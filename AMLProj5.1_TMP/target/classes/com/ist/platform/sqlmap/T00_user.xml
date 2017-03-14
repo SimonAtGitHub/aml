@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T00_user">
+
+  <statement id="getT00_userList1" parameterClass="com.ist.platform.dto.T00_user" resultClass="com.ist.platform.dto.T00_user">
+  SELECT  a.*,b.organname
+   FROM T00_USER a,t00_organ b
+   where a.organkey=b.organkey
+  <dynamic>
+    <isNotEmpty prepend="AND" property="username">
+    a.USERNAME LIKE #username#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="realname">
+    a.REALNAME LIKE #realname#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organkey">
+    a.ORGANKEY IN ($organkey$)
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organ">
+    a.ORGANKEY = #organ#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="flag">
+    a.FLAG = #flag#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="rolekey">
+    a.USERNAME IN (SELECT USERNAME FROM T00_COM_AUTH WHERE ROLEKEY=#rolekey#)
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="post_id">
+    USERNAME IN (SELECT USERNAME FROM T07_POST_OPERATOR T WHERE T.POST_ID=#post_id#)
+    </isNotEmpty>
+  
+    			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="0">
+					ORDER BY a.USERNAME
+				</isEqual>
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY a.REALNAME
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY a.FLAG
+				</isEqual>
+				<isEqual property="orderby" compareValue="4">
+					ORDER BY a.ORGANKEY
+				</isEqual>
+				</isNotEmpty>
+  </dynamic>
+  </statement>
+   <statement id="getT00_userListCount1" parameterClass="com.ist.platform.dto.T00_user" resultClass="int">
+  SELECT COUNT(USERNAME) FROM T00_USER a,t00_organ b
+   where a.organkey=b.organkey
+  <dynamic>
+    <isNotEmpty prepend="AND" property="username">
+    a.USERNAME LIKE #username#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="realname">
+    a.REALNAME LIKE #realname#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organkey">
+    a.ORGANKEY IN ($organkey$)
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organ">
+    a.ORGANKEY = #organ#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="flag">
+    a.FLAG = #flag#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="rolekey">
+    a.USERNAME IN (SELECT USERNAME FROM T00_COM_AUTH WHERE ROLEKEY=#rolekey#)
+    </isNotEmpty>
+ 
+    
+  </dynamic>
+  </statement>
+  <statement id="getT00_userList2" parameterClass="com.ist.platform.dto.T00_user" resultClass="com.ist.platform.dto.T00_user">
+  SELECT  a.*,b.organname
+   FROM T00_USER a,t00_organ b
+   where a.organkey=b.organkey
+  <dynamic>
+    <isNotEmpty prepend="AND" property="username">
+    a.USERNAME LIKE #username#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="realname">
+    a.REALNAME LIKE #realname#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organkey">
+    a.ORGANKEY IN ($organkey$)
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organ">
+    a.ORGANKEY = #organ#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="flag">
+    a.FLAG = #flag#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="rolekey">
+    a.USERNAME NOT IN (SELECT USERNAME FROM T00_COM_AUTH WHERE ROLEKEY=#rolekey#)
+    </isNotEmpty>
+  </dynamic>
+  </statement>
+  <statement id="getT00_userListCount2" parameterClass="com.ist.platform.dto.T00_user" resultClass="int">
+  SELECT COUNT(USERNAME) FROM T00_USER
+  <dynamic prepend="WHERE">
+    <isNotEmpty prepend="AND" property="username">
+    USERNAME LIKE #username#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="realname">
+    REALNAME LIKE #realname#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organkey">
+    ORGANKEY IN ($organkey$)
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organ">
+    ORGANKEY = #organ#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="flag">
+    FLAG = #flag#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="rolekey">
+    USERNAME NOT IN (SELECT USERNAME FROM T00_COM_AUTH WHERE ROLEKEY=#rolekey#)
+    </isNotEmpty>
+  </dynamic>
+  </statement>
+  
+  <statement id="getT00_userexport_List" parameterClass="com.ist.platform.dto.T00_user" resultClass="com.ist.platform.dto.T00_user">
+  SELECT USERNAME,REALNAME,PASSWORD,ORGANKEY,FLAG,ISBUILDIN,ISADMIN,ADDRESS,POSTALCODE,EMAILADDRESS,TELEPHONE,MOBILEPHONE,DES,SEX,BIRTH,EDUCATION,ISNEWUSER,POSITION,POSTITLE,WORKLEVEL,POLITICAL,INDATE,STAFCODE,REMARK,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER,DEFGROUPKEY,CURR_CD FROM T00_USER
+  <dynamic prepend="WHERE">
+      <isNotEmpty prepend="AND" property="username">
+    USERNAME LIKE #username#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="realname">
+    REALNAME LIKE #realname#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organkey">
+    ORGANKEY IN ($organkey$)
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organ">
+    ORGANKEY = #organ#
+    </isNotEmpty>
+       <isNotEmpty prepend="AND" property="uname">
+    USERNAME in($uname$)
+       </isNotEmpty>
+    <isNotEmpty prepend="AND" property="flag">
+    FLAG = #flag#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="rolekey">
+    USERNAME IN (SELECT USERNAME FROM T00_COM_AUTH WHERE ROLEKEY=#rolekey#)
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="post_id">
+    USERNAME IN (SELECT USERNAME FROM T07_POST_OPERATOR T WHERE T.POST_ID=#post_id#)
+    </isNotEmpty>
+    			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="0">
+					ORDER BY USERNAME
+				</isEqual>
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY REALNAME
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY FLAG
+				</isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY CURR_CD
+				</isEqual>
+				<isEqual property="orderby" compareValue="4">
+					ORDER BY ORGANKEY
+				</isEqual>
+				</isNotEmpty>
+  </dynamic>
+  </statement>
+  <statement id="getT00_userList" parameterClass="com.ist.platform.dto.T00_user" resultClass="com.ist.platform.dto.T00_user">
+  SELECT USERNAME,REALNAME,PASSWORD,ORGANKEY,FLAG,ISBUILDIN,ISADMIN,ADDRESS,POSTALCODE,EMAILADDRESS,TELEPHONE,MOBILEPHONE,DES,SEX,BIRTH,EDUCATION,ISNEWUSER,POSITION,POSTITLE,WORKLEVEL,POLITICAL,INDATE,STAFCODE,REMARK,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER,DEFGROUPKEY,CURR_CD FROM T00_USER
+  <dynamic prepend="WHERE">
+    <isNotEmpty prepend="AND" property="username">
+    USERNAME LIKE #username#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="realname">
+    REALNAME LIKE #realname#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organkey">
+    ORGANKEY IN ($organkey$)
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="flag">
+    FLAG = #flag#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="rolekey">
+    USERNAME IN (SELECT USERNAME FROM T00_COM_AUTH WHERE ROLEKEY=#rolekey#)
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="post_id">
+    USERNAME IN (SELECT USERNAME FROM T07_POST_OPERATOR T WHERE T.POST_ID=#post_id#)
+    </isNotEmpty>
+    
+  </dynamic>
+  ORDER BY FLAG,USERNAME
+  </statement>
+
+  <statement id="getT00_userListCount" parameterClass="com.ist.platform.dto.T00_user" resultClass="int">
+  SELECT COUNT(*) FROM T00_USER
+  <dynamic prepend="WHERE">
+    <isNotEmpty prepend="AND" property="username">
+    USERNAME LIKE #username#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="realname">
+    REALNAME LIKE #realname#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organkey">
+    ORGANKEY IN ($organkey$)
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="flag">
+    FLAG = #flag#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="rolekey">
+    USERNAME IN (SELECT USERNAME FROM T00_COM_AUTH WHERE ROLEKEY=#rolekey#)
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="post_id">
+    USERNAME IN (SELECT USERNAME FROM T07_POST_OPERATOR T WHERE T.POST_ID=#post_id#)
+    </isNotEmpty>
+   
+    
+  </dynamic>
+  </statement>
+
+  <statement id="insertT00_user" parameterClass="com.ist.platform.dto.T00_user" resultClass="int">
+  INSERT INTO T00_USER(
+  USERNAME,REALNAME,PASSWORD,ORGANKEY,FLAG,ISBUILDIN,ISADMIN,ADDRESS,POSTALCODE,EMAILADDRESS,TELEPHONE,MOBILEPHONE,DES,SEX,BIRTH,EDUCATION,ISNEWUSER,POSITION,POSTITLE,WORKLEVEL,POLITICAL,INDATE,STAFCODE,REMARK,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER
+  ) VALUES(
+  #username#,#realname#,#password#,#organkey#,#flag#,#isbuildin#,#isadmin#,#address#,#postalcode#,#emailaddress#,#telephone#,#mobilephone#,#des#,#sex#,#birth#,#education#,#isnewuser#,#position#,#postitle#,#worklevel#,#political#,#indate#,#stafcode#,#remark#,#createdate#,#creator#,#modifydate#,#modifier#
+  )
+  </statement>
+
+  <statement id="modifyT00_user" parameterClass="com.ist.platform.dto.T00_user" resultClass="int">
+  UPDATE T00_USER SET
+  REALNAME=#realname#,ORGANKEY=#organkey#,FLAG=#flag#,ADDRESS=#address#
+  ,POSTALCODE=#postalcode#,EMAILADDRESS=#emailaddress#,TELEPHONE=#telephone#,MOBILEPHONE=#mobilephone#
+  ,DES=#des#,SEX=#sex#,BIRTH=#birth#,EDUCATION=#education#,POSITION=#position#,POSTITLE=#postitle#
+  ,WORKLEVEL=#worklevel#,POLITICAL=#political#,INDATE=#indate#,STAFCODE=#stafcode#
+  ,REMARK=#remark#,MODIFYDATE=#modifydate#,MODIFIER=#modifier#
+  WHERE USERNAME=#username#
+  </statement>
+
+  <statement id="deleteT00_user" parameterClass="java.lang.String" resultClass="int">
+  <![CDATA[ DELETE FROM T00_USER WHERE USERNAME=#value# AND ISBUILDIN<>'1' ]]>
+  </statement>
+
+  <statement id="getT00_userDisp" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_user">
+  SELECT USERNAME, REALNAME, PASSWORD, ORGANKEY, FLAG, ISBUILDIN, ISADMIN, ADDRESS, POSTALCODE, EMAILADDRESS, TELEPHONE, MOBILEPHONE, DES, SEX, BIRTH, EDUCATION, ISNEWUSER, POSITION, POSTITLE, WORKLEVEL, POLITICAL, INDATE, STAFCODE, REMARK, CREATEDATE, CREATOR, MODIFYDATE, MODIFIER, DEFGROUPKEY, CURR_CD FROM T00_USER WHERE USERNAME=#value#  
+  </statement>
+  
+  <statement id="getT00_userDisp1" parameterClass="com.ist.platform.dto.T00_user" resultClass="com.ist.platform.dto.T00_user">
+  SELECT a.*,b.organname,b.organlevel,b.uporgankey
+  FROM  T00_USER  a,t00_organ b
+   WHERE  a.organkey=b.organkey 
+   and a.USERNAME=#username#  
+  <dynamic>
+  <isNotEmpty prepend="AND" property="flag">
+   a.FLAG=#flag#
+  </isNotEmpty>
+  </dynamic>
+  </statement>
+
+  <statement id="modifyT00_userPassword" parameterClass="com.ist.platform.dto.T00_user" resultClass="int">
+  UPDATE T00_USER SET PASSWORD=#password# WHERE USERNAME=#username# 
+  </statement>
+
+  <statement id="modifyT00_userFlag" parameterClass="com.ist.platform.dto.T00_user" resultClass="int">
+  UPDATE T00_USER SET FLAG=#flag# WHERE USERNAME=#username#
+  </statement>
+
+  <statement id="modifyT00_userDefGroupkey" parameterClass="com.ist.platform.dto.T00_user" resultClass="int">
+  UPDATE T00_USER SET DEFGROUPKEY=#defgroupkey# WHERE USERNAME=#username#
+  </statement>
+  
+  <statement id="getT00_userRealname" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_user">
+  SELECT REALNAME FROM T00_USER WHERE USERNAME=#value#
+  </statement>
+  
+  <statement id="getT00_userVd" parameterClass="java.lang.String" resultClass="int">
+  SELECT COUNT(*) FROM T00_USER A  WHERE A.USERNAME=#value# AND A.REMARK = '0'
+  </statement>
+  
+  <statement id="modifyT00_userColor" parameterClass="com.ist.platform.dto.T00_user" resultClass="int">
+  UPDATE T00_USER SET
+  COLOR=#color#,MODIFYDATE=#modifydate#,MODIFIER=#modifier#
+  WHERE USERNAME=#username#
+  </statement>
+  
+    <statement id="getT07_post_operatorDispByUserName" parameterClass="java.lang.String" resultClass="com.ist.aml.report.dto.T07_post_operator"> 
+   SELECT DISTINCT T4.POST_ID,T4.POST_DES FROM T00_ROLE_POST T3,T00_ROLE T1,T00_COM_AUTH T2,T07_POST T4  
+	WHERE T1.ROLEKEY=T2.ROLEKEY  AND T3.ROLEKEY=T1.ROLEKEY
+	   and T3.POST_ID=T4.POST_ID AND T1.FLAG='1'
+	AND T2.USERNAME=#value#
+  </statement>
+   <statement id="getT07_post_operatorList" parameterClass="java.lang.String" resultClass="com.ist.aml.report.dto.T07_post_operator"> 
+   SELECT DISTINCT T4.POST_ID,T4.POST_DES,T2.USERNAME FROM T00_ROLE_POST T3,T00_ROLE T1,T00_COM_AUTH T2,T07_POST T4  
+	WHERE T1.ROLEKEY=T2.ROLEKEY  AND T3.ROLEKEY=T1.ROLEKEY
+	   and T3.POST_ID=T4.POST_ID AND T1.FLAG='1'
+	
+  </statement>
+  
+  
+</sqlMap>
+

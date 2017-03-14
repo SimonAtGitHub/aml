@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T08_count_rule">
+	<statement id="getT08_count_ruleList"
+		parameterClass="com.ist.aml.risk.dto.T08_count_rule"
+		resultClass="com.ist.aml.risk.dto.T08_count_rule">
+		SELECT CTRULEKEY,CTRULEMAX,CTRULEMIN,CREATEDATE,CREATOR,
+		MODIFIER,MODIFYDATE,STATUS,SCORE,MAXISCLOSED,MINISCLOSED, A_V_T
+		FROM T08_COUNT_RULE
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="ctrulekey">
+				CTRULEKEY = #ctrulekey#
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY A_V_T,CTRULEMAX DESC
+
+	</statement>
+
+
+	<statement id="getT08_count_ruleListCount"
+		parameterClass="com.ist.aml.risk.dto.T08_count_rule"
+		resultClass="int">
+		SELECT COUNT(*) FROM T08_COUNT_RULE
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="ctrulekey">
+				CTRULEKEY = #ctrulekey#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+
+</sqlMap>
+

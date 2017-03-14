@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T09_indic_subitem3">
+	<statement id="getT09_indic_subitem3List"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.iap.dto.T09_indic_subitem3">
+		select
+		indickey,calseq,itemcategory,itemtype,symbol,tablekey,tableename,itemkey,itemename,colkey,colename,constant,formulatype
+		from T09_indic_subitem3 where indickey = #value#
+
+	</statement>
+
+	<statement id="getT09_indic_subitem3ListCount"
+		parameterClass="com.ist.iap.dto.T09_indic_subitem3"
+		resultClass="int">
+		select count(*) from T09_indic_subitem3
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="indickey">
+				indickey = #indickey#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="getT09_indic_subitem3ListForAutoSetDepand"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.iap.dto.T09_indic_subitem3">
+		select distinct t1.indickey,t1.tableename,t1.itemkey,itemname,t3.granularity from T09_INDIC_SUBITEM3 t1,T09_FIXED_REPORT t2,T18_TASKLIST t3 where t1.tablekey=t2.REPORTKEY and t3.BUSINESSKEY=t1.indickey and t3.tasktype='502'
+
+	</statement>
+
+	<statement id="insertT09_indic_subitem3"
+		parameterClass="com.ist.iap.dto.T09_indic_subitem3"
+		resultClass="int">
+		insert into T09_indic_subitem3(
+		indickey,calseq,itemcategory,itemtype,symbol,tablekey,tableename,itemkey,itemename,colkey,colename,constant,formulatype
+		) values(
+		#indickey#,#calseq#,#itemcategory#,#itemtype#,#symbol#,#tablekey#,#tableename#,#itemkey#,#itemename#,#colkey#,#colename#,#constant#,#formulatype#
+		)
+	</statement>
+
+	<statement id="modifyT09_indic_subitem3"
+		parameterClass="com.ist.iap.dto.T09_indic_subitem3"
+		resultClass="int">
+		update T09_indic_subitem3 set
+		indickey=#indickey#,calseq=#calseq#,itemcategory=#itemcategory#,itemtype=#itemtype#,symbol=#symbol#,tablekey=#tablekey#,tableename=#tableename#,itemkey=#itemkey#,itemename=#itemename#,colkey=#colkey#,colename=#colename#,constant=#constant#,formulatype=#formulatype#
+		where indickey=#indickey#
+	</statement>
+
+	<statement id="deleteT09_indic_subitem3"
+		parameterClass="java.lang.String" resultClass="int">
+		delete from T09_indic_subitem3 where indickey=#value#
+	</statement>
+
+	<statement id="getT09_indic_subitem3Disp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.iap.dto.T09_indic_subitem3">
+		select * from T09_indic_subitem3 where indickey=#value#
+	</statement>
+	
+	<statement id="getT09_reportitemList"
+		parameterClass="com.ist.iap.dto.T09_indic_subitem3"
+		resultClass="com.ist.iap.dto.T09_indic_subitem3">
+		select fieldkey,fieldname from T09_reportitem
+		where flag= '1'
+		<dynamic>
+			<isNotEmpty prepend="and" property="reportkey">
+				reportkey = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="categorykey">
+				categorykey = #categorykey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="fieldkey">
+				fieldkey like '%'||#fieldkey#||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="fieldname">
+				fieldname like '%'||#fieldname#||'%'
+			</isNotEmpty>
+		</dynamic>
+		order by fieldkey
+	</statement>
+	
+	<statement id="getT09_reportitemListCount"
+		parameterClass="com.ist.iap.dto.T09_indic_subitem3"
+		resultClass="int">
+		select count(*) from T09_reportitem where isindic = '1' and flag= '1'
+		<dynamic>
+			<isNotEmpty prepend="and" property="reportkey">
+				reportkey = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="categorykey">
+				categorykey = #categorykey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="fieldkey">
+				fieldkey like '%'||#fieldkey#||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="fieldname">
+				fieldname like '%'||#fieldname#||'%'
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT09_report_categoryMap"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.iap.dto.T09_indic_subitem3">
+		select categorykey,categoryname from T09_report_category where reportkey = #value#
+
+	</statement>
+	
+	<statement id="getT09_reportpropMap"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.iap.dto.T09_indic_subitem3">
+		select propkey||colname as propkey,propname from T09_ReportProp
+	    where reportkey = #value#
+
+	</statement>
+	<statement id="insertT09_indic_inout3" parameterClass="com.ist.iap.dto.T09_indic_subitem3"
+		resultClass="int">
+		insert into T09_indic_inout(
+		indickey,tabkey,tabename
+		) values(
+		#indickey#,#tabkey#,#tabname#
+		)
+	</statement>
+	<statement id="getT09_indic_subitem3ByIndickey"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.iap.dto.T09_indic_subitem3">
+		select distinct t1.indickey,    t1.tableename,    t1.itemkey,    itemname,t3.granularity
+		from T09_indic_subitem3 t1,T09_FIXED_REPORT t2,T09_INDICATOR t3 where t1.indickey=#value# and t1.tablekey=t2.REPORTKEY and t1.indickey = t3.indickey
+	</statement>
+</sqlMap>
+

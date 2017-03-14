@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 知识管理平台模块配置 -->
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	
+    <bean id="t12_articleDAO" parent="baseDAO" class="com.ist.cms.dao.T12_articleDAO" ></bean>
+    <bean id="t12_article_collectDAO" parent="baseDAO" class="com.ist.cms.dao.T12_article_collectDAO" ></bean>
+    <bean id="t12_article_contentDAO" parent="baseDAO" class="com.ist.cms.dao.T12_article_contentDAO" ></bean>
+    <bean id="t12_article_historyDAO" parent="baseDAO" class="com.ist.cms.dao.T12_article_historyDAO" ></bean>
+    <bean id="t12_article_relationDAO" parent="baseDAO" class="com.ist.cms.dao.T12_article_relationDAO" ></bean>
+    <bean id="t12_article_keywordsDAO" parent="baseDAO" class="com.ist.cms.dao.T12_article_keywordsDAO" ></bean>
+    <bean id="t12_power_groupDAO" parent="baseDAO" class="com.ist.cms.dao.T12_power_groupDAO" ></bean>
+    <bean id="t12_article_logDAO" parent="baseDAO" class="com.ist.cms.dao.T12_article_logDAO" ></bean>
+    <bean id="t12_date_subscibeDAO" parent="baseDAO" class="com.ist.cms.dao.T12_date_subscibeDAO" ></bean>
+    <bean id="t12_keywords_libraryDAO" parent="baseDAO" class="com.ist.cms.dao.T12_keywords_libraryDAO" ></bean>
+    <bean id="t12_person_subscibeDAO" parent="baseDAO" class="com.ist.cms.dao.T12_person_subscibeDAO" ></bean>
+    <bean id="t12_programa_defcolsDAO" parent="baseDAO" class="com.ist.cms.dao.T12_programa_defcolsDAO" ></bean>
+    <bean id="t12_power_roleDAO" parent="baseDAO" class="com.ist.cms.dao.T12_power_roleDAO" ></bean>
+    <bean id="t12_power_userDAO" parent="baseDAO" class="com.ist.cms.dao.T12_power_userDAO" ></bean>
+    <bean id="t12_programaDAO" parent="baseDAO" class="com.ist.cms.dao.T12_programaDAO" ></bean>
+    <bean id="t12_programa_colsDAO" parent="baseDAO" class="com.ist.cms.dao.T12_programa_colsDAO" ></bean>
+    <bean id="t12_writebackDAO" parent="baseDAO" class="com.ist.cms.dao.T12_writebackDAO" ></bean>
+    <bean id="t12_ca_programaDAO" parent="baseDAO" class="com.ist.cms.dao.T12_ca_programaDAO" ></bean>
+    <bean id="t12_programa_powerDAO" parent="baseDAO" class="com.ist.cms.dao.T12_programa_powerDAO" ></bean>
+    <bean id="t12_programa_subscibeDAO" parent="baseDAO" class="com.ist.cms.dao.T12_programa_subscibeDAO" ></bean>
+    <bean id="t12_programa_tableDAO" parent="baseDAO" class="com.ist.cms.dao.T12_programa_tableDAO" ></bean>
+    <bean id="t12_programa_table_relDAO" parent="baseDAO" class="com.ist.cms.dao.T12_programa_table_relDAO" ></bean>
+    <bean id="t12_subscibeDAO" parent="baseDAO" class="com.ist.cms.dao.T12_subscibeDAO" ></bean>
+    <bean id="t12_subscibe_tacticsDAO" parent="baseDAO" class="com.ist.cms.dao.T12_subscibe_tacticsDAO" ></bean>
+	<bean id="t12_se_file_dbDAO" parent="baseDAO" class="com.ist.cms.dao.T12_se_file_dbDAO" ></bean>
+	<bean id="t12_se_file_pathDAO" parent="baseDAO" class="com.ist.cms.dao.T12_se_file_pathDAO" ></bean>
+	<bean id="t12_programa_attachtypeDAO" parent="baseDAO" class="com.ist.cms.dao.T12_programa_attachtypeDAO" ></bean>
+	
+	
+	
+    <!-- zai xian kao shi begin zhangqiaojun 2010-09-12  -->
+    <bean id="t12_questionnaireDAO" parent="baseDAO" class="com.ist.cms.dao.T12_questionnaireDAO"></bean>
+    <bean id="t12_questions_subjectDAO" parent="baseDAO" class="com.ist.cms.dao.T12_questions_subjectDAO"></bean>
+    <bean id="t12_questions_choiceDAO" parent="baseDAO" class="com.ist.cms.dao.T12_questions_choiceDAO"></bean>
+    <bean id="t12_publish_questionnaireDAO" parent="baseDAO" class="com.ist.cms.dao.T12_publish_questionnaireDAO" ></bean>
+    <bean id="t12_publish_gradeDAO" parent="baseDAO" class="com.ist.cms.dao.T12_publish_gradeDAO" ></bean>
+    <bean id="t12_answer_questionnaireDAO" parent="baseDAO" class="com.ist.cms.dao.T12_answer_questionnaireDAO" ></bean>
+    <bean id="t12_judgment_questionnaireDAO" parent="baseDAO" class="com.ist.cms.dao.T12_judgment_questionnaireDAO" ></bean>
+    <bean id="t12_publish_userDAO" parent="baseDAO" class="com.ist.cms.dao.T12_publish_userDAO"></bean>
+    <bean id="t12_answer_subjectDAO" parent="baseDAO" class="com.ist.cms.dao.T12_answer_subjectDAO" ></bean>
+    <bean id="t12_judgment_subjectDAO" parent="baseDAO" class="com.ist.cms.dao.T12_judgment_subjectDAO" ></bean>
+    <bean id="t12_article_coderuleDAO" parent="baseDAO" class="com.ist.cms.dao.T12_article_coderuleDAO" ></bean>
+    <bean id="t12_ca_articleDAO" parent="baseDAO" class="com.ist.cms.dao.T12_ca_articleDAO" ></bean>
+    <bean id="t12_categoryDAO" parent="baseDAO" class="com.ist.cms.dao.T12_categoryDAO"></bean>
+    <bean id="t12_sequenceDAO" parent="baseDAO" class="com.ist.cms.dao.T12_sequenceDAO"></bean>
+      <bean id="t01_attachmentDAO" parent="baseDAO" class="com.ist.common.attachment.dao.T01_attachmentDAO" ></bean>
+	<bean id="t01_attach_mapDAO" parent="baseDAO" class="com.ist.common.attachment.dao.T01_attach_mapDAO"></bean>
+	<bean id="t01_attachment_pmpDAO" parent="sqlMapClientTemplate" class="com.ist.common.attachment.dao.T01_attachment_pmpDAO"></bean>
+	<bean id="t01_attach_map_pmpDAO" parent="sqlMapClientTemplate" class="com.ist.common.attachment.dao.T01_attach_map_pmpDAO"></bean>
+    <bean id="t01_db_linkDAO" parent="baseDAO" class="com.ist.common.metadata.dao.T01_db_linkDAO" ></bean>
+	<bean id="attachmentManage" parent="baseBO" class="com.ist.common.attachment.bo.AttachmentManage" >
+		<property name="t01_attachmentDAO" ref="t01_attachmentDAO" />
+		<property name="t01_attach_mapDAO" ref="t01_attach_mapDAO" />
+		<property name="t01_attachment_pmpDAO" ref="t01_attachment_pmpDAO" />
+		<property name="t01_attach_map_pmpDAO" ref="t01_attach_map_pmpDAO" />
+	</bean>
+	<bean id="t01_smsDAO" parent="baseDAO" class="com.ist.common.message.dao.T01_smsDAO" ></bean>
+   
+     <!--审计 实现发布到前台文章的路径 -->
+    <bean id="moduleService" class="com.ist.cms.services.impl.AMLModuleServices" />
+    <bean id="defineCmsBlock" class="com.ist.cms.common.lucene.block.define.DefineCmsBlock" />
+    
+</beans>

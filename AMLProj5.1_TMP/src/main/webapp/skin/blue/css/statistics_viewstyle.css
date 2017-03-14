@@ -1,0 +1,46 @@
+/* audit\analysis inside_check_plan , project_run */
+.awp_art01,.awp_art02 table { border-collapse:collapse; }
+.awp_art01   { border:1px solid #9ED9F7; }
+.awp_art01,.awp_art02 { position: relative; overflow-y:hidden;overflow-x: auto;width:100%;background:#EFF6F9; margin-top:8px; }
+.awp_art01 td  { text-align:center; border-bottom:1px solid #fff; }
+.awp_art01 td{ line-height:44px; }
+.awp_art01 .fir { background:#DDEFF6; height:30px; color:#027A9C; white-space:nowrap; }
+.awp_art01 .fir2 { background-color:#E7EFF4; }
+.awp_art01 td{ border:1px solid #fff;}
+.art_flag01 { background:url(../images/art_flag01.gif) no-repeat center; }
+.art_flag02 { background:url(../images/art_flag02.gif) no-repeat center; }
+.art_flag03 { background:url(../images/art_flag03.gif) no-repeat center; }
+.art_flag04 { background:url(../images/art_flag04.gif) no-repeat center; }
+.art_flag05 { background:url(../images/art_flag05.gif) no-repeat center; }
+.art_flag06 { background:url(../images/art_flag06.gif) no-repeat center; }
+
+.awp_art02 { border-top:1px solid #9DD4F0; border-left:1px solid #9DD4F0; border-right:1px solid #9DD4F0; border-bottom:0; }
+.awp_art02 td { text-align:center; height:27px; }
+.awp_art02 .tir{ background:#D1EFF9; height:30px; white-space:nowrap; }
+.awp_art02 .tir2 { background:#E7F8FB; }
+
+.art_blue { background:url(../images/art_blue.gif) repeat-x center; }
+.art_red { background:url(../images/art_red.gif) repeat-x center; }
+.art_green { background:url(../images/art_green.gif) repeat-x center; }
+
+.blue_l,.blue_r,.red_l,.red_r,.green_l,.green_r { background:no-repeat center;height:25px; width:4px; }
+.blue_l { background-image:url(../images/art_blue1.gif); float:left; }
+.blue_r { background-image:url(../images/art_blue2.gif); float:right }
+.red_l { background-image:url(../images/art_red1.gif); float:left; }
+.red_r { background-image:url(../images/art_red2.gif); float:right }
+.green_l { background-image:url(../images/art_green1.gif); float:left; }
+.green_r { background-image:url(../images/art_green2.gif); float:right }
+
+.awp_art02 .b-b { border-bottom:1px solid #9DD4F0; }
+.awp_art02 .b-r { border-right:1px solid #9DD4F0 }
+.awp_art02 .b-r2 {  border-right:1px solid #fff; }
+
+.awp_art02 .viewimgbg{ background-color:#fff;}
+.awp_art02 .vieweekbg{ background-color:#E5F1F7; border-left:1px solid #fff; border-top:1px solid #fff; }
+.awp_art02 .vieweekdaybg{ background-color:#DDEAF1; border-left:1px solid #fff; }
+
+.viewExplain { margin-top:10px; text-align:right; font-size:14px }
+.viewExplain img { vertical-align:middle; margin:0 5px 0 30px}
+
+#awp_artleft td,#awp_artright td{white-space:nowrap;}
+.dragmasker { width:100%; position:absolute; left:10px; top:40px; z-index:1; background:#fff; -moz-opacity:.0; opacity:0; filter: Alpha(opacity=0); }

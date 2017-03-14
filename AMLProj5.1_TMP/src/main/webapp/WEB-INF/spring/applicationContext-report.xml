@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 基础管理平台模块配置 -->
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<bean id="t47_transactionDAO" parent="baseDAO" class="com.ist.aml.report.dao.T47_transactionDAO" ></bean>
+	<bean id="t47_partyDAO" parent="baseDAO" class="com.ist.aml.report.dao.T47_partyDAO" ></bean>
+	<bean id="t47_agreementDAO" parent="baseDAO" class="com.ist.aml.pbcreport.dao.T47_agreementDAO" ></bean>
+	<bean id="t07_data_transDAO" parent="baseDAO" class="com.ist.aml.pbcreport.dao.T07_data_transDAO" ></bean>
+	<bean id="t07_report08DAO" parent="baseDAO" class="com.ist.aml.pbcreport.dao.T07_report08DAO" ></bean>
+	<bean id="t07_receiptDAO" parent="baseDAO" class="com.ist.aml.pbcreport.dao.T07_receiptDAO" ></bean>
+	<bean id="t07_nbs_rpdiDAO" parent="baseDAO" class="com.ist.aml.pbcreport.dao.T07_nbs_rpdiDAO" ></bean>
+	<bean id="t07_nbs_atifDAO" parent="baseDAO" class="com.ist.aml.pbcreport.dao.T07_nbs_atifDAO" ></bean>
+	<bean id="t07_nbh_tsdtDAO" parent="baseDAO" class="com.ist.aml.pbcreport.dao.T07_nbh_tsdtDAO" ></bean>
+	<bean id="t07_nbh_rbifDAO" parent="baseDAO" class="com.ist.aml.pbcreport.dao.T07_nbh_rbifDAO" ></bean>
+	<bean id="t07_nbh_ctifDAO" parent="baseDAO" class="com.ist.aml.pbcreport.dao.T07_nbh_ctifDAO" ></bean>
+	<bean id="t07_nbs_rbifDAO" parent="baseDAO" class="com.ist.aml.pbcreport.dao.T07_nbs_rbifDAO" ></bean>
+	<bean id="t07_nbs_ctifDAO" parent="baseDAO" class="com.ist.aml.pbcreport.dao.T07_nbs_ctifDAO" ></bean>
+	<bean id="t07_cbh_tsdtDAO" parent="baseDAO" class="com.ist.aml.pbcreport.dao.T07_cbh_tsdtDAO" ></bean>
+	<bean id="t07_dbh_rbifDAO" parent="baseDAO" class="com.ist.aml.pbcreport.dao.T07_dbh_rbifDAO" ></bean>
+	<bean id="t07_msgDAO" parent="baseDAO" class="com.ist.aml.pbcreport.dao.T07_msgDAO" ></bean>  
+	<bean id="t07_pbc_sequenceDAO" parent="baseDAO" class="com.ist.aml.pbcreport.dao.T07_pbc_sequenceDAO" ></bean>  
+	<bean id="readFeedbackBO" parent="baseBO" class="com.ist.aml.pbcreport.bo.ReadFeedbackBO" ></bean>
+	<bean id="readFDSCbyXMLBean" parent="baseBO" class="com.ist.aml.pbcreport.bo.ReadFDSCbyXMLBean" ></bean>
+	<bean id="createZIPBO" parent="baseBO" class="com.ist.aml.pbcreport.bo.CreateZIPBO" ></bean>
+	<bean id="t07_ReportBo" parent="baseBO" class="com.ist.aml.pbcreport.bo.T07_ReportBo" ></bean>
+	<bean id="t07_reportDAO" parent="baseDAO" class="com.ist.aml.pbcreport.dao.T07_reportDAO" ></bean>
+	<bean id="t07_flowDAO" parent="baseDAO" class="com.ist.aml.report.dao.T07_flowDAO" ></bean>
+	<bean id="t07_flowBo" parent="baseBO" class="com.ist.aml.report.bo.T07_FlowBo" ></bean>
+	<bean id="t07_app_movefateDAO" parent="baseDAO" class="com.ist.aml.report.dao.T07_app_movefateDAO" ></bean>
+	<bean id="t07_case_applicationDAO" parent="baseDAO" class="com.ist.aml.report.dao.T07_case_applicationDAO" ></bean>
+    <bean id="T07_case_stcrDAO" parent="baseDAO" class="com.ist.aml.report.dao.T07_case_stcrDAO" ></bean>
+    <bean id="t07_case_transactionDAO" parent="baseDAO" class="com.ist.aml.report.dao.T07_case_transactionDAO" ></bean>
+     <bean id="t07_alert_attachDAO" parent="baseDAO" class="com.ist.aml.report.dao.T07_alert_attachDAO" ></bean>
+     <bean id="t07_case_stcrDAO" parent="baseDAO" class="com.ist.aml.report.dao.T07_case_stcrDAO" ></bean>
+     <bean id="t07_case_AssistDAO" parent="baseDAO" class="com.ist.aml.report.dao.T07_case_AssistDAO" ></bean>
+     <bean id="t10_trans_analysisDAO" parent="baseDAO" class="com.ist.aml.report.dao.T10_trans_analysisDAO" ></bean>
+     <bean id="t10_trans_analysis_caseDAO" parent="baseDAO" class="com.ist.aml.report.dao.T10_trans_analysis_caseDAO" ></bean>
+     <bean id="t10_check_custDAO" parent="baseDAO" class="com.ist.aml.report.dao.T10_check_custDAO" ></bean>
+     <bean id="t07_report_by_organDAO" parent="baseDAO" class="com.ist.aml.report.dao.T07_report_by_organDAO" ></bean>
+     <bean id="t07_report_organDAO" parent="baseDAO" class="com.ist.aml.report.dao.T07_report_organDAO" ></bean>
+     
+     <bean id="t10_checkpartyDAO" parent="baseDAO" class="com.ist.aml.cust_identify.dao.T10_checkpartyDAO" ></bean>
+     <bean id="t10_checkparty_funDAO" parent="baseDAO" class="com.ist.aml.cust_identify.dao.T10_checkparty_funDAO" ></bean>
+     <bean id="t10_party_cretalDAO" parent="baseDAO" class="com.ist.aml.cust_identify.dao.T10_party_cretalDAO" ></bean>
+     <bean id="t13_mfa_nbDAO" parent="baseDAO" class="com.ist.aml.nb.dao.T13_mfa_nbDAO"></bean>
+
+     <bean id="t07_attention_libDAO" parent="baseDAO" class="com.ist.aml.report.dao.T07_ATTENTION_libDAO" ></bean>
+
+     <bean id="t10_newClientCheckDAO" parent="baseDAO" class="com.ist.aml.cust_identify.dao.T10_newClientCheckDAO"></bean>
+
+	<bean id="t07_cd_applyDAO" parent="baseDAO" class="com.ist.aml.report.dao.T07_cd_applyDAO"></bean>
+</beans>

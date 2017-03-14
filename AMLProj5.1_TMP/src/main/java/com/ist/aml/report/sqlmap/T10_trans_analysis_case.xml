@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T10_trans_analysis_case"> 
+	<statement id="getT10_transcount_by_caseid"
+		parameterClass="com.ist.aml.report.dto.T10_trans_analysis_case"
+		resultClass="int">
+		SELECT COUNT(t.transactionkey)
+		FROM T47_TRANSACTION_UC T
+		WHERE EXISTS (SELECT 'X' FROM 
+			<isNotEmpty prepend="" property="cast_type">
+		<isEqual property="cast_type" compareValue="1">
+						T07_CASE_TRANSACTION_DE C
+				  	</isEqual>
+					<isEqual property="cast_type" compareValue="2">
+						T07_CASE_TRANSACTION_KY C
+				  	</isEqual>
+		</isNotEmpty>
+		WHERE T.TRANSACTIONKEY = C.TRANSACTIONKEY 
+		      AND C.APPLICATION_NUM = #application_num#
+		      )
+		
+		
+	</statement>
+	
+	<statement id="getT10_transsumamt_by_caseid"
+		parameterClass="com.ist.aml.report.dto.T10_trans_analysis_case"
+		resultClass="double">
+		SELECT SUM( T.AMT)
+		FROM T47_TRANSACTION_UC T
+	WHERE EXISTS (SELECT 'X' FROM 
+			<isNotEmpty prepend="" property="cast_type">
+		<isEqual property="cast_type" compareValue="1">
+						T07_CASE_TRANSACTION_DE C
+				  	</isEqual>
+					<isEqual property="cast_type" compareValue="2">
+						T07_CASE_TRANSACTION_KY C
+				  	</isEqual>
+		</isNotEmpty>
+		WHERE T.TRANSACTIONKEY = C.TRANSACTIONKEY 
+		      AND C.APPLICATION_NUM = #application_num#
+		      )
+		
+	</statement>
+	
+	<statement id="getCaseTransGroupByChannel"
+		parameterClass="com.ist.aml.report.dto.T10_trans_analysis_case"
+		resultClass="com.ist.aml.report.dto.T10_trans_analysis_case">
+		SELECT T.CHANNEL AS PATTERN,COUNT(T.TRANSACTIONKEY) AS T_COUNT, SUM(T.AMT) AS T_AMT,
+		       ROUND(100*SUM(T.AMT)/SUM(SUM(T.AMT))OVER (PARTITION BY 1),2) AS AMT_PERCENT,
+		       ROUND(100*COUNT(T.TRANSACTIONKEY)/SUM(COUNT(T.TRANSACTIONKEY))OVER (PARTITION BY 1),2) AS COUNT_PERCENT
+		FROM T47_TRANSACTION_UC T
+		WHERE EXISTS (SELECT 'X' FROM 
+			<isNotEmpty prepend="" property="cast_type">
+		<isEqual property="cast_type" compareValue="1">
+						T07_CASE_TRANSACTION_DE C
+				  	</isEqual>
+					<isEqual property="cast_type" compareValue="2">
+						T07_CASE_TRANSACTION_KY C
+				  	</isEqual>
+		</isNotEmpty>
+		WHERE T.TRANSACTIONKEY = C.TRANSACTIONKEY 
+		      AND C.APPLICATION_NUM = #application_num# )
+ 		GROUP BY T.CHANNEL
+ 		
+	</statement>
+	
+	<statement id="getCaseTransGroupByOrgankey"
+		parameterClass="com.ist.aml.report.dto.T10_trans_analysis_case"
+		resultClass="com.ist.aml.report.dto.T10_trans_analysis_case">
+		SELECT T.ORGANKEY AS PATTERN,COUNT(T.TRANSACTIONKEY) AS T_COUNT, SUM(T.AMT) AS T_AMT,
+		       ROUND(100*SUM(T.AMT)/SUM(SUM(T.AMT))OVER (PARTITION BY 1),2) AS AMT_PERCENT,
+		       ROUND(100*COUNT(T.TRANSACTIONKEY)/SUM(COUNT(T.TRANSACTIONKEY))OVER (PARTITION BY 1),2) AS COUNT_PERCENT
+				FROM T47_TRANSACTION_UC T
+		WHERE EXISTS (SELECT 'X' FROM 
+			<isNotEmpty prepend="" property="cast_type">
+		<isEqual property="cast_type" compareValue="1">
+						T07_CASE_TRANSACTION_DE C
+				  	</isEqual>
+					<isEqual property="cast_type" compareValue="2">
+						T07_CASE_TRANSACTION_KY C
+				  	</isEqual>
+		</isNotEmpty>
+		WHERE T.TRANSACTIONKEY = C.TRANSACTIONKEY 
+		      AND C.APPLICATION_NUM = #application_num#
+		      )
+ 		GROUP BY T.ORGANKEY
+ 		
+	</statement>
+	
+	<statement id="getCaseTransGroupByTxgoarea"
+		parameterClass="com.ist.aml.report.dto.T10_trans_analysis_case"
+		resultClass="com.ist.aml.report.dto.T10_trans_analysis_case">
+		SELECT T.TX_GO_AREA AS PATTERN,COUNT(T.TRANSACTIONKEY) AS T_COUNT, SUM(T.AMT) AS T_AMT,
+		       ROUND(100*SUM(T.AMT)/SUM(SUM(T.AMT))OVER (PARTITION BY 1),2) AS AMT_PERCENT,
+		       ROUND(100*COUNT(T.TRANSACTIONKEY)/SUM(COUNT(T.TRANSACTIONKEY))OVER (PARTITION BY 1),2) AS COUNT_PERCENT
+				FROM T47_TRANSACTION_UC T
+		WHERE EXISTS (SELECT 'X' FROM 
+			<isNotEmpty prepend="" property="cast_type">
+		<isEqual property="cast_type" compareValue="1">
+						T07_CASE_TRANSACTION_DE C
+				  	</isEqual>
+					<isEqual property="cast_type" compareValue="2">
+						T07_CASE_TRANSACTION_KY C
+				  	</isEqual>
+		</isNotEmpty>
+		WHERE T.TRANSACTIONKEY = C.TRANSACTIONKEY 
+		      AND C.APPLICATION_NUM = #application_num#
+		      )
+ 		GROUP BY T.TX_GO_AREA
+ 		
+	</statement>
+	
+	<statement id="getCaseTransGroupBySettletype"
+		parameterClass="com.ist.aml.report.dto.T10_trans_analysis_case"
+		resultClass="com.ist.aml.report.dto.T10_trans_analysis_case">
+		SELECT T.SETTLE_TYPE_CD AS PATTERN,COUNT(T.TRANSACTIONKEY) AS T_COUNT, SUM(T.AMT) AS T_AMT,
+		       ROUND(100*SUM(T.AMT)/SUM(SUM(T.AMT))OVER (PARTITION BY 1),2) AS AMT_PERCENT,
+		       ROUND(100*COUNT(T.TRANSACTIONKEY)/SUM(COUNT(T.TRANSACTIONKEY))OVER (PARTITION BY 1),2) AS COUNT_PERCENT
+		FROM T47_TRANSACTION_UC T
+		WHERE EXISTS (SELECT 'X' FROM 
+			<isNotEmpty prepend="" property="cast_type">
+		<isEqual property="cast_type" compareValue="1">
+						T07_CASE_TRANSACTION_DE C
+				  	</isEqual>
+					<isEqual property="cast_type" compareValue="2">
+						T07_CASE_TRANSACTION_KY C
+				  	</isEqual>
+		</isNotEmpty>
+		WHERE T.TRANSACTIONKEY = C.TRANSACTIONKEY 
+		      AND C.APPLICATION_NUM = #application_num#
+		      )
+ 		GROUP BY T.SETTLE_TYPE_CD 
+ 		
+	</statement>
+	
+	<statement id="getCaseTransGroupByOppname"
+		parameterClass="com.ist.aml.report.dto.T10_trans_analysis_case"
+		resultClass="com.ist.aml.report.dto.T10_trans_analysis_case">
+		SELECT T.OPP_NAME AS PATTERN,COUNT(T.TRANSACTIONKEY) AS T_COUNT, SUM(T.AMT) AS T_AMT,
+		       ROUND(100*SUM(T.AMT)/SUM(SUM(T.AMT))OVER (PARTITION BY 1),2) AS AMT_PERCENT,
+		       ROUND(100*COUNT(T.TRANSACTIONKEY)/SUM(COUNT(T.TRANSACTIONKEY))OVER (PARTITION BY 1),2) AS COUNT_PERCENT
+		FROM T47_TRANSACTION_UC T
+		WHERE EXISTS (SELECT 'X' FROM 
+			<isNotEmpty prepend="" property="cast_type">
+		<isEqual property="cast_type" compareValue="1">
+						T07_CASE_TRANSACTION_DE C
+				  	</isEqual>
+					<isEqual property="cast_type" compareValue="2">
+						T07_CASE_TRANSACTION_KY C
+				  	</isEqual>
+		</isNotEmpty>
+		WHERE T.TRANSACTIONKEY = C.TRANSACTIONKEY 
+		      AND C.APPLICATION_NUM = #application_num#
+		      )
+ 		GROUP BY T.OPP_NAME
+ 		
+	</statement>
+	
+	<statement id="getCaseTransGroupByOppnameCount" parameterClass="com.ist.aml.report.dto.T10_trans_analysis_case"
+		resultClass="int">
+		SELECT count(PATTERN) FROM (
+		  SELECT T.OPP_NAME AS PATTERN,COUNT(T.TRANSACTIONKEY) AS T_COUNT, SUM(T.AMT) AS T_AMT,
+		       ROUND(100*SUM(T.AMT)/SUM(SUM(T.AMT))OVER (PARTITION BY 1),2) AS AMT_PERCENT,
+		       ROUND(100*COUNT(T.TRANSACTIONKEY)/SUM(COUNT(T.TRANSACTIONKEY))OVER (PARTITION BY 1),2) AS COUNT_PERCENT
+		FROM T47_TRANSACTION_UC T
+		WHERE EXISTS (SELECT 'X' FROM 
+			<isNotEmpty prepend="" property="cast_type">
+		<isEqual property="cast_type" compareValue="1">
+						T07_CASE_TRANSACTION_DE C
+				  	</isEqual>
+					<isEqual property="cast_type" compareValue="2">
+						T07_CASE_TRANSACTION_KY C
+				  	</isEqual>
+		</isNotEmpty>
+		WHERE T.TRANSACTIONKEY = C.TRANSACTIONKEY 
+		      AND C.APPLICATION_NUM = #application_num#
+		      )
+ 		GROUP BY T.OPP_NAME
+ 		
+		) 
+		
+	</statement>	
+	
+</sqlMap> 

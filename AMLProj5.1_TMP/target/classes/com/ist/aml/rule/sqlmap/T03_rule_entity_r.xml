@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T03_rule_entity_r">
+	<statement id="getT03_rule_entity_rList"
+		parameterClass="com.ist.aml.rule.dto.T03_rule_entity_r"
+		resultClass="com.ist.aml.rule.dto.T03_rule_entity_r">
+		select rtettypekey,tplakey from t03_rule_entity_r
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="rtettypekey">
+				rtettypekey = #rtettypekey#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="getT03_rule_entity_rListCount"
+		parameterClass="com.ist.aml.rule.dto.T03_rule_entity_r"
+		resultClass="int">
+		select count(*) from t03_rule_entity_r
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="rtettypekey">
+				rtettypekey = #rtettypekey#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="insertT03_rule_entity_r"
+		parameterClass="com.ist.aml.rule.dto.T03_rule_entity_r"
+		resultClass="int">
+		insert into T03_rule_entity_r( rtettypekey,tplakey ) values(
+		#rtettypekey#,#tplakey# )
+	</statement>
+
+	<statement id="copyT03_rule_entity_r" parameterClass="java.util.Map"
+		resultClass="int">
+		insert into T03_rule_entity_r( rtettypekey,tplakey ) select
+		rtettypekey,$newrulekey$ as tplakey from
+		T03_rule_entity_r r where r.tplakey=#oldrulekey#
+	</statement>
+
+
+
+	<statement id="modifyT03_rule_entity_r"
+		parameterClass="com.ist.aml.rule.dto.T03_rule_entity_r"
+		resultClass="int">
+		update T03_rule_entity_r set
+		rtettypekey=#rtettypekey#,tplakey=#tplakey# where
+		rtettypekey=#rtettypekey#
+	</statement>
+
+	<statement id="deleteT03_rule_entity_r_by_rtettypekey"
+		parameterClass="java.lang.String" resultClass="int">
+		delete from T03_rule_entity_r where rtettypekey=#value#
+	</statement>
+
+	<statement id="deleteT03_rule_entity_r_by_tplakey"
+		parameterClass="java.lang.String" resultClass="int">
+		delete from T03_rule_entity_r where TPLAKEY in ($value$)
+	</statement>
+
+	<statement id="getT03_rule_entity_rDisp_by_Rtettypekey"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.rule.dto.T03_rule_entity_r">
+		select * from T03_rule_entity_r where rtettypekey=#value#
+	</statement>
+
+	<statement id="getT03_rule_entity_rDisp_by_Rulekey"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.rule.dto.T03_rule_entity_r">
+		select * from T03_rule_entity_r where tplakey=#value#
+	</statement>
+
+	<statement id="getRtettypekey_by_tplakey"
+		parameterClass="java.lang.String" resultClass="java.lang.String">
+		select rtettypekey from T03_rule_entity_r where tplakey=#value#
+	</statement>
+
+</sqlMap>
+

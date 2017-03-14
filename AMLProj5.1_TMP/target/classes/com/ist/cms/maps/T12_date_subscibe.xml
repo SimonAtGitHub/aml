@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_date_subscibe"> 
+  <statement id="getT12_date_subscibeList" parameterClass="com.ist.cms.dto.T12_date_subscibe" resultClass="com.ist.cms.dto.T12_date_subscibe"> 
+  select subscibekey,begindt,enddt from t12_date_subscibe 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="subscibekey"> 
+    subscibekey = #subscibekey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT12_date_subscibeListCount" parameterClass="com.ist.cms.dto.T12_date_subscibe" resultClass="int"> 
+  select count(*) from t12_date_subscibe 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="subscibekey"> 
+    subscibekey = #subscibekey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_date_subscibe" parameterClass="com.ist.cms.dto.T12_date_subscibe" resultClass="int"> 
+  insert into T12_date_subscibe(
+  subscibekey,begindt,enddt
+  ) values(
+  #subscibekey#,#begindt#,#enddt#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_date_subscibe" parameterClass="com.ist.cms.dto.T12_date_subscibe" resultClass="int"> 
+  update T12_date_subscibe set 
+  subscibekey=#subscibekey#,begindt=#begindt#,enddt=#enddt#
+  where subscibekey=#subscibekey# 
+  </statement> 
+ 
+  <statement id="deleteT12_date_subscibe" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_date_subscibe where subscibekey=#value# 
+  </statement> 
+ 
+  <statement id="getT12_date_subscibeDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_date_subscibe"> 
+  select * from T12_date_subscibe where subscibekey=#value# 
+  </statement> 
+ 
+</sqlMap> 
+

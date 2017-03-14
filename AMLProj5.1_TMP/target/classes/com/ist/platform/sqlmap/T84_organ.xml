@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T84_organ">
+
+  <statement id="getT84_organList" parameterClass="com.ist.platform.dto.T84_organ" resultClass="com.ist.platform.dto.T84_organ">
+  SELECT ORGANKEY,PORGANKEY,TRADEKEY,ISOUTERBANK,ISSUBCORP,ISAREA,FLAG,DES,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER,FILLUSER,CHECKUSER,PRINCIPALUSER,ISCOLLECT FROM T84_ORGAN
+  <dynamic prepend="WHERE">
+    <isNotEmpty prepend="AND" property="organkey">
+    ORGANKEY = #organkey#
+    </isNotEmpty>
+   <isNotEmpty prepend="AND" property="flag">
+    FLAG = #flag#
+    </isNotEmpty>
+  </dynamic>
+  </statement>
+
+  <statement id="getT84_organListCount" parameterClass="com.ist.platform.dto.T84_organ" resultClass="int">
+  SELECT COUNT(*) FROM T84_ORGAN
+  <dynamic prepend="WHERE">
+    <isNotEmpty prepend="AND" property="organkey">
+    ORGANKEY = #organkey#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="flag">
+    FLAG = #flag#
+    </isNotEmpty>
+  </dynamic>
+  </statement>
+
+ <statement id="getT84_organCount" parameterClass="com.ist.platform.dto.T84_organ" resultClass="int">
+  SELECT COUNT(*) FROM T84_ORGAN
+  <dynamic prepend="WHERE">
+    <isNotEmpty prepend="AND" property="organkey">
+    ORGANKEY = #organkey#
+    </isNotEmpty>
+  </dynamic>
+  </statement>
+
+  <statement id="insertT84_organ" parameterClass="com.ist.platform.dto.T84_organ" resultClass="int">
+  INSERT INTO T84_ORGAN(
+  ORGANKEY,PORGANKEY,TRADEKEY,ISOUTERBANK,ISSUBCORP,ISAREA,FLAG,DES,CREATEDATE,CREATOR,FILLUSER,CHECKUSER,PRINCIPALUSER,ISCOLLECT)
+  VALUES(#organkey#,#porgankey#,#tradekey#,#isouterbank#,#issubcorp#,#isarea#,#flag#,#des#,#createdate#,#creator#,#filluser_username#,#checkuser_username#,#principaluser_username#,#iscollect#)
+  </statement>
+
+  <statement id="modifyT84_organ" parameterClass="com.ist.platform.dto.T84_organ" resultClass="int">
+  UPDATE T84_ORGAN SET
+  ORGANKEY=#organkey#,PORGANKEY=#porgankey#,TRADEKEY=#tradekey#,ISOUTERBANK=#isouterbank#,ISSUBCORP=#issubcorp#,ISAREA=#isarea#,FLAG=#flag#,DES=#des#,MODIFYDATE=#modifydate#,MODIFIER=#modifier#,FILLUSER=#filluser_username#,CHECKUSER=#checkuser_username#,PRINCIPALUSER=#principaluser_username#,ISCOLLECT=#iscollect#
+  WHERE ORGANKEY=#organkey#
+  </statement>
+
+  <statement id="deleteT84_organ" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T84_ORGAN WHERE ORGANKEY=#value#
+  </statement>
+
+  <statement id="getT84_organDisp" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T84_organ">
+  SELECT * FROM T84_ORGAN WHERE ORGANKEY=#value#
+  </statement>
+
+  <statement id="getT84_organListAll" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T84_organ">
+  SELECT * FROM T84_ORGAN WHERE FLAG ='1' AND '-1'!=#value#
+  </statement>
+  
+    <statement id="getT84_pbc_organListAll" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T84_organ">
+     SELECT * FROM T84_PBC_ORGAN WHERE FLAG ='1' AND '-1'!='0' ORDER BY ORGANKEY DESC
+  </statement>
+
+</sqlMap>
+

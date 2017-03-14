@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 基础管理平台模块配置 -->
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+  <data-sources />
+  <form-beans>
+    <form-bean name="t07_data_transActionForm" type="com.ist.aml.pbcreport.controller.T07_data_transActionForm"/>	  
+    <form-bean name="t07_nbs_ctifActionForm" type="com.ist.aml.pbcreport.controller.T07_nbs_ctifActionForm" />
+    <form-bean name="t07_nbh_ctifActionForm" type="com.ist.aml.pbcreport.controller.T07_nbh_ctifActionForm" />
+    <form-bean name="t07_nbs_atifActionForm" type="com.ist.aml.pbcreport.controller.T07_nbs_atifActionForm" />
+    <form-bean name="t07_nbs_rbifActionForm" type="com.ist.aml.pbcreport.controller.T07_nbs_rbifActionForm" />
+    <form-bean name="t07_nbs_rpdiActionForm" type="com.ist.aml.pbcreport.controller.T07_nbs_rpdiActionForm" />
+    <form-bean name="t07_nbh_tsdtActionForm" type="com.ist.aml.pbcreport.controller.T07_nbh_tsdtActionForm" />
+    <form-bean name="t07_ibh_tsdtActionForm" type="com.ist.aml.pbcreport.controller.T07_ibh_tsdtActionForm" />
+    <form-bean name="t07_cbh_tsdtActionForm" type="com.ist.aml.pbcreport.controller.T07_cbh_tsdtActionForm" />
+    <form-bean name="t07_nbh_rbifActionForm" type="com.ist.aml.pbcreport.controller.T07_nbh_rbifActionForm" />
+    <form-bean name="t07_cbh_rbifActionForm" type="com.ist.aml.pbcreport.controller.T07_cbh_rbifActionForm" />
+    <form-bean name="t07_ibh_rbifActionForm" type="com.ist.aml.pbcreport.controller.T07_ibh_rbifActionForm" />
+    <form-bean name="t07_dbh_rbifActionForm" type="com.ist.aml.pbcreport.controller.T07_dbh_rbifActionForm" />
+    <form-bean name="t07_reportActionForm"   type="com.ist.aml.pbcreport.controller.T07_reportActionForm" />
+    <form-bean name="t07_packetActionForm"   type="com.ist.aml.pbcreport.controller.T07_packetActionForm" />
+    <form-bean name="t07_receiptActionForm"  type="com.ist.aml.pbcreport.controller.T07_receiptActionForm" />
+    
+  </form-beans>
+  <global-exceptions />
+  <global-forwards />
+  <action-mappings>
+ <action path="/validate/getT07_data_trans_listAll"
+			parameter="getT07_data_trans_listAll" name="t07_data_transActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_data_transAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/validate/T07_data_trans_listAll.jsp" />
+		</action>
+		<action path="/validate/getValidateTransDisp"
+			parameter="getValidateTransDisp" name="t07_data_transActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_data_transAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/validate/transInfoValidateAll.jsp" />
+				<forward name="failure"
+				path="/validate/getT07_data_trans_listAll.do" />
+		</action>
+		<action path="/validate/modifyTransDo"
+			parameter="modifyValidatedTransDo" name="t07_data_transActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_data_transAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/validate/getValidateTransDisp.do" />
+		   <forward name="failure"
+				path="/validate/getT07_data_trans_listAll.do" />
+		</action>
+		
+			<action path="/validate/t07_nbs_ctif_validate_list"
+
+			parameter="getT07_nbs_ctif_validate_list"
+
+			name="t07_nbs_ctifActionForm"
+
+			type="com.ist.aml.pbcreport.controller.T07_nbs_ctifAction"
+
+			validate="false" scope="request">
+
+			<forward name="success"
+
+				path="/validate/t07_nbs_ctif_validatelist.jsp" />
+
+		</action>
+		
+		<action path="/validate/t07_nbh_ctif_validate_list"
+
+			parameter="getT07_nbh_ctif_validate_list"
+
+			name="t07_nbh_ctifActionForm"
+
+			type="com.ist.aml.pbcreport.controller.T07_nbh_ctifAction"
+
+			validate="false" scope="request">
+
+			<forward name="success"
+
+				path="/validate/t07_nbh_ctif_validatelist.jsp" />
+
+		</action>
+		<action path="/validate/getValidateCustDisp"
+			parameter="getValidateCustDisp" name="t07_nbs_ctifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbs_ctifAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/validate/custInfoValidate.jsp" />
+		</action>
+		<action path="/validate/modifyValidatedCustDo"
+			parameter="modifyValidatedCustDo" name="t07_nbs_ctifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbs_ctifAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/validate/t07_nbh_ctif_validate_list.do" />
+		</action>
+
+		<action path="/validate/t07_nbs_atif_validate_list"
+
+			parameter="getT07_nbs_atif_validate_list"
+
+			name="t07_nbs_atifActionForm"
+
+			type="com.ist.aml.pbcreport.controller.T07_nbs_atifAction"
+
+			validate="false" scope="request">
+
+			<forward name="success"
+
+				path="/validate/t07_nbs_atif_validatelist.jsp" />
+
+		</action>
+		<action path="/validate/getValidateAcctDisp"
+			parameter="getT07_nbs_atifDisp" name="t07_nbs_atifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbs_atifAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/validate/acctInfoValidate.jsp" />
+		</action>
+		<action path="/validate/modifyValidatedAcctDo"
+			parameter="modifyT07_nbs_atifDo" name="t07_nbs_atifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbs_atifAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/validate/t07_nbs_atif_validate_list.do" />
+		</action>
+		<action path="/report/nbs_base_info1"
+			parameter="getT07_nbs_baseList" name="t07_nbs_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbs_rbifAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report/nbs_base_info1.jsp" />
+		</action>
+		<action path="/validate/modifyNbs_msg"
+			parameter="modifyNbs_msg" name="t07_nbs_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbs_rbifAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/validate/t07_eidt_case_reason_add1.jsp" />
+		</action>
+		<action path="/validate/modifyNbs_msgDO"
+			parameter="modifyNbs_msgDO" name="t07_nbs_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbs_rbifAction"
+			validate="false" scope="request">
+			<forward name="success" path="/validate/modifyNbs_msg.do" />
+		</action>
+		<action path="/report/nbs_ctif_list"
+			parameter="getT07_nbs_ctifList" name="t07_nbs_ctifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbs_ctifAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report/nbs_ctif_list.jsp" />
+			<forward name="failure" path="/report/nbs_base_info.do" />
+		</action>
+		<action path="/report/nbs_base_infoAll"
+			parameter="getT07_nbs_baseListAll" name="t07_nbs_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbs_rbifAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report/nbs_base_infoAll.jsp" />
+		</action>
+		<action path="/report/nbs_rpdi_detail"
+			parameter="getT07_nbs_rpdiList" name="t07_nbs_rpdiActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbs_rpdiAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report/nbs_rpdi_detail.jsp" />
+			<forward name="failure" path="/report/nbs_base_info.do" />
+		</action>
+		<action path="/validate/nbh_base_info"
+			parameter="getNbh_baseInfo" name="t07_nbh_ctifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbh_ctifAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/validate/nbh_base_info.jsp" />
+		</action>
+		<action path="/report/nbh_tsdt_detail"
+			parameter="getT07_nbh_tsdt_detailList" name="t07_nbh_tsdtActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbh_tsdtAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report/nbh_tsdt_detail.jsp" />
+		</action>
+		
+		<action path="/report/T07_ibh_tsdt_list"
+			parameter="getT07_ibh_tsdtList" name="t07_ibh_tsdtActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_report08Action"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/report/T07_ibh_tsdt_list.jsp" />
+		</action>
+		<action path="/report/ibh_tsdt_detaillist"
+			parameter="getT08_ibh_detailtsdtList" name="t07_ibh_tsdtActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_report08Action"
+			validate="false" scope="request">
+			<forward name="success" path="/report/ibh_tsdt_detail.jsp" />
+		</action>
+		
+		<action path="/report/cbh_tsdt_list"
+			parameter="getT07_cbh_tsdtList" name="t07_cbh_tsdtActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_cbh_tsdtAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report/cbh_tsdt_list.jsp" />
+		</action>
+		<action path="/report/cbh_tsdt_detail"
+			parameter="getT07_cbh_tsdtdetailList" name="t07_cbh_tsdtActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_cbh_tsdtAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report/cbh_tsdt_detail.jsp" />
+			<forward name="failure" path="/report/cbh_tsdt_list.do" />
+		</action>
+		
+		<action path="/validate/getValidateTransDisp1"
+			parameter="getValidateTransDisp" name="t07_nbs_rpdiActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbs_rpdiAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/validate/transInfoValidate.jsp" />
+		</action>
+		<action path="/validate/modifyValidatedTransDo"
+			parameter="modifyValidatedTransDo" name="t07_nbs_rpdiActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbs_rpdiAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/validate/getValidateTransDisp.do" />
+		</action>
+		<action path="/report/dbh_dtdt_list"
+			parameter="getT07Case_dbh_dtdtList" name="t07_nbh_tsdtActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_report08Action"
+			validate="false" scope="request">
+			<forward name="success" path="/report/case_dbh_dtdt_list.jsp" />
+		</action>
+		<action path="/report/normal_huge_list"
+			parameter="getT07_nbh_rbifList" name="t07_nbh_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbh_rbifAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report/normal_huge_list.jsp" />
+		</action>
+		<action path="/report/return_normal_huge_t07_report"
+			parameter="returnT07_reportToCase_applicationDo" name="t07_nbs_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_reportAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report/normal_huge_list.do" />
+		</action>
+		<action path="/report/return_normal_spc_t07_report"
+			parameter="returnT07_reportToCase_applicationDo" name="t07_nbs_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_reportAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report/normal_spc_list.do" />
+		</action>
+			<action path="/report/preview" parameter="createPreviewXML"
+			name="t07_reportActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_reportAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report/preview.jsp" />
+		</action>
+		<action path="/report/normal_spc_list"
+			parameter="getT07_nbs_rbifList" name="t07_nbs_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbs_rbifAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report/normal_spc_list.jsp" />
+		</action>
+		<action path="/report/make_normal_hugePacketDo"
+			parameter="allMakePacketDo" name="t07_nbs_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbs_rbifAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report/normal_huge_list.do" />
+		</action>
+		<action path="/report/make_normal_spcPacketDo"
+			parameter="allMakePacketDo" name="t07_nbs_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbs_rbifAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report/normal_spc_list.do" />
+		</action>
+		<action path="/report/make_resend_hugePacketDo"
+			parameter="allMakePacketDo" name="t07_nbs_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbs_rbifAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report/resend_huge_list.do" />
+		</action>
+		<action path="/report/make_resend_spcPacketDo"
+			parameter="allMakePacketDo" name="t07_nbs_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbs_rbifAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report/resend_spc_list.do" />
+		</action>
+		
+		<action path="/report/createPacket" parameter="createT07_packet"
+			name="t07_reportActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_reportAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/report/createPacket_result.jsp" />
+		</action>
+		<action path="/report/createPacket1"
+			parameter="createT07_packet" name="t07_nbh_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_reportAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/report/createPacket_result.jsp" />
+		</action>
+		<action path="/report/createPacket4"
+			parameter="createT07_packet" name="t07_nbs_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_reportAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/report/createPacket_result.jsp" />
+		</action>
+		<action path="/report/resend_huge_list"
+			parameter="getT07_nbh_rbifRList" name="t07_nbh_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbh_rbifAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/report/resend_huge_list.jsp" />
+		</action>
+			<action path="/report/resend_spc_list"
+			parameter="getT07_nbs_rbifRList" name="t07_nbs_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbs_rbifAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report/resend_spc_list.jsp" />
+		</action>
+		
+			<action path="/report/revise_huge_list"
+			name="t07_ibh_rbifActionForm" parameter="getT07_ibh_reviseRbifList"
+			type="com.ist.aml.pbcreport.controller.T07_nbh_rbifAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/report/revise_huge_list.jsp" />
+		</action>
+		<action path="/report/correct_huge_list"
+			parameter="getT07_cbh_rbifList" name="t07_cbh_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbh_rbifAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/report/correct_huge_list.jsp" />
+		</action>
+		
+			<action path="/report/delete_huge_list"
+			parameter="getT07_dbh_rbifList" name="t07_dbh_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbh_rbifAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report/delete_huge_list.jsp" />
+		</action>
+		
+		<action path="/report/revise_spc_list"
+			parameter="getT07_nbs_reviseRbifList" name="t07_nbs_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbs_rbifAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report/revise_spc_list.jsp" />
+		</action>
+		<action path="/report/cbh_spc_list"
+			parameter="getT07_nbs_reviseRbifList" name="t07_nbs_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbs_rbifAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report/cbh_spc_list.jsp" />
+		</action>
+		<action path="/report/createSPacket" parameter="createST07_packet"
+			name="t07_reportActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_reportAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/report/createPacket_result.jsp" />
+		</action>
+		<action path="/report/createSPacket1"
+			parameter="createST07_packet" name="t07_nbh_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_reportAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/report/createPacket_result.jsp" />
+		</action>
+		<action path="/report/createSPacket4"
+			parameter="createST07_packet" name="t07_nbs_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_reportAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/report/createPacket_result.jsp" />
+		</action>
+		<action path="/report/createIbhPacket"
+			parameter="createST07_packet" name="t07_ibh_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_reportAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/report/createPacket_result.jsp" />
+		</action>
+		<action path="/report/createPacket2"
+			parameter="createT07_packet" name="t07_cbh_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_reportAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/report/createPacket_result.jsp" />
+		</action>
+		<action path="/report/createPacket3"
+			parameter="createT07_packet" name="t07_dbh_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_reportAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/report/createPacket_result.jsp" />
+		</action>
+		<action path="/reporttrans/datapak_today"
+			parameter="getT07_packetList2" name="t07_packetActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_report08Action"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/reporttrans/datapak_today.jsp" />
+		</action>
+		<action path="/reporttrans/recreate_report"
+			parameter="deletePacket_createreportDo" name="t07_packetActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_report08Action"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/reporttrans/datapak_today.do" />
+		</action>
+		
+		<action path="/t07_receipt/t07_receipt_list"
+			parameter="getT07_receiptList" name="t07_receiptActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_receiptAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/receipt/t07_receipt_list.jsp" />
+		</action>
+		<action path="/t07_receipt/t07_receipt_add"
+			parameter="addT07_receipt" name="t07_receiptActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_receiptAction"
+			validate="false" scope="request">
+			<forward name="success" path="/receipt/receip_add.jsp" />
+			<forward name="failure"
+				path="/t07_receipt/t07_receipt_list.do" />
+		</action>
+		<action path="/t07_receipt/t07_receipt_add_do" 
+			parameter="addT07_receiptDo" name="t07_receiptActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_receiptAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/t07_receipt/t07_receipt_add.do" />
+			<forward name="failure"
+				path="/t07_receipt/t07_receipt_add.do" />
+		</action>
+		<action path="/t07_receipt/t07_receipt_disp"
+			parameter="getT07_receiptDisp" name="t07_receiptActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_receiptAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/receipt/t07_receiptDisp.jsp" />
+			<forward name="failure"
+				path="/t07_receipt/t07_receipt_list.do" />
+		</action>
+
+		<action path="/report/normal_spc_exportlist"
+			parameter="getT07_nbs_rbif_exportList" name="t07_nbs_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbs_rbifAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report/normal_spc_exportlist.jsp" />
+		</action>
+		<action path="/report/nbs_base_info"
+			parameter="getT07_nbs_baseList" name="t07_nbs_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbs_rbifAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report/nbs_base_info.jsp" />
+		</action>
+		<action path="/report/export_nbs_reportAll"
+			parameter="export_nbs_reportAll" name="t07_nbs_rbifActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbs_rbifAction"
+			validate="false" scope="request">
+            <forward name="success" path="/report/normal_spc_exportlist.do" />
+        </action>
+        
+        <action path="/report/updateT07_packetStatus" parameter="updateT07_packetStatus"
+			name="t07_reportActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_reportAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/report/createPacket_result.jsp" />
+		</action>
+  </action-mappings>
+  <message-resources parameter="ApplicationResources_zh_CN" />
+</struts-config>

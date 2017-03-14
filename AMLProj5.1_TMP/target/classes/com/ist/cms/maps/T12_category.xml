@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_category"> 
+  <statement id="getT12_categoryList" parameterClass="com.ist.cms.dto.T12_category" resultClass="com.ist.cms.dto.T12_category"> 
+  select categorytype,categorytypename,isquote,"LEVEL",flag,dispseq,"DESC",creator,createdate,modifier,modifydate from t12_category 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="categorytype"> 
+    categorytype = #categorytype# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="categorytypename"> 
+    categorytypename like '%'||#categorytypename#||'%' 
+    </isNotEmpty> 
+   <isNotEmpty prepend="and" property="flag"> 
+    flag = #flag# 
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT12_categoryListCount" parameterClass="com.ist.cms.dto.T12_category" resultClass="int"> 
+  select count(*) from t12_category 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="categorytype"> 
+    categorytype = #categorytype# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="categorytypename"> 
+    categorytypename like '%'||#categorytypename#||'%' 
+    </isNotEmpty> 
+   <isNotEmpty prepend="and" property="flag"> 
+    flag = #flag# 
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_category" parameterClass="com.ist.cms.dto.T12_category" resultClass="int"> 
+  insert into T12_category(
+  categorytype,categorytypename,"LEVEL",flag,dispseq,"DESC",creator,createdate,modifier,modifydate,isquote,quotetype
+  ) values(
+  #categorytype#,#categorytypename#,#level#,#flag#,#dispseq#,#desc#,#creator#,#createdate#,#modifier#,#modifydate#,#isquote#,#quotetype#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_category" parameterClass="com.ist.cms.dto.T12_category" resultClass="int"> 
+  update T12_category set 
+  categorytype=#categorytype#,categorytypename=#categorytypename#,"LEVEL"=#level#,flag=#flag#,dispseq=#dispseq#,"DESC"=#desc#,modifier=#modifier#,modifydate=#modifydate#
+  ,isquote=#isquote#,quotetype=#quotetype#  where categorytype=#old_type# 
+  </statement> 
+ 
+  <statement id="deleteT12_category" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_category where categorytype=#value# 
+  </statement> 
+ 
+  <statement id="getT12_categoryDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_category"> 
+  select * from T12_category where categorytype=#value# 
+  </statement> 
+
+  <statement id="getT12_categoryTreeList" parameterClass="java.lang.String" resultClass="com.ist.common.menu.Menu">
+	 select * from ( select CATEGORYTYPE || '@'|| CATEGORYTYPE as id, '0' as parent_id,CATEGORYTYPENAME as name from T12_CATEGORY order by dispseq )A
+	 union all 
+	 select * from ( select  CATEGORYTYPE || '@'|| CATEGORYKEY as id, CATEGORYTYPE || '@'|| upcategorykey as parent_id, categoryname as name  from T12_CA_ARTICLE  
+	 order by dispseq) B
+  </statement>
+
+  <statement id="getT12_artcategoryTreeList" parameterClass="java.lang.String" resultClass="com.ist.common.menu.Menu">
+	select CATEGORYTYPE as id, '0' as parent_id,CATEGORYTYPENAME as name ,'0' as "LEVEL" from T12_CATEGORY where CATEGORYTYPE = (select artcategorytype from T12_PROGRAMA_POWER where programakey = #value# and isartcategory = '1' )
+	union all
+	select CATEGORYKEY as id ,UPCATEGORYKEY as parent_id,CATEGORYNAME as name ,"LEVEL" as "LEVEL"  from T12_CA_ARTICLE 
+	where CATEGORYTYPE =  (select artcategorytype from T12_PROGRAMA_POWER where programakey = #value# and isartcategory = '1' )
+  </statement>
+
+  <statement id="getT12_category_menuid" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_category"> 
+  select * from T12_CATEGORY t1 where categorytype = (select ARTCATEGORYTYPE from T12_PROGRAMA_POWER where PROGRAMAKEY = #value#)
+  </statement> 
+
+  <statement id="getT12_category_cachekey" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_category"> 
+  select t1.CATEGORYTYPE,t2.CACHEKEY from T12_CATEGORY t1,T12_CATEGORY_QUOTE t2 where t1.QUOTETYPE = t2.QUOTETYPE and categorytype = (select ARTCATEGORYTYPE from T12_PROGRAMA_POWER where PROGRAMAKEY = #value#)
+  </statement> 
+
+  <statement id="getT12_category_quotetype" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_category"> 
+   select quotetype,quotename from T12_CATEGORY_QUOTE 
+  </statement> 
+  
+  <statement id="getT12_categoryMap"  resultClass="com.ist.cms.dto.T12_category"> 
+   select categorytype,categorytypename from t12_category
+  </statement> 
+  
+ <statement id="getT12_category_quoteDisp" parameterClass="java.lang.String"  resultClass="com.ist.cms.dto.T12_category"> 
+   select * from T12_CATEGORY_QUOTE where quotetype=#value#
+  </statement>
+   <statement id="getT12_categoryDispByT12_category" parameterClass="com.ist.cms.dto.T12_category" resultClass="com.ist.cms.dto.T12_category"> 
+  	select * from T12_category where  ( categorytype=#categorytype#  or  categorytypename = #categorytypename# )
+  </statement> 
+    <statement id="getT12_categoryDispByName" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_category"> 
+  	select * from T12_category where  categorytypename = #categorytypename# 
+  </statement>
+  
+</sqlMap> 
+

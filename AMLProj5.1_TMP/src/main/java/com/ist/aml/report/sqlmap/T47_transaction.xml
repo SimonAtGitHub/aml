@@ -1,0 +1,3194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T47_transaction">
+	<statement id="getT47_trade_transactionList_1b" parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT A.TRANSACTIONKEY,A.HOST_CUST_ID,A.TX_NO,A.ORGANKEY,A.TX_DT,A.ACCT_NUM,A.PARTY_ID,A.DEBIT_CREDIT,
+		A.AMT,A.CNY_AMT,A.CASH_TRANS_FLAG,A.VOUCHER_NO,A.PARTY_CHN_NAME,A.CURRENCY_CD FROM T47_TRANSACTION_UB A
+		<dynamic prepend="WHERE">
+		    <isNotEmpty prepend="AND" property="tx_no">
+				A.tx_no = #tx_no#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="host_cust_id">
+				A.HOST_CUST_ID = #host_cust_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="amt_start_search">
+			 <![CDATA[A.CNY_AMT >= #amt_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="amt_end_search">
+				<![CDATA[A.CNY_AMT <= #amt_end#]]>
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="tx_dt">
+				<![CDATA[A.TX_DT >= #tx_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_dtEnd">
+				<![CDATA[A.TX_DT <= #tx_dtEnd:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				A.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				A.ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="transactionkey">
+				A.TRANSACTIONKEY = #transactionkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="acct_num">
+				A.ACCT_NUM = #acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cash_trans_flag">
+				A.CASH_TRANS_FLAG = #cash_trans_flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="debit_credit">
+				A.DEBIT_CREDIT = #debit_credit#
+			</isNotEmpty>	
+			<isNotEmpty prepend="AND" property="validate_ind">
+				<isNotEmpty prepend="" property="alert_type_cd">
+					<isEqual prepend="" property="alert_type_cd"  compareValue="DE">
+						A.VALIDATE_IND = #validate_ind#
+					</isEqual>
+					<isEqual prepend="" property="alert_type_cd"  compareValue="KY">
+						A.VALIDATE_IND2 = #validate_ind#
+					</isEqual>
+				</isNotEmpty>
+				<isEmpty prepend="" property="alert_type_cd">
+					(A.VALIDATE_IND = #validate_ind# OR A.VALIDATE_IND2 = #validate_ind#)
+				</isEmpty>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="handle_status_cd">
+				A.HANDLE_STATUS_CD = #handle_status_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd_search">
+				A.PARTY_CLASS_CD = #party_class_cd_search#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="curr_cd">
+				A.CURR_CD = #curr_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="re_ind">
+				A.RE_IND = #re_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="addtional">
+				A.ADDTIONAL = #addtional#
+			</isNotEmpty>
+			<isEmpty  property="orderby">
+			ORDER BY  A.TX_DT DESC,A.ADDTIONAL ASC,A.ORGANKEY ASC,A.TX_NO ASC
+			</isEmpty>		
+			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="0">
+					ORDER BY A.TX_DT
+				</isEqual>
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY A.PARTY_ID
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY A.ACCT_NUM
+				</isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY A.ORGANKEY
+				</isEqual>
+				<isEqual property="orderby" compareValue="4">
+					ORDER BY A.TELLER
+				</isEqual>
+				<isEqual property="orderby" compareValue="5">
+					ORDER BY A.TX_CD
+				</isEqual>
+				<isEqual property="orderby" compareValue="6">
+					ORDER BY A.AMT
+				</isEqual>
+				<isEqual property="orderby" compareValue="7">
+					ORDER BY A.ADDTIONAL
+				</isEqual>
+
+				<isNotEmpty property="order">
+					<isEqual property="order" compareValue="1">
+					   <isNotEqual property="orderby" compareValue="0">
+					     ,A.TX_DT DESC,A.TX_NO ASC
+					   </isNotEqual>
+					</isEqual>
+					<isEqual property="order" compareValue="2">
+					       DESC
+					        <isNotEqual property="orderby" compareValue="0">
+					      ,A.TX_DT DESC,A.TX_NO ASC
+					        </isNotEqual>
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>			
+		</dynamic>
+	</statement>
+	<statement id="getT47_trade_transactionListCount_1b"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="int">
+		SELECT count(*) FROM
+		T47_TRANSACTION_UB A
+		<dynamic prepend="WHERE">
+		    <isNotEmpty prepend="AND" property="tx_no">
+				A.tx_no = #tx_no#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="host_cust_id">
+				A.HOST_CUST_ID = #host_cust_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="amt_start_search">
+			 <![CDATA[A.CNY_AMT >= #amt_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="amt_end_search">
+				<![CDATA[A.CNY_AMT <= #amt_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_dt">
+				<![CDATA[A.TX_DT >= #tx_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_dtEnd">
+				<![CDATA[A.TX_DT <= #tx_dtEnd:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				A.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				A.ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd_search">
+				A.PARTY_CLASS_CD = #party_class_cd_search#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="curr_cd">
+				A.CURR_CD = #curr_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="transactionkey">
+				A.TRANSACTIONKEY = #transactionkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="acct_num">
+				A.ACCT_NUM = #acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cash_trans_flag">
+				A.CASH_TRANS_FLAG = #cash_trans_flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="debit_credit">
+				A.DEBIT_CREDIT = #debit_credit#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				<isNotEmpty prepend="" property="alert_type_cd">
+					<isEqual prepend="" property="alert_type_cd"  compareValue="DE">
+						A.VALIDATE_IND = #validate_ind#
+					</isEqual>
+					<isEqual prepend="" property="alert_type_cd"  compareValue="KY">
+						A.VALIDATE_IND2 = #validate_ind#
+					</isEqual>
+				</isNotEmpty>
+				<isEmpty prepend="" property="alert_type_cd">
+					(A.VALIDATE_IND = #validate_ind# OR A.VALIDATE_IND2 = #validate_ind#)
+				</isEmpty>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="handle_status_cd">
+				A.HANDLE_STATUS_CD = #handle_status_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="re_ind">
+				A.RE_IND = #re_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="addtional">
+				A.ADDTIONAL = #addtional#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="getT47_transaction_ubDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT
+		A.TX_GO_COUNTRY,A.TX_GO_AREA,A.HOST_CUST_ID,A.CASH_IND,A.CURR_CD,A.TX_OCCUR_COUNTRY
+		,A.TX_OCCUR_AREA,A.OPP_COUNTRY,A.OPP_AREA,A.OPP_ORGANNAME,A.AGENT_NAME,A.AGENT_COUNTRY,A.ORG_TRANS_RELA,
+		A.AGENT_CARD_TYPE,A.AGENT_CARD_NO,
+		A.TRANSACTIONKEY,A.CB_PK,A.TX_NO,A.ORGANKEY,A.TX_DT,A.DT_TIME,A.ACCT_NUM,A.PARTY_ID,
+		A.PARTY_CLASS_CD,A.TX_CD,A.CB_TX_CD,A.BUS_TYPE_CD,A.TX_TYPE_CD,A.DEBIT_CREDIT,A.RECEIVE_PAY_CD,
+		A.SUBJECTNO,A.CURRENCY_CD,A.AMT,A.CNY_AMT,A.USD_AMT,A.CASH_TRANS_FLAG,A.REMIT_TYPE_CD,A.DES,
+		A.OVERAREA_IND,A.SETTLE_TYPE_CD,A.USE_DES,A.OPP_SYS_ID,A.OPP_AREA,A.OPP_ORGAN_TYPE,A.OPP_ORGANKEY,A.OPP_PBC_PARTY_CLASS_CD,
+		A.OPP_PARTY_ID,A.OPP_NAME,A.OPP_ACCT_NUM,A.OPP_TX_DT,A.OPP_ACCT_TYPE_CD,A.OPP_CARD_TYPE,A.OPP_CARD_NO,
+		A.OPP_PARTY_CLASS_CD,A.BATCH_IND,A.TELLER,A.RE_IND,A.HANDLE_STATUS_CD,A.PARTY_CHN_NAME,A.ADDTIONAL, 
+		A.VOUCHER_NO,A.HOST_CUST_ID,A.OPP_OFF_SHORE_IND,A.CAL_IND,A.VALIDATE_IND2,A.VALIDATE_IND,A.TSCTKEY
+		FROM T47_TRANSACTION_UB A  WHERE A.TRANSACTIONKEY=#value#
+	</statement>
+	
+	<statement id="getT47_transactionDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT
+		A.TX_GO_COUNTRY,A.TX_GO_AREA,A.HOST_CUST_ID,A.CASH_IND,A.CURR_CD,A.TX_OCCUR_COUNTRY
+		,A.TX_OCCUR_AREA,A.OPP_COUNTRY,A.OPP_AREA,A.OPP_ORGANNAME,A.AGENT_NAME,A.AGENT_COUNTRY,A.ORG_TRANS_RELA,
+		A.AGENT_CARD_TYPE,A.AGENT_CARD_NO,
+		A.TRANSACTIONKEY,A.CB_PK,A.TX_NO,A.ORGANKEY,A.TX_DT,A.DT_TIME,A.ACCT_NUM,A.PARTY_ID,
+		A.PARTY_CLASS_CD,A.TX_CD,A.CB_TX_CD,A.BUS_TYPE_CD,A.TX_TYPE_CD,A.DEBIT_CREDIT,A.RECEIVE_PAY_CD,
+		A.SUBJECTNO,A.CURRENCY_CD,A.AMT,A.CNY_AMT,A.USD_AMT,A.CASH_TRANS_FLAG,A.REMIT_TYPE_CD,A.DES,
+		A.OVERAREA_IND,A.SETTLE_TYPE_CD,A.USE_DES,A.OPP_SYS_ID,A.OPP_AREA,A.OPP_ORGAN_TYPE,A.OPP_ORGANKEY,A.OPP_PBC_PARTY_CLASS_CD,
+		A.OPP_PARTY_ID,A.OPP_NAME,A.OPP_ACCT_NUM,A.OPP_TX_DT,A.OPP_ACCT_TYPE_CD,A.OPP_CARD_TYPE,A.OPP_CARD_NO,
+		A.OPP_PARTY_CLASS_CD,A.BATCH_IND,A.TELLER,A.RE_IND,A.HANDLE_STATUS_CD,A.PARTY_CHN_NAME,A.ADDTIONAL, 
+		A.VOUCHER_NO,A.HOST_CUST_ID,A.OPP_OFF_SHORE_IND,A.CAL_IND,A.VALIDATE_IND2,A.VALIDATE_IND,A.TSCTKEY
+		FROM T47_TRANSACTION A  WHERE A.TRANSACTIONKEY=#value#
+	</statement>
+	<statement id="cqcmodifyT47_transaction_ub"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="int">
+		UPDATE T47_TRANSACTION_UB SET RE_DT=#re_dt# ,ADDTIONAL=#addtional# 
+	
+		   <isNotEqual   prepend="," property="cal_ind" compareValue="#">
+		    	CAL_IND=#cal_ind#
+		  </isNotEqual>	
+		<isEqual property="opp_organkey_flag" compareValue="1">
+		  <isNotEqual   prepend="," property="opp_organkey" compareValue="#">
+		    OPP_ORGANKEY=#opp_organkey#
+		  </isNotEqual>
+		</isEqual>
+		<isEqual property="opp_organ_type_flag" compareValue="1">
+		<isNotEqual  prepend="," property="opp_organ_type"  compareValue="#">
+		  OPP_ORGAN_TYPE=#opp_organ_type#
+		</isNotEqual>
+		</isEqual>
+		<isEqual property="opp_organname_flag" compareValue="1">
+		   <isNotEqual  prepend="," property="opp_organname"  compareValue="#">
+		 OPP_ORGANNAME=#opp_organname#
+		</isNotEqual>
+			
+		</isEqual>
+		<isEqual property="opp_name_flag" compareValue="1">
+		     <isNotEqual  prepend="," property="opp_name"  compareValue="#">
+		OPP_NAME=#opp_name#
+		</isNotEqual>
+			
+		</isEqual>
+	
+		<isEqual property="opp_acct_type_cd_flag" compareValue="1">
+		    <isNotEqual  prepend="," property="opp_acct_type_cd"  compareValue="#">
+		    OPP_ACCT_TYPE_CD=#opp_acct_type_cd#
+		</isNotEqual>
+			
+		</isEqual>
+		<isEqual property="opp_acct_num_flag" compareValue="1">
+			<isNotEqual  prepend="," property="opp_acct_num"  compareValue="#">
+		    OPP_ACCT_NUM=#opp_acct_num#
+		</isNotEqual>
+		</isEqual>
+		<isEqual property="opp_Card_type_flag" compareValue="1">
+		   <isNotEqual  prepend="," property="opp_card_type"  compareValue="#">
+		    OPP_CARD_TYPE=#opp_card_type#
+		</isNotEqual>
+			
+		</isEqual>
+		<isEqual property="tx_dt_flag" compareValue="1">
+			,TX_DT=#tx_dt:DATE#
+		</isEqual>
+		<isEqual property="opp_Card_no_flag" compareValue="1">
+		    <isNotEqual  prepend="," property="opp_card_no"  compareValue="#">
+		    OPP_CARD_NO=#opp_card_no#
+		</isNotEqual>
+			
+		</isEqual>
+		<isEqual property="debit_credit_flag" compareValue="1">
+			   <isNotEqual  prepend="," property="debit_credit"  compareValue="#">
+		    DEBIT_CREDIT=#debit_credit#
+		</isNotEqual>
+			
+		</isEqual>
+	
+		<isEqual property="use_des_flag" compareValue="1">
+		    <isNotEqual  prepend="," property="use_des"  compareValue="#">
+		   USE_DES=#use_des#
+		</isNotEqual>		
+		</isEqual>
+
+		<isEqual property="agent_name_flag" compareValue="1">
+			<isNotEqual  prepend="," property="agent_name"  compareValue="#">
+		  AGENT_NAME=#agent_name#
+		</isNotEqual>	
+		</isEqual>
+		<isEqual property="agent_country_flag" compareValue="1">
+		
+			  <isNotEqual  prepend="," property="agent_country"  compareValue="#">
+		 AGENT_COUNTRY=#agent_country#
+		</isNotEqual>	
+		</isEqual>
+		<isEqual property="agent_card_type_flag" compareValue="1">
+		   <isNotEqual  prepend="," property="agent_card_type"  compareValue="#">
+		 AGENT_CARD_TYPE=#agent_card_type#
+		</isNotEqual>	
+		
+		</isEqual>
+		<isEqual property="agent_card_no_flag" compareValue="1">
+		   <isNotEqual  prepend="," property="agent_card_no"  compareValue="#">
+			AGENT_CARD_NO=#agent_card_no#
+		</isNotEqual>	
+			
+		</isEqual>
+		<isEqual property="settle_type_cd_flag" compareValue="1">
+			  <isNotEqual  prepend="," property="settle_type_cd"  compareValue="#">
+			SETTLE_TYPE_CD=#settle_type_cd#
+		</isNotEqual>	
+		</isEqual>
+		<isEqual property="tsctkey_flag" compareValue="1">
+		    <isNotEqual  prepend="," property="tsctkey"  compareValue="#">
+				TSCTKEY=#tsctkey#
+		</isNotEqual>
+			
+		</isEqual>
+		<isEqual property="currency_cd_flag" compareValue="1">
+		   <isNotEqual  prepend="," property="currency_cd"  compareValue="#">
+				currency_cd=#currency_cd#,
+				curr_cd=#curr_cd#
+		</isNotEqual>
+		</isEqual>
+	
+		   <isNotEqual  prepend="," property="tx_go_country"  compareValue="#">
+				TX_GO_COUNTRY=#tx_go_country#
+		</isNotEqual>
+		   
+		    <isNotEqual  prepend="," property="tx_go_area"  compareValue="#">
+				TX_GO_AREA=#tx_go_area#
+		</isNotEqual>
+		     <isNotEqual  prepend="," property="tx_occur_country"  compareValue="#">
+				TX_OCCUR_COUNTRY=#tx_occur_country#
+		</isNotEqual>
+		    <isNotEqual  prepend="," property="tx_occur_area"  compareValue="#">
+				TX_OCCUR_AREA=#tx_occur_area#
+		</isNotEqual>
+	         <isNotEqual  prepend="," property="opp_area"  compareValue="#">
+				OPP_AREA=#opp_area#
+		</isNotEqual>
+	         <isNotEqual  prepend="," property="opp_coutry"  compareValue="#">
+				OPP_COUNTRY=#opp_coutry#
+		</isNotEqual>
+		
+		<isEqual property="cash_ind_flag" compareValue="1">
+		         <isNotEqual  prepend="," property="cash_ind"  compareValue="#">
+				CASH_IND=#cash_ind#
+		</isNotEqual>
+			
+		</isEqual>
+		<isEqual property="opp_pbc_party_class_cd_flag"  compareValue="1">
+		    <isNotEqual  prepend="," property="opp_pbc_party_class_cd"  compareValue="#">
+				OPP_PBC_PARTY_CLASS_CD=#opp_pbc_party_class_cd#
+		</isNotEqual>
+		</isEqual>
+		<isEqual property="org_trans_rela_flag" compareValue="1">
+		   <isNotEqual  prepend="," property="org_trans_rela"  compareValue="#">
+				ORG_TRANS_RELA=#org_trans_rela#
+		</isNotEqual>
+			
+		</isEqual>
+
+		<isEqual property="opp_off_shore_ind_flag" compareValue="1">
+		    <isNotEqual  prepend="," property="opp_off_shore_ind"  compareValue="#">
+				OPP_OFF_SHORE_IND=#opp_off_shore_ind#
+		</isNotEqual>
+		</isEqual>
+		<isEqual property="tx_cd_flag" compareValue="1">
+		    <isNotEqual  prepend="," property="tx_cd"  compareValue="#">
+				TX_CD=#tx_cd#
+		</isNotEqual>
+			
+		</isEqual>
+		<isEqual property="tx_type_cd_flag" compareValue="1">
+		   <isNotEqual  prepend="," property="tx_type_cd"  compareValue="#">
+					TX_TYPE_CD=#tx_type_cd#
+		</isNotEqual>
+		</isEqual>
+		<isEqual property="overarea_ind_flag" compareValue="1">
+			<isNotEqual  prepend="," property="overarea_ind"  compareValue="#">
+					OVERAREA_IND=#overarea_ind#
+		</isNotEqual>
+		</isEqual>
+        <isNotEmpty   property="opp_sys_id">
+            <isNotEqual  prepend="," property="opp_sys_id"  compareValue="#">
+			OPP_SYS_ID=#opp_sys_id#
+			</isNotEqual>
+		   </isNotEmpty>
+		  <isNotEmpty   property="opp_party_id">
+		    <isNotEqual  prepend="," property="opp_party_id"  compareValue="#">
+			OPP_PARTY_ID=#opp_party_id#
+			</isNotEqual>
+		   </isNotEmpty>		
+		<isNotEqual  prepend="," property="opp_party_class_cd"  compareValue="#">
+				OPP_PARTY_CLASS_CD=#opp_party_class_cd#
+		</isNotEqual>
+
+			<isNotEqual  prepend="," property="host_cust_id"  compareValue="#">
+					HOST_CUST_ID=#host_cust_id#, PARTY_ID=#host_cust_id#
+		</isNotEqual>
+		<isNotEqual  prepend="," property="acct_num"  compareValue="#">
+				ACCT_NUM=#acct_num#
+		</isNotEqual>
+		<isNotEqual  prepend="," property="party_chn_name"  compareValue="#">
+				PARTY_CHN_NAME=#party_chn_name#
+		</isNotEqual>
+		
+			<isNotEmpty prepend="," property="party_class_cd">
+			PARTY_CLASS_CD=#party_class_cd#
+		</isNotEmpty>
+		
+		WHERE TRANSACTIONKEY=#transactionkey#
+	</statement>
+	<statement id="cqcmodifyT47_transaction_uc"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="int">
+		UPDATE T47_TRANSACTION_UC SET RE_DT=#re_dt# ,ADDTIONAL=#addtional# 
+	
+		   <isNotEqual   prepend="," property="cal_ind" compareValue="#">
+		    	CAL_IND=#cal_ind#
+		  </isNotEqual>	
+		<isEqual property="opp_organkey_flag" compareValue="1">
+		  <isNotEqual   prepend="," property="opp_organkey" compareValue="#">
+		    OPP_ORGANKEY=#opp_organkey#
+		  </isNotEqual>
+		</isEqual>
+		<isEqual property="opp_organ_type_flag" compareValue="1">
+		<isNotEqual  prepend="," property="opp_organ_type"  compareValue="#">
+		  OPP_ORGAN_TYPE=#opp_organ_type#
+		</isNotEqual>
+		</isEqual>
+		<isEqual property="opp_organname_flag" compareValue="1">
+		   <isNotEqual  prepend="," property="opp_organname"  compareValue="#">
+		 OPP_ORGANNAME=#opp_organname#
+		</isNotEqual>
+			
+		</isEqual>
+		<isEqual property="opp_name_flag" compareValue="1">
+		     <isNotEqual  prepend="," property="opp_name"  compareValue="#">
+		OPP_NAME=#opp_name#
+		</isNotEqual>
+			
+		</isEqual>
+	
+		<isEqual property="opp_acct_type_cd_flag" compareValue="1">
+		    <isNotEqual  prepend="," property="opp_acct_type_cd"  compareValue="#">
+		    OPP_ACCT_TYPE_CD=#opp_acct_type_cd#
+		</isNotEqual>
+			
+		</isEqual>
+		<isEqual property="opp_acct_num_flag" compareValue="1">
+			<isNotEqual  prepend="," property="opp_acct_num"  compareValue="#">
+		    OPP_ACCT_NUM=#opp_acct_num#
+		</isNotEqual>
+		</isEqual>
+		<isEqual property="opp_Card_type_flag" compareValue="1">
+		   <isNotEqual  prepend="," property="opp_card_type"  compareValue="#">
+		    OPP_CARD_TYPE=#opp_card_type#
+		</isNotEqual>
+			
+		</isEqual>
+		<isEqual property="tx_dt_flag" compareValue="1">
+			,TX_DT=#tx_dt:DATE#
+		</isEqual>
+		<isEqual property="opp_Card_no_flag" compareValue="1">
+		    <isNotEqual  prepend="," property="opp_card_no"  compareValue="#">
+		    OPP_CARD_NO=#opp_card_no#
+		</isNotEqual>
+			
+		</isEqual>
+		<isEqual property="debit_credit_flag" compareValue="1">
+			   <isNotEqual  prepend="," property="debit_credit"  compareValue="#">
+		    DEBIT_CREDIT=#debit_credit#
+		</isNotEqual>
+			
+		</isEqual>
+	
+		<isEqual property="use_des_flag" compareValue="1">
+		    <isNotEqual  prepend="," property="use_des"  compareValue="#">
+		   USE_DES=#use_des#
+		</isNotEqual>		
+		</isEqual>
+
+		<isEqual property="agent_name_flag" compareValue="1">
+			<isNotEqual  prepend="," property="agent_name"  compareValue="#">
+		  AGENT_NAME=#agent_name#
+		</isNotEqual>	
+		</isEqual>
+		<isEqual property="agent_country_flag" compareValue="1">
+		
+			  <isNotEqual  prepend="," property="agent_country"  compareValue="#">
+		 AGENT_COUNTRY=#agent_country#
+		</isNotEqual>	
+		</isEqual>
+		<isEqual property="agent_card_type_flag" compareValue="1">
+		   <isNotEqual  prepend="," property="agent_card_type"  compareValue="#">
+		 AGENT_CARD_TYPE=#agent_card_type#
+		</isNotEqual>	
+		
+		</isEqual>
+		<isEqual property="agent_card_no_flag" compareValue="1">
+		   <isNotEqual  prepend="," property="agent_card_no"  compareValue="#">
+			AGENT_CARD_NO=#agent_card_no#
+		</isNotEqual>	
+			
+		</isEqual>
+		<isEqual property="settle_type_cd_flag" compareValue="1">
+			  <isNotEqual  prepend="," property="settle_type_cd"  compareValue="#">
+			SETTLE_TYPE_CD=#settle_type_cd#
+		</isNotEqual>	
+		</isEqual>
+		<isEqual property="tsctkey_flag" compareValue="1">
+		    <isNotEqual  prepend="," property="tsctkey"  compareValue="#">
+				TSCTKEY=#tsctkey#
+		</isNotEqual>
+			
+		</isEqual>
+		<isEqual property="currency_cd_flag" compareValue="1">
+		   <isNotEqual  prepend="," property="curr_cd"  compareValue="#">
+				CURR_CD=#curr_cd#
+		</isNotEqual>
+		</isEqual>
+	
+		   <isNotEqual  prepend="," property="tx_go_country"  compareValue="#">
+				TX_GO_COUNTRY=#tx_go_country#
+		</isNotEqual>
+		   
+		    <isNotEqual  prepend="," property="tx_go_area"  compareValue="#">
+				TX_GO_AREA=#tx_go_area#
+		</isNotEqual>
+		     <isNotEqual  prepend="," property="tx_occur_country"  compareValue="#">
+				TX_OCCUR_COUNTRY=#tx_occur_country#
+		</isNotEqual>
+		    <isNotEqual  prepend="," property="tx_occur_area"  compareValue="#">
+				TX_OCCUR_AREA=#tx_occur_area#
+		</isNotEqual>
+	         <isNotEqual  prepend="," property="opp_area"  compareValue="#">
+				OPP_AREA=#opp_area#
+		</isNotEqual>
+	         <isNotEqual  prepend="," property="opp_coutry"  compareValue="#">
+				OPP_COUNTRY=#opp_coutry#
+		</isNotEqual>
+		
+		<isEqual property="cash_ind_flag" compareValue="1">
+		         <isNotEqual  prepend="," property="cash_ind"  compareValue="#">
+				CASH_IND=#cash_ind#
+		</isNotEqual>
+			
+		</isEqual>
+		<isEqual property="opp_pbc_party_class_cd_flag"  compareValue="1">
+		    <isNotEqual  prepend="," property="opp_pbc_party_class_cd"  compareValue="#">
+				OPP_PBC_PARTY_CLASS_CD=#opp_pbc_party_class_cd#
+		</isNotEqual>
+		</isEqual>
+		<isEqual property="org_trans_rela_flag" compareValue="1">
+		   <isNotEqual  prepend="," property="org_trans_rela"  compareValue="#">
+				ORG_TRANS_RELA=#org_trans_rela#
+		</isNotEqual>
+			
+		</isEqual>
+
+		<isEqual property="opp_off_shore_ind_flag" compareValue="1">
+		    <isNotEqual  prepend="," property="opp_off_shore_ind"  compareValue="#">
+				OPP_OFF_SHORE_IND=#opp_off_shore_ind#
+		</isNotEqual>
+		</isEqual>
+		<isEqual property="tx_cd_flag" compareValue="1">
+		    <isNotEqual  prepend="," property="tx_cd"  compareValue="#">
+				TX_CD=#tx_cd#
+		</isNotEqual>
+			
+		</isEqual>
+		<isEqual property="tx_type_cd_flag" compareValue="1">
+		   <isNotEqual  prepend="," property="tx_type_cd"  compareValue="#">
+					TX_TYPE_CD=#tx_type_cd#
+		</isNotEqual>
+		</isEqual>
+		<isEqual property="overarea_ind_flag" compareValue="1">
+			<isNotEqual  prepend="," property="overarea_ind"  compareValue="#">
+					OVERAREA_IND=#overarea_ind#
+		</isNotEqual>
+		</isEqual>
+        <isNotEmpty   property="opp_sys_id">
+            <isNotEqual  prepend="," property="opp_sys_id"  compareValue="#">
+			OPP_SYS_ID=#opp_sys_id#
+			</isNotEqual>
+		   </isNotEmpty>
+		  <isNotEmpty   property="opp_party_id">
+		    <isNotEqual  prepend="," property="opp_party_id"  compareValue="#">
+			OPP_PARTY_ID=#opp_party_id#
+			</isNotEqual>
+		   </isNotEmpty>		
+		<isNotEqual  prepend="," property="opp_party_class_cd"  compareValue="#">
+				OPP_PARTY_CLASS_CD=#opp_party_class_cd#
+		</isNotEqual>
+
+			<isNotEqual  prepend="," property="host_cust_id"  compareValue="#">
+					HOST_CUST_ID=#host_cust_id#, PARTY_ID=#host_cust_id#
+		</isNotEqual>
+		<isNotEqual  prepend="," property="acct_num"  compareValue="#">
+				ACCT_NUM=#acct_num#
+		</isNotEqual>
+		<isNotEqual  prepend="," property="party_chn_name"  compareValue="#">
+				PARTY_CHN_NAME=#party_chn_name#
+		</isNotEqual>
+		
+			<isNotEmpty prepend="," property="party_class_cd">
+			PARTY_CLASS_CD=#party_class_cd#
+		</isNotEmpty>
+		
+		WHERE TRANSACTIONKEY=#transactionkey#
+	</statement>
+	<statement id="cqcmodifyT47_transaction"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="int">
+		UPDATE T47_TRANSACTION SET RE_DT=#re_dt# ,ADDTIONAL=#addtional# 
+	
+		   <isNotEqual   prepend="," property="cal_ind" compareValue="#">
+		    	CAL_IND=#cal_ind#
+		  </isNotEqual>	
+		<isEqual property="opp_organkey_flag" compareValue="1">
+		  <isNotEqual   prepend="," property="opp_organkey" compareValue="#">
+		    OPP_ORGANKEY=#opp_organkey#
+		  </isNotEqual>
+		</isEqual>
+		<isEqual property="opp_organ_type_flag" compareValue="1">
+		<isNotEqual  prepend="," property="opp_organ_type"  compareValue="#">
+		  OPP_ORGAN_TYPE=#opp_organ_type#
+		</isNotEqual>
+		</isEqual>
+		<isEqual property="opp_organname_flag" compareValue="1">
+		   <isNotEqual  prepend="," property="opp_organname"  compareValue="#">
+		 OPP_ORGANNAME=#opp_organname#
+		</isNotEqual>
+			
+		</isEqual>
+		<isEqual property="opp_name_flag" compareValue="1">
+		     <isNotEqual  prepend="," property="opp_name"  compareValue="#">
+		OPP_NAME=#opp_name#
+		</isNotEqual>
+			
+		</isEqual>
+	
+		<isEqual property="opp_acct_type_cd_flag" compareValue="1">
+		    <isNotEqual  prepend="," property="opp_acct_type_cd"  compareValue="#">
+		    OPP_ACCT_TYPE_CD=#opp_acct_type_cd#
+		</isNotEqual>
+			
+		</isEqual>
+		<isEqual property="opp_acct_num_flag" compareValue="1">
+			<isNotEqual  prepend="," property="opp_acct_num"  compareValue="#">
+		    OPP_ACCT_NUM=#opp_acct_num#
+		</isNotEqual>
+		</isEqual>
+		<isEqual property="opp_Card_type_flag" compareValue="1">
+		   <isNotEqual  prepend="," property="opp_card_type"  compareValue="#">
+		    OPP_CARD_TYPE=#opp_card_type#
+		</isNotEqual>
+			
+		</isEqual>
+		<isEqual property="tx_dt_flag" compareValue="1">
+			,TX_DT=#tx_dt:DATE#
+		</isEqual>
+		<isEqual property="opp_Card_no_flag" compareValue="1">
+		    <isNotEqual  prepend="," property="opp_card_no"  compareValue="#">
+		    OPP_CARD_NO=#opp_card_no#
+		</isNotEqual>
+			
+		</isEqual>
+		<isEqual property="debit_credit_flag" compareValue="1">
+			   <isNotEqual  prepend="," property="debit_credit"  compareValue="#">
+		    DEBIT_CREDIT=#debit_credit#
+		</isNotEqual>
+			
+		</isEqual>
+	
+		<isEqual property="use_des_flag" compareValue="1">
+		    <isNotEqual  prepend="," property="use_des"  compareValue="#">
+		   USE_DES=#use_des#
+		</isNotEqual>		
+		</isEqual>
+
+		<isEqual property="agent_name_flag" compareValue="1">
+			<isNotEqual  prepend="," property="agent_name"  compareValue="#">
+		  AGENT_NAME=#agent_name#
+		</isNotEqual>	
+		</isEqual>
+		<isEqual property="agent_country_flag" compareValue="1">
+		
+			  <isNotEqual  prepend="," property="agent_country"  compareValue="#">
+		 AGENT_COUNTRY=#agent_country#
+		</isNotEqual>	
+		</isEqual>
+		<isEqual property="agent_card_type_flag" compareValue="1">
+		   <isNotEqual  prepend="," property="agent_card_type"  compareValue="#">
+		 AGENT_CARD_TYPE=#agent_card_type#
+		</isNotEqual>	
+		
+		</isEqual>
+		<isEqual property="agent_card_no_flag" compareValue="1">
+		   <isNotEqual  prepend="," property="agent_card_no"  compareValue="#">
+			AGENT_CARD_NO=#agent_card_no#
+		</isNotEqual>	
+			
+		</isEqual>
+		<isEqual property="settle_type_cd_flag" compareValue="1">
+			  <isNotEqual  prepend="," property="settle_type_cd"  compareValue="#">
+			SETTLE_TYPE_CD=#settle_type_cd#
+		</isNotEqual>	
+		</isEqual>
+		<isEqual property="tsctkey_flag" compareValue="1">
+		    <isNotEqual  prepend="," property="tsctkey"  compareValue="#">
+				TSCTKEY=#tsctkey#
+		</isNotEqual>
+			
+		</isEqual>
+		<isEqual property="currency_cd_flag" compareValue="1">
+		   <isNotEqual  prepend="," property="curr_cd"  compareValue="#">
+				CURR_CD=#curr_cd#
+		</isNotEqual>
+		</isEqual>
+	
+		   <isNotEqual  prepend="," property="tx_go_country"  compareValue="#">
+				TX_GO_COUNTRY=#tx_go_country#
+		</isNotEqual>
+		   
+		    <isNotEqual  prepend="," property="tx_go_area"  compareValue="#">
+				TX_GO_AREA=#tx_go_area#
+		</isNotEqual>
+		     <isNotEqual  prepend="," property="tx_occur_country"  compareValue="#">
+				TX_OCCUR_COUNTRY=#tx_occur_country#
+		</isNotEqual>
+		    <isNotEqual  prepend="," property="tx_occur_area"  compareValue="#">
+				TX_OCCUR_AREA=#tx_occur_area#
+		</isNotEqual>
+	         <isNotEqual  prepend="," property="opp_area"  compareValue="#">
+				OPP_AREA=#opp_area#
+		</isNotEqual>
+	         <isNotEqual  prepend="," property="opp_coutry"  compareValue="#">
+				OPP_COUNTRY=#opp_coutry#
+		</isNotEqual>
+		
+		<isEqual property="cash_ind_flag" compareValue="1">
+		         <isNotEqual  prepend="," property="cash_ind"  compareValue="#">
+				CASH_IND=#cash_ind#
+		</isNotEqual>
+			
+		</isEqual>
+		<isEqual property="opp_pbc_party_class_cd_flag"  compareValue="1">
+		    <isNotEqual  prepend="," property="opp_pbc_party_class_cd"  compareValue="#">
+				OPP_PBC_PARTY_CLASS_CD=#opp_pbc_party_class_cd#
+		</isNotEqual>
+		</isEqual>
+		<isEqual property="org_trans_rela_flag" compareValue="1">
+		   <isNotEqual  prepend="," property="org_trans_rela"  compareValue="#">
+				ORG_TRANS_RELA=#org_trans_rela#
+		</isNotEqual>
+			
+		</isEqual>
+
+		<isEqual property="opp_off_shore_ind_flag" compareValue="1">
+		    <isNotEqual  prepend="," property="opp_off_shore_ind"  compareValue="#">
+				OPP_OFF_SHORE_IND=#opp_off_shore_ind#
+		</isNotEqual>
+		</isEqual>
+		<isEqual property="tx_cd_flag" compareValue="1">
+		    <isNotEqual  prepend="," property="tx_cd"  compareValue="#">
+				TX_CD=#tx_cd#
+		</isNotEqual>
+			
+		</isEqual>
+		<isEqual property="tx_type_cd_flag" compareValue="1">
+		   <isNotEqual  prepend="," property="tx_type_cd"  compareValue="#">
+					TX_TYPE_CD=#tx_type_cd#
+		</isNotEqual>
+		</isEqual>
+		<isEqual property="overarea_ind_flag" compareValue="1">
+			<isNotEqual  prepend="," property="overarea_ind"  compareValue="#">
+					OVERAREA_IND=#overarea_ind#
+		</isNotEqual>
+		</isEqual>
+        <isNotEmpty   property="opp_sys_id">
+            <isNotEqual  prepend="," property="opp_sys_id"  compareValue="#">
+			OPP_SYS_ID=#opp_sys_id#
+			</isNotEqual>
+		   </isNotEmpty>
+		  <isNotEmpty   property="opp_party_id">
+		    <isNotEqual  prepend="," property="opp_party_id"  compareValue="#">
+			OPP_PARTY_ID=#opp_party_id#
+			</isNotEqual>
+		   </isNotEmpty>		
+		<isNotEqual  prepend="," property="opp_party_class_cd"  compareValue="#">
+				OPP_PARTY_CLASS_CD=#opp_party_class_cd#
+		</isNotEqual>
+
+			<isNotEqual  prepend="," property="host_cust_id"  compareValue="#">
+					HOST_CUST_ID=#host_cust_id#, PARTY_ID=#host_cust_id#
+		</isNotEqual>
+		<isNotEqual  prepend="," property="acct_num"  compareValue="#">
+				ACCT_NUM=#acct_num#
+		</isNotEqual>
+		<isNotEqual  prepend="," property="party_chn_name"  compareValue="#">
+				PARTY_CHN_NAME=#party_chn_name#
+		</isNotEqual>
+		
+			<isNotEmpty prepend="," property="party_class_cd">
+			PARTY_CLASS_CD=#party_class_cd#
+		</isNotEmpty>
+		
+		WHERE TRANSACTIONKEY=#transactionkey#
+	</statement>
+	<statement id="getT47_trade_transactionList_2b" parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT A.TRANSACTIONKEY,A.HOST_CUST_ID,A.TX_NO,A.ORGANKEY,A.TX_DT,A.ACCT_NUM,A.PARTY_ID,A.DEBIT_CREDIT,
+		A.AMT,A.CASH_TRANS_FLAG,A.VOUCHER_NO,A.PARTY_CHN_NAME,A.CURRENCY_CD,A.CB_TX_CD FROM T47_TRANSACTION_UC A
+		WHERE <!-- EXISTS (SELECT 'A' FROM T07_CASE_TRANSACTION T2 WHERE T2.STATUS_CD != '4' AND T2.TRANSACTIONKEY=A.TRANSACTIONKEY)  -->
+		A.HANDLE_STATUS_CD = '1'
+		<dynamic>
+		    <isNotEmpty prepend="AND" property="tx_no">
+				A.tx_no = #tx_no#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="host_cust_id">
+				A.HOST_CUST_ID = #host_cust_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="amt_start_search">
+			 <![CDATA[A.CNY_AMT >= #amt_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="amt_end_search">
+				<![CDATA[A.CNY_AMT <= #amt_end#]]>
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="tx_dt">
+				<![CDATA[A.TX_DT >= #tx_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_dtEnd">
+				<![CDATA[A.TX_DT <= #tx_dtEnd:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_today">
+				<![CDATA[A.TX_DT >= #tx_today:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				A.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				A.ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="transactionkey">
+				A.TRANSACTIONKEY = #transactionkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="acct_num">
+				A.ACCT_NUM = #acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cash_trans_flag">
+				A.CASH_TRANS_FLAG = #cash_trans_flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="debit_credit">
+				A.DEBIT_CREDIT = #debit_credit#
+			</isNotEmpty>	
+			<isNotEmpty prepend="AND" property="cb_tx_cd">
+				A.CB_TX_CD = #cb_tx_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="teller">
+				A.TELLER = #teller#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				<isNotEmpty prepend="" property="alert_type_cd">
+					<isEqual prepend="" property="alert_type_cd"  compareValue="DE">
+						A.VALIDATE_IND = #validate_ind#
+					</isEqual>
+					<isEqual prepend="" property="alert_type_cd"  compareValue="KY">
+						A.VALIDATE_IND2 = #validate_ind#
+						
+						<isNotEmpty prepend="AND" property="is_recordflag">				 
+						    <isEqual property="is_recordflag" compareValue="2">
+						             A.IS_RECORDFLAG = '1'
+						    </isEqual>
+						</isNotEmpty>
+					</isEqual>
+				</isNotEmpty>
+				<isEmpty prepend="" property="alert_type_cd">
+					(A.VALIDATE_IND = #validate_ind# OR A.VALIDATE_IND2 = #validate_ind# 
+					
+					<isNotEmpty prepend="AND" property="is_recordflag">				 
+						    <isEqual property="is_recordflag" compareValue="2">
+						             A.IS_RECORDFLAG = '1'
+						    </isEqual>
+						</isNotEmpty>
+					)
+				</isEmpty>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd_search">
+				A.PARTY_CLASS_CD = #party_class_cd_search#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="curr_cd">
+				A.CURR_CD = #curr_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="starttime">
+				<![CDATA[A.RECORD_ENDDATE >= #starttime:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="starttime2">
+				<![CDATA[A.RECORD_ENDDATE <= #starttime2:DATE#]]>
+			</isNotEmpty>
+		   
+		
+			<isNotEmpty prepend="AND" property="is_recordflag">
+				 <isEqual property="is_recordflag" compareValue="1">
+			             A.IS_RECORDFLAG = #is_recordflag#
+			    </isEqual>
+			</isNotEmpty>
+			<isEmpty  property="orderby">
+			ORDER BY  A.TX_DT DESC,A.TX_NO ASC
+			</isEmpty>		
+			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="0">
+					ORDER BY A.TX_DT
+				</isEqual>
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY A.PARTY_ID
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY A.ACCT_NUM
+				</isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY A.ORGANKEY
+				</isEqual>
+				<isEqual property="orderby" compareValue="4">
+					ORDER BY A.TELLER
+				</isEqual>
+				<isEqual property="orderby" compareValue="5">
+					ORDER BY A.TX_CD
+				</isEqual>
+				<isEqual property="orderby" compareValue="6">
+					ORDER BY A.AMT
+				</isEqual>
+				<isEqual property="orderby" compareValue="7">
+					ORDER BY A.ADDTIONAL
+				</isEqual>
+
+				<isNotEmpty property="order">
+					<isEqual property="order" compareValue="1">
+					   <isNotEqual property="orderby" compareValue="0">
+					     ,A.TX_DT DESC,A.TX_NO ASC
+					   </isNotEqual>
+					</isEqual>
+					<isEqual property="order" compareValue="2">
+					       DESC
+					        <isNotEqual property="orderby" compareValue="0">
+					      ,A.TX_DT DESC,A.TX_NO ASC
+					        </isNotEqual>
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>			
+		</dynamic>
+	</statement>
+	<statement id="getT47_trade_transactionListCount_2b"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="int">
+		SELECT count(*) FROM
+		T47_TRANSACTION_UC A
+		WHERE <!-- EXISTS (SELECT 1 FROM T07_CASE_TRANSACTION T2 WHERE T2.STATUS_CD != '4' AND T2.TRANSACTIONKEY=A.TRANSACTIONKEY) --> 
+		A.HANDLE_STATUS_CD = '1'
+		<dynamic>
+		    <isNotEmpty prepend="AND" property="tx_no">
+				A.tx_no = #tx_no#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="host_cust_id">
+				A.HOST_CUST_ID = #host_cust_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="amt_start_search">
+			 <![CDATA[A.CNY_AMT >= #amt_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="amt_end_search">
+				<![CDATA[A.CNY_AMT <= #amt_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_dt">
+				<![CDATA[A.TX_DT >= #tx_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_dtEnd">
+				<![CDATA[A.TX_DT <= #tx_dtEnd:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_today">
+				<![CDATA[A.TX_DT >= #tx_today:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				A.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				A.ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd_search">
+				A.PARTY_CLASS_CD = #party_class_cd_search#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="curr_cd">
+				A.CURR_CD = #curr_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="transactionkey">
+				A.TRANSACTIONKEY = #transactionkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="acct_num">
+				A.ACCT_NUM = #acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cash_trans_flag">
+				A.CASH_TRANS_FLAG = #cash_trans_flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="debit_credit">
+				A.DEBIT_CREDIT = #debit_credit#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cb_tx_cd">
+				A.CB_TX_CD = #cb_tx_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="teller">
+				A.TELLER = #teller#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				<isNotEmpty prepend="" property="alert_type_cd">
+					<isEqual prepend="" property="alert_type_cd"  compareValue="DE">
+						A.VALIDATE_IND = #validate_ind#
+					</isEqual>
+					<isEqual prepend="" property="alert_type_cd"  compareValue="KY">
+						A.VALIDATE_IND2 = #validate_ind#
+						
+						<isNotEmpty prepend="AND" property="is_recordflag">				 
+						    <isEqual property="is_recordflag" compareValue="2">
+						             A.IS_RECORDFLAG = '1'
+						    </isEqual>
+						</isNotEmpty>
+					</isEqual>
+				</isNotEmpty>
+				<isEmpty prepend="" property="alert_type_cd">
+					(A.VALIDATE_IND = #validate_ind# OR A.VALIDATE_IND2 = #validate_ind#
+					<isNotEmpty prepend="AND" property="is_recordflag">				 
+						    <isEqual property="is_recordflag" compareValue="2">
+						             A.IS_RECORDFLAG = '1'
+						    </isEqual>
+						</isNotEmpty>
+					)
+				</isEmpty>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="starttime">
+				<![CDATA[A.RECORD_ENDDATE >= #starttime:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="starttime2">
+				<![CDATA[A.RECORD_ENDDATE <= #starttime2:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="is_recordflag">
+				 <isEqual property="is_recordflag" compareValue="1">
+			             A.IS_RECORDFLAG = #is_recordflag#
+			    </isEqual>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="getT47_transaction_ucDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT
+		A.TX_GO_COUNTRY,A.TX_GO_AREA,A.HOST_CUST_ID,A.CASH_IND,A.CURR_CD,A.TX_OCCUR_COUNTRY
+		,A.TX_OCCUR_AREA,A.OPP_COUNTRY,A.OPP_AREA,A.OPP_ORGANNAME,A.AGENT_NAME,A.AGENT_COUNTRY,A.ORG_TRANS_RELA,
+		A.AGENT_CARD_TYPE,A.AGENT_CARD_NO,CHANNEL,
+		A.TRANSACTIONKEY,A.CB_PK,A.TX_NO,A.ORGANKEY,A.TX_DT,A.DT_TIME,A.ACCT_NUM,A.PARTY_ID,
+		A.PARTY_CLASS_CD,A.TX_CD,A.CB_TX_CD,A.BUS_TYPE_CD,A.TX_TYPE_CD,A.DEBIT_CREDIT,A.RECEIVE_PAY_CD,
+		A.SUBJECTNO,A.CURRENCY_CD,A.AMT,A.CNY_AMT,A.USD_AMT,A.CASH_TRANS_FLAG,A.REMIT_TYPE_CD,A.DES,
+		A.OVERAREA_IND,A.SETTLE_TYPE_CD,A.USE_DES,A.OPP_SYS_ID,A.OPP_AREA,A.OPP_ORGAN_TYPE,A.OPP_ORGANKEY,A.OPP_PBC_PARTY_CLASS_CD,
+		A.OPP_PARTY_ID,A.OPP_NAME,A.OPP_ACCT_NUM,A.OPP_TX_DT,A.OPP_ACCT_TYPE_CD,A.OPP_CARD_TYPE,A.OPP_CARD_NO,
+		A.OPP_PARTY_CLASS_CD,A.BATCH_IND,A.TELLER,A.RE_IND,A.HANDLE_STATUS_CD,A.PARTY_CHN_NAME,A.ADDTIONAL, 
+		A.VOUCHER_NO,A.HOST_CUST_ID,A.OPP_OFF_SHORE_IND,A.CAL_IND,A.VALIDATE_IND2,A.VALIDATE_IND,A.TSCTKEY
+		FROM T47_TRANSACTION_UC A  WHERE A.TRANSACTIONKEY=#value#
+	</statement>
+	<statement id="saveValidatedSET47_transaction"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="int">
+		UPDATE T47_TRANSACTION_UC SET DES=DES
+		<dynamic>
+		   <isNotEqual prepend="," property="agent_name" compareValue="#">
+		     AGENT_NAME=#agent_name#
+		   </isNotEqual>
+		      <isNotEqual prepend="," property="agent_country" compareValue="#">
+		    AGENT_COUNTRY=#agent_country#
+		   </isNotEqual>
+		   
+		     <isNotEqual prepend="," property="agent_card_type" compareValue="#">
+		  AGENT_CARD_TYPE=#agent_card_type#
+		   </isNotEqual>
+	          
+	       <isNotEqual prepend="," property="agent_card_no" compareValue="#">
+		 AGENT_CARD_NO=#agent_card_no#
+		   </isNotEqual>
+		   
+		        <isNotEqual prepend="," property="tsctkey" compareValue="#">
+			TSCTKEY=#tsctkey#
+		   </isNotEqual>
+	        
+		        <isNotEqual prepend="," property="tx_go_country" compareValue="#">
+			TX_GO_COUNTRY=#tx_go_country#
+		   </isNotEqual>
+		    <isNotEqual prepend="," property="tx_go_area" compareValue="#">
+				TX_GO_AREA=#tx_go_area#
+		   </isNotEqual>
+		     <isNotEqual prepend="," property="opp_country" compareValue="#">
+				OPP_COUNTRY=#opp_country#
+		   </isNotEqual>
+	          <isNotEqual prepend="," property="opp_area" compareValue="#">
+				OPP_AREA=#opp_area#
+		   </isNotEqual>
+		     <isNotEqual prepend="," property="acct_num" compareValue="#">
+				ACCT_NUM=#acct_num#
+		   </isNotEqual>
+		
+	<!--  	<isNotEmpty prepend="," property="cash_ind">
+				CASH_IND=#cash_ind#
+			</isNotEmpty>-->
+			  <isNotEqual prepend="," property="settle_type_cd" compareValue="#">
+				SETTLE_TYPE_CD=#settle_type_cd#
+		   </isNotEqual>
+		    <isNotEqual prepend="," property="tx_occur_country" compareValue="#">
+				TX_OCCUR_COUNTRY=#tx_occur_country#
+		   </isNotEqual>
+		   <isNotEqual prepend="," property="tx_occur_area" compareValue="#">
+				TX_OCCUR_AREA=#tx_occur_area#
+		   </isNotEqual>
+		   <isNotEqual prepend="," property="use_des" compareValue="#">
+					USE_DES=#use_des#
+		   </isNotEqual>
+		  <isNotEqual prepend="," property="opp_organname" compareValue="#">
+						OPP_ORGANNAME=#opp_organname#
+		   </isNotEqual>
+	        <isNotEqual prepend="," property="opp_organkey" compareValue="#">
+						OPP_ORGANKEY=#opp_organkey#
+		   </isNotEqual>
+	         <isNotEqual prepend="," property="opp_organ_type" compareValue="#">
+						OPP_ORGAN_TYPE=#opp_organ_type#
+		   </isNotEqual>
+	          <isNotEqual prepend="," property="opp_name" compareValue="#">
+						OPP_NAME=#opp_name#
+		   </isNotEqual>
+		    <isNotEqual prepend="," property="opp_acct_type_cd" compareValue="#">
+						OPP_ACCT_TYPE_CD=#opp_acct_type_cd#
+		   </isNotEqual>
+	
+	        <isNotEqual prepend="," property="opp_acct_num" compareValue="#">
+							OPP_ACCT_NUM=#opp_acct_num#
+		   </isNotEqual>
+		     <isNotEqual prepend="," property="opp_card_no" compareValue="#">
+							OPP_CARD_NO=#opp_card_no#
+		   </isNotEqual>
+	         <isNotEqual prepend="," property="opp_card_type" compareValue="#">
+								OPP_CARD_TYPE=#opp_card_type#
+		   </isNotEqual>
+		     <isNotEqual prepend="," property="org_trans_rela" compareValue="#">
+								ORG_TRANS_RELA=#org_trans_rela#
+		   </isNotEqual>
+		
+    
+	<!-- <isNotEmpty prepend="," property="receive_pay_cd">
+				RECEIVE_PAY_CD=#receive_pay_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="currency_cd">
+				CURRENCY_CD=#currency_cd#
+			</isNotEmpty> -->	
+			 <isNotEmpty prepend="," property="validate_ind">
+				VALIDATE_IND=#validate_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="validate_ind2">
+				VALIDATE_IND2=#validate_ind2#
+			</isNotEmpty>
+		</dynamic>
+		WHERE TRANSACTIONKEY=#transactionkey#
+	</statement>
+	
+	<statement id="saveValidatedT47_transaction_notnull"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="int">
+		UPDATE T47_TRANSACTION_UC SET 
+		<dynamic>
+
+			AGENT_NAME=#agent_name#
+
+			,AGENT_COUNTRY=#agent_country#
+
+			,AGENT_CARD_TYPE=#agent_card_type#
+
+			,AGENT_CARD_NO=#agent_card_no#
+	       <isNotEmpty prepend="," property="curr_cd">
+				CURR_CD=#curr_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="acct_num">
+				ACCT_NUM=#acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="cash_ind">
+				CASH_IND=#cash_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="settle_type_cd">
+				SETTLE_TYPE_CD=#settle_type_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="tsctkey">
+				TSCTKEY=#tsctkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="tx_occur_country">
+				TX_OCCUR_COUNTRY=#tx_occur_country#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="tx_occur_area">
+				TX_OCCUR_AREA=#tx_occur_area#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="tx_go_country">
+				TX_GO_COUNTRY=#tx_go_country#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="tx_go_area">
+				TX_GO_AREA=#tx_go_area#
+			</isNotEmpty>
+            <isNotEmpty prepend="," property="use_des">
+			USE_DES=#use_des#
+			</isNotEmpty>
+             <isNotEmpty prepend="," property="opp_country">
+			OPP_COUNTRY=#opp_country# 
+			</isNotEmpty>
+			  <isNotEmpty prepend="," property="opp_area">
+			OPP_AREA=#opp_area#
+			</isNotEmpty>
+			,OPP_ORGANNAME=#opp_organname#
+
+
+			,OPP_ORGANKEY=#opp_organkey#
+
+
+			,OPP_ORGAN_TYPE=#opp_organ_type#
+
+			,OPP_NAME=#opp_name#
+
+			,OPP_ACCT_TYPE_CD=#opp_acct_type_cd#
+
+			,OPP_ACCT_NUM=#opp_acct_num#
+
+			,OPP_CARD_NO=#opp_card_no#
+
+			,OPP_CARD_TYPE=#opp_card_type#
+         
+			<isNotEmpty prepend="," property="org_trans_rela">
+				  ORG_TRANS_RELA=#org_trans_rela#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="receive_pay_cd">
+				RECEIVE_PAY_CD=#receive_pay_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="currency_cd">
+				CURRENCY_CD=#currency_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="validate_ind">
+				VALIDATE_IND=#validate_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="validate_ind2">
+				VALIDATE_IND2=#validate_ind2#
+			</isNotEmpty>
+		</dynamic>
+		WHERE TRANSACTIONKEY=#transactionkey#
+	</statement>
+	
+	<statement id="getT47_casetransaction_ucvalidate1"
+		parameterClass="com.ist.aml.report.dto.CreditTask"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT A.VALIDATE_IND2,A.VALIDATE_IND FROM T47_TRANSACTION_UC A
+		<dynamic>
+			<isNotEmpty prepend="" property="cast_type">
+				<isEqual property="cast_type" compareValue="1">
+			       , T07_CASE_TRANSACTION_DE B   
+			    </isEqual>
+			    <isEqual property="cast_type" compareValue="2">
+			       , T07_CASE_TRANSACTION_KY B   
+			    </isEqual>
+			</isNotEmpty>
+			<isEmpty prepend="" property="cast_type">
+				, T07_CASE_TRANSACTION B   
+			</isEmpty>
+		</dynamic>		
+		WHERE A.TRANSACTIONKEY=B.TRANSACTIONKEY AND B.APPLICATION_NUM = #application_num# AND B.STATUS_CD = '1'
+	</statement>
+	
+	<statement id="insertT47_transaction_all_field"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="int">
+		INSERT INTO T47_TRANSACTION(
+		TRANSACTIONKEY,CB_PK,TX_NO,VOUCHER_NO,ORGANKEY,TX_DT,DT_TIME,ACCT_NUM,PARTY_ID,PARTY_CLASS_CD,TX_CD,
+		CB_TX_CD,BUS_TYPE_CD,TX_TYPE_CD,DEBIT_CREDIT,RECEIVE_PAY_CD,SUBJECTNO,CURRENCY_CD,CURR_CD,AMT,CNY_AMT,
+		USD_AMT,CASH_TRANS_FLAG,REMIT_TYPE_CD,DES,OVERAREA_IND,SETTLE_TYPE_CD,USE_DES,OPP_SYS_ID,OPP_ISPARTY,
+		OPP_AREA,OPP_ORGAN_TYPE,OPP_ORGANKEY,OPP_ORGANNAME,OPP_PARTY_ID,OPP_NAME,OPP_ACCT_NUM,OPP_ACCT_TYPE_CD,
+		OPP_CARD_TYPE,OPP_CARD_NO,OPP_PARTY_CLASS_CD,CANCEL_IND,AMT_CD,BATCH_IND,TELLER,RE_IND,HANDLE_STATUS_CD,PARTY_CHN_NAME,
+		ADDTIONAL,TX_DIRECT,TOKEN_NO,HOST_CUST_ID,CHANNEL,CAL_IND,OPP_COUNTRY,TSCTKEY,TX_GO_COUNTRY,
+		TX_GO_AREA,TX_OCCUR_COUNTRY,TX_OCCUR_AREA,AGENT_NAME,AGENT_CARD_TYPE,AGENT_CARD_NO,AGENT_COUNTRY,ORG_TRANS_RELA,
+		CASH_IND,OPP_PBC_PARTY_CLASS_CD,OPP_OFF_SHORE_IND,VALIDATE_IND,VALIDATE_IND2,TEMP1,RE_DT
+		) VALUES(
+		#transactionkey#,#cb_pk#,#tx_no#,#voucher_no#,#organkey#,#tx_dt#,#dt_time#,#acct_num#,#party_id#,#party_class_cd#,#tx_cd#,
+		#cb_tx_cd#,#bus_type_cd#,#tx_type_cd#,#debit_credit#,#receive_pay_cd#,#subjectno#,#currency_cd#,#curr_cd#,#amt#,#cny_amt#,
+		#usd_amt#,#cash_trans_flag#,#remit_type_cd#,#des#,#overarea_ind#,#settle_type_cd#,#use_des#,#opp_sys_id#,#opp_isparty#,
+		#opp_area#,#opp_organ_type#,#opp_organkey#,#opp_organname#,#opp_party_id#,#opp_name#,#opp_acct_num#,#opp_acct_type_cd#,
+		#opp_card_type#,#opp_card_no#,#opp_party_class_cd#,#cancel_ind#,#amt_cd#,#batch_ind#,#teller#,#re_ind#,#handle_status_cd#,#party_chn_name#,
+		#addtional#,#tx_direct#,#token_no#,#host_cust_id#,#channel#,#cal_ind#,#opp_country#,#tsctkey#,#tx_go_country#,
+		#tx_go_area#,#tx_occur_country#,#tx_occur_area#,#agent_name#,#agent_card_type#,#agent_card_no#,#agent_country#,#org_trans_rela#,
+		#cash_ind#,#opp_pbc_party_class_cd#,#opp_off_shore_ind#,#validate_ind#,#validate_ind2#,#txt#,#re_dt#
+		)
+	</statement>
+	
+	<statement	id="getT47_transaction_uc_from_key" parameterClass="java.lang.String" resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT
+		A.TX_GO_COUNTRY,A.TX_GO_AREA,A.HOST_CUST_ID,A.CASH_IND,A.CURR_CD,A.TX_OCCUR_COUNTRY
+		,A.TX_OCCUR_AREA,A.OPP_COUNTRY,A.OPP_AREA,A.OPP_ORGANNAME,A.AGENT_NAME,A.AGENT_COUNTRY,A.ORG_TRANS_RELA,
+		A.AGENT_CARD_TYPE,A.AGENT_CARD_NO,
+		A.TRANSACTIONKEY,A.CB_PK,A.TX_NO,A.ORGANKEY,A.TX_DT,A.DT_TIME,A.ACCT_NUM,A.PARTY_ID,
+		A.PARTY_CLASS_CD,A.TX_CD,A.CB_TX_CD,A.BUS_TYPE_CD,A.TX_TYPE_CD,A.DEBIT_CREDIT,A.RECEIVE_PAY_CD,
+		A.SUBJECTNO,A.CURRENCY_CD,A.AMT,A.CNY_AMT,A.USD_AMT,A.CASH_TRANS_FLAG,A.REMIT_TYPE_CD,A.DES,
+		A.OVERAREA_IND,A.SETTLE_TYPE_CD,A.USE_DES,A.OPP_SYS_ID,A.OPP_AREA,A.OPP_ORGAN_TYPE,A.OPP_ORGANKEY,A.OPP_PBC_PARTY_CLASS_CD,
+		A.OPP_PARTY_ID,A.OPP_NAME,A.OPP_ACCT_NUM,A.OPP_TX_DT,A.OPP_ACCT_TYPE_CD,A.OPP_CARD_TYPE,A.OPP_CARD_NO,
+		A.OPP_PARTY_CLASS_CD,A.BATCH_IND,A.TELLER,A.RE_IND,A.HANDLE_STATUS_CD,A.PARTY_CHN_NAME,A.ADDTIONAL, 
+		A.VOUCHER_NO,A.HOST_CUST_ID,A.OPP_OFF_SHORE_IND,A.CAL_IND,A.VALIDATE_IND2,A.VALIDATE_IND,A.TSCTKEY
+		
+	   FROM  T47_TRANSACTION_UC A WHERE A.TRANSACTIONKEY=#transactionkey# 
+	
+	</statement>
+	
+	<statement id="insertT47_acct_uc"
+		parameterClass="java.lang.String"
+		resultClass="int">
+		 INSERT INTO T47_ACCT_UC(ACCT_NUM, PARTY_ID, AML_ACCT_TYPE_CD, OPEN_DT, CLOSE_DT,acct_from,OP_ORG_NUM)
+		 SELECT  A.ACCT_NUM,A.CUSTOMER_ID,A.AML_ACCT_TYPE_CD,A.OPEN_DT,A.CLOSE_DT ,A.acct_from,A.OP_ORG_NUM
+		 FROM T47_AGREEMENT A WHERE NOT EXISTS (SELECT 'A' FROM T47_ACCT_UC UC WHERE UC.ACCT_NUM=A.ACCT_NUM)
+		  AND A.ACCT_NUM  in($value$) 
+  
+	</statement>
+	<statement id="insertT07_case_stcr_ky_by_acct_num_tpla"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="int">
+		 INSERT INTO T07_CASE_STCR_KY (APPLICATION_NUM, PARTY_ID, STCR, STATUS,CASE_DATE,ACCT_NUM,PARTY_STATUS,ACCT_STATUS)
+		 SELECT  #application_num#, A.PARTY_ID,#stcr#,'1',(SELECT CASE_DATE FROM T07_CASE_APPLICATION WHERE APPLICATION_NUM = #application_num#) AS CASE_DATE,
+		 A.ACCT_NUM,'1','1'
+		 FROM T47_ACCT_UC A WHERE NOT EXISTS (SELECT 'X' FROM T07_CASE_STCR_KY UC WHERE UC.ACCT_NUM=A.ACCT_NUM AND UC.APPLICATION_NUM = #application_num# AND UC.STCR = #stcr#)
+			<isNotNull property="list">
+			    <iterate prepend="AND" property="list" open="("
+						close=")" conjunction="or">
+						A.ACCT_NUM=#list[]#
+					</iterate>
+			</isNotNull>
+  
+	</statement>
+	 <statement id="insertT47_acct_uc1"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="int">
+		 INSERT INTO T47_ACCT_UC(ACCT_NUM, PARTY_ID, AML_ACCT_TYPE_CD,ACCT_FROM, OP_ORG_NUM,validate_ind2)
+		 values(#acct_num#,#party_id#,#acct_type#,#party_class_cd#,#organkey#,'1')
+	</statement>
+	<statement	id="updateT47_transaction_uc"  parameterClass="com.ist.aml.report.dto.T47_transaction" resultClass="int">
+		UPDATE T47_TRANSACTION_UC T SET T.HANDLE_STATUS_CD=#handle_status_cd# , T.VALIDATE_IND=#validate_ind# ,T.VALIDATE_IND2=#validate_ind2#
+		WHERE T.TRANSACTIONKEY=#transactionkey#
+	
+	</statement>
+	
+	<statement id="insertT47_transaction_uc_all_field1"
+		parameterClass="java.lang.String"
+		resultClass="int">
+		INSERT INTO T47_TRANSACTION_UC(
+		TRANSACTIONKEY,CB_PK,TX_NO,VOUCHER_NO,ORGANKEY,TX_DT,DT_TIME,ACCT_NUM,PARTY_ID,PARTY_CLASS_CD,TX_CD,
+		CB_TX_CD,BUS_TYPE_CD,TX_TYPE_CD,DEBIT_CREDIT,RECEIVE_PAY_CD,SUBJECTNO,CURRENCY_CD,CURR_CD,AMT,CNY_AMT,
+		USD_AMT,AMT_VAL,CASH_TRANS_FLAG,REMIT_TYPE_CD,DES,OVERAREA_IND,SETTLE_TYPE_CD,USE_DES,OPP_SYS_ID,OPP_ISPARTY,
+		OPP_AREA,OPP_ORGAN_TYPE,OPP_ORGANKEY,OPP_ORGANNAME,OPP_PARTY_ID,OPP_NAME,OPP_ACCT_NUM,OPP_TX_DT,OPP_ACCT_TYPE_CD,
+		OPP_CARD_TYPE,OPP_CARD_NO,OPP_PARTY_CLASS_CD,CANCEL_IND,AMT_CD,BATCH_IND,TELLER,RE_IND,HANDLE_STATUS_CD,PARTY_CHN_NAME,
+		ADDTIONAL,RE_DT,TX_DIRECT,TOKEN_NO,HOST_CUST_ID,CHANNEL,CAL_IND,rule_ind,TEMP1,OPP_COUNTRY,TSCTKEY,TX_GO_COUNTRY,
+		TX_GO_AREA,TX_OCCUR_COUNTRY,TX_OCCUR_AREA,AGENT_NAME,AGENT_CARD_TYPE,AGENT_CARD_NO,AGENT_COUNTRY,ORG_TRANS_RELA,
+		CASH_IND,OPP_PBC_PARTY_CLASS_CD,OPP_OFF_SHORE_IND,CHECK_TELLER,BIZ_TYPE_CD,LAST_UPD_USR,VALIDATE_IND,VALIDATE_IND2
+		) 
+		select TRANSACTIONKEY,CB_PK,TX_NO,VOUCHER_NO,ORGANKEY,TX_DT,DT_TIME,ACCT_NUM,PARTY_ID,PARTY_CLASS_CD,TX_CD,
+		CB_TX_CD,BUS_TYPE_CD,TX_TYPE_CD,DEBIT_CREDIT,RECEIVE_PAY_CD,SUBJECTNO,CURRENCY_CD,CURR_CD,AMT,CNY_AMT,
+		USD_AMT,AMT_VAL,CASH_TRANS_FLAG,REMIT_TYPE_CD,DES,OVERAREA_IND,SETTLE_TYPE_CD,USE_DES,OPP_SYS_ID,OPP_ISPARTY,
+		OPP_AREA,OPP_ORGAN_TYPE,OPP_ORGANKEY,OPP_ORGANNAME,OPP_PARTY_ID,OPP_NAME,OPP_ACCT_NUM,OPP_TX_DT,OPP_ACCT_TYPE_CD,
+		OPP_CARD_TYPE,OPP_CARD_NO,OPP_PARTY_CLASS_CD,CANCEL_IND,AMT_CD,BATCH_IND,TELLER,RE_IND,'1',PARTY_CHN_NAME,
+		ADDTIONAL,RE_DT,TX_DIRECT,TOKEN_NO,HOST_CUST_ID,CHANNEL,CAL_IND,rule_ind,TEMP1,OPP_COUNTRY,TSCTKEY,TX_GO_COUNTRY,
+		TX_GO_AREA,TX_OCCUR_COUNTRY,TX_OCCUR_AREA,AGENT_NAME,AGENT_CARD_TYPE,AGENT_CARD_NO,AGENT_COUNTRY,ORG_TRANS_RELA,
+		CASH_IND,OPP_PBC_PARTY_CLASS_CD,OPP_OFF_SHORE_IND,CHECK_TELLER,BIZ_TYPE_CD,LAST_UPD_USR,VALIDATE_IND,VALIDATE_IND2
+		from T47_TRANSACTION where transactionkey in($value$)
+	</statement>
+	
+	<statement id="insertT47_transaction_sel_tpla"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="int">
+		INSERT INTO T47_TRANSACTION_UC(
+		TRANSACTIONKEY,CB_PK,TX_NO,VOUCHER_NO,ORGANKEY,TX_DT,DT_TIME,ACCT_NUM,PARTY_ID,PARTY_CLASS_CD,TX_CD,
+		CB_TX_CD,BUS_TYPE_CD,TX_TYPE_CD,DEBIT_CREDIT,RECEIVE_PAY_CD,SUBJECTNO,CURRENCY_CD,CURR_CD,AMT,CNY_AMT,
+		USD_AMT,AMT_VAL,CASH_TRANS_FLAG,REMIT_TYPE_CD,DES,OVERAREA_IND,SETTLE_TYPE_CD,USE_DES,OPP_SYS_ID,OPP_ISPARTY,
+		OPP_AREA,OPP_ORGAN_TYPE,OPP_ORGANKEY,OPP_ORGANNAME,OPP_PARTY_ID,OPP_NAME,OPP_ACCT_NUM,OPP_ACCT_TYPE_CD,
+		OPP_CARD_TYPE,OPP_CARD_NO,OPP_PARTY_CLASS_CD,CANCEL_IND,AMT_CD,BATCH_IND,TELLER,RE_IND,HANDLE_STATUS_CD,PARTY_CHN_NAME,
+		ADDTIONAL,TX_DIRECT,TOKEN_NO,HOST_CUST_ID,CHANNEL,CAL_IND,OPP_COUNTRY,TSCTKEY,TX_GO_COUNTRY,
+		TX_GO_AREA,TX_OCCUR_COUNTRY,TX_OCCUR_AREA,AGENT_NAME,AGENT_CARD_TYPE,AGENT_CARD_NO,AGENT_COUNTRY,ORG_TRANS_RELA,
+		CASH_IND,OPP_PBC_PARTY_CLASS_CD,OPP_OFF_SHORE_IND,VALIDATE_IND,VALIDATE_IND2,
+		MERCHANT_TYPE_CD,MERCHANT_ID,ACCT_STYLE,OPP_ACCT_STYLE
+		) 
+		select TRANSACTIONKEY,CB_PK,TX_NO,VOUCHER_NO,ORGANKEY,TX_DT,DT_TIME,ACCT_NUM,PARTY_ID,PARTY_CLASS_CD,TX_CD,
+		CB_TX_CD,BUS_TYPE_CD,TX_TYPE_CD,DEBIT_CREDIT,RECEIVE_PAY_CD,SUBJECTNO,CURRENCY_CD,CURR_CD,AMT,CNY_AMT,
+		USD_AMT,AMT_VAL,CASH_TRANS_FLAG,REMIT_TYPE_CD,DES,OVERAREA_IND,SETTLE_TYPE_CD,USE_DES,OPP_SYS_ID,OPP_ISPARTY,
+		OPP_AREA,OPP_ORGAN_TYPE,OPP_ORGANKEY,OPP_ORGANNAME,OPP_PARTY_ID,OPP_NAME,OPP_ACCT_NUM,OPP_ACCT_TYPE_CD,
+		OPP_CARD_TYPE,OPP_CARD_NO,OPP_PARTY_CLASS_CD,CANCEL_IND,AMT_CD,BATCH_IND,TELLER,RE_IND,'1',PARTY_CHN_NAME,
+		ADDTIONAL,TX_DIRECT,TOKEN_NO,HOST_CUST_ID,CHANNEL,CAL_IND,OPP_COUNTRY,TSCTKEY,TX_GO_COUNTRY,
+		TX_GO_AREA,TX_OCCUR_COUNTRY,TX_OCCUR_AREA,AGENT_NAME,AGENT_CARD_TYPE,AGENT_CARD_NO,AGENT_COUNTRY,ORG_TRANS_RELA,
+		CASH_IND,OPP_PBC_PARTY_CLASS_CD,OPP_OFF_SHORE_IND,
+		(CASE WHEN VALIDATE_IND IS NULL THEN '0' WHEN VALIDATE_IND='' THEN '0' ELSE VALIDATE_IND END) AS VALIDATE_IND,
+		(CASE WHEN VALIDATE_IND2 IS NULL THEN '0' WHEN VALIDATE_IND2='' THEN '0' ELSE VALIDATE_IND2 END) AS VALIDATE_IND2,
+		MERCHANT_TYPE_CD,MERCHANT_ID,ACCT_STYLE,OPP_ACCT_STYLE
+		from V47_TRANSACTION 
+		<dynamic prepend="WHERE">
+		<isNotNull property="list">
+		    <iterate prepend="AND" property="list" open="("
+					close=")" conjunction="or">
+					transactionkey=#list[]#
+				</iterate>
+		</isNotNull>
+    </dynamic>
+	</statement>
+	<statement id="insertT07_case_transaction_ky_tpla"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="int">
+		INSERT INTO T07_CASE_TRANSACTION_KY(
+		APPLICATION_NUM,TRANSACTIONKEY,STATUS_CD,STCR,PARTY_ID,CASE_DATE,DEALADVISE,ACCT_NUM,TRANS_AMT
+		) 
+		select #application_num#,TRANSACTIONKEY,'1',#stcr#,PARTY_ID,
+		(SELECT CASE_DATE FROM T07_CASE_APPLICATION WHERE APPLICATION_NUM = #application_num#) AS CASE_DATE,'',ACCT_NUM,AMT 
+		from V47_TRANSACTION 
+		<dynamic prepend="WHERE">
+		<isNotNull property="list">
+		    <iterate prepend="AND" property="list" open="("
+					close=")" conjunction="or">
+					transactionkey=#list[]#
+				</iterate>
+		</isNotNull>
+    </dynamic>
+	</statement>
+	 <statement id="updateT47_transaction_uc_2"
+		parameterClass="java.lang.String"
+		resultClass="int">
+		update T47_TRANSACTION_UC set validate_ind2='0' ,handle_status_cd='1'
+		where (validate_ind2 is null or validate_ind2='') and  transactionkey in($value$)
+	</statement>
+	<statement id="updateT47_transaction_uc_1"
+		parameterClass="java.lang.String"
+		resultClass="int">
+		update T47_TRANSACTION_UC set validate_ind='0' ,handle_status_cd='1' 
+		where (validate_ind is null or validate_ind='') and  transactionkey in($value$)
+	</statement>
+	
+	<statement id="getT47_transactionList_for_case"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT  A.TRANSACTIONKEY,
+				A.CB_PK,
+				A.TX_NO,
+				A.ORGANKEY,
+				A.TX_DT,
+				A.DT_TIME,
+				A.ACCT_NUM,
+				A.PARTY_ID,
+				A.PARTY_CLASS_CD,
+				A.TX_CD,
+				A.CB_TX_CD,
+				A.BUS_TYPE_CD,
+				A.TX_TYPE_CD,
+				A.DEBIT_CREDIT,
+				A.RECEIVE_PAY_CD,
+				A.SUBJECTNO,
+				A.CURRENCY_CD,
+				A.CURR_CD,
+				A.AMT,
+				A.CNY_AMT,
+				A.USD_AMT,
+				A.AMT_VAL,
+				A.CASH_TRANS_FLAG,
+				A.REMIT_TYPE_CD,
+				A.DES,
+				A.OVERAREA_IND,
+				A.SETTLE_TYPE_CD,
+				A.USE_DES,
+				A.OPP_SYS_ID,
+				A.OPP_ISPARTY,
+				A.OPP_AREA,
+				A.OPP_ORGAN_TYPE,
+				A.OPP_ORGANKEY,
+				A.OPP_ORGANNAME,
+				A.OPP_PARTY_ID,
+				A.OPP_NAME,
+				A.OPP_ACCT_NUM,
+				A.OPP_TX_DT,
+				A.OPP_ACCT_TYPE_CD,
+				A.OPP_CARD_TYPE,
+				A.OPP_CARD_NO,
+				A.OPP_PARTY_CLASS_CD,
+				A.CANCEL_IND,
+				A.AMT_CD,
+				A.BATCH_IND,
+				A.TELLER,
+				A.RE_IND,
+				A.HANDLE_STATUS_CD,
+				A.PARTY_CHN_NAME,
+				A.ADDTIONAL,
+				A.RE_DT,
+				A.TX_DIRECT,
+				A.TOKEN_NO,
+				A.HOST_CUST_ID,
+				A.CHANNEL,
+				A.CAL_IND,
+				A.RULE_IND,
+				A.TEMP1,
+				A.OPP_COUNTRY,
+				A.TSCTKEY,
+				A.TX_GO_COUNTRY,
+				A.TX_GO_AREA,
+				A.TX_OCCUR_COUNTRY,
+				A.TX_OCCUR_AREA,
+				A.AGENT_NAME,
+				A.AGENT_CARD_TYPE,
+				A.AGENT_CARD_NO,
+				A.AGENT_COUNTRY,
+				A.ORG_TRANS_RELA,
+				A.CASH_IND,
+				A.OPP_PBC_PARTY_CLASS_CD,
+				A.CHECK_TELLER,
+				A.LAST_UPD_USR,
+				A.OPP_OFF_SHORE_IND,
+				A.BIZ_TYPE_CD,
+				A.VALIDATE_IND,
+				A.VALIDATE_IND2 
+		
+		FROM T47_TRANSACTION A
+		
+		<dynamic prepend="WHERE">
+			<isNotNull property="list">
+				<iterate prepend="AND" property="list" open="("
+					close=")" conjunction="or">
+					A.TRANSACTIONKEY=#list[]#
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		ORDER BY A.TX_DT
+	</statement>
+	 <statement id="getT07_transacionList2" parameterClass="com.ist.aml.report.dto.T07_case_application" resultClass="com.ist.aml.report.dto.T47_transaction">  
+ SELECT	A.TRANSACTIONKEY,         A.TRANSACTIONKEY,       A.CB_PK ,     A.TX_NO,     A.VOUCHER_NO,             
+     A.ORGANKEY,        A.TX_DT,          A.DT_TIME,        A.ACCT_NUM,       A.PARTY_ID,        A.PARTY_CLASS_CD,         
+     A.TX_CD,      A.CB_TX_CD,         A.BUS_TYPE_CD,         A.TX_TYPE_CD,        A.DEBIT_CREDIT,           
+     A.RECEIVE_PAY_CD,         A.SUBJECTNO,         A.CURRENCY_CD,        A.CURR_CD,        A.AMT,                    
+     A.CNY_AMT,          A.USD_AMT,         A.AMT_VAL,        A.CASH_TRANS_FLAG,        A.REMIT_TYPE_CD,          
+     A.DES,             A.OVERAREA_IND,         A.SETTLE_TYPE_CD,         A.USE_DES,         A.OPP_SYS_ID,             
+     A.OPP_ISPARTY,              A.OPP_AREA,         A.OPP_ORGAN_TYPE,          A.OPP_ORGANKEY,           
+     A.OPP_ORGANNAME,          A.OPP_PARTY_ID,         A.OPP_NAME,           A.OPP_ACCT_NUM,           
+     A.OPP_TX_DT,         A.OPP_ACCT_TYPE_CD,        A.OPP_CARD_TYPE,        A.OPP_CARD_NO,            
+     A.OPP_PARTY_CLASS_CD,        A.CANCEL_IND,       A.AMT_CD,           A.BATCH_IND,         A.TELLER,                 
+     A.RE_IND,              A.HANDLE_STATUS_CD,         A.PARTY_CHN_NAME,          A.ADDTIONAL,              
+     A.RE_DT,            A.TX_DIRECT,          A.TOKEN_NO,              A.HOST_CUST_ID,         A.CHANNEL,                
+     A.CAL_IND,             A.RULE_IND,              A.TEMP1,       A.OPP_COUNTRY,       A.TSCTKEY,                
+     A.TX_GO_COUNTRY,         A.TX_GO_AREA,         A.TX_OCCUR_COUNTRY,            A.TX_OCCUR_AREA,          
+     A.AGENT_NAME,            A.AGENT_CARD_TYPE,         A.AGENT_CARD_NO,       A.AGENT_COUNTRY,          
+     A.ORG_TRANS_RELA,          A.CASH_IND,         A.OPP_PBC_PARTY_CLASS_CD,     A.CHECK_TELLER,           
+     A.LAST_UPD_USR,                A.OPP_OFF_SHORE_IND,           A.BIZ_TYPE_CD,            A.VALIDATE_IND,           
+     A.VALIDATE_IND2
+	 FROM 
+	 <isNotEmpty prepend="" property="casesearchtime"> 
+	   <isEqual property="casesearchtime" compareValue ="0">
+	 		T47_TRANSACTION_UC A  WHERE EXISTS (SELECT 'X' FROM  T07_CASE_TRANSACTION B    WHERE B.TRANSACTIONKEY = A.TRANSACTIONKEY AND B.APPLICATION_NUM=#application_num# )
+	   </isEqual>
+	   <isEqual property="casesearchtime" compareValue ="1">
+	 		T47_TRANSACTION_UH A, WHERE EXISTS (SELECT 'X' FROM  T07_CASE_TRANSACTION_UH B    WHERE B.TRANSACTIONKEY = A.TRANSACTIONKEY AND B.APPLICATION_NUM=#application_num# )
+	 	</isEqual>
+	 </isNotEmpty>
+	<isEmpty prepend="" property="casesearchtime"> 
+  			T47_TRANSACTION_UC A, WHERE EXISTS (SELECT 'X' FROM  T07_CASE_TRANSACTION B    WHERE B.TRANSACTIONKEY = A.TRANSACTIONKEY AND B.APPLICATION_NUM=#application_num# )
+    </isEmpty>
+ 
+<isNotEmpty prepend="AND" property="validate_ind"> 
+    <isEqual property="validate_ind" compareValue ="0">
+     <isEqual property="cast_type" compareValue ="1">
+     (A.VALIDATE_IND='0' OR A.VALIDATE_IND IS NULL OR A.VALIDATE_IND='')
+     </isEqual>
+     <isEqual property="cast_type" compareValue ="2">
+          ( A.VALIDATE_IND2='0' OR A.VALIDATE_IND2='2')
+     </isEqual>
+    </isEqual>
+    <isEqual property="validate_ind" compareValue ="1">
+      <isEqual property="cast_type" compareValue ="1">
+       A.VALIDATE_IND= #validate_ind#
+      </isEqual>
+     <isEqual property="cast_type" compareValue ="2">
+       A.VALIDATE_IND2= #validate_ind#
+     </isEqual>
+    </isEqual>
+    </isNotEmpty> 
+  </statement>
+  
+  <statement id="getT07_transacionList2Count" parameterClass="com.ist.aml.report.dto.T07_case_application" resultClass="int">  
+	  SELECT
+	    count(1)
+	 FROM 
+	 <isNotEmpty prepend="" property="casesearchtime"> 
+	   <isEqual property="casesearchtime" compareValue ="0">
+	 		T47_TRANSACTION_UC A  WHERE EXISTS (SELECT 'X' FROM  T07_CASE_TRANSACTION B    WHERE B.TRANSACTIONKEY = A.TRANSACTIONKEY AND B.APPLICATION_NUM=#application_num# )
+	   </isEqual>
+	   <isEqual property="casesearchtime" compareValue ="1">
+	 		T47_TRANSACTION_UH A, WHERE EXISTS (SELECT 'X' FROM  T07_CASE_TRANSACTION_UH B    WHERE B.TRANSACTIONKEY = A.TRANSACTIONKEY AND B.APPLICATION_NUM=#application_num# )
+	 	</isEqual>
+	 </isNotEmpty>
+	<isEmpty prepend="" property="casesearchtime"> 
+  			T47_TRANSACTION_UC A, WHERE EXISTS (SELECT 'X' FROM  T07_CASE_TRANSACTION B    WHERE B.TRANSACTIONKEY = A.TRANSACTIONKEY AND B.APPLICATION_NUM=#application_num# )
+    </isEmpty>
+ 
+    
+      
+  <isNotEmpty prepend="AND" property="validate_ind"> 
+    <isEqual property="validate_ind" compareValue ="0">
+     <isEqual property="cast_type" compareValue ="1">
+     (A.VALIDATE_IND='0' OR A.VALIDATE_IND IS NULL OR A.VALIDATE_IND='')
+     </isEqual>
+     <isEqual property="cast_type" compareValue ="2">
+          ( A.VALIDATE_IND2='0' OR A.VALIDATE_IND2='2')
+     </isEqual>
+    </isEqual>
+    <isEqual property="validate_ind" compareValue ="1">
+      <isEqual property="cast_type" compareValue ="1">
+       A.VALIDATE_IND= #validate_ind#
+      </isEqual>
+     <isEqual property="cast_type" compareValue ="2">
+       A.VALIDATE_IND2= #validate_ind#
+     </isEqual>
+    </isEqual>
+    </isNotEmpty> 
+  </statement>
+  
+  <statement id="getT47_transaction_newList"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT
+		A.TRANSACTIONKEY,A.HOST_CUST_ID,A.ORGANKEY,A.TX_DT,A.ACCT_NUM,A.PARTY_ID,
+		A.DEBIT_CREDIT,A.CURRENCY_CD,A.AMT,A.PARTY_CHN_NAME,A.TX_TYPE_CD FROM T47_TRANSACTION A
+		 WHERE A.TEMP1='04'
+		<dynamic>
+		    <isNotEmpty prepend="AND" property="tx_no">
+				A.tx_no = #tx_no#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="amt_start_search">
+			 <![CDATA[A.CNY_AMT >= #amt_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="amt_end_search">
+				<![CDATA[A.CNY_AMT <= #amt_end#]]>
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="tx_dt">
+				<![CDATA[A.TX_DT >= #tx_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_dtEnd">
+				<![CDATA[A.TX_DT <= #tx_dtEnd:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_today">
+				<![CDATA[A.TX_DT >= #tx_today:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				A.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				A.ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cal_ind">
+				CAL_IND = #cal_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="transactionkey">
+				A.TRANSACTIONKEY = #transactionkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="acct_num">
+				A.ACCT_NUM = #acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cash_trans_flag">
+				A.CASH_TRANS_FLAG = #cash_trans_flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="debit_credit">
+				A.DEBIT_CREDIT = #debit_credit#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="addtional">
+				A.ADDTIONAL = #addtional#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				(A.VALIDATE_IND = #validate_ind#
+				OR A.VALIDATE_IND2 = #validate_ind#)
+			</isNotEmpty>
+				<isNotEmpty prepend="AND" property="party_class_cd">
+					A.PARTY_CLASS_CD = #party_class_cd#
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="curr_cd">
+					A.CURR_CD = #curr_cd#
+				</isNotEmpty>
+			<isEmpty  property="orderby">
+			ORDER BY  A.TX_DT DESC,A.ADDTIONAL ASC,A.ORGANKEY ASC,A.TX_NO ASC
+			</isEmpty>
+			
+			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="0">
+					ORDER BY A.TX_DT
+				</isEqual>
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY A.PARTY_ID
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY A.ACCT_NUM
+				</isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY A.ORGANKEY
+				</isEqual>
+				<isEqual property="orderby" compareValue="4">
+					ORDER BY A.TELLER
+				</isEqual>
+				<isEqual property="orderby" compareValue="5">
+					ORDER BY A.TX_CD
+				</isEqual>
+				<isEqual property="orderby" compareValue="6">
+					ORDER BY A.AMT
+				</isEqual>
+				<isEqual property="orderby" compareValue="7">
+					ORDER BY A.ADDTIONAL
+				</isEqual>
+
+				<isNotEmpty property="order">
+					<isEqual property="order" compareValue="1">
+					   <isNotEqual property="orderby" compareValue="0">
+					     ,A.TX_DT DESC,A.TX_NO ASC
+					   </isNotEqual>
+					</isEqual>
+					<isEqual property="order" compareValue="2">
+					       DESC
+					        <isNotEqual property="orderby" compareValue="0">
+					      ,A.TX_DT DESC,A.TX_NO ASC
+					        </isNotEqual>
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+			
+		</dynamic>
+	</statement>
+	<statement id="getT47_transaction_newListCount"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="int">
+		SELECT count(*) FROM
+		T47_TRANSACTION A WHERE A.TEMP1='04'
+		<dynamic>
+		    <isNotEmpty prepend="AND" property="tx_no">
+				A.tx_no = #tx_no#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="amt_start_search">
+			 <![CDATA[A.CNY_AMT >= #amt_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="amt_end_search">
+				<![CDATA[A.CNY_AMT <= #amt_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_dt">
+				<![CDATA[A.TX_DT >= #tx_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_dtEnd">
+				<![CDATA[A.TX_DT <= #tx_dtEnd:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_today">
+				<![CDATA[A.TX_DT >= #tx_today:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				A.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				A.ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cal_ind">
+				CAL_IND = #cal_ind#
+			</isNotEmpty>
+				<isNotEmpty prepend="AND" property="party_class_cd">
+					A.PARTY_CLASS_CD = #party_class_cd#
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="curr_cd">
+					A.CURR_CD = #curr_cd#
+				</isNotEmpty>
+			<isNotEmpty prepend="AND" property="bus_type_cd">
+						A.BUS_TYPE_CD LIKE #bus_type_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="transactionkey">
+				A.TRANSACTIONKEY = #transactionkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="acct_num">
+				A.ACCT_NUM = #acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cash_trans_flag">
+				A.CASH_TRANS_FLAG = #cash_trans_flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="debit_credit">
+				A.DEBIT_CREDIT = #debit_credit#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="addtional">
+				A.ADDTIONAL = #addtional#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				(A.VALIDATE_IND = #validate_ind#
+				OR A.VALIDATE_IND2 = #validate_ind#)
+			</isNotEmpty>
+			
+		</dynamic>
+	</statement>
+	
+	<statement id="getT47_trade_transactionList_1"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT
+		A.TX_GO_COUNTRY,A.TX_GO_AREA,A.HOST_CUST_ID,A.CASH_IND,A.CURR_CD,A.TX_OCCUR_COUNTRY
+		,A.TX_OCCUR_AREA,A.OPP_COUNTRY,A.OPP_AREA,A.OPP_ORGANNAME,A.AGENT_NAME,A.AGENT_COUNTRY,A.ORG_TRANS_RELA,
+		A.AGENT_CARD_TYPE,A.AGENT_CARD_NO,
+		A.TRANSACTIONKEY,A.CB_PK,A.TX_NO,A.ORGANKEY,A.TX_DT,A.DT_TIME,A.ACCT_NUM,A.PARTY_ID,
+		A.PARTY_CLASS_CD,A.TX_CD,A.CB_TX_CD,A.BUS_TYPE_CD,A.TX_TYPE_CD,A.DEBIT_CREDIT,A.RECEIVE_PAY_CD,
+		A.SUBJECTNO,A.CURRENCY_CD,A.AMT,A.CNY_AMT,A.USD_AMT,A.CASH_TRANS_FLAG,A.REMIT_TYPE_CD,A.DES,
+		A.OVERAREA_IND,A.SETTLE_TYPE_CD,A.USE_DES,A.OPP_SYS_ID,A.OPP_AREA,A.OPP_ORGAN_TYPE,A.OPP_ORGANKEY,A.OPP_PBC_PARTY_CLASS_CD,
+		A.OPP_PARTY_ID,A.OPP_NAME,A.OPP_ACCT_NUM,A.OPP_TX_DT,A.OPP_ACCT_TYPE_CD,A.OPP_CARD_TYPE,A.OPP_CARD_NO,
+		A.OPP_PARTY_CLASS_CD,A.BATCH_IND,A.TELLER,A.RE_IND,A.HANDLE_STATUS_CD,A.PARTY_CHN_NAME,A.ADDTIONAL,
+		A.VOUCHER_NO,A.HOST_CUST_ID,A.OPP_OFF_SHORE_IND,A.CAL_IND,A.VALIDATE_IND2,A.VALIDATE_IND,A.TSCTKEY, 
+		(CASE WHEN A.VALIDATE_IND IS NULL AND A.VALIDATE_IND2 IS NULL THEN '0' 
+		 WHEN A.VALIDATE_IND IS NOT NULL AND A.VALIDATE_IND2 IS NULL THEN '1' 
+		 WHEN A.VALIDATE_IND IS NULL AND A.VALIDATE_IND2 IS NOT NULL THEN '2' 
+		 WHEN A.VALIDATE_IND IS NOT NULL AND A.VALIDATE_IND2 IS NOT NULL THEN '3' END) AS VALIDATE_FLAG
+		FROM V47_TRANSACTION A
+
+		<dynamic prepend="WHERE">
+		    <!-- add by lkl -->
+		    <isNotEmpty prepend="AND" property="tx_no">
+				A.tx_no = #tx_no#
+			</isNotEmpty>
+			<!-- end lkl -->
+			
+			<isNotEmpty prepend="AND" property="amt_start_search">
+			 <![CDATA[A.CNY_AMT >= #amt_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="amt_end_search">
+				<![CDATA[A.CNY_AMT <= #amt_end#]]>
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="tx_dt">
+				<![CDATA[A.TX_DT >= #tx_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_dtEnd">
+				<![CDATA[A.TX_DT <= #tx_dtEnd:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_today">
+				<![CDATA[A.TX_DT >= #tx_today:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				A.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				A.ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cal_ind">
+				CAL_IND = #cal_ind#
+			</isNotEmpty>
+
+			<isNotEmpty prepend="AND" property="bus_type_cd">
+
+				A.BUS_TYPE_CD LIKE #bus_type_cd#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="transactionkey">
+				A.TRANSACTIONKEY = #transactionkey#
+			</isNotEmpty>
+			<isNotNull property="list">
+				<iterate prepend="AND" property="list" open="("
+					close=")" conjunction="and">
+					A.TRANSACTIONKEY !=#list[]#
+				</iterate>
+			</isNotNull>
+			<isNotEmpty prepend="AND" property="acct_num">
+				A.ACCT_NUM = #acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cash_trans_flag">
+				A.CASH_TRANS_FLAG = #cash_trans_flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="channel">
+				A.CHANNEL = #channel#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="debit_credit">
+				A.DEBIT_CREDIT = #debit_credit#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="overarea_ind">
+				A.OVERAREA_IND = #overarea_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="re_ind">
+				A.RE_IND = #re_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="addtional">
+				A.ADDTIONAL = #addtional#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="validate_ind">
+				<isNotEmpty prepend="" property="alert_type_cd">
+					<isEqual prepend="" property="alert_type_cd"  compareValue="DE">
+						A.VALIDATE_IND = #validate_ind#
+					</isEqual>
+					<isEqual prepend="" property="alert_type_cd"  compareValue="KY">
+						A.VALIDATE_IND2 = #validate_ind#
+					</isEqual>
+				</isNotEmpty>
+				<isEmpty prepend="" property="alert_type_cd">
+					(A.VALIDATE_IND = #validate_ind# OR A.VALIDATE_IND2 = #validate_ind#)
+				</isEmpty>
+			</isNotEmpty>
+			
+			<!-- add by lkl -->
+				<isNotEmpty prepend="AND" property="party_class_cd">
+					A.PARTY_CLASS_CD = #party_class_cd#
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="curr_cd">
+					A.CURR_CD = #curr_cd#
+				</isNotEmpty>
+				    <isNotEmpty prepend="AND" property="teller">
+					A.TELLER = #teller#
+				</isNotEmpty>
+			<!-- end lkl -->
+			<isNotEmpty prepend="AND" property="opp_party_class_cd">
+				A.OPP_PARTY_CLASS_CD = #opp_party_class_cd#
+			</isNotEmpty>
+			<isEmpty  property="orderby">
+			ORDER BY  A.TX_DT DESC
+			</isEmpty>
+			
+			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="0">
+					ORDER BY A.TX_DT
+				</isEqual>
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY A.PARTY_ID
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY A.ACCT_NUM
+				</isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY A.ORGANKEY
+				</isEqual>
+				<isEqual property="orderby" compareValue="4">
+					ORDER BY A.TELLER
+				</isEqual>
+				<isEqual property="orderby" compareValue="5">
+					ORDER BY A.TX_CD
+				</isEqual>
+				<isEqual property="orderby" compareValue="6">
+					ORDER BY A.AMT
+				</isEqual>
+				<isEqual property="orderby" compareValue="7">
+					ORDER BY A.ADDTIONAL
+				</isEqual>
+				<isEqual property="orderby" compareValue="8">
+					ORDER BY A.CHANNEL
+				</isEqual>
+
+				<isNotEmpty property="order">
+					<isEqual property="order" compareValue="1">
+					   <isNotEqual property="orderby" compareValue="0">
+					     ,A.TX_DT DESC,A.TX_NO ASC
+					   </isNotEqual>
+					</isEqual>
+					<isEqual property="order" compareValue="2">
+					       DESC
+					        <isNotEqual property="orderby" compareValue="0">
+					      ,A.TX_DT DESC,A.TX_NO ASC
+					        </isNotEqual>
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+			
+		</dynamic>
+	</statement>
+
+	<statement id="getT47_trade_transactionListCount_1"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="int">
+		SELECT count(*) FROM V47_TRANSACTION A
+	
+		<dynamic prepend="WHERE">
+		    <!-- add by lkl -->
+		    <isNotEmpty prepend="AND" property="tx_no">
+				A.tx_no = #tx_no#
+			</isNotEmpty>
+			<!-- end lkl -->
+		
+			<isNotEmpty prepend="AND" property="amt_start_search">
+			 <![CDATA[A.CNY_AMT >= #amt_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="amt_end_search">
+				<![CDATA[A.CNY_AMT <= #amt_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="channel">
+				A.CHANNEL = #channel#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_dt">
+				<![CDATA[A.TX_DT >= #tx_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_dtEnd">
+				<![CDATA[A.TX_DT <= #tx_dtEnd:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_today">
+				<![CDATA[A.TX_DT >= #tx_today:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				A.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				A.ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cal_ind">
+				CAL_IND = #cal_ind#
+			</isNotEmpty>
+			
+			<!-- add by lkl -->
+				<isNotEmpty prepend="AND" property="party_class_cd">
+					A.PARTY_CLASS_CD = #party_class_cd#
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="curr_cd">
+					A.CURR_CD = #curr_cd#
+				</isNotEmpty>
+				    <isNotEmpty prepend="AND" property="teller">
+					A.TELLER = #teller#
+				</isNotEmpty>
+		
+			<isNotEmpty prepend="AND" property="bus_type_cd">
+						A.BUS_TYPE_CD LIKE #bus_type_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="alertkey">
+				B.ALERTKEY = #alertkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="transactionkey">
+				A.TRANSACTIONKEY = #transactionkey#
+			</isNotEmpty>
+			<isNotNull property="list">
+				<iterate prepend="AND" property="list" open="("
+					close=")" conjunction="and">
+					A.TRANSACTIONKEY !=#list[]#
+				</iterate>
+			</isNotNull>
+			<isNotEmpty prepend="AND" property="acct_num">
+				A.ACCT_NUM = #acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cash_trans_flag">
+				A.CASH_TRANS_FLAG = #cash_trans_flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="debit_credit">
+				A.DEBIT_CREDIT = #debit_credit#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="overarea_ind">
+				A.OVERAREA_IND = #overarea_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="re_ind">
+				A.RE_IND = #re_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="addtional">
+				A.ADDTIONAL = #addtional#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="validate_ind">
+				<isNotEmpty prepend="" property="alert_type_cd">
+					<isEqual prepend="" property="alert_type_cd"  compareValue="DE">
+						A.VALIDATE_IND = #validate_ind#
+					</isEqual>
+					<isEqual prepend="" property="alert_type_cd"  compareValue="KY">
+						A.VALIDATE_IND2 = #validate_ind#
+					</isEqual>
+				</isNotEmpty>
+				<isEmpty prepend="" property="alert_type_cd">
+					(A.VALIDATE_IND = #validate_ind# OR A.VALIDATE_IND2 = #validate_ind#)
+				</isEmpty>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_party_class_cd">
+				A.OPP_PARTY_CLASS_CD = #opp_party_class_cd#
+			</isNotEmpty>
+		</dynamic>
+
+	</statement>
+	<statement id="getT47_transactionUCList"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT
+		A.TX_GO_COUNTRY,A.TX_GO_AREA,A.HOST_CUST_ID,A.CASH_IND,A.CURR_CD,A.TX_OCCUR_COUNTRY
+		,A.TX_OCCUR_AREA,A.OPP_COUNTRY,A.OPP_AREA,A.OPP_ORGANNAME,A.AGENT_NAME,A.AGENT_COUNTRY,A.ORG_TRANS_RELA,
+		A.AGENT_CARD_TYPE,A.AGENT_CARD_NO,
+		A.TRANSACTIONKEY,A.CB_PK,A.TX_NO,A.ORGANKEY,A.TX_DT,A.DT_TIME,A.ACCT_NUM,A.PARTY_ID,
+		A.PARTY_CLASS_CD,A.TX_CD,A.CB_TX_CD,A.BUS_TYPE_CD,A.TX_TYPE_CD,A.DEBIT_CREDIT,A.RECEIVE_PAY_CD,
+		A.SUBJECTNO,A.CURRENCY_CD,A.AMT,A.CNY_AMT,A.USD_AMT,A.CASH_TRANS_FLAG,A.REMIT_TYPE_CD,A.DES,
+		A.OVERAREA_IND,A.SETTLE_TYPE_CD,A.USE_DES,A.OPP_SYS_ID,A.OPP_AREA,A.OPP_ORGAN_TYPE,A.OPP_ORGANKEY,A.OPP_PBC_PARTY_CLASS_CD,
+		A.OPP_PARTY_ID,A.OPP_NAME,A.OPP_ACCT_NUM,A.OPP_TX_DT,A.OPP_ACCT_TYPE_CD,A.OPP_CARD_TYPE,A.OPP_CARD_NO,
+		A.OPP_PARTY_CLASS_CD,A.BATCH_IND,A.TELLER,A.RE_IND,A.HANDLE_STATUS_CD,A.PARTY_CHN_NAME,A.ADDTIONAL,
+		A.VOUCHER_NO,A.HOST_CUST_ID,A.OPP_OFF_SHORE_IND,A.CAL_IND,A.VALIDATE_IND2,A.VALIDATE_IND,A.TSCTKEY, 
+		(CASE WHEN A.VALIDATE_IND IS NULL AND A.VALIDATE_IND2 IS NULL THEN '0' 
+		 WHEN A.VALIDATE_IND IS NOT NULL AND A.VALIDATE_IND2 IS NULL THEN '1' 
+		 WHEN A.VALIDATE_IND IS NULL AND A.VALIDATE_IND2 IS NOT NULL THEN '2' 
+		 WHEN A.VALIDATE_IND IS NOT NULL AND A.VALIDATE_IND2 IS NOT NULL THEN '3' END) AS VALIDATE_FLAG
+		FROM T47_TRANSACTION_UC A
+
+		<dynamic prepend="WHERE">
+		    <!-- add by lkl -->
+		    <isNotEmpty prepend="AND" property="tx_no">
+				A.tx_no = #tx_no#
+			</isNotEmpty>
+			<!-- end lkl -->
+			
+			<isNotEmpty prepend="AND" property="amt_start_search">
+			 <![CDATA[A.CNY_AMT >= #amt_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="amt_end_search">
+				<![CDATA[A.CNY_AMT <= #amt_end#]]>
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="tx_dt">
+				<![CDATA[A.TX_DT >= #tx_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_dtEnd">
+				<![CDATA[A.TX_DT <= #tx_dtEnd:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_today">
+				<![CDATA[A.TX_DT >= #tx_today:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				A.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				A.ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cal_ind">
+				CAL_IND = #cal_ind#
+			</isNotEmpty>
+
+			<isNotEmpty prepend="AND" property="bus_type_cd">
+
+				A.BUS_TYPE_CD LIKE #bus_type_cd#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="transactionkey">
+				A.TRANSACTIONKEY = #transactionkey#
+			</isNotEmpty>
+			<isNotNull property="list">
+				<iterate prepend="AND" property="list" open="("
+					close=")" conjunction="and">
+					A.TRANSACTIONKEY !=#list[]#
+				</iterate>
+			</isNotNull>
+			<isNotEmpty prepend="AND" property="acct_num">
+				A.ACCT_NUM = #acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cash_trans_flag">
+				A.CASH_TRANS_FLAG = #cash_trans_flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="channel">
+				A.CHANNEL = #channel#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="debit_credit">
+				A.DEBIT_CREDIT = #debit_credit#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="overarea_ind">
+				A.OVERAREA_IND = #overarea_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="re_ind">
+				A.RE_IND = #re_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="addtional">
+				A.ADDTIONAL = #addtional#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="validate_ind">
+				<isNotEmpty prepend="" property="alert_type_cd">
+					<isEqual prepend="" property="alert_type_cd"  compareValue="DE">
+						A.VALIDATE_IND = #validate_ind#
+					</isEqual>
+					<isEqual prepend="" property="alert_type_cd"  compareValue="KY">
+						A.VALIDATE_IND2 = #validate_ind#
+					</isEqual>
+				</isNotEmpty>
+				<isEmpty prepend="" property="alert_type_cd">
+					(A.VALIDATE_IND = #validate_ind# OR A.VALIDATE_IND2 = #validate_ind#)
+				</isEmpty>
+			</isNotEmpty>
+			
+			<!-- add by lkl -->
+				<isNotEmpty prepend="AND" property="party_class_cd">
+					A.PARTY_CLASS_CD = #party_class_cd#
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="curr_cd">
+					A.CURR_CD = #curr_cd#
+				</isNotEmpty>
+				    <isNotEmpty prepend="AND" property="teller">
+					A.TELLER = #teller#
+				</isNotEmpty>
+			<!-- end lkl -->
+			<isNotEmpty prepend="AND" property="opp_party_class_cd">
+				A.OPP_PARTY_CLASS_CD = #opp_party_class_cd#
+			</isNotEmpty>
+			<isEmpty  property="orderby">
+			ORDER BY  A.TX_DT DESC
+			</isEmpty>
+			
+			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="0">
+					ORDER BY A.TX_DT
+				</isEqual>
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY A.PARTY_ID
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY A.ACCT_NUM
+				</isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY A.ORGANKEY
+				</isEqual>
+				<isEqual property="orderby" compareValue="4">
+					ORDER BY A.TELLER
+				</isEqual>
+				<isEqual property="orderby" compareValue="5">
+					ORDER BY A.TX_CD
+				</isEqual>
+				<isEqual property="orderby" compareValue="6">
+					ORDER BY A.AMT
+				</isEqual>
+				<isEqual property="orderby" compareValue="7">
+					ORDER BY A.ADDTIONAL
+				</isEqual>
+				<isEqual property="orderby" compareValue="8">
+					ORDER BY A.CHANNEL
+				</isEqual>
+
+				<isNotEmpty property="order">
+					<isEqual property="order" compareValue="1">
+					   <isNotEqual property="orderby" compareValue="0">
+					     ,A.TX_DT DESC,A.TX_NO ASC
+					   </isNotEqual>
+					</isEqual>
+					<isEqual property="order" compareValue="2">
+					       DESC
+					        <isNotEqual property="orderby" compareValue="0">
+					      ,A.TX_DT DESC,A.TX_NO ASC
+					        </isNotEqual>
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+			
+		</dynamic>
+	</statement>
+
+	<statement id="getT47_transactionUCListCount"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="int">
+		SELECT count(*) FROM T47_TRANSACTION_UC A
+	
+		<dynamic prepend="WHERE">
+		    <!-- add by lkl -->
+		    <isNotEmpty prepend="AND" property="tx_no">
+				A.tx_no = #tx_no#
+			</isNotEmpty>
+			<!-- end lkl -->
+		
+			<isNotEmpty prepend="AND" property="amt_start_search">
+			 <![CDATA[A.CNY_AMT >= #amt_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="amt_end_search">
+				<![CDATA[A.CNY_AMT <= #amt_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="channel">
+				A.CHANNEL = #channel#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_dt">
+				<![CDATA[A.TX_DT >= #tx_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_dtEnd">
+				<![CDATA[A.TX_DT <= #tx_dtEnd:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_today">
+				<![CDATA[A.TX_DT >= #tx_today:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				A.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				A.ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cal_ind">
+				CAL_IND = #cal_ind#
+			</isNotEmpty>
+			
+			<!-- add by lkl -->
+				<isNotEmpty prepend="AND" property="party_class_cd">
+					A.PARTY_CLASS_CD = #party_class_cd#
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="curr_cd">
+					A.CURR_CD = #curr_cd#
+				</isNotEmpty>
+				    <isNotEmpty prepend="AND" property="teller">
+					A.TELLER = #teller#
+				</isNotEmpty>
+		
+			<isNotEmpty prepend="AND" property="bus_type_cd">
+						A.BUS_TYPE_CD LIKE #bus_type_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="alertkey">
+				B.ALERTKEY = #alertkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="transactionkey">
+				A.TRANSACTIONKEY = #transactionkey#
+			</isNotEmpty>
+			<isNotNull property="list">
+				<iterate prepend="AND" property="list" open="("
+					close=")" conjunction="and">
+					A.TRANSACTIONKEY !=#list[]#
+				</iterate>
+			</isNotNull>
+			<isNotEmpty prepend="AND" property="acct_num">
+				A.ACCT_NUM = #acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cash_trans_flag">
+				A.CASH_TRANS_FLAG = #cash_trans_flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="debit_credit">
+				A.DEBIT_CREDIT = #debit_credit#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="overarea_ind">
+				A.OVERAREA_IND = #overarea_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="re_ind">
+				A.RE_IND = #re_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="addtional">
+				A.ADDTIONAL = #addtional#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="validate_ind">
+				<isNotEmpty prepend="" property="alert_type_cd">
+					<isEqual prepend="" property="alert_type_cd"  compareValue="DE">
+						A.VALIDATE_IND = #validate_ind#
+					</isEqual>
+					<isEqual prepend="" property="alert_type_cd"  compareValue="KY">
+						A.VALIDATE_IND2 = #validate_ind#
+					</isEqual>
+				</isNotEmpty>
+				<isEmpty prepend="" property="alert_type_cd">
+					(A.VALIDATE_IND = #validate_ind# OR A.VALIDATE_IND2 = #validate_ind#)
+				</isEmpty>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_party_class_cd">
+				A.OPP_PARTY_CLASS_CD = #opp_party_class_cd#
+			</isNotEmpty>
+		</dynamic>
+
+	</statement>
+	<statement id="getT47_transactionList_acct_num_tpla"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT DISTINCT ACCT_NUM FROM V47_TRANSACTION 
+		<dynamic prepend="WHERE">
+		<isNotNull property="list">
+		    <iterate prepend="AND" property="list" open="("
+					close=")" conjunction="or">
+					transactionkey=#list[]#
+				</iterate>
+		</isNotNull>
+       </dynamic>
+	</statement>
+	<statement id="getT47_trade_transactionList_tpla"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT
+		A.TX_GO_COUNTRY,A.TX_GO_AREA,A.HOST_CUST_ID,A.CASH_IND,A.CURR_CD,A.TX_OCCUR_COUNTRY
+		,A.TX_OCCUR_AREA,A.OPP_COUNTRY,A.OPP_AREA,A.OPP_ORGANNAME,A.AGENT_NAME,A.AGENT_COUNTRY,A.ORG_TRANS_RELA,
+		A.AGENT_CARD_TYPE,A.AGENT_CARD_NO,
+		A.TRANSACTIONKEY,A.CB_PK,A.TX_NO,A.ORGANKEY,A.TX_DT,A.DT_TIME,A.ACCT_NUM,A.PARTY_ID,
+		A.PARTY_CLASS_CD,A.TX_CD,A.CB_TX_CD,A.BUS_TYPE_CD,A.TX_TYPE_CD,A.DEBIT_CREDIT,A.RECEIVE_PAY_CD,
+		A.SUBJECTNO,A.CURRENCY_CD,A.AMT,A.CNY_AMT,A.USD_AMT,A.CASH_TRANS_FLAG,A.REMIT_TYPE_CD,A.DES,
+		A.OVERAREA_IND,A.SETTLE_TYPE_CD,A.USE_DES,A.OPP_SYS_ID,A.OPP_AREA,A.OPP_ORGAN_TYPE,A.OPP_ORGANKEY,A.OPP_PBC_PARTY_CLASS_CD,
+		A.OPP_PARTY_ID,A.OPP_NAME,A.OPP_ACCT_NUM,A.OPP_TX_DT,A.OPP_ACCT_TYPE_CD,A.OPP_CARD_TYPE,A.OPP_CARD_NO,
+		A.OPP_PARTY_CLASS_CD,A.BATCH_IND,A.TELLER,A.RE_IND,A.HANDLE_STATUS_CD,A.PARTY_CHN_NAME,A.ADDTIONAL,
+		A.VOUCHER_NO,A.HOST_CUST_ID,A.OPP_OFF_SHORE_IND,A.CAL_IND,A.VALIDATE_IND2,A.VALIDATE_IND,A.TSCTKEY, 
+		(CASE WHEN A.VALIDATE_IND IS NULL AND A.VALIDATE_IND2 IS NULL THEN '0' 
+		 WHEN A.VALIDATE_IND IS NOT NULL AND A.VALIDATE_IND2 IS NULL THEN '1' 
+		 WHEN A.VALIDATE_IND IS NULL AND A.VALIDATE_IND2 IS NOT NULL THEN '2' 
+		 WHEN A.VALIDATE_IND IS NOT NULL AND A.VALIDATE_IND2 IS NOT NULL THEN '3' END) AS VALIDATE_FLAG
+		FROM V47_TRANSACTION A
+
+		<dynamic prepend="WHERE">
+		    <!-- add by lkl -->
+		    <isNotEmpty prepend="AND" property="tx_no">
+				A.tx_no = #tx_no#
+			</isNotEmpty>
+			<!-- end lkl -->
+			
+			<isNotEmpty prepend="AND" property="amt_start_search">
+			 <![CDATA[A.CNY_AMT >= #amt_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="amt_end_search">
+				<![CDATA[A.CNY_AMT <= #amt_end#]]>
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="tx_dt">
+				<![CDATA[A.TX_DT >= #tx_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_dtEnd">
+				<![CDATA[A.TX_DT <= #tx_dtEnd:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_today">
+				<![CDATA[A.TX_DT >= #tx_today:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				A.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				A.ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cal_ind">
+				CAL_IND = #cal_ind#
+			</isNotEmpty>
+
+			<isNotEmpty prepend="AND" property="bus_type_cd">
+
+				A.BUS_TYPE_CD LIKE #bus_type_cd#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="transactionkey">
+				A.TRANSACTIONKEY = #transactionkey#
+			</isNotEmpty>
+			<isNotNull property="list">
+				<iterate prepend="AND" property="list" open="("
+					close=")" conjunction="and">
+					A.TRANSACTIONKEY !=#list[]#
+				</iterate>
+			</isNotNull>
+			<isNotEmpty prepend="AND" property="acct_num">
+				A.ACCT_NUM = #acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cash_trans_flag">
+				A.CASH_TRANS_FLAG = #cash_trans_flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="channel">
+				A.CHANNEL = #channel#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="debit_credit">
+				A.DEBIT_CREDIT = #debit_credit#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="overarea_ind">
+				A.OVERAREA_IND = #overarea_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="re_ind">
+				A.RE_IND = #re_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="addtional">
+				A.ADDTIONAL = #addtional#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="validate_ind">
+				<isNotEmpty prepend="" property="alert_type_cd">
+					<isEqual prepend="" property="alert_type_cd"  compareValue="DE">
+						A.VALIDATE_IND = #validate_ind#
+					</isEqual>
+					<isEqual prepend="" property="alert_type_cd"  compareValue="KY">
+						A.VALIDATE_IND2 = #validate_ind#
+					</isEqual>
+				</isNotEmpty>
+				<isEmpty prepend="" property="alert_type_cd">
+					(A.VALIDATE_IND = #validate_ind# OR A.VALIDATE_IND2 = #validate_ind#)
+				</isEmpty>
+			</isNotEmpty>
+			
+			<!-- add by lkl -->
+				<isNotEmpty prepend="AND" property="party_class_cd">
+					A.PARTY_CLASS_CD = #party_class_cd#
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="curr_cd">
+					A.CURR_CD = #curr_cd#
+				</isNotEmpty>
+				    <isNotEmpty prepend="AND" property="teller">
+					A.TELLER = #teller#
+				</isNotEmpty>
+			<!-- end lkl -->
+			<isNotEmpty prepend="AND" property="opp_party_class_cd">
+				A.OPP_PARTY_CLASS_CD = #opp_party_class_cd#
+			</isNotEmpty>
+			<!-- 不在该案例特征下的交易 -->
+			 AND NOT EXISTS (
+			    SELECT 'X' FROM T07_CASE_TRANSACTION_KY TC WHERE TC.TRANSACTIONKEY = A.TRANSACTIONKEY 
+			    <isNotEmpty prepend="AND" property="application_num">
+			       TC.APPLICATION_NUM = #application_num# 
+			    </isNotEmpty>
+			    <isNotEmpty prepend="AND" property="stcr">
+			       TC.STCR = #stcr# 
+			    </isNotEmpty>
+			 )
+			
+			<isEmpty  property="orderby">
+			ORDER BY  A.TX_DT DESC
+			</isEmpty>
+			
+			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="0">
+					ORDER BY A.TX_DT
+				</isEqual>
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY A.PARTY_ID
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY A.ACCT_NUM
+				</isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY A.ORGANKEY
+				</isEqual>
+				<isEqual property="orderby" compareValue="4">
+					ORDER BY A.TELLER
+				</isEqual>
+				<isEqual property="orderby" compareValue="5">
+					ORDER BY A.TX_CD
+				</isEqual>
+				<isEqual property="orderby" compareValue="6">
+					ORDER BY A.AMT
+				</isEqual>
+				<isEqual property="orderby" compareValue="7">
+					ORDER BY A.ADDTIONAL
+				</isEqual>
+				<isEqual property="orderby" compareValue="8">
+					ORDER BY A.CHANNEL
+				</isEqual>
+
+				<isNotEmpty property="order">
+					<isEqual property="order" compareValue="1">
+					   <isNotEqual property="orderby" compareValue="0">
+					     ,A.TX_DT DESC,A.TX_NO ASC
+					   </isNotEqual>
+					</isEqual>
+					<isEqual property="order" compareValue="2">
+					       DESC
+					        <isNotEqual property="orderby" compareValue="0">
+					      ,A.TX_DT DESC,A.TX_NO ASC
+					        </isNotEqual>
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+			
+		</dynamic>
+	</statement>
+	<statement id="getT47_trade_transactionListCount_tpla"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="int">
+		SELECT count(*) FROM V47_TRANSACTION A
+	
+		<dynamic prepend="WHERE">
+		    <!-- add by lkl -->
+		    <isNotEmpty prepend="AND" property="tx_no">
+				A.tx_no = #tx_no#
+			</isNotEmpty>
+			<!-- end lkl -->
+		
+			<isNotEmpty prepend="AND" property="amt_start_search">
+			 <![CDATA[A.CNY_AMT >= #amt_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="amt_end_search">
+				<![CDATA[A.CNY_AMT <= #amt_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="channel">
+				A.CHANNEL = #channel#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_dt">
+				<![CDATA[A.TX_DT >= #tx_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_dtEnd">
+				<![CDATA[A.TX_DT <= #tx_dtEnd:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_today">
+				<![CDATA[A.TX_DT >= #tx_today:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				A.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				A.ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cal_ind">
+				CAL_IND = #cal_ind#
+			</isNotEmpty>
+			
+			<!-- add by lkl -->
+				<isNotEmpty prepend="AND" property="party_class_cd">
+					A.PARTY_CLASS_CD = #party_class_cd#
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="curr_cd">
+					A.CURR_CD = #curr_cd#
+				</isNotEmpty>
+				    <isNotEmpty prepend="AND" property="teller">
+					A.TELLER = #teller#
+				</isNotEmpty>
+		
+			<isNotEmpty prepend="AND" property="bus_type_cd">
+						A.BUS_TYPE_CD LIKE #bus_type_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="alertkey">
+				B.ALERTKEY = #alertkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="transactionkey">
+				A.TRANSACTIONKEY = #transactionkey#
+			</isNotEmpty>
+			<isNotNull property="list">
+				<iterate prepend="AND" property="list" open="("
+					close=")" conjunction="and">
+					A.TRANSACTIONKEY !=#list[]#
+				</iterate>
+			</isNotNull>
+			<isNotEmpty prepend="AND" property="acct_num">
+				A.ACCT_NUM = #acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cash_trans_flag">
+				A.CASH_TRANS_FLAG = #cash_trans_flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="debit_credit">
+				A.DEBIT_CREDIT = #debit_credit#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="overarea_ind">
+				A.OVERAREA_IND = #overarea_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="re_ind">
+				A.RE_IND = #re_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="addtional">
+				A.ADDTIONAL = #addtional#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="validate_ind">
+				<isNotEmpty prepend="" property="alert_type_cd">
+					<isEqual prepend="" property="alert_type_cd"  compareValue="DE">
+						A.VALIDATE_IND = #validate_ind#
+					</isEqual>
+					<isEqual prepend="" property="alert_type_cd"  compareValue="KY">
+						A.VALIDATE_IND2 = #validate_ind#
+					</isEqual>
+				</isNotEmpty>
+				<isEmpty prepend="" property="alert_type_cd">
+					(A.VALIDATE_IND = #validate_ind# OR A.VALIDATE_IND2 = #validate_ind#)
+				</isEmpty>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_party_class_cd">
+				A.OPP_PARTY_CLASS_CD = #opp_party_class_cd#
+			</isNotEmpty>
+			<!-- 不在该案例特征下的交易 -->
+			 AND NOT EXISTS (
+			    SELECT 'X' FROM T07_CASE_TRANSACTION_KY TC WHERE TC.TRANSACTIONKEY = A.TRANSACTIONKEY 
+			    <isNotEmpty prepend="AND" property="application_num">
+			       TC.APPLICATION_NUM = #application_num# 
+			    </isNotEmpty>
+			    <isNotEmpty prepend="AND" property="stcr">
+			       TC.STCR = #stcr# 
+			    </isNotEmpty>
+			 )
+		</dynamic>
+
+	</statement>
+	<statement id="getT47_transactionDisp1"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+	SELECT
+	A.TX_GO_COUNTRY,A.TX_GO_AREA,A.HOST_CUST_ID,A.CASH_IND,A.CURR_CD,A.TX_OCCUR_COUNTRY
+	,A.TX_OCCUR_AREA,A.OPP_COUNTRY,A.OPP_AREA,A.OPP_ORGANNAME,A.AGENT_NAME,A.AGENT_COUNTRY,A.ORG_TRANS_RELA,
+	A.AGENT_CARD_TYPE,A.AGENT_CARD_NO,
+	A.TRANSACTIONKEY,A.CB_PK,A.TX_NO,A.ORGANKEY,A.TX_DT,A.DT_TIME,A.ACCT_NUM,A.PARTY_ID,
+	A.PARTY_CLASS_CD,A.TX_CD,A.CB_TX_CD,A.BUS_TYPE_CD,A.TX_TYPE_CD,A.DEBIT_CREDIT,A.RECEIVE_PAY_CD,
+	A.SUBJECTNO,A.CURRENCY_CD,A.AMT,A.CNY_AMT,A.USD_AMT,A.CASH_TRANS_FLAG,A.REMIT_TYPE_CD,A.DES,
+	A.OVERAREA_IND,A.SETTLE_TYPE_CD,A.USE_DES,A.OPP_SYS_ID,A.OPP_ORGAN_TYPE,A.OPP_ORGANKEY,A.OPP_PBC_PARTY_CLASS_CD,
+	A.OPP_PARTY_ID,A.OPP_NAME,A.OPP_ACCT_NUM,A.OPP_TX_DT,A.OPP_ACCT_TYPE_CD,A.OPP_CARD_TYPE,A.OPP_CARD_NO,A.OPP_ISPARTY,
+	A.OPP_PARTY_CLASS_CD,A.BATCH_IND,A.TELLER,A.RE_IND,A.HANDLE_STATUS_CD,A.PARTY_CHN_NAME,A.ADDTIONAL,
+	A.VOUCHER_NO,A.OPP_OFF_SHORE_IND,A.CAL_IND,A.VALIDATE_IND2,A.VALIDATE_IND,A.TSCTKEY
+	FROM 
+		<dynamic>
+			<isNotEmpty prepend="" property="alertsearchtime"> 
+			  	<isEqual property="alertsearchtime" compareValue ="0">
+			  		T47_TRANSACTION_UC A 
+			  	</isEqual>
+			  	<isEqual property="alertsearchtime" compareValue ="1">
+			  		V47_TRANSACTION A 
+			  	</isEqual>
+			</isNotEmpty>
+			<isEmpty prepend="" property="alertsearchtime"> 
+			  	T47_TRANSACTION_UC A 
+			</isEmpty>
+			<isNotEmpty prepend="" property="transactionkey">
+			    WHERE A.TRANSACTIONKEY=#transactionkey#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="getT47_accttype" parameterClass="java.lang.String"
+		resultClass="java.lang.String">
+	  SELECT AML_ACCT_TYPE_CD FROM T47_AGREEMENT WHERE ACCT_NUM=#value#
+	</statement>
+	<statement id="getT47_subjectname" parameterClass="java.lang.String"
+		resultClass="java.lang.String">
+		SELECT T.SUBJECTNAME FROM T87_SUBJECT T WHERE
+		T.SUBJECTKEY=#value#
+	</statement>
+	
+	<statement id="getT47M_transactionList"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT
+		A.TX_GO_COUNTRY,A.TX_GO_AREA,A.HOST_CUST_ID,A.CASH_IND,A.CURR_CD,A.TX_OCCUR_COUNTRY
+		,A.TX_OCCUR_AREA,A.OPP_COUNTRY,A.OPP_AREA,A.OPP_ORGANNAME,A.AGENT_NAME,A.AGENT_COUNTRY,A.ORG_TRANS_RELA,
+		A.AGENT_CARD_TYPE,A.AGENT_CARD_NO,
+		A.TRANSACTIONKEY,A.CB_PK,A.TX_NO,A.ORGANKEY,A.TX_DT,A.DT_TIME,A.ACCT_NUM,A.PARTY_ID,
+		A.PARTY_CLASS_CD,A.TX_CD,A.CB_TX_CD,A.BUS_TYPE_CD,A.TX_TYPE_CD,A.DEBIT_CREDIT,A.RECEIVE_PAY_CD,
+		A.SUBJECTNO,A.CURRENCY_CD,A.AMT,A.CNY_AMT,A.USD_AMT,A.CASH_TRANS_FLAG,A.REMIT_TYPE_CD,A.DES,
+		A.OVERAREA_IND,A.SETTLE_TYPE_CD,A.USE_DES,A.OPP_SYS_ID,A.OPP_AREA,A.OPP_ORGAN_TYPE,A.OPP_ORGANKEY,
+		A.OPP_PARTY_ID,A.OPP_NAME,A.OPP_ACCT_NUM,A.OPP_TX_DT,A.OPP_ACCT_TYPE_CD,A.OPP_CARD_TYPE,A.OPP_CARD_NO,
+		A.OPP_PARTY_CLASS_CD,A.BATCH_IND,A.TELLER,A.RE_IND,A.HANDLE_STATUS_CD,A.PARTY_CHN_NAME,A.ADDTIONAL,
+		A.VOUCHER_NO,A.HOST_CUST_ID,A.CHANNEL FROM V47_TRANSACTION A
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="organkeystr">
+				ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cash_trans_flag">
+				CASH_TRANS_FLAG = #cash_trans_flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="debit_credit">
+				DEBIT_CREDIT = #debit_credit#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="channel">
+				CHANNEL = #channel#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="settle_type_cd">
+				SETTLE_TYPE_CD = #settle_type_cd#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="tx_dt_start">
+				<![CDATA[TX_DT >= #tx_dt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_dt_end">
+				<![CDATA[TX_DT <= #tx_dt_end:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				PARTY_ID = #party_id#
+			</isNotEmpty>
+		<isNotEmpty prepend="AND" property="amt_start_search">
+				<![CDATA[CNY_AMT >= #amt_start#]]>
+			</isNotEmpty>
+<isNotEmpty prepend="AND" property="amt_end_search">
+				<![CDATA[CNY_AMT <= #amt_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="acct_num">
+				ACCT_NUM = #acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="teller">
+				TELLER = #teller#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cal_ind">
+				CAL_IND = #cal_ind#
+			</isNotEmpty>
+			<isEmpty  property="orderby">
+			ORDER BY  A.TX_DT DESC,A.ADDTIONAL ASC,A.ORGANKEY ASC,A.TX_NO ASC
+			</isEmpty>		
+			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="0">
+					ORDER BY A.TX_DT
+				</isEqual>
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY A.PARTY_ID
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY A.ACCT_NUM
+				</isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY A.ORGANKEY
+				</isEqual>
+				<isEqual property="orderby" compareValue="4">
+					ORDER BY A.TELLER
+				</isEqual>
+				<isEqual property="orderby" compareValue="5">
+					ORDER BY A.TX_CD
+				</isEqual>
+				<isEqual property="orderby" compareValue="6">
+					ORDER BY A.AMT
+				</isEqual>
+				<isEqual property="orderby" compareValue="7">
+					ORDER BY A.ADDTIONAL
+				</isEqual>
+
+				<isNotEmpty property="order">
+					<isEqual property="order" compareValue="1">
+					</isEqual>
+					<isEqual property="order" compareValue="2">
+					       DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="getT47M_transactionListCount"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="int">
+		SELECT COUNT(*) FROM V47_TRANSACTION
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="organkeystr">
+				ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cash_trans_flag">
+				CASH_TRANS_FLAG = #cash_trans_flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="debit_credit">
+				DEBIT_CREDIT = #debit_credit#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="channel">
+				CHANNEL = #channel#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="settle_type_cd">
+				SETTLE_TYPE_CD = #settle_type_cd#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="tx_dt_start">
+				<![CDATA[TX_DT >= #tx_dt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_dt_end">
+				<![CDATA[TX_DT <= #tx_dt_end:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				PARTY_ID = #party_id#
+			</isNotEmpty>
+		<isNotEmpty prepend="AND" property="amt_start_search">
+				<![CDATA[CNY_AMT >= #amt_start#]]>
+			</isNotEmpty>
+<isNotEmpty prepend="AND" property="amt_end_search">
+				<![CDATA[CNY_AMT <= #amt_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="acct_num">
+				ACCT_NUM = #acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="teller">
+				TELLER = #teller#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cal_ind">
+				CAL_IND = #cal_ind#
+			</isNotEmpty>
+
+		</dynamic>
+	</statement>
+	
+	<statement id="getT47_transaction_ubFillDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT A.* ,B.UNIONORGKEY,C.CARD_TYPE,C.CARD_NO FROM
+		T47_TRANSACTION_UB A,T87_UNION_ORGAN B,T47_PARTY C WHERE
+		A.ORGANKEY=B.ORGANKEY AND A.PARTY_ID=C.PARTY_ID AND
+		A.TRANSACTIONKEY=#value#
+	</statement>
+	<statement id="getT47_transaction_ucFillDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT A.* ,B.UNIONORGKEY,C.CARD_TYPE,C.CARD_NO FROM
+		T47_TRANSACTION_UC A,T87_UNION_ORGAN B,T47_PARTY C WHERE
+		A.ORGANKEY=B.ORGANKEY AND A.PARTY_ID=C.PARTY_ID AND
+		A.TRANSACTIONKEY=#value#
+	</statement>
+	
+	<statement id="getT47_transactionDisp_for_key"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT  A.TRANSACTIONKEY,
+				A.CB_PK,
+				A.TX_NO,
+				A.VOUCHER_NO,
+				A.ORGANKEY,
+				A.TX_DT,
+				A.DT_TIME,
+				A.ACCT_NUM,
+				A.PARTY_ID,
+				A.PARTY_CLASS_CD,
+				A.TX_CD,
+				A.CB_TX_CD,
+				A.BUS_TYPE_CD,
+				A.TX_TYPE_CD,
+				A.DEBIT_CREDIT,
+				A.RECEIVE_PAY_CD,
+				A.SUBJECTNO,
+				A.CURRENCY_CD,
+				A.CURR_CD,
+				A.AMT,
+				A.CNY_AMT,
+				A.USD_AMT,
+				A.AMT_VAL,
+				A.CASH_TRANS_FLAG,
+				A.REMIT_TYPE_CD,
+				A.DES,
+				A.OVERAREA_IND,
+				A.SETTLE_TYPE_CD,
+				A.USE_DES,
+				A.OPP_SYS_ID,
+				A.OPP_ISPARTY,
+				A.OPP_AREA,
+				A.OPP_ORGAN_TYPE,
+				A.OPP_ORGANKEY,
+				A.OPP_ORGANNAME,
+				A.OPP_PARTY_ID,
+				A.OPP_NAME,
+				A.OPP_ACCT_NUM,
+				A.OPP_TX_DT,
+				A.OPP_ACCT_TYPE_CD,
+				A.OPP_CARD_TYPE,
+				A.OPP_CARD_NO,
+				A.OPP_PARTY_CLASS_CD,
+				A.CANCEL_IND,
+				A.AMT_CD,
+				A.BATCH_IND,
+				A.TELLER,
+				A.RE_IND,
+				A.HANDLE_STATUS_CD,
+				A.PARTY_CHN_NAME,
+				A.ADDTIONAL,
+				A.RE_DT,
+				A.TX_DIRECT,
+				A.TOKEN_NO,
+				A.HOST_CUST_ID,
+				A.CHANNEL,
+				A.CAL_IND,
+				A.RULE_IND,
+				A.TEMP1,
+				A.OPP_COUNTRY,
+				A.TSCTKEY,
+				A.TX_GO_COUNTRY,
+				A.TX_GO_AREA,
+				A.TX_OCCUR_COUNTRY,
+				A.TX_OCCUR_AREA,
+				A.AGENT_NAME,
+				A.AGENT_CARD_TYPE,
+				A.AGENT_CARD_NO,
+				A.AGENT_COUNTRY,
+				A.ORG_TRANS_RELA,
+				A.CASH_IND,
+				A.OPP_PBC_PARTY_CLASS_CD,
+				A.CHECK_TELLER,
+				A.LAST_UPD_USR,
+				A.OPP_OFF_SHORE_IND,
+				A.BIZ_TYPE_CD,
+				A.VALIDATE_IND,
+				A.VALIDATE_IND2 
+		
+		FROM T47_TRANSACTION A
+		WHERE A.TRANSACTIONKEY=#transactionkey#
+	
+		
+	</statement>
+	
+	<statement id="getT47_transactionFillDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT A.* ,B.UNIONORGKEY,C.CARD_TYPE,C.CARD_NO FROM
+		T47_TRANSACTION A,T87_UNION_ORGAN B,T47_PARTY C WHERE
+		A.ORGANKEY=B.ORGANKEY AND A.PARTY_ID=C.PARTY_ID AND
+		A.TRANSACTIONKEY=#value#
+	</statement>
+	
+	<statement id="getT47_transactionFillDisp1"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT A.* ,C.CARD_TYPE,C.CARD_NO,C.COUNTRY_CD FROM
+		T47_TRANSACTION A,T47_PARTY C WHERE A.PARTY_ID=C.PARTY_ID AND
+		A.TRANSACTIONKEY=#value#
+	</statement>
+	
+	<statement id="modifyT47_transactiondo"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="int">
+	UPDATE T47_TRANSACTION SET
+TRANSACTIONKEY=#transactionkey#,CB_PK=#cb_pk#,TX_NO=#tx_no#,ORGANKEY=#organkey#,TX_DT=#tx_dt:DATE#,DT_TIME=#dt_time:DATE#,ACCT_NUM=#acct_num#,PARTY_ID=#party_id#,
+PARTY_CLASS_CD=#party_class_cd#,TX_CD=#tx_cd#,CB_TX_CD=#cb_tx_cd#
+,BUS_TYPE_CD=#bus_type_cd#,TX_TYPE_CD=#tx_type_cd#,DEBIT_CREDIT=#debit_credit#,RECEIVE_PAY_CD=#receive_pay_cd#,SUBJECTNO=#subjectno#,CURRENCY_CD=#currency_cd#
+,AMT=#amt#,CNY_AMT=#cny_amt#,USD_AMT=#usd_amt#,CASH_TRANS_FLAG=#cash_trans_flag#,REMIT_TYPE_CD=#remit_type_cd#,DES=#des#,OVERAREA_IND=#overarea_ind#,
+SETTLE_TYPE_CD=#settle_type_cd#,USE_DES=#use_des#,OPP_SYS_ID=#opp_sys_id#,OPP_AREA=#opp_area#,OPP_ORGAN_TYPE=#opp_organ_type#,OPP_ORGANKEY=#opp_organkey#
+		,OPP_PARTY_ID=#opp_party_id#,OPP_NAME=#opp_name#,OPP_ACCT_NUM=#opp_acct_num#,OPP_ACCT_TYPE_CD=#opp_acct_type_cd#,
+		OPP_CARD_TYPE=#opp_card_type#,OPP_CARD_NO=#opp_card_no#,OPP_PARTY_CLASS_CD=#opp_party_class_cd#,BATCH_IND=#batch_ind#
+		,TELLER=#teller#,RE_IND=#re_ind#,HANDLE_STATUS_CD=#handle_status_cd#,PARTY_CHN_NAME=#party_chn_name#,ADDTIONAL=#addtional#,TX_DIRECT=#tx_direct#,
+		OPP_ORGANNAME=#opp_organname#,ORG_TRANS_RELA=#org_trans_rela#,AGENT_NAME=#agent_name#,AGENT_COUNTRY=#agent_country#
+		,AGENT_CARD_TYPE=#agent_card_type#,AGENT_CARD_NO=#agent_card_no#,HOST_CUST_ID=#host_cust_id#,CURR_CD=#curr_cd#,CASH_IND=#cash_ind#,
+		TX_GO_COUNTRY=#tx_go_country#,TX_GO_AREA=#tx_go_area#,TX_OCCUR_COUNTRY=#tx_occur_country#,TX_OCCUR_AREA=#tx_occur_area#
+		,OPP_OFF_SHORE_IND=#opp_off_shore_ind#,OPP_PBC_PARTY_CLASS_CD=#opp_pbc_party_class_cd#,OPP_COUNTRY=#opp_country#,TSCTKEY=#tsctkey#,OPP_ISPARTY=#opp_isparty#
+		WHERE TRANSACTIONKEY=#transactionkey#
+	</statement>
+	
+	<statement id="deleteT47_transaction" parameterClass="java.lang.String" resultClass="int">
+		DELETE FROM T47_TRANSACTION WHERE TRANSACTIONKEY = #value#
+	</statement>
+	
+	<statement id="getT47_transaction_ucDisp_next"
+		parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT
+		A.TX_GO_COUNTRY,A.TX_GO_AREA,A.HOST_CUST_ID,A.CASH_IND,A.CURR_CD,A.TX_OCCUR_COUNTRY
+		,A.TX_OCCUR_AREA,A.OPP_COUNTRY,A.OPP_AREA,A.OPP_ORGANNAME,A.AGENT_NAME,A.AGENT_COUNTRY,A.ORG_TRANS_RELA,
+		A.AGENT_CARD_TYPE,A.AGENT_CARD_NO,CHANNEL,
+		A.TRANSACTIONKEY,A.CB_PK,A.TX_NO,A.ORGANKEY,A.TX_DT,A.DT_TIME,A.ACCT_NUM,A.PARTY_ID,
+		A.PARTY_CLASS_CD,A.TX_CD,A.CB_TX_CD,A.BUS_TYPE_CD,A.TX_TYPE_CD,A.DEBIT_CREDIT,A.RECEIVE_PAY_CD,
+		A.SUBJECTNO,A.CURRENCY_CD,A.AMT,A.CNY_AMT,A.USD_AMT,A.CASH_TRANS_FLAG,A.REMIT_TYPE_CD,A.DES,
+		A.OVERAREA_IND,A.SETTLE_TYPE_CD,A.USE_DES,A.OPP_SYS_ID,A.OPP_AREA,A.OPP_ORGAN_TYPE,A.OPP_ORGANKEY,A.OPP_PBC_PARTY_CLASS_CD,
+		A.OPP_PARTY_ID,A.OPP_NAME,A.OPP_ACCT_NUM,A.OPP_TX_DT,A.OPP_ACCT_TYPE_CD,A.OPP_CARD_TYPE,A.OPP_CARD_NO,
+		A.OPP_PARTY_CLASS_CD,A.BATCH_IND,A.TELLER,A.RE_IND,A.HANDLE_STATUS_CD,A.PARTY_CHN_NAME,A.ADDTIONAL, 
+		A.VOUCHER_NO,A.HOST_CUST_ID,A.OPP_OFF_SHORE_IND,A.CAL_IND,A.VALIDATE_IND2,A.VALIDATE_IND,A.TSCTKEY
+		FROM T47_TRANSACTION_UC A  WHERE 		A.HANDLE_STATUS_CD = '1'
+		<dynamic>
+		    <isNotEmpty prepend="AND" property="tx_no">
+				A.tx_no = #tx_no#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="host_cust_id">
+				A.HOST_CUST_ID = #host_cust_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="amt_start_search">
+			 <![CDATA[A.CNY_AMT >= #amt_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="amt_end_search">
+				<![CDATA[A.CNY_AMT <= #amt_end#]]>
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="tx_dt">
+				<![CDATA[A.TX_DT >= #tx_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_dtEnd">
+				<![CDATA[A.TX_DT <= #tx_dtEnd:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_today">
+				<![CDATA[A.TX_DT >= #tx_today:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				A.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				A.ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="transactionkey">
+				A.TRANSACTIONKEY = #transactionkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="acct_num">
+				A.ACCT_NUM = #acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cash_trans_flag">
+				A.CASH_TRANS_FLAG = #cash_trans_flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="debit_credit">
+				A.DEBIT_CREDIT = #debit_credit#
+			</isNotEmpty>	
+			<isNotEmpty prepend="AND" property="cb_tx_cd">
+				A.CB_TX_CD = #cb_tx_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="teller">
+				A.TELLER = #teller#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				<isNotEmpty prepend="" property="alert_type_cd">
+					<isEqual prepend="" property="alert_type_cd"  compareValue="DE">
+						A.VALIDATE_IND = #validate_ind#
+					</isEqual>
+					<isEqual prepend="" property="alert_type_cd"  compareValue="KY">
+						A.VALIDATE_IND2 = #validate_ind#
+						
+						<isNotEmpty prepend="AND" property="is_recordflag">				 
+						    <isEqual property="is_recordflag" compareValue="2">
+						             A.IS_RECORDFLAG = '1'
+						    </isEqual>
+						</isNotEmpty>
+					</isEqual>
+				</isNotEmpty>
+				<isEmpty prepend="" property="alert_type_cd">
+					(A.VALIDATE_IND = #validate_ind# OR A.VALIDATE_IND2 = #validate_ind# 
+					
+					<isNotEmpty prepend="AND" property="is_recordflag">				 
+						    <isEqual property="is_recordflag" compareValue="2">
+						             A.IS_RECORDFLAG = '1'
+						    </isEqual>
+						</isNotEmpty>
+					)
+				</isEmpty>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd_search">
+				A.PARTY_CLASS_CD = #party_class_cd_search#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="curr_cd">
+				A.CURR_CD = #curr_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="starttime">
+				<![CDATA[A.RECORD_ENDDATE >= #starttime:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="starttime2">
+				<![CDATA[A.RECORD_ENDDATE <= #starttime2:DATE#]]>
+			</isNotEmpty>
+		   
+		
+			<isNotEmpty prepend="AND" property="is_recordflag">
+				 <isEqual property="is_recordflag" compareValue="1">
+			             A.IS_RECORDFLAG = #is_recordflag#
+			    </isEqual>
+			</isNotEmpty>
+			<isEmpty  property="orderby">
+			ORDER BY  A.TX_DT DESC,A.TX_NO ASC
+			</isEmpty>		
+			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="0">
+					ORDER BY A.TX_DT
+				</isEqual>
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY A.PARTY_ID
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY A.ACCT_NUM
+				</isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY A.ORGANKEY
+				</isEqual>
+				<isEqual property="orderby" compareValue="4">
+					ORDER BY A.TELLER
+				</isEqual>
+				<isEqual property="orderby" compareValue="5">
+					ORDER BY A.TX_CD
+				</isEqual>
+				<isEqual property="orderby" compareValue="6">
+					ORDER BY A.AMT
+				</isEqual>
+				<isEqual property="orderby" compareValue="7">
+					ORDER BY A.ADDTIONAL
+				</isEqual>
+
+				<isNotEmpty property="order">
+					<isEqual property="order" compareValue="1">
+					   <isNotEqual property="orderby" compareValue="0">
+					     ,A.TX_DT DESC,A.TX_NO ASC
+					   </isNotEqual>
+					</isEqual>
+					<isEqual property="order" compareValue="2">
+					       DESC
+					        <isNotEqual property="orderby" compareValue="0">
+					      ,A.TX_DT DESC,A.TX_NO ASC
+					        </isNotEqual>
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>			
+		</dynamic>
+		
+	</statement>
+	
+	<statement id="insertT47_trans_recordLog"
+		parameterClass="com.ist.aml.report.dto.T47_trans_recordLog"
+		resultClass="int">
+		 INSERT INTO T47_TRANS_RECORDLOG(TRANSACTIONKEY,TX_NO,TX_DT,ACCT_NUM,PARTY_ID,OPER_DES,OPER_OBJ_TYPE,CREATE_DT,CREATE_USR)
+		 values(#transactionkey#,#tx_no#,#tx_dt:DATE#,#acct_num#,#party_id#,#oper_des#,#oper_obj_type#,#create_dt#,#create_usr#)
+	</statement>
+	
+</sqlMap>

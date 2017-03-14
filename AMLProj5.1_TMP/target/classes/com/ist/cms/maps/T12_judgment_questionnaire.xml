@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_judgment_questionnaire"> 
+  <statement id="getT12_judgment_questionnaireList" parameterClass="com.ist.cms.dto.T12_judgment_questionnaire" resultClass="com.ist.cms.dto.T12_judgment_questionnaire"> 
+	  SELECT C.QUESTIONINSKEY,B.PUBLISHKEY,B.QUESTIONKEY,B.TITLE,B.STARTTIME,B.ENDTIME,CASE WHEN D.STATE IS NULL THEN '0' ELSE D.STATE END AS STATE,A.ANSWERKEY 
+	  FROM T12_ANSWER_QUESTIONNAIRE A LEFT JOIN T12_JUDGMENT_QUESTIONNAIRE D ON A.ANSWERKEY = D.ANSWERKEY,
+	  T12_PUBLISH_QUESTIONNAIRE B,T12_QUESTION_INS C WHERE
+	  A.PUBLISHKEY = B.PUBLISHKEY AND C.QUESTIONINSKEY=B.QUESTIONINSKEY AND A.STATE='1' AND C.QUESTIONTYPE='1' AND B.ARCHIVED='0' AND B.FLAG='1' AND
+	  B.PUBLISHMODE='1' AND  EXISTS( SELECT 'X' FROM T12_PUBLISH_USER T WHERE T.PUBLISHKEY = B.PUBLISHKEY AND T.USERTYPE='1'
+	               AND T.USERNAME=#username#
+	  ) 
+   	  <dynamic>
+		<isNotEmpty prepend="and" property="current_time">
+		<![CDATA[ #current_time# >= b.starttime]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="current_time">
+			<![CDATA[ #current_time# <= b.endtime]]>
+		</isNotEmpty>
+      </dynamic>
+ 	</statement> 
+  <statement id="getT12_judgment_questionnaireListCount" parameterClass="com.ist.cms.dto.T12_judgment_questionnaire" resultClass="int"> 
+	  SELECT COUNT(*)  FROM T12_ANSWER_QUESTIONNAIRE A LEFT JOIN T12_JUDGMENT_QUESTIONNAIRE D ON A.ANSWERKEY = D.ANSWERKEY,
+	  T12_PUBLISH_QUESTIONNAIRE B,T12_QUESTION_INS C WHERE
+	  A.PUBLISHKEY = B.PUBLISHKEY AND C.QUESTIONINSKEY=B.QUESTIONINSKEY AND A.STATE='1' AND C.QUESTIONTYPE='1' AND B.ARCHIVED='0' AND B.FLAG='1' AND
+	  B.PUBLISHMODE='1' AND  EXISTS( SELECT 'X' FROM T12_PUBLISH_USER T WHERE T.PUBLISHKEY = B.PUBLISHKEY AND T.USERTYPE='1'
+	               AND T.USERNAME=#username#
+	  ) 
+   	  <dynamic>
+		<isNotEmpty prepend="and" property="current_time">
+		<![CDATA[  #current_time# >= b.starttime]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="current_time">
+			<![CDATA[  #current_time# <= b.endtime]]>
+		</isNotEmpty>
+      </dynamic>
+   </statement> 
+ 
+  <statement id="insertT12_judgment_questionnaire" parameterClass="com.ist.cms.dto.T12_judgment_questionnaire" resultClass="int"> 
+  insert into T12_judgment_questionnaire(
+  judgmentkey,publishkey,questioninskey,answerkey,creattime,username,state
+  ) values(
+  #judgmentkey#,#publishkey#,#questioninskey#,#answerkey#,#creattime#,#username#,#state#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_judgment_questionnaire" parameterClass="com.ist.cms.dto.T12_judgment_questionnaire" resultClass="int"> 
+  update T12_judgment_questionnaire set state=#state#  where judgmentkey=#judgmentkey# 
+  </statement> 
+ 
+  <statement id="deleteT12_judgment_questionnaire" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_judgment_questionnaire where judgmentkey=#value# 
+  </statement> 
+ 
+  <statement id="getT12_judgment_questionnaireDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_judgment_questionnaire"> 
+  select * from T12_judgment_questionnaire where judgmentkey=#value# 
+  </statement> 
+ 
+ 
+ <!-- add by zhangqiaojun -->
+ <statement id="getT12_questions_subjectForJudgMentList" parameterClass="com.ist.cms.dto.T12_judgment_questionnaire" resultClass="com.ist.cms.dto.T12_questions_subject"> 
+   SELECT A.SUBJECTINSKEY,A.SUBJECTKEY,A.CONTENT,A.SCORE,A.SOLUTION,A.SUBJECTTYPE FROM T12_SUBJECT_INS A,
+   T12_PUBLISH_QUESTIONNAIRE B,T12_ANSWER_QUESTIONNAIRE C
+   WHERE A.QUESTIONINSKEY=C.QUESTIONINSKEY
+   AND B.PUBLISHKEY = C.PUBLISHKEY 
+   AND B.QUESTIONINSKEY=C.QUESTIONINSKEY 
+   <isNotEmpty prepend="AND" property="endtime">
+     B.ENDTIME >= #endtime#
+   </isNotEmpty>
+   AND C.ANSWERKEY=#answerkey# AND (A.SUBJECTTYPE='1' OR A.SUBJECTTYPE='2' OR A.SUBJECTTYPE='3')
+  </statement> 
+  <statement id="getT12_judgment_questionnaireByAnswerID" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_judgment_questionnaire"> 
+  		select * from T12_judgment_questionnaire where answerkey=#answerkey# 
+  </statement>
+  <!-- modify by zhangqiaojun 2010-09-28 -->
+  <statement id="getT12_judgment_dispById" parameterClass="com.ist.cms.dto.T12_judgment_questionnaire" resultClass="com.ist.cms.dto.T12_judgment_questionnaire"> 
+  		select * from T12_judgment_questionnaire where answerkey=#answerkey#
+  </statement>
+  <!-- modify by zhangqiaojun 2010-09-28 -->
+   <statement id="getT12_judgment_list" parameterClass="com.ist.cms.dto.T12_judgment_questionnaire" resultClass="com.ist.cms.dto.T12_questions_subject"> 
+     SELECT A.CONTENT AS ANSWER ,B.SUBJECTINSKEY ,B.CONTENT AS QUESTION,B.SCORE  ,B.SFILE ,B.SORDER ,b.solution FROM T12_ANSWER_SUBJECT A  RIGHT JOIN T12_SUBJECT_INS B ON A.SUBJECTINSKEY = B.SUBJECTINSKEY
+     WHERE A.ANSWERKEY = #answerkey# AND B.SUBJECTTYPE='4' AND B.QUESTIONINSKEY=#questioninskey#
+  </statement> 
+    
+</sqlMap> 
+

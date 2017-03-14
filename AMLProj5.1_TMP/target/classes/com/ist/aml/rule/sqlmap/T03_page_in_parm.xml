@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T03_page_in_parm"> 
+  <statement id="getT03_page_in_parmList" parameterClass="com.ist.aml.rule.dto.T03_page_in_parm" resultClass="com.ist.aml.rule.dto.T03_page_in_parm"> 
+  select t1.parmkey,
+       t1.tplakey,
+       t1.dispname,
+       t1.sysinparmcd,
+       t1.parmtype,
+       t1.sysinparmkey,
+       t1.parmintype,
+       t1.targetcde,
+       t1.displen,
+       t1.isness,
+       t1.dispseq,
+       t1.des,
+       t1.displen,
+       t1.defaultval,
+       t1.indatatype,
+       t1.maxlen,
+       t1.minlen,
+       t1.warning,
+       t2.parmname
+  from t03_page_in_parm t1, T05_SYS_IN_PARM t2
+ where t1.sysinparmkey = t2.sysinparmkey 
+  <dynamic > 
+    <isNotEmpty prepend="and" property="tplakey"> 
+    tplakey = #tplakey# 
+    </isNotEmpty> 
+  </dynamic> 
+  order by t1.dispseq
+  </statement> 
+  
+  <statement id="getT03_page_in_parm_valueList" parameterClass="com.ist.aml.rule.dto.T03_page_in_parm" resultClass="com.ist.aml.rule.dto.T03_page_in_parm"> 
+  select t1.parmkey,
+       t1.tplakey,
+       t1.dispname,
+       t1.sysinparmcd,
+       t1.parmtype,
+       t1.sysinparmkey,
+       t1.parmintype,
+       t1.targetcde,
+       t1.displen,
+       t1.isness,
+       t1.dispseq,
+       t1.des,
+       t1.displen,
+       t1.defaultval,
+       t1.indatatype,
+       t1.maxlen,
+       t1.minlen,
+       t1.warning,
+       t2.parmname,
+       t3.param
+  from t03_page_in_parm t1, 
+       T05_SYS_IN_PARM t2,
+       T03_param_list   t3,
+       t03_page_in_val  t4
+ where t1.sysinparmkey = t2.sysinparmkey
+       and t3.parmvalkey = t4.parmvalkey
+       and t4.parmkey = t1.parmkey
+       and t3.tplakey = t1.tplakey
+       and t4.tplakey = t1.tplakey 
+  <dynamic > 
+    <isNotEmpty prepend="and" property="tplakey"> 
+    t1.tplakey = #tplakey# 
+    </isNotEmpty> 
+  </dynamic> 
+  order by t1.dispseq
+  </statement> 
+ 
+  <statement id="getAvp_in_parmList1" parameterClass="java.lang.String" resultClass="com.ist.avp.common.Avp_in_parm"> 
+  select parmkey,dispname,sysinparmcd,parmtype,sysinparmkey,parmintype,targetcde,displen,isness,dispseq,des,displen,defaultval,indatatype,maxlen,minlen,warning,systemflag,keyvisible from t03_page_in_parm 
+  where  tplakey = #value# 
+  order by dispseq
+  </statement> 
+ 
+  <statement id="getT03_page_in_parmListCount" parameterClass="com.ist.aml.rule.dto.T03_page_in_parm" resultClass="int"> 
+  select count(*) from t03_page_in_parm 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="tplakey"> 
+    tplakey = #tplakey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT03_page_in_parm" parameterClass="com.ist.aml.rule.dto.T03_page_in_parm" resultClass="int"> 
+  insert into T03_page_in_parm(
+  parmkey,tplakey,dispname,sysinparmcd,parmtype,sysinparmkey,targetcde,isness,systemflag,keyvisible,dispseq,des,displen,defaultval,
+  maxlen,minlen,warning,indatatype
+  ) values(
+  #parmkey#,#tplakey#,#dispname#,#sysinparmcd#,#parmtype#,#sysinparmkey#,#targetcde:VARCHAR:NULL#,#isness:VARCHAR:NULL#,#systemflag:CHAR#,#keyvisible:CHAR#,
+  #dispseq:INTEGER#,#des:VARCHAR#,#displen:INTEGER#,#defaultval:VARCHAR#,#maxlen:INTEGER#,#minlen:INTEGER#,#warning:VARCHAR#,#indatatype:VARCHAR#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT03_page_in_parm" parameterClass="com.ist.aml.rule.dto.T03_page_in_parm" resultClass="int"> 
+  update T03_page_in_parm set 
+  dispname=#dispname#,sysinparmcd=#sysinparmcd#,parmtype=#parmtype#,sysinparmkey=#sysinparmkey#,
+  targetcde=#targetcde#,displen=#displen#,isness=#isness#,systemflag=#systemflag#,keyvisible=#keyvisible#,dispseq=#dispseq#,des=#des#
+  ,defaultval=#defaultval#,maxlen=#maxlen#,minlen=#minlen#,warning=#warning#,indatatype=#indatatype#
+  where parmkey=#parmkey#
+  </statement> 
+ 
+  <statement id="deleteT03_page_in_parm" parameterClass="com.ist.aml.rule.dto.T03_page_in_parm" resultClass="int">
+  delete from T03_page_in_parm where parmkey =#parmkey# and tplakey=#tplakey#
+  </statement> 
+ 
+  <statement id="deleteT03_page_in_parm_by_tplakey" parameterClass="java.lang.String" resultClass="int">
+  delete from T03_page_in_parm where tplakey in ($value$)
+  </statement>
+  
+  <statement id="deleteT03_param_org_by_tplakey" parameterClass="java.lang.String" resultClass="int">
+  delete from T03_PARAM_ORG where tplakey in ($value$)
+  </statement>
+  
+  <statement id="getT03_page_in_parmDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.rule.dto.T03_page_in_parm"> 
+  select * from T03_page_in_parm where parmkey=#value# 
+  </statement> 
+ 
+   <statement id="getT02_sys_in_valDis1" parameterClass="java.lang.Integer" resultClass="com.ist.avp.template.dto.T02_sys_in_val"> 
+  select * from t05_sys_in_val where sysinparmkey=#sysinparmkey#
+  </statement> 
+  
+  <statement id="getT03_page_in_parmListWidthTylaKeys" parameterClass="java.util.List"  resultClass="com.ist.aml.rule.dto.T03_page_in_parm">
+  	select * from T03_page_in_parm where tplakey in
+  	<iterate open="(" close=")" conjunction=",">
+		#value[]#
+	</iterate>
+  </statement>
+  
+  <statement id="getT03_page_in_parmMaxDispSeq" parameterClass="java.lang.String" resultClass="java.lang.String"> 
+	  select max(dispseq) as dispseq
+	   from t03_page_in_parm 
+	  where tplakey=#value# 
+  </statement> 
+  
+  <statement id="checkSysinparmcd" parameterClass="com.ist.aml.rule.dto.T03_page_in_parm" resultClass="java.lang.Integer"> 
+  SELECT count(*) FROM t03_page_in_parm 
+  WHERE TPLAKEY = #tplakey# AND SYSINPARMCD = #sysinparmcd#
+  </statement> 
+  
+</sqlMap> 
+

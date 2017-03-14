@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table tablename="T06_AP_01" desc="项目方案流程表">
+	<!--
+		id:顺序 name:字段名称，和表单页面上的字段必须一致，区分大小写 desc:字段描叙 type: 
+		1:类		2:引用	3:意见	4:表
+		step：默认值生效的流程步骤
+	-->
+	<column name="ID" desc="表单id" />
+	<column name="ENTRYID" desc="流程id" />
+	<column name="STEPID" desc="步骤id" />
+	
+	<column name="PLANKEY" desc="计划编号" />
+	<column name="PLANNAME" desc="计划名称" step="10" />
+	<column name="ANNUAL" desc="计划年度" step="10" />
+	
+	<column name="PROJECTKEY" desc="项目编号" />
+	<column name="PROJECTNAME" desc="项目名称"/>
+	<column name="PSOURCE" desc="项目来源" />
+	<column name="PSOURCE_DISP" desc="项目来源" />
+	<column name="BCATEGORY" desc="业务类别" />
+	<column name="BCATEGORY_DISP" desc="业务类别展示" step="10" />		
+	<column name="BEGINDT" desc="开始时间" step="10" />
+	<column name="ENDDT" desc="结束时间" step="10" />
+	<column name="COSTESTI" desc="项目费用估算" step="10" />
+	<column name="AUDITMODEL" desc="审计模式" step="10"/>
+	
+	<column name="PM" desc="项目经理" step="10"/>
+	<column name="PM_DISP" desc="项目经理展示" step="10"/>
+	
+	<column name="AUDITPUR" desc="审计目的" step="10" />
+	<column name="ASCOPE" desc="审计范围" step="10" />
+	<column name="AUDITBASIS" desc="审计依据" step="10"/>
+	<column name="DESCR" desc="备注" step="10" />
+	<column name="PRESIDENT" desc="主审人" step="10" />
+	<column name="PRESIDENT_DISP" desc="主审人展示" step="10" />
+	<column name="QUACM" desc="质控经理" step="10" />
+	<column name="QUACM_DISP" desc="质控经理展示" step="10" />
+	
+	<column name="PROJECTTEAM" desc="项目小组" type="4" source="T06_AP_01_PJ_TEAM" ref="ENTRYID">
+		<subcolumn>ID</subcolumn>
+		<subcolumn>ENTRYID</subcolumn>
+		<subcolumn>TMKEY</subcolumn>
+		<subcolumn>PROJECTKEY</subcolumn>
+		<subcolumn>USERNAME</subcolumn>
+		<subcolumn>ROLEID</subcolumn>
+		<subcolumn>TEAMNAME</subcolumn>
+	</column>
+	
+	<column name="AUDITOBJECT" desc="被审计对象" type="4" source="T06_AP_01_OBJECT" ref="ENTRYID">
+		<subcolumn>ID</subcolumn>
+		<subcolumn>ENTRYID</subcolumn>
+		<subcolumn>PROJECTKEY</subcolumn>
+		<subcolumn>ENTITYKEY</subcolumn>
+		<subcolumn>ENTITYKEY_DISP</subcolumn>
+		<subcolumn>BEGINDT</subcolumn>
+		<subcolumn>ENDDT</subcolumn>
+		<subcolumn>AUDITTEAM</subcolumn>
+	</column>
+	
+	<column name="DOCATTCHID" desc="附件编号" step="10" />
+	<column name="QUACMOPTION" desc="质控经理意见" step="20" type="3" />
+	<column name="TOTALOPTION" desc="审计部负责人意见" step="30" type="3" />
+	<!-- <column name="BANKLEADEROPTION" desc="分管行领导意见" step="40" type="3" /> -->	
+	<column name="OPERATEDT" desc="拟稿日期" type="1"
+		source="com.ist.pmp.common.workflow.client.form.predefine.PredefineOfDate" step="-1" />
+	<column name="OPERATOR" desc="拟稿人" type="1"
+		source="com.ist.pmp.common.workflow.client.form.predefine.PredefineOfUser" step="-1" />
+</table>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="V18_day">
+	<statement id="getV18_dayList" parameterClass="com.ist.bmp.hpom.dto.V18_day"
+		resultClass="com.ist.bmp.hpom.dto.V18_day">
+		select
+		statisticdate,taskstatus,begintime,endtime,usetime,taskcount,finishtask
+		from v18_day
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="statisticdate">
+				statisticdate = #statisticdate# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="time_begin">
+				statisticdate>= #time_begin# 
+    </isNotEmpty>
+     <isNotEmpty prepend="and" property="time_end">
+				#time_end# >= statisticdate
+    </isNotEmpty>
+		</dynamic>
+		order by statisticdate 
+	</statement>
+
+	<statement id="getV18_dayListCount" parameterClass="com.ist.bmp.hpom.dto.V18_day"
+		resultClass="int">
+		select count(*) from v18_day
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="statisticdate">
+				statisticdate = #statisticdate# 
+    </isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="insertV18_day" parameterClass="com.ist.bmp.hpom.dto.V18_day"
+		resultClass="int">
+		insert into V18_day(
+		statisticdate,taskstatus,begintime,endtime,usetime,taskcount,finishtask
+		) values(
+		#statisticdate#,#taskstatus#,#begintime#,#endtime#,#usetime#,#taskcount#,#finishtask#
+		) 
+  </statement>
+
+	<statement id="modifyV18_day" parameterClass="com.ist.bmp.hpom.dto.V18_day"
+		resultClass="int">
+		update V18_day set
+		statisticdate=#statisticdate#,taskstatus=#taskstatus#,begintime=#begintime#,endtime=#endtime#,usetime=#usetime#,taskcount=#taskcount#,finishtask=#finishtask#
+		where statisticdate=#statisticdate# 
+  </statement>
+
+	<statement id="deleteV18_day" parameterClass="java.lang.String"
+		resultClass="int">
+		delete from V18_day where statisticdate=#value# 
+  </statement>
+
+	<statement id="getV18_dayDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.bmp.hpom.dto.V18_day">
+		select * from V18_day where statisticdate=#value# 
+  </statement>
+
+</sqlMap> 
+

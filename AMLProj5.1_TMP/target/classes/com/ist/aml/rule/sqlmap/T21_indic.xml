@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T21_indic">
+	<statement id="getT21_indicList" parameterClass="com.ist.aml.rule.dto.T21_indic"
+		resultClass="com.ist.aml.rule.dto.T21_indic">
+		SELECT INDICKEY ,INDICNAME , INDECDES ,GRANULARITYS ,PARTY_ACCT_CD
+		,INDIC_ATTR , INDICTYPE , INDIC_TABLE ,TRANSTABLE , CALLAYER ,FLAG
+		,USE_TYPE_CD ,TRANS_IND , CREATE_USR , CREATE_DT , CREATE_ORG FROM
+		T21_INDIC
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="indickey">
+				INDICKEY = #indickey# 
+    </isNotEmpty>
+    		<isNotEmpty prepend="AND" property="indicname_str">
+				INDICNAME LIKE '%'||#indicname_str#||'%'
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="granularitys">
+				GRANULARITYS = #granularitys# 
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_acct_cd">
+				PARTY_ACCT_CD =#party_acct_cd#
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="indictype">
+				INDICTYPE =#indictype#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="release">
+    	<isEqual property="release" compareValue="0">
+    		FLAG ='0'
+    	</isEqual>
+    	<isEqual property="release" compareValue="1">
+    		<isNotEmpty  property="flag">
+				FLAG =#flag#
+    		</isNotEmpty>
+    	</isEqual>
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="use_type_cd">
+				USE_TYPE_CD =#use_type_cd#
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="trans_ind">
+				TRANS_IND =#trans_ind#
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="indic_attr">
+				INDIC_ATTR =#indic_attr#
+    </isNotEmpty>
+    		<isNotEmpty prepend="AND" property="mark">
+    			<isEqual property="mark" compareValue="1">
+    				use_type_cd in ('1' , '3')
+    			</isEqual>
+    			<isEqual property="mark" compareValue="2">
+    				use_type_cd in ('2' , '3')
+    			</isEqual>
+    		</isNotEmpty>
+		</dynamic>
+		ORDER BY FLAG DESC
+	</statement>
+
+	<statement id="getT21_indicListCount" parameterClass="com.ist.aml.rule.dto.T21_indic"
+		resultClass="int">
+		SELECT COUNT(*) FROM T21_indic
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="indickey">
+				INDICKEY = #indickey# 
+    </isNotEmpty>
+    		<isNotEmpty prepend="AND" property="indicname_str">
+				INDICNAME LIKE '%'||#indicname_str#||'%'
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="granularitys">
+				GRANULARITYS = #granularitys# 
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_acct_cd">
+				PARTY_ACCT_CD =#party_acct_cd#
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="indictype">
+				INDICTYPE =#indictype#
+    </isNotEmpty>
+	<isNotEmpty prepend="AND" property="release">
+    	<isEqual property="release" compareValue="0">
+    		FLAG ='0'
+    	</isEqual>
+    	<isEqual property="release" compareValue="1">
+    		<isNotEmpty property="flag">
+				FLAG =#flag#
+    		</isNotEmpty>
+    	</isEqual>
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="use_type_cd">
+				USE_TYPE_CD =#use_type_cd#
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="trans_ind">
+				TRANS_IND =#trans_ind#
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="indic_attr">
+				INDIC_ATTR =#indic_attr#
+    </isNotEmpty>
+    		<isNotEmpty prepend="AND" property="mark">
+    			<isEqual property="mark" compareValue="1">
+    				use_type_cd in ('1' , '3')
+    			</isEqual>
+    			<isEqual property="mark" compareValue="2">
+    				use_type_cd in ('2' , '3')
+    			</isEqual>
+    		</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT21_indicListCount1" parameterClass="com.ist.aml.rule.dto.T21_indic"
+		resultClass="int">
+		SELECT COUNT(*) FROM T21_indic
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="indickey">
+				INDICKEY = #indickey# 
+    </isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="insertT21_indic" parameterClass="com.ist.aml.rule.dto.T21_indic"
+		resultClass="int">
+		INSERT INTO
+		T21_indic(INDICKEY,INDICNAME,INDECDES,GRANULARITYS,PARTY_ACCT_CD,INDIC_ATTR,INDICTYPE,INDIC_TABLE,TRANSTABLE,CALLAYER,FLAG,USE_TYPE_CD,TRANS_IND,CREATE_USR,CREATE_DT,CREATE_ORG)
+		values	 (#indickey#,#indicname#,#indecdes#,#granularitys#,#party_acct_cd#,#indic_attr#,
+		#indictype#, #indic_table#,#transtable#,
+		#callayer#,#flag#,#use_type_cd#,#trans_ind#, #create_usr#,
+		#create_dt#,#create_org#) 
+
+  </statement>
+	<statement id="getT21_indicDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.aml.rule.dto.T21_indic">
+	SELECT A.*, B.INDIC_SEL_SQL AS INDIC_SEL_SQL, B.TRANS_SEL_SQL AS TRANS_SEL_SQL
+	FROM T21_INDIC A, T21_INDIC_SQL B
+	WHERE A.INDICKEY = B.INDICKEY AND A.INDICKEY=#value# 
+  </statement>
+	<statement id="modifyT21_indic" parameterClass="com.ist.aml.rule.dto.T21_indic"
+		resultClass="int">
+		UPDATE T21_indic SET
+		INDICNAME=#indicname#,INDECDES=#indecdes#,GRANULARITYS=#granularitys#,PARTY_ACCT_CD=#party_acct_cd#,
+		INDICTYPE=#indictype#,USE_TYPE_CD=#use_type_cd#,
+		INDIC_TABLE=#indic_table#,TRANSTABLE=#transtable#,
+		CALLAYER=#callayer#,TRANS_IND=#trans_ind#
+		WHERE INDICKEY=#indickey# 
+  </statement>
+
+	<statement id="deleteT21_indic" parameterClass="java.lang.String"
+		resultClass="int">
+		DELETE FROM T21_indic WHERE INDICKEY=#value# 
+	</statement>
+	
+	<statement id="deleteT21_indic_sql" parameterClass="java.lang.String"
+		resultClass="int">
+		DELETE FROM T21_indic_sql WHERE INDICKEY=#value# 
+	</statement>
+
+	<statement id="insertT21_indic_sql" parameterClass="com.ist.aml.rule.dto.T21_indic"
+		resultClass="int">
+		INSERT INTO T21_INDIC_SQL (INDICKEY, INDIC_SEL_SQL, INDIC_INS_SQL,
+		TRANS_SEL_SQL, TRANS_INS_SQL) VALUES
+		(#indickey#,#indic_sel_sql#,#indic_ins_sql#,#trans_sel_sql#,#trans_ins_sql#)
+	</statement>
+	
+	<statement id="modifyT21_indic_sql" parameterClass="com.ist.aml.rule.dto.T21_indic"
+	resultClass="int">
+	UPDATE T21_INDIC_SQL
+	SET TRANS_INS_SQL = #trans_ins_sql#,
+	TRANS_SEL_SQL = #trans_sel_sql#,
+	INDIC_INS_SQL = #indic_ins_sql#,
+	INDIC_SEL_SQL = #indic_sel_sql#
+	WHERE INDICKEY = #indickey#
+	</statement>
+	
+	
+	<statement id="getT21_indic_mapList" parameterClass="com.ist.aml.rule.dto.T21_indic"
+		resultClass="com.ist.aml.rule.dto.T21_indic">
+		select rule_indickey as indickey, base_indickey as gz_jckey,defkey as gz_defkey from T21_INDIC_MAP WHERE rule_indickey = #indickey#
+		<dynamic prepend="">
+			<isNotEmpty prepend="AND" property="gz_jckey">
+				base_indickey = #gz_jckey#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT21_indic_mapCount" parameterClass="com.ist.aml.rule.dto.T21_indic"
+		resultClass="int">
+		SELECT COUNT(*) FROM T21_INDIC_MAP WHERE rule_indickey = #indickey# 
+		<dynamic prepend="">
+			<isNotEmpty prepend="AND" property="gz_jckey">
+				base_indickey = #gz_jckey#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="insertT21_indic_map" parameterClass="com.ist.aml.rule.dto.T21_indic"
+		resultClass="int">
+		INSERT INTO T21_INDIC_MAP (rule_indickey, base_indickey, defkey) VALUES
+		(#indickey#,#gz_jckey#,#gz_defkey#)
+	</statement>
+	
+	<statement id="getGz_defkey" parameterClass="java.lang.String"
+		resultClass="java.lang.String">
+		SELECT distinct defkey FROM T21_INDIC_MAP WHERE rule_indickey = #indickey#
+	</statement>
+	
+	<statement id="deleteT21_indic_map" parameterClass="java.lang.String"
+		resultClass="int">
+		DELETE FROM T21_INDIC_MAP WHERE rule_indickey = #indickey#
+	</statement>
+	
+	<statement id="insertT18_taskList" parameterClass="com.ist.aml.rule.dto.T21_indic" resultClass="int">
+		INSERT INTO T18_TASKLIST (BUSINESSKEY, TASKTYPE, DEPANDONTYPE, GRANULARITY) VALUES 
+		(#indic_table#,#tasktype#,#depandontype#,#granularitys#)
+  	</statement>
+  	
+  	<statement id="deleteT18_taskList" parameterClass="java.lang.String" resultClass="int">
+		DELETE FROM T18_TASKLIST WHERE BUSINESSKEY =#indic_table#
+  	</statement>
+  	
+  	<statement id="updateT21_indic_flag" parameterClass="com.ist.aml.rule.dto.T21_indic" resultClass="int">
+		UPDATE T21_INDIC SET FLAG=#flag# WHERE INDICKEY=#indickey#
+  	</statement>
+  	
+</sqlMap> 
+

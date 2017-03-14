@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_questionnaire"> 
+  <statement id="getT12_questionnaireList" parameterClass="com.ist.cms.dto.T12_questionnaire" resultClass="com.ist.cms.dto.T12_questionnaire"> 
+  	SELECT T12_QUESTIONNAIRE.QUESTIONKEY,TITLE,FLAG,CREATETIME,QUESTIONTYPE,CREATOR,COALESCE(PUBLISH_STATE, '0') AS PUBLISH_STATE 
+  	FROM T12_QUESTIONNAIRE LEFT JOIN (SELECT DISTINCT A.QUESTIONKEY, A.STATE AS PUBLISH_STATE FROM T12_PUBLISH_QUESTIONNAIRE A WHERE A.STATE = (SELECT MAX(B.STATE) FROM T12_PUBLISH_QUESTIONNAIRE B WHERE B.QUESTIONKEY=A.QUESTIONKEY )) X ON T12_QUESTIONNAIRE.QUESTIONKEY=X.QUESTIONKEY
+	  <dynamic prepend="WHERE"> 
+	    <isNotEmpty prepend="AND" property="title"> 
+	    	TITLE LIKE '%'||#title#||'%'
+	    </isNotEmpty> 
+	    <isNotEmpty prepend="AND" property="createtime_begin">
+	    	CREATETIME >= #createtime_begin#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="createtime_end">
+	    	<![CDATA[ CREATETIME <= #createtime_end# ]]>
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="questiontype">
+	    	QUESTIONTYPE = #questiontype#
+	    </isNotEmpty>
+	    <isEmpty prepend="AND" property="flag">
+	    	FLAG != '2'
+	    </isEmpty>
+	    <isNotEmpty prepend="AND" property="flag">
+	    	FLAG = #flag#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="creator">
+	    	CREATOR = #creator#
+	    </isNotEmpty>
+	  </dynamic> 
+	  <isNotEmpty prepend="" property="sort_type">
+	  	ORDER BY $sort$ $sort_type$
+	  </isNotEmpty>
+  </statement> 
+ 
+  <statement id="getT12_questionnaireListCount" parameterClass="com.ist.cms.dto.T12_questionnaire" resultClass="int"> 
+	  SELECT COUNT(*) FROM T12_QUESTIONNAIRE LEFT JOIN (SELECT DISTINCT A.QUESTIONKEY, A.STATE AS PUBLISH_STATE FROM T12_PUBLISH_QUESTIONNAIRE A WHERE A.STATE = (SELECT MAX(B.STATE) FROM T12_PUBLISH_QUESTIONNAIRE B WHERE B.QUESTIONKEY=A.QUESTIONKEY )) X ON T12_QUESTIONNAIRE.QUESTIONKEY=X.QUESTIONKEY
+	  <dynamic prepend="WHERE"> 
+	    <isNotEmpty prepend="AND" property="title"> 
+	    	TITLE LIKE '%'||#title#||'%'
+	    </isNotEmpty> 
+	    <isNotEmpty prepend="AND" property="createtime_begin">
+	    	CREATETIME >= #createtime_begin#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="createtime_end">
+	    	<![CDATA[ CREATETIME <= #createtime_end# ]]>
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="questiontype">
+	    	QUESTIONTYPE = #questiontype#
+	    </isNotEmpty>
+	    <isEmpty prepend="AND" property="flag">
+	    	FLAG != '2'
+	    </isEmpty>
+	    <isNotEmpty prepend="AND" property="flag">
+	    	FLAG = #flag#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="creator">
+	    	CREATOR = #creator#
+	    </isNotEmpty>
+	  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_questionnaire" parameterClass="com.ist.cms.dto.T12_questionnaire" resultClass="int"> 
+   INSERT INTO T12_QUESTIONNAIRE(
+  QUESTIONKEY,TITLE,TOTALSCORE,FLAG,CREATETIME,CREATOR,MODIFYTIME,MODIFIER,QUESTIONTYPE
+  ) VALUES(
+  #questionkey#,#title#,#totalscore#,#flag#,#createtime#,#creator#,#modifytime#,#modifier#,#questiontype#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_questionnaire" parameterClass="com.ist.cms.dto.T12_questionnaire" resultClass="int"> 
+  UPDATE T12_QUESTIONNAIRE SET 
+  title=#title#,totalscore=#totalscore#,flag=#flag#,createtime=#createtime#,
+  creator=#creator#,modifytime=#modifytime#,questiontype=#questiontype#,modifier=#modifier# where questionkey=#questionkey# 
+  </statement> 
+ 
+  <statement id="updateT12_questionnaireState" parameterClass="com.ist.cms.dto.T12_questionnaire" resultClass="int">
+  	UPDATE T12_questionnaire SET FLAG=#flag# where questionkey=#questionkey# 
+  </statement> 
+ 
+  <statement id="getT12_questionnaireDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_questionnaire"> 
+  select * from T12_questionnaire where questionkey=#value# 
+  </statement> 
+  
+  
+  <statement id="updateT12_questionnaireTotalScore" parameterClass="java.lang.String" resultClass="int">
+  	UPDATE T12_QUESTIONNAIRE SET TOTALSCORE=(
+  		SELECT COALESCE(SUM(SCORE),0) AS SCORE  FROM T12_QUESTIONS_SUBJECT WHERE QUESTIONKEY=#id# AND FLAG='1'
+  	)WHERE QUESTIONKEY=#questionkey#
+  </statement>
+  
+ <statement id="updateT12_questionnaireCreator" parameterClass="com.ist.cms.dto.T12_questionnaire" resultClass="int">
+  	UPDATE T12_QUESTIONNAIRE SET CREATOR=#creator# WHERE QUESTIONKEY=#questionkey#
+  </statement>
+ 
+ <!-- add by zhangqiaojun 2010-09-28  -->
+ <statement id="insertT12_question_ins" parameterClass="com.ist.cms.dto.T12_questionnaire" resultClass="int"> 
+   INSERT INTO T12_QUESTION_INS(
+  QUESTIONINSKEY,QUESTIONKEY,TITLE,TOTALSCORE,FLAG,CREATETIME,CREATOR,MODIFYTIME,MODIFIER,QUESTIONTYPE
+  ) VALUES(
+  #questioninskey#,#questionkey#,#title#,#totalscore#,#flag#,#createtime#,#creator#,#modifytime#,#modifier#,#questiontype#
+  ) 
+  </statement> 
+   <statement id="getT12_question_insDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_questionnaire"> 
+  SELECT * FROM T12_QUESTION_INS WHERE QUESTIONINSKEY=#value# 
+  </statement> 
+</sqlMap> 
+

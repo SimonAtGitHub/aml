@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation=" http://www.springframework.org/schema/beans
+						 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<!-- 客户端请求映射器 -->
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<value>/*=springManagedMessageBroker</value>
+		</property>
+	</bean>
+
+	<bean class="org.springframework.flex.servlet.MessageBrokerHandlerAdapter" />
+		
+	<bean id="springManagedMessageBroker" 
+		  class=" org.springframework.flex.core.MessageBrokerFactoryBean" />
+		  
+	<!-- Flex 调用Service配置 begin -->
+	
+	<bean id="initializeDataService" class="org.springframework.flex.remoting.RemotingDestinationExporter">
+		<property name="messageBroker" ref="springManagedMessageBroker" />
+		<property name="service" ref="initializeDataImpl" />
+	</bean>
+	
+	<bean id="saveDataService" class="org.springframework.flex.remoting.RemotingDestinationExporter">
+		<property name="messageBroker" ref="springManagedMessageBroker" />
+		<property name="service" ref="saveDataImpl" />
+	</bean>
+	
+	
+	<bean id="exportDataService" class="org.springframework.flex.remoting.RemotingDestinationExporter">
+		<property name="messageBroker" ref="springManagedMessageBroker" />
+		<property name="service" ref="exportDataImpl" />
+	</bean>
+	
+	
+	
+ 	<!-- Flex 调用Service配置 end -->
+</beans> 

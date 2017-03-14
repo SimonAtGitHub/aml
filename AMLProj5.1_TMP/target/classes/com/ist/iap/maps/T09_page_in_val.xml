@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T09_page_in_val"> 
+  <statement id="getT09_page_in_valList" parameterClass="com.ist.iap.dto.T09_page_in_val" resultClass="com.ist.iap.dto.T09_page_in_val"> 
+  select parmvalkey,parmkey,indickey,parmname,parmcd,isness,ishidecol,parmseq,isvalcol from t09_page_in_val 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="parmvalkey"> 
+    parmvalkey = #parmvalkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT09_page_in_valListCount" parameterClass="com.ist.iap.dto.T09_page_in_val" resultClass="int"> 
+  select count(*) from t09_page_in_val 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="parmvalkey"> 
+    parmvalkey = #parmvalkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT09_page_in_val" parameterClass="com.ist.iap.dto.T09_page_in_val" resultClass="int"> 
+  insert into T09_page_in_val(
+  parmvalkey,parmkey,indickey,parmname,parmcd,isness,ishidecol,parmseq,isvalcol
+  ) values(
+  #parmvalkey#,#parmkey#,#indickey#,#parmname#,#parmcd#,#isness#,#ishidecol#,#parmseq#,#isvalcol#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT09_page_in_val" parameterClass="com.ist.iap.dto.T09_page_in_val" resultClass="int"> 
+  update T09_page_in_val set 
+  parmvalkey=#parmvalkey#,parmkey=#parmkey#,indickey=#indickey#,parmname=#parmname#,parmcd=#parmcd#,isness=#isness#,ishidecol=#ishidecol#,parmseq=#parmseq#,isvalcol=#isvalcol#
+  where parmvalkey=#parmvalkey# 
+  </statement> 
+  
+  <statement id="deleteT09_page_in_val" parameterClass="java.util.HashMap" resultClass="int">
+  delete from T09_page_in_val where indickey=#indickey#  and parmkey = #parmkey#
+  </statement> 
+  
+  <statement id="deleteT09_page_in_val_indickey" parameterClass="java.lang.String" resultClass="int">
+  delete from T09_page_in_val where indickey=#indickey#
+  </statement>
+ 
+  <statement id="getT09_page_in_valDisp" parameterClass="java.lang.String" resultClass="com.ist.iap.dto.T09_page_in_val"> 
+  select * from T09_page_in_val where parmvalkey=#value# 
+  </statement> 
+  
+ <statement id="indicParmkeyAndParmcdMap" parameterClass="java.lang.String"
+		resultClass="com.ist.iap.dto.T09_page_in_val">
+	    select parmcd,parmvalkey from t09_page_in_val where indickey=#value#
+ </statement>
+ 
+  <statement id="getT09_page_in_valByIndickey" parameterClass="java.lang.String" resultClass="com.ist.iap.dto.T09_page_in_val"> 
+  	select t.*, t1.parmtype,t1.indatatype from T09_PAGE_IN_VAL t , T09_PAGE_IN_PARM t1	where t.indickey = t1.indickey
+   	and t.parmkey = t1.parmkey 	and t.indickey = #value#
+  </statement> 
+ 
+ 
+ <statement id="getT09_param_valList" parameterClass="java.lang.String" resultClass="com.ist.iap.dto.T09_page_in_val">
+  select v.parmcd ,l.param from T09_PARAM_LIST l ,
+  T09_PAGE_IN_VAL v where l.PARMVALKEY = v.PARMVALKEY and l.indickey = v.indickey 
+  and l.indickey=#value#
+ </statement>
+ 
+ <statement id="getT09_page_in_valCodeValue" parameterClass="java.lang.String" resultClass="com.ist.iap.dto.T09_page_in_val"> 
+    select '@'||rtrim(ltrim(a.PARMCD))||':'||
+	case b.indatatype when '2' then 'number' when '3' then 'date' else 'char' end||'@' as parmcd,
+    rtrim(a.parmname) as parmname from T09_page_in_val a,T09_page_IN_PARM b  
+    where a.parmkey=b.parmkey and  a.indickey=#indickey# and b.indickey=#indickey#
+    order by b.dispseq
+  </statement>
+</sqlMap> 
+

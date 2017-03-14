@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T18_shcontent"> 
+
+ 
+  <statement id="getT18_shcontentListForODS2DM" parameterClass="com.ist.bmp.hpom.dto.T18_shcontent" resultClass="com.ist.bmp.hpom.dto.T18_shcontent"> 
+	 select t2.tableename,t2.seq,t2.shcontent,t3.granularity from t18_dm_table t1,T18_SHCONTENT t2,T18_TASKLIST t3 where t1.tableename=t2.tableename and t3.businesskey=t2.tableename and t3.tasktype='302' order by t2.tableename,t2.seq 
+  </statement> 
+ 
+ 
+</sqlMap> 
+

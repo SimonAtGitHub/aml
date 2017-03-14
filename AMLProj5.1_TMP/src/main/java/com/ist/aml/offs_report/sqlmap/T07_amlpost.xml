@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T07_amlpost"> 
+  <statement id="getT07_amlpostList" parameterClass="com.ist.aml.offs_report.dto.T07_amlpost" resultClass="com.ist.aml.offs_report.dto.T07_amlpost"> 
+  SELECT USER_ID,ORGANKEY,DEPARTMENT,ORGAN_USERNAME,ORGAN_POSITION,ORGAN_TELEPHONE,DEPART_USERNAME,DEPART_TELEPHONE,FULL_TIME_NUM,PART_TIME_NUM FROM T07_AMLPOST 
+  <dynamic prepend="WHERE"> 
+  
+    <isNotEmpty prepend="AND" property="user_id"> 
+    USER_ID = #user_id# 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="organ_username"> 
+    ORGAN_USERNAME LIKE '%'||#organ_username#||'%'
+    </isNotEmpty> 
+    
+    <isNotEmpty prepend="AND" property="organkey"> 
+    ORGANKEY IN ($organkey$)
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="organstr"> 
+    ORGANKEY IN ($organstr$)
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="organ_position"> 
+    ORGAN_POSITION LIKE '%'||#organ_position#||'%' 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="department"> 
+    DEPARTMENT LIKE '%'||#department#||'%'
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="organ_telephone"> 
+    ORGAN_TELEPHONE LIKE '%'||#organ_telephone#||'%'
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="depart_username"> 
+    DEPART_USERNAME LIKE '%'||#depart_username#||'%' 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="depart_telephone"> 
+    DEPART_TELEPHONE LIKE '%'||#depart_telephone#||'%' 
+    </isNotEmpty>
+    
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT07_amlpostListCount" parameterClass="com.ist.aml.offs_report.dto.T07_amlpost" resultClass="int"> 
+  SELECT COUNT(USER_ID) FROM T07_AMLPOST 
+  <dynamic prepend="WHERE"> 
+  
+	<isNotEmpty prepend="AND" property="user_id"> 
+    USER_ID = #user_id# 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="organ_username"> 
+    ORGAN_USERNAME LIKE '%'||#organ_username#||'%' 
+    </isNotEmpty> 
+    
+    <isNotEmpty prepend="AND" property="organkey"> 
+    ORGANKEY IN ($organkey$)
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="organstr"> 
+    ORGANKEY IN ($organstr$)
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="organ_position"> 
+    ORGAN_POSITION LIKE '%'||#organ_position#||'%' 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="department"> 
+    DEPARTMENT LIKE '%'||#department#||'%' 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="organ_telephone"> 
+    ORGAN_TELEPHONE LIKE '%'||#organ_telephone#||'%' 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="depart_username"> 
+    DEPART_USERNAME LIKE '%'||#depart_username#||'%' 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="depart_telephone"> 
+    DEPART_TELEPHONE LIKE '%'||#depart_telephone#||'%' 
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT07_amlpost" parameterClass="com.ist.aml.offs_report.dto.T07_amlpost" resultClass="int"> 
+  INSERT INTO T07_AMLPOST(USER_ID,ORGANKEY,DEPARTMENT,ORGAN_USERNAME,ORGAN_POSITION,ORGAN_TELEPHONE,DEPART_USERNAME,DEPART_TELEPHONE,FULL_TIME_NUM,PART_TIME_NUM,LAST_UPD_USER,LAST_UPD_DT
+  ) VALUES(
+  #user_id#,#organkey#,#department#,#organ_username#,#organ_position#,#organ_telephone#,#depart_username#,#depart_telephone#,#full_time_num#,#part_time_num#,#last_upd_user#,#last_upd_dt#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT07_amlpost" parameterClass="com.ist.aml.offs_report.dto.T07_amlpost" resultClass="int"> 
+  UPDATE T07_AMLPOST SET 
+  USER_ID=#user_id#,ORGANKEY=#organkey#,DEPARTMENT=#department#,ORGAN_USERNAME=#organ_username#,ORGAN_POSITION=#organ_position#,ORGAN_TELEPHONE=#organ_telephone#,DEPART_USERNAME=#depart_username#,DEPART_TELEPHONE=#depart_telephone#,FULL_TIME_NUM=#full_time_num#,PART_TIME_NUM=#part_time_num#,LAST_UPD_USER=#last_upd_user#,LAST_UPD_DT=#last_upd_dt#
+  WHERE USER_ID=#user_id# 
+  </statement> 
+ 
+  <statement id="deleteT07_amlpost" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T07_AMLPOST WHERE USER_ID=#value# 
+  </statement> 
+ 
+  <statement id="getT07_amlpostDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.offs_report.dto.T07_amlpost"> 
+  SELECT USER_ID,ORGAN_USERNAME,ORGANKEY,ORGAN_POSITION,DEPARTMENT,ORGAN_TELEPHONE,LAST_UPD_USER,LAST_UPD_DT,DEPART_USERNAME,DEPART_TELEPHONE,FULL_TIME_NUM,PART_TIME_NUM FROM T07_AMLPOST WHERE USER_ID=#value# 
+  </statement> 
+ 
+</sqlMap> 
+

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+<struts-config>
+	<data-sources />
+	<form-beans>
+		<form-bean name="t10_reportActionForm"
+			type="com.ist.rpp.report.controller.T10_reportActionForm" />
+		<form-bean name="t10_reportParmActionForm"
+			type="com.ist.rpp.report.controller.T10_reportParmActionForm" />
+		<form-bean name="t10_reportEditorActionForm"
+			type="com.ist.rpp.report.controller.T10_reportEditorActionForm" />
+	</form-beans>
+
+	<global-exceptions />
+	<global-forwards />
+
+	<action-mappings>
+		<action name="t10_reportActionForm" parameter="showReport"
+			path="/showReport" type="com.ist.rpp.report.controller.T10_reportAction"
+			validate="false">
+			<forward name="success" path="/show_report.jsp"></forward>
+			<forward name="up" path="/show_report_up.jsp"></forward>
+			<forward name="down" path="/show_report_down.jsp"></forward>
+			<forward name="left" path="/show_report_left.jsp"></forward>
+			<forward name="right" path="/show_report_right.jsp"></forward>
+		</action>
+		<action name="t10_reportActionForm" parameter="downloadReport"
+			path="/downloadReport" type="com.ist.rpp.report.controller.T10_reportAction" validate="false">
+			<forward name="success" path="/show_report.jsp"></forward>			
+		</action>
+		<action path="/t10_report/t10_report_search" parameter="searchT10_report"
+			name="t10_reportActionForm" type="com.ist.rpp.report.controller.T10_reportAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t10_report/t10_report_search.jsp" />
+			<forward name="failure" path="/t10_report/t10_report_list.do" />
+		</action>
+		<action path="/t10_report/t10_report_list" parameter="getT10_reportList"
+			name="t10_reportActionForm" type="com.ist.rpp.report.controller.T10_reportAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t10_report/report_list.jsp" />
+		</action>
+		<action path="/t10_report/t10_report_add" parameter="addT10_report"
+			name="t10_reportActionForm" type="com.ist.rpp.report.controller.T10_reportAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t10_report/report_add.jsp" />
+			<forward name="failure" path="/t10_report/report_add.jsp" />
+		</action>
+		
+		<action path="/t10_report/t10_report_add_baseinfo" parameter="addT10_reportBaseInfo"
+			name="t10_reportActionForm" type="com.ist.rpp.report.controller.T10_reportAction" validate="false" scope="request">
+			<forward name="success" path="/t10_report/report_add_baseinfo.jsp" />
+			<forward name="failure" path="/t10_report/report_add_baseinfo.jsp" />
+		</action>
+		
+		<action path="/t10_report/t10_report_add_baseinfo_do" parameter="addT10_reportBaseInfoDo"
+			name="t10_reportActionForm" type="com.ist.rpp.report.controller.T10_reportAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t10_report/t10_report_modify_baseinfo.do" />
+			<forward name="failure" path="/t10_report/t10_report_add_baseinfo.do" />
+		</action>
+		
+		<action path="/t10_report/t10_report_modify" parameter="modifyT10_report"
+			name="t10_reportActionForm" type="com.ist.rpp.report.controller.T10_reportAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t10_report/report_add.jsp" />
+			<forward name="failure" path="/t10_report/t10_report_list.do" />
+		</action>
+		
+		<action path="/t10_report/t10_report_modify_baseinfo" parameter="modifyT10_reportBaseInfo"
+			name="t10_reportActionForm" type="com.ist.rpp.report.controller.T10_reportAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t10_report/report_modify_baseinfo.jsp" />
+			<forward name="failure" path="/t10_report/t10_report_list.do" />
+		</action>
+		<action path="/t10_report/t10_report_modify_baseinfo_do" parameter="modifyT10_reportBaseInfoDo"
+			name="t10_reportActionForm" type="com.ist.rpp.report.controller.T10_reportAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t10_report/t10_report_modify_baseinfo.do" />
+			<forward name="failure" path="/t10_report/t10_report_modify_baseinfo.do" />
+		</action>
+		
+		<action path="/t10_report/t10_report_sum" parameter="sumT10_report" name="t10_reportActionForm"
+		 type="com.ist.rpp.report.controller.T10_reportAction" validate="false" scope="request">
+			<forward name="success" path="/t10_report/report_sum.jsp" />
+			<forward name="failure" path="/t10_report/report_sum.jsp" />
+		</action>
+		
+		<action path="/t10_report/t10_report_test" parameter="testT10_report" name="t10_reportActionForm"
+		 type="com.ist.rpp.report.controller.T10_reportAction" validate="false" scope="request">
+			<forward name="success" path="/t10_report/report_test.jsp" />
+			<forward name="failure" path="/t10_report/report_test.jsp" />
+			<forward name="up" path="/show_report_up.jsp"></forward>
+			<forward name="down" path="/show_report_down.jsp"></forward>
+			<forward name="left" path="/show_report_left.jsp"></forward>
+			<forward name="right" path="/show_report_right.jsp"></forward>
+		</action>
+		
+		<action path="/t10_report/t10_report_delete_do" parameter="deleteT10_reportDo"
+			name="t10_reportActionForm" type="com.ist.rpp.report.controller.T10_reportAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t10_report/t10_report_list.do" />
+			<forward name="failure" path="/t10_report/t10_report_list.do" />
+		</action>
+		<action path="/t10_report/t10_report_disp" parameter="getT10_reportDisp"
+			name="t10_reportActionForm" type="com.ist.rpp.report.controller.T10_reportAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t10_report/report_disp.jsp" />
+		</action>
+		<action path="/t10_report/t10_report_deploy" parameter="deployT10_report"
+			name="t10_reportActionForm" type="com.ist.rpp.report.controller.T10_reportAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t10_report/t10_report_list.do" />
+			<forward name="success1" path="/t10_report/t10_report_deploy_list.do" />
+		</action>
+		<action path="/t10_report/get_file_disp" parameter="get_file_disp"
+			name="t10_reportActionForm" type="com.ist.rpp.report.controller.T10_reportAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t10_report/file_disp.jsp" />
+		</action>
+		<action path="/t10_report/t10_report_deploy_list" parameter="get_deploy_list"
+			name="t10_reportActionForm" type="com.ist.rpp.report.controller.T10_reportAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t10_report/deploy_list.jsp" />
+		</action>
+		<action path="/t10_report/deploy_report" parameter="deploy_report"
+			name="t10_reportActionForm" type="com.ist.rpp.report.controller.T10_reportAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t10_report/deploy.jsp" />
+		</action>
+		<action path="/t10_report/deploy_report_do" parameter="deploy_report_do"
+			name="t10_reportActionForm" type="com.ist.rpp.report.controller.T10_reportAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t10_report/t10_report_deploy_list.do" />
+		</action>
+		<action path="/t10_report/repeal_report_do" parameter="repeal_report_do"
+			name="t10_reportActionForm" type="com.ist.rpp.report.controller.T10_reportAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t10_report/t10_report_deploy_list.do" />
+		</action>
+		
+		
+		<!-- 报表定义 - 参数列表  -->
+		<action path="/t10_report/t10_reportparm_list" parameter="getT10_reportParmList" name="t10_reportParmActionForm"
+			type="com.ist.rpp.report.controller.T10_reportParmAction" validate="false" scope="request">
+			<forward name="success" path="/t10_report/report_parm_list.jsp" />
+			<forward name="failure" path="/t10_report/report_parm_list.jsp" />
+		</action>
+		<!-- 报表定义 - 参数添加界面 -->
+		<action path="/t10_report/t10_reportparm_add" parameter="addT10_reportParm" name="t10_reportParmActionForm"
+			type="com.ist.rpp.report.controller.T10_reportParmAction" validate="false" scope="request">
+			<forward name="success" path="/t10_report/report_parm_add.jsp" />
+			<forward name="failure" path="/t10_report/report_parm_add.jsp" />
+		</action>
+		<!-- 报表定义 - 参数添加动作 -->
+		<action path="/t10_report/t10_reportparm_add_do"
+			parameter="addT10_reportParmDo" name="t10_reportParmActionForm"
+			type="com.ist.rpp.report.controller.T10_reportParmAction" validate="false" scope="request">
+			<forward name="success" path="/t10_report/t10_reportparm_list.do" />
+			<forward name="failure" path="/t10_report/t10_reportparm_add.do" />
+		</action>
+		<!-- 报表定义 - 参数修改界面 -->
+		<action path="/t10_report/t10_reportparm_modify" parameter="modifyT10_reportParm" name="t10_reportParmActionForm"
+			type="com.ist.rpp.report.controller.T10_reportParmAction" validate="false" scope="request">
+			<forward name="success" path="/t10_report/report_parm_modify.jsp" />
+			<forward name="failure" path="/t10_report/t10_reportparm_list.do" />
+		</action>
+		<!-- 报表定义 - 参数修改动作 -->
+		<action path="/t10_report/t10_reportparm_modify_do" parameter="modifyT10_reportParmDo" name="t10_reportParmActionForm"
+			type="com.ist.rpp.report.controller.T10_reportParmAction" validate="false" scope="request">
+			<forward name="success" path="/t10_report/t10_reportparm_list.do" />
+			<forward name="failure" path="/t10_report/t10_reportparm_modify.do" />
+		</action>
+		<!-- 报表定义 - 参数删除动作 -->
+		<action path="/t10_report/t10_reportparm_delete_do" parameter="deleteT10_reportParmDo" name="t10_reportParmActionForm"
+			type="com.ist.rpp.report.controller.T10_reportParmAction" validate="false" scope="request">
+			<forward name="success" path="/t10_report/t10_reportparm_list.do" />
+			<forward name="failure" path="/t10_report/t10_reportparm_list.do" />
+		</action>
+		
+		<!-- 报表定义 - 图表类型添加界面 -->
+		<action path="/t10_report/t10_report_charttype_add" parameter="addT10_report_charttype" name="t10_reportActionForm"
+			type="com.ist.rpp.report.controller.T10_reportAction" validate="false" scope="request">
+			<forward name="success" path="/t10_report/report_charttype.jsp" />
+			<forward name="failure" path="/t10_report/report_charttype.jsp" />
+		</action>
+		<!-- 报表定义 - 图表类型添加动作 -->
+		<action path="/t10_report/t10_report_charttype_add_do" parameter="addT10_report_charttypeDo" name="t10_reportActionForm"
+			type="com.ist.rpp.report.controller.T10_reportAction" validate="false" scope="request">
+			<forward name="success" path="/t10_report/t10_report_charttype_add.do" />
+			<forward name="failure" path="/t10_report/t10_report_charttype_add.do" />
+		</action>		
+		<action path="/t10_report/t10_report_scriptcd_modify" parameter="modifyT10_report_scriptcd" name="t10_reportActionForm"
+			type="com.ist.rpp.report.controller.T10_reportAction" validate="false" scope="request">
+			<forward name="success" path="/t10_report/t10_report_scriptcd_modify.jsp" />
+			<forward name="failure" path="/t10_report/t10_report_scriptcd_modify.jsp" />			
+		</action>
+		<action path="/t10_report/modifyT10_report_scriptcdDo" parameter="modifyT10_report_scriptcdDo" name="t10_reportActionForm"
+			type="com.ist.rpp.report.controller.T10_reportAction" validate="false" scope="request">
+			<forward name="success" path="/t10_report/t10_report_scriptcd_modify.jsp" />
+			<forward name="failure" path="/t10_report/t10_report_scriptcd_modify.jsp" />			
+		</action>
+		<!-- 数据模板编辑 -->
+		<action name="t10_reportEditorActionForm" parameter="editReportDataTpl"
+			path="/t10_report/editreportdatatpl" type="com.ist.rpp.report.controller.T10_reportEditorAction" validate="false">
+			<forward name="success" path="/t10_report/report_datatpl_edit.jsp"></forward>			
+		</action>
+		
+		<action name="t10_reportEditorActionForm" parameter="editReportDataTpl_xls"
+            path="/t10_report/editReportDataTpl_xls" type="com.ist.rpp.report.controller.T10_reportEditorAction" validate="false">
+            <forward name="success" path="/t10_report/report_exceltpl_edit.jsp"></forward>           
+        </action>
+        <action path="/t10_report/editReportDataTpl_read" parameter="editReportDataTplRead"  type="com.ist.rpp.report.controller.T10_reportEditorAction" validate="false" scope="request" />
+        <action path="/t10_report/editReportDataTpl_save" parameter="editReportDataTplSave"  type="com.ist.rpp.report.controller.T10_reportEditorAction" validate="false" scope="request" />
+		
+		<action name="t10_reportEditorActionForm" parameter="editReportDataTpl_des"
+			path="/t10_report/editreportdatatpl_des" type="com.ist.rpp.report.controller.T10_reportEditorAction" validate="false">
+			<forward name="success" path="/t10_report/report_datatpl_edit_des.jsp"></forward>			
+		</action>
+		<action name="t10_reportEditorActionForm" parameter="editReportDataTpl_page"
+			path="/t10_report/editreportdatatpl_page" type="com.ist.rpp.report.controller.T10_reportEditorAction" validate="false">
+			<forward name="success" path="/t10_report/report_datatpl_edit_page.jsp"></forward>			
+		</action>
+		<action name="t10_reportEditorActionForm" parameter="editReportDataTpl_table"
+			path="/t10_report/editreportdatatpl_table" type="com.ist.rpp.report.controller.T10_reportEditorAction" validate="false">
+			<forward name="table" path="/t10_report/report_datatpl_edit_table.jsp"></forward>
+			<forward name="des" path="/t10_report/editreportdatatpl_des.do"></forward>
+			<forward name="failure" path="/t10_report/editreportdatatpl_des.do"></forward>
+		</action>	
+		<action name="t10_reportEditorActionForm" parameter="editReportDataTpl_chart"
+			path="/t10_report/editreportdatatpl_chart" type="com.ist.rpp.report.controller.T10_reportEditorAction" validate="false">
+			<forward name="success" path="/t10_report/report_datatpl_edit_chart.jsp"></forward>			
+		</action>
+	</action-mappings>
+	<message-resources parameter="ApplicationResources_zh_CN" />
+
+</struts-config>

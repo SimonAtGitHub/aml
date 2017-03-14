@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T18_task">
+  <statement id="getT18_taskList" parameterClass="com.ist.platform.dto.T18_task" resultClass="com.ist.platform.dto.T18_task">
+  select domainkey,serverkey,taskkey,taskname,taskseq,tasktype,granularitys,isuse,des,mainclass from t18_task
+  where isuse = '1' 
+  <dynamic>
+    <isNotEmpty prepend="and" property="domainkey">
+    domainkey = #domainkey#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="serverkey">
+    serverkey = #serverkey#
+    </isNotEmpty>
+  </dynamic>
+  order by domainkey,serverkey,taskseq
+  </statement>
+
+  <statement id="insertT18_task" parameterClass="com.ist.platform.dto.T18_task" resultClass="int">
+  insert into T18_task(
+  domainkey,serverkey,taskkey,taskname,taskseq,tasktype,granularitys,isuse,des,mainclass
+  ) values(
+  #domainkey#,#serverkey#,#taskkey#,#taskname#,#taskseq#,#tasktype#,#granularitys#,#isuse#,#des#,#mainclass#
+  )
+  </statement>
+
+  <statement id="modifyT18_task" parameterClass="com.ist.platform.dto.T18_task" resultClass="int">
+  update T18_task set
+  domainkey=#domainkey#,serverkey=#serverkey#,taskkey=#taskkey#,taskname=#taskname#,taskseq=#taskseq#,tasktype=#tasktype#,granularitys=#granularitys#,isuse=#isuse#,des=#des#,mainclass=#mainclass#
+  where domainkey=#domainkey#
+  </statement>
+
+  <statement id="deleteT18_task" parameterClass="java.lang.String" resultClass="int">
+  delete from T18_task where domainkey=#value#
+  </statement>
+
+  <statement id="getT18_taskDisp" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T18_task">
+  select * from T18_task where domainkey=#value#
+  </statement>
+
+</sqlMap>
+

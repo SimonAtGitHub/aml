@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T07_WORKDATE"> 
+  <statement id="getT07_WORKDATEList" parameterClass="com.ist.platform.dto.T07_WORKDATE" resultClass="com.ist.platform.dto.T07_WORKDATE"> 
+  SELECT DAYKEY,ISHOLIDAY,ISFIRSTDAY,REMARK,CREATOR,CREATEDATE,MODIFIOR,MODIFYDATE,WORKDAY,EDTINPUT_DT 
+  FROM $tablename$  where 1>0
+  <isNotEmpty prepend="AND" property="daykey_disp"> 
+    <isNotEmpty prepend="" property="compare"> 
+    <![CDATA[DAYKEY $compare$ #daykey#]]> 
+    </isNotEmpty> 
+     </isNotEmpty> 
+      ORDER BY DAYKEY 
+       <isNotEmpty prepend=" " property="order"> 
+        $order$
+       </isNotEmpty>
+  </statement> 
+  <statement id="getT07_WORKDATEList_SysD" parameterClass="com.ist.platform.dto.T07_WORKDATE" resultClass="com.ist.platform.dto.T07_WORKDATE"> 
+   SELECT DAYKEY FROM $tablename$ ORDER BY DAYKEY DESC
+  </statement> 
+  <statement id="getT07_WORKDATE" parameterClass="com.ist.platform.dto.T07_WORKDATE" resultClass="com.ist.platform.dto.T07_WORKDATE"> 
+     SELECT * FROM $tablename$ WHERE   1>0  
+    <isNotEmpty prepend="AND" property="daykey"> 
+    <![CDATA[DAYKEY > #daykey#]]> 
+    </isNotEmpty> 
+      ORDER BY DAYKEY ASC
+  </statement>
+  <statement id="getT07_WORKDATE_byCompare" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T07_WORKDATE"> 
+     $sql$
+  </statement>  
+  <statement id="getT07_WORKDATEListCount" parameterClass="com.ist.platform.dto.T07_WORKDATE" resultClass="int"> 
+  SELECT COUNT(*) FROM T00_GROUP 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="daykey"> 
+    DAYKEY = #daykey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT07_WORKDATE" parameterClass="com.ist.platform.dto.T07_WORKDATE" resultClass="int"> 
+  INSERT INTO $tablename$(
+  DAYKEY,ISHOLIDAY,ISFIRSTDAY,REMARK,CREATOR,CREATEDATE,MODIFIOR,MODIFYDATE,WORKDAY,EDTINPUT_DT
+  ) VALUES(
+  #daykey#,#isholiday#,#isfirstday#,#remark#,#creator#,#createdate#,#modifior#,#modifydate#,#workday#,#edtinput_dt#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT07_WORKDATE" parameterClass="com.ist.platform.dto.T07_WORKDATE" resultClass="int"> 
+  UPDATE $tablename$ SET ISHOLIDAY=#isholiday#
+   WHERE DAYKEY=#daykey# 
+  </statement> 
+ 
+  <statement id="deleteT07_WORKDATE" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T07_WORKDATE WHERE DAYKEY=#value# 
+  </statement> 
+ 
+  <statement id="getT07_WORKDATEDisp" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T07_WORKDATE"> 
+  SELECT * FROM T07_WORKDATE WHERE DAYKEY=#value# 
+  </statement> 
+ 
+</sqlMap> 
+

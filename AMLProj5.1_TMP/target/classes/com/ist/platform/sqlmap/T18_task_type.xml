@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T18_task_type"> 
+  <statement id="getT18_task_typeList_pf" parameterClass="com.ist.platform.dto.T18_task_type" resultClass="com.ist.platform.dto.T18_task_type"> 
+  select tasktype,typegroup,typename,cfgclass,execlass,typedes from t18_task_type t
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="tasktype"> 
+    tasktype = #tasktype# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="ispilot"> 
+   		<isEqual property="ispilot" compareValue="0">
+   			t.tasktype not in ('M321', 'M322', 'M358', 'M362', 'M350','M351', 'M352', 'M353', 'M354', 'M355')
+   		</isEqual>
+   		<isEqual property="ispilot" compareValue="1">
+   			t.tasktype not in ('M300', 'M301', 'M302')
+   		</isEqual>
+   		<isEqual property="ispilot" compareValue="2">
+   			t.tasktype not in ('M300', 'M301', 'M302', 'M358', 'M362', 'M350','M351', 'M352', 'M353', 'M354', 'M355')
+   		</isEqual>
+   		
+   </isNotEmpty>
+  </dynamic> 
+  order by tasktype
+  </statement>
+   
+  <statement id="insertT18_task_type" parameterClass="com.ist.platform.dto.T18_task_type" resultClass="int"> 
+  insert into T18_task_type(
+  tasktype,typegroup,typename,cfgclass,execlass,typedes
+  ) values(
+  #tasktype#,#typegroup#,#typename#,#cfgclass#,#execlass#,#typedes#
+  ) 
+  </statement>
+ 
+  <statement id="deleteT18_task_type" parameterClass="java.lang.String" resultClass="int">
+  delete from T18_task_type where tasktype=#value# 
+  </statement>
+</sqlMap> 
+

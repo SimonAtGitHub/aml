@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="T00_FUNCTION_PARAM">
+	<statement id="getT01_function_paramPage" parameterClass="com.ist.aml.rule.dto.T01_function_param"
+		resultClass="com.ist.aml.rule.dto.T01_function_param">
+		SELECT T.PARAMCD,T.PARAMNAME,T.RTNTYPE,T.PARMTYPE,T.PARAMVAL,T.CREATEDATE
+		FROM T01_FUNCTION_PARAM T
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="paramcd">
+				PARAMCD = #paramcd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="paramname">
+				PARAMNAME = #paramname#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="rtntype">
+				RTNTYPE = #rtntype#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="parmtype">
+				PARMTYPE = #parmtype#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="getT01_function_paramCount" parameterClass="com.ist.aml.rule.dto.T01_function_param"
+		resultClass="int">
+		SELECT count(T.PARAMCD) 
+		FROM T01_FUNCTION_PARAM T
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="paramcd">
+				PARAMCD = #paramcd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="paramname">
+				PARAMNAME = #paramname#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="rtntype">
+				RTNTYPE = #rtntype#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="parmtype">
+				PARMTYPE = #parmtype#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="getT01_function_paramList" parameterClass="com.ist.aml.rule.dto.T01_function_param"
+		resultClass="com.ist.aml.rule.dto.T01_function_param">
+		SELECT T.*
+		FROM T01_FUNCTION_PARAM T
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="paramcd">
+				PARAMCD = #paramcd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="paramname">
+				PARAMNAME = #paramname#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="rtntype">
+				RTNTYPE = #rtntype#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="parmtype">
+				PARMTYPE = #parmtype#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="insertT01_function_param" parameterClass="com.ist.aml.rule.dto.T01_function_param"
+		resultClass="int">
+		 INSERT into T01_FUNCTION_PARAM
+		 (PARAMCD,PARAMNAME,RTNTYPE,PARMTYPE,PARAMVAL,BASEDT,CREATEDATE,CREATOR,DISPSEQ)
+		 values
+		 (#paramcd#,#paramname#,#rtntype#,#parmtype#,#paramval#,#basedt#,#createdate#,#creator#,$dispseq$)
+	</statement>
+	<statement id="updateT01_function_param" parameterClass="com.ist.aml.rule.dto.T01_function_param"
+		resultClass="int">
+		 UPDATE T01_FUNCTION_PARAM SET 
+		  PARAMNAME =#paramname#,
+		  RTNTYPE = #rtntype#,
+		  PARMTYPE = #parmtype#,
+		  PARAMVAL = #paramval#,
+		  BASEDT = #basedt#,
+		  DISPSEQ = $dispseq$,
+		  MODIFYDATE= #modifydate#,
+		  MODIFIER= #modifier#,
+		  PARAMCD = #paramcd#
+		WHERE
+		  PARAMCD = #selectedkey#
+	</statement>
+	<statement id="deleteT01_function_param" parameterClass="java.lang.String"
+		resultClass="int">
+		DELETE FROM T01_FUNCTION_PARAM WHERE  PARAMCD=#value#
+	</statement>
+</sqlMap>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="Para_export">
+
+		<!--author:lijie  -->
+	 <statement id="getPbckey_List" parameterClass="com.ist.platform.dto.Para_export" resultClass="com.ist.platform.dto.Para_export">
+	 	SELECT PBCKEY, PBC_DES FROM T07_PBCRULE_N where flag='1'  ORDER BY INTERFACEKEY DESC,PBCKEY	
+  	 </statement>
+  	 
+  	 <statement id="getRule_List" parameterClass="com.ist.platform.dto.Para_export" resultClass="com.ist.platform.dto.Para_export">
+  	 	SELECT RULEKEY, RULE_DES, PBCKEY FROM T07_SYSRULE where flag='1' order by RULEKEY
+  	 </statement>
+  	 
+  	 <statement id="getIndic_val_List" parameterClass="com.ist.platform.dto.Para_export" resultClass="com.ist.platform.dto.Para_export">
+	WITH T AS
+	(SELECT A.RULEKEY, A.PBCKEY, C.INDICKEY, C.INDICNAME
+	FROM T07_SYSRULE A, T07_RULE_INDIC_R B, V07_INDIC C
+	WHERE A.RULEKEY = B.RULEKEY
+	AND B.INDICKEY = C.INDICKEY),
+	S AS
+	(SELECT D.VALPARAKEY, D.PARA_DES, D.UPPER_LIMIT, D.LOW_LIMIT, E.INDICKEY
+	FROM T07_VALPARA D, T07_INDIC_VALPARA E
+	WHERE E.VALPARAKEY = D.VALPARAKEY)
+	SELECT T.*, S.VALPARAKEY, S.PARA_DES, S.UPPER_LIMIT, S.LOW_LIMIT
+	FROM T
+	LEFT JOIN S
+	ON T.INDICKEY = S.INDICKEY
+  	 </statement>
+  	 
+  	 <statement id="getTemplate_List" parameterClass="com.ist.platform.dto.Para_export" resultClass="com.ist.platform.dto.Para_export">
+	 	SELECT t.templatekey FROM T08_DEF_TMPL t WHERE t.temptype = #temptype# AND  t.templatekey IN ('2542','2582') ORDER BY t.templatekey
+  	 </statement>
+  	 
+  	 <statement id="getCategory_List" parameterClass="com.ist.platform.dto.Para_export" resultClass="com.ist.platform.dto.Para_export">
+		SELECT T.TEMPLATEKEY, T.CATEGORYKEY, T.DES AS CATEGORY_DES, T.OCC AS CATEGORY_OCC
+		FROM T08_DEF_CAT T
+		WHERE T.TEMPLATEKEY IN ('2542', '2582')
+		ORDER BY TEMPLATEKEY,CATEGORYKEY
+  	 </statement>
+  	 
+  	 <statement id="getBasic_List" parameterClass="com.ist.platform.dto.Para_export" resultClass="com.ist.platform.dto.Para_export">
+  	 	SELECT A.CATEGORYKEY, A.BASICKEY, C.CHECKUPPOINT, A.BASICOCC AS BASIC_OCC, A.BASE_SCORE
+  		FROM T08_DEF_CAT_BIA A, T08_DEF_BASIC C
+ 		WHERE A.BASICKEY = C.BASICKEY
+  	 </statement>
+  	 <!--end of lijie  -->
+  	
+     <statement id="getT08_gs_base_List" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.Para_export">
+            select DISTINCT a.GSKEY ,a.LEVELKEY,a.REMARK,a.PARTY_TYPE,a.GRANULARITY ,b.templatekey,
+        c.valparakey as t_valparakey,c.para_des as t_para_des,c.upper_limit as t_upper_limit,c.low_limit as t_low_limit
+        from  T08_GS_BASE a,T08_DEF_GS b ,T08_VALPARA c ,T08_GS_INDIC d,T08_INDIC_VALPARA e,T08_DEF_TMPL f
+         where  a.gskey=b.gskey and b.gskey=d.gskey and d.indickey=e.indickey and e.valparakey=c.valparakey and b.templatekey=f.templatekey
+          order by a.GRANULARITY asc
+     </statement>
+    
+</sqlMap>

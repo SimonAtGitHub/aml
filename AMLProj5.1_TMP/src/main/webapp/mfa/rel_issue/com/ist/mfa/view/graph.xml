@@ -1,0 +1,14 @@
+<Graph>
+	<Node id="1" name="黎昌义" desc="黎昌义[083924000010100051085]"  nodeIcon="S"/>
+	<Node id="2" name="皮凌燕" desc="皮凌燕[083924000010100051184]"  nodeIcon="C"/>
+	<Node id="3" name="郑碧莲" desc="郑碧莲[083924000010100051226]"  nodeIcon="F"/>
+	<Node id="4" name="谢朝军" desc="谢朝军[39250166000931281]"  nodeIcon="E"/>
+	<Node id="5" name="开发商" desc="开发商[39250000000000000]"  nodeIcon="V"/>
+
+	<Edge fromId="1" toId="2" edgeLabel="交易金额：544.65" color="0x000000"/>
+	<Edge fromId="1" toId="3" edgeLabel="交易金额：3237.19" color="0x000000"/>
+	<Edge fromId="1" toId="4" edgeLabel="交易金额：896.72" color="0x000000"/>
+	<Edge fromId="2" toId="5" edgeLabel="交易金额：544.65" color="0xFF0000"/>
+	<Edge fromId="3" toId="5" edgeLabel="交易金额：3237.19" color="0xFF0000" edgeStyle="straight"/>
+	<Edge fromId="4" toId="5" edgeLabel="交易金额：896.72" color="0xFF0000" edgeStyle="straight"/>
+</Graph>

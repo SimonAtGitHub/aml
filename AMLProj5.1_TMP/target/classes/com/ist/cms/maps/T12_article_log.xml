@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_article_log"> 
+  <statement id="getT12_article_logList" parameterClass="com.ist.cms.dto.T12_article_log" resultClass="com.ist.cms.dto.T12_article_log"> 
+  select articlekey,seq,opuser,optime,opcomment from t12_article_log 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="articlekey"> 
+    articlekey = #articlekey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT12_article_logListCount" parameterClass="com.ist.cms.dto.T12_article_log" resultClass="int"> 
+  select count(*) from t12_article_log 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="articlekey"> 
+    articlekey = #articlekey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_article_log" parameterClass="com.ist.cms.dto.T12_article_log" resultClass="int"> 
+  insert into T12_article_log(
+  articlekey,seq,opuser,optime,opcomment
+  ) values(
+  #articlekey#,#seq#,#opuser#,#optime#,#opcomment#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_article_log" parameterClass="com.ist.cms.dto.T12_article_log" resultClass="int"> 
+  update T12_article_log set 
+  articlekey=#articlekey#,seq=#seq#,opuser=#opuser#,optime=#optime#,opcomment=#opcomment#
+  where articlekey=#articlekey# 
+  </statement> 
+ 
+  <statement id="deleteT12_article_log" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_article_log where articlekey=#value# 
+  </statement> 
+ 
+  <statement id="getT12_article_logDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_article_log"> 
+  select * from T12_article_log where articlekey=#value# 
+  </statement> 
+ 
+</sqlMap> 
+

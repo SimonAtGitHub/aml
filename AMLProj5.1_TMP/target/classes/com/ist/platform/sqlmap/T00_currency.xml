@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T00_currency"> 
+  <statement id="getT00_currencyList" parameterClass="com.ist.platform.dto.T00_currency" resultClass="com.ist.platform.dto.T00_currency"> 
+  SELECT CURRKEY,CURRNAME,CURREXCHANGERATE,CURRSYMBOL,CURRABBREVIATE,CURRNO,CURRALIAS,DECIMALDIGITS,LEASTCURRUNIT,LEASTTALLYUNIT,CURRLEVEL,VALIDATEDATE,INVALIDATEDATE,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER FROM T00_CURRENCY 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="currkey"> 
+    CURRKEY = #currkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT00_currencyListCount" parameterClass="com.ist.platform.dto.T00_currency" resultClass="int"> 
+  SELECT COUNT(*) FROM T00_CURRENCY 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="currkey"> 
+    CURRKEY = #currkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT00_currency" parameterClass="com.ist.platform.dto.T00_currency" resultClass="int"> 
+  INSERT INTO T00_CURRENCY(
+  CURRKEY,CURRNAME,CURREXCHANGERATE,CURRSYMBOL,CURRABBREVIATE,CURRNO,CURRALIAS,DECIMALDIGITS,LEASTCURRUNIT,LEASTTALLYUNIT,CURRLEVEL,VALIDATEDATE,INVALIDATEDATE,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER
+  ) VALUES(
+  #currkey#,#currname#,#currexchangerate#,#currsymbol#,#currabbreviate#,#currno#,#curralias#,#decimaldigits#,#leastcurrunit#,#leasttallyunit#,#currlevel#,#validatedate#,#invalidatedate#,#createdate#,#creator#,#modifydate#,#modifier#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT00_currency" parameterClass="com.ist.platform.dto.T00_currency" resultClass="int"> 
+  UPDATE T00_CURRENCY SET 
+  CURRKEY=#currkey#,CURRNAME=#currname#,CURREXCHANGERATE=#currexchangerate#,CURRSYMBOL=#currsymbol#,CURRABBREVIATE=#currabbreviate#,CURRNO=#currno#,CURRALIAS=#curralias#,DECIMALDIGITS=#decimaldigits#,LEASTCURRUNIT=#leastcurrunit#,LEASTTALLYUNIT=#leasttallyunit#,CURRLEVEL=#currlevel#,VALIDATEDATE=#validatedate#,INVALIDATEDATE=#invalidatedate#,CREATEDATE=#createdate#,CREATOR=#creator#,MODIFYDATE=#modifydate#,MODIFIER=#modifier#
+  WHERE CURRKEY=#currkey# 
+  </statement> 
+ 
+  <statement id="deleteT00_currency" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T00_CURRENCY WHERE CURRKEY=#value# 
+  </statement> 
+ 
+  <statement id="getT00_currencyDisp" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_currency"> 
+  SELECT * FROM T00_CURRENCY WHERE CURRKEY=#value# 
+  </statement> 
+ 
+</sqlMap> 
+

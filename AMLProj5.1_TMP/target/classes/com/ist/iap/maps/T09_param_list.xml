@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T09_param_list"> 
+  <statement id="getT09_param_listList" parameterClass="com.ist.iap.dto.T09_param_list" resultClass="com.ist.iap.dto.T09_param_list"> 
+  select parmvalkey,subitemkey,indickey,subitemname,param from t09_param_list 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="parmvalkey"> 
+    parmvalkey = #parmvalkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT09_param_listListCount" parameterClass="com.ist.iap.dto.T09_param_list" resultClass="int"> 
+  select count(*) from t09_param_list 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="parmvalkey"> 
+    parmvalkey = #parmvalkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT09_param_list" parameterClass="com.ist.iap.dto.T09_param_list" resultClass="int"> 
+  insert into T09_param_list(
+  parmvalkey,subitemkey,indickey,subitemname,param
+  ) values(
+  #parmvalkey#,#subitemkey#,#indickey#,#subitemname#,#param#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT09_param_list" parameterClass="com.ist.iap.dto.T09_param_list" resultClass="int"> 
+  update T09_param_list set 
+  parmvalkey=#parmvalkey#,subitemkey=#subitemkey#,indickey=#indickey#,subitemname=#subitemname#,param=#param#
+  where parmvalkey=#parmvalkey# 
+  </statement> 
+ 
+  <statement id="deleteT09_param_list" parameterClass="java.lang.String" resultClass="int">
+  delete from T09_param_list where parmvalkey=#value# 
+  </statement> 
+ 
+  <statement id="getT09_param_listDisp" parameterClass="java.lang.String" resultClass="com.ist.iap.dto.T09_param_list"> 
+  select * from T09_param_list where parmvalkey=#value# 
+  </statement> 
+  
+  <statement id="deleteT09_param_listByMap" parameterClass="java.util.HashMap" resultClass="int">
+    delete  from T09_param_list l where exists 
+	(select 'X' from T09_PAGE_IN_VAL v where v.parmvalkey=l.parmvalkey and v.parmkey=#parmkey# and v.indickey=#indickey#)
+  </statement> 
+  
+ <statement id="delT09_param_listByIndickey" parameterClass="java.lang.String" resultClass="int"> 
+  		delete from  T09_param_list where indickey=#value#
+  </statement>
+</sqlMap> 
+

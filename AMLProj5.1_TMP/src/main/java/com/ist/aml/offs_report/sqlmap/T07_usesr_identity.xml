@@ -1,0 +1,861 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<!-- add by zew -->
+<sqlMap namespace="T07_usesr_identity">
+
+	
+ 
+ <statement id="getT07_user_identityListCount"
+		parameterClass="com.ist.aml.offs_report.dto.T07_user_identity"
+		resultClass="int">
+		SELECT COUNT(DISTINCT IDENTITYKEY)
+		<isEqual property="identitytype" compareValue="1">
+			FROM T07_USER_IDENTITY A
+		</isEqual>
+		<isEqual property="identitytype" compareValue="2">
+			FROM T07_USER_REIDENTITY A
+		</isEqual>
+		<isEqual property="identitytype" compareValue="3">
+			FROM T07_DUBIETY_IDENTITY A
+		</isEqual>
+		<isEqual property="identitytype" compareValue="4">
+			FROM T07_REPORT_STATISTIC A
+		</isEqual>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="status_cd">
+				<![CDATA[A.STATUS_CD = #status_cd#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="startdate">
+				<![CDATA[A.STATISTICDATE >=#startdate#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="enddate">
+				<![CDATA[A.STATISTICDATE <= #enddate#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				A.ORGANKEY IN ($organkey$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="status_arrayList">
+				A.STATUS_CD IN
+				<iterate prepend="" property="status_arrayList" open="("
+					close=")" conjunction=",">
+					#status_arrayList[]#
+				</iterate>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organList">
+				A.ORGANKEY IN
+				<iterate prepend="" property="organList" open="("
+					close=")" conjunction=",">
+					#organList[]#
+				</iterate>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT07_user_identityList"
+		parameterClass="com.ist.aml.offs_report.dto.T07_user_identity"
+		resultClass="com.ist.aml.offs_report.dto.T07_user_identity">
+		SELECT DISTINCT
+		IDENTITYKEY,STATISTICDATE,IDENTITYTYPE,ORGANKEY,UPDATETIME,STATUS_CD
+		<isEqual property="identitytype" compareValue="1">
+			FROM T07_USER_IDENTITY A
+		</isEqual>
+		<isEqual property="identitytype" compareValue="2">
+			FROM T07_USER_REIDENTITY A
+		</isEqual>
+		<isEqual property="identitytype" compareValue="3">
+			FROM T07_DUBIETY_IDENTITY A
+		</isEqual>
+		<isEqual property="identitytype" compareValue="4">
+			FROM T07_REPORT_STATISTIC A
+		</isEqual>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="status_cd">
+				<![CDATA[A.STATUS_CD = #status_cd#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="startdate">
+				<![CDATA[A.STATISTICDATE >= #startdate#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="enddate">
+				<![CDATA[A.STATISTICDATE <= #enddate#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				A.ORGANKEY IN ($organkey$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="status_arrayList">
+				A.STATUS_CD IN
+				<iterate prepend="" property="status_arrayList" open="("
+					close=")" conjunction=",">
+					#status_arrayList[]#
+				</iterate>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organList">
+				A.ORGANKEY IN
+				<iterate prepend="" property="organList" open="("
+					close=")" conjunction=",">
+					#organList[]#
+				</iterate>
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY STATISTICDATE DESC
+	</statement>
+
+	<statement id="insertT07_user_identity"
+		parameterClass="com.ist.aml.offs_report.dto.T07_user_identity"
+		resultClass="int">
+		<isEqual property="identitytype" compareValue="1">
+			INSERT INTO T07_USER_IDENTITY(
+			IDENTITYKEY,STATISTICDATE,IDENTITYTYPE,ORGANKEY,UPDATETIME,IDENTITYFLAG,CP_TOTAL,
+			CP_PROXY,CP_THPARTY,CP_DISEMBARK,CP_BENEFIT,CP_QUESTOTAL,CP_ANONYMOUS,CP_FALSECARD,
+			CP_FAILURECARD,CP_OTHERSCARD,CP_SUSPECTS,CP_OTHERCASE,ID_TOTAL,ID_PROXY,ID_THPARTY,
+			ID_RESIDENTS,ID_RESIPROXY,ID_NONRESIDENTS,ID_NONRESIPROXY,ID_QUESTOTAL,ID_ANONYMOUS,
+			ID_FALSECARD,ID_FAILURECARD,ID_OTHERSCARD,ID_SUSPECTS,ID_OTHERCASE,ALL_TOTAL,STATUS_CD)
+			VALUES(
+			#identitykey#,#statisticdate#,#identitytype#,#organkey#,#updatetime#,#identityflag#,#cp_total#,
+			#cp_proxy#,#cp_thparty#,#cp_disembark#,#cp_benefit#,#cp_questotal#,#cp_anonymous#,#cp_falsecard#,
+			#cp_failurecard#,#cp_otherscard#,#cp_suspects#,#cp_othercase#,#id_total#,#id_proxy#,#id_thparty#,
+			#id_residents#,#id_resiproxy#,#id_nonresidents#,#id_nonresiproxy#,#id_questotal#,#id_anonymous#,
+			#id_falsecard#,#id_failurecard#,#id_otherscard#,#id_suspects#,#id_othercase#,#all_total#,#status_cd#
+			)
+		</isEqual>
+		<isEqual property="identitytype" compareValue="2">
+			INSERT INTO T07_USER_REIDENTITY(
+			IDENTITYKEY,STATISTICDATE,IDENTITYTYPE,ORGANKEY,UPDATETIME,REIDENTITYFLAG,CHANGEINFO,
+			INFO_VERIFIED,BEHAVIOR,BEHA_VERIFIED,SUSPECTS,SUSPE_VERIFIED,SUSPICIOUS,SUSPI_VERIFIED,
+			OTHERCASE,OTHER_VERIFIED,TOTAL,TOTAL_VERIFIED,FAILURECARD,UPDATECARD,STATUS_CD)
+			VALUES(
+			#identitykey#,#statisticdate#,#identitytype#,#organkey#,#updatetime#,#reidentityflag#,#changeinfo#,
+			#info_verified#,#behavior#,#beha_verified#,#suspects#,#suspe_verified#,#suspicious#,#suspi_verified#,
+			#othercase#,#other_verified#,#total#,#total_verified#,#failurecard#,#updatecard#,#status_cd#
+			)
+		</isEqual>
+		<isEqual property="identitytype" compareValue="3">
+			INSERT INTO T07_DUBIETY_IDENTITY(
+			IDENTITYKEY,STATISTICDATE,IDENTITYTYPE,ORGANKEY,UPDATETIME,BUSINESS_ALERT,SERVICE_ALERT,
+			DEGREE_ALERT,TRADE_ALERT,STATUS_CD) VALUES(
+			#identitykey#,#statisticdate#,#identitytype#,#organkey#,#updatetime#,#business_alert#,#service_alert#,
+			#degree_alert#,#trade_alert#,#status_cd# )
+		</isEqual>
+		<isEqual property="identitytype" compareValue="4">
+			INSERT INTO T07_REPORT_STATISTIC(
+			IDENTITYKEY,STATISTICDATE,IDENTITYTYPE,ORGANKEY,UPDATETIME,CURRFLAG,CP_REPORTNUM,CP_REPORTAMT,
+			ID_REPORTNUM,ID_REPORTAMT,CPL_REPORTNUM,CPL_REPORTAMT,IDL_REPORTNUM,IDL_REPORTAMT,DES,UPDATEUSER,
+			PHONE,STATUS_CD) VALUES(
+			#identitykey#,#statisticdate#,#identitytype#,#organkey#,#updatetime#,#currflag#,#cp_reportNum#,
+			#cp_reportAmt#,#id_reportNum#,#id_reportAmt#,#cpl_reportNum#,#cpl_reportAmt#,#idl_reportNum#,
+			#idl_reportAmt#,#des#,#updateUser#,#phone#,#status_cd# )
+		</isEqual>
+	</statement>
+
+
+	<statement id="modifyT07_user_identity"
+		parameterClass="com.ist.aml.offs_report.dto.T07_user_identity"
+		resultClass="int">
+		<isEqual property="identitytype" compareValue="1">
+			UPDATE T07_USER_IDENTITY SET
+			UPDATETIME=#updatetime#,CP_TOTAL=#cp_total#,
+			CP_PROXY=#cp_proxy#,CP_THPARTY=#cp_thparty#,CP_DISEMBARK=#cp_disembark#,
+			CP_BENEFIT=#cp_benefit#,CP_QUESTOTAL=#cp_questotal#,CP_ANONYMOUS=#cp_anonymous#,
+			CP_FALSECARD=#cp_falsecard#,CP_FAILURECARD=#cp_failurecard#,CP_OTHERSCARD=#cp_otherscard#,
+			CP_SUSPECTS=#cp_suspects#,CP_OTHERCASE=#cp_othercase#,ID_TOTAL=#id_total#,
+			ID_PROXY=#id_proxy#,ID_THPARTY=#id_thparty#,ID_RESIDENTS=#id_residents#,
+			ID_RESIPROXY=#id_resiproxy#,ID_NONRESIDENTS=#id_nonresidents#,ID_NONRESIPROXY=#id_nonresiproxy#,
+			ID_QUESTOTAL=#id_questotal#,ID_ANONYMOUS=#id_anonymous#,ID_FALSECARD=#id_falsecard#,
+			ID_FAILURECARD=#id_failurecard#,ID_OTHERSCARD=#id_otherscard#,ID_SUSPECTS=#id_suspects#,
+			ID_OTHERCASE=#id_othercase#,ALL_TOTAL=#all_total#,STATUS_CD=#status_cd#
+			WHERE IDENTITYKEY=#identitykey# AND
+			IDENTITYFLAG=#identityflag#
+		</isEqual>
+		<isEqual property="identitytype" compareValue="2">
+			UPDATE T07_USER_REIDENTITY SET
+			UPDATETIME=#updatetime#,CHANGEINFO=#changeinfo#,
+			INFO_VERIFIED=#info_verified#,BEHAVIOR=#behavior#,BEHA_VERIFIED=#beha_verified#,
+			SUSPECTS=#suspects#,SUSPE_VERIFIED=#suspe_verified#,SUSPICIOUS=#suspicious#,
+			SUSPI_VERIFIED=#suspi_verified#,OTHERCASE=#othercase#,OTHER_VERIFIED=#other_verified#,
+			TOTAL=#total#,TOTAL_VERIFIED=#total_verified#,FAILURECARD=#failurecard#,
+			UPDATECARD=#updatecard#,STATUS_CD=#status_cd# WHERE
+			IDENTITYKEY=#identitykey# AND
+			REIDENTITYFLAG=#reidentityflag#
+		</isEqual>
+		<isEqual property="identitytype" compareValue="3">
+			UPDATE T07_DUBIETY_IDENTITY SET
+			UPDATETIME=#updatetime#,BUSINESS_ALERT=#business_alert#,SERVICE_ALERT=#service_alert#,
+			DEGREE_ALERT=#degree_alert#,TRADE_ALERT=#trade_alert#,STATUS_CD=#status_cd#
+			WHERE IDENTITYKEY=#identitykey#
+		</isEqual>
+		<isEqual property="identitytype" compareValue="4">
+			UPDATE T07_REPORT_STATISTIC SET
+			UPDATETIME=#updatetime#,CP_REPORTNUM=#cp_reportNum#,CP_REPORTAMT=#cp_reportAmt#,
+			ID_REPORTNUM=#id_reportNum#,ID_REPORTAMT=#id_reportAmt#,CPL_REPORTNUM=#cpl_reportNum#,
+			CPL_REPORTAMT=#cpl_reportAmt#,IDL_REPORTNUM=#idl_reportNum#,
+			IDL_REPORTAMT=#idl_reportAmt#,DES=#des#,UPDATEUSER=#updateUser#,
+			PHONE=#phone#,STATUS_CD=#status_cd# WHERE
+			IDENTITYKEY=#identitykey# AND CURRFLAG=#currflag#
+		</isEqual>
+	</statement>
+
+	<statement id="delT07_user_identity"
+		parameterClass="com.ist.aml.offs_report.dto.T07_user_identity"
+		resultClass="int">
+		DELETE FROM
+		<isEqual property="identitytype" compareValue="1">
+			T07_USER_IDENTITY
+		</isEqual>
+		<isEqual property="identitytype" compareValue="2">
+			T07_USER_REIDENTITY
+		</isEqual>
+		<isEqual property="identitytype" compareValue="3">
+			T07_DUBIETY_IDENTITY
+		</isEqual>
+		<isEqual property="identitytype" compareValue="4">
+			T07_REPORT_STATISTIC
+		</isEqual>
+		WHERE IDENTITYKEY=#identitykey#
+	</statement>
+
+	<statement id="getT07_user_identityDisp1"
+		parameterClass="com.ist.aml.offs_report.dto.T07_user_identity"
+		resultClass="com.ist.aml.offs_report.dto.T07_user_identity">
+		SELECT
+		IDENTITYKEY,STATISTICDATE,IDENTITYTYPE,ORGANKEY,UPDATETIME,IDENTITYFLAG,CP_TOTAL,
+		CP_PROXY,CP_THPARTY,CP_DISEMBARK,CP_BENEFIT,CP_QUESTOTAL,CP_ANONYMOUS,CP_FALSECARD,
+		CP_FAILURECARD,CP_OTHERSCARD,CP_SUSPECTS,CP_OTHERCASE,ID_TOTAL,ID_PROXY,ID_THPARTY,
+		ID_RESIDENTS,ID_RESIPROXY,ID_NONRESIDENTS,ID_NONRESIPROXY,ID_QUESTOTAL,ID_ANONYMOUS,
+		ID_FALSECARD,ID_FAILURECARD,ID_OTHERSCARD,ID_SUSPECTS,ID_OTHERCASE,ALL_TOTAL,STATUS_CD
+		FROM T07_USER_IDENTITY A WHERE IDENTITYKEY=#identitykey#
+	</statement>
+
+
+	<statement id="getT07_user_identityDisp2"
+		parameterClass="com.ist.aml.offs_report.dto.T07_user_identity"
+		resultClass="com.ist.aml.offs_report.dto.T07_user_identity">
+		SELECT
+		IDENTITYKEY,STATISTICDATE,IDENTITYTYPE,ORGANKEY,UPDATETIME,
+		REIDENTITYFLAG,CHANGEINFO,INFO_VERIFIED,BEHAVIOR,BEHA_VERIFIED,SUSPECTS,
+		SUSPE_VERIFIED,SUSPICIOUS,SUSPI_VERIFIED,OTHERCASE,OTHER_VERIFIED,TOTAL,
+		TOTAL_VERIFIED,FAILURECARD,UPDATECARD,STATUS_CD FROM
+		T07_USER_REIDENTITY A WHERE IDENTITYKEY=#identitykey#
+	</statement>
+
+
+	<statement id="getT07_user_identityDisp3"
+		parameterClass="com.ist.aml.offs_report.dto.T07_user_identity"
+		resultClass="com.ist.aml.offs_report.dto.T07_user_identity">
+		SELECT
+		IDENTITYKEY,STATISTICDATE,IDENTITYTYPE,ORGANKEY,UPDATETIME,
+		BUSINESS_ALERT,SERVICE_ALERT,DEGREE_ALERT,TRADE_ALERT,STATUS_CD
+		FROM T07_DUBIETY_IDENTITY A WHERE IDENTITYKEY=#identitykey#
+	</statement>
+
+	<statement id="getT07_user_identityDisp4"
+		parameterClass="com.ist.aml.offs_report.dto.T07_user_identity"
+		resultClass="com.ist.aml.offs_report.dto.T07_user_identity">
+		SELECT
+		IDENTITYKEY,STATISTICDATE,IDENTITYTYPE,ORGANKEY,UPDATETIME,
+		CURRFLAG,CP_REPORTNUM,CP_REPORTAMT,ID_REPORTNUM,ID_REPORTAMT,
+		CPL_REPORTNUM,CPL_REPORTAMT,IDL_REPORTNUM,IDL_REPORTAMT,DES,UPDATEUSER,PHONE,STATUS_CD
+		FROM T07_REPORT_STATISTIC A WHERE IDENTITYKEY=#identitykey#
+	</statement>
+
+	<statement id="getT07_user_identityCollect1"
+		parameterClass="com.ist.aml.offs_report.dto.T07_user_identity"
+		resultClass="com.ist.aml.offs_report.dto.T07_user_identity">
+		SELECT SUM(CP_TOTAL) CP_TOTAL,
+            SUM(CP_PROXY) CP_PROXY,
+            SUM(CP_THPARTY ) CP_THPARTY,
+            SUM(CP_DISEMBARK ) CP_DISEMBARK,
+            SUM(CP_BENEFIT ) CP_BENEFIT,
+            SUM(CP_QUESTOTAL ) CP_QUESTOTAL,
+            SUM(CP_ANONYMOUS ) CP_ANONYMOUS,
+            SUM(CP_FALSECARD ) CP_FALSECARD,
+            SUM(CP_FAILURECARD ) CP_FAILURECARD,
+            SUM(CP_OTHERSCARD ) CP_OTHERSCARD,
+            SUM(CP_SUSPECTS ) CP_SUSPECTS,
+            SUM(CP_OTHERCASE ) CP_OTHERCASE,
+            SUM(ID_TOTAL ) ID_TOTAL,
+            SUM(ID_PROXY ) ID_PROXY,
+            SUM(ID_THPARTY ) ID_THPARTY,
+            SUM(ID_RESIDENTS ) ID_RESIDENTS,
+            SUM(ID_RESIPROXY ) ID_RESIPROXY,
+            SUM(ID_NONRESIDENTS ) ID_NONRESIDENTS,
+            SUM(ID_NONRESIPROXY ) ID_NONRESIPROXY,
+            SUM(ID_QUESTOTAL ) ID_QUESTOTAL,
+            SUM(ID_ANONYMOUS ) ID_ANONYMOUS,
+            SUM(ID_FALSECARD ) ID_FALSECARD,
+            SUM(ID_FAILURECARD ) ID_FAILURECARD,
+            SUM(ID_OTHERSCARD ) ID_OTHERSCARD,
+            SUM(ID_SUSPECTS ) ID_SUSPECTS,
+            SUM(ID_OTHERCASE ) ID_OTHERCASE,
+            SUM(ALL_TOTAL ) ALL_TOTAL ,IDENTITYFLAG     
+		FROM T07_USER_IDENTITY A WHERE 1=1
+		<isNotEmpty prepend="AND" property="identitykeyList">
+			IDENTITYKEY IN
+			<iterate prepend="" property="identitykeyList" open="("
+				close=")" conjunction=",">
+				#identitykeyList[]#
+			</iterate>
+		</isNotEmpty>
+		<isEmpty prepend="AND" property="identitykeyList">
+			IDENTITYKEY IN ( SELECT DISTINCT IDENTITYKEY FROM
+			T07_USER_IDENTITY B WHERE 1=1
+			<isNotEmpty prepend="AND" property="startdate">
+				<![CDATA[B.STATISTICDATE >= #startdate#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="enddate">
+				<![CDATA[B.STATISTICDATE <= #enddate#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organList">
+				B.ORGANKEY IN
+				<iterate prepend="" property="organList" open="("
+					close=")" conjunction=",">
+					#organList[]#
+				</iterate>
+			</isNotEmpty>
+			)
+		</isEmpty>
+			<isNotEmpty prepend="AND" property="status_arrayList">
+				A.STATUS_CD IN
+				<iterate prepend="" property="status_arrayList" open="("
+					close=")" conjunction=",">
+					#status_arrayList[]#
+				</iterate>
+			</isNotEmpty>			
+		GROUP BY IDENTITYFLAG
+	</statement>
+
+	<statement id="getT07_user_identityCollect2"
+		parameterClass="com.ist.aml.offs_report.dto.T07_user_identity"
+		resultClass="com.ist.aml.offs_report.dto.T07_user_identity">
+		SELECT SUM(CHANGEINFO) CHANGEINFO,
+					SUM(INFO_VERIFIED) INFO_VERIFIED,
+					SUM(BEHAVIOR) BEHAVIOR,
+					SUM(BEHA_VERIFIED) BEHA_VERIFIED,
+					SUM(SUSPECTS) SUSPECTS,
+					SUM(SUSPE_VERIFIED) SUSPE_VERIFIED,
+					SUM(SUSPICIOUS) SUSPICIOUS,
+					SUM(SUSPI_VERIFIED) SUSPI_VERIFIED,
+					SUM(OTHERCASE) OTHERCASE,
+					SUM(OTHER_VERIFIED) OTHER_VERIFIED,
+					SUM(TOTAL) TOTAL,
+					SUM(TOTAL_VERIFIED) TOTAL_VERIFIED,
+					SUM(FAILURECARD) FAILURECARD,
+					SUM(UPDATECARD) UPDATECARD ,REIDENTITYFLAG    
+		FROM T07_USER_REIDENTITY A WHERE 1=1
+		<isNotEmpty prepend="AND" property="identitykeyList">
+			IDENTITYKEY IN
+			<iterate prepend="" property="identitykeyList" open="("
+				close=")" conjunction=",">
+				#identitykeyList[]#
+			</iterate>
+		</isNotEmpty>
+		<isEmpty prepend="AND" property="identitykeyList">
+			IDENTITYKEY IN ( SELECT DISTINCT IDENTITYKEY FROM
+			T07_USER_REIDENTITY B WHERE 1=1
+			<isNotEmpty prepend="AND" property="startdate">
+				<![CDATA[B.STATISTICDATE >= #startdate#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="enddate">
+				<![CDATA[B.STATISTICDATE <= #enddate#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organList">
+				B.ORGANKEY IN
+				<iterate prepend="" property="organList" open="("
+					close=")" conjunction=",">
+					#organList[]#
+				</iterate>
+			</isNotEmpty>
+			)
+		</isEmpty>
+			<isNotEmpty prepend="AND" property="status_arrayList">
+				A.STATUS_CD IN
+				<iterate prepend="" property="status_arrayList" open="("
+					close=")" conjunction=",">
+					#status_arrayList[]#
+				</iterate>
+			</isNotEmpty>			
+		GROUP BY REIDENTITYFLAG
+	</statement>
+
+
+	<statement id="getT07_user_identityCollect3"
+		parameterClass="com.ist.aml.offs_report.dto.T07_user_identity"
+		resultClass="com.ist.aml.offs_report.dto.T07_user_identity">
+		SELECT SUM(BUSINESS_ALERT) BUSINESS_ALERT,
+					SUM(SERVICE_ALERT) SERVICE_ALERT,
+					SUM(DEGREE_ALERT) DEGREE_ALERT,
+					SUM(TRADE_ALERT) TRADE_ALERT
+		FROM T07_DUBIETY_IDENTITY A WHERE 1=1
+		<isNotEmpty prepend="AND" property="identitykeyList">
+			IDENTITYKEY IN
+			<iterate prepend="" property="identitykeyList" open="("
+				close=")" conjunction=",">
+				#identitykeyList[]#
+			</iterate>
+		</isNotEmpty>
+		<isEmpty prepend="AND" property="identitykeyList">
+			IDENTITYKEY IN ( SELECT DISTINCT IDENTITYKEY FROM
+			T07_DUBIETY_IDENTITY B WHERE 1=1
+			<isNotEmpty prepend="AND" property="startdate">
+				<![CDATA[B.STATISTICDATE >= #startdate#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="enddate">
+				<![CDATA[B.STATISTICDATE <= #enddate#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organList">
+				B.ORGANKEY IN
+				<iterate prepend="" property="organList" open="("
+					close=")" conjunction=",">
+					#organList[]#
+				</iterate>
+			</isNotEmpty>
+			)
+		</isEmpty>
+			<isNotEmpty prepend="AND" property="status_arrayList">
+				A.STATUS_CD IN
+				<iterate prepend="" property="status_arrayList" open="("
+					close=")" conjunction=",">
+					#status_arrayList[]#
+				</iterate>
+			</isNotEmpty>			
+	</statement>
+
+	<statement id="getT07_user_identityCollect4"
+		parameterClass="com.ist.aml.offs_report.dto.T07_user_identity"
+		resultClass="com.ist.aml.offs_report.dto.T07_user_identity">
+		SELECT SUM(CP_REPORTNUM) CP_REPORTNUM,
+					SUM(CP_REPORTAMT) CP_REPORTAMT,
+					SUM(ID_REPORTNUM) ID_REPORTNUM,
+					SUM(ID_REPORTAMT) ID_REPORTAMT,
+					SUM(CPL_REPORTNUM) CPL_REPORTNUM,
+					SUM(CPL_REPORTAMT) CPL_REPORTAMT,
+					SUM(IDL_REPORTNUM) IDL_REPORTNUM,
+					SUM(IDL_REPORTAMT) IDL_REPORTAMT,CURRFLAG
+		FROM T07_REPORT_STATISTIC A WHERE 1=1
+		<isNotEmpty prepend="AND" property="identitykeyList">
+			IDENTITYKEY IN
+			<iterate prepend="" property="identitykeyList" open="("
+				close=")" conjunction=",">
+				#identitykeyList[]#
+			</iterate>
+		</isNotEmpty>
+		<isEmpty prepend="AND" property="identitykeyList">
+			IDENTITYKEY IN ( SELECT DISTINCT IDENTITYKEY FROM
+			T07_REPORT_STATISTIC B WHERE 1=1
+			<isNotEmpty prepend="AND" property="startdate">
+				<![CDATA[B.STATISTICDATE >= #startdate#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="enddate">
+				<![CDATA[B.STATISTICDATE <= #enddate#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organList">
+				B.ORGANKEY IN
+				<iterate prepend="" property="organList" open="("
+					close=")" conjunction=",">
+					#organList[]#
+				</iterate>
+			</isNotEmpty>
+			)
+		</isEmpty>	
+			<isNotEmpty prepend="AND" property="status_arrayList">
+				A.STATUS_CD IN
+				<iterate prepend="" property="status_arrayList" open="("
+					close=")" conjunction=",">
+					#status_arrayList[]#
+				</iterate>
+			</isNotEmpty>							
+		GROUP BY CURRFLAG
+	</statement>
+
+	<!-- <statement id="getT07_reportCount"
+		parameterClass="com.ist.aml.offs_report.dto.T07_user_identity"
+		resultClass="com.ist.aml.offs_report.dto.T07_user_identity">
+		SELECT CURR_CD, PARTY_CLASS_CD, TRUNC(SUM(AMOUNT)/10000,2) AS AMT,
+		COUNT(DISTINCT REPORTKEY) AS COUNT FROM ( SELECT CASE WHEN
+		A.CURR_CD='2' THEN '2' ELSE '1' END AS CURR_CD, 
+		P.PARTY_CD AS PARTY_CLASS_CD, A.AMOUNT, C.REPORTKEY FROM T07_ALERT
+		A,T07_CASE_ALERT B,T07_REPORT C,T07_MSG D ,T07_SYSRULE P
+		WHERE P.PARTY_CD IS NOT NULL
+		AND A.RULEKEY = P.RULEKEY
+		AND A.ALERTKEY =B.ALERTKEY 
+		AND B.APPLICATION_NUM = C.APPLICATION_NUM AND
+		C.REPORTKEY = D.REPORTKEY
+		<isNotEmpty prepend="AND" property="organList">
+			C.CREATE_ORG IN
+			<iterate prepend="" property="organList" open="(" close=")"
+				conjunction=",">
+				#organList[]#
+			</iterate>
+		</isNotEmpty>
+		AND D.MSG_STATUS_CD IN ('2','5','3') AND D.MSG_TYPE_CD IN('N','A')
+		AND D.REPORT_TYPE_CD ='BS'
+		<isNotEmpty prepend="AND" property="startdate_str">
+				<![CDATA[D.SENDDATE_DT >= #startdate_str#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="enddate_str">
+			<![CDATA[D.SENDDATE_DT <= #enddate_str#]]>
+		</isNotEmpty>
+		) B GROUP BY CURR_CD,PARTY_CLASS_CD
+	</statement>
+	 -->
+	 <statement id="getT07_reportCount"
+		parameterClass="com.ist.aml.offs_report.dto.T07_user_identity"
+		resultClass="com.ist.aml.offs_report.dto.T07_user_identity">
+		SELECT SUM(T.CP_REPORTNUM) AS cp_reportNum,
+        <!-- TRUNC(SUM(T.CP_REPORTAMT), 2) / 10000 AS cp_reportAmt, -->
+        TRUNC(SUM(T.CP_REPORTAMT) / 10000, 2) AS cp_reportAmt,
+       	SUM(T.ID_REPORTNUM) AS id_reportNum,
+       	<!-- TRUNC(SUM(T.ID_REPORTAMT), 2) / 10000 AS id_reportAmt, -->
+       	TRUNC(SUM(T.ID_REPORTAMT) / 10000, 2) AS id_reportAmt,
+       	T.CURRFLAG
+  	   	FROM T09_REPORT_STATISTIC T
+  	   	WHERE T.ORGANKEY IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP M WHERE 1=1 
+  	   		<isNotEmpty prepend="and" property="organkey">
+				M.ORGANKEY = #organkey#
+			</isNotEmpty>
+		)
+		<isNotEmpty prepend="AND" property="startdate_str">
+				<![CDATA[T.STATISTICDATE >= #startdate_str#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="enddate_str">
+			<![CDATA[T.STATISTICDATE <= #enddate_str#]]>
+		</isNotEmpty>
+ 	   	GROUP BY T.CURRFLAG
+	</statement>
+	<!-- end by zew -->
+
+
+	<!-- new add 2009-02-02 -->
+	<statement id="updateT07_user_identityStatus"
+		parameterClass="com.ist.aml.offs_report.dto.T07_user_identity"
+		resultClass="int">
+		UPDATE
+		<isEqual property="identitytype" compareValue="1">
+			T07_USER_IDENTITY
+		</isEqual>
+		<isEqual property="identitytype" compareValue="2">
+			T07_USER_REIDENTITY
+		</isEqual>
+		<isEqual property="identitytype" compareValue="3">
+			T07_DUBIETY_IDENTITY
+		</isEqual>
+		<isEqual property="identitytype" compareValue="4">
+			T07_REPORT_STATISTIC
+		</isEqual>
+		SET STATUS_CD=#status_cd#,UPDATETIME=#updatetime# WHERE
+		IDENTITYKEY=#identitykey#
+	</statement>
+
+	<statement id="updateT07_user_identityStatus2"
+		parameterClass="com.ist.aml.offs_report.dto.T07_user_identity"
+		resultClass="int">
+		UPDATE $tableName$
+		SET STATUS_CD=#status_cd#,UPDATETIME=#updatetime# WHERE 1=1
+		<isNotEmpty prepend="AND" property="identitykeyList">
+			IDENTITYKEY IN
+			<iterate prepend="" property="identitykeyList" open="("
+				close=")" conjunction=",">
+				#identitykeyList[]#
+			</iterate>
+		</isNotEmpty>
+		<isEmpty prepend="AND" property="identitykeyList">
+			IDENTITYKEY IN ( SELECT DISTINCT IDENTITYKEY FROM
+			$tableName$ B WHERE 1=1
+			<isNotEmpty prepend="AND" property="startdate">
+				<![CDATA[B.STATISTICDATE >= #startdate#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="enddate">
+				<![CDATA[B.STATISTICDATE <= #enddate#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organList">
+				B.ORGANKEY IN
+				<iterate prepend="" property="organList" open="("
+					close=")" conjunction=",">
+					#organList[]#
+				</iterate>
+			</isNotEmpty>
+			)
+		</isEmpty>
+			<isNotEmpty prepend="AND" property="status_arrayList">
+				STATUS_CD IN
+				<iterate prepend="" property="status_arrayList" open="("
+					close=")" conjunction=",">
+					#status_arrayList[]#
+				</iterate>
+			</isNotEmpty>		
+	</statement>
+
+	
+	<statement id="getT09_new_party_statistics"
+		parameterClass="com.ist.aml.offs_report.dto.T09_new_party_statistics"
+		resultClass="com.ist.aml.offs_report.dto.T09_new_party_statistics">
+			SELECT SUM(COUNT_C_NEW) AS CNEW, SUM(COUNT_I_NEW) AS INEW, SUM(COUNT_IM_NEW) AS IMNEW, 
+			SUM(COUNT_INM_NEW) AS INMNEW,SUM(COUNT_IC) AS ALL_TOTAL FROM T09_NEW_PARTY_STATISTICS WHERE 1>0 AND STATISTIC_TYPE ='0' AND 
+			ORGANKEY IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP M WHERE 1=1 
+  	   		<isNotEmpty prepend="and" property="organkey">
+				M.ORGANKEY = #organkey#
+			</isNotEmpty>
+			)
+			<isNotEmpty prepend="AND" property="beginDate">
+				<![CDATA[STATISTIC_DT >= #beginDate#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="endDate">
+				<![CDATA[STATISTIC_DT <= #endDate#]]>
+			</isNotEmpty>			
+	</statement>
+	
+		<statement id="getT09_new_party_statistics1"
+		parameterClass="com.ist.aml.offs_report.dto.T09_new_party_statistics"
+		resultClass="com.ist.aml.offs_report.dto.T09_new_party_statistics">
+			SELECT SUM(COUNT_C_NEW) AS ONCNEW, SUM(COUNT_I_NEW) AS ONINEW, SUM(COUNT_IM_NEW) AS ONIMNEW, 
+			SUM(COUNT_INM_NEW) AS ONINMNEW,SUM(COUNT_IC) AS ONALL_TOTAL FROM T09_NEW_PARTY_STATISTICS WHERE 1>0 AND STATISTIC_TYPE ='1' AND 
+			ORGANKEY IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP M WHERE 1=1 
+  	   		<isNotEmpty prepend="and" property="organkey">
+				M.ORGANKEY = #organkey#
+			</isNotEmpty>
+			)
+			<isNotEmpty prepend="AND" property="beginDate">
+				<![CDATA[STATISTIC_DT >= #beginDate#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="endDate">
+				<![CDATA[STATISTIC_DT <= #endDate#]]>
+			</isNotEmpty>			
+	</statement>
+	
+	<statement id="getT09_new_party_statistics2"
+		parameterClass="com.ist.aml.offs_report.dto.T09_new_party_statistics"
+		resultClass="com.ist.aml.offs_report.dto.T09_new_party_statistics">
+			SELECT SUM(COUNT_C_NEW) AS OHCNEW, SUM(COUNT_I_NEW) AS OHINEW, SUM(COUNT_IM_NEW) AS OHIMNEW, 
+			SUM(COUNT_INM_NEW) AS OHINMNEW,SUM(COUNT_IC) AS OHALL_TOTAL FROM T09_NEW_PARTY_STATISTICS WHERE 1>0 AND STATISTIC_TYPE ='2' AND 
+			ORGANKEY IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP M WHERE 1=1 
+  	   		<isNotEmpty prepend="and" property="organkey">
+				M.ORGANKEY = #organkey#
+			</isNotEmpty>
+			)
+			<isNotEmpty prepend="AND" property="beginDate">
+				<![CDATA[STATISTIC_DT >= #beginDate#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="endDate">
+				<![CDATA[STATISTIC_DT <= #endDate#]]>
+			</isNotEmpty>			
+	</statement>
+	<statement id="getT07_REPORT_STATISTIC_MIDdb2"
+		parameterClass="com.ist.aml.offs_report.dto.T07_user_identity"
+		resultClass="com.ist.aml.offs_report.dto.T07_user_identity">
+		select sum(T.CPT_REPORTNUM) AS cp_reportNum,
+       sum(T.CPT_REPORTAMT) / 10000 AS cp_reportAmt ,
+       sum(T.IDT_REPORTNUM) AS id_reportNum,
+       sum(T.IDT_REPORTAMT) / 10000 AS id_reportAmt,
+       sum(T.CPA_REPORTNUM) AS cp1_reportNum,
+       sum(T.CPA_REPORTAMT) / 10000 AS cp1_reportAmt,
+       sum(T.IDA_REPORTNUM) AS id1_reportNum,
+       sum(T.IDA_REPORTAMT) / 10000 AS id1_reportAmt, T.CURRFLAG
+      FROM T07_REPORT_STATISTIC_MID T
+  	  WHERE 1=1 
+  	   		<isNotEmpty prepend="and" property="organkey">
+				T.ORGANKEY IN ( $organkey$ )
+			</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="startdate_str">
+				<![CDATA[T.STATISTICDATE >= #startdate_str#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="enddate_str">
+			<![CDATA[T.STATISTICDATE <= #enddate_str#]]>
+		</isNotEmpty>
+ 	   	GROUP BY T.CURRFLAG
+	</statement>
+	
+	<statement id="getT07_REPORT_STATISTIC_MID1db2"
+		parameterClass="com.ist.aml.offs_report.dto.T07_user_identity"
+		resultClass="com.ist.aml.offs_report.dto.T07_user_identity">
+		SELECT sum(T.CPR_REPORTNUM)  AS cp_reportNum3,
+        sum(T.CPR_REPORTAMT)/10000 AS cp_reportAmt3,
+       	sum(T.IDR_REPORTNUM) AS id_reportNum3,
+       sum(T.IDR_REPORTAMT)/10000 AS id_reportAmt3
+       
+  	   	FROM T07_REPORT_STATISTIC_MID T
+  	  WHERE 1=1 
+  	   		<isNotEmpty prepend="and" property="organkey">
+				T.ORGANKEY IN ( $organkey$ )
+			</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="startdate_str">
+				<![CDATA[T.STATISTICDATE >= #startdate_str#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="enddate_str">
+			<![CDATA[T.STATISTICDATE <= #enddate_str#]]>
+		</isNotEmpty>
+ 	  
+	</statement>
+	
+	<statement id="getT07_USER_IDENTITY_MListDb2"
+		parameterClass="com.ist.aml.offs_report.dto.T07_user_identity"
+		resultClass="com.ist.aml.offs_report.dto.T07_user_identity">
+		SELECT 
+       IDENTITYFLAG,
+       CHAR(SUM(CPM_TOTAL)) AS CP_TOTAL,
+       CHAR(SUM(CPM_PROXY)) AS CP_PROXY,
+       CHAR(SUM(CPM_THPARTY)) AS CP_THPARTY,
+       CHAR(SUM(CPM_DISEMBARK)) AS CP_DISEMBARK,
+       CHAR(SUM(CPM_BENEFIT)) AS CP_BENEFIT,
+       CHAR(SUM(CPM_QUESTOTAL)) AS CP_QUESTOTAL,
+       CHAR(SUM(CPM_ANONYMOUS)) AS CP_ANONYMOUS,
+       CHAR(SUM(CPM_FALSECARD)) AS CP_FALSECARD,
+       CHAR(SUM(CPM_FAILURECARD)) AS CP_FAILURECARD,
+       CHAR(SUM(CPM_OTHERSCARD)) AS CP_OTHERSCARD,
+       CHAR(SUM(CPM_SUSPECTS)) AS CP_SUSPECTS,
+       CHAR(SUM(CPM_OTHERCASE)) AS CP_OTHERCASE,
+       CHAR(SUM(IDM_TOTAL)) AS ID_TOTAL,
+       CHAR(SUM(IDM_PROXY)) AS ID_PROXY,
+       CHAR(SUM(IDM_THPARTY)) AS ID_THPARTY,
+       CHAR(SUM(IDM_RESIDENTS)) AS ID_RESIDENTS,
+       CHAR(SUM(IDM_RESIPROXY)) AS ID_RESIPROXY,
+       CHAR(SUM(IDM_NONRESIDENTS)) AS ID_NONRESIDENTS,
+       CHAR(SUM(IDM_NONRESIPROXY)) AS ID_NONRESIPROXY,
+       CHAR(SUM(IDM_QUESTOTAL)) AS ID_QUESTOTAL,
+       CHAR(SUM(IDM_ANONYMOUS)) AS ID_ANONYMOUS,
+       CHAR(SUM(IDM_FALSECARD)) AS ID_FALSECARD,
+       CHAR(SUM(IDM_FAILURECARD)) AS ID_FAILURECARD,
+       CHAR(SUM(IDM_OTHERSCARD)) AS ID_OTHERSCARD,
+       CHAR(SUM(IDM_SUSPECTS)) AS ID_SUSPECTS,
+       CHAR(SUM(IDM_OTHERCASE)) AS ID_OTHERCASE,
+       CHAR(SUM(CIALL_TOTAL)) AS ALL_TOTAL
+  FROM T07_USER_IDENTITY_M T
+ 
+  	  WHERE 1=1 
+  	   		<isNotEmpty prepend="and" property="organkey">
+				T.ORGANKEY IN ( $organkey$ )
+			</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="startdate_str">
+				<![CDATA[T.STATISTICDATE >= #startdate_str#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="enddate_str">
+			<![CDATA[T.STATISTICDATE <= #enddate_str#]]>
+		</isNotEmpty>
+		
+		 GROUP BY IDENTITYFLAG
+     
+ 	  
+	</statement>
+	
+	<statement id="getT07_USER_REIDENTITY_MListDb2"
+		parameterClass="com.ist.aml.offs_report.dto.T07_user_identity"
+		resultClass="com.ist.aml.offs_report.dto.T07_user_identity">
+		
+ SELECT REIDENTITYFLAG,
+       CHAR(SUM(CHANGEINFO)) AS CHANGEINFO,
+       CHAR(SUM(INFO_VERIFIED)) as INFO_VERIFIED,
+       CHAR(SUM(BEHAVIOR)) as BEHAVIOR,
+       CHAR(SUM(BEHA_VERIFIED)) as BEHA_VERIFIED ,
+       CHAR(SUM(SUSPECTS)) as SUSPECTS,
+		   CHAR(SUM(SUSPE_VERIFIED)) as SUSPE_VERIFIED,
+		   CHAR(SUM(SUSPICIOUS)) as SUSPICIOUS,
+		   CHAR(SUM(SUSPI_VERIFIED)) as SUSPI_VERIFIED,
+		   CHAR(SUM(OTHERCASE)) as OTHERCASE ,
+		   CHAR(SUM(OTHER_VERIFIED)) as OTHER_VERIFIED,
+		   CHAR(SUM(TOTAL)) as TOTAL,
+		   CHAR(SUM(TOTAL_VERIFIED)) as TOTAL_VERIFIED,
+		   CHAR(SUM(FAILURECARD)) as FAILURECARD,
+		   CHAR(SUM(UPDATECARD)) as UPDATECARD
+  	   	FROM T07_USER_REIDENTITY_M T
+  	  WHERE 1=1 
+  	   		<isNotEmpty prepend="and" property="organkey">
+				T.ORGANKEY IN ( $organkey$ )
+			</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="startdate_str">
+				<![CDATA[T.STATISTICDATE >= #startdate_str#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="enddate_str">
+			<![CDATA[T.STATISTICDATE <= #enddate_str#]]>
+		</isNotEmpty>
+ 	   GROUP BY REIDENTITYFLAG
+	</statement>
+	
+	<statement id="getT07_USER_IDENTITY_MList"
+		parameterClass="com.ist.aml.offs_report.dto.T07_user_identity"
+		resultClass="com.ist.aml.offs_report.dto.T07_user_identity">
+		SELECT 
+       IDENTITYFLAG,
+       TO_CHAR(SUM(CPM_TOTAL)) AS CP_TOTAL,
+       TO_CHAR(SUM(CPM_PROXY)) AS CP_PROXY,
+       TO_CHAR(SUM(CPM_THPARTY)) AS CP_THPARTY,
+       TO_CHAR(SUM(CPM_DISEMBARK)) AS CP_DISEMBARK,
+       TO_CHAR(SUM(CPM_BENEFIT)) AS CP_BENEFIT,
+       TO_CHAR(SUM(CPM_QUESTOTAL)) AS CP_QUESTOTAL,
+       TO_CHAR(SUM(CPM_ANONYMOUS)) AS CP_ANONYMOUS,
+       TO_CHAR(SUM(CPM_FALSECARD)) AS CP_FALSECARD,
+       TO_CHAR(SUM(CPM_FAILURECARD)) AS CP_FAILURECARD,
+       TO_CHAR(SUM(CPM_OTHERSCARD)) AS CP_OTHERSCARD,
+       TO_CHAR(SUM(CPM_SUSPECTS)) AS CP_SUSPECTS,
+       TO_CHAR(SUM(CPM_OTHERCASE)) AS CP_OTHERCASE,
+       TO_CHAR(SUM(IDM_TOTAL)) AS ID_TOTAL,
+       TO_CHAR(SUM(IDM_PROXY)) AS ID_PROXY,
+       TO_CHAR(SUM(IDM_THPARTY)) AS ID_THPARTY,
+       TO_CHAR(SUM(IDM_RESIDENTS)) AS ID_RESIDENTS,
+       TO_CHAR(SUM(IDM_RESIPROXY)) AS ID_RESIPROXY,
+       TO_CHAR(SUM(IDM_NONRESIDENTS)) AS ID_NONRESIDENTS,
+       TO_CHAR(SUM(IDM_NONRESIPROXY)) AS ID_NONRESIPROXY,
+       TO_CHAR(SUM(IDM_QUESTOTAL)) AS ID_QUESTOTAL,
+       TO_CHAR(SUM(IDM_ANONYMOUS)) AS ID_ANONYMOUS,
+       TO_CHAR(SUM(IDM_FALSECARD)) AS ID_FALSECARD,
+       TO_CHAR(SUM(IDM_FAILURECARD)) AS ID_FAILURECARD,
+       TO_CHAR(SUM(IDM_OTHERSCARD)) AS ID_OTHERSCARD,
+       TO_CHAR(SUM(IDM_SUSPECTS)) AS ID_SUSPECTS,
+       TO_CHAR(SUM(IDM_OTHERCASE)) AS ID_OTHERCASE,
+       TO_CHAR(SUM(CIALL_TOTAL)) AS ALL_TOTAL
+  FROM T07_USER_IDENTITY_M T
+ 
+  	  WHERE 1=1 
+  	   		<isNotEmpty prepend="and" property="organkey">
+				T.ORGANKEY IN ( $organkey$ )
+			</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="startdate_str">
+				<![CDATA[T.STATISTICDATE >= #startdate_str#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="enddate_str">
+			<![CDATA[T.STATISTICDATE <= #enddate_str#]]>
+		</isNotEmpty>
+		
+		 GROUP BY IDENTITYFLAG
+     
+ 	  
+	</statement>
+	
+	<statement id="getT07_USER_REIDENTITY_MList"
+		parameterClass="com.ist.aml.offs_report.dto.T07_user_identity"
+		resultClass="com.ist.aml.offs_report.dto.T07_user_identity">
+		
+ SELECT REIDENTITYFLAG,
+       TO_CHAR(SUM(CHANGEINFO)) AS CHANGEINFO,
+       TO_CHAR(SUM(INFO_VERIFIED)) as INFO_VERIFIED,
+       TO_CHAR(SUM(BEHAVIOR)) as BEHAVIOR,
+       TO_CHAR(SUM(BEHA_VERIFIED)) as BEHA_VERIFIED ,
+       TO_CHAR(SUM(SUSPECTS)) as SUSPECTS,
+		   TO_CHAR(SUM(SUSPE_VERIFIED)) as SUSPE_VERIFIED,
+		   TO_CHAR(SUM(SUSPICIOUS)) as SUSPICIOUS,
+		   TO_CHAR(SUM(SUSPI_VERIFIED)) as SUSPI_VERIFIED,
+		   TO_CHAR(SUM(OTHERCASE)) as OTHERCASE ,
+		   TO_CHAR(SUM(OTHER_VERIFIED)) as OTHER_VERIFIED,
+		   TO_CHAR(SUM(TOTAL)) as TOTAL,
+		   TO_CHAR(SUM(TOTAL_VERIFIED)) as TOTAL_VERIFIED,
+		   TO_CHAR(SUM(FAILURECARD)) as FAILURECARD,
+		   TO_CHAR(SUM(UPDATECARD)) as UPDATECARD
+  	   	FROM T07_USER_REIDENTITY_M T
+  	  WHERE 1=1 
+  	   		<isNotEmpty prepend="and" property="organkey">
+				T.ORGANKEY IN ( $organkey$ )
+			</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="startdate_str">
+				<![CDATA[T.STATISTICDATE >= #startdate_str#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="enddate_str">
+			<![CDATA[T.STATISTICDATE <= #enddate_str#]]>
+		</isNotEmpty>
+ 	   GROUP BY REIDENTITYFLAG
+	</statement>
+	
+	
+</sqlMap>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T18_dm_table"> 
+  <statement id="getT18_dm_table" parameterClass="com.ist.platform.dto.T18_dm_table" resultClass="com.ist.platform.dto.T18_dm_table"> 
+  	select t1.tableename,t1.odstableename,'',t1.granularity from T18_DM_TABLE t1
+  </statement>
+  
+  <statement id="insertT18_dm_table300_pf" parameterClass="com.ist.platform.dto.T18_dm_table" resultClass="int"> 
+	  insert into T18_dm_table(tableename, GRANULARITY) 
+	  select t.indic_table, t.granularitys
+  	  from v07_indic t, t07_etl_base s, t07_etl_out_tab m
+ 	  where t.indickey = s.etl_code
+      and s.etl_id = m.etl_id
+  </statement>
+  
+  <statement id="deleteT18_dm_table300_pf" parameterClass="com.ist.platform.dto.T18_dm_table" resultClass="int">
+  	delete from T18_dm_table m where exists (select 'X'
+  	  from v07_indic t, t07_etl_base s, t07_etl_out_tab m
+ 	  where t.indickey = s.etl_code
+      and s.etl_id = m.etl_id and m.tableename = t.indic_table)
+  </statement>
+  
+  <statement id="insertT18_dm_table321_pf" parameterClass="com.ist.platform.dto.T18_dm_table" resultClass="int"> 
+	  insert into T18_dm_table(tableename, GRANULARITY) 
+	  select t.indic_table, t.granularitys
+  	from T21_INDIC t, T21_INDIC_SQL s
+	where t.indickey = s.indickey and t.use_type_cd in ('1', '3')
+  </statement>
+  
+  <statement id="deleteT18_dm_table321_pf" parameterClass="com.ist.platform.dto.T18_dm_table" resultClass="int">
+  	delete from T18_dm_table m where exists (select 'X'
+  	from T21_INDIC t, T21_INDIC_SQL s
+	where t.indickey = s.indickey and t.use_type_cd in ('1', '3') and m.tableename = t.indic_table)
+  </statement>
+  
+  <statement id="insertT18_dm_table703_pf" parameterClass="com.ist.platform.dto.T18_dm_table" resultClass="int"> 
+	  insert into T18_dm_table(tableename, GRANULARITY) 
+	  select t.indic_table, t.granularitys
+  	from T21_INDIC t, T21_INDIC_SQL s
+	where t.indickey = s.indickey and t.use_type_cd = '2'
+  </statement>
+  
+  <statement id="deleteT18_dm_table703_pf" parameterClass="com.ist.platform.dto.T18_dm_table" resultClass="int">
+  	delete from T18_dm_table m where exists (select 'X'
+  	from T21_INDIC t, T21_INDIC_SQL s
+	where t.indickey = s.indickey and t.use_type_cd = '2' and m.tableename = t.indic_table)
+  </statement>
+  
+</sqlMap> 
+

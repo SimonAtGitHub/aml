@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T03_tp_exec_qry"> 
+  <statement id="getT03_tp_exec_qryList" parameterClass="com.ist.aml.rule.dto.T03_tp_exec_qry" resultClass="com.ist.aml.rule.dto.T03_tp_exec_qry"> 
+  select execsqlkey,tplakey,execseq,ismainquery,recstat from t03_tp_exec_qry 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="tplakey"> 
+    tplakey = #tplakey# 
+    </isNotEmpty> 
+  </dynamic> 
+   order by execseq
+  </statement> 
+ 
+  <statement id="getNoMainQryList1" parameterClass="java.lang.String"  resultClass="com.ist.aml.rule.dto.T03_tp_exec_qry"> 
+  select execsqlkey,tplakey,execseq,ismainquery,recstat from t03_tp_exec_qry 
+  where tplakey = #value#  and  ismainquery = '0' and recstat = '1' 
+  order by execseq
+  </statement> 
+  
+  <statement id="getT03_tp_exec_qryListForAll" parameterClass="com.ist.aml.rule.dto.T03_tp_exec_qry" resultClass="com.ist.aml.rule.dto.T03_tp_exec_qry"> 
+  	 SELECT T2.RULEKEY,T1.EXECSQLKEY,T1.TPLAKEY,T4.EXECSQL,T1.EXECSEQ,T1.ISMAINQUERY,T1.RECSTAT,T3.GRANULARITY 
+		FROM T03_TP_EXEC_QRY T1,T03_TP_EXEC_QRY_SEQ T4,T03_RULE T2,T18_TASKLIST T3 
+	    WHERE T1.TPLAKEY=T2.TPLAKEY AND T3.BUSINESSKEY=T2.RULEKEY AND T1.EXECSQLKEY=T4.EXECSQLKEY AND T3.TASKTYPE='402' 
+ 		ORDER BY T2.RULEKEY,T1.EXECSEQ,T4.SEQ
+  </statement>
+  
+  <statement id="getT03_tp_exec_qryListCount" parameterClass="com.ist.aml.rule.dto.T03_tp_exec_qry" resultClass="int"> 
+  select count(*) from t03_tp_exec_qry 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="execsqlkey"> 
+    execsqlkey = #execsqlkey# 
+    </isNotEmpty>
+  </dynamic>
+  </statement> 
+ 
+ 
+   <statement id="getT03_tp_exec_qryMainSql" parameterClass="java.util.ArrayList" resultClass="com.ist.aml.rule.dto.T03_tp_exec_qry"> 
+  select execsqlkey,tplakey from t03_tp_exec_qry 
+  where recstat = '1' and ismainquery = '1'  and execsqlkey in
+		<iterate open="(" close=")" conjunction=",">
+			#value[]#
+		</iterate> 
+  </statement> 
+  
+  <statement id="insertT03_tp_exec_qry" parameterClass="com.ist.aml.rule.dto.T03_tp_exec_qry" resultClass="int"> 
+  insert into T03_tp_exec_qry(
+  execsqlkey,tplakey,execseq,ismainquery,recstat
+  ) values(
+  #execsqlkey#,#tplakey#,#execseq:INTEGER#,#ismainquery#,#recstat#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT03_tp_exec_qry" parameterClass="com.ist.aml.rule.dto.T03_tp_exec_qry" resultClass="int"> 
+  update T03_tp_exec_qry set 
+  execsqlkey=#execsqlkey#,tplakey=#tplakey#,execseq=#execseq#,ismainquery=#ismainquery#
+  where execsqlkey=#execsqlkey# 
+  </statement> 
+ 
+  <statement id="deleteT03_tp_exec_qry" parameterClass="java.util.ArrayList" resultClass="int">
+  update  T03_tp_exec_qry set recstat = '0' where execsqlkey in
+		<iterate open="(" close=")" conjunction=",">
+			#value[]#
+		</iterate> 
+  </statement> 
+ 
+  <statement id="getT03_tp_exec_qryDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.rule.dto.T03_tp_exec_qry"> 
+  select * from T03_tp_exec_qry where execsqlkey=#value# 
+  </statement> 
+<statement id="deleteT03_tp_exec_qry_tpla" parameterClass="java.lang.String" resultClass="int"> 
+  delete from T03_tp_exec_qry where tplakey=#value# 
+  </statement> 
+  
+<statement id="deleteT03_tp_exec_qry_by_tplakey" parameterClass="java.lang.String" resultClass="int"> 
+  delete from T03_tp_exec_qry where tplakey in  ($value$) 
+</statement> 
+  <statement id="getT03_tp_exec_qryListWidthTplaKeys" parameterClass="java.util.List" resultClass="com.ist.aml.rule.dto.T03_tp_exec_qry">
+  	select * from T03_tp_exec_qry where tplakey in 
+  	<iterate open="(" close=")" conjunction=",">
+		#value[]#
+	</iterate>
+  </statement>
+  
+  <statement id="getT03_tp_exec_qry_mainSql" parameterClass="java.lang.String" resultClass="com.ist.aml.rule.dto.T03_tp_exec_qry"> 
+  select * from t03_tp_exec_qry 
+  where recstat = '1' and ismainquery = '1' and tplakey = #value#
+  </statement> 
+  
+   <statement id="updateT03_tp_exec_qry_mainSql" parameterClass="com.ist.aml.rule.dto.T03_tp_exec_qry" resultClass="int"> 
+   update t03_tp_exec_qry set  execsql = #execsql#
+   where  ismainquery = '1'  and tplakey = #tplakey# and  execsqlkey=#execsqlkey#
+  </statement> 
+  
+   <statement id="insertT03_tp_exec_qry_seq" parameterClass="com.ist.aml.rule.dto.T03_tp_exec_qry" resultClass="int"> 
+   insert into T03_tp_exec_qry_seq(execsqlkey,seq,execsql) values(#execsqlkey#,#seq#,#execsql#) 
+  </statement> 
+  
+   <statement id="deleteT03_tp_exec_qry_seq" parameterClass="java.lang.String" resultClass="int"> 
+   DELETE FROM T03_TP_EXEC_QRY_SEQ s WHERE EXISTS (SELECT 'X' from T03_TP_EXEC_QRY t WHERE  t.EXECSQLKEY = s.EXECSQLKEY and t.tplakey=#value#)
+  </statement> 
+  
+   <statement id="deleteT03_tp_exec_qry_seq_by_tplakey" parameterClass="java.lang.String" resultClass="int"> 
+   DELETE FROM T03_TP_EXEC_QRY_SEQ s WHERE EXISTS (SELECT 'X' from T03_TP_EXEC_QRY t WHERE  t.EXECSQLKEY = s.EXECSQLKEY and t.tplakey in ($value$))
+  </statement> 
+  
+   <statement id="getRel_sql_by_tplakey" parameterClass="com.ist.aml.rule.dto.T03_tp_exec_qry" resultClass="com.ist.aml.rule.dto.T03_tp_exec_qry"> 
+  SELECT s.* FROM T03_TP_EXEC_QRY t , T03_TP_EXEC_QRY_SEQ s WHERE  t.EXECSQLKEY = s.EXECSQLKEY AND t.TPLAKEY=#tplakey# 
+   <isNotEmpty prepend="and" property="execsqlkey"> 
+    t.EXECSQLKEY=#execsqlkey#
+    </isNotEmpty> 
+  ORDER BY s.execsqlkey,s.seq
+  </statement> 
+  
+  <statement id="deleteT03_tp_exec_qry_seq_by_key" parameterClass="java.lang.String" resultClass="int"> 
+   DELETE FROM T03_TP_EXEC_QRY_SEQ s WHERE  s.EXECSQLKEY = #value#
+  </statement> 
+
+ <statement id="getT03_exec_sql_by_execkey" parameterClass="com.ist.aml.rule.dto.T03_tp_exec_qry" resultClass="com.ist.aml.rule.dto.T03_tp_exec_qry"> 
+  SELECT s.* FROM T03_TP_EXEC_QRY t , T03_TP_EXEC_QRY_SEQ s WHERE  t.EXECSQLKEY = s.EXECSQLKEY AND t.EXECSQLKEY=#execsqlkey# ORDER BY s.execsqlkey,s.seq
+  </statement> 
+</sqlMap> 
+

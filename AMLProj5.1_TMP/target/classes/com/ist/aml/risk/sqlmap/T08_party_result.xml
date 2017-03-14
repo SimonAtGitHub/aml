@@ -1,0 +1,873 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T08_party_result">
+	
+	<statement id="getT08_party_history_resultList"
+		parameterClass="com.ist.aml.risk.dto.T08_party_result"
+		resultClass="com.ist.aml.risk.dto.T08_party_result">
+		SELECT
+		A.RESULEKEY,A.TEMPLATEKEY,A.PARTY_ID,A.PARTY_CHN_NAME,A.LEVELKEY,
+		A.FRISTAPPRAGRADE,A.FRISTAPPRALEVEL,A.GRANULARITY,
+		A.EMENDATIONLEVEL,A.REASON ,A.APPRADATE,A.MODIFYDATE,A.TEMPTYPE,A.LASTLEVELKEY,A.LASTCHECKFLAG,
+		A.ORGANKEY,A.PARTY_CLASS_CD,A.MODIFY_CD, A.CREATE_DT FROM $tableName$ A 
+		 WHERE  1>0
+	 
+		<isNotEmpty prepend="AND" property="templatekey">
+			A.TEMPLATEKEY = #templatekey#
+		</isNotEmpty>
+	<isNotEmpty prepend="AND" property="temptype">
+	    A.TEMPTYPE = #temptype#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="templatgs">
+			A.templatgs = #templatgs#
+		</isNotEmpty>
+		<!--  add by qiu 090618  -->
+		<isNotEmpty prepend="AND" property="party_id">
+			A.PARTY_ID = #party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			A.PARTY_CLASS_CD = #party_class_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="riskLevel">
+			A.FRISTAPPRALEVEL = #riskLevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="riskLevel1">
+			A.LEVELKEY = #riskLevel1#
+		</isNotEmpty>
+			 <isNotEmpty prepend="AND" property="lastlevelkey">
+			A.lastlevelkey = #lastlevelkey#
+		</isNotEmpty>
+	   <isNotEmpty prepend="AND" property="lastcheckflag">
+			A.lastcheckflag = #lastcheckflag#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			A.ORGANKEY IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY=#organkey#)  
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_chn_name">
+			A.PARTY_CHN_NAME=#party_chn_name#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="appradate">
+			<![CDATA[APPRADATE >= #appradate#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="appradate_end">
+			<![CDATA[APPRADATE <= #appradate_end#]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="modifydate_disp">
+			<![CDATA[MODIFYDATE >= #modifydate#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="modifydate_disp_end">
+			<![CDATA[MODIFYDATE <= #modifydate_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_start">
+			
+			<![CDATA[CREATE_DT >= #create_start#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_end">
+			<![CDATA[CREATE_DT <= #create_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organ_id">
+			A.ORGANKEY IN ($organ_id$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="modify_cd">
+			A.MODIFY_CD = #modify_cd#
+		</isNotEmpty>
+		<isNotEmpty property="orderby">
+			<isEqual property="orderby" compareValue="1">
+				ORDER BY A.PARTY_CLASS_CD
+			</isEqual>
+			<isEqual property="orderby" compareValue="2">
+				ORDER BY A.ORGANKEY
+			</isEqual>
+			<isEqual property="orderby" compareValue="3">
+				ORDER BY A.PARTY_CHN_NAME
+			</isEqual>
+			<isEqual property="orderby" compareValue="4">
+				ORDER BY A.PARTY_ID
+			</isEqual>
+		</isNotEmpty>
+		<isNotEmpty property="orderby">
+			<isNotEmpty property="order">
+				<isEqual property="order" compareValue="1"></isEqual>
+				<isEqual property="order" compareValue="2">
+					DESC
+				</isEqual>
+			</isNotEmpty>
+		</isNotEmpty>
+	</statement>
+	
+	<statement id="getT08_party_history_resultListCount"
+		parameterClass="com.ist.aml.risk.dto.T08_party_result"
+		resultClass="int">
+		SELECT COUNT(*) FROM $tableName$  A
+		  WHERE  1>0
+	
+		<isNotEmpty prepend="AND" property="templatekey">
+			A.TEMPLATEKEY = #templatekey#
+		</isNotEmpty>
+	<isNotEmpty prepend="AND" property="temptype">
+	A.TEMPTYPE = #temptype#
+		 
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="templatgs">
+			A.templatgs = #templatgs#
+		</isNotEmpty>
+	
+		<isNotEmpty prepend="AND" property="party_id">
+			A.PARTY_ID = #party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			A.PARTY_CLASS_CD = #party_class_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="riskLevel">
+			A.FRISTAPPRALEVEL = #riskLevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="riskLevel1">
+			A.LEVELKEY = #riskLevel1#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="lastlevelkey">
+			A.lastlevelkey = #lastlevelkey#
+		</isNotEmpty>
+	   <isNotEmpty prepend="AND" property="lastcheckflag">
+			A.lastcheckflag = #lastcheckflag#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			A.ORGANKEY IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY=#organkey#)  
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_chn_name">
+			A.PARTY_CHN_NAME=#party_chn_name#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="appradate">
+			<![CDATA[APPRADATE >= #appradate#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="appradate_end">
+			<![CDATA[APPRADATE <= #appradate_end#]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="modifydate_disp">
+			<![CDATA[MODIFYDATE >= #modifydate#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="modifydate_disp_end">
+			<![CDATA[MODIFYDATE <= #modifydate_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_start">
+			<![CDATA[CREATE_DT >= #create_start#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_end">
+			<![CDATA[CREATE_DT <= #create_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organ_id">
+			A.ORGANKEY IN ($organ_id$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="modify_cd">
+			A.MODIFY_CD = #modify_cd#
+		</isNotEmpty>
+	</statement>
+
+	
+	
+    <statement id="getTable"
+		resultClass="java.lang.String" parameterClass="com.ist.aml.risk.dto.T08_party_result">
+		$tableName$
+	</statement>
+	
+	<statement id="getT08_party_history_resultList1"
+		parameterClass="com.ist.aml.risk.dto.T08_party_result"
+		resultClass="com.ist.aml.risk.dto.T08_party_result">
+		SELECT
+		A.RESULEKEY,A.TEMPLATEKEY,A.TEMPTYPE,A.PARTY_ID,A.PARTY_CHN_NAME,A.LEVELKEY,A.FRISTAPPRAGRADE,A.GRANULARITY,LASTLEVELKEY,LASTCHECKFLAG,
+		A.FRISTAPPRALEVEL,A.EMENDATIONLEVEL,A.REASON,A.APPRADATE,A.MODIFYDATE,A.ORGANKEY,A.PARTY_CLASS_CD,A.CREATE_DT,A.MODIFY_CD
+		FROM $tableName$ A WHERE 1>0
+		
+		<isNotEmpty prepend="AND" property="resulekey">
+			A.RESULEKEY = #resulekey#
+		</isNotEmpty>
+		<!--  ADD BY QIU 0702 -->
+		<isNotEmpty prepend="AND" property="party_id">
+			A.PARTY_ID = #party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			A.PARTY_CLASS_CD = #party_class_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="riskLevel">
+			A.FRISTAPPRALEVEL = #riskLevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="riskLevel1">
+			A.LEVELKEY = #riskLevel#
+		</isNotEmpty>
+				<isNotEmpty prepend="AND" property="templatekey">
+			A.TEMPLATEKEY = #templatekey#
+		</isNotEmpty>
+		 <isNotEmpty prepend="AND" property="lastlevelkey">
+			A.lastlevelkey = #lastlevelkey#
+		</isNotEmpty>
+	   <isNotEmpty prepend="AND" property="lastcheckflag">
+			A.lastcheckflag = #lastcheckflag#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			A.ORGANKEY = #organkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_chn_name">
+			A.PARTY_CHN_NAME =#party_chn_name#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="appradate">
+			<![CDATA[APPRADATE >= #appradate#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="appradate_end">
+			<![CDATA[APPRADATE <= #appradate_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="modifydate_disp">
+			<![CDATA[MODIFYDATE >= #modifydate#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="modifydate_disp_end">
+			<![CDATA[MODIFYDATE <= #modifydate_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_start">
+			
+			<![CDATA[CREATE_DT >= #create_start#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_end">
+			<![CDATA[CREATE_DT <= #create_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organ_id">
+			A.ORGANKEY IN ($organ_id$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="modify_cd">
+			A.MODIFY_CD = #modify_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="temptype">
+		   A.TEMPTYPE = #temptype#
+		</isNotEmpty>
+		<isNotEmpty property="orderby">
+			<isEqual property="orderby" compareValue="1">
+				ORDER BY A.PARTY_CLASS_CD
+			</isEqual>
+			<isEqual property="orderby" compareValue="2">
+				ORDER BY A.ORGANKEY
+			</isEqual>
+			<isEqual property="orderby" compareValue="3">
+				ORDER BY A.PARTY_CHN_NAME
+			</isEqual>
+			<isEqual property="orderby" compareValue="4">
+				ORDER BY A.PARTY_ID
+			</isEqual>
+		</isNotEmpty>
+		<isNotEmpty property="orderby">
+			<isNotEmpty property="order">
+				<isEqual property="order" compareValue="1"></isEqual>
+				<isEqual property="order" compareValue="2">
+					DESC
+				</isEqual>
+			</isNotEmpty>
+		</isNotEmpty>
+	</statement>
+	
+	<statement id="getT08_party_history_resultListCount1"
+		parameterClass="com.ist.aml.risk.dto.T08_party_result"
+		resultClass="int">
+		SELECT COUNT(*) FROM $tableName$ A WHERE 1>0
+		
+		<isNotEmpty prepend="AND" property="resulekey">
+			A.RESULEKEY = #resulekey#
+		</isNotEmpty>
+		<!--  ADD BY QIU 0702 -->
+		<isNotEmpty prepend="AND" property="party_id">
+			A.PARTY_ID = #party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			A.PARTY_CLASS_CD = #party_class_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="riskLevel1">
+			A.LEVELKEY = #riskLevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="riskLevel">
+			A.FRISTAPPRALEVEL = #riskLevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="lastlevelkey">
+			A.lastlevelkey = #lastlevelkey#
+		</isNotEmpty>
+	   <isNotEmpty prepend="AND" property="lastcheckflag">
+			A.lastcheckflag = #lastcheckflag#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			A.ORGANKEY = #organkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_chn_name">
+			A.PARTY_CHN_NAME =#party_chn_name#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="appradate">
+			<![CDATA[APPRADATE >= #appradate#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="appradate_end">
+			<![CDATA[APPRADATE <= #appradate_end#]]>
+		</isNotEmpty>
+	<isNotEmpty prepend="AND" property="modifydate_disp">
+			<![CDATA[MODIFYDATE >= #modifydate#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="modifydate_disp_end">
+			<![CDATA[MODIFYDATE <= #modifydate_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_start">
+			
+			<![CDATA[CREATE_DT >= #create_start#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_end">
+			<![CDATA[CREATE_DT <= #create_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organ_id">
+			A.ORGANKEY IN ($organ_id$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="modify_cd">
+			A.MODIFY_CD = #modify_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="templatekey">
+			A.TEMPLATEKEY = #templatekey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="temptype">
+		A.TEMPTYPE = #temptype#
+		 
+		</isNotEmpty>
+	</statement>
+	
+	<statement id="getT08_party_resultList2_negative"
+		parameterClass="com.ist.aml.risk.dto.T08_party_result"
+		resultClass="com.ist.aml.risk.dto.T08_party_result">
+		SELECT R.RESULEKEY, R.TEMPLATEKEY, R.TEMPTYPE, R.PARTY_ID, R.PARTY_CHN_NAME, 
+        R.LEVELKEY, R.FRISTAPPRAGRADE, R.FRISTAPPRALEVEL, R.EMENDATIONLEVEL,
+        R.REASON,R.APPRADATE,R.ORGANKEY,R.PARTY_CLASS_CD, R.TEMPLATGS,R.CREATE_DT,MODIFY_CD,TEMPTYPE,MODIFYDATE
+        FROM  $tableName$ R 
+        WHERE  1>0
+		<isNotEmpty prepend="AND" property="appradate">
+			APPRADATE = #appradate#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			R.party_id = #party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_start">
+			
+			<![CDATA[CREATE_DT >= #create_start#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_end">
+			<![CDATA[CREATE_DT <= #create_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="resulekey">
+			R.RESULEKEY = #resulekey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			R.PARTY_CLASS_CD = #party_class_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			R.ORGANKEY = #organkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organ_id">
+			R.ORGANKEY IN ($organ_id$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="riskLevel">
+			R.EMENDATIONLEVEL = #riskLevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_chn_name">
+			R.PARTY_CHN_NAME =#party_chn_name#
+		</isNotEmpty>
+	</statement>
+	<statement id="getT08_party_resultListCount2_negative"
+		parameterClass="com.ist.aml.risk.dto.T08_party_result"
+		resultClass="int">
+		SELECT COUNT(*) FROM (SELECT R.RESULEKEY, R.TEMPLATEKEY, R.TEMPTYPE, R.PARTY_ID, R.PARTY_CHN_NAME, 
+        R.LEVELKEY, R.FRISTAPPRAGRADE, R.FRISTAPPRALEVEL, R.EMENDATIONLEVEL,
+        R.REASON,R.APPRADATE,R.ORGANKEY,R.PARTY_CLASS_CD, R.TEMPLATGS
+        FROM $tableName$ R  
+        WHERE 1>0
+       
+		<isNotEmpty prepend="AND" property="appradate">
+			APPRADATE = #appradate#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			R.party_id = #party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_start">
+			
+			<![CDATA[CREATE_DT >= #create_start#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_end">
+			<![CDATA[CREATE_DT <= #create_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="resulekey">
+			R.RESULEKEY = #resulekey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			R.PARTY_CLASS_CD = #party_class_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			R.ORGANKEY = #organkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organ_id">
+			R.ORGANKEY IN ($organ_id$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="riskLevel">
+			R.EMENDATIONLEVEL = #riskLevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_chn_name">
+			R.PARTY_CHN_NAME =#party_chn_name#
+		</isNotEmpty>
+		)TT
+	</statement>
+	
+	<statement id="getT08_party_resultDisp"
+		parameterClass="com.ist.aml.risk.dto.T08_party_result"
+		resultClass="com.ist.aml.risk.dto.T08_party_result">
+	SELECT 	 R.RESULEKEY,R.TEMPLATEKEY,R.PARTY_ID,R.HOST_CUST_ID,
+        R.PARTY_CHN_NAME, R.LEVELKEY,R.FRISTAPPRAGRADE,R.FRISTAPPRALEVEL, R.EMENDATIONLEVEL,
+        R.REASON,R.APPRADATE,R.MODIFYDATE, R.ORGANKEY,R.PARTY_CLASS_CD,R.TEMPLATGS,R.TEMPTYPE,R.CURR_POST,R.CREATE_DT,R.MODIFY_CD,LASTLEVELKEY,LASTCHECKFLAG
+    FROM t08_party_result R
+    WHERE R.RESULEKEY =#resulekey#
+	</statement>
+	
+	<statement id="getT08_party_resultList2"
+		parameterClass="com.ist.aml.risk.dto.T08_party_result"
+		resultClass="com.ist.aml.risk.dto.T08_party_result">
+ 		SELECT  R.RESULEKEY,R.TEMPLATEKEY,R.PARTY_ID,R.HOST_CUST_ID,
+        R.PARTY_CHN_NAME, R.LEVELKEY,R.FRISTAPPRAGRADE,R.FRISTAPPRALEVEL, R.EMENDATIONLEVEL,
+        R.REASON,R.APPRADATE,R.MODIFYDATE, R.ORGANKEY,R.PARTY_CLASS_CD,R.TEMPLATGS,R.TEMPTYPE,R.CURR_POST,R.CREATE_DT,R.MODIFY_CD,LASTLEVELKEY,LASTCHECKFLAG
+        FROM $tableName$ R
+		WHERE  R.ORGANKEY IN ($organ_id$)
+		<isNotEmpty prepend="AND" property="status_cd">
+			R.status_cd=#status_cd#
+		</isNotEmpty>
+	<isNotEmpty prepend="AND" property="appradate">
+			<![CDATA[APPRADATE >= #appradate#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="appradate_end">
+			<![CDATA[APPRADATE <= #appradate_end#]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="modifydate_disp">
+			<![CDATA[MODIFYDATE >= #modifydate#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="modifydate_disp_end">
+			<![CDATA[MODIFYDATE <= #modifydate_end#]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="create_start">
+			
+			<![CDATA[CREATE_DT >= #create_start#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_end">
+			<![CDATA[CREATE_DT <= #create_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			R.PARTY_ID =#party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="host_cust_id">
+			R.HOST_CUST_ID =#host_cust_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="post_id">
+			R.CURR_POST =#post_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			R.PARTY_CLASS_CD = #party_class_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			R.ORGANKEY = #organkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="riskLevel">
+			R.FRISTAPPRALEVEL = #riskLevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="riskLevel1">
+			R.emendationlevel=#riskLevel1#
+             and R.modify_cd ='1'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_chn_name">
+			R.PARTY_CHN_NAME LIKE #party_chn_name#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="temptype">
+			R.TEMPTYPE = #temptype#
+		</isNotEmpty>
+		<isNotEmpty property="orderby">
+			<isEqual property="orderby" compareValue="1">
+				ORDER BY R.PARTY_CLASS_CD
+			</isEqual>
+			<isEqual property="orderby" compareValue="2">
+				ORDER BY R.ORGANKEY
+			</isEqual>
+			<isEqual property="orderby" compareValue="3">
+				ORDER BY R.PARTY_CHN_NAME
+			</isEqual>
+			<isEqual property="orderby" compareValue="4">
+				ORDER BY R.PARTY_ID
+			</isEqual>
+		</isNotEmpty>
+		<isNotEmpty property="orderby">
+			<isNotEmpty property="order">
+				<isEqual property="order" compareValue="1"></isEqual>
+				<isEqual property="order" compareValue="2">
+					DESC
+				</isEqual>
+			</isNotEmpty>
+		</isNotEmpty>
+	</statement>
+	<!-- modified by chenhao date:2010-06-03 -->
+	<statement id="getT08_party_resultListCount2"
+		parameterClass="com.ist.aml.risk.dto.T08_party_result"
+		resultClass="int">
+		SELECT COUNT(*) FROM $tableName$ R
+		WHERE  R.ORGANKEY IN ($organ_id$)
+		<isNotEmpty prepend="AND" property="status_cd">
+			R.status_cd=#status_cd#
+		</isNotEmpty>
+	<isNotEmpty prepend="AND" property="appradate">
+			<![CDATA[APPRADATE >= #appradate#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="appradate_end">
+			<![CDATA[APPRADATE <= #appradate_end#]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="modifydate_disp">
+			<![CDATA[MODIFYDATE >= #modifydate#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="modifydate_disp_end">
+			<![CDATA[MODIFYDATE <= #modifydate_end#]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="create_start">
+			
+			<![CDATA[CREATE_DT >= #create_start#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_end">
+			<![CDATA[CREATE_DT <= #create_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			R.PARTY_ID =#party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="host_cust_id">
+			R.HOST_CUST_ID =#host_cust_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="post_id">
+			R.CURR_POST =#post_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			R.PARTY_CLASS_CD = #party_class_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			R.ORGANKEY = #organkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="riskLevel">
+			R.FRISTAPPRALEVEL = #riskLevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="riskLevel1">
+			R.emendationlevel=#riskLevel1#
+             and R.modify_cd ='1'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_chn_name">
+			R.PARTY_CHN_NAME LIKE #party_chn_name#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="temptype">
+			R.TEMPTYPE = #temptype#
+		</isNotEmpty>
+	</statement>
+	
+	<statement id="modifyT08_party_resultStatusForReport"
+	parameterClass="com.ist.aml.risk.dto.T08_party_result" resultClass="int">
+	UPDATE $tableName$ T SET T.STATUS_CD=#status_cd#,T.CURR_POST=#curr_post#
+		<isNotEmpty prepend="," property="emendationlevel">
+			emendationlevel = #emendationlevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="levelkey">
+			levelkey = #emendationlevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="modify_cd">
+			modify_cd = #modify_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="modifier">
+			modifier = #modifier#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="modifydate">
+			modifydate = #modifydate#
+		</isNotEmpty>
+	 WHERE T.RESULEKEY IN ($resulekey$)
+	</statement>
+	
+	<statement id="getT08_risk_reportListByPartyId"
+		parameterClass="com.ist.aml.risk.dto.T08_risk_report" resultClass="int">
+		SELECT COUNT(*) FROM $tablename$ A WHERE REPORTKEY=#reportkey#
+	</statement>
+	
+	<statement id="insertT08_risk_report2"
+		parameterClass="com.ist.aml.risk.dto.T08_risk_report"
+		resultClass="int">
+		INSERT INTO $tablename$ (
+		REPORTKEY,REPORTTYPE,OBJKEY,STATUS,REPORTDT,ORGANKEY,
+		PARTY_CHN_NAME,PARTY_CLASS_CD,EXPORT_STATUS,HOST_CUST_ID,MODIFY_CD,MODIFIER)
+		VALUES(#reportkey#,#reporttype#,#objkey#,#status#,#reportdt:DATE#,#organkey#,
+		#party_chn_name#,#party_class_cd#,#exprotStatus#,#hostCustId#,#modify_cd#,#modifier#)
+	</statement>
+	<statement id="updateT08_risk_report"
+		parameterClass="com.ist.aml.risk.dto.T08_risk_report" resultClass="int">
+		UPDATE $tablename$ SET STATUS=#status#,REPORTDT=#reportdt:DATE#,MODIFY_CD=#modify_cd#,MODIFIER=#modifier#
+		WHERE OBJKEY=#objkey#
+	</statement>
+	
+
+	
+	<statement id="getT08_party_resultDisp_tmpl"
+		parameterClass="com.ist.aml.risk.dto.T08_party_result"
+		resultClass="com.ist.aml.risk.dto.T08_party_result">
+			SELECT  T.*		  FROM T08_PARTY_RESULT  T 
+		    WHERE   T.PARTY_ID=#party_id#
+	</statement>
+	<statement id="getT08_party_tmpl_inds"
+		parameterClass="java.lang.String"
+				
+		resultClass="com.ist.aml.risk.dto.T08_gs_indic">
+		  SELECT   DISTINCT INDICKEY  FROM T08_Gs_Indic  T 
+		   WHERE  T.GSKEY=#gskey#
+		  
+		</statement>
+		
+		<statement id="getIndicValue"
+		parameterClass="com.ist.aml.risk.dto.T08_party_result"
+		resultClass="java.lang.String">
+		<![CDATA[
+  	SELECT INDICVAL AS INDICVAL
+  	FROM $tempvalue$ 
+  	WHERE STATISTIC_DT = #enddate# 
+  	AND OBJKEY=#party_id#
+  	AND INDICKEY =#indicstr#]]>
+	</statement>
+	
+	<statement id="getT08_def_catResultList"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.risk.dto.T08_def_cat">
+		 SELECT
+		C.CATEGORYKEY,C.TREELAYE,C.OPERATIONAME,C.OCC,C.UPCATEGORYKEY,R.SCORE
+		FROM T08_DEF_CAT C ,T08_APPR_CAT_RSLT R WHERE 
+		C.CATEGORYKEY=R.CATEGORYKEY AND R.party_id=#value# ORDER BY
+		TREELAYE
+	</statement>
+	
+	<statement id="getT08_def_basicResultList"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.risk.dto.T08_def_basic">
+		SELECT  B.BASICKEY,
+                B.BASICNAME,
+                B.BASE_SCORE_TYPE,
+                D.BASICOCC,
+                D.BASE_SCORE,
+                R.SCORE,
+                A.CATEGORYKEY,
+                R.BASIC_VAL
+  FROM T08_DEF_BASIC     B,
+       T08_APPR_BAS_RSLT R,
+       T08_APPR_CAT_RSLT A,
+       T08_DEF_CAT_BIA   D
+ WHERE  D.BASICKEY = R.BASICKEY
+   AND A.CATEGORYKEY = D.CATEGORYKEY
+   AND B.BASICKEY = R.BASICKEY
+   and a.party_id=r.party_id
+    AND R.party_id=#value# 
+
+		 ORDER BY A.CATEGORYKEY
+	</statement>
+	
+	<statement id="getT08_party_resultDisp3"
+		parameterClass="com.ist.aml.risk.dto.T08_party_result"
+		resultClass="com.ist.aml.risk.dto.T08_party_result">
+		SELECT DISTINCT
+		R.PARTY_CHN_NAME,R.APPRADATE,R.PARTY_CLASS_CD,R.ORGANKEY,R.TEMPLATGS,R.LEVELKEY,R.FRISTAPPRALEVEL,R.PARTY_ID,
+		T.GRANULARITY,T.TEMPLATEKEY, T.TEMPLATENAME AS TEMPLATE_NAME,
+		G.GSNAME,G.OUTSTR,G.INDICSTR,G.INDICTYPE 
+		FROM $tableName$  R,T08_DEF_TMPL T,T08_GS_BASE G 
+		WHERE R.TEMPLATEKEY=T.TEMPLATEKEY
+		AND R.TEMPLATGS=G.GSKEY AND R.RESULEKEY=#resulekey#
+	</statement>
+	
+	<statement id="gett08_risk_rslt_adjust_proctList"
+		parameterClass="com.ist.aml.risk.dto.T08_party_result"
+		resultClass="com.ist.aml.risk.dto.T08_risk_rslt_adjust_proc">
+		SELECT
+		A.LAST_UPD_DT,A.LAST_UPD_USER,A.LEVEL_BEFORE_ADJUST,A.LEVEL_AFTER_ADJUST, A.UPOPERATOR as up_operator,
+		A.ADJUST_REASON,A.POST_ID FROM T08_RISK_RSLT_ADJUST_PROC A WHERE
+		A.RSLTKEY=#resulekey#
+	</statement>
+	<statement id="insertT08_risk_rslt_adjust_proc"
+		parameterClass="com.ist.aml.risk.dto.T08_risk_rslt_adjust_proc"
+		resultClass="int">
+		INSERT INTO $tablename$(
+		RSLTKEY,LAST_UPD_DT,LAST_UPD_USER,LEVEL_BEFORE_ADJUST,
+		LEVEL_AFTER_ADJUST,ADJUST_REASON,UPOPERATOR,REMARK,FLAG,POST_ID )
+		values(
+		#rsltkey#,#appradate#,#last_upd_user#,#level_before_adjust#,
+		#level_after_adjust#,#adjust_reason#,#up_operator#,#remark#,#flag#,#post_id#
+		)
+	</statement>
+
+	
+	<statement id="getT08_risk_reportListnew"
+		parameterClass="com.ist.aml.risk.dto.T08_risk_report"
+		resultClass="com.ist.aml.risk.dto.T08_risk_report">
+	    SELECT R.REPORTKEY,R.REPORTTYPE,R.OBJKEY,R.STATUS,R.REPORTDT,R.ORGANKEY,T.TEMPTYPE TABLENAME,
+		R.PARTY_CHN_NAME,R.PARTY_CLASS_CD,R.EXPORT_STATUS,T.FRISTAPPRALEVEL,
+		T.EMENDATIONLEVEL,T.LEVELKEY,T.APPRADATE,R.MODIFY_CD		
+		 FROM $table_namet08rreport$ R,$table_namet08presult$ T
+		 WHERE R.REPORTKEY=T.RESULEKEY 
+		<dynamic>
+			<isNotEmpty prepend="and" property="reportkey">
+				R.REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start">
+				<![CDATA[R.REPORTDT >= #date_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end">
+				<![CDATA[R.REPORTDT <= #date_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="appradate_start">
+				<![CDATA[T.APPRADATE >= #appradate_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="appradate_end">
+				<![CDATA[T.APPRADATE <= #appradate_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="reporttype">
+				R.REPORTTYPE = #reporttype#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="objkey">
+				R.OBJKEY = #objkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="party_chn_name">
+				R.PARTY_CHN_NAME like  #party_chn_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="party_class_cd">
+				R.PARTY_CLASS_CD = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="export_status">
+				R.EXPORT_STATUS= #export_status#
+			</isNotEmpty>	
+			<!-- modify by qiuyun 2010-6-4  
+			<isNotEmpty prepend="and" property="status">
+				R.STATUS= #status#
+			</isNotEmpty>	 -->
+				AND R.STATUS= '2' 
+			<isNotEmpty prepend="and" property="modify_cd">
+				R.MODIFY_CD= #modify_cd#
+			</isNotEmpty>	
+			<!-- end -->
+			<isNotEmpty prepend="and" property="fristappralevel">
+				T.FRISTAPPRALEVEL = #fristappralevel#
+		   </isNotEmpty>	
+		  	<isNotEmpty prepend="and" property="emendationlevel">
+				T.EMENDATIONLEVEL = #emendationlevel#
+		   </isNotEmpty>	
+		   <!-- modify  by qiuyun 2010-6-7  -->
+		   	<isNotEmpty prepend="and" property="levelkey">
+				T.LEVELKEY = #levelkey#
+		   </isNotEmpty>
+			<isNotEmpty prepend="and" property="organkeys">
+				R.ORGANKEY  IN ($organkeys$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_start">
+				<![CDATA[T.create_dt >= #create_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_end">
+				<![CDATA[T.create_dt <= #create_end#]]>
+			</isNotEmpty>
+		</dynamic>
+		
+	</statement>
+
+	<statement id="getT08_risk_reportListCountnew"
+		parameterClass="com.ist.aml.risk.dto.T08_risk_report"
+		resultClass="int">
+	     SELECT COUNT(*) FROM $table_namet08rreport$ R,$table_namet08presult$ T
+		       WHERE  R.REPORTKEY=T.RESULEKEY 
+		<dynamic>
+			<isNotEmpty prepend="and" property="reportkey">
+				R.REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start">
+				<![CDATA[R.REPORTDT >= #date_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end">
+				<![CDATA[R.REPORTDT <= #date_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="appradate_start">
+				<![CDATA[T.APPRADATE >= #appradate_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="appradate_end">
+				<![CDATA[T.APPRADATE <= #appradate_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="reporttype">
+				R.REPORTTYPE = #reporttype#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="objkey">
+				R.OBJKEY = #objkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="party_chn_name">
+				R.PARTY_CHN_NAME like  #party_chn_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="party_class_cd">
+				R.PARTY_CLASS_CD = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="export_status">
+				R.EXPORT_STATUS= #export_status#
+			</isNotEmpty>	
+				AND R.STATUS= '2' 
+			<isNotEmpty prepend="and" property="modify_cd">
+				R.MODIFY_CD= #modify_cd#
+			</isNotEmpty>	
+			<!-- end -->	
+			<isNotEmpty prepend="and" property="fristappralevel">
+				T.FRISTAPPRALEVEL = #fristappralevel#
+		   </isNotEmpty>	
+		  	<isNotEmpty prepend="and" property="emendationlevel">
+				T.EMENDATIONLEVEL = #emendationlevel#
+		   </isNotEmpty>	
+		    <!-- modify  by qiuyun 2010-6-7  -->
+		   	<isNotEmpty prepend="and" property="levelkey">
+				T.LEVELKEY = #levelkey#
+		   </isNotEmpty>
+			<isNotEmpty prepend="and" property="organkeys">
+				R.ORGANKEY  IN ($organkeys$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_start">
+				<![CDATA[T.create_dt >= #create_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_end">
+				<![CDATA[T.create_dt <= #create_end#]]>
+			</isNotEmpty>
+		</dynamic>		
+	</statement>
+	
+	<statement id="updateT08_party_result_again"
+		parameterClass="com.ist.aml.risk.dto.T08_party_result"
+		resultClass="int">
+		UPDATE $tableName$ SET 
+		 LEVELKEY=#emendationlevel#,emendationlevel=#emendationlevel#,
+		 REASON=#reason#,MODIFIER=#modifier#,MODIFYDATE=#modifydate:DATE#
+		WHERE RESULEKEY=#resulekey#
+	</statement>
+	
+<statement id="modifyT08_party_resultStatusAuditReturn"
+	parameterClass="com.ist.aml.risk.dto.T08_party_result" resultClass="int">
+	UPDATE $tableName$ T 
+	SET T.STATUS_CD=#status_cd#,T.CURR_POST=#curr_post#,T.LEVELKEY=''
+	WHERE T.RESULEKEY IN ($resulekey$)
+	</statement>
+	
+	<statement id="updtT08_risk_reportStatus"
+		parameterClass="com.ist.aml.risk.dto.T08_risk_report"
+		resultClass="int">
+		UPDATE $tablename$ SET STATUS=#status# WHERE 1=1
+		<isNotEmpty prepend="AND" property="resultKeys">
+			REPORTKEY IN
+			<iterate prepend="" property="resultKeys" open="(" close=")"
+				conjunction=",">
+				#resultKeys[]#
+			</iterate>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="resultKey">
+			REPORTKEY IN ($resultKey$)
+		</isNotEmpty>
+	</statement>
+	
+
+</sqlMap>
+

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T00_tool">
+	<statement id="getT00_toolList" parameterClass="com.ist.platform.dto.T00_tool"
+		resultClass="com.ist.platform.dto.T00_tool">
+		select
+		toolkey,tbkey,toolname,imgurl,url,uptoolkey,toollevel,dispseq,flag,createdate,creator,modifydate,modifier
+		from t00_tool
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="toolkey">
+				toolkey = #toolkey# 
+    </isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="getT00_tool_ListByTbKeyAndUptoolkey" parameterClass="com.ist.platform.dto.T00_tool"
+		resultClass="com.ist.platform.dto.T00_tool">
+		select
+		DISTINCT t0.toolkey,t0.tbkey,t0.toolname,t0.imgurl,t0.url,t0.uptoolkey,t0.toollevel,t0.dispseq,t0.flag,
+		t0.createdate,t0.creator,t0.modifydate,t0.modifier
+		from t00_tool t0,T00_ROLE_AUTH t1,T00_COM_AUTH t2		
+		 where t0.uptoolkey = #uptoolkey# and t0.tbkey =#tbkey# and t1.rolekey = t2.ROLEKEY and t0.toolkey = t1.MODULEKEY
+		AND t2.USERNAME = #creator# AND t2.GROUPKEY = #modifier#
+		UNION ALL
+	   	SELECT t0.toolkey,t0.tbkey,t0.toolname,t0.imgurl,t0.url,t0.uptoolkey,t0.toollevel,t0.dispseq,t0.flag,t0.createdate,t0.creator,t0.modifydate,t0.modifier 
+	   	FROM t00_tool t0 where t0.uptoolkey = #uptoolkey# AND t0.TOOLKEY NOT LIKE '%T%'
+	</statement>
+	<statement id="getT00_tool_childListByToolkey" parameterClass="com.ist.platform.dto.T00_tool"
+		resultClass="com.ist.platform.dto.T00_tool">
+		select
+		t0.toolkey,t0.tbkey,t0.toolname,t0.imgurl,t0.url,t0.uptoolkey,t0.toollevel,t0.dispseq,t0.flag,t0.createdate,t0.creator,t0.modifydate,t0.modifier
+		from t00_tool t0,T00_ROLE_AUTH t1,T00_COM_AUTH t2  where t0.uptoolkey = #toolkey# and t1.rolekey = t2.ROLEKEY and t0.toolkey = t1.MODULEKEY
+		AND t2.USERNAME = #creator# AND t2.GROUPKEY = #modifier#
+		UNION ALL
+	   	SELECT t0.toolkey,t0.tbkey,t0.toolname,t0.imgurl,t0.url,t0.uptoolkey,t0.toollevel,t0.dispseq,t0.flag,t0.createdate,t0.creator,t0.modifydate,t0.modifier 
+	   	FROM t00_tool t0 where t0.uptoolkey = #toolkey# AND t0.TOOLKEY NOT LIKE '%T%'
+	</statement>
+
+	<statement id="getT00_toolListCount" parameterClass="com.ist.platform.dto.T00_tool"
+		resultClass="int">
+		select count(*) from t00_tool
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="toolkey">
+				toolkey = #toolkey# 
+    </isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="getT00_toolListByUptoolkey" parameterClass="com.ist.platform.dto.T00_tool"
+		resultClass="com.ist.platform.dto.T00_tool">
+		select
+		toolkey,tbkey,toolname,imgurl,url,uptoolkey,toollevel,dispseq,flag,createdate,creator,modifydate,modifier
+		from t00_tool
+		WHERE  NOT EXISTS (SELECT 'X' FROM T02_TP_BAS_INF WHERE TPLAKEY = TOOLKEY )
+			<isNotEmpty prepend="and" property="uptoolkey">
+				uptoolkey = #uptoolkey# 
+    </isNotEmpty>
+			<isNotEmpty prepend="and" property="toolkey">
+				toolkey = '$toolkey$' 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="toolname">
+				toolkey = '%$toolname$%' 
+    </isNotEmpty>
+	</statement>
+	<statement id="getT00_toolListCountByUptoolkey" parameterClass="com.ist.platform.dto.T00_tool"
+		resultClass="int">
+		select count(*) from t00_tool		
+		WHERE  NOT EXISTS (SELECT 'X' FROM T02_TP_BAS_INF WHERE TPLAKEY = TOOLKEY )
+			<isNotEmpty prepend="and" property="uptoolkey">
+				uptoolkey = #uptoolkey# 
+    </isNotEmpty>
+			<isNotEmpty prepend="and" property="toolkey">
+				toolkey = '$toolkey$' 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="toolname">
+				toolkey = '%$toolname$%' 
+    </isNotEmpty>
+	</statement>
+
+	<statement id="insertT00_tool" parameterClass="com.ist.platform.dto.T00_tool"
+		resultClass="int">
+		insert into T00_tool(
+		toolkey,tbkey,toolname,imgurl,url,uptoolkey,toollevel,dispseq,flag,createdate,creator,modifydate,modifier
+		) values(
+		#toolkey#,#tbkey#,#toolname#,#imgurl#,#url#,#uptoolkey#,#toollevel#,#dispseq#,#flag#,#createdate#,#creator#,#modifydate#,#modifier#
+		) 
+  </statement>
+
+	<statement id="modifyT00_tool" parameterClass="com.ist.platform.dto.T00_tool"
+		resultClass="int">
+		update T00_tool set
+		toolname=#toolname#,url=#url#,dispseq=#dispseq#,flag=#flag#,modifydate=#modifydate#,modifier=#modifier#
+		where toolkey=#toolkey# 
+  </statement>
+  
+  <statement id="updateT00_toolUrl" parameterClass="com.ist.platform.dto.T00_tool"
+		resultClass="int">
+		update T00_tool set
+		url=#url#
+		where toolkey=#toolkey# 
+  </statement>
+
+	<statement id="deleteT00_tool" parameterClass="java.lang.String"
+		resultClass="int">
+		delete from T00_tool where toolkey=#value# 
+  </statement>
+
+	<statement id="getT00_toolDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.platform.dto.T00_tool">
+		select * from T00_tool where toolkey=#value# 
+  </statement>
+  
+  <statement id="getT00_tooltreeList"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.common.menu.Menu">
+		SELECT tbkey AS id,'-1' as parent_id,tbname AS name FROM T00_TOOLBOX		
+          UNION
+        SELECT TOOLKEY AS id,uptoolkey AS parent_id,toolname AS NAME FROM T00_TOOL
+        WHERE  NOT EXISTS (SELECT 'X' FROM T02_TP_BAS_INF WHERE TPLAKEY = TOOLKEY )        
+	</statement>
+	<statement id="getT00_tooltreeListIsLocation"
+		parameterClass="java.util.HashMap"
+		resultClass="com.ist.common.menu.Menu">
+		SELECT t.tbkey AS id,'-1' as parent_id,t.tbname AS name FROM T00_TOOLBOX t,   
+   ( select distinct b.TBKEY 
+		     from T00_COM_AUTH c, T00_ROLE_AUTH a, T00_TOOL b
+		     where c.USERNAME = #username# 
+		     AND c.GROUPKEY =#groupkey# 
+		     AND c.ROLEKEY = a.ROLEKEY
+		     AND a.MODULEKEY = b.TOOLKEY) K WHERE K.tbkey = t.tbkey
+          UNION
+        SELECT TOOLKEY AS id,uptoolkey AS parent_id,toolname AS NAME FROM T00_TOOL
+        WHERE  NOT EXISTS (SELECT 'X' FROM T02_TP_BAS_INF WHERE TPLAKEY = TOOLKEY )
+        AND EXISTS
+    	(
+        SELECT
+            'X'
+        FROM
+            T00_COM_AUTH T,
+            T00_ROLE_AUTH T1
+        WHERE
+            T.ROLEKEY = T1.ROLEKEY
+        AND T1.MODULEKEY = TOOLKEY
+        AND T.USERNAME = #username#
+        AND T.GROUPKEY =#groupkey# )
+	</statement>
+	<statement id="getT00_toolListIsRole" parameterClass="com.ist.platform.dto.T00_tool"
+		resultClass="com.ist.platform.dto.T00_tool">
+		SELECT t.*,t1.TBNAME as tbkey_disp FROM (select	toolkey,tbkey,toolname,uptoolkey
+		from t00_tool where toolkey like '%T%') t LEFT JOIN		
+		T00_TOOLBOX t1 
+		ON 
+		t.tbkey = t1.tbkey
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="tbkey">
+				t.tbkey = #tbkey# 
+    		</isNotEmpty>
+		</dynamic>	
+	</statement>
+	<statement id="getToolkeyByUptoolkey" parameterClass="java.lang.String"
+		resultClass="java.lang.String">
+		select distinct tbkey from T00_tool where uptoolkey=#value# 
+  </statement>
+  
+  <statement id="getT00_tool_allList"
+		parameterClass="com.ist.platform.dto.T00_tool"
+		resultClass="com.ist.common.menu.Menu">
+		SELECT
+    TOOLKEY   AS id,
+    uptoolkey AS parent_id,
+    toolname  AS NAME,
+    url AS URL
+FROM
+    T00_TOOL
+WHERE
+  EXISTS
+    (
+        SELECT
+            'X'
+        FROM
+            T00_COM_AUTH T,
+            T00_ROLE_AUTH T1
+        WHERE
+            T.ROLEKEY = T1.ROLEKEY
+        AND T1.MODULEKEY = TOOLKEY
+        AND T.USERNAME = #creator#
+        AND T.GROUPKEY =#modifier# )
+        and 
+        <![CDATA[ UPTOOLKEY <> #uptoolkey#]]>
+        and TBKEY = tbkey
+        UNION ALL
+    SELECT TOOLKEY AS id,uptoolkey AS parent_id,toolname AS name,url AS url FROM T00_TOOL 
+    WHERE TBKEY = tbkey AND TOOLKEY NOT LIKE 'T%'
+	</statement>
+</sqlMap> 
+

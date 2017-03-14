@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T00_role_auth"> 
+  <statement id="getT00_role_authList" parameterClass="com.ist.platform.dto.T00_role_auth" resultClass="com.ist.platform.dto.T00_role_auth"> 
+  SELECT ROLEKEY,MODULEKEY,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER FROM T00_ROLE_AUTH 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="rolekey"> 
+    ROLEKEY = #rolekey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT00_role_authListCount" parameterClass="com.ist.platform.dto.T00_role_auth" resultClass="int"> 
+  SELECT COUNT(*) FROM T00_ROLE_AUTH 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="rolekey"> 
+    ROLEKEY = #rolekey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT00_role_auth" parameterClass="com.ist.platform.dto.T00_role_auth" resultClass="int"> 
+  INSERT INTO T00_ROLE_AUTH(
+  ROLEKEY,MODULEKEY,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER
+  ) VALUES(
+  #rolekey#,#modulekey#,#createdate#,#creator#,#modifydate#,#modifier#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT00_role_auth" parameterClass="com.ist.platform.dto.T00_role_auth" resultClass="int"> 
+  UPDATE T00_ROLE_AUTH SET 
+  ROLEKEY=#rolekey#,MODULEKEY=#modulekey#,CREATEDATE=#createdate#,CREATOR=#creator#,MODIFYDATE=#modifydate#,MODIFIER=#modifier#
+  WHERE ROLEKEY=#rolekey# 
+  </statement> 
+ 
+  <statement id="deleteT00_role_auth" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T00_ROLE_AUTH WHERE ROLEKEY=#value# 
+  </statement> 
+ 
+  <statement id="getT00_role_authDisp" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_role_auth"> 
+  SELECT * FROM T00_ROLE_AUTH WHERE ROLEKEY=#value# 
+  </statement> 
+ 
+</sqlMap> 
+

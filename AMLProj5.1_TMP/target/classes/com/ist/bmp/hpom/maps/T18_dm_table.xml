@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T18_dm_table"> 
+  <statement id="getT18_dm_tableList" parameterClass="com.ist.bmp.hpom.dto.T18_dm_table" resultClass="com.ist.bmp.hpom.dto.T18_dm_table"> 
+  select tableename,tablecname,shfilename,shcontent,odstableename,creatmethod,isedit,isdeploy,deploytime,islock,creator,createdate,modifier,modifydate,granularity from t18_dm_table 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="tableename"> 
+    tableename like  '%'||#tableename#||'%'
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="shfilename"> 
+    shfilename like  '%'||#shfilename#||'%'
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="isedit"> 
+    isedit = #isedit#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="isdeploy"> 
+    isdeploy = #isdeploy#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="createdate"> 
+    createdate like '%'||#createdate#||'%'
+    </isNotEmpty>   
+     <isNotEmpty prepend="and" property="creatmethod"> 
+    creatmethod = #creatmethod#
+    </isNotEmpty> 
+     </dynamic>  
+     <dynamic prepend="">
+	     <isNotEmpty prepend="" property="sort">
+	    <isNotEmpty prepend="" property="sort_type">
+		 ORDER BY $sort$ $sort_type$
+		</isNotEmpty>
+		</isNotEmpty>
+ 	 </dynamic>  
+  </statement> 
+ 
+  <statement id="getT18_dm_tableListCount" parameterClass="com.ist.bmp.hpom.dto.T18_dm_table" resultClass="int"> 
+  select count(*) from t18_dm_table 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="tableename"> 
+    tableename like  '%'||#tableename#||'%'
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="shfilename"> 
+    shfilename like  '%'||#shfilename#||'%'
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="isedit"> 
+    isedit = #isedit#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="isdeploy"> 
+    isdeploy = #isdeploy#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="createdate"> 
+    createdate like '%'||#createdate#||'%'
+    </isNotEmpty>    
+     <isNotEmpty prepend="and" property="creatmethod"> 
+    creatmethod = #creatmethod#
+    </isNotEmpty>  
+  </dynamic>  
+  </statement> 
+ 
+  <statement id="getT18_dm_tableFromODS" parameterClass="com.ist.bmp.hpom.dto.T18_dm_table" resultClass="com.ist.bmp.hpom.dto.T18_dm_table"> 
+  	select t1.tableename,t1.odstableename,'',t3.granularity from T18_DM_TABLE t1,T18_TASKLIST t3 where  t3.businesskey=t1.tableename and t3.tasktype='302'
+  </statement>
+ 
+  <statement id="insertT18_dm_table" parameterClass="com.ist.bmp.hpom.dto.T18_dm_table" resultClass="int"> 
+  insert into T18_dm_table(
+  tableename,tablecname,shfilename,shcontent,odstableename,creatmethod,isedit,isdeploy,deploytime,islock,creator,createdate,modifier,modifydate,granularity
+  ) values(
+  #tableename#,#tablecname#,#shfilename#,#shcontent#,#odstableename#,#creatmethod#,#isedit#,#isdeploy#,#deploytime#,#islock#,#creator#,#createdate#,#modifier#,#modifydate#,#granularity#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT18_dm_table" parameterClass="com.ist.bmp.hpom.dto.T18_dm_table" resultClass="int"> 
+  update T18_dm_table set 
+  tableename=#tableename#,
+  <isNotEmpty prepend="" property="tablecname">
+  tablecname=#tablecname#,
+  </isNotEmpty>  
+  shcontent=#shcontent#,isedit=#isedit#,modifier=#modifier#,modifydate=#modifydate#,granularity=#granularity#
+  where tableename=#tableename# 
+  </statement> 
+ 
+  <statement id="deleteT18_dm_table" parameterClass="java.lang.String" resultClass="int">
+  delete from T18_dm_table where tableename=#value# 
+  </statement> 
+  
+  <statement id="getT18_dm_table_exsit" parameterClass="java.lang.String" resultClass="int">
+  select count(*) from T18_dm_table where tableename=#value# 
+  </statement> 
+ 
+  <statement id="getT18_dm_tableDisp" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_dm_table"> 
+  select * from T18_dm_table where tableename=#value# 
+  </statement> 
+  
+  
+  <statement id="lockT18_odstable" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_dm_table"> 
+  	update T18_dm_table set islock ='1' where tableename=#value# 
+  </statement> 
+  
+  <statement id="unlockT18_odstable" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_dm_table"> 
+  	update T18_dm_table set islock ='0' where tableename=#value# 
+  </statement> 
+  
+   <statement id="deployT18_odstable" parameterClass="com.ist.bmp.hpom.dto.T18_dm_table" resultClass="com.ist.bmp.hpom.dto.T18_dm_table"> 
+  	update T18_dm_table set isdeploy =#isdeploy# , deploytime=#deploytime#  where tableename=#tableename# 
+  </statement> 
+ 
+  <statement id="getT18_ods_tablelist" parameterClass="com.ist.bmp.hpom.dto.T18_dm_table" resultClass="com.ist.bmp.hpom.dto.T18_dm_table"> 
+    select dskey,tableename,tablecname,granularity,des from t18_ods_table t where not EXISTS (select 'X' from T18_DM_TABLE d where t.tableename = d.odstableename ) order by dskey,tableename
+  </statement>
+  
+   <statement id="getT18_dmtableListCount" parameterClass="com.ist.bmp.hpom.dto.T18_dm_table" resultClass="int"> 
+  select count(*) from t18_ods_table 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="tableename"> 
+    tableename like  '%'||#tableename#||'%'
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+    <statement id="insertT18_shcontent_dm" parameterClass="com.ist.bmp.hpom.dto.T18_dm_table" resultClass="int"> 
+	  insert into  T18_shcontent  (tableename,seq,shcontenttype,shcontent)
+	  values (#tableename#,#seq#,#shcontenttype#,#shcontent#)
+  </statement>
+  <statement id="getT18_dm_shcontent" parameterClass="com.ist.bmp.hpom.dto.T18_dm_table" resultClass="com.ist.bmp.hpom.dto.T18_dm_table"> 
+  	select * from t18_shcontent 
+  	<dynamic prepend="where"> 
+  	<isNotEmpty prepend="and" property="tableename"> 
+    tableename = #tableename#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="shcontenttype"> 
+    shcontenttype = #shcontenttype#
+    </isNotEmpty>
+    </dynamic> 
+    order by SEQ
+  </statement> 
+    <statement id="deleteT18_shcontent_dm" parameterClass="com.ist.bmp.hpom.dto.T18_dm_table" resultClass="int"> 
+	  delete from  T18_shcontent  
+	  where tableename=#tableename# and shcontenttype=#shcontenttype#
+  </statement>
+</sqlMap> 
+

@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+	<form-beans>
+		<form-bean name="t31_def_tempActionForm" type="com.ist.aml.newrisk.controller.T31_def_tempActionForm" />
+		<form-bean name="t31_def_gsActionForm" type="com.ist.aml.newrisk.controller.T31_def_gsActionForm" />
+		<form-bean name="t37_party_resultActionForm" type="com.ist.aml.newrisk.controller.T37_party_resultActionForm" />
+		<form-bean name="t37_party_result_uhActionForm" type="com.ist.aml.newrisk.controller.T37_party_result_uhActionForm" />
+		<form-bean name="t37_risk_attachActionForm" type="com.ist.aml.newrisk.controller.T37_risk_attachActionForm" />
+		<form-bean name="t31_count_ruleActionForm" type="com.ist.aml.newrisk.controller.T31_count_ruleActionForm" />
+		<form-bean name="t31_risk_levelActionForm" type="com.ist.aml.newrisk.controller.T31_risk_levelActionForm" />
+		<form-bean name="t31_def_elementActionForm" type="com.ist.aml.newrisk.controller.T31_def_elementActionForm"/> 
+		<form-bean name="t10_checkparty_funActionForm" type="com.ist.aml.cust_identify.controller.T10_checkparty_funActionForm"></form-bean>
+	</form-beans>
+
+
+	<global-exceptions></global-exceptions>
+
+	<!-- global-forwards -->
+	<global-forwards type="org.apache.struts.action.ActionForward">
+		<forward name="failure" path="/../common/errors.jsp" />
+		<forward name="errors" path="/../common/errors.jsp" />
+		<forward name="nopower" path="/../common/nopower.jsp" />
+		<forward name="sessiontimeout"
+			path="/../common/sessiontimeout.jsp" />
+	</global-forwards>
+
+	<action-mappings>
+		<!-- t31_def_temp added by qiuyun & lee-->
+		<action path="/t31_def_temp/t31_def_tempList"
+			parameter="getT31_def_tempList" name="t31_def_tempActionForm"
+			type="com.ist.aml.newrisk.controller.T31_def_tempAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t31_def_temp/temp_list.jsp" />
+		</action>
+		
+		<action path="/t31_def_temp/t31_def_temp_add"
+			parameter="addT31_def_temp" name="t31_def_tempActionForm"
+			type="com.ist.aml.newrisk.controller.T31_def_tempAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t31_def_temp/temp_add.jsp" />
+		</action>
+		
+		<action path="/t31_def_temp/t31_def_temp_add_do" 
+				parameter="addT31_def_tempDo" 
+				name="t31_def_tempActionForm" type="com.ist.aml.newrisk.controller.T31_def_tempAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/t31_def_temp/t31_def_temp_main_add.jsp"/> 
+	    	<forward name="failure" path="/t31_def_temp/t31_def_temp_add.do"/> 
+    	</action>
+    
+    	<action path="/t31_def_temp/t31_def_temp_main_modify" parameter="modifyT31_def_temp_main" name="t31_def_tempActionForm" 
+    			type="com.ist.aml.newrisk.controller.T31_def_tempAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/t31_def_temp/t31_def_temp_main_mod.jsp"/> 
+	    	<forward name="failure" path="/t31_def_temp/t31_def_tempList.do"/> 
+    	</action>
+    	
+    	<action path="/t31_def_temp/t31_def_temp_modify" parameter="modifyT31_def_temp" name="t31_def_tempActionForm" 
+    			type="com.ist.aml.newrisk.controller.T31_def_tempAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/t31_def_temp/temp_mod.jsp"/> 
+	    	<forward name="failure" path="/t31_def_temp/t31_def_tempList.do"/> 
+    	</action>
+    	 
+    	<action path="/t31_def_temp/t31_def_temp_modify_do" parameter="modifyT31_def_tempDo" name="t31_def_tempActionForm" 
+    			type="com.ist.aml.newrisk.controller.T31_def_tempAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/t31_def_temp/t31_def_temp_modify.do"/> 
+	    	<forward name="failure" path="/t31_def_temp/t31_def_temp_modify.do"/> 
+    	</action>
+    	
+    	<action path="/t31_def_temp/t31_def_temp_copy" parameter="copyT31_def_temp" name="t31_def_tempActionForm" 
+    			type="com.ist.aml.newrisk.controller.T31_def_tempAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/t31_def_temp/t31_def_tempList.do"/> 
+	    	<forward name="failure" path="/t31_def_temp/t31_def_tempList.do"/> 
+    	</action>
+    	
+    	<action path="/t31_def_temp/flag_change" parameter="changeT31_def_tempFlag" name="t31_def_tempActionForm" 
+    			type="com.ist.aml.newrisk.controller.T31_def_tempAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/t31_def_temp/t31_def_tempList.do"/> 
+	    	<forward name="failure" path="/t31_def_temp/t31_def_tempList.do"/> 
+    	</action>
+    	
+    	<action path="/t31_def_temp/t31_def_temp_gran" parameter="getT31_def_temp_granList" name="t31_def_tempActionForm" 
+    			type="com.ist.aml.newrisk.controller.T31_def_tempAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/t31_def_temp/t31_def_temp_granList.jsp"/> 
+	    	<forward name="failure" path="/t31_def_temp/t31_def_temp_main_modify.do"/> 
+    	</action>
+    	<action path="/t31_def_temp/t31_def_temp_gran_add" parameter="addT31_def_temp_gran" name="t31_def_tempActionForm" 
+    			type="com.ist.aml.newrisk.controller.T31_def_tempAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/t31_def_temp/t31_def_temp_gran_add.jsp"/> 
+	    	<forward name="failure" path="/t31_def_temp/t31_def_temp_gran.do"/> 
+    	</action>
+    	<action path="/t31_def_temp/t31_def_temp_gran_add_do" parameter="addT31_def_temp_granDo" name="t31_def_tempActionForm" 
+    			type="com.ist.aml.newrisk.controller.T31_def_tempAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/t31_def_temp/t31_def_temp_gran.do"/> 
+	    	<forward name="failure" path="/t31_def_temp/t31_def_temp_gran.do"/> 
+    	</action>
+    	<action path="/t31_def_temp/t31_def_temp_gran_mod" parameter="modT31_def_temp_gran" name="t31_def_tempActionForm" 
+    			type="com.ist.aml.newrisk.controller.T31_def_tempAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/t31_def_temp/t31_def_temp_gran_mod.jsp"/> 
+	    	<forward name="failure" path="/t31_def_temp/t31_def_temp_gran.do"/> 
+    	</action>
+    	<action path="/t31_def_temp/t31_def_temp_gran_mod_do" parameter="modT31_def_temp_granDo" name="t31_def_tempActionForm" 
+    			type="com.ist.aml.newrisk.controller.T31_def_tempAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/t31_def_temp/t31_def_temp_gran.do"/> 
+	    	<forward name="failure" path="/t31_def_temp/t31_def_temp_gran.do"/> 
+    	</action>
+    	<action path="/t31_def_temp/t31_def_temp_gran_del" parameter="delT31_def_temp_gran" name="t31_def_tempActionForm" 
+    			type="com.ist.aml.newrisk.controller.T31_def_tempAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/t31_def_temp/t31_def_temp_gran.do"/> 
+	    	<forward name="failure" path="/t31_def_temp/t31_def_temp_gran.do"/> 
+    	</action>
+    	<action path="/t31_def_temp/t31_def_temp_sqlList" parameter="getT31_def_temp_sqlList" name="t31_def_tempActionForm" 
+    			type="com.ist.aml.newrisk.controller.T31_def_tempAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/t31_def_temp/t31_def_temp_sqlList.jsp"/> 
+	    	<forward name="failure" path="/t31_def_temp/t31_def_temp_main_modify.do"/> 
+    	</action>
+        <!-- end of t31_def_temp -->
+        
+        <!-- T31_DEF_GS & T31_DEF_GS_SQL added by lee -->
+        <action path="/t31_def_gs/t31_def_gs_list" parameter="getT31_def_gsList" 
+				name="t31_def_gsActionForm" type="com.ist.aml.newrisk.controller.T31_def_gsAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/t31_def_gs/t31_def_gs_list.jsp"/>
+	    	<forward name="failure" path="/t31_def_temp/t31_def_tempList.do"/> 
+        </action>
+        
+        <action path="/t31_def_gs/t31_def_gs_add" parameter="addT31_def_gs"
+				name="t31_def_gsActionForm" type="com.ist.aml.newrisk.controller.T31_def_gsAction" validate="false" scope="request">
+			<forward name="success" path="/t31_def_gs/t31_def_gs_add.jsp" />
+			<forward name="failure" path="/t31_def_gs/t31_def_gs_list.do" />
+		</action>
+		
+		<action path="/t31_def_gs/t31_def_gs_add_do" parameter="addT31_def_gsDo"
+			name="t31_def_gsActionForm" type="com.ist.aml.newrisk.controller.T31_def_gsAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t31_def_gs/t31_def_gs_list.do" />
+			<forward name="failure" path="/t31_def_gs/t31_def_gs_add.do" />
+		</action>
+		
+		<action path="/t31_def_gs/t31_def_gs_modify" parameter="modifyT31_def_gs"
+			name="t31_def_gsActionForm" type="com.ist.aml.newrisk.controller.T31_def_gsAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t31_def_gs/t31_def_gs_modify.jsp" />
+			<forward name="failure" path="/t31_def_gs/t31_def_gs_list.do" />
+		</action>
+		
+		<action path="/t31_def_gs/t31_def_gs_modify_do" parameter="modifyT31_def_gsDo"
+			name="t31_def_gsActionForm" type="com.ist.aml.newrisk.controller.T31_def_gsAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t31_def_gs/t31_def_gs_list.do" />
+			<forward name="failure" path="/t31_def_gs/t31_def_gs_modify.do" />
+		</action>
+		
+		<action path="/t31_def_gs/t31_def_gs_delete_do" parameter="deleteT31_def_gsDo"
+			name="t31_def_gsActionForm" type="com.ist.aml.newrisk.controller.T31_def_gsAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t31_def_gs/t31_def_gs_list.do" />
+			<forward name="failure" path="/t31_def_gs/t31_def_gs_list.do" />
+		</action>
+		
+		<action path="/t31_def_gs/t31_def_gs_disp" parameter="getT31_def_gsDisp"
+			name="t31_def_gsActionForm" type="com.ist.aml.newrisk.controller.T31_def_gsAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t31_def_gs/t31_def_gs_disp.jsp" />
+			<forward name="failure" path="/t31_def_gs/t31_def_gs_list.do" />
+		</action> 
+		<!-- end of T31_DEF_GS & T31_DEF_GS_SQL -->
+    
+     <!-- t31_def_element add by qiuyun -->
+    
+    <action path="/t31_def_element/t31_def_element_list" parameter="getT31_def_elementList" name="t31_def_elementActionForm" type="com.ist.aml.newrisk.controller.T31_def_elementAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t31_def_element/t31_def_element_list.jsp"/> 
+	    <forward name="success1" path="/t31_def_element/t31_def_element_disp.jsp"/> 
+    </action> 
+    <action path="/t31_def_element/t31_def_element_add" parameter="addT31_def_element" name="t31_def_elementActionForm" type="com.ist.aml.newrisk.controller.T31_def_elementAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t31_def_element/t31_def_element_add.jsp"/> 
+	    <forward name="success1" path="/t31_def_element/t31_def_element_add_last.jsp"/>
+	    <forward name="failure" path="/t31_def_element/t31_def_element_list.do" /> 
+    </action> 
+    <action path="/t31_def_element/t31_def_element_add_do" parameter="addT31_def_elementDo" name="t31_def_elementActionForm" type="com.ist.aml.newrisk.controller.T31_def_elementAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t31_def_element/t31_def_element_list.do"/> 
+	    <forward name="failure" path="/t31_def_element/t31_def_element_add.do"/> 
+    </action> 
+    <action path="/t31_def_element/t31_def_element_modify" parameter="modifyT31_def_element" name="t31_def_elementActionForm" type="com.ist.aml.newrisk.controller.T31_def_elementAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t31_def_element/t31_def_element_modify.jsp"/>
+	    <forward name="success1" path="/t31_def_element/t31_def_element_last_modify.jsp"/>  
+	    <forward name="failure" path="/t31_def_element/t31_def_element_list.do"/> 
+    </action> 
+    <action path="/t31_def_element/t31_def_element_modify_do" parameter="modifyT31_def_elementDo" name="t31_def_elementActionForm" type="com.ist.aml.newrisk.controller.T31_def_elementAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t31_def_element/t31_def_element_list.do"/> 
+	    <forward name="failure" path="/t31_def_element/t31_def_element_modify.do"/> 
+    </action> 
+    <action path="/t31_def_element/t31_def_element_delete_do" parameter="deleteT31_def_elementDo" name="t31_def_elementActionForm" type="com.ist.aml.newrisk.controller.T31_def_elementAction" validate="false" scope="request"> 
+	<forward name="success" path="/t31_def_element/t31_def_element_list.do"/> 
+        <forward name="failure" path="/t31_def_element/t31_def_element_list.do"/> 
+    </action> 
+    <action path="/t31_def_element/t31_def_element_disp" parameter="getT31_def_elementDisp" name="t31_def_elementActionForm" type="com.ist.aml.newrisk.controller.T31_def_elementAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t31_def_element/t31_def_element_disp.jsp"/> 
+    </action> 
+   <action path="/t31_def_element/t31_def_element_locate" parameter="getT31_def_elementLocate" name="t31_def_elementActionForm" type="com.ist.aml.newrisk.controller.T31_def_elementAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t31_def_element/t31_def_element_locate.jsp"/> 
+    </action> 
+     <action path="/t31_def_element/editRange" parameter="editRange" name="t31_def_elementActionForm" type="com.ist.aml.newrisk.controller.T31_def_elementAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t31_def_element/editRange.jsp"/> 
+    </action> 
+    
+    <!-- end of t31_def_element -->
+    
+            <!-- KYC审查 start -->
+		<action path="/result/t37_party_result_list"
+			parameter="getT37_party_resultList" name="t37_party_resultActionForm"
+			type="com.ist.aml.newrisk.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/t37_party_result_list.jsp" />
+			<forward name="failure" path="/result/t37_party_result_list.jsp" />
+		</action> 
+		<action path="/result/t10_checkparty_main"
+			parameter="getT10_checkparty_main" name="t37_party_resultActionForm"
+			type="com.ist.aml.newrisk.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/checkparty_main.jsp" />
+			<forward name="success1" path="/result/checkparty_disp_main.jsp" />
+		</action> 
+		<action path="/result/t37_result_gs_modify"
+			parameter="modifyT37_party_gs_result" name="t37_party_resultActionForm"
+			type="com.ist.aml.newrisk.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="main" path="/result/result_main.jsp" />
+			<forward name="success" path="/result/result_modify.jsp" />
+			<forward name="failure" path="/result/t37_party_result_list.do" />
+		</action> 
+		<action path="/result/t37_result_jf_modify"
+			parameter="modifyT37_party_jf_result" name="t37_party_resultActionForm"
+			type="com.ist.aml.newrisk.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/result_jf_modify.jsp" />
+			<forward name="failure" path="/result/t37_party_result_list.do" />
+		</action> 
+		<action path="/result/t37_result_modify_do"
+			parameter="modifyT37_party_resultDo" name="t37_party_resultActionForm"
+			type="com.ist.aml.newrisk.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success1" path="/result/mod_result.jsp" />
+			<forward name="success" path="/result/t37_party_result_list.do" />
+		</action> 
+		
+		<action path="/result/recountT37_party_result"
+			parameter="recountT37_party_result" name="t37_party_resultActionForm"
+			type="com.ist.aml.newrisk.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/t37_result_jf_modify.do" />
+			<forward name="failure" path="/result/t37_appr_bas_rsltList.do" />
+		</action> 
+		<action path="/result/t37_flow_workbench_oper"
+			parameter="flow_workbench_oper" name="t37_party_resultActionForm"
+			type="com.ist.aml.newrisk.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/t37_party_result_list.do" />
+			<forward name="failure" path="/result/t37_party_result_list.do" />
+		</action> 
+		<action path="/result/t37_appr_bas_rsltList"
+			parameter="getT37_appr_bas_rsltList" name="t37_party_resultActionForm"
+			type="com.ist.aml.newrisk.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/result_integral_List.jsp" />
+			<forward name="failure" path="/result/t37_party_result_list.do" />
+		</action>
+		<action path="/result/t37_appr_elem_rslt_dispList"
+			parameter="getT37_appr_elem_rslt_dispList" name="t37_party_resultActionForm"
+			type="com.ist.aml.newrisk.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/result_jf_modify.jsp" />
+			<forward name="failure" path="/result/t37_result_jf_modify.do" />
+		</action>
+		<action path="/result/currentT37_party_result"
+			parameter="getCurrentT37_party_result" name="t37_party_resultActionForm"
+			type="com.ist.aml.newrisk.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/current_result_disp.jsp" />
+			<forward name="failure" path="/result/t37_party_result_list.do" />
+		</action> 
+		<action path="/result/t37_party_gs_resultDisp"
+			parameter="getT37_party_gs_resultDisp" name="t37_party_resultActionForm"
+			type="com.ist.aml.newrisk.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/result_gs_disp.jsp" />
+			<forward name="failure" path="/result/t37_party_result_list.do" />
+		</action> 
+		<action path="/result/t37_party_gs_result_uhDisp"
+			parameter="getT37_party_gs_result_uhDisp" name="t37_party_resultActionForm"
+			type="com.ist.aml.newrisk.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/result_gs_disp.jsp" />
+			<forward name="failure" path="/result/t37_party_result_list.do" />
+		</action>
+		<action path="/result/t37_party_jf_resultDisp"
+			parameter="getT37_party_jf_resultDisp" name="t37_party_resultActionForm"
+			type="com.ist.aml.newrisk.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/result_jf_disp.jsp" />
+			<forward name="failure" path="/result/t37_party_result_list.do" />
+		</action>
+		<action path="/result/t37_party_gsjf_resultDisp"
+			parameter="getT37_party_gsjf_resultDisp" name="t37_party_resultActionForm"
+			type="com.ist.aml.newrisk.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/result_jf_disp.jsp" />
+			<forward name="success1" path="/result/current_result_disp.jsp" />
+			<forward name="failure" path="/result/error_result_disp.jsp" />
+		</action>
+		<action path="/result/t37_party_jf_result_uhDisp"
+			parameter="getT37_party_jf_result_uhDisp" name="t37_party_resultActionForm"
+			type="com.ist.aml.newrisk.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/result_jf_disp.jsp" />
+			<forward name="failure" path="/result/t37_party_result_list.do" />
+		</action> 
+		<action path="/result/t37_party_result_uhlist"
+			parameter="getT37_party_result_uhList" name="t37_party_resultActionForm"
+			type="com.ist.aml.newrisk.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/t37_party_result_uhlist.jsp" />
+			<forward name="failure" path="/result/currentT37_party_result.do" />
+		</action>
+		<action path="/result/changeLevel"
+			parameter="changeLevelByLastscore" name="t37_party_resultActionForm"
+			type="com.ist.aml.newrisk.controller.T37_party_resultAction" validate="false"
+			scope="request">
+		</action>
+		
+
+		<!-- 上传附件 -->
+		<action path="/t37_risk_attach/t37_risk_attach_list" 
+				parameter="getT37_risk_attachList" 
+				name="t37_risk_attachActionForm" 
+				type="com.ist.aml.newrisk.controller.T37_risk_attachAction" 
+				validate="false" scope="request">
+	    <forward name="success" path="/attach/risk_attach_list.jsp"/> 
+    	</action>
+		
+
+		<action path="/t37_risk_attach/t37_risk_attach_add" 
+    			parameter="addT37_risk_attach" 
+    			name="t37_risk_attachActionForm" 
+    			type="com.ist.aml.newrisk.controller.T37_risk_attachAction" 
+    			validate="false" scope="request"> 
+	    <forward name="success" path="/attach/risk_attach_add.jsp"/> 
+	    <forward name="failure" path="/t37_risk_attach/t37_risk_attach_list.do"/> 
+    	</action>
+    	
+    	<action path="/t37_risk_attach/t37_risk_attach_delete_do" 
+    			parameter="deleteT37_risk_attachDo" 
+    			name="t37_risk_attachActionForm" 
+    			type="com.ist.aml.newrisk.controller.T37_risk_attachAction" 
+    			validate="false" scope="request"> 
+		<forward name="success" path="/t37_risk_attach/t37_risk_attach_list.do"/> 
+        <forward name="failure" path="/t37_risk_attach/t37_risk_attach_list.do"/> 
+    	</action>
+    	
+    	<action path="/t37_risk_attach/t37_risk_attach_add_do" 
+    			parameter="addT37_risk_attachDo" 
+    			name="t37_risk_attachActionForm" 
+    			type="com.ist.aml.newrisk.controller.T37_risk_attachAction" 
+    			validate="false" scope="request"> 
+	    <forward name="success" path="/t37_risk_attach/t37_risk_attach_list.do"/> 
+	    <forward name="failure" path="/t37_risk_attach/t37_risk_attach_add.do"/> 
+    	</action>
+    	
+    	<!-- 评级结果再调整&评级结果报告  added by lee -->
+    	<action path="/result/t37_party_result_list1" parameter="getT37_party_resultList1" name="t37_party_resultActionForm"
+				type="com.ist.aml.newrisk.controller.T37_party_resultAction" validate="false" scope="request">
+			<forward name="success" path="/result/t37_party_result_list1.jsp" />
+			<forward name="failure" path="/result/t37_party_result_list1.jsp" />
+		</action>
+		
+		<action path="/result/t37_party_resultReturn" parameter="ReturnT37_party_result" name="t37_party_resultActionForm"
+				type="com.ist.aml.newrisk.controller.T37_party_resultAction" validate="false" scope="request">
+			<forward name="success" path="/result/return_reason.jsp" />
+		</action>
+		<action path="/result/t37_party_resultReturnDo" parameter="ReturnT37_party_resultDo" name="t37_party_resultActionForm"
+				type="com.ist.aml.newrisk.controller.T37_party_resultAction" validate="false" scope="request">
+				<forward name="success" path="/result/return_midReason.jsp" />
+		</action>
+		
+		<action path="/result/t31_party_resultSExcel" parameter="getT31_party_result_SExcel" name="t37_party_resultActionForm"
+				type="com.ist.aml.newrisk.controller.T37_party_resultAction" validate="false" scope="request">
+			<forward name="success" path="/result/t37_party_result_Excel.jsp" />
+		</action>
+		
+		<action path="/result/t31_party_resultBExcel" parameter="getT31_party_result_BExcel" name="t37_party_resultActionForm"
+				type="com.ist.aml.newrisk.controller.T37_party_resultAction" validate="false" scope="request">
+			<forward name="success" path="/report_excel.do" />
+		</action>
+    	<!-- end of 评级结果再调整&评级结果报告 -->
+    	
+        <!-- KYC审查 end -->
+    
+    <!-- t31_count_rule  by bianjiang & lee-->
+		<action path="/t31_count_rule/t31_count_ruleList"
+			parameter="getT31_count_ruleList" name="t31_count_ruleActionForm"
+			type="com.ist.aml.newrisk.controller.T31_count_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t31_count_rule/t31_count_ruleList.jsp" />
+		</action>
+		<!-- end of t31_count_rule -->
+		
+		<!-- t31_risk_level  by bianjiang & lee-->
+		<action path="/t31_risk_level/t31_risk_levelList"
+			parameter="getT31_risk_levelList" name="t31_risk_levelActionForm"
+			type="com.ist.aml.newrisk.controller.T31_risk_levelAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t31_risk_level/t31_risk_levelList.jsp" />
+		</action>
+		<action path="/t31_risk_level/t13_level_add"
+			parameter="addT31_risk_level" name="t31_risk_levelActionForm"
+			type="com.ist.aml.newrisk.controller.T31_risk_levelAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t31_risk_level/t31_risk_levelAdd.jsp" />
+		</action>
+		<action path="/t31_risk_level/t13_level_add_do"
+			parameter="addT31_risk_levelDo" name="t31_risk_levelActionForm"
+			type="com.ist.aml.newrisk.controller.T31_risk_levelAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t31_risk_level/t31_risk_levelList.do" />
+		</action>
+		<action path="/t31_risk_level/t13_level_del_do"
+			parameter="deleteT31_risk_levelDo" name="t31_risk_levelActionForm"
+			type="com.ist.aml.newrisk.controller.T31_risk_levelAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t31_risk_level/t31_risk_levelList.do" />
+		</action>
+		<!-- end of t31_count_rule -->
+    
+    
+    
+    <!-- 结果查询  added by lee -->
+    	<action path="/result/t37_party_result_list2" parameter="getT37_party_resultList2" name="t37_party_result_uhActionForm"
+				type="com.ist.aml.newrisk.controller.T37_party_result_uhAction" validate="false" scope="request">
+			<forward name="success" path="/result/t37_party_result_list2.jsp" />
+		</action>
+		<action path="/result/t37_party_result2_export" parameter="getT37_party_result2Export" name="t37_party_result_uhActionForm"
+				type="com.ist.aml.newrisk.controller.T37_party_result_uhAction" validate="false" scope="request">
+			<forward name="success" path="/result/t37_party_result2_export.jsp" />
+		</action>
+		<action path="/result/t37_party_result2_exportall" parameter="getT37_party_result2ExportAll" name="t37_party_result_uhActionForm"
+				type="com.ist.aml.newrisk.controller.T37_party_result_uhAction" validate="false" scope="request">
+			<forward name="success" path="/result/t37_party_result2_export.jsp" />
+		</action>
+		<action path="/result/t37_party_result_notrans_list" parameter="getT37_party_result_notransList" name="t37_party_result_uhActionForm"
+				type="com.ist.aml.newrisk.controller.T37_party_result_uhAction" validate="false" scope="request">
+			<forward name="success" path="/result/t37_party_result_notrans_list.jsp" />
+		</action>
+		
+    <!-- end of 结果查询 -->
+    
+    
+    
+    
+    
+    
+	</action-mappings>
+	<message-resources parameter="ApplicationResources_zh_CN" />
+
+</struts-config>
+
+

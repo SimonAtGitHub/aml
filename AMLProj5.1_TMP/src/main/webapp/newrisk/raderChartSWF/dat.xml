@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <info>
+    <!--user注释-->
+    <node namer="a1" pic="02" sm="btn1" sn="m1" link="http://www.aura.cn/TP/corp.asp"/>
+    <lur>http://www.aura.cn/TP/corp.asp</lur>
+    <user>user01</user>
+    <date>2010-07-01</date>
+    <title>title01</title>
+    <content>this is content 01</content>
+  </info>
+
+  <info>
+    <user>user02</user>
+    <date>2010-07-02</date>
+    <title>title02</title>
+    <content>this is content 02</content>
+  </info>
+
+  <info>
+    <user>user03</user>
+    <date>2010-07-03</date>
+    <title>title03</title>
+    <content>this is content 03</content>
+  </info>
+
+</root>

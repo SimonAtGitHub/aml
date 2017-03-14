@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="T07_receipt">
+
+<statement id="getT07_case_receiptList" parameterClass="com.ist.aml.pbcreport.dto.T07_receipt"
+		resultClass="com.ist.aml.pbcreport.dto.T07_receipt">
+		SELECT
+		APPLICATION_NUM,REPORTKEY,RECEIPTKEY,RECEIPT_TYPE_CD,ERR_SEQNO,ERR_FILENAME,ERR_LOCATION,ERRS
+		FROM V07_RECEIPT WHERE 1>0
+		<isNotEmpty prepend="AND" property="application_num">
+			APPLICATION_NUM = #application_num#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="reportkey">
+			REPORTKEY = #reportkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="receiptkey">
+			RECEIPTKEY = #receiptkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="receipt_type_cd">
+			RECEIPT_TYPE_CD = #receipt_type_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="err_seqno">
+			ERR_SEQNO = #err_seqno#
+		</isNotEmpty>
+		<isNotEmpty property="ordername">
+			ORDER BY #APPLICATION_NUM#,#ERR_SEQNO#
+			<isNotEmpty property="orderby">desc</isNotEmpty>
+		</isNotEmpty>
+	</statement>
+   <statement id="insertT07_report_case08"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_report_case"
+		resultClass="int">
+		INSERT INTO T07_REPORT_CASE
+		(REPORTKEY,APPLICATION_NUM,LAST_APPLICATION_NUM,CREATE_DT,MSGKEY,RECEIPTKEY)
+		VALUES
+		(#reportkey#,#application_num#,#last_application_num#,#create_dt#,#msgkey#,#receiptkey#)
+	</statement>
+	
+	<statement id="getT07_receiptList08"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_receipt"
+		resultClass="com.ist.aml.pbcreport.dto.T07_receipt">
+		SELECT
+		RECEIPTKEY,RECEIPT_TYPE_CD,PACKETKEY,RECEIPT_FILE,RECEIPT_FILEPATH,CREATE_DT,PBC_CRT_DT
+		FROM T07_RECEIPT WHERE 1>0
+		<isNotEmpty prepend="AND" property="receiptkey">
+			RECEIPTKEY = #receiptkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="receipt_type_cd">
+			RECEIPT_TYPE_CD = #receipt_type_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt_start">
+			<![CDATA[CREATE_DT >= #create_dt_start:DATE# AND CREATE_DT< #create_dt_end:DATE#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="pbc_crt_dt_start">
+			<![CDATA[PBC_CRT_DT >= #pbc_crt_dt_start:DATE# AND PBC_CRT_DT<= #pbc_crt_dt_end:DATE#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="receipt_file">
+			receipt_file like #receipt_file#
+		</isNotEmpty>
+		<isNotEmpty property="ordername">
+			ORDER BY $ordername$
+			<isNotEmpty property="orderby">desc</isNotEmpty>
+		</isNotEmpty>
+	</statement>
+
+	<statement id="getT07_receiptListCount08"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_receipt"
+		resultClass="int">
+		SELECT COUNT(*) FROM T07_RECEIPT
+		<dynamic prepend="where">
+			<isNotEmpty prepend="AND" property="receiptkey">
+				RECEIPTKEY = #receiptkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="receipt_type_cd">
+				RECEIPT_TYPE_CD = #receipt_type_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="receipt_file">
+			receipt_file like #receipt_file#
+		</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt_start">
+				<![CDATA[CREATE_DT >= #create_dt_start:DATE# AND CREATE_DT< #create_dt_end:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_start">
+				<![CDATA[PBC_CRT_DT >= #pbc_crt_dt_start:DATE# AND PBC_CRT_DT<= #pbc_crt_dt_end:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="getT07_receiptList_FD08"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_receipt"
+		resultClass="com.ist.aml.pbcreport.dto.T07_receipt">
+		SELECT
+		RECEIPTKEY,RECEIPT_TYPE_CD,PACKETKEY,RECEIPT_FILE,RECEIPT_FILEPATH,CREATE_DT
+		FROM T07_RECEIPT WHERE 1>0
+		<isNotEmpty prepend="AND" property="receiptkey">
+			RECEIPTKEY = #receiptkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="receipt_file">
+			RECEIPT_FILE = #receipt_file#
+		</isNotEmpty>
+	</statement>
+	
+	<statement id="getT07_msgListByFileName"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.pbcreport.dto.T07_msg">
+		SELECT
+		MSGKEY,REPORTKEY,MSG_TYPE_CD,PACKETKEY,REPORT_TYPE_CD,REPORTORGANKEY,SENDDATE_DT,SENDDATE_CH,
+		BATCH_SEQ,MSG_SEQ,MSG_FILE,MSG_FILEPATH,MSG_ORIG_FILE,MSG_ORIG_FILEPATH,ORIG_MSGKEY,ATTACH_FILE,
+		ATTACH_FILEPAT,MSG_STATUS_CD,CREATE_DT FROM T07_MSG WHERE
+		MSG_FILE=#value# AND MSG_STATUS_CD='2'
+	</statement>
+	<statement id="insertT07_receipt08"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_receipt"
+		resultClass="int">
+		INSERT INTO T07_RECEIPT(
+		RECEIPTKEY,RECEIPT_TYPE_CD,PACKETKEY,RECEIPT_FILE,RECEIPT_FILEPATH,CREATE_DT,MSGKEY,PBC_CRT_DT,RECEIPT_STATUS_CD
+		) VALUES(
+		#receiptkey#,#receipt_type_cd#,#packetkey#,#receipt_file#,#receipt_filepath#,#create_dt#,#msgkey#,#pbc_crt_dt#,#receipt_status_cd#
+		)
+	</statement>
+		<statement id="insertT07_fdcf08"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_fdcf"
+		resultClass="int">
+		INSERT INTO T07_FDCF (RECEIPTKEY,RECEIPT_TYPE_CD,SFID,ERTN)
+		VALUES (#receiptkey#, #receipt_type_cd#, #sfid#,#ertn#)
+	</statement>
+	<statement id="insertT07_fdcf_fcer08"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_fdcf_fcer"
+		resultClass="int">
+		INSERT INTO T07_FDCF_FCER
+		(RECEIPTKEY,ERFL_SEQNO,FCER_SEQNO,ERLC,ERRS) VALUES
+		(#receiptkey#,1,#fcer_seqno#, #erlc#,#errs#)
+	</statement>
+		<statement id="updateT07_msg08"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_msg"
+		resultClass="int">
+		UPDATE T07_MSG SET MSG_STATUS_CD=#msg_status_cd#,RECEIPT_FILE=#receipt_file# WHERE
+		MSGKEY=#msgkey#
+	</statement>
+	<statement id="getT07_nbh_htcr08"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbh_htcr"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbh_htcr">
+		SELECT CRCD FROM T07_NBH_HTCR T WHERE T.REPORTKEY = #reportkey#
+		AND T.CATI_SEQNO = #cati_seqno# AND T.HTCR_SEQNO = #htcr_seqno#
+	</statement>
+	<statement id="updatT07_nbh_tsdtValidateInd"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt"
+		resultClass="int">
+		UPDATE T07_NBH_TSDT T SET VALIDATE_IND = '0',T.ERRORS_TYPE = #error_type#,T.PBC_CRT_DT=#pbc_crt_dt# WHERE T.REPORTKEY
+		=#reportkey# AND T.CATI_SEQNO =#cati_seqno# AND T.CRCD = #crcd#
+		AND T.TSDT_SEQNO=#tsdt_seqno#
+	</statement>
+	<statement id="updatT07_nbh_ctifValidateInd"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbh_ctif"
+		resultClass="int">
+		UPDATE T07_NBH_CTIF T SET T.VALIDATE_IND = '0',T.ERRORS_TYPE = #error_type#,T.PBC_CRT_DT=#pbc_crt_dt# WHERE T.REPORTKEY
+		= #reportkey# AND T.CATI_SEQNO = #cati_seqno#
+	</statement>
+	<statement id="updatT07_ibh_tsdtValidateInd"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_ibh_tsdt"
+		resultClass="int">
+		UPDATE T07_IBH_TSDT T SET T.VALIDATE_IND = '0' WHERE T.REPORTKEY
+		= #reportkey# AND T.TSDT_SEQNO = #tsdt_seqno#
+	</statement>
+	
+	<statement id="updatT07_nbs_rpdiValidateInd"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rpdi"
+		resultClass="int">
+		UPDATE T07_NBS_RPDI T SET T.VALIDATE_IND = '0',T.ERRORS_TYPE = #error_type#,T.PBC_CRT_DT=#pbc_crt_dt# WHERE T.REPORTKEY
+		= #reportkey# AND T.RPDI_SEQNO = #rpdi_seqno#
+	</statement>
+
+	<statement id="updatT07_nbs_ctifValidateInd"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_ctif"
+		resultClass="int">
+		UPDATE T07_NBS_CTIF T SET T.VALIDATE_IND = '0',T.ERRORS_TYPE = #error_type#,T.PBC_CRT_DT=#pbc_crt_dt#  WHERE T.REPORTKEY
+		=#reportkey# AND T.CTIF_SEQNO = #ctif_seqno#
+	</statement>
+
+	<statement id="updatT07_nbs_atifValidateInd"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_atif"
+		resultClass="int">
+		UPDATE T07_NBS_ATIF T SET T.VALIDATE_IND = '0',T.ERRORS_TYPE = #error_type# ,T.PBC_CRT_DT=#pbc_crt_dt# WHERE T.REPORTKEY
+		= #reportkey# AND T.CTIF_SEQNO = #ctif_seqno# AND T.ATIF_SEQNO =
+		#atif_seqno#
+	</statement>
+	
+	<statement id="updateT07_report08"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_report"
+		resultClass="int">
+		UPDATE T07_REPORT SET REPORT_STATUS_CD=#report_status_cd#
+		<isNotEmpty prepend="," property="pbc_msg_type_cd">
+			PBC_MSG_TYPE_CD=#pbc_msg_type_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="orig_application_num">
+			ORIG_APPLICATION_NUM=#orig_application_num#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="validate_ind">
+			VALIDATE_IND=#validate_ind#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="invalid_dt">
+			INVALID_DT=#invalid_dt#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="resend_ind">
+			RESEND_IND=#resend_ind#
+		</isNotEmpty>
+		WHERE REPORTKEY=#reportkey#
+	</statement>
+	<statement id="insertT07_08_fdrc_bh08"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_08_fdrc_bh"
+		resultClass="int">
+		INSERT INTO T07_08_FDRC_BH (RECEIPTKEY, RECEIPT_TYPE_CD, SFID,
+		RCTN) VALUES (#receiptkey#, #receipt_type_cd#, #sfid#, #rctn#)
+	</statement>
+	<statement id="insertT07_ibh_rbif"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_ibh_rbif"
+		resultClass="int">
+		INSERT INTO T07_IBH_RBIF
+		(REPORTKEY,RINM,RICD,IRDT,TSTN,VALIDATE_IND) VALUES
+		(#reportkey#,#rinm#,#ricd#,#irdt#,$tstn$,#validate_ind#)
+	</statement>
+	<statement id="insertT07_ibh_tsdt"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_ibh_tsdt"
+		resultClass="int">
+		INSERT INTO T07_IBH_TSDT
+		(REPORTKEY,TSDT_SEQNO,OCNM,OTDT,OTCD,OTIC,FINN,FIRC,RLTP,FICT,FINC,CATP,CTAC,TBNM,TBIT,TBID,TBNT,TSTM,TICD,TSTP,TSCT,TSDR,TDRC,TRCD,CRPP,CRTP,CRAT,CFIN,CFCT,CFIC,TCNM,TCIT,TCID,TCAT,TCAC,VALIDATE_IND,PARTY_CLASS_CD,CURR_CD,ERRORS_TYPE,PBC_CRT_DT,ORGANKEY)
+		VALUES
+		(#reportkey#,#tsdt_seqno#,#ocnm#,#otdt#,#otcd#,#otic#,#finn#,#firc#,#rltp#,#fict#,#finc#,#catp#,#ctac#,#tbnm#,#tbit#,#tbid#,#tbnt#,#tstm#,#ticd#,#tstp#,#tsct#,#tsdr#,#tdrc#,#trcd#,#crpp#,#crtp#,#crat#,#cfin#,#cfct#,#cfic#,#tcnm#,#tcit#,#tcid#,#tcat#,#tcac#,#validate_ind#,#party_class_cd#,#curr_cd#,#errors_type#,#pbc_crt_dt#,#organkey#)
+	</statement>
+	<statement id="insertT07_08_fdrc_bh_fcrc"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_08_fdrc_bh_fcrc"
+		resultClass="int">
+		INSERT INTO T07_08_FDRC_BH_FCRC (RECEIPTKEY, FCRC_SEQNO, OCNM,
+		OTDT, OTCD, OTIC) VALUES (#receiptkey#, #fcrc_seqno#, #ocnm#,
+		#otdt#, #otcd#, #otic#)
+	</statement>
+
+	<statement id="insertT07_08_fdrc_bh_fcrc_rcif"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_08_fdrc_bh_fcrc_rcif"
+		resultClass="int">
+		INSERT INTO T07_08_FDRC_BH_FCRC_RCIF (RECEIPTKEY, FCRC_SEQNO,
+		RCIF_SEQNO, RCLC, RCSG) VALUES (#receiptkey#, #fcrc_seqno#,
+		#rcif_seqno#, #rclc#, #rcsg#)
+	</statement>
+		<statement id="getT07_ibh_tsdt08"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt"
+		resultClass="com.ist.aml.pbcreport.dto.T07_ibh_tsdt">
+		SELECT A.REPORTKEY, B.CSNM OCNM,A.CRCD OTCD,A.TICD OTIC,
+		A.FINN,A.FIRC,A.RLTP,A.FICT,A.FINC,A.CATP,A.CTAC,A.TBNM,A.TBIT,A.TBID,A.TBNT,A.TSTM,
+		A.TICD,A.TSTP,A.TSCT,A.TSDR,A.TDRC,A.TRCD,A.CRPP,A.CRTP,A.CRAT,A.CFIN,A.CFCT,A.CFIC,
+		A.TCNM,A.TCIT,A.TCID,A.TCAT,A.TCAC,A.VALIDATE_IND,A.PARTY_CLASS_CD,A.CURR_CD,A.ORGANKEY FROM
+		T07_NBH_TSDT A,T07_NBH_CTIF B WHERE A.REPORTKEY=B.REPORTKEY AND
+		A.CATI_SEQNO=B.CATI_SEQNO AND A.REPORTKEY = #reportkey# AND TICD
+		= #ticd# AND CRCD=#crcd#
+	</statement>
+	<statement id="insertT07_08_fdrc_bs"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_08_fdrc_bs"
+		resultClass="int">
+		INSERT INTO T07_08_FDRC_BS (RECEIPTKEY,SFID,RCTN) VALUES
+		(#receiptkey#,#sfid#,#rctn#)
+	</statement>
+
+	<statement id="insertT07_08_fdrc_bs_fcrc"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_08_fdrc_bs_fcrc"
+		resultClass="int">
+		INSERT INTO T07_08_FDRC_BS_FCRC
+		(RECEIPTKEY,FCRC_SEQNO,RCLC,RCSG) VALUES
+		(#receiptkey#,#fcrc_seqno#,#rclc#,#rcsg#)
+	</statement>
+	<statement id="getT07_nbs_rpdiValidateIndOrgan"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rpdi"
+		resultClass="java.lang.String">
+		SELECT B.ORGANKEY FROM T07_NBS_RPDI A,T47_TRANSACTION_UC B WHERE REPORTKEY = #reportkey# AND RPDI_SEQNO = #rpdi_seqno# AND A.TICD = B.TRANSACTIONKEY
+	</statement>
+	<statement id="getT07_fdsc_bs_rpdi"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_receipt"
+		resultClass="com.ist.aml.pbcreport.dto.T07_receipt">
+		SELECT ORGANKEY FROM T07_FDRC_BS_RPDI_COUNT_MID WHERE ORGANKEY = #organkey# AND STATISTIC_DT = #pbc_crt_dt#
+	</statement>
+	
+	<statement id="insertT07_fdsc_bs_rpdi_count"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_receipt"
+		resultClass="int">
+		INSERT INTO T07_FDRC_BS_RPDI_COUNT_MID(
+		ORGANKEY,RPDI_COUNT,STATISTIC_DT
+		) VALUES(
+		#organkey#,#rpdi_count#,#pbc_crt_dt#
+		)
+	</statement>
+	<statement id="updateT07_fdsc_bs_rpdi_count"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_receipt"
+		resultClass="int">
+		UPDATE T07_FDRC_BS_RPDI_COUNT_MID SET RPDI_COUNT = #rpdi_count# WHERE ORGANKEY = #organkey# AND STATISTIC_DT = #pbc_crt_dt#
+	</statement>
+	<statement id="getT07_msgListByMsgName"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_msg"
+		resultClass="com.ist.aml.pbcreport.dto.T07_msg">
+		SELECT
+		MSGKEY,REPORTKEY,MSG_TYPE_CD,PACKETKEY,REPORT_TYPE_CD,REPORTORGANKEY,SENDDATE_DT,SENDDATE_CH,
+		BATCH_SEQ,MSG_SEQ,MSG_FILE,MSG_FILEPATH,MSG_ORIG_FILE,MSG_ORIG_FILEPATH,ORIG_MSGKEY,ATTACH_FILE,
+		ATTACH_FILEPAT,MSG_STATUS_CD,CREATE_DT FROM T07_MSG WHERE
+		MSG_FILE=#msg_file# AND (RECEIPT_FILE!=#receipt_file# or RECEIPT_FILE is null) AND MSG_STATUS_CD='2'
+	</statement>
+	<statement id="getT07_receiptDisp01"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_receipt"
+		resultClass="com.ist.aml.pbcreport.dto.T07_receipt">
+		SELECT
+		T1.APPLICATION_NUM,T1.REPORTKEY,T0.RECEIPTKEY,T0.RECEIPT_TYPE_CD,T2.MSG_FILE
+		MSGFILE, T3.RCLC ERR_LOCATION,T3.RCSG ERRS FROM T07_RECEIPT T0,
+		T07_REPORT T1, T07_MSG T2,T07_08_FDRC_BH_FCRC_RCIF T3 WHERE
+		T1.REPORTKEY = T2.REPORTKEY AND T0.MSGKEY = T2.MSGKEY AND
+		T0.RECEIPTKEY = T3.receiptkey and t0.receiptkey=#receiptkey#
+	</statement>
+
+	<statement id="getT07_receiptDisp02"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_receipt"
+		resultClass="com.ist.aml.pbcreport.dto.T07_receipt">
+		SELECT
+		T1.APPLICATION_NUM,T1.REPORTKEY,T0.RECEIPTKEY,T0.RECEIPT_TYPE_CD,T2.MSG_FILE
+		MSGFILE, T3.RCLC ERR_LOCATION,T3.RCSG ERRS FROM T07_RECEIPT T0,
+		T07_REPORT T1, T07_MSG T2,T07_08_FDRC_BS_FCRC T3 WHERE
+		T1.REPORTKEY = T2.REPORTKEY AND T0.MSGKEY = T2.MSGKEY AND
+		T0.RECEIPTKEY = T3.RECEIPTKEY AND T0.RECEIPTKEY=#receiptkey#
+	</statement>
+
+	<statement id="getT07_receiptDisp03"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_receipt"
+		resultClass="com.ist.aml.pbcreport.dto.T07_receipt">
+		SELECT
+		T1.APPLICATION_NUM,T1.REPORTKEY,T0.RECEIPTKEY,T0.RECEIPT_TYPE_CD,T2.MSG_FILE
+		MSGFILE, T3.ERLC ERR_LOCATION,T3.ERRS ERRS FROM T07_RECEIPT T0,
+		T07_REPORT T1, T07_MSG T2,T07_FDCF_FCER T3 WHERE T1.REPORTKEY =
+		T2.REPORTKEY AND T0.MSGKEY = T2.MSGKEY AND T0.RECEIPTKEY =
+		T3.RECEIPTKEY AND T0.RECEIPTKEY=#receiptkey#
+	</statement>
+		<statement id="updateT07_packetStatus"
+		resultClass="int">
+		update t07_packet a set a.packet_status_cd='5'
+         where exists(select 'x' from t07_msg b where b.packetkey=a.packetkey and b.msg_status_cd='3')
+          and a.packet_status_cd='3'
+	</statement>
+	
+</sqlMap>
+

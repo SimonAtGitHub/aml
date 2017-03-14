@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_programa">
+
+<!-- 系统管理栏目 -->
+<statement id="getT12_programaTreeListForSysManager"
+	parameterClass="java.lang.String"
+	resultClass="com.ist.common.menu.Menu">
+	select categorykey as id,'-1' as parent_id,categoryname as name from t12_ca_programa	
+	<![CDATA[	
+		where (flag <> '2' or flag is null)
+	]]>
+		order by dispseq
+</statement>
+
+<!-- 业务管理栏目 -->
+<statement id="getT12_programaTreeListForBusManager"
+	parameterClass="java.lang.String"
+	resultClass="com.ist.common.menu.Menu">
+	select categorykey as id,'-1' as parent_id,categoryname as name from t12_ca_programa	
+	<![CDATA[	
+		where flag='1'
+	]]>
+		order by dispseq
+</statement>
+
+<!-- 栏目为后台发布 -->
+<statement id="getT12_programaTreeList"
+	parameterClass="java.lang.String"
+	resultClass="com.ist.common.menu.Menu">
+	select * from (
+	select t1.programakey as id,t1.categorykey as parent_id,t1.programaname as name from t12_programa t1,t12_ca_programa t2
+	<![CDATA[	
+		where t1.categorykey=t2.categorykey and t1.flag='1' and t2.flag='1' and t1.auditstat='1' and t1.releasetype = '2'
+	]]>
+		order by t1.dispseq
+	) A
+	union all
+	select * from (
+	select categorykey as id,'-1' as parent_id,categoryname as name from t12_ca_programa	
+	<![CDATA[	
+		where flag='1'
+	]]>
+		order by dispseq
+	) B
+</statement>
+
+<!-- 栏目为前后台发布 -->
+<statement id="getT12_programa_allTreeList"
+	parameterClass="java.lang.String"
+	resultClass="com.ist.common.menu.Menu">
+	select * from (
+	select t1.programakey as id,t1.categorykey as parent_id,t1.programaname as name from t12_programa t1,t12_ca_programa t2
+	<![CDATA[	
+		where t1.categorykey=t2.categorykey and t1.flag='1' and t2.flag='1' and t1.auditstat='1' 
+	]]>
+		order by t1.dispseq
+	) A
+	union all
+	select * from (
+	select categorykey as id,'-1' as parent_id,categoryname as name from t12_ca_programa	
+	<![CDATA[	
+		where flag='1' AND CATEGORYKEY IN (select DISTINCT CATEGORYKEY
+  from t12_programa t1 
+  where (flag <> '2' or flag is NULL) AND t1.AUDITSTAT = '1')
+	]]>
+		order by dispseq
+	) B
+</statement>
+
+
+<statement id="getT12_programaTreeList2Article"
+	parameterClass="java.lang.String"
+	resultClass="com.ist.common.menu.Menu">
+	select * from (
+	select t1.programakey as id,t1.categorykey as parent_id,t1.programaname as name from t12_programa t1,t12_ca_programa t2
+	<![CDATA[	
+		where t1.categorykey=t2.categorykey and t1.flag='1' and t2.flag='1' and t1.auditstat='1' 
+	]]>
+		order by t1.dispseq
+	) A
+	union all
+	select * from (
+	select categorykey as id,'-1' as parent_id,categoryname as name from t12_ca_programa	
+	<![CDATA[	
+		where flag='1'
+	]]>
+		order by dispseq
+	) B
+</statement>
+	 
+  <statement id="getT12_programaList" parameterClass="com.ist.cms.dto.T12_programa" resultClass="com.ist.cms.dto.T12_programa"> 
+  select t1.programakey,programaname,categorykey,showtype,isshowmoudle,releasetype,programaadd,
+         defaultname,auditstat,t1.des,dispseq,flag,creator,createdate,modifier,modifydate,applytype,
+         t2.isstructure,t2.iscontent,t2.issearch 
+  from t12_programa t1 left join T12_pp_programa t2
+  on t1.programakey = t2.programakey
+  <![CDATA[ where (flag <> '2'  or flag is null)]]>  
+  <dynamic> 
+    <isNotEmpty prepend="and" property="programakey"> 
+    t1.programakey = #programakey# 
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="programaname"> 
+    programaname like '%'||#programaname#||'%' 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="categorykey"> 
+    categorykey = #categorykey#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="releasetype"> 
+    releasetype = #releasetype#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="auditstat"> 
+    auditstat = #auditstat#
+    </isNotEmpty>   
+    <isNotEmpty prepend="and" property="flag"> 
+    flag = #flag#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="applytype"> 
+    applytype = #applytype#
+    </isNotEmpty>   
+  </dynamic> 
+  	order by createdate desc,dispseq 
+  </statement> 
+ 
+  <statement id="getT12_programaListCount" parameterClass="com.ist.cms.dto.T12_programa" resultClass="int"> 
+  select count(*) from t12_programa t1 left join T12_pp_programa t2
+  on t1.programakey = t2.programakey
+  <![CDATA[ where (flag <> '2'  or flag is null)]]> 
+  <dynamic > 
+    <isNotEmpty prepend="and" property="programakey"> 
+    t1.programakey = #programakey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="programaname"> 
+    programaname like '%'||#programaname#||'%' 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="categorykey"> 
+    categorykey = #categorykey#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="releasetype"> 
+    releasetype = #releasetype#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="auditstat"> 
+    auditstat = #auditstat#
+    </isNotEmpty>   
+    <isNotEmpty prepend="and" property="flag"> 
+    flag = #flag#
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="applytype"> 
+    applytype = #applytype#
+    </isNotEmpty>  
+  </dynamic> 
+  </statement> 
+  
+  <statement id="getT12_programa_busiList" parameterClass="com.ist.cms.dto.T12_programa" resultClass="com.ist.cms.dto.T12_programa"> 
+  select t1.programakey,programaname,categorykey,showtype,isshowmoudle,releasetype,programaadd,
+         defaultname,auditstat,t1.des,dispseq,flag,creator,createdate,modifier,modifydate,applytype,
+         t2.isstructure,t2.iscontent,t2.issearch 
+  from t12_programa t1 left join T12_pp_programa t2
+  on t1.programakey = t2.programakey
+  <![CDATA[ where (flag = '1' or flag is null)]]>  
+  <dynamic> 
+    <isNotEmpty prepend="and" property="programakey"> 
+    t1.programakey = #programakey# 
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="programaname"> 
+    programaname like '%'||#programaname#||'%' 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="categorykey"> 
+    categorykey = #categorykey#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="releasetype"> 
+    releasetype = #releasetype#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="auditstat"> 
+    auditstat = #auditstat#
+    </isNotEmpty>   
+    <isNotEmpty prepend="and" property="flag"> 
+    flag = #flag#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="applytype"> 
+    applytype = #applytype#
+    </isNotEmpty>   
+  </dynamic> 
+  	order by createdate desc,dispseq 
+  </statement> 
+ 
+  <statement id="getT12_programa_busiCount" parameterClass="com.ist.cms.dto.T12_programa" resultClass="int"> 
+  select count(*) from t12_programa t1 left join T12_pp_programa t2
+  on t1.programakey = t2.programakey
+  <![CDATA[ where (flag = '1' or flag is null)]]> 
+  <dynamic > 
+    <isNotEmpty prepend="and" property="programakey"> 
+    t1.programakey = #programakey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="programaname"> 
+    programaname like '%'||#programaname#||'%' 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="categorykey"> 
+    categorykey = #categorykey#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="releasetype"> 
+    releasetype = #releasetype#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="auditstat"> 
+    auditstat = #auditstat#
+    </isNotEmpty>   
+    <isNotEmpty prepend="and" property="flag"> 
+    flag = #flag#
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="applytype"> 
+    applytype = #applytype#
+    </isNotEmpty>  
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_programa" parameterClass="com.ist.cms.dto.T12_programa" resultClass="int"> 
+  insert into T12_programa(
+  programakey,programaname,categorykey,isshowmoudle,releasetype,programaadd,defaultname,auditstat,des,flag,creator,createdate,dispseq,showtype,applytype
+  ) values(
+  #programakey#,#programaname#,#categorykey#,#isshowmoudle#,#releasetype#,#programaadd#,#defaultname#,#auditstat#,#des#,#flag#,#creator#,#createdate#,#dispseq#,#showtype#,#applytype#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_programa" parameterClass="com.ist.cms.dto.T12_programa" resultClass="int"> 
+  update T12_programa set 
+  programaname=#programaname#,isshowmoudle=#isshowmoudle#,releasetype=#releasetype#,
+  programaadd=#programaadd#,defaultname=#defaultname#,des=#des#,flag=#flag#,
+  modifier=#modifier#,modifydate=#modifydate#,dispseq=#dispseq#,showtype=#showtype#,applytype=#applytype#
+  where programakey=#programakey# 
+  </statement> 
+  
+  <!-- 修改栏目名称 -->
+  <statement id="modifyT12_programaname" parameterClass="com.ist.cms.dto.T12_programa" resultClass="int"> 
+  update T12_programa set 
+  programaname=#programaname#,modifier=#modifier#,modifydate=#modifydate#
+  where programakey=#programakey# 
+  </statement>
+  
+  <!-- 修改审核状态 -->
+  <statement id="modifyT12_programa_auditstat" parameterClass="com.ist.cms.dto.T12_programa" resultClass="int"> 
+  update T12_programa set 
+  auditstat=#auditstat#,modifier=#modifier#,modifydate=#modifydate#
+  where programakey=#programakey# 
+  </statement>
+  
+ <!-- 逻辑删除栏目 -->
+  <statement id="deleteT12_programa" parameterClass="com.ist.cms.dto.T12_programa" resultClass="int">
+  update T12_programa set 
+  flag='2',modifier=#modifier#,modifydate=#modifydate#
+  where programakey=#programakey# 
+  </statement> 
+ 
+  <statement id="getT12_programaDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_programa"> 
+  select t1.*,t2.isstructure,t2.iscontent,t2.issearch from T12_programa t1 
+  left join T12_pp_programa t2 on t1.programakey = t2.programakey 
+  where t1.programakey=#value# 
+  </statement> 
+  
+  <statement id="getT12_programaDispByTableName" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_programa"> 
+  select t1.*,t2.isstructure,t2.iscontent,t2.issearch from T12_programa t1 
+  left join T12_pp_programa t2 on t1.programakey = t2.programakey 
+  ,t12_programa_table_rel t3
+  where 1 > 0
+  and t3.tablecode=#tablecode# 
+  and t1.programakey = t3.programakey
+  </statement> 
+  
+  <statement id="getT12_programaAllList" parameterClass="com.ist.cms.dto.T12_programa" resultClass="com.ist.cms.dto.T12_programa"> 
+   select t1.PROGRAMAKEY,t1.CATEGORYKEY,t1.PROGRAMANAME,t1.RELEASETYPE,t1.SHOWTYPE,t1.APPLYTYPE,
+	CASE WHEN s.PROCESSDATE IS NULL THEN '' ELSE  s.PROCESSDATE END createdate
+	from T12_programa t1 LEFT JOIN T12_SE_DB_STATUS s ON t1.PROGRAMAKEY||'_art' = s.ID
+	where flag='1' AND applytype !='1'
+   <dynamic prepend=""> 
+    <isNotEmpty prepend="and" property="programaname"> 
+    t1.programaname like '%'||#programaname#||'%' 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="categorykey"> 
+     t1.categorykey = #categorykey#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="releasetype"> 
+     t1.releasetype = #releasetype#
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+ <statement id="getT12_programaAllListCount" parameterClass="com.ist.cms.dto.T12_programa" resultClass="int"> 
+	select count(*)
+	from T12_programa t1 LEFT JOIN T12_SE_DB_STATUS s ON t1.PROGRAMAKEY||'_art' = s.ID
+	where flag='1' AND applytype !='1'
+  <dynamic prepend=""> 
+    <isNotEmpty prepend="and" property="programaname"> 
+     t1.programaname like '%'||#programaname#||'%' 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="categorykey"> 
+     t1.categorykey = #categorykey#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="releasetype"> 
+    t1.releasetype = #releasetype#
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+</sqlMap> 
+

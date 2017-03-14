@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T13_mfa_info">
+	<statement id="getT13_mfa_infoList" parameterClass="com.ist.mfa.dto.T13_mfa_info"
+		resultClass="com.ist.mfa.dto.T13_mfa_info">
+		SELECT * FROM T13_MFA_INFO T
+		<dynamic prepend="where">
+		
+		<isNotEqual prepend="AND" property="isView" compareValue="1">
+		 FLOW_STATUS IN ('1','2')
+		 and NET_STATUS!='3'
+		</isNotEqual>
+		<isNotEmpty prepend="AND" property="net_name">
+			NET_NAME like '%'||#net_name#||'%'
+	    </isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id_search">
+			EXISTS (	SELECT 'X' FROM T13_ND_ACCT A WHERE T.NET_ID=A.NET_ID AND  A.PARTY_ID=#party_id_search#)
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="net_status">
+			NET_STATUS = #net_status#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="create_dt_start">
+	     <![CDATA[createdate >= #create_dt_start#]]> 
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="create_dt_end">
+	     <![CDATA[createdate <= #create_dt_end#]]>
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organStr">
+			ORGAN IN ($organStr$)
+	    </isNotEmpty>
+	</dynamic>
+	</statement>
+	<statement id="getT13_mfa_infoCount" parameterClass="com.ist.mfa.dto.T13_mfa_info"
+		resultClass="int">
+		SELECT count(*) FROM T13_MFA_INFO T
+		<dynamic prepend="where">
+		<isNotEqual prepend="AND" property="isView" compareValue="1">
+		 FLOW_STATUS IN ('1','2')
+		 and NET_STATUS!='3'
+		</isNotEqual>
+	    <isNotEmpty prepend="AND" property="net_name">
+			NET_NAME like '%'||#net_name#||'%'
+	    </isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id_search">
+			EXISTS (	SELECT 'X' FROM T13_ND_ACCT A WHERE T.NET_ID=A.NET_ID AND  A.PARTY_ID=#party_id_search#)
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="net_status">
+			NET_STATUS = #net_status#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="create_dt_start">
+	     <![CDATA[createdate >= #create_dt_start#]]> 
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="create_dt_end">
+	     <![CDATA[createdate <= #create_dt_end#]]>
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organStr">
+			ORGAN IN ($organStr$)
+	    </isNotEmpty>
+	    </dynamic>
+	 
+	</statement>
+</sqlMap>
+

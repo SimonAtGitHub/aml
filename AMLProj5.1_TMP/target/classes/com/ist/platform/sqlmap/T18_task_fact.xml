@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T18_task_fact">
+  <statement id="getDM_serverList" parameterClass="com.ist.platform.dto.T18_task_fact" resultClass="com.ist.platform.dto.T18_task_fact">
+  <![CDATA[
+   select domainkey,domainname domainkey_disp,serverkey,servername serverkey_disp,statisticdate, sum(timestr) timestr,calstatus from
+   V18_task_fact f where f.statisticdate>=#calStartDate# and f.statisticdate<=#calEndDate#
+  ]]>
+  <dynamic>
+    <isNotEmpty prepend="and" property="serverkey">
+    f.serverkey = #serverkey#
+    </isNotEmpty>
+  </dynamic>
+    group by statisticdate,domainkey,domainname,serverkey,servername,calstatus
+    order by statisticdate
+  </statement>
+
+  <statement id="getT18_task_factList_new" parameterClass="com.ist.platform.dto.T18_task_fact" resultClass="com.ist.platform.dto.T18_task_fact">
+      select (f.enddate - f.begindate) * 24 * 60 * 60 timestr,t.taskname taskkey_disp,t.tasktype,f.* from t18_task_fact f,t18_task t
+      where f.taskkey=t.taskkey and f.domainkey=#domainkey# and f.serverkey=#serverkey# and f.statisticdate=#statisticdate#
+      <dynamic>
+         <isNotEmpty prepend="and" property="organkey">
+           f.organkey = #organkey#
+         </isNotEmpty>
+         <isNotEmpty prepend="and" property="granularity">
+           f.granularity = #granularity#
+         </isNotEmpty>
+         <isNotEmpty prepend="and" property="taskkey">
+           f.taskkey = #taskkey#
+         </isNotEmpty>
+         <isNotEmpty prepend="and" property="tasktype">
+           t.tasktype = #tasktype#
+         </isNotEmpty>
+         <isNotEmpty prepend="and" property="calstatus">
+           f.calstatus = #calstatus#
+         </isNotEmpty>
+      </dynamic>
+      order by f.granularity,f.schedulekey
+  </statement>
+
+  <statement id="getT18_task_factDisp1" parameterClass="com.ist.platform.dto.T18_task_fact" resultClass="com.ist.platform.dto.T18_task_fact">
+       select * from t18_task_fact f where 1>0
+       <dynamic>
+         <isNotEmpty prepend="and" property="organkey">
+           f.organkey = #organkey#
+         </isNotEmpty>
+         <isNotEmpty prepend="and" property="domainkey">
+           f.domainkey = #domainkey#
+         </isNotEmpty>
+         <isNotEmpty prepend="and" property="serverkey">
+           f.serverkey = #serverkey#
+         </isNotEmpty>
+         <isNotEmpty prepend="and" property="taskkey">
+           f.taskkey = #taskkey#
+         </isNotEmpty>
+         <isNotEmpty prepend="and" property="tasktype">
+           f.tasktype = #tasktype#
+         </isNotEmpty>
+         <isNotEmpty prepend="and" property="granularity">
+           f.granularity = #granularity#
+         </isNotEmpty>
+         <isNotEmpty prepend="and" property="statisticdate">
+           f.statisticdate = #statisticdate#
+         </isNotEmpty>
+      </dynamic>
+  </statement>
+
+  <statement id="modifyT18_task_fact_calstatus" parameterClass="com.ist.platform.dto.T18_task_fact" resultClass="int">
+  update T18_task_fact set
+  calstatus=#calstatus#
+   where schedulekey=#schedulekey#
+  </statement>
+
+  <statement id="modifyT18_task_fact_calstatus_byserverkey" parameterClass="com.ist.platform.dto.T18_task_fact" resultClass="int">
+  update T18_task_fact set
+  calstatus=#calstatus#
+  where domainkey=#domainkey# and serverkey=#serverkey# and statisticdate=#statisticdate# and calstatus='0'
+  </statement>
+
+  <statement id="insertT18_task_fact_new" parameterClass="com.ist.platform.dto.T18_task_fact" resultClass="int">
+  insert into T18_task_fact(
+  schedulekey,domainkey,serverkey,taskkey,tasktype,statisticdate,granularity,transferdate,begindate,enddate,calstatus,organkey
+  ) values(
+  #schedulekey#,#domainkey#,#serverkey#,#taskkey#,#tasktype#,#statisticdate#,#granularity#,#transferdate#,#begindate#,#enddate#,#calstatus#,#organkey#
+  )
+  </statement>
+
+  <statement id="modifyT18_task_fact_new" parameterClass="com.ist.platform.dto.T18_task_fact" resultClass="int">
+  update T18_task_fact set
+  schedulekey=#schedulekey#,domainkey=#domainkey#,serverkey=#serverkey#,taskkey=#taskkey#,tasktype=#tasktype#,statisticdate=#statisticdate#,granularity=#granularity#,transferdate=#transferdate#,begindate=#begindate#,enddate=#enddate#,calstatus=#calstatus#,organkey=#organkey#
+  where schedulekey=#schedulekey#
+  </statement>
+
+  <statement id="deleteT18_task_fact_new" parameterClass="java.lang.String" resultClass="int">
+  delete from T18_task_fact where schedulekey=#value#
+  </statement>
+
+  <statement id="getT18_task_factDisp_new" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T18_task_fact">
+  select * from T18_task_fact where schedulekey=#value#
+  </statement>
+  
+  <statement id="getRunningT18_task_factCount" parameterClass="java.lang.String" resultClass="int">
+  select count(taskkey) from T18_task_fact where calstatus in('3','5')
+  </statement>
+
+</sqlMap>
+

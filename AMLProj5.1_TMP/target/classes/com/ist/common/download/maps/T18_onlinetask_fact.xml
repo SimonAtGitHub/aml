@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T18_onlinetask_fact">
+	<statement id="getT18_onlinetask_factList" parameterClass="com.ist.common.download.dto.T18_onlinetask_fact"
+		resultClass="com.ist.common.download.dto.T18_onlinetask_fact">
+		SELECT t4.taskkey,
+       t4.tasktype,
+       t4.typename,
+       t4.businesskey,
+       t4.statisticdate,
+       t4.begintime,
+       t4.endtime,
+       t4.usetime,
+       t4.calstatus,
+       t4.iserror,
+       t4.objkey,
+       t4.objdes
+  FROM (SELECT t3.*, t2.taskkey AS iserror
+          FROM (SELECT t.*, t1.TYPENAME
+                  from t18_online_task_fact t, t18_online_task_type t1
+                 where t.tasktype = t1.tasktype
+			    	<isNotEmpty prepend="and" property="statisticdate_begin">
+							t.statisticdate >= #statisticdate_begin# 
+			    	</isNotEmpty>
+			    	<isNotEmpty prepend="and" property="statisticdate_end">
+							 #statisticdate_end# >=t.statisticdate
+			    	</isNotEmpty>				 
+					) t3		
+					LEFT JOIN 		
+				(SELECT DISTINCT TASKKEY FROM T18_ONLINE_TASK_LOG) t2		
+					ON t3.TASKKEY = t2.taskkey) t4 		
+		<dynamic prepend="where">
+		<isNotEmpty prepend="and" property="taskkey">
+			t4.taskkey = #taskkey# 
+   		</isNotEmpty>
+   		<isNotEmpty prepend="and" property="tasktype">
+			t4.tasktype = #tasktype# 
+   		</isNotEmpty>
+   		<isNotEmpty prepend="and" property="businesskey">
+			t4.businesskey = #businesskey# 
+   		</isNotEmpty>
+   		 
+   		<isNotEmpty prepend="and" property="calstatus">
+			t4.calstatus = #calstatus# 
+   		</isNotEmpty>
+    	<isNotEmpty prepend="and" property="statisticdate_begin">
+				t4.statisticdate >= #statisticdate_begin# 
+    	</isNotEmpty>
+    	<isNotEmpty prepend="and" property="statisticdate_end">
+				 #statisticdate_end# >=t4.statisticdate
+    	</isNotEmpty>
+    	</dynamic>
+    	order by t4.statisticdate desc,t4.calstatus,t4.businesskey
+	</statement>
+
+	<statement id="getT18_onlinetask_factListCount" parameterClass="com.ist.common.download.dto.T18_onlinetask_fact"
+		resultClass="int">
+		select count(*) from t18_task_fact
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="taskkey">
+				taskkey = #taskkey# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="tasktype">
+			tasktype = #tasktype# 
+   		</isNotEmpty>
+   		<isNotEmpty prepend="and" property="businesskey">
+			businesskey = #businesskey# 
+   		</isNotEmpty>
+   		<isNotEmpty prepend="and" property="dskey">
+			dskey = #dskey# 
+   		</isNotEmpty>
+   		
+   		<isNotEmpty prepend="and" property="calstatus">
+			calstatus = #calstatus# 
+   		</isNotEmpty>
+   		<isNotEmpty prepend="and" property="statisticdate_begin">
+				statisticdate >= #statisticdate_begin# 
+    	</isNotEmpty>
+    	<isNotEmpty prepend="and" property="statisticdate_end">
+				 #statisticdate_end# >= statisticdate
+    	</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="insertT18_onlinetask_fact" parameterClass="com.ist.common.download.dto.T18_onlinetask_fact"
+		resultClass="int">
+		insert into T18_ONLINE_TASK_FACT(
+		taskkey,tasktype,businesskey,statisticdate,calstatus,creatuser,creatdate,objkey,objdes,serverkey
+		) values(
+		#taskkey#,#tasktype#,#businesskey#,#statisticdate#,#calstatus#,#creatuser#,#creatdate#,#objkey#,#objdes#,#serverkey#
+		) 
+  </statement>
+<statement id="insertT18_onlinetask_factpara" parameterClass="com.ist.common.download.dto.T18_onlinetask_fact"
+		resultClass="int">
+		insert into T18_ONLINE_TASK_PARA(
+		taskkey,para_code,subnum,para_val
+		) values(
+		#taskkey#,#para_code#,#subnum:VARCHAR#,#para_val#
+		) 
+  </statement>
+	<statement id="modifyT18_onlinetask_fact" parameterClass="com.ist.common.download.dto.T18_onlinetask_fact"
+		resultClass="int">
+		update T18_task_fact set
+		taskkey=#taskkey#,tasktype=#tasktype#,businesskey=#businesskey#,statisticdate=#statisticdate#,dskey=#dskey#,begintime=#begintime#,endtime=#endtime#,usetime=#usetime#,calstatus=#calstatus#
+		where taskkey=#taskkey# 
+  </statement>
+<statement id="getT18_onlinetask_factkey" parameterClass="com.ist.common.download.dto.T18_onlinetask_fact"
+		resultClass="com.ist.common.download.dto.T18_onlinetask_fact">
+		select * from t18_online_task_fact where businesskey=#businesskey# and tasktype=#tasktype# and  calstatus in ('2','3')
+  </statement>
+	<statement id="deleteT18_onlinetask_fact" parameterClass="java.lang.String"
+		resultClass="int">
+		delete from t18_online_task_fact where taskkey=#value# 
+  </statement>
+
+	<statement id="getT18_onlinetask_factDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.common.download.dto.T18_onlinetask_fact">
+		select t.taskkey,t1.typename,t.businesskey,t.statisticdate   ,t.begintime,t.endtime,t.usetime,t.calstatus 
+		from T18_online_task_fact t ,t18_online_task_type t1 where taskkey=#value#  and   t.tasktype = t1.tasktype
+  </statement>
+	
+  <statement id="modifyT18_onlinetask_factByTaskkey" parameterClass="java.lang.String"
+		resultClass="int">
+		update T18_task_fact set
+		calstatus='2'
+		where taskkey=#taskkey# 
+  </statement>
+  
+    <statement id="getT18_online_errorlogListByTaskkey" parameterClass="java.lang.String" resultClass="com.ist.common.download.dto.T18_onlinetask_fact"> 
+  select * from T18_ONLINE_TASK_LOG where taskkey=#value# 
+  </statement>
+  <statement id="deleteT18_onlinetask_factpara" parameterClass="java.lang.String"
+		resultClass="int">
+		delete from  t18_online_task_para where taskkey=#value#
+  </statement>
+
+	<statement id="deleteT18_onlinetask_factByprogramkey"
+		parameterClass="java.lang.String" resultClass="int">
+		delete from
+		t18_online_task_fact t where t.objkey in (select p.tplakey from
+		t03_program_rule_rel p where p.programkey = #value#)
+  </statement>
+
+	<statement id="deleteT18_onlinetask_factparaByprogramkey"
+		parameterClass="java.lang.String" resultClass="int">
+		delete from
+		t18_online_task_para t
+		where t.taskkey in (select t1.taskkey
+		from t18_online_task_fact t1, t03_program_rule_rel p
+		where t1.objkey = p.tplakey
+		and p.programkey = #value#)
+		
+  </statement>
+  
+  <statement id="deleteT18_onlinetask_factByArrays" parameterClass="java.util.List"
+		 resultClass="int">
+		delete from t18_online_task_fact t where t.taskkey in
+		<iterate open="(" close=")" conjunction=",">
+		#value[]#
+		</iterate>
+  </statement>
+  
+  <statement id="deleteT18_onlinetask_factparaByArrays" parameterClass="java.util.List"
+		 resultClass="int">
+		delete from t18_online_task_para t where t.taskkey in
+		<iterate open="(" close=")" conjunction=",">
+		#value[]#
+		</iterate>
+  </statement>
+</sqlMap> 
+

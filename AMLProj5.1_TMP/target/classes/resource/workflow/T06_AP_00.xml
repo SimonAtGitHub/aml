@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table tablename="T06_AP_00" desc="审计计划表">
+	<!--
+		id:顺序 name:字段名称，和表单页面上的字段必须一致，区分大小写 desc:字段描叙 type: 1:类 2:引用 3:意见 4:表
+		step：默认值生效的流程步骤
+	-->
+	<column name="ID" desc="表单id" />
+	<column name="ENTRYID" desc="流程id" />
+	<column name="STEPID" desc="步骤id" />
+	<column name="PLANKEY" desc="计划编号" type="1" 
+		source="com.ist.pmp.common.workflow.client.form.predefine.PredefineOfID00" 
+		step="-1" />
+	<column name="PLANNAME" desc="计划名称" step="10" />
+	<column name="ANNUAL" desc="计划年度" step="10" />
+	<column name="BEGINDT" desc="开始时间" step="10" />	
+	<column name="ENDDT" desc="结束时间" step="10" />
+	<column name="PLANCOST" desc="计划费用" step="10" />
+	<column name="BCATEGORY" desc="业务类别" step="10" />
+	<column name="BCATEGORY_DISP" desc="业务类别展示" step="10" />
+	<column name="ENTITYKEY" desc="覆盖机构ID" step="10" />
+	<column name="ENTITYKEY_DISP" desc="覆盖机构名称" step="10" />
+	<column name="ASCOPE" desc="审计范围" step="10" />
+	<column name="DESCR" desc="审计内容" step="10"/>
+	<column name="TOTALOPTION" desc="审计部负责人审批意见" step="20" type="3" />
+	<column name="BANKLEADEROPTION" desc="分管行领导审批意见" step="30"  type="3"/>
+	<column name="DOCATTCHID" desc="附件编号" step="10" />
+	<column name="OPERATEDT" desc="编制日期" type="1"
+		source="com.ist.pmp.common.workflow.client.form.predefine.PredefineOfDate"
+		step="-1" />
+	<column name="OPERATOR" desc="编制人" type="1"
+		source="com.ist.pmp.common.workflow.client.form.predefine.PredefineOfUser"
+		step="-1" />
+		
+	<column name="PROJECT_PLAN" type="4" source="T06_PROJECT_PLAN"
+		ref="PLANKEY">
+		<subcolumn>PROJECTKEY</subcolumn>
+		<subcolumn>PROJECTNAME</subcolumn>
+		<subcolumn>PSOURCE</subcolumn>
+		<subcolumn>BCATEGORY</subcolumn>
+		<subcolumn>PM</subcolumn>
+		<subcolumn>STATE</subcolumn>
+		<subcolumn>BEGINDT</subcolumn>
+		<subcolumn>ENDDT</subcolumn>
+		<subcolumn>HESTIMATE</subcolumn>
+		<subcolumn>COST</subcolumn>
+	</column>
+</table>
+
+

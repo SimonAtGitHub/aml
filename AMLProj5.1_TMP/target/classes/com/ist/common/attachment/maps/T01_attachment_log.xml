@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T01_attachment_log"> 
+  <statement id="getT01_attachment_logList" parameterClass="com.ist.common.attachment.dto.T01_attachment_log" resultClass="com.ist.common.attachment.dto.T01_attachment_log"> 
+  select attachkey,logkey,operatedate,operatetype,operatingps,versionum from t01_attachment_log 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="attachkey"> 
+    attachkey = #attachkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT01_attachment_logListCount" parameterClass="com.ist.common.attachment.dto.T01_attachment_log" resultClass="int"> 
+  select count(*) from t01_attachment_log 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="attachkey"> 
+    attachkey = #attachkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT01_attachment_log" parameterClass="com.ist.common.attachment.dto.T01_attachment_log" resultClass="int"> 
+  insert into T01_attachment_log(
+  attachkey,logkey,operatedate,operatetype,operatingps,versionum
+  ) values(
+  #attachkey#,#logkey#,#operatedate#,#operatetype#,#operatingps#,#versionum#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT01_attachment_log" parameterClass="com.ist.common.attachment.dto.T01_attachment_log" resultClass="int"> 
+  update T01_attachment_log set 
+  attachkey=#attachkey#,logkey=#logkey#,operatedate=#operatedate#,operatetype=#operatetype#,operatingps=#operatingps#,versionum=#versionum#
+  where attachkey=#attachkey# 
+  </statement> 
+ 
+  <statement id="deleteT01_attachment_log" parameterClass="java.lang.String" resultClass="int">
+  delete from T01_attachment_log where attachkey=#value# 
+  </statement> 
+ 
+  <statement id="getT01_attachment_logDisp" parameterClass="java.lang.String" resultClass="com.ist.common.attachment.dto.T01_attachment_log"> 
+  select * from T01_attachment_log where attachkey=#value# 
+  </statement> 
+ 
+</sqlMap> 
+

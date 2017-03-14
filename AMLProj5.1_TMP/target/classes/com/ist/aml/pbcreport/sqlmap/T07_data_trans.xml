@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T07_data_trans"> 
+  <statement id="getT07_data_transAllList"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_data_trans_search"
+		resultClass="com.ist.aml.pbcreport.dto.T07_data_trans_list">
+  <isEqual property="casetype" compareValue="1">
+		 SELECT T2.REPORTKEY,
+             T2.TICD, 
+             T1.CSNM  , 
+             T2.Cati_seqno AS CTIF_SEQNO, 
+             T2.Tsdt_seqno AS RPDI_SEQNO, 
+             T2.CRCD AS CRCD, 
+             T2.TSTM  , 
+             T3.organkey as FINC, 
+             T2.CRAT, 
+             T2.CRTP, 
+             T2.TSDR, 
+             T2.VALIDATE_IND,
+             T2.PBC_CRT_DT,
+             T2.ERRORS_TYPE,
+             T2.party_class_cd,
+             'NBH' as trans_type
+        FROM T07_NBH_TSDT T2 ,T07_NBH_CTIF T1,T47_TRANSACTION_UC T3 where T1.Reportkey=T2.Reportkey and T1.Cati_Seqno=T2.CATI_SEQNO
+        and t2.ticd=t3.transactionkey
+     
+        <isNotEmpty prepend="AND" property="reportkey">
+				T2.REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[T2.TSTM >= #start_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[T2.TSTM < #end_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ticd">
+				T2.TICD = #ticd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="finc">
+				T3.organkey  IN ($finc$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="csnm">
+				T1.CSNM = #csnm#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				T2.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_start">
+				<![CDATA[T2.pbc_crt_dt >= #pbc_crt_dt_start_s#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_end">
+				<![CDATA[T2.pbc_crt_dt <= #pbc_crt_dt_end_s#]]>
+			</isNotEmpty>
+         union all
+          SELECT
+             T2.REPORTKEY,
+             T2.TICD, 
+             T2.OCNM  AS CSNM, 
+             T2.Tsdt_seqno AS CTIF_SEQNO, 
+             T2.Tsdt_seqno AS RPDI_SEQNO, 
+             T2.OTCD AS OTCD, 
+             T2.TSTM , 
+             T3.organkey as FINC, 
+             T2.CRAT, 
+             T2.CRTP, 
+             T2.TSDR, 
+             T2.VALIDATE_IND,  
+              T2.PBC_CRT_DT,
+              T2.ERRORS_TYPE,
+             T2.party_class_cd,
+             'IBH' as trans_type 
+           from T07_IBH_TSDT T2,T47_TRANSACTION_UC T3 where   t2.ticd=t3.transactionkey
+           <isNotEmpty prepend="AND" property="reportkey">
+				T2.REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[T2.TSTM >= #start_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[T2.TSTM < #end_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ticd">
+				T2.TICD = #ticd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="finc">
+				T3.organkey  IN ($finc$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="csnm">
+				T2.OCNM = #csnm#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				T2.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+       	    <isNotEmpty prepend="AND" property="pbc_crt_dt_start">
+				<![CDATA[T2.pbc_crt_dt >= #pbc_crt_dt_start_s#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_end">
+				<![CDATA[T2.pbc_crt_dt <= #pbc_crt_dt_end_s#]]>
+			</isNotEmpty>
+          order by PBC_CRT_DT
+ </isEqual>
+  <isEqual property="casetype" compareValue="2">
+		 SELECT T2.REPORTKEY,
+          T2.TICD, 
+          T1.HOST_CUST_ID AS CSNM, 
+          T2.Ctif_seqno AS Ctif_seqno, 
+          T2.RPDI_SEQNO AS RPDI_SEQNO, 
+          '1' AS CRCD,
+          T2.TSTM  , 
+          T1.ORGANKEY AS FINC, 
+          T2.CRAT, 
+          T2.CRTP, 
+          T2.TSDR, 
+          T2.VALIDATE_IND,T2.Errors_Type,
+          T2.PBC_CRT_DT,
+          T2.ERRORS_TYPE,
+           T2.party_class_cd,
+           'NBS' AS trans_type
+     FROM T47_TRANSACTION_UC T1, T07_NBS_RPDI T2 WHERE T1.TRANSACTIONKEY = T2.TICD
+      <isNotEmpty prepend="AND" property="reportkey">
+				T2.REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[T2.TSTM >= #start_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[T2.TSTM <#end_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ticd">
+				T2.TICD = #ticd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="finc">
+				T1.organkey  IN ($finc$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="csnm">
+				T1.party_id = #csnm#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				T2.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			 <isNotEmpty prepend="AND" property="pbc_crt_dt_start">
+				<![CDATA[T2.pbc_crt_dt >= #pbc_crt_dt_start_s#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_end">
+				<![CDATA[T2.pbc_crt_dt <= #pbc_crt_dt_end_s#]]>
+			</isNotEmpty>
+			 order by T2.PBC_CRT_DT		
+			 </isEqual>	
+			
+	</statement>
+	<statement id="getT07_data_transAllList_count"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_data_trans_search"
+		resultClass="int">
+		SELECT count(1)  FROM  (
+			<isEqual property="casetype" compareValue="1">
+		 SELECT T2.REPORTKEY,
+             T2.TICD, 
+             T1.CSNM  , 
+             T2.Cati_seqno AS CTIF_SEQNO, 
+             T2.Tsdt_seqno AS RPDI_SEQNO, 
+             T2.CRCD AS CRCD, 
+             T2.TSTM  , 
+             T2.FINC, 
+             T2.CRAT, 
+             T2.CRTP, 
+             T2.TSDR, 
+             T2.VALIDATE_IND,
+             T2.PBC_CRT_DT,
+             T2.ERRORS_TYPE,
+             T2.party_class_cd
+        FROM T07_NBH_TSDT T2 ,T07_NBH_CTIF T1 ,T47_TRANSACTION_UC T3
+        where T1.Reportkey=T2.Reportkey and T1.Cati_Seqno=T2.CATI_SEQNO
+       and t2.ticd=t3.transactionkey
+        <isNotEmpty prepend="AND" property="reportkey">
+				T2.REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[T2.TSTM >= #start_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[T2.TSTM < #end_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ticd">
+				T2.TICD = #ticd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="finc">
+				T3.organkey  IN ($finc$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="csnm">
+				T1.CSNM = #csnm#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				T2.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_start">
+				<![CDATA[T2.pbc_crt_dt >= #pbc_crt_dt_start_s#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_end">
+				<![CDATA[T2.pbc_crt_dt <= #pbc_crt_dt_end_s#]]>
+			</isNotEmpty>
+         union all
+          SELECT
+             T2.REPORTKEY,
+             T2.TICD, 
+             T2.OCNM  AS CSNM, 
+             T2.Tsdt_seqno AS CTIF_SEQNO, 
+             T2.Tsdt_seqno AS RPDI_SEQNO, 
+             T2.OTCD AS OTCD, 
+             T2.TSTM , 
+             T2.FINC, 
+             T2.CRAT, 
+             T2.CRTP, 
+             T2.TSDR, 
+             T2.VALIDATE_IND,  
+              T2.PBC_CRT_DT,
+              T2.ERRORS_TYPE,
+             T2.party_class_cd 
+           from T07_IBH_TSDT T2,T47_TRANSACTION_UC T3 where  t2.ticd=t3.transactionkey
+           <isNotEmpty prepend="AND" property="reportkey">
+				T2.REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[T2.TSTM >= #start_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[T2.TSTM < #end_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ticd">
+				T2.TICD = #ticd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="finc">
+				T3.organkey  IN ($finc$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="csnm">
+				T2.OCNM = #csnm#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				T2.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+            <isNotEmpty prepend="AND" property="pbc_crt_dt_start">
+				<![CDATA[T2.pbc_crt_dt >= #pbc_crt_dt_start_s#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_end">
+				<![CDATA[T2.pbc_crt_dt <= #pbc_crt_dt_end_s#]]>
+			</isNotEmpty>
+
+ </isEqual>
+  <isEqual property="casetype" compareValue="2">
+		 SELECT T2.REPORTKEY,
+          T2.TICD, 
+          T1.HOST_CUST_ID AS CSNM, 
+          T2.Ctif_seqno AS Ctif_seqno, 
+          T2.RPDI_SEQNO AS RPDI_SEQNO, 
+          '1' AS CRCD,
+          T2.TSTM  , 
+          T1.ORGANKEY AS FINC, 
+          T2.CRAT, 
+          T2.CRTP, 
+          T2.TSDR, 
+          T2.VALIDATE_IND,T2.Errors_Type,
+          T2.PBC_CRT_DT,
+          T2.ERRORS_TYPE,
+           T2.party_class_cd
+     FROM T47_TRANSACTION_UC T1, T07_NBS_RPDI T2 WHERE T1.TRANSACTIONKEY = T2.TICD
+      <isNotEmpty prepend="AND" property="reportkey">
+				T2.REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[T2.TSTM >= #start_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[T2.TSTM < #end_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ticd">
+				T2.TICD = #ticd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="finc">
+				T1.organkey  IN ($finc$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="csnm">
+				T1.party_id = #csnm#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				T2.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_start">
+				<![CDATA[T2.pbc_crt_dt >= #pbc_crt_dt_start_s#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_end">
+				<![CDATA[T2.pbc_crt_dt <= #pbc_crt_dt_end_s#]]>
+			</isNotEmpty>
+			 </isEqual>	
+			 			
+			)T
+	</statement>
+	 <statement id="getValidateTransDisp" parameterClass="com.ist.aml.pbcreport.dto.T07_data_trans" resultClass="com.ist.aml.pbcreport.dto.T07_data_trans"> 
+  SELECT * FROM T07_NBS_RPDI  WHERE 1>0
+   <dynamic> 
+    <isNotEmpty prepend="AND" property="reportkey"> 
+      REPORTKEY = #reportkey# 
+    </isNotEmpty> 
+      <isNotEmpty prepend="AND" property="rpdi_seqno"> 
+      RPDI_SEQNO = $rpdi_seqno$ 
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="ticd"> 
+       TICD = #ticd# 
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+  <!-- end add -->
+</sqlMap> 

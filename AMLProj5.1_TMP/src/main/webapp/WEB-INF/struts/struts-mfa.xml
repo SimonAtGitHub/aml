@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!-- 资金网络平台模块配置 -->
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+	<data-sources />
+	<form-beans>
+	 <form-bean name="t23_rule_moduleActionForm" type="com.ist.mfa.controller.T23_rule_moduleActionForm" />
+	 <form-bean name="t23_net_paraActionForm" type="com.ist.mfa.controller.T23_net_paraActionForm" />
+	 <form-bean name="t13_rel_infoActionForm" type="com.ist.mfa.controller.T13_rel_infoActionForm" />
+	 <form-bean name="t13_mfa_infoActionForm" type="com.ist.mfa.controller.T13_mfa_infoActionForm" />
+	 <form-bean name="t13_mfaActionForm" type="com.ist.mfa.controller.T13_mfaActionForm" />
+	 <form-bean name="t13_mfa_dealActionForm" type="com.ist.mfa.controller.T13_mfa_dealActionForm" />
+	</form-beans>
+	<global-exceptions />
+	<global-forwards />
+	<action-mappings>
+	  <!--   高级模型管理配置   -->
+		<action path="/module/module_list" parameter="getT23_rule_moduleList"
+			name="t23_rule_moduleActionForm" type="com.ist.mfa.controller.T23_rule_moduleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/module_list.jsp" />
+		</action>
+		<action path="/module/module_add" parameter="addT23_rule_module"
+			name="t23_rule_moduleActionForm" type="com.ist.mfa.controller.T23_rule_moduleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/module_add.jsp" />
+		</action>
+		<action path="/module/module_add_do" parameter="addT23_rule_moduleDo"
+			name="t23_rule_moduleActionForm" type="com.ist.mfa.controller.T23_rule_moduleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/module_modify_main.jsp" />
+			<forward name="falture" path="/module/module_add.do" />
+		</action>
+		<action path="/module/module_modify_main" parameter="modifyT23_rule_module_main"
+			name="t23_rule_moduleActionForm" type="com.ist.mfa.controller.T23_rule_moduleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/module_modify_main.jsp" />
+		</action>
+		<action path="/module/module_modify" parameter="modifyT23_rule_module"
+			name="t23_rule_moduleActionForm" type="com.ist.mfa.controller.T23_rule_moduleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/module_modify.jsp" />
+		</action>
+		<action path="/module/module_modify_do" parameter="modifyT23_rule_moduleDo"
+			name="t23_rule_moduleActionForm" type="com.ist.mfa.controller.T23_rule_moduleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/module_modify.do" />
+			<forward name="falture" path="/module/module_modify.do" />
+		</action>
+		<action path="/module/module_disp" parameter="getT23_rule_moduleDisp"
+			name="t23_rule_moduleActionForm" type="com.ist.mfa.controller.T23_rule_moduleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/module_disp.jsp" />
+		</action>
+		<action path="/module/module_disp2" parameter="getT23_rule_moduleDisp"
+			name="t23_rule_moduleActionForm" type="com.ist.mfa.controller.T23_rule_moduleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/module_disp2.jsp" />
+		</action>
+		
+		<action path="/module/module_delete_do" parameter="deleteT23_rule_moduleDo"
+			name="t23_rule_moduleActionForm" type="com.ist.mfa.controller.T23_rule_moduleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/module_list.do" />
+			<forward name="falture" path="/module/module_list.do" />
+		</action>
+		<action path="/module/module_delete" parameter="deleteT23_rule_module"
+			name="t23_rule_moduleActionForm" type="com.ist.mfa.controller.T23_rule_moduleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/module_list.do" />
+			<forward name="failure" path="/module/module_list.do" />
+		</action>
+		<action path="/module/module_applyRelease" parameter="releaseT23_rule_module"
+			name="t23_rule_moduleActionForm" type="com.ist.mfa.controller.T23_rule_moduleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/module_list.do" />
+		</action>
+		<action path="/module/module_stcr_modify" parameter="modifyT23_module_stcr"
+			name="t23_rule_moduleActionForm" type="com.ist.mfa.controller.T23_rule_moduleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/module_stcr_modify.jsp" />
+			<forward name="failure" path="/module/module_stcr_modify.do" />
+		</action>
+		<action path="/module/module_stcr_modify_do" parameter="modifyT23_module_stcrDo"
+			name="t23_rule_moduleActionForm" type="com.ist.mfa.controller.T23_rule_moduleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/module_stcr_modify.do" />
+			<forward name="failure" path="/module/module_stcr_modify.do" />
+		</action>
+		<action path="/module/update_module_stcr_type" parameter="updateT23_module_stcr_type"
+			name="t23_rule_moduleActionForm" type="com.ist.mfa.controller.T23_rule_moduleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/module_stcr_modify.do" />
+		</action>
+		<!--   高级模型发布配置  -->
+		<action path="/module/module_releaselist" parameter="getT23_rule_module_releaseList"
+			name="t23_rule_moduleActionForm" type="com.ist.mfa.controller.T23_rule_moduleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/module_release_list.jsp" />
+		</action>
+		<action path="/module/module_release_disp" parameter="getT23_rule_moduleDisp"
+			name="t23_rule_moduleActionForm" type="com.ist.mfa.controller.T23_rule_moduleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/module_release_disp.jsp" />
+		</action>
+		<action path="/module/module_release" parameter="releaseT23_rule_module"
+			name="t23_rule_moduleActionForm" type="com.ist.mfa.controller.T23_rule_moduleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/module_releaselist.do" />
+		</action>
+		<action path="/module/module_cancelRelease" parameter="cancelRelT23_rule_module"
+			name="t23_rule_moduleActionForm" type="com.ist.mfa.controller.T23_rule_moduleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/module_releaselist.do" />
+		</action>
+		<!--  模型特征配置     -->
+		<action path="/module/t21_pbcrule_search" parameter="getT21_pbcruleList"
+			name="t23_rule_moduleActionForm" type="com.ist.mfa.controller.T23_rule_moduleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/t21_pbcrule_search.jsp" />
+		</action>
+		<action path="/module/t23_module_stcr_search" parameter="getT23_module_stcrList"
+			name="t23_rule_moduleActionForm" type="com.ist.mfa.controller.T23_rule_moduleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/t23_module_stcr_search.jsp" />
+		</action>
+		<action path="/module/t23_module_stcr_search_result" parameter="getT23_module_stcrListDo"
+			name="t23_rule_moduleActionForm" type="com.ist.mfa.controller.T23_rule_moduleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/result.jsp" />
+		</action>
+		
+		
+		
+		<action path="/module/t07_pbcruleDo" parameter="getT07_pbcruleDo"
+			name="t23_rule_moduleActionForm" type="com.ist.mfa.controller.T23_rule_moduleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/search_result.jsp" />
+		</action>
+		<!--  网络参数维护配置     -->
+		<action path="/net/para_main" parameter="para_main"
+			name="t23_net_paraActionForm" type="com.ist.mfa.controller.T23_net_paraAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/para_main.jsp" />
+		</action>
+		<action path="/net/para_detection_c" parameter="para_detection_c"
+			name="t23_net_paraActionForm" type="com.ist.mfa.controller.T23_net_paraAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/detection_modify.jsp" />
+		</action>
+		<action path="/net/para_warn_c" parameter="para_warn_c"
+			name="t23_net_paraActionForm" type="com.ist.mfa.controller.T23_net_paraAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/warn_modify.jsp" />
+		</action>
+		<action path="/net/para_netCut_c" parameter="para_netCut_c"
+			name="t23_net_paraActionForm" type="com.ist.mfa.controller.T23_net_paraAction"
+			validate="false" scope="request">
+			<forward name="success" path="/module/netCut_modify.jsp" />
+		</action>
+		<action path="/net/modify_paraDetection" parameter="modify_paraDetection"
+			name="t23_net_paraActionForm" type="com.ist.mfa.controller.T23_net_paraAction"
+			validate="false" scope="request">
+			<forward name="success" path="/net/para_detection_c.do" />
+		</action>
+		<action path="/net/modify_paraWarn" parameter="modify_paraWarn"
+			name="t23_net_paraActionForm" type="com.ist.mfa.controller.T23_net_paraAction"
+			validate="false" scope="request">
+			<forward name="success" path="/net/para_warn_c.do" />
+		</action>
+		<action path="/net/modify_paraNetCut" parameter="modify_paraNetCut"
+			name="t23_net_paraActionForm" type="com.ist.mfa.controller.T23_net_paraAction"
+			validate="false" scope="request">
+			<forward name="success" path="/net/para_netCut_c.do" />
+		</action>
+		<!--  关系网络配置     -->
+		<action path="/relation/relation_net_search" parameter="getT13_relation_netList"
+			name="t13_rel_infoActionForm" type="com.ist.mfa.controller.T13_relation_netAction"
+			validate="false" scope="request">
+			<forward name="success" path="/relation/t13_relation_net_search.jsp" />
+		</action>
+		<action path="/relation/relation_net_list" parameter="getT13_relation_netList"
+			name="t13_rel_infoActionForm" type="com.ist.mfa.controller.T13_relation_netAction"
+			validate="false" scope="request">
+			<forward name="success" path="/relation/t13_relation_net_list.jsp" />
+		</action>
+		<action path="/relation/relation_delete" parameter="relation_delete"
+			name="t13_rel_infoActionForm" type="com.ist.mfa.controller.T13_relation_netAction"
+			validate="false" scope="request">
+			<forward name="success" path="/relation/relation_net_list.do" />
+		</action>
+		
+		<!--  资金网络配置     -->
+		<action path="/t13_mfa_info/t13_mfa_info_search" parameter="getT13_mfa_infoList"
+			name="t13_mfa_infoActionForm" type="com.ist.mfa.controller.T13_mfa_infoAction"
+			validate="false" scope="request">
+			<forward name="success" path="/fund/t13_mfa_info_search.jsp" />
+		</action>
+		
+		<!-- deal -->
+		<action path="/t13_mfa_deal/t13_mfa_info_deal" parameter="DealT13_mfa_info"
+			name="t13_mfa_dealActionForm" type="com.ist.mfa.controller.T13_mfa_dealAction"
+			validate="false" scope="request">
+			<forward name="success" path="/fund/t13_mfa_info_deal.jsp" />
+		</action>
+		<action path="/t13_mfa_deal/t13_mfa_stcr_deal" parameter="getT13_mfa_stcrList"
+			name="t13_mfa_dealActionForm" type="com.ist.mfa.controller.T13_mfa_dealAction"
+			validate="false" scope="request">
+			<forward name="success" path="/fund/t13_mfa_stcr.jsp" />
+		</action>
+		<action path="/t13_mfa_deal/t13_mfa_stcr_trans" parameter="getT13_mfa_stcr_transList"
+			name="t13_mfa_dealActionForm" type="com.ist.mfa.controller.T13_mfa_dealAction"
+			validate="false" scope="request">
+			<forward name="success" path="/fund/t13_mfa_stcr_translist.jsp" />
+		</action>
+		<action path="/t13_mfa_deal/stcrlist_search" parameter="getStcrList"
+			name="t13_mfa_dealActionForm" type="com.ist.mfa.controller.T13_mfa_dealAction"
+			validate="false" scope="request">
+			<forward name="success" path="/fund/pbcrule_list.jsp" />
+		</action>
+		<action path="/t13_mfa_deal/stcrlist_search_result" parameter="getStcrList_result"
+			name="t13_mfa_dealActionForm" type="com.ist.mfa.controller.T13_mfa_dealAction"
+			validate="false" scope="request">
+			<forward name="success" path="/fund/pbcrule_list_result.jsp" />
+		</action>
+		
+		
+		<action path="/t13_mfa_deal/t13_mfa_stcr_add" parameter="addT13_mfa_stcr"
+			name="t13_mfa_dealActionForm" type="com.ist.mfa.controller.T13_mfa_dealAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t13_mfa_deal/t13_mfa_stcr_deal.do" />
+		</action>
+		<action path="/t13_mfa_deal/t13_mfa_stcr_delete" parameter="deleteT13_mfa_stcr"
+			name="t13_mfa_dealActionForm" type="com.ist.mfa.controller.T13_mfa_dealAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t13_mfa_deal/t13_mfa_stcr_deal.do" />
+		</action>
+		
+		<action path="/t13_mfa_deal/t13_mfa_stcr_trans_add" parameter="addT13_mfa_stcr_trans"
+			name="t13_mfa_dealActionForm" type="com.ist.mfa.controller.T13_mfa_dealAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t13_mfa_deal/t13_mfa_stcr_trans.do" />
+		</action>
+		<action path="/t13_mfa_deal/t13_mfa_stcr_trans_delete" parameter="deleteT13_mfa_stcr_trans"
+			name="t13_mfa_dealActionForm" type="com.ist.mfa.controller.T13_mfa_dealAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t13_mfa_deal/t13_mfa_stcr_trans.do" />
+		</action>
+		<action path="/t13_mfa_deal/trans_rellist_search" parameter="getTrans_relList"
+			name="t13_mfa_dealActionForm" type="com.ist.mfa.controller.T13_mfa_dealAction"
+			validate="false" scope="request">
+			<forward name="success" path="/fund/trans_rel_list.jsp" />
+		</action>
+		<action path="/t13_mfa_deal/trans_rel_result" parameter="getTrans_relList_result"
+			name="t13_mfa_dealActionForm" type="com.ist.mfa.controller.T13_mfa_dealAction"
+			validate="false" scope="request">
+			<forward name="success" path="/fund/trans_rel_list_result.jsp" />
+		</action>
+		<action path="/t13_mfa_deal/t13_mfa_info_save" parameter="SaveT13_mfa_info"
+			name="t13_mfa_dealActionForm" type="com.ist.mfa.controller.T13_mfa_dealAction"
+			validate="false" scope="request">
+			<forward name="success" path="/fund/t13_mfa_info_deal.jsp" />
+			<forward name="failure" path="/t13_mfa_deal/t13_mfa_info_deal.do" />
+		</action>
+		
+		
+		
+		
+		<action path="/downloadExportData" parameter="downloadExportData"
+			name="t13_mfaActionForm" type="com.ist.mfa.controller.T13_mfaAction"
+			validate="false" scope="request">	
+			<forward name="success" path="/module/netCut_modify.jsp" />
+		</action>
+	</action-mappings>
+	<message-resources parameter="ApplicationResources_zh_CN" />
+</struts-config>

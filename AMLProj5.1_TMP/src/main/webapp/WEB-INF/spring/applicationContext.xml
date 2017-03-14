@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 公共模块配置 -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd" >
+	<!-- Activates scanning of @Autowired -->
+    <context:annotation-config/>
+
+    <!-- Activates scanning of @Repository and @Service -->
+    <context:component-scan base-package="com.ist.common"/>
+    
+	<!-- ========================= RESOURCE DEFINITIONS ========================= -->
+
+	<!-- Local Apache Commons DBCP DataSource that refers to a combined database -->
+	<!-- (see dataAccessContext-jta.xml index_dept.jsp
+	index_dept.jsp
+	for an alternative) -->
+	<!-- The placeholders are resolved from jdbc.properties through -->
+	<!-- the PropertyPlaceholderConfigurer in applicationContext.xml -->
+
+	<!-- tomcat -->
+		<bean id="DataSource"
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+		<value>java:comp/env/jdbc/aml</value>
+		</property>
+		</bean>
+		
+			<bean id="DataSource_ods" class="org.springframework.jndi.JndiObjectFactoryBean">
+			<property name="jndiName">
+				<value>java:comp/env/jdbc/ods</value>
+			</property>
+		</bean>	
+		
+	<!--<bean id="DataDb2"
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>java:comp/env/jdbc/db2</value>
+		</property>
+	</bean>-->
+	
+	<!-- jboss 
+	<bean id="DataSource"
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>java:jdbc/awp</value>
+		</property>
+	</bean>-->
+	<!-- websphere -->
+	<!-- <bean id="DataSource"
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/awp" />
+		<property name="lookupOnStartup" value="false" />
+		<property name="cache" value="true" />
+		<property name="proxyInterface" value="javax.sql.DataSource" />
+		</bean> -->
+
+	<!-- weblogic -->
+	<!-- <bean id="DataSource"
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+		<value>jdbc/awp</value>
+		</property>
+		<property name="jndiEnvironment">
+		<props>
+		<prop key="java.naming.factory.initial">
+		weblogic.jndi.WLInitialContextFactory
+		</prop>
+		<prop key="java.naming.provider.url">
+		t3://localhost:7001
+		</prop>
+		</props>
+		</property>
+		</bean> -->
+   <bean id="busiConfig"
+		class="com.ist.common.properties.XMLProperties">
+		<constructor-arg>
+			<value>/WEB-INF/business_config.xml</value>
+		</constructor-arg>
+	</bean>
+	<!-- SystemConfig -->
+	<bean id="sysConfig"
+		class="com.ist.common.properties.XMLProperties">
+		<constructor-arg>
+			<value>/WEB-INF/system-config.xml</value>
+		</constructor-arg>
+	</bean>
+	<bean id="load"
+		class="com.ist.common.properties.XMLProperties">
+		<constructor-arg>
+			<value>/WEB-INF/aml_data/load.xml</value>
+		</constructor-arg>
+	</bean>
+	
+	
+	
+
+		<!-- JCS 缓存接口注入 -->
+	<bean id="catchManager" class="com.ist.common.jcs.CatchManager">
+		<constructor-arg index="0" ref="sysConfig" />
+		<constructor-arg index="1" ref="DataSource" />
+		<constructor-arg index="2" >
+		<map>
+			<entry key="oracleQuery_0"  value-ref="DataSource"/>
+			<entry key="db2Query_1"  value-ref="DataSource"/>
+		</map>
+		</constructor-arg>
+	</bean>
+
+	<!-- 生成模板查询结果，使用bean, max_qry_time最大查询日期，单位秒-->
+	<bean id="bdu" class="com.ist.common.db.common.BaseDbUtils">
+		<property name="systemConfig" ref="sysConfig"></property>
+	</bean>
+	
+	<bean id="db2SqlParse" class="com.ist.common.db.results.db2.Db2SqlParse"></bean>
+	<bean id="db2Query_1"
+		class="com.ist.common.db.results.db2.Db2Query">
+		<property name="bdu" ref="bdu"></property>
+		<property name="sp" ref="db2SqlParse"></property>
+		<property name="ds" ref="DataSource"></property>
+	</bean>
+	<bean id="db2Query_2"
+		class="com.ist.common.db.results.db2.Db2Query">
+		<property name="bdu" ref="bdu"></property>
+		<property name="sp" ref="db2SqlParse"></property>
+		<property name="ds" ref="DataSource_ods"></property>
+	</bean>	
+
+	<bean id="oracleSqlParse" class="com.ist.common.db.results.oracle.OracleSqlParse"></bean>
+	<bean id="oracleQuery_0" class="com.ist.common.db.results.oracle.OracleQuery">
+		<property name="bdu" ref="bdu"></property>
+		<property name="sp" ref="oracleSqlParse"></property>
+		<property name="ds" ref="DataSource"></property>
+	</bean>
+	<bean id="oracleQuery_1" class="com.ist.common.db.results.oracle.OracleQuery">
+		<property name="bdu" ref="bdu"></property>
+		<property name="sp" ref="oracleSqlParse"></property>
+		<property name="ds" ref="DataSource_ods"></property>
+	</bean>
+
+	
+
+	<!-- DataExport Template-->
+		<bean id="template" class="com.ist.common.Template">
+		<constructor-arg index="0" ref="sysConfig" />
+		</bean> 
+
+	<!-- Transaction manager for a single JDBC DataSource -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="DataSource" />
+	</bean>
+
+	<!-- SqlMap setup for iBATIS Database Layer -->
+	<!-- 让SqlMapClientFactoryBean支持JDBC事务 -->
+	<bean id="transactionConfigClass" class="java.lang.Class"
+		factory-method="forName">
+		<constructor-arg index="0"
+			value="com.ibatis.sqlmap.engine.transaction.jdbc.JdbcTransactionConfig" />
+	</bean>
+	<bean id="sqlMapClient"
+		class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation">
+			<value>/WEB-INF/ibatis/sql-map-config.xml</value>
+		</property>
+		<property name="transactionConfigClass"
+			ref="transactionConfigClass" />
+		<property name="dataSource" ref="DataSource" />
+	</bean>
+	
+	<bean id="sqlMapClientTemplate"
+		class="org.springframework.orm.ibatis.SqlMapClientTemplate">
+		<property name="sqlMapClient" ref="sqlMapClient" />
+		<property name="dataSource" ref="DataSource" />
+	</bean>
+<!-- DAO基类注入 -->
+	<bean id="baseDAO" abstract="true"
+		class="com.ist.common.base.BaseDAO">
+		<property name="dataSource" ref="DataSource" />
+		<property name="cm" ref="catchManager" />
+		<property name="sqlMapClient" ref="sqlMapClient" />
+	</bean>
+
+	<!-- BO -->
+	<bean id="baseBO" abstract="true"
+		class="com.ist.common.base.BaseBO">
+		<property name="sysConfig" ref="sysConfig" />
+		<property name="cm" ref="catchManager" />
+		<property name="sqlMapClient" ref="sqlMapClient" />
+	</bean>
+	<bean id="seqMgr" class="com.ist.common.sequence.SeqMgr">
+		<property name="sqlMap" ref="sqlMapClient"></property>
+	</bean>
+	 <bean id="operatelog" class="com.ist.common.OperateLog">
+		<property name="cm" ref="catchManager" />
+		<property name="dataSource" ref="DataSource" />
+		<property name="sqlMapClient" ref="sqlMapClient" />
+	</bean>
+	
+	<bean id= "evBean" class="com.ist.common.db.common.EnvirVar">
+		<property name="sysConfig" ref="sysConfig"></property>
+	</bean>
+	
+	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+</beans>

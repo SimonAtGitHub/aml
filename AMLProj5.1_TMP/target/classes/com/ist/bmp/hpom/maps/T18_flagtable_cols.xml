@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T18_flagtable_cols"> 
+  <statement id="getT18_flagtable_colsList" parameterClass="com.ist.bmp.hpom.dto.T18_flagtable_cols" resultClass="com.ist.bmp.hpom.dto.T18_flagtable_cols"> 
+  select domainkey,serverkey,schema_code,tab_code,dskey,col_code,flag_val,upd_val,flag,is_date,is_status,is_order,order_seq,order_type from t18_flagtable_cols 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="domainkey"> 
+    domainkey = #domainkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT18_flagtable_colsListCount" parameterClass="com.ist.bmp.hpom.dto.T18_flagtable_cols" resultClass="int"> 
+  select count(*) from t18_flagtable_cols 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="domainkey"> 
+    domainkey = #domainkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT18_flagtable_cols" parameterClass="com.ist.bmp.hpom.dto.T18_flagtable_cols" resultClass="int"> 
+  insert into T18_flagtable_cols(
+  domainkey,serverkey,schema_code,tab_code,dskey,col_code,flag_val,upd_val,flag,is_date,is_status,is_order,order_seq,order_type
+  ) values(
+  #domainkey#,#serverkey#,#schema_code#,#tab_code#,#dskey#,#col_code#,#flag_val#,#upd_val#,#flag#,#is_date#,#is_status#,#is_order#,#order_seq#,#order_type#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT18_flagtable_cols" parameterClass="com.ist.bmp.hpom.dto.T18_flagtable_cols" resultClass="int"> 
+  update T18_flagtable_cols set 
+  domainkey=#domainkey#,serverkey=#serverkey#,schema_code=#schema_code#,tab_code=#tab_code#,dskey=#dskey#,col_code=#col_code#,flag_val=#flag_val#,upd_val=#upd_val#,flag=#flag#,is_date=#is_date#,is_status=#is_status#,is_order=#is_order#,order_seq=#order_seq#,order_type=#order_type#
+  where domainkey=#domainkey# 
+  </statement> 
+ 
+  <statement id="deleteT18_flagtable_cols" parameterClass="java.lang.String" resultClass="int">
+  delete from T18_flagtable_cols where domainkey=#value# 
+  </statement> 
+ 
+  <statement id="getT18_flagtable_colsDisp" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_flagtable_cols"> 
+  select * from T18_flagtable_cols where domainkey=#value# 
+  </statement> 
+ 
+</sqlMap> 
+

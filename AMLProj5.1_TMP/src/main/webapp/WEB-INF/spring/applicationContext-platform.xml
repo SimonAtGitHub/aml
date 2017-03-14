@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 基础管理平台模块配置 -->
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	
+	<bean id="fileUpload" class="com.ist.common.FileUpload">
+		<property name="sysConfig" ref="sysConfig" />
+	</bean>
+
+	<bean id="t00_roleDAO" parent="baseDAO" class="com.ist.platform.dao.T00_roleDAO" ></bean>
+	<bean id="t00_com_authDAO" parent="baseDAO" class="com.ist.platform.dao.T00_com_authDAO" ></bean>
+	<bean id="t00_organDAO" parent="baseDAO" class="com.ist.platform.dao.T00_organDAO" ></bean>
+	<bean id="t00_role_authDAO" parent="baseDAO" class="com.ist.platform.dao.T00_role_authDAO" ></bean>	
+	<bean id="t00_moduleDAO" parent="baseDAO" class="com.ist.platform.dao.T00_moduleDAO" ></bean>	
+	<bean id="t00_userDAO" parent="baseDAO" class="com.ist.platform.dao.T00_userDAO" ></bean>
+	<bean id="t00_operate_logDAO" parent="baseDAO" class="com.ist.platform.dao.T00_operate_logDAO" ></bean>
+	<bean id="authorizationBO" parent="baseBO" class="com.ist.platform.bo.AuthorizationBO" ></bean>
+	<bean id="t07_Supervise_msgDAO" parent="baseDAO" class="com.ist.aml.information.dao.T07_Supervise_msgDAO" ></bean>	
+	<bean id="t00_system_logDAO" parent="baseDAO" class="com.ist.platform.dao.T00_system_logDAO" ></bean>
+	<bean id="cacheManagerDAO" parent="baseDAO" class="com.ist.platform.dao.Cache_manage_dao" ></bean>		
+	<bean id="taskfactBO" parent="baseBO" class="com.ist.platform.bo.TaskFactBO" ></bean>
+	<bean id="t07_bj_list_type_cdDAO" parent="baseDAO" class="com.ist.platform.dao.T07_BJ_list_type_cdDAO" ></bean>
+	<bean id="t18_taskDAO" parent="baseDAO" class="com.ist.platform.dao.T18_taskDAO" ></bean>
+	<bean id="t18_task_logDAO" parent="baseDAO" class="com.ist.platform.dao.T18_task_logDAO" ></bean>
+	<bean id="t18_server_logDAO" parent="baseDAO" class="com.ist.platform.dao.T18_server_logDAO" ></bean>
+	<bean id="t18_serverDAO" parent="baseDAO" class="com.ist.platform.dao.T18_serverDAO" ></bean>
+	<bean id="t87_tx_cdDAO" parent="baseDAO" class="com.ist.platform.dao.T87_tx_cdDAO" ></bean>
+	<bean id="t87_attention_areaDAO" parent="baseDAO" class="com.ist.platform.dao.T87_attention_areaDAO" ></bean>
+	<bean id="t87_pbc_areaDAO" parent="baseDAO" class="com.ist.platform.dao.T87_PBC_AREADAO" ></bean>
+	<bean id="t07_workdateDAO" parent="baseDAO" class="com.ist.platform.dao.T07_WORKDATEDAO" ></bean>
+	<bean id="t07_defparaDAO" parent="baseDAO" class="com.ist.platform.dao.T07_defparaDAO" ></bean>
+	<bean id="t07_valparaDAO" parent="baseDAO" class="com.ist.platform.dao.T07_valparaDAO" ></bean>
+	<bean id="t07_nbs_templetDAO" parent="baseDAO" class="com.ist.platform.dao.T07_nbs_templetDAO" ></bean>
+	<bean id="t18_config_subjectDAO" parent="baseDAO" class="com.ist.platform.dao.T18_config_subjectDAO" ></bean>
+	<bean id="t87_subjectDAO" parent="baseDAO" class="com.ist.platform.dao.T87_subjectDAO" ></bean>
+	<bean id="para_exportDAO" parent="baseDAO" class="com.ist.platform.dao.Para_exportDAO" ></bean>
+	<bean id="t00_groupDAO" parent="baseDAO" class="com.ist.platform.dao.T00_groupDAO" ></bean>
+	<bean id="t00_group_organDAO" parent="baseDAO" class="com.ist.platform.dao.T00_group_organDAO" ></bean>
+	<bean id="tree_loadDAO" parent="baseDAO" class="com.ist.platform.dao.Tree_loadDAO" ></bean>
+	<bean id="t18_tasklistDAO2" parent="baseDAO" class="com.ist.platform.dao.T18_tasklistDAO" ></bean>
+	<bean id="t07_rule_indicDAO" parent="baseDAO" class="com.ist.platform.dao.T07_rule_indicDAO" ></bean>
+	
+	<bean id="t18_task_depandonDAO2" parent="baseDAO" class="com.ist.platform.dao.T18_task_depandonDAO" ></bean>
+	<bean id="t18_dm_tableDAO2" parent="baseDAO" class="com.ist.platform.dao.T18_dm_tableDAO" ></bean>
+	<bean id="t18_task_typeDAO2" parent="baseDAO" class="com.ist.platform.dao.T18_task_typeDAO" ></bean>
+	<bean id="t18_task_factDAO2" parent="baseDAO" class="com.ist.platform.dao.T18_task_factDAO" ></bean>
+	<bean id="t00_system_paramDAO" parent="baseDAO" class="com.ist.platform.dao.T00_system_paramDAO" ></bean>
+	<bean id="t00_toolDAO" parent="baseDAO" class="com.ist.bmp.platform.dao.T00_toolDAO" ></bean>
+    <bean id="BasicReport"  class="com.ist.aml.pbcreport.bo.BasicReport" >
+   		 <property name="cm" ref="catchManager" />
+    </bean>
+	<bean id="CountryArea"  parent="baseBO"  class="com.ist.aml.pbcreport.bo.CountryArea" > </bean>
+    	<bean id="Tsct" parent="baseBO"   class="com.ist.aml.pbcreport.bo.Tsct" >
+     </bean>
+     <bean id="TransWay"  parent="baseBO"  class="com.ist.aml.pbcreport.bo.TransWay" > </bean>
+     
+ <!-- 
+  <bean id="firstJob" class="com.ist.common.WorkJob">
+      <property name="sysConfig" ref="sysConfig" />
+		<property name="cm" ref="catchManager" />
+		<property name="sqlMap" ref="sqlMapClient" />
+  </bean>
+  <bean id="Job" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+      <property name="targetObject">
+          <ref local="firstJob"/>
+      </property>
+      <property name="targetMethod">
+         <value>executeWork</value>
+     </property>
+ </bean>
+
+ <bean id="cronTrigger_1" class="org.springframework.scheduling.quartz.CronTriggerBean"> 
+     <property name="jobDetail"> 
+     <ref  bean="Job"/> 
+     </property>
+     <property name="cronExpression">
+         <value>0 10 18 * * ?</value>
+     </property>
+ </bean>
+ 
+ 
+   <bean id="secondJob" class="com.ist.common.MyJob_UpdateCase">
+		<property name="sqlMap" ref="sqlMapClient" />
+  </bean>
+  
+   <bean id="jobDetail_2" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+      <property name="targetObject">
+          <ref local="secondJob"/>
+      </property>
+      <property name="targetMethod">
+         <value>executeCase</value>
+     </property>
+ </bean>
+
+ <bean id="cronTrigger_2"  class="org.springframework.scheduling.quartz.CronTriggerBean"> 
+     <property name="jobDetail"> 
+     <ref  bean="jobDetail_2"/> 
+     </property>
+     <property name="cronExpression">
+         <value>0 27 18 * * ?</value>
+     </property>
+ </bean>
+
+ <bean autowire="no"  class="org.springframework.scheduling.quartz.SchedulerFactoryBean"> 
+    <property name="triggers"> 
+     <list>
+        <ref local="cronTrigger_1"/>
+        <ref local="cronTrigger_2" />
+        
+     </list>
+     </property>
+ </bean>
+  -->  
+ 
+
+	
+	
+	
+</beans>

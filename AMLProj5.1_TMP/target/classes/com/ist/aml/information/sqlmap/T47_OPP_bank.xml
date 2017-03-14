@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T47_OPP_bank">
+	<statement id="getT47_OPP_bankList"
+		parameterClass="com.ist.aml.information.dto.T47_OPP_bank"
+		resultClass="com.ist.aml.information.dto.T47_OPP_bank">
+		SELECT
+		OPP_ORGANKEY,OPP_ORGNAME,OPP_CODE_TYPE_CD,OPP_COUNTRY,OPP_AREA,FLAG
+		FROM T47_OPP_BANK
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="opp_organkey_s">
+				OPP_ORGANKEY LIKE #opp_organkey_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_code_type_cd_s">
+				OPP_CODE_TYPE_CD = #opp_code_type_cd_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_orgname_s">
+				OPP_ORGNAME LIKE #opp_orgname#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_country_s">
+				OPP_COUNTRY = #opp_country_s#
+			</isNotEmpty>
+		</dynamic>
+		<isNotEmpty property="orderby">
+			<isEqual property="orderby" compareValue="1">
+				ORDER BY OPP_ORGANKEY
+			</isEqual>
+			<isEqual property="orderby" compareValue="2">
+				ORDER BY OPP_ORGNAME
+			</isEqual>
+			<isEqual property="orderby" compareValue="3">
+				ORDER BY OPP_CODE_TYPE_CD
+			</isEqual>
+			<isEqual property="orderby" compareValue="4">
+				ORDER BY OPP_COUNTRY
+			</isEqual>
+		</isNotEmpty>
+		<isNotEmpty property="orderby">
+			<isNotEmpty property="order">
+				<isEqual property="order" compareValue="1"></isEqual>
+				<isEqual property="order" compareValue="2">
+					DESC
+				</isEqual>
+			</isNotEmpty>
+		</isNotEmpty>
+	</statement>
+
+	 <statement id="getT47_OPP_bankList1"
+		parameterClass="com.ist.aml.information.dto.T47_OPP_bank"
+		resultClass="com.ist.aml.information.dto.T47_OPP_bank">
+  select a.unionorgkey,a.union_name,a.union_type,a.country_cd,a.city_cd
+  from(		
+	SELECT OPP_ORGANKEY as UNIONORGKEY,OPP_ORGNAME as
+	UNION_NAME,OPP_CODE_TYPE_CD as UNION_TYPE,OPP_COUNTRY as COUNTRY_CD
+	,OPP_AREA as CITY_CD FROM T47_OPP_BANK
+	UNION 
+	SELECT UNIONORGKEY as UNIONORGKEY,UNION_NAME as
+	UNION_NAME,UNION_TYPE as UNION_TYPE,COUNTRY_CD as COUNTRY_CD
+	,CITY_CD as CITY_CD FROM t87_union) a
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="unionorgkey">
+				a.UNIONORGKEY LIKE #unionorgkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="union_name">
+				a.UNION_NAME LIKE #union_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="union_type">
+				a.UNION_TYPE = #union_type#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="country_cd">
+				a.COUNTRY_CD = #country_cd#
+			</isNotEmpty>
+		</dynamic>
+		<isNotEmpty property="orderby">
+			<isEqual property="orderby" compareValue="1">
+				ORDER BY a.UNIONORGKEY
+			</isEqual>
+			<isEqual property="orderby" compareValue="2">
+				ORDER BY a.UNION_NAME
+			</isEqual>
+			<isEqual property="orderby" compareValue="3">
+				ORDER BY a.UNION_TYPE
+			</isEqual>
+			<isEqual property="orderby" compareValue="4">
+				ORDER BY a.COUNTRY_CD
+			</isEqual>
+		</isNotEmpty>
+		<isNotEmpty property="orderby">
+			<isNotEmpty property="order">
+				<isEqual property="order" compareValue="1"></isEqual>
+				<isEqual property="order" compareValue="2">
+					DESC
+				</isEqual>
+			</isNotEmpty>
+		</isNotEmpty>
+	</statement> 
+
+	<statement id="getT47_OPP_bankListCount"
+		parameterClass="com.ist.aml.information.dto.T47_OPP_bank"
+		resultClass="int">
+	SELECT COUNT(UNIONORGKEY) FROM
+	(SELECT OPP_ORGANKEY as UNIONORGKEY,OPP_ORGNAME as
+	UNION_NAME,OPP_CODE_TYPE_CD
+	as UNION_TYPE,OPP_COUNTRY as COUNTRY_CD
+	,OPP_AREA as CITY_CD FROM
+	T47_OPP_BANK
+	UNION 
+	SELECT UNIONORGKEY as UNIONORGKEY,UNION_NAME as
+	UNION_NAME,UNION_TYPE as UNION_TYPE,COUNTRY_CD as COUNTRY_CD
+	,CITY_CD as
+	CITY_CD FROM t87_union)a
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="unionorgkey">
+				a.UNIONORGKEY LIKE #unionorgkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="union_name">
+				a.UNION_NAME LIKE #union_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="union_type">
+				a.UNION_TYPE = #union_type#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="country_cd">
+				a.COUNTRY_CD = #country_cd#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT47_OPP_bankListCount1"
+		parameterClass="com.ist.aml.information.dto.T47_OPP_bank"
+		resultClass="int">
+		SELECT COUNT(OPP_ORGANKEY) FROM T47_OPP_BANK
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="unionorgkey">
+				OPP_ORGANKEY LIKE #unionorgkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="union_name">
+				OPP_ORGNAME LIKE #union_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="union_type">
+				OPP_CODE_TYPE_CD = #union_type#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="country_cd">
+				OPP_COUNTRY = #country_cd#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="getT87_UnionListCount"
+		parameterClass="com.ist.aml.information.dto.T47_OPP_bank"
+		resultClass="int">
+		SELECT COUNT(UNIONORGKEY) FROM T87_UNION
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="unionorgkey">
+				UNIONORGKEY LIKE #unionorgkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="union_name">
+				UNION_NAME LIKE #union_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="union_type">
+				UNION_TYPE = #union_type#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="country_cd">
+				COUNTRY_CD = #country_cd#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="getT87_UnionList"
+		parameterClass="com.ist.aml.information.dto.T47_OPP_bank"
+		resultClass="com.ist.aml.information.dto.T47_OPP_bank">
+		SELECT UNIONORGKEY,UNION_NAME,UNION_TYPE,COUNTRY_CD ,CITY_CD FROM T87_UNION
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="unionorgkey">
+				UNIONORGKEY LIKE #unionorgkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="union_name">
+				UNION_NAME LIKE #union_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="union_type">
+				UNION_TYPE = #union_type#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="country_cd">
+				COUNTRY_CD = #country_cd#
+			</isNotEmpty>
+		</dynamic>
+		<isNotEmpty property="orderby">
+			<isEqual property="orderby" compareValue="1">
+				ORDER BY UNIONORGKEY
+			</isEqual>
+			<isEqual property="orderby" compareValue="2">
+				ORDER BY UNION_NAME
+			</isEqual>
+			<isEqual property="orderby" compareValue="3">
+				ORDER BY UNION_TYPE
+			</isEqual>
+			<isEqual property="orderby" compareValue="4">
+				ORDER BY COUNTRY_CD
+			</isEqual>
+		</isNotEmpty>
+		<isNotEmpty property="orderby">
+			<isNotEmpty property="order">
+				<isEqual property="order" compareValue="1"></isEqual>
+				<isEqual property="order" compareValue="2">
+					DESC
+				</isEqual>
+			</isNotEmpty>
+		</isNotEmpty>
+	</statement>
+	<statement id="insertT47_OPP_bank"
+		parameterClass="com.ist.aml.information.dto.T47_OPP_bank"
+		resultClass="int">
+		INSERT INTO T47_OPP_BANK(
+		OPP_ORGANKEY,OPP_ORGNAME,OPP_CODE_TYPE_CD,OPP_COUNTRY,OPP_AREA )
+		VALUES(
+		#opp_organkey#,#opp_orgname#,#opp_code_type_cd#,#opp_country#,#opp_area#
+		)
+	</statement>
+
+<statement id="insertT847_Union"
+		parameterClass="com.ist.aml.information.dto.T47_OPP_bank"
+		resultClass="int">
+		INSERT INTO T87_UNION(
+		UNIONORGKEY,UNION_NAME,UNION_TYPE,COUNTRY_CD,CITY_CD )
+		VALUES(
+		#unionorgkey#,#union_name#,#union_type#,#country_cd#,#city_cd#
+		)
+	</statement>
+
+	<statement id="modifyT47_OPP_bank"
+		parameterClass="com.ist.aml.information.dto.T47_OPP_bank"
+		resultClass="int">
+		UPDATE T47_OPP_BANK SET
+		OPP_ORGANKEY=#opp_organkey#,OPP_ORGNAME=#opp_orgname#
+		,OPP_COUNTRY=#opp_country#,OPP_AREA=#opp_area#
+		<isNotEmpty prepend="" property="opp_code_type_cd">
+				,OPP_CODE_TYPE_CD=#opp_code_type_cd#
+		</isNotEmpty>
+		WHERE OPP_ORGANKEY=#opp_organkey#
+	</statement>
+	
+	<statement id="modifyT87_Union"
+		parameterClass="com.ist.aml.information.dto.T47_OPP_bank"
+		resultClass="int">
+		UPDATE T87_UNION SET
+		UNIONORGKEY=#unionorgkey#,UNION_NAME=#union_name#
+		,COUNTRY_CD=#country_cd#,CITY_CD=#city_cd#
+		<isNotEmpty prepend="" property="union_type">
+				,UNION_TYPE=#union_type#
+		</isNotEmpty>
+		WHERE UNIONORGKEY=#unionorgkey# AND UNION_TYPE=#union_type#
+	</statement>
+
+	<statement id="deleteT47_OPP_bank" parameterClass="java.lang.String"
+		resultClass="int">
+		DELETE FROM T47_OPP_BANK WHERE OPP_ORGANKEY=#value#
+	</statement>
+
+	<statement id="deleteT87_Union" parameterClass="com.ist.aml.information.dto.T47_OPP_bank"
+		resultClass="int">
+		DELETE FROM T87_UNION WHERE UNIONORGKEY=#unionorgkey# AND UNION_TYPE=#union_type#
+	</statement>
+
+	<statement id="getT47_OPP_bankDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.information.dto.T47_OPP_bank">
+		SELECT * FROM T47_OPP_BANK WHERE OPP_ORGANKEY=#value#
+	</statement>
+<statement id="getT87_UnionDisp"
+		parameterClass="com.ist.aml.information.dto.T47_OPP_bank"
+		resultClass="com.ist.aml.information.dto.T47_OPP_bank">
+		SELECT UNIONORGKEY,UNION_NAME,UNION_TYPE,COUNTRY_CD ,CITY_CD FROM T87_UNION WHERE UNIONORGKEY=#unionorgkey# 
+		<dynamic>
+		<isNotEmpty prepend="AND" property="union_type">
+				UNION_TYPE=#union_type#
+		</isNotEmpty>
+	
+		</dynamic>
+	</statement>
+	
+
+</sqlMap>
+

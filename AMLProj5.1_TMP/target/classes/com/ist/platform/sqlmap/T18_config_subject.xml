@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T18_config_subject"> 
+  <statement id="getT18_config_subjectList" parameterClass="com.ist.platform.dto.T18_config_subject" resultClass="com.ist.platform.dto.T87_subject"> 
+  SELECT T18.SUBJECT_NUM,T18.SUBJECT_NAME,T18.SUBJECT_FLAG FROM T18_CONFIG_SUBJECT T18,T87_SUBJECT T87 WHERE T87.SUBJECTNUM=T18.SUBJECT_NUM
+  <dynamic prepend="">
+    <isNotEmpty prepend="AND" property="subject_flag">
+    T18.SUBJECT_FLAG = #subject_flag#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="subject_name">
+    T18.SUBJECT_NAME = #subject_name#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="subject_num">
+    T18.SUBJECT_NUM = #subject_num#
+    </isNotEmpty>
+   </dynamic> 
+   </statement> 
+ 
+  <statement id="getT18_config_subjectListCount" parameterClass="com.ist.platform.dto.T18_config_subject" resultClass="int"> 
+  SELECT COUNT(*) FROM T18_CONFIG_SUBJECT T18,T87_SUBJECT T87 WHERE  T87.SUBJECTNUM=T18.SUBJECT_NUM
+    <dynamic prepend="">
+    <isNotEmpty prepend="AND" property="subject_flag">
+    T18.SUBJECT_FLAG = #subject_flag#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="subject_name">
+    T18.SUBJECT_NAME = #subject_name#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="subject_num">
+    T18.SUBJECT_NUM = #subject_num#
+    </isNotEmpty>
+   </dynamic> 
+   </statement> 
+ 
+  <statement id="insertT18_config_subject" parameterClass="com.ist.platform.dto.T18_config_subject" resultClass="int"> 
+  INSERT INTO T18_CONFIG_SUBJECT(
+  SUBJECT_NUM,SUBJECT_NAME,SUBJECT_FLAG
+  ) VALUES(
+  #subject_num#,#subject_name#,#subject_flag#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT18_config_subject" parameterClass="com.ist.platform.dto.T18_config_subject" resultClass="int"> 
+  UPDATE T18_CONFIG_SUBJECT SET 
+  SUBJECT_NUM=#subject_num#,SUBJECT_NAME=#subject_name#,SUBJECT_FLAG=#subject_flag#
+  WHERE SUBJECT_NUM=#subject_num# 
+  </statement> 
+ 
+  <statement id="deleteT18_config_subject" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T18_CONFIG_SUBJECT WHERE SUBJECT_NUM=#subjectnum# 
+  </statement> 
+  
+   <statement id="deleteT18_config_subject_byflag" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T18_CONFIG_SUBJECT WHERE SUBJECT_FLAG=#subject_flag# 
+  </statement> 
+ 
+  <statement id="getT18_config_subjectDisp" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T18_config_subject"> 
+  SELECT * FROM T18_CONFIG_SUBJECT WHERE SUBJECT_NUM=#value# 
+  </statement> 
+ 
+</sqlMap> 
+

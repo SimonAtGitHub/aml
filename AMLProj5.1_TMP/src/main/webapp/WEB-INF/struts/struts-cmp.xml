@@ -1,0 +1,743 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+  <data-sources />
+   <form-beans>
+		<form-bean name="T01_mt_downloadActionForm" type="com.ist.common.metadata.controller.T01_mt_downloadActionForm" />
+     
+   		<form-bean name="t01_workdateActionForm" type="com.ist.common.workdate.controller.T01_workdateActionForm"/>
+	    <form-bean name="t01_attachmentActionForm" type="com.ist.common.attachment.controller.T01_attachmentActionForm"/>
+	    <form-bean name="t01_questionActionForm" type="com.ist.common.prowcorr.controller.T01_questionActionForm"/>
+		<form-bean name="T01_db_linkActionForm" type="com.ist.common.metadata.controller.T01_db_linkActionForm"/>
+  		<form-bean name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyActionForm"/>
+        <form-bean name="T01_mt_col_proActionForm" type="com.ist.common.metadata.controller.T01_mt_col_proActionForm"/>
+        <form-bean name="t01_smsActionForm" type="com.ist.common.message.controller.T01_smsActionForm"/>
+		<form-bean name="t01_qassignActionForm" type="com.ist.common.prowcorr.controller.T01_qassignActionForm"/> 
+		<form-bean name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackActionForm"/> 
+		<form-bean name="t01_mt_authActionForm" type="com.ist.common.metadata.controller.T01_mt_authActionForm"/>
+		<form-bean name="t01_custom_dataActionForm" type="com.ist.common.metadata.controller.T01_custom_dataActionForm"/> 
+		<form-bean name="t01_mt_shareActionForm" type="com.ist.common.metadata.controller.T01_mt_shareActionForm"/>
+		
+	</form-beans>
+<action-mappings>
+	<!-- question -->
+	<action path="/getT01_question_list" parameter="getT01_questionList" name="t01_questionActionForm" type="com.ist.common.prowcorr.controller.T01_questionAction" validate="false" scope="request">
+		<forward name="success" path="/question/t01_question_list_locate.jsp"/>		
+	</action>
+	<action path="/t01_question/t01_question_search" parameter="searchT01_question" name="t01_questionActionForm" type="com.ist.common.prowcorr.controller.T01_questionAction" validate="false" scope="request">
+		<forward name="success" path="/question/t01_question_search.jsp"/>
+		<forward name="failure" path="/t01_question/t01_question_list.do"/>
+	</action>
+	<action path="/t01_question/t01_question_list" parameter="getT01_questionList" name="t01_questionActionForm" type="com.ist.common.prowcorr.controller.T01_questionAction" validate="false" scope="request">
+		<forward name="success" path="/question/t01_question_list.jsp"/>
+	</action>
+	<action path="/t01_question/t01_question_add" parameter="addT01_question" name="t01_questionActionForm" type="com.ist.common.prowcorr.controller.T01_questionAction" validate="false" scope="request">
+		<forward name="success" path="/question/t01_question_add.jsp"/>
+		<forward name="failure" path="/t01_question/t01_question_list.do"/>
+	</action>
+	<action path="/t01_question/t01_question_add_do" parameter="addT01_questionDo" name="t01_questionActionForm" type="com.ist.common.prowcorr.controller.T01_questionAction" validate="false" scope="request">
+		<forward name="success" path="/t01_question/t01_question_list.do"/>
+		<forward name="failure" path="/t01_question/t01_question_add.do"/>
+	</action>
+	<action path="/t01_question/t01_question_modify" parameter="modifyT01_question" name="t01_questionActionForm" type="com.ist.common.prowcorr.controller.T01_questionAction" validate="false" scope="request">
+		<forward name="success" path="/question/t01_question_modify.jsp"/>
+		<forward name="failure" path="/t01_question/t01_question_list.do"/>
+	</action>
+	<action path="/t01_question/t01_question_modify_do" parameter="modifyT01_questionDo" name="t01_questionActionForm" type="com.ist.common.prowcorr.controller.T01_questionAction" validate="false" scope="request">
+		<forward name="success" path="/t01_question/t01_question_list.do"/>
+		<forward name="failure" path="/t01_question/t01_question_modify.do"/>
+	</action>
+	<action path="/t01_question/t01_question_delete_do" parameter="deleteT01_questionDo" name="t01_questionActionForm" type="com.ist.common.prowcorr.controller.T01_questionAction" validate="false" scope="request">
+		<forward name="success" path="/t01_question/t01_question_list.do"/>
+		<forward name="failure" path="/t01_question/t01_question_list.do"/>
+	</action>
+	<action path="/t01_question/t01_question_disp" parameter="getT01_questionDisp" name="t01_questionActionForm" type="com.ist.common.prowcorr.controller.T01_questionAction" validate="false" scope="request">
+		<forward name="success" path="/question/t01_question_disp.jsp"/>	
+	</action>
+	<action path="/t01_question/t01_question_disp_trace" parameter="getT01_questionDisp" name="t01_questionActionForm" type="com.ist.common.prowcorr.controller.T01_questionAction" validate="false" scope="request">
+		<forward name="success" path="/question/t01_question_disp_trace.jsp"/>
+	</action>
+	<action path="/t01_question/t01_question_publish_do" parameter="publishT01_questionDo" name="t01_questionActionForm" type="com.ist.common.prowcorr.controller.T01_questionAction" validate="false" scope="request">
+		<forward name="success" path="/t01_question/t01_question_list.do"/>
+		<forward name="failure" path="/t01_question/t01_question_list.do"/>
+	</action>
+	<!-- question_search -->
+	<action path="/t01_question/t01_question_search_list" parameter="getT01_question_search_List" name="t01_questionActionForm" type="com.ist.common.prowcorr.controller.T01_questionAction" validate="false" scope="request">
+		<forward name="success" path="/question/t01_question_search_list.jsp"/>
+	</action>
+	<action path="/t01_question/t01_search_question_disp" parameter="getT01_search_question_disp" name="t01_questionActionForm" type="com.ist.common.prowcorr.controller.T01_questionAction" validate="false" scope="request">
+		<forward name="success" path="/question/t01_search_question_disp.jsp"/>
+	</action>
+    
+    <!-- attachment -->
+    <action path="/attachment/t01_attachment_list" parameter="getT01_attachmentList" name="t01_attachmentActionForm" type="com.ist.common.attachment.controller.T01_attachmentAction" validate="false" scope="request">
+      <forward name="success" path="/attachment/filetest.jsp"/>
+    </action>
+    <action path="/attachment/t01_attachment_add" parameter="uploadT01_attachment" name="t01_attachmentActionForm" type="com.ist.common.attachment.controller.T01_attachmentAction" validate="false" scope="request">
+      <forward name="success" path="/attachment/attach_add.jsp"/>
+      <forward name="failure" path="/attachment/filetest.jsp"/>
+    </action>
+     <action path="/attachment/t01_attachment_addType" parameter="uploadT01_attachmentType" name="t01_attachmentActionForm" type="com.ist.common.attachment.controller.T01_attachmentAction" validate="false" scope="request">
+      <forward name="success" path="/attachment/attach_add_type.jsp"/>
+      <forward name="failure" path="/attachment/filetest.jsp"/>
+    </action>
+    <action path="/attachment/t01_attachment_add_do" parameter="uploadT01_attachmentDo" name="t01_attachmentActionForm" type="com.ist.common.attachment.controller.T01_attachmentAction" validate="false" scope="request">
+      <forward name="success" path="/attachment/attach_add.jsp"/>
+      <forward name="failure" path="/attachment/attach_add.jsp"/>
+    </action>
+     <action path="/attachment/t01_attachment_type_add_do" parameter="uploadT01_attachmentDo" name="t01_attachmentActionForm" type="com.ist.common.attachment.controller.T01_attachmentAction" validate="false" scope="request">
+      <forward name="success" path="/attachment/attach_add_type.jsp"/>
+      <forward name="failure" path="/attachment/attach_add_type.jsp"/>
+    </action>
+    <action path="/attachment/t01_attachment_disp" parameter="getT01_attachmentDisp" name="t01_attachmentActionForm" type="com.ist.common.attachment.controller.T01_attachmentAction" validate="false" scope="request">
+      <forward name="success" path="/attachment/attach_disp.jsp"/>
+    </action>
+    <action path="/attachment/t01_attachment_control" parameter="getT01_attachmentControl" name="t01_attachmentActionForm" type="com.ist.common.attachment.controller.T01_attachmentAction" validate="false" scope="request">
+      <forward name="success" path="/attachment/attachcontrol.jsp"/>
+      <forward name="successNew" path="/attachment/attachcontrol_others.jsp"/>
+    </action>
+    <action path="/attachment/t01_attachment_save" parameter="getT01_attachmentSave"  type="com.ist.common.attachment.controller.T01_attachmentAction" validate="false" scope="request">
+    </action>
+    <action path="/attachment/t01_attachment_read" parameter="getT01_attachmentRead"  type="com.ist.common.attachment.controller.T01_attachmentAction" validate="false" scope="request">
+    </action>
+    <action path="/attachment/close_attachcontrol" parameter="closeT01_attachControl"  type="com.ist.common.attachment.controller.T01_attachmentAction" validate="false" scope="request">
+      <forward name="success" path="/attachment/close_attachcontrol.jsp"/>
+      <forward name="failure" path="/attachment/close_attachcontrol.jsp"/>
+    </action>
+    <!-- end -->
+    
+    <!-- workdate set start   -->
+      <action path="/platform/workdate/t01_workdate_list" parameter="getT01_workdateList" name="t01_workdateActionForm" type="com.ist.common.workdate.controller.T01_workdateAction"  validate="false" scope="request">
+         <forward name="success" path="/workdate/holiday_calendar.jsp"/>
+        </action>
+        <action path="/platform/workdate/t01_workdate_modify_do" parameter="modifyT01_workdateDo" name="t01_workdateActionForm" type="com.ist.common.workdate.controller.T01_workdateAction" validate="false" scope="request">
+         <forward name="success" path="/platform/workdate/t01_workdate_list.do?newsearchflag=3"/>
+         <forward name="failure" path="/platform/workdate/t01_workdate_list.do"/>
+        </action>
+     <!-- workdate set end   -->
+     
+     
+      <!-- t01_metadata_db_link start-->
+    <action path="/metadata/dblink/metadata_link_list" parameter="getT01_db_linkList" name="T01_db_linkActionForm" type="com.ist.common.metadata.controller.T01_db_linkAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/dblink/metadata_link_list.jsp"/>
+    </action>
+    <action path="/metadata/dblink/metadata_link_add" parameter="addT01_db_link" name="T01_db_linkActionForm" type="com.ist.common.metadata.controller.T01_db_linkAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/dblink/metadata_link_add.jsp"/>
+      <forward name="failure" path="/metadata/dblink/metadata_link_list.do"/>
+    </action>
+    <action path="/metadata/dblink/metadata_link_add_do" parameter="addT01_db_linkDo" name="T01_db_linkActionForm" type="com.ist.common.metadata.controller.T01_db_linkAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/dblink/metadata_link_list.do"/>
+      <forward name="failure" path="/metadata/dblink/metadata_link_add.do"/>
+    </action>
+    <action path="/metadata/dblink/metadata_link_modify" parameter="modifyT01_db_link" name="T01_db_linkActionForm" type="com.ist.common.metadata.controller.T01_db_linkAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/dblink/metadata_link_modify.jsp"/>
+      <forward name="failure" path="/metadata/dblink/metadata_link_list.do"/>
+    </action>
+    <action path="/metadata/dblink/metadata_link_modify_do" parameter="modifyT01_db_linkDo" name="T01_db_linkActionForm" type="com.ist.common.metadata.controller.T01_db_linkAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/dblink/metadata_link_list.do"/>
+      <forward name="failure" path="/metadata/dblink/metadata_link_modify.jsp"/>
+    </action>
+    <action path="/metadata/dblink/metadata_link_delete_logic_do" parameter="deleteT01_db_linkLogicDo" name="T01_db_linkActionForm" type="com.ist.common.metadata.controller.T01_db_linkAction" validate="false" scope="request">
+    <forward name="success" path="/metadata/dblink/metadata_link_list.do"/>
+        <forward name="success" path="/metadata/dblink/metadata_link_list.do"/>
+    </action>
+    <action path="/metadata/dblink/metadata_link_disp" parameter="getT01_db_linkDisp" name="T01_db_linkActionForm" type="com.ist.common.metadata.controller.T01_db_linkAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/dblink/metadata_link_disp.jsp"/>
+    </action>
+    <!-- t01_metadata_link end-->
+
+
+     <!-- br_metadata_table start-->
+    <action path="/metadata/table/metadata_tab_index" parameter="getT01_mt_propertyIndex" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+     <forward name="success" path="/metadata/table/metadata_tab_index.jsp"/>
+    </action>
+    <action path="/metadata/table/metadata_tab_list" parameter="getT01_mt_propertyList" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/table/metadata_tab_list.jsp"/>
+    </action>
+    <action path="/metadata/table/metadata_tab_add" parameter="addT01_mt_property" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/table/metadata_tab_add.jsp"/>
+      <forward name="failure" path="/metadata/table/metadata_tab_list.do"/>
+    </action>
+    <action path="/metadata/table/metadata_tab_add_do" parameter="addT01_mt_propertyDo" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/table/metadata_tab_list.do"/>
+      <forward name="failure" path="/metadata/table/metadata_tab_add.do"/>
+    </action>
+    <action path="/metadata/table/metadata_tab_location_do" parameter="locationT01_mt_propertyList" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/table/metadata_tab_list_location.jsp"/>
+    </action>
+    <action path="/metadata/table/metadata_tabByKind_location_do" parameter="locationT01_mt_propertyByKindList" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/table/metadata_tabByKind_list_location.jsp"/>
+    </action>
+    <action path="/metadata/table/metadata_tab_modify" parameter="modifyT01_mt_property" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/table/metadata_tab_modify.jsp"/>
+      <forward name="failure" path="/metadata/table/metadata_tab_list.do"/>
+    </action>
+    <action path="/metadata/table/metadata_tab_modify_do" parameter="modifyT01_mt_propertyDo" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/table/metadata_tab_list.do"/>
+      <forward name="failure" path="/metadata/table/metadata_tab_modify.do"/>
+    </action>
+    <action path="/metadata/table/metadata_tab_delete_logic_do" parameter="deleteT01_mt_propertyLogicDo" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+    <forward name="success" path="/metadata/table/metadata_tab_list.do"/>
+        <forward name="failure" path="/metadata/table/metadata_tab_list.do"/>
+    </action>
+    <action path="/metadata/table/metadata_tab_batch_add1" parameter="addT01_mt_propertyBatch1" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/table/metadata_tab_batch_add1.jsp"/>
+      <forward name="failure" path="/metadata/table/metadata_tab_list.do"/>
+    </action>
+    <action path="/metadata/table/metadata_tab_batch_add2" parameter="addT01_mt_propertyBatch2" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/table/metadata_tab_batch_add2.jsp"/>
+      <forward name="failure" path="/metadata/table/metadata_tab_batch_add1.do"/>
+    </action>
+    <action path="/metadata/table/metadata_tab_batch_add_do" parameter="addT01_mt_propertyBatchDo" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/table/metadata_tab_list.do"/>
+      <forward name="failure" path="/metadata/table/metadata_tab_batch_add2.do"/>
+    </action>
+    
+
+ <!-- br_metadata_table end-->
+ 
+<!-- data_auth_manage start dave-->
+	<action path="/metadata/dataauth/customdata_manage_list" parameter="getT01_cdata_manageList" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/dataauth/customdata_mng_list.jsp"/>
+    </action>
+    <action path="/metadata/dataauth/customdata_manage_delete_logic_do" parameter="deleteT01_mt_proCusdataLogicDo" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+    	<forward name="success" path="/metadata/dataauth/customdata_manage_list.do"/>
+        <forward name="failure" path="/metadata/dataauth/customdata_manage_list.do"/>
+    </action>
+    <action path="/metadata/dataauth/customdata_cols_list" parameter="getCusdata_colsList" name="T01_mt_col_proActionForm" type="com.ist.common.metadata.controller.T01_mt_col_proAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/dataauth/customdata_cols_list.jsp"/>
+      <forward name="failure" path="/metadata/dataauth/customdata_manage_list.do"/>
+    </action>
+    <action path="/metadata/dataauth/customdata_colsdata_list" parameter="getCusdata_colsdataList" name="T01_mt_col_proActionForm" type="com.ist.common.metadata.controller.T01_mt_col_proAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/dataauth/customdata_colsdata_list.jsp"/>
+      <forward name="failure" path="/metadata/dataauth/customdata_manage_list.do"/>
+      <forward name="failure_busi" path="/metadata/dataauth/busidata_mng_list.do"/>
+      <forward name="failure_share" path="/metadata/dataauth/sharedata_mng_list.do"/>
+    </action>
+    
+    <action path="/metadata/dataauth/t01_mt_auth_groupList" parameter="getT01_mt_auth_groupList" name="t01_mt_authActionForm" type="com.ist.common.metadata.controller.T01_mt_authAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/dataauth/t01_mt_auth_groupList.jsp"/>
+    </action>
+    <action path="/metadata/dataauth/t01_mt_auth_assignshowList" parameter="getT01_mt_auth_assignshowList" name="t01_mt_authActionForm" type="com.ist.common.metadata.controller.T01_mt_authAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/dataauth/t01_mt_auth_assignshowList.jsp"/>
+    </action>
+    <action path="/metadata/dataauth/t01_mt_auth_assignAdd" parameter="t01_mt_auth_assignAdd" name="t01_mt_authActionForm" type="com.ist.common.metadata.controller.T01_mt_authAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/dataauth/t01_mt_auth_assign_add.jsp"/>
+      <forward name="failure" path="/metadata/dataauth/t01_mt_auth_groupList.do"/>
+    </action>
+    <action path="/metadata/dataauth/t01_mt_auth_assignshowAdd_do" parameter="t01_mt_auth_assignshowAdd_do" name="t01_mt_authActionForm" type="com.ist.common.metadata.controller.T01_mt_authAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/dataauth/t01_mt_auth_groupList.do?newsearchflag=1"/>
+      <forward name="failure" path="/metadata/dataauth/t01_mt_auth_assignAdd.do"/>
+    </action>
+	<action path="/metadata/dataauth/t01_mt_auth_assigndelete_do" parameter="deleteT01_mt_auth_assign_do" name="t01_mt_authActionForm" type="com.ist.common.metadata.controller.T01_mt_authAction" validate="false" scope="request">
+    	<forward name="success" path="/metadata/dataauth/t01_mt_auth_groupList.do?newsearchflag=1"/>
+        <forward name="failure" path="/metadata/dataauth/t01_mt_auth_groupList.do"/>
+    </action>
+	<action path="/metadata/dataauth/t01_mt_auth_assignModify" parameter="t01_mt_auth_assignModify" name="t01_mt_authActionForm" type="com.ist.common.metadata.controller.T01_mt_authAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/dataauth/t01_mt_auth_assign_modify.jsp"/>
+      <forward name="failure" path="/metadata/dataauth/t01_mt_auth_groupList.do"/>
+    </action>
+    <action path="/metadata/dataauth/t01_mt_auth_assignsModify_do" parameter="t01_mt_auth_assignModify_do" name="t01_mt_authActionForm" type="com.ist.common.metadata.controller.T01_mt_authAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/dataauth/t01_mt_auth_groupList.do?newsearchflag=1"/>
+      <forward name="failure" path="/metadata/dataauth/t01_mt_auth_assignModify.do"/>
+    </action>
+    
+    <action path="/metadata/dataauth/busidata_mng_list" parameter="getBusidataMngList" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/dataauth/customdata_mng_list.jsp"/>
+    </action>
+    <action path="/metadata/dataauth/sharedata_mng_list" parameter="getSharedataMngList" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/dataauth/customdata_mng_list.jsp"/>
+    </action>
+    <action path="/metadata/dataauth/t01_mt_auth_assignback" parameter="t01_mt_auth_assignback" name="t01_mt_authActionForm" type="com.ist.common.metadata.controller.T01_mt_authAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/dataauth/t01_mt_auth_groupList.do"/>
+    </action>
+    <action path="/metadata/dataauth/t01_mt_propertyDataExport" parameter="exprotT01_mt_propertyData" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+    	<forward name="failure_busi" path="/metadata/dataauth/busidata_mng_list.do"/>
+    	<forward name="failure_cust" path="/metadata/custom/custom_data_list.do"/>
+    	<forward name="failure_share" path="/metadata/dataauth/sharedata_mng_list.do"/>
+    </action>
+    <action path="/metadata/dataauth/my_sharedata_list" parameter="my_sharedata_list" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/dataauth/my_sharedata_list.jsp"/>
+      <forward name="failure" path="/metadata/dataauth/my_sharedata_list.jsp"/>
+    </action>    
+     <action path="/metadata/dataauth/cancel_sharedata" parameter="cancel_sharedata" name="t01_mt_shareActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/dataauth/my_sharedata_list.do"/>
+      <forward name="failure" path="/metadata/dataauth/my_sharedata_list.jsp"/>
+    </action>
+    <action path="/metadata/dataauth/collect_data" parameter="collect_data" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/dataauth/busidata_mng_list.do"/>
+      <forward name="failure" path="/metadata/dataauth/customdata_mng_list.jsp"/>
+    </action>
+<!-- data_auth_manage end-->
+
+
+ <!-- br_metadata_tab_cols start-->
+    <action path="/metadata/column/metadata_cols_list" parameter="getT01_mt_col_proList" name="T01_mt_col_proActionForm" type="com.ist.common.metadata.controller.T01_mt_col_proAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/column/metadata_cols_list.jsp"/>
+      <forward name="failure" path="/metadata/table/metadata_tab_list.do"/>
+    </action>
+    <action path="/metadata/column/metadata_cols_modify" parameter="modifyT01_mt_col_pro" name="T01_mt_col_proActionForm" type="com.ist.common.metadata.controller.T01_mt_col_proAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/column/metadata_cols_modify.jsp"/>
+      <forward name="failure" path="/metadata/column/metadata_cols_list.do"/>
+    </action>
+    <action path="/metadata/column/metadata_cols_addnewpage" parameter="addT01_mt_col_pro_page" name="T01_mt_col_proActionForm" type="com.ist.common.metadata.controller.T01_mt_col_proAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/column/metadata_cols_modify.jsp"/>
+      <forward name="failure" path="/metadata/column/metadata_cols_list.do"/>
+    </action>
+    <action path="/metadata/column/metadata_cols_batch_add" parameter="addT01_mt_col_pro" name="T01_mt_col_proActionForm" type="com.ist.common.metadata.controller.T01_mt_col_proAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/column/metadata_cols_batch_add.jsp"/>
+      <forward name="failure" path="/metadata/column/metadata_cols_list.do"/>
+    </action>
+    <action path="/metadata/column/metadata_cols_add_batch_do" parameter="addT01_mt_col_proBatch" name="T01_mt_col_proActionForm" type="com.ist.common.metadata.controller.T01_mt_col_proAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/column/metadata_cols_list.do"/>
+      <forward name="failure" path="/metadata/column/metadata_cols_modify.do"/>
+    </action>
+    <action path="/metadata/column/metadata_cols_batch_add_do" parameter="addT01_mt_col_proBatch2" name="T01_mt_col_proActionForm" type="com.ist.common.metadata.controller.T01_mt_col_proAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/column/metadata_cols_list.do"/>
+      <forward name="failure" path="/metadata/column/metadata_cols_batch_add.do"/>
+    </action>
+    <action path="/metadata/column/metadata_cols_modify_do" parameter="modifyT01_mt_col_proDo" name="T01_mt_col_proActionForm" type="com.ist.common.metadata.controller.T01_mt_col_proAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/column/metadata_cols_list.do"/>
+      <forward name="failure" path="/metadata/column/metadata_cols_modify.do"/>
+    </action>
+    <action path="/metadata/column/metadata_cols_delete_do" parameter="deleteT01_mt_col_proDo" name="T01_mt_col_proActionForm" type="com.ist.common.metadata.controller.T01_mt_col_proAction" validate="false" scope="request">
+    <forward name="success" path="/metadata/column/metadata_cols_list.do"/>
+        <forward name="failure" path="/metadata/column/metadata_cols_list.do"/>
+    </action>
+     <action path="/metadata/column/metadata_cols_express_test_do" parameter="testT01_mt_col_pro_expressDo" name="T01_mt_col_proActionForm" type="com.ist.common.metadata.controller.T01_mt_col_proAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/column/metadata_cols_modify.do"/>
+      <forward name="failure" path="/metadata/column/metadata_cols_modify.do"/>
+    </action>
+     <action path="/metadata/column/metadata_cols_test_do" parameter="testT01_mt_col_proDo" name="T01_mt_col_proActionForm" type="com.ist.common.metadata.controller.T01_mt_col_proAction" validate="false" scope="request">
+      <forward name="success" path="/metadata/column/metadata_cols_test_list.jsp"/>
+      <forward name="failure" path="/metadata/column/metadata_cols_list.do"/>
+    </action>
+
+     <!-- br_metadata_tab_cols end-->
+      <!-- t00_sms start-->
+     <action path="/platform/t00_sms/t00_sms_search" parameter="searchT01_sms" name="t01_smsActionForm" type="com.ist.common.message.controller.T01_smsAction" validate="false" scope="request">
+      <forward name="success" path="/sms/t00_sms_search.jsp"/>
+        <forward name="failure" path="/t00_sms/t00_sms_list.do"/>
+    </action>
+    <action path="/platform/t00_sms/t00_sms_list" parameter="getT01_smsList" name="t01_smsActionForm" type="com.ist.common.message.controller.T01_smsAction" validate="false" scope="request">
+      <forward name="success" path="/../skin/primeval/pub/main.jsp"/>
+    </action>
+    <action path="/platform/t00_sms/t00_sms_list1" parameter="getT01_smsList1" name="t01_smsActionForm" type="com.ist.common.message.controller.T01_smsAction" validate="false" scope="request">
+      <forward name="success" path="/sms/sms_list.jsp"/>
+    </action>
+    <action path="/platform/t00_sms/t00_sms_list2" parameter="getT01_smsList1" name="t01_smsActionForm" type="com.ist.common.message.controller.T01_smsAction" validate="false" scope="request">
+      <forward name="success" path="/sms/sms_list_send.jsp"/>
+    </action>
+     <action path="/platform/t00_sms/sms_list_more" parameter="getSmsListMore" name="t01_smsActionForm" type="com.ist.common.message.controller.T01_smsAction" validate="false" scope="request">
+      <forward name="success" path="/sms/sms_list_more.jsp"/>
+    </action>
+    <action path="/platform/t00_sms/t00_sms_listmore" parameter="getT01_smsList" name="t01_smsActionForm" type="com.ist.common.message.controller.T01_smsAction" validate="false" scope="request">
+      <forward name="success" path="/common/sms_list.jsp"/>
+    </action>
+    <action path="/platform/t00_sms/t00_sms_add" parameter="addT01_sms" name="t01_smsActionForm" type="com.ist.common.message.controller.T01_smsAction" validate="false" scope="request">
+      <forward name="success" path="/sms/sms_add.jsp"/>
+      <forward name="failure" path="/t00_sms/t00_sms_list.do"/>
+    </action>
+    <action path="/platform/t00_sms/t00_sms_add_do" parameter="addT01_smsok" name="t01_smsActionForm" type="com.ist.common.message.controller.T01_smsAction" validate="false" scope="request">
+      <forward name="success" path="/platform/t00_sms/t00_sms_list1.do"/>
+      <forward name="failure" path="/t00_sms/t00_sms_add.do"/>
+    </action>
+     <action path="/platform/t00_sms/t00_sms_add_send" parameter="addT01_sms_send" name="t01_smsActionForm" type="com.ist.common.message.controller.T01_smsAction" validate="false" scope="request">
+      <forward name="success" path="/sms/sms_add_send.jsp"/>
+      <forward name="failure" path="/t00_sms/t00_sms_list.do"/>
+    </action>
+    <action path="/platform/t00_sms/t00_sms_add_send_do" parameter="addT01_sms_sendok" name="t01_smsActionForm" type="com.ist.common.message.controller.T01_smsAction" validate="false" scope="request">
+      <forward name="success" path="/sms/local_sms_result.jsp"/>
+      <forward name="failure" path="/t00_sms/t00_sms_add_send.do"/>
+    </action>
+
+    <action path="/platform/t00_sms/t00_sms_modify" parameter="modifyT01_sms" name="t01_smsActionForm" type="com.ist.common.message.controller.T01_smsAction" validate="false" scope="request">
+      <forward name="success" path="/sms/sms_modify.jsp"/>
+      <forward name="failure" path="/platform/t00_sms/t00_sms_list1.do"/>
+    </action>
+    <action path="/platform/t00_sms/t00_sms_modify_do" parameter="modifyT01_smsDo" name="t01_smsActionForm" type="com.ist.common.message.controller.T01_smsAction" validate="false" scope="request">
+      <forward name="success" path="/platform/t00_sms/t00_sms_list1.do"/>
+      <forward name="failure" path="/platform/t00_sms/t00_sms_list1.do"/>
+    </action>
+   <action path="/platform/t00_sms/t00_sms_delete_do" parameter="deleteT01_smsDo" name="t01_smsActionForm" type="com.ist.common.message.controller.T01_smsAction" validate="false" scope="request">
+    <forward name="success0" path="/platform/t00_sms/t00_sms_list1.do"/>
+    <forward name="success1" path="/platform/t00_sms/t00_sms_list2.do"/>
+        <forward name="failure" path="/platform/t00_sms/t00_sms_list1.do"/>
+    </action>
+    <action path="/platform/t00_sms/t00_smsperson_delete_do" parameter="deleteT01_sms_personDo" name="t01_smsActionForm" type="com.ist.common.message.controller.T01_smsAction" validate="false" scope="request">
+    <forward name="success" path="/platform/t00_sms/sms_list_more.do"/>
+        <forward name="failure" path="/platform/t00_sms/sms_list_more.do"/>
+    </action>
+    <action path="/platform/t00_sms/t00_sendsms_do" parameter="sendT01_smsDo" name="t01_smsActionForm" type="com.ist.common.message.controller.T01_smsAction" validate="false" scope="request">
+    <forward name="success" path="/platform/t00_sms/t00_sms_list1.do"/>
+        <forward name="failure" path="/platform/t00_sms/t00_sms_list1.do"/>
+    </action>
+    <action path="/platform/t00_sms/t00_sms_disp" parameter="getT01_smsDisp" name="t01_smsActionForm" type="com.ist.common.message.controller.T01_smsAction" validate="false" scope="request">
+      <forward name="success" path="/sms/local_sms_disp.jsp"/>
+    </action>
+    <!-- end -->
+	<!-- 问题整改 begin -->
+    <action path="/qrectify/t01_qassign_list" parameter="getT01_qassignList" name="t01_qassignActionForm" type="com.ist.common.prowcorr.controller.T01_qassignAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qassign_list.jsp"/> 
+	    <forward name="failure" path="/qrectify/t01_qassign_list.jsp"/> 
+    </action> 
+    <action path="/qrectify/t01_qassign_add" parameter="addT01_qassign" name="t01_qassignActionForm" type="com.ist.common.prowcorr.controller.T01_qassignAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qassign_add.jsp"/> 
+	    <forward name="failure" path="/qrectify/t01_qassign_add.jsp"/> 
+    </action> 
+    <action path="/qrectify/t01_qassign_add_do" parameter="addT01_qassignDo" name="t01_qassignActionForm" type="com.ist.common.prowcorr.controller.T01_qassignAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qassign_list.do"/> 
+	    <forward name="failure" path="/qrectify/t01_qassign_add.do"/> 
+    </action> 
+    <!-- 转派 -->
+    <action path="/qrectify/t01_qassign_readd" parameter="addT01_qassign" name="t01_qassignActionForm" type="com.ist.common.prowcorr.controller.T01_qassignAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qassign_readd.jsp"/> 
+	    <forward name="failure" path="/qrectify/t01_qassign_readd.jsp"/> 
+    </action> 
+    <action path="/qrectify/t01_qassign_readd_do" parameter="addT01_qassignReDo" name="t01_qassignActionForm" type="com.ist.common.prowcorr.controller.T01_qassignAction" validate="false" scope="request" /> 
+    <action path="/qrectify/t01_qassign_modify" parameter="modifyT01_qassign" name="t01_qassignActionForm" type="com.ist.common.prowcorr.controller.T01_qassignAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qassign_modify.jsp"/> 
+	    <forward name="failure" path="/qrectify/t01_qassign_list.do"/> 
+    </action> 
+    <action path="/qrectify/t01_qassign_modify_do" parameter="modifyT01_qassignDo" name="t01_qassignActionForm" type="com.ist.common.prowcorr.controller.T01_qassignAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qassign_list.do"/> 
+	    <forward name="failure" path="/qrectify/t01_qassign_modify.do"/> 
+    </action> 
+    <action path="/qrectify/t01_qassign_delete_do" parameter="deleteT01_qassignDo" name="t01_qassignActionForm" type="com.ist.common.prowcorr.controller.T01_qassignAction" validate="false" scope="request"> 
+	<forward name="success" path="/qrectify/t01_qassign_list.do"/> 
+        <forward name="failure" path="/qrectify/t01_qassign_list.do"/> 
+    </action> 
+    <action path="/qrectify/t01_qassign_disp" parameter="getT01_qassignDisp" name="t01_qassignActionForm" type="com.ist.common.prowcorr.controller.T01_qassignAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qassign_disp.jsp"/> 
+    </action> 
+    
+    
+    <!-- 整改跟踪 begin -->
+    <action path="/qrectify/t01_qrtrack_trace_index" parameter="getT01_qrtrack_trace_index" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qrtrack_trace_index.jsp"/> 
+        <forward name="failure" path="/qrectify/t01_qrtrack_trace_index.jsp"/> 
+    </action> 
+    <!-- 整改跟踪，树的最顶级链接，查看所有整改人员的整改问题 -->
+    <action path="/qrectify/t01_qrtrack_trace_qassign_list" parameter="getT01_qrtrack_trace_qassignList" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qrtrack_trace_qassign_list.jsp"/> 
+	    <forward name="failure" path="/qrectify/t01_qrtrack_trace_qassign_list.jsp"/> 
+    </action> 
+    
+     <!-- 整改跟踪，新建 -->
+    <action path="/qrectify/t01_qrtrack_trace_add" parameter="addT01_qrtrack_trace" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qrtrack_trace_add.jsp"/> 
+	    <forward name="failure" path="/qrectify/t01_qrtrack_trace_question_rectify_list.do"/> 
+    </action> 
+    <action path="/qrectify/t01_qrtrack_trace_add_do" parameter="addT01_qrtrack_traceDo" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request" /> 
+	 <!-- 整改跟踪，修改 --> 
+    <action path="/qrectify/t01_qrtrack_trace_modify" parameter="modifyT01_qrtrack_trace" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qrtrack_trace_modify.jsp"/> 
+	    <forward name="failure" path="/qrectify/t01_qrtrack_trace_question_rectify_list.do"/> 
+    </action> 
+    <action path="/qrectify/t01_qrtrack_trace_modify_do" parameter="modifyT01_qrtrack_traceDo" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request" /> 
+    <action path="/qrectify/t01_qrtrack_trace_delete_do" parameter="deleteT01_qrtrackDo" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+		 <forward name="success" path="/qrectify/t01_qrtrack_trace_question_rectify_list.do"/> 
+	</action> 
+	
+     <!-- 整改跟踪，树的次级级链接，查看当前整改人员的整改问题 -->
+    <action path="/qrectify/t01_qrtrack_trace_q_list" parameter="getT01_qrtrack_trace_questionList" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qrtrack_trace_q_list.jsp"/> 
+        <forward name="failure" path="/qrectify/t01_qrtrack_trace_q_list.jsp"/> 
+    </action>
+    <!-- 整改跟踪，树的叶子链接，查看当前整改问题的整改情况 -->
+    <action path="/qrectify/t01_qrtrack_trace_question_rectify_list" parameter="getT01_qrtrack_trace_question_rectifyList" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qrtrack_trace_q_rectify_list.jsp"/> 
+        <forward name="failure" path="/qrectify/t01_qrtrack_trace_q_rectify_list.jsp"/> 
+    </action>  
+    <action path="/qrectify/generate_notice" parameter="generate_notice" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 	    
+    </action>
+    <!-- 整改跟踪 end -->
+    
+    <!-- 整改落实 begin-->
+    <action path="/qrectify/t01_qrtrack_handle_index" parameter="getT01_qrtrack_handle_index" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qrtrack_handle_index.jsp"/> 
+        <forward name="failure" path="/qrectify/t01_qrtrack_handle_index.jsp"/> 
+    </action> 
+     <!-- 整改落实，树形菜单 -->
+    <action path="/qrectify/t01_qrtrack_handle_index_left_tree" parameter="getT01_qrtrack_handle_index_leftTree" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qrtrack_handle_index_left_tree.jsp"/> 
+        <forward name="failure" path="/qrectify/t01_qrtrack_handle_index_left_tree.jsp"/> 
+    </action> 
+    <!-- 整改落实，树的次级链接，查看当前人员的不同问题来源的问题列表 (现场问题除外) -->
+    <action path="/qrectify/t01_qrtrack_handle_question_list" parameter="getT01_qrtrack_handle_question_listList" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qrtrack_handle_question_list.jsp"/> 
+	    <forward name="failure" path="/qrectify/t01_qrtrack_handle_question_list.jsp"/> 
+    </action> 
+    <!-- 整改落实，树的叶子链接，对问题进行整改 -->
+    <action path="/qrectify/t01_qrtrack_handle_question_rectify_list" parameter="getT01_qrtrack_handle_question_rectifyList" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qrtrack_handle_q_rectify_list.jsp"/> 
+        <forward name="failure" path="/qrectify/t01_qrtrack_handle_q_rectify_list.jsp"/> 
+    </action> 
+    <!-- 整改落实，树的叶子链接，对问题进行整改(现场审计问题，通过projectkey得到) -->
+    <action path="/qrectify/t01_qrtrack_handle_audit_question_list" parameter="getT01_qrtrack_handle_audit_question_listList" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qrtrack_handle_question_list.jsp"/> 
+        <forward name="failure" path="/qrectify/t01_qrtrack_handle_question_list.jsp"/> 
+    </action>   
+    
+     <!-- 整改落实，新建 -->
+    <action path="/qrectify/t01_qrtrack_add" parameter="addT01_qrtrack" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qrtrack_add.jsp"/> 
+	    <forward name="failure" path="/qrectify/t01_qrtrack_list.do"/> 
+    </action> 
+    <action path="/qrectify/t01_qrtrack_add_do" parameter="addT01_qrtrackDo" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request" /> 
+	 <!-- 整改落实，修改 --> 
+    <action path="/qrectify/t01_qrtrack_modify" parameter="modifyT01_qrtrack" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qrtrack_modify.jsp"/> 
+	    <forward name="failure" path="/qrectify/t01_qrtrack_list.do"/> 
+    </action> 
+    <action path="/qrectify/t01_qrtrack_modify_do" parameter="modifyT01_qrtrackDo" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request" /> 
+    <action path="/qrectify/t01_qrtrack_delete_do" parameter="deleteT01_qrtrackDo" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+		 <forward name="success" path="/qrectify/t01_qrtrack_handle_question_rectify_list.do"/> 
+	</action> 
+	 <!-- 整改落实，显示详情 -->
+    <action path="/qrectify/t01_qrtrack_disp" parameter="getT01_qrtrackDisp" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qrtrack_disp.jsp"/> 
+    </action>     
+    <!-- 整改落实 end-->
+	
+	<!-- 整改确认begin-->
+    <action path="/qrectify/t01_qrtrack_verify_index" parameter="getT01_qrtrack_verify_index" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qrtrack_verify_index.jsp"/> 
+        <forward name="failure" path="/qrectify/t01_qrtrack_verify_index.jsp"/> 
+    </action> 
+     <!-- 整改确认，树形菜单 -->
+    <action path="/qrectify/t01_qrtrack_verify_index_left_tree" parameter="getT01_qrtrack_verify_index_leftTree" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qrtrack_verify_index_left_tree.jsp"/> 
+        <forward name="failure" path="/qrectify/t01_qrtrack_verify_index_left_tree.jsp"/> 
+    </action> 
+	
+    <!-- 整改确认，树的次级链接，查看当前人员的不同问题来源的问题列表 (现场问题除外) -->
+    <action path="/qrectify/t01_qrtrack_verify_question_list" parameter="getT01_qrtrack_verify_question_listList" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qrtrack_verify_question_list.jsp"/> 
+	    <forward name="failure" path="/qrectify/t01_qrtrack_verify_question_list.jsp"/> 
+    </action> 
+    <!-- 整改确认，树的叶子链接，对问题进行整改确认 -->
+    <action path="/qrectify/t01_qrtrack_verify_question_rectify_list" parameter="getT01_qrtrack_verify_question_rectifyList" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qrtrack_verify_q_rectify_list.jsp"/> 
+        <forward name="failure" path="/qrectify/t01_qrtrack_verify_q_rectify_list.jsp"/> 
+    </action> 
+    <!-- 整改确认，树的叶子链接，对问题进行整改(现场审计问题，通过projectkey得到) -->
+    <action path="/qrectify/t01_qrtrack_verify_audit_question_list" parameter="getT01_qrtrack_verify_audit_question_listList" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qrtrack_verify_question_list.jsp"/> 
+        <forward name="failure" path="/qrectify/t01_qrtrack_verify_question_list.jsp"/> 
+    </action>
+	<!-- 整改确认，增加确认 -->
+    <action path="/qrectify/t01_qrtrack_verify_add" parameter="addT01_qrtrack_verify" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qrtrack_verify_add.jsp"/> 
+	    <forward name="failure" path="/qrectify/t01_qrtrack_verify_add.jsp"/> 
+    </action> 
+    <action path="/qrectify/t01_qrtrack_verify_add_do" parameter="addT01_qrtrack_verifyDo" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request" >
+    	<forward name="failure" path="/qrectify/t01_qrtrack_verify_add.do"/> 
+    </action> 
+    <!-- 整改确认，归档 -->
+    <action path="/qrectify/t01_qrtrack_questionArchive_do" parameter="t01_qrtrack_questionArchiveDo" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qrtrack_verify_question_rectify_list.do"/> 
+	    <forward name="failure" path="/qrectify/t01_qrtrack_verify_question_rectify_list.do"/> 
+    </action> 
+    
+	<!-- 整改确认end-->
+	
+	<!-- t01_qassign_notice begin-->
+	<action path="/qrectify/t01_qassign_notice_list" parameter="getT01_qassign_notice_list" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_qassign_notice_list.jsp"/> 
+	    <forward name="failure" path="/qrectify/t01_qassign_notice_list.jsp"/> 
+    </action> 
+    
+    <action path="/qrectify/t01_question_noticeList" parameter="getT01_question_noticeList" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_question_notice_list.jsp"/> 
+	    <forward name="failure" path="/qrectify/t01_question_notice_list.jsp"/> 
+    </action> 
+    <action path="/qrectify/modiyfT01_qassign_notice" parameter="modiyfT01_qassign_notice" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request"> 
+	    <forward name="success" path="/qrectify/t01_question_notice_modify.jsp"/> 
+	    <forward name="failure" path="/qrectify/t01_qassign_notice_list.do"/> 
+    </action> 
+    
+	<!-- t01_qassign_notice end  -->
+	
+	<!-- 整改历史 begin -->
+	
+    <action path="/qrectify/t01_qrtrack_history_list" parameter="getT01_qrtrack_historyList" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request" >
+    	<forward name="success" path="/qrectify/t01_qrtrack_history_list.jsp"/>
+    	<forward name="failure" path="/qrectify/t01_qrtrack_history_list.jsp"/> 
+    </action> 
+	<action path="/qrectify/t01_qrtrack_history_disp" parameter="getT01_qrtrack_historyDisp" name="t01_qrtrackActionForm" type="com.ist.common.prowcorr.controller.T01_qrtrackAction" validate="false" scope="request" >
+    	<forward name="success" path="/qrectify/t01_qrtrack_history_disp.jsp"/>
+    	<forward name="failure" path="/qrectify/t01_qrtrack_history_disp.jsp"/> 
+    </action>	
+	<!-- 整改历史 end -->
+	
+	<!-- 后续审计清单 begin-->
+	 <action path="/question/question_after_audit_index" parameter="getQuestion_after_audit_index" name="t01_questionActionForm" type="com.ist.common.prowcorr.controller.T01_questionAction" validate="false" scope="request"> 
+	    <forward name="success" path="/question/question_after_audit_index.jsp"/> 
+        <forward name="failure" path="/question/question_after_audit_index.jsp"/> 
+    </action> 
+    <action path="/question/question_after_audit_statistics" parameter="getQuestion_after_audit_statistics" name="t01_questionActionForm" type="com.ist.common.prowcorr.controller.T01_questionAction" validate="false" scope="request"> 
+	    <forward name="success" path="/question/question_after_audit_statistics.jsp"/> 
+        <forward name="failure" path="/question/question_after_audit_statistics.jsp"/> 
+    </action>
+    <action path="/question/question_after_audit_list" parameter="getQuestion_after_audit_list" name="t01_questionActionForm" type="com.ist.common.prowcorr.controller.T01_questionAction" validate="false" scope="request"> 
+	    <forward name="success" path="/question/question_after_audit_list.jsp"/> 
+        <forward name="failure" path="/question/question_after_audit_list.jsp"/> 
+    </action>
+     <action path="/question/question_after_audit_import_project" parameter="getImport_project" name="t01_questionActionForm" type="com.ist.common.prowcorr.controller.T01_questionAction" validate="false" scope="request"> 
+	    <forward name="success" path="/question/import_project.jsp"/> 
+    </action>
+    <action path="/question/import_project_do" parameter="import_project_do" name="t01_questionActionForm" type="com.ist.common.prowcorr.controller.T01_questionAction" validate="false" scope="request"> 
+	    <forward name="success" path="/question/import_project_result.jsp"/>
+	    <forward name="failure" path="/question/import_project.jsp"/>
+    </action>
+	<!-- 后续审计清单 end  -->
+	
+	<!-- 问题整改 end -->
+	<!-- 元数据管理 -->
+      <!-- br_metadata_table start-->
+    <action path="/table/metadata_tab_index" parameter="getT01_mt_propertyIndex" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+     <forward name="success" path="/table/metadata_tab_index.jsp"/>
+    </action>
+    <action path="/table/metadata_tab_list" parameter="getT01_mt_propertyList" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/table/metadata_tab_list.jsp"/>
+    </action>
+    <action path="/table/metadata_tab_add" parameter="addT01_mt_property" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/table/metadata_tab_add.jsp"/>
+      <forward name="failure" path="/table/metadata_tab_list.do"/>
+    </action>
+    <action path="/table/metadata_tab_add_do" parameter="addT01_mt_propertyDo" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/table/metadata_tab_list.do"/>
+      <forward name="failure" path="/table/metadata_tab_add.do"/>
+    </action>
+    <action path="/table/metadata_tab_location_do" parameter="locationT01_mt_propertyList" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/table/metadata_tab_list_location.jsp"/>
+    </action>
+    <action path="/table/metadata_tabByKind_location_do" parameter="locationT01_mt_propertyByKindList" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/table/metadata_tabByKind_list_location.jsp"/>
+    </action>
+    <action path="/table/metadata_tab_modify" parameter="modifyT01_mt_property" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/table/metadata_tab_modify.jsp"/>
+      <forward name="failure" path="/table/metadata_tab_list.do"/>
+    </action>
+    <action path="/table/metadata_tab_modify_do" parameter="modifyT01_mt_propertyDo" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/table/metadata_tab_list.do"/>
+      <forward name="failure" path="/table/metadata_tab_modify.do"/>
+    </action>
+    <action path="/table/metadata_tab_delete_logic_do" parameter="deleteT01_mt_propertyLogicDo" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+    <forward name="success" path="/table/metadata_tab_list.do"/>
+        <forward name="failure" path="/table/metadata_tab_list.do"/>
+    </action>
+    <action path="/table/metadata_tab_batch_add1" parameter="addT01_mt_propertyBatch1" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/table/metadata_tab_batch_add1.jsp"/>
+      <forward name="failure" path="/table/metadata_tab_list.do"/>
+    </action>
+    <action path="/table/metadata_tab_batch_add2" parameter="addT01_mt_propertyBatch2" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/table/metadata_tab_batch_add2.jsp"/>
+      <forward name="failure" path="/table/metadata_tab_batch_add1.do"/>
+    </action>
+    <action path="/table/metadata_tab_batch_add_do" parameter="addT01_mt_propertyBatchDo" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_propertyAction" validate="false" scope="request">
+      <forward name="success" path="/table/metadata_tab_list.do"/>
+      <forward name="failure" path="/table/metadata_tab_batch_add2.do"/>
+    </action>
+    
+
+ <!-- br_metadata_table end-->
+ 
+ 
+   <!-- br_metadata_tab_cols start-->
+    <action path="/column/metadata_cols_list" parameter="getT01_mt_col_proList" name="T01_mt_col_proActionForm" type="com.ist.common.metadata.controller.T01_mt_col_proAction" validate="false" scope="request">
+      <forward name="success" path="/column/metadata_cols_list.jsp"/>
+      <forward name="failure" path="/table/metadata_tab_list.do"/>
+    </action>
+    <action path="/column/metadata_cols_modify" parameter="modifyT01_mt_col_pro" name="T01_mt_col_proActionForm" type="com.ist.common.metadata.controller.T01_mt_col_proAction" validate="false" scope="request">
+      <forward name="success" path="/column/metadata_cols_modify.jsp"/>
+      <forward name="failure" path="/column/metadata_cols_list.do"/>
+    </action>
+    <action path="/column/metadata_cols_addnewpage" parameter="addT01_mt_col_pro_page" name="T01_mt_col_proActionForm" type="com.ist.common.metadata.controller.T01_mt_col_proAction" validate="false" scope="request">
+      <forward name="success" path="/column/metadata_cols_modify.jsp"/>
+      <forward name="failure" path="/column/metadata_cols_list.do"/>
+    </action>
+    <action path="/column/metadata_cols_batch_add" parameter="addT01_mt_col_pro" name="T01_mt_col_proActionForm" type="com.ist.common.metadata.controller.T01_mt_col_proAction" validate="false" scope="request">
+      <forward name="success" path="/column/metadata_cols_batch_add.jsp"/>
+      <forward name="failure" path="/column/metadata_cols_list.do"/>
+    </action>
+    <action path="/column/metadata_cols_add_batch_do" parameter="addT01_mt_col_proBatch" name="T01_mt_col_proActionForm" type="com.ist.common.metadata.controller.T01_mt_col_proAction" validate="false" scope="request">
+      <forward name="success" path="/column/metadata_cols_list.do"/>
+      <forward name="failure" path="/column/metadata_cols_modify.do"/>
+    </action>
+    <action path="/column/metadata_cols_batch_add_do" parameter="addT01_mt_col_proBatch2" name="T01_mt_col_proActionForm" type="com.ist.common.metadata.controller.T01_mt_col_proAction" validate="false" scope="request">
+      <forward name="success" path="/column/metadata_cols_list.do"/>
+      <forward name="failure" path="/column/metadata_cols_batch_add.do"/>
+    </action>
+    <action path="/column/metadata_cols_modify_do" parameter="modifyT01_mt_col_proDo" name="T01_mt_col_proActionForm" type="com.ist.common.metadata.controller.T01_mt_col_proAction" validate="false" scope="request">
+      <forward name="success" path="/column/metadata_cols_list.do"/>
+      <forward name="failure" path="/column/metadata_cols_modify.do"/>
+    </action>
+    <action path="/column/metadata_cols_delete_do" parameter="deleteT01_mt_col_proDo" name="T01_mt_col_proActionForm" type="com.ist.common.metadata.controller.T01_mt_col_proAction" validate="false" scope="request">
+    <forward name="success" path="/column/metadata_cols_list.do"/>
+        <forward name="failure" path="/column/metadata_cols_list.do"/>
+    </action>
+     <action path="/column/metadata_cols_express_test_do" parameter="testT01_mt_col_pro_expressDo" name="T01_mt_col_proActionForm" type="com.ist.common.metadata.controller.T01_mt_col_proAction" validate="false" scope="request">
+      <forward name="success" path="/column/metadata_cols_modify.do"/>
+      <forward name="failure" path="/column/metadata_cols_modify.do"/>
+    </action>
+     <action path="/column/metadata_cols_test_do" parameter="testT01_mt_col_proDo" name="T01_mt_col_proActionForm" type="com.ist.common.metadata.controller.T01_mt_col_proAction" validate="false" scope="request">
+      <forward name="success" path="/column/metadata_cols_test_list.jsp"/>
+      <forward name="failure" path="/column/metadata_cols_list.do"/>
+    </action>
+
+     <!-- br_metadata_tab_cols end-->
+     
+    <!--add by lijie --> 
+    <action path="/function/t10_mt_property_list" parameter="getT01_mt_propertyList1" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_functionAction" validate="false" scope="request">
+      <forward name="success" path="/function/t10_mt_property_list.jsp"/>
+    </action>
+    <action path="/function/mt_table_disp" parameter="getMt_table_disp" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_functionAction" validate="false" scope="request">
+      <forward name="success" path="/function/mt_table_disp.jsp"/>
+      <forward name="failure" path="/function/t10_mt_property_list.do"/>
+    </action>
+    <action path="/function/exportToTxt" parameter="exportToTxt" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_functionAction" validate="false" scope="request">
+      <forward name="success" path="/function/t10_mt_property_list.do"/>
+    </action>
+    <action path="/function/exportToTxt_disp" parameter="exportToTxt_disp" name="T01_mt_propertyActionForm" type="com.ist.common.metadata.controller.T01_mt_functionAction" validate="false" scope="request">
+    </action>
+    <action path="/function/t10_mt_download_list" parameter="getT01_mt_downloadList" name="T01_mt_downloadActionForm" type="com.ist.common.metadata.controller.T01_mt_functionAction" validate="false" scope="request">
+      <forward name="success" path="/function/t10_mt_download_list.jsp"/>
+    </action>
+    
+    <!--end by lijie  -->
+    <!--add by zhanjin for 内部数据源管理  start-->
+	    <action path="/dblink/metadata_link_list" parameter="getT01_db_linkList" name="T01_db_linkActionForm" type="com.ist.common.metadata.controller.T01_db_linkAction" validate="false" scope="request">
+	      <forward name="success" path="/dblink/metadata_link_list.jsp"/>
+	    </action>
+	    <action path="/dblink/metadata_link_add" parameter="addT01_db_link" name="T01_db_linkActionForm" type="com.ist.common.metadata.controller.T01_db_linkAction" validate="false" scope="request">
+	      <forward name="success" path="/dblink/metadata_link_add.jsp"/>
+	      <forward name="failure" path="/dblink/metadata_link_list.do"/>
+	    </action>
+	    <action path="/dblink/metadata_link_add_do" parameter="addT01_db_linkDo" name="T01_db_linkActionForm" type="com.ist.common.metadata.controller.T01_db_linkAction" validate="false" scope="request">
+	      <forward name="success" path="/dblink/metadata_link_list.do" redirect="true"/>
+	      <forward name="failure" path="/dblink/metadata_link_add.do"/>
+	    </action>
+	    <action path="/dblink/metadata_link_modify" parameter="modifyT01_db_link" name="T01_db_linkActionForm" type="com.ist.common.metadata.controller.T01_db_linkAction" validate="false" scope="request">
+	      <forward name="success" path="/dblink/metadata_link_modify.jsp"/>
+	      <forward name="failure" path="/dblink/metadata_link_list.do"/>
+	    </action>
+	    <action path="/dblink/metadata_link_modify_do" parameter="modifyT01_db_linkDo" name="T01_db_linkActionForm" type="com.ist.common.metadata.controller.T01_db_linkAction" validate="false" scope="request">
+	      <forward name="success" path="/dblink/metadata_link_list.do" redirect="true"/>
+	      <forward name="failure" path="/dblink/metadata_link_modify.jsp"/>
+	    </action>
+	    <action path="/dblink/metadata_link_delete_logic_do" parameter="deleteT01_db_linkLogicDo" name="T01_db_linkActionForm" type="com.ist.common.metadata.controller.T01_db_linkAction" validate="false" scope="request">
+	        <forward name="success" path="/dblink/metadata_link_list.do"  redirect="true"/>
+	    </action>
+	    <action path="/dblink/metadata_link_disp" parameter="getT01_db_linkDisp" name="T01_db_linkActionForm" type="com.ist.common.metadata.controller.T01_db_linkAction" validate="false" scope="request">
+	      <forward name="success" path="/dblink/metadata_link_disp.jsp"/>
+	    </action>
+	    <!-- t01_metadata_link end-->
+</action-mappings>
+
+
+  <message-resources parameter="ApplicationResources_zh_CN" />
+</struts-config>

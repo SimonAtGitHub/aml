@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T18_errorlog">
+	<statement id="getT18_errorlogList" parameterClass="com.ist.bmp.hpom.dto.T18_errorlog"
+		resultClass="com.ist.bmp.hpom.dto.T18_errorlog">
+		select logkey,taskkey,errdes,errtime,manager,donemethod,donetime from
+		t18_errorlog
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="logkey">
+				logkey = #logkey# 
+    		</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT18_errorlogListCount" parameterClass="com.ist.bmp.hpom.dto.T18_errorlog"
+		resultClass="int">
+		select count(*) from t18_errorlog
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="logkey">
+				logkey = #logkey# 
+    		</isNotEmpty>
+    		<isNotEmpty prepend="and" property="taskkey">
+				taskkey = #taskkey# 
+    		</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT18_errlogTaskList" parameterClass="com.ist.bmp.hpom.dto.T18_errorlog"
+		resultClass="com.ist.bmp.hpom.dto.T18_errorlog">
+		select
+		a.*,
+		b.*,
+		(
+		   select
+		   t.typename
+		   from T18_task_type t
+		   where t.tasktype = b.tasktype
+		)tasktype_disp
+		from
+		t18_errorlog a left join t18_task_fact b on a.taskkey = b.taskkey
+		<dynamic prepend="where" >
+			<isNotEmpty prepend="and" property="logkey">
+				a.logkey = #logkey# 
+    		</isNotEmpty>
+			<isNotEmpty prepend="and" property="taskkey">
+				a.taskkey = #taskkey# 
+    		</isNotEmpty>
+		</dynamic>
+		<isNotEmpty prepend="" property="sort">
+    		<isNotEmpty prepend="" property="sort_type">
+				order by $sort$ $sort_type$
+			</isNotEmpty>
+		</isNotEmpty>
+	</statement>
+	
+	<statement id="getT18_errlogTaskListCount" parameterClass="com.ist.bmp.hpom.dto.T18_errorlog"
+		resultClass="int">
+		select
+		count(*)
+		from
+		t18_errorlog a
+		left join t18_task_fact b on a.taskkey = b.taskkey
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="logkey">
+				a.logkey = #logkey# 
+    		</isNotEmpty>
+    		<isNotEmpty prepend="and" property="taskkey">
+				a.taskkey = #taskkey# 
+    		</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="insertT18_errorlog" parameterClass="com.ist.bmp.hpom.dto.T18_errorlog"
+		resultClass="int">
+		insert into T18_errorlog(
+		logkey,taskkey,errdes,errtime,manager,donemethod,donetime
+		) values(
+		#logkey#,#taskkey#,#errdes#,#errtime#,#manager#,#donemethod#,#donetime#
+		) 
+  </statement>
+
+	<statement id="modifyT18_errorlog" parameterClass="com.ist.bmp.hpom.dto.T18_errorlog"
+		resultClass="int">
+		update T18_errorlog set
+		logkey=#logkey#,taskkey=#taskkey#,errdes=#errdes#,errtime=#errtime#,manager=#manager#,donemethod=#donemethod#,donetime=#donetime#
+		where logkey=#logkey# 
+  </statement>
+
+	<statement id="deleteT18_errorlog" parameterClass="java.lang.String"
+		resultClass="int">
+		delete from T18_errorlog where logkey=#value# 
+  </statement>
+
+	<statement id="getT18_errorlogDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.bmp.hpom.dto.T18_errorlog">
+		select * from T18_errorlog where logkey=#value# 
+  </statement>
+
+  <statement id="getT18_errorlogListByTaskkey" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_errorlog"> 
+  select * from T18_errorlog where taskkey=#value# 
+  </statement> 
+ 
+</sqlMap> 
+

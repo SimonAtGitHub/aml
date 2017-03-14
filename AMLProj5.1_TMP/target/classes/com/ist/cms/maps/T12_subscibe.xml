@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_subscibe"> 
+  <statement id="getT12_subscibeList" parameterClass="com.ist.cms.dto.T12_subscibe" resultClass="com.ist.cms.dto.T12_subscibe"> 
+  select t1.articlekey,t2.articlename,t2.programakey,t2.creator,t2.createdate,
+         t3.programaname,t1.subscibetype,t1.subscibedt,t4.realname
+   from T12_subscibe t1,T12_article t2,T12_programa t3, t00_user t4
+     where t1.articlekey=t2.articlekey
+	       and t2.programakey=t3.programakey 
+	       and t2.creator = t4.username
+	       and t2.auditstat in ('0','3')
+  <dynamic prepend=""> 
+    <isNotEmpty prepend="and" property="subscibeps"> 
+    t1.subscibeps = #subscibeps# 
+    </isNotEmpty> 
+    
+    <isNotEmpty prepend="and" property="subscibetype"> 
+    t1.subscibetype = #subscibetype# 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="articlename"> 
+    t2.articlename like '%'||#articlename#||'%' 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="programaname"> 
+    t3.programaname like '%'||#programaname#||'%' 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="realname"> 
+    t4.realname like '%'||#realname#||'%' 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="begindate"> 
+    <![CDATA[
+        t1.subscibedt >= #begindate# 
+    ]]>
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="enddate"> 
+    <![CDATA[
+        t1.subscibedt <= #enddate# 
+    ]]>
+    </isNotEmpty> 
+    
+    <isNotEmpty prepend="and" property="createdate_min"> 
+    <![CDATA[
+        t2.createdate >= #createdate_min# 
+    ]]>
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="createdate_max"> 
+    <![CDATA[
+        t2.createdate <= #createdate_max# 
+    ]]>
+    </isNotEmpty> 
+    
+    <isNotEmpty prepend="" property="sort_type"> 
+         order by $sort$ $sort_type$ 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT12_subscibeListCount" parameterClass="com.ist.cms.dto.T12_subscibe" resultClass="int"> 
+  select count(*)
+   from T12_subscibe t1,T12_article t2,T12_programa t3, t00_user t4
+     where t1.articlekey=t2.articlekey
+	       and t2.programakey=t3.programakey 
+	       and t2.creator = t4.username
+	       and t2.auditstat in ('0','3')
+  <dynamic prepend=""> 
+    <isNotEmpty prepend="and" property="subscibeps"> 
+    t1.subscibeps = #subscibeps# 
+    </isNotEmpty> 
+    
+    <isNotEmpty prepend="and" property="subscibetype"> 
+    t1.subscibetype = #subscibetype# 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="articlename"> 
+    t2.articlename like '%'||#articlename#||'%' 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="programaname"> 
+    t3.programaname like '%'||#programaname#||'%' 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="realname"> 
+    t4.realname like '%'||#realname#||'%' 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="begindate"> 
+    <![CDATA[
+        t1.subscibedt >= #begindate# 
+    ]]>
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="enddate"> 
+    <![CDATA[
+        t1.subscibedt <= #enddate# 
+    ]]>
+    </isNotEmpty>    
+    
+    <isNotEmpty prepend="and" property="createdate_min"> 
+    <![CDATA[
+        t2.createdate >= #createdate_min# 
+    ]]>
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="createdate_max"> 
+    <![CDATA[
+        t2.createdate <= #createdate_max# 
+    ]]>
+    </isNotEmpty> 
+    
+    
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_subscibe" parameterClass="com.ist.cms.dto.T12_subscibe" resultClass="int"> 
+  insert into T12_subscibe(
+  articlekey,subscibeps,subscibedt,subscibetype
+  ) values(
+  #articlekey#,#subscibeps#,#subscibedt#,#subscibetype#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_subscibe" parameterClass="com.ist.cms.dto.T12_subscibe" resultClass="int"> 
+  update T12_subscibe set 
+  articlekey=#articlekey#,subscibeps=#subscibeps#,subscibedt=#subscibedt#,subscibetype=#subscibetype#
+  where articlekey=#articlekey# 
+  </statement> 
+ 
+  <statement id="deleteT12_subscibe" parameterClass="com.ist.cms.dto.T12_subscibe" resultClass="int">
+  delete from T12_subscibe 
+  where articlekey=#articlekey# 
+        and subscibeps=#subscibeps#
+        and subscibetype=#subscibetype#
+  </statement> 
+ 
+  <statement id="getT12_subscibeDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_subscibe"> 
+  select * from T12_subscibe where articlekey=#value# 
+  </statement> 
+  
+  <!-- 根据订阅策略,生成订阅文章 -->
+  <statement id="insertT12_subscibeByTactics" parameterClass="com.ist.cms.dto.T12_subscibe" resultClass="int"> 
+  insert into T12_subscibe(
+  articlekey,subscibeps,subscibedt,subscibetype
+  ) 
+  select '$articlekey$',creator,'$subscibedt$', subscibetype from 
+  (
+  select t1.subscibetype,t1.creator from T12_SUBSCIBE_TACTICS t1,T12_PROGRAMA_SUBSCIBE t2
+  where t1.SUBSCIBEKEY = t2.SUBSCIBEKEY and t2.programakey = #programakey#
+  
+  union 
+  
+   select t3.subscibetype,t3.creator from T12_SUBSCIBE_TACTICS t3,T12_PERSON_SUBSCIBE t4
+  where t3.SUBSCIBEKEY = t4.SUBSCIBEKEY and t4.username = #subscibeps#
+  
+  union
+  
+  select t5.subscibetype,t5.creator from T12_SUBSCIBE_TACTICS t5,T12_DATE_SUBSCIBE t6
+  where t5.SUBSCIBEKEY = t6.SUBSCIBEKEY 
+  <![CDATA[
+        and t6.BEGINDT <= #begindate# and t6.ENDDT >= #begindate#
+    ]]>
+  ) 
+  
+  </statement>
+  
+   <statement id="deleteT12_subscibe_relation" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_subscibe 
+  where articlekey=#articlekey# 
+  </statement>
+ 
+</sqlMap> 
+

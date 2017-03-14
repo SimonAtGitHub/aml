@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+
+<!--create by zj-->
+<sqlMap namespace="T07_usesr_identityUrge"> 
+  
+    <statement id="getT07_user_identityUrgeList" parameterClass="java.lang.String" resultClass="java.lang.String"> 
+		SELECT SUBORGANKEY FROM T87_ORGAN_MAP A WHERE A.ORGANKEY = #organkey#
+  	</statement>
+
+  	<statement id="getT07_user_identityUrgeCount" parameterClass="com.ist.aml.offs_report.dto.T07_user_identityUrge" resultClass="java.lang.String"> 
+		SELECT DISTINCT ORGANKEY
+	<isEqual property="identitytype" compareValue="1">
+		FROM T07_USER_IDENTITY A
+	</isEqual>
+	<isEqual property="identitytype" compareValue="2">
+		FROM T07_USER_REIDENTITY A
+	</isEqual>
+	<isEqual property="identitytype" compareValue="3">
+		FROM T07_DUBIETY_IDENTITY A
+	</isEqual>
+	<isEqual property="identitytype" compareValue="4">
+		FROM T07_REPORT_STATISTIC A
+	</isEqual>
+	<dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND" property="startdate">
+			<![CDATA[A.STATISTICDATE = #startdate#]]>
+		</isNotEmpty>
+	    <isNotEmpty prepend="AND" property="underOrganList">
+		    A.ORGANKEY IN
+		    <iterate prepend="" property="underOrganList" open="(" close=")" conjunction=",">
+					#underOrganList[]#
+			</iterate>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+				A.ORGANKEY IN ($organkey$)
+			</isNotEmpty>
+		<isNotEmpty prepend="AND" property="status_arrayList">
+		    A.STATUS_CD IN
+		    <iterate prepend="" property="status_arrayList" open="("
+					close=")" conjunction=",">
+					#status_arrayList[]#
+			</iterate>
+		</isNotEmpty>
+	 </dynamic>
+  </statement>
+
+  <statement id="getUnderOganList" parameterClass="java.util.List" resultClass="com.ist.aml.offs_report.dto.T07_user_identityUrge"> 
+		SELECT ORGANKEY,ORGANNAME,ORGANMANAGER,TELEPHONE FROM T00_ORGAN A WHERE A.ORGANKEY IN
+		<iterate open="(" close=")" conjunction=",">
+			#[]#
+		</iterate>
+		order by organkey
+  </statement>
+  
+  <statement id="getT07_user_identityUrgeCount1" parameterClass="com.ist.aml.offs_report.dto.T07_user_identityUrge" resultClass="int"> 
+		SELECT COUNT(DISTINCT ORGANKEY)
+	<isEqual property="identitytype" compareValue="1">
+		FROM T07_USER_IDENTITY A
+	</isEqual>
+	<isEqual property="identitytype" compareValue="2">
+		FROM T07_USER_REIDENTITY A
+	</isEqual>
+	<isEqual property="identitytype" compareValue="3">
+		FROM T07_DUBIETY_IDENTITY A
+	</isEqual>
+	<isEqual property="identitytype" compareValue="4">
+		FROM T07_REPORT_STATISTIC A
+	</isEqual>
+	<dynamic prepend="WHERE">
+        <isNotEmpty prepend="AND" property="startdate">
+			<![CDATA[A.STATISTICDATE = #startdate#]]>
+		</isNotEmpty>
+	    <isNotEmpty prepend="AND" property="underOrganList">
+		    A.ORGANKEY IN
+		    <iterate prepend="" property="underOrganList" open="(" close=")" conjunction=",">
+					#underOrganList[]#
+			</iterate>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+				A.ORGANKEY IN ($organkey$)
+			</isNotEmpty>
+		<isNotEmpty prepend="AND" property="status_arrayList">
+		    A.STATUS_CD IN
+		    <iterate prepend="" property="status_arrayList" open="("
+					close=")" conjunction=",">
+					#status_arrayList[]#
+			</iterate>
+		</isNotEmpty>
+	 </dynamic>
+  </statement>
+  
+  <statement id="getT07_user_identityUrge_organList" parameterClass="com.ist.aml.offs_report.dto.T07_user_identityUrge" resultClass="com.ist.aml.offs_report.dto.T07_user_identityUrge"> 
+		SELECT ORGANKEY,ORGANNAME,ORGANMANAGER,TELEPHONE FROM T00_ORGAN A 
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="organstr">
+        	ORGANKEY IN ( $organstr$ )
+    	</isNotEmpty>
+		</dynamic>
+  </statement>
+  
+  <statement id="getT07_user_identityUrge_organListCount" parameterClass="com.ist.aml.offs_report.dto.T07_user_identityUrge" resultClass="int"> 
+		SELECT COUNT(ORGANKEY) FROM T00_ORGAN A 
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="organstr">
+        	ORGANKEY IN ( $organstr$ )
+    	</isNotEmpty>
+		</dynamic>
+  </statement>
+</sqlMap> 

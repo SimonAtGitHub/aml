@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T00_system">
+  <statement id="getT00_systemList" parameterClass="com.ist.platform.dto.T00_system" resultClass="com.ist.platform.dto.T00_system">
+  SELECT SYSTEMKEY,SYSTEMNAME,SYSTEMDESC,FLAG,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER,HOMEPAGE FROM T00_SYSTEM
+  ORDER BY SYSTEMKEY
+  </statement>
+
+  <statement id="getT00_systemListCount" parameterClass="com.ist.platform.dto.T00_system" resultClass="int">
+  SELECT COUNT(*) FROM T00_SYSTEM
+  </statement>
+
+  <statement id="insertT00_system" parameterClass="com.ist.platform.dto.T00_system" resultClass="int">
+  INSERT INTO T00_SYSTEM(
+  SYSTEMKEY,SYSTEMNAME,SYSTEMDESC,FLAG,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER,HOMEPAGE
+  ) VALUES(
+  #systemkey#,#systemname#,#systemdesc#,#flag#,#createdate#,#creator#,#modifydate#,#modifier#,#homepage#
+  )
+  </statement>
+
+  <statement id="modifyT00_system" parameterClass="com.ist.platform.dto.T00_system" resultClass="int">
+  UPDATE T00_SYSTEM SET
+  SYSTEMKEY=#systemkey#,SYSTEMNAME=#systemname#,SYSTEMDESC=#systemdesc#,FLAG=#flag#,CREATEDATE=#createdate#,CREATOR=#creator#,MODIFYDATE=#modifydate#,MODIFIER=#modifier#,HOMEPAGE=#homepage#
+  WHERE SYSTEMKEY=#systemkey#
+  </statement>
+
+  <statement id="deleteT00_system" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T00_SYSTEM WHERE SYSTEMKEY=#value#
+  </statement>
+
+  <statement id="getT00_systemDisp" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_system">
+  SELECT * FROM T00_SYSTEM WHERE SYSTEMKEY=#value#
+  </statement>
+</sqlMap>
+

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<objects xmlns="http://www.springactionscript.org/schema/objects" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springactionscript.org/schema/objects http://www.springactionscript.org/schema/objects/spring-actionscript-objects-1.0.xsd">
+
+	<!--
+		===================================================================
+	-->
+	<!--
+		所有命令定义
+	-->
+	<!--
+		===================================================================
+	-->
+			
+	
+	<!-- 动态获取查询结果对象 -->
+	<object id="getDynamicDataCommand" class="com.ist.mfa.command.GetDynamicDataCommand" scope="prototype">
+		<constructor-arg ref="getDynamicDataDelegate"/>
+		<constructor-arg ref="modelLocator"/>
+	</object>
+		
+	
+	<object id="initializeMFADataCommand" class="com.ist.mfa.command.InitializeMFADataCommand" scope="prototype">
+		<constructor-arg ref="initializeMFADataDelegate"/>
+		<constructor-arg ref="modelLocator"/>
+	</object>
+	
+	<object id="saveMFADataCommand" class="com.ist.mfa.command.SaveMFADataCommand" scope="prototype">
+		<constructor-arg ref="saveMFADataDelegate"/>
+		<constructor-arg ref="modelLocator"/>
+	</object>
+	
+	<object id="saveAsMFADataCommand" class="com.ist.mfa.command.SaveAsMFADataCommand" scope="prototype">
+		<constructor-arg ref="saveMFADataDelegate"/>
+		<constructor-arg ref="modelLocator"/>
+	</object>
+	
+	<object id="saveAsRELDataCommand" class="com.ist.mfa.command.SaveAsRELDataCommand" scope="prototype">
+		<constructor-arg ref="saveMFADataDelegate"/>
+		<constructor-arg ref="modelLocator"/>
+	</object>
+	
+	<object id="exportDataCommand" class="com.ist.mfa.command.ExportDataCommand" scope="prototype">
+		<constructor-arg ref="exportDataDelegate"/>
+		<constructor-arg ref="modelLocator"/>
+	</object>
+	
+	<!-- 动态获取查询结果对象 -->
+	<object id="getAccountingEntryCommand" class="com.ist.mfa.command.GetAccountingEntryCommand" scope="prototype">
+		<constructor-arg ref="getAccountingEntryDelegate"/>
+		<constructor-arg ref="modelLocator"/>
+	</object>	
+	
+	<!-- 账户相关处理 -->
+	<object id="accountCommand" class="com.ist.mfa.command.AccountCommand" scope="prototype">
+		<property name="modelLocator" ref="modelLocator" />
+	</object>
+	
+	<!-- 添加账户 -->
+	<object id="addAccountCommand" class="com.ist.mfa.command.AddAccountCommand" scope="prototype">
+		<property name="modelLocator" ref="modelLocator" />
+	</object>
+	
+	<!-- 删除账户 -->
+	<object id="deleteAccountCommand" class="com.ist.mfa.command.DeleteAccountCommand" scope="prototype">
+		<property name="modelLocator" ref="modelLocator" />
+	</object>
+	
+	<!-- 交易相关处理 -->
+	<object id="transactionCommand" class="com.ist.mfa.command.TransactionCommand" scope="prototype">
+		<property name="modelLocator" ref="modelLocator" />
+	</object>
+	
+	<!-- 反洗钱交易相关处理 -->
+	<object id="amlTransactionCommand" class="com.ist.mfa.command.AMLTransactionCommand" scope="prototype">
+		<property name="modelLocator" ref="modelLocator" />
+	</object>
+	
+	<!-- 查找相关处理 -->
+	<object id="searchCommand" class="com.ist.mfa.command.SearchCommand" scope="prototype">
+		<property name="modelLocator" ref="modelLocator" />
+	</object>
+	
+</objects>

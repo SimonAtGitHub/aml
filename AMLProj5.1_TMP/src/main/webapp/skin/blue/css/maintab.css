@@ -1,0 +1,38 @@
+/****************************** Public style ****************************/
+* {
+    scrollbar-arrow-color:#98BAD2; scrollbar-face-color:#E3F1FB; scrollbar-darkshadow-color:#98BAD2; scrollbar-highlight-color:#E3F1FB;
+	scrollbar-3dlight-color:#98BAD2; scrollbar-shadow-color:#E3F1FB; scrollbar-track-color:#E3F1FB; 
+} 
+form,iframe,div,ul,li,dl,dt,dd,p,h1,h2,h3,span,strong,a { padding:0; margin:0; list-style:none; }
+body                         { overflow:auto; background:#E2F1F8 url(../images/report_body_bg01.gif) top repeat-x; font-size:14px; margin:0 auto; padding:0; color:#333; font-family:'ËÎÌו'; }
+img                          { border:0; }
+a,img,input                  { hide-focus:expression(this.hideFocus=true); /* for ie 5+ */outline:none; /* for firefox 1.5 + */ }
+a                            { font-size:14px; text-decoration:none; color:#333; }
+a:hover                      { color:#0995D0; }
+
+.maintab_scroll { overflow:hidden; margin:auto; position:relative; width:100%; }
+
+.hand_l,.hand_r{ height:26px; width:16px; position:absolute; top:4px; z-index:99; cursor:pointer; display:none; }
+.hand_l{ background:url(../images/toolswindow/tab-hand_l.gif) no-repeat right; left:0; }
+.hand_r{ background:url(../images/toolswindow/tab-hand_r.gif) no-repeat left; right:0; }
+
+.maintab_menu   { font-size:14px; padding:6px 0 0 6px; height:26px; position:relative; left:0; background: url(../images/toolswindow/tab-line.gif) bottom repeat-x; width:6000px; overflow:hidden; }
+
+.maintab_menu a,.maintab_menu a span,.maintab_menu a strong { display:inline-block; zoom:1; *display:inline; height:26px; cursor:pointer } 
+
+.maintab_menu a { float:left; position:relative; background:url(../images/toolswindow/tab-bgl.gif) no-repeat left top; padding-left:3px; margin-right:3px; }
+
+.maintab_menu a span { background:url(../images/toolswindow/tab-bgr.gif) no-repeat right top; padding:0 24px 0 6px; line-height:26px; }
+
+.maintab_menu a.link_menu { background-position: left bottom; }
+.maintab_menu a.link_menu span { background-position: right bottom; }
+
+.maintab_menu a strong { width:11px; height:16px; position:absolute; right:6px; top:5px; background:url(../images/toolswindow/tab-close.gif) no-repeat center center; }
+.maintab_menu a strong.closeacitve { background-image: url(../images/toolswindow/tab-close-active.gif); }
+
+.maintab_iframe,.maintab_iframe div { height:100%; margin:auto; }
+
+html,body,.maintab_iframe div iframe { height:100%; }
+
+html,body { overflow:hidden; }
+

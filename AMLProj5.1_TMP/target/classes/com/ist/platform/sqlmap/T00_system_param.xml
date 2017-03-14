@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T00_system_param"> 
+  <statement id="getT00_system_paramList" parameterClass="com.ist.platform.dto.T00_system_param" resultClass="com.ist.platform.dto.T00_system_param"> 
+  select paramtype,paramkey,paramvalue,des from t00_system_param 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="paramtype"> 
+    paramtype = #paramtype# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT00_system_paramListCount" parameterClass="com.ist.platform.dto.T00_system_param" resultClass="int"> 
+  select count(*) from t00_system_param 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="paramtype"> 
+    paramtype = #paramtype# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT00_system_param" parameterClass="com.ist.platform.dto.T00_system_param" resultClass="int"> 
+  insert into T00_system_param(
+  paramtype,paramkey,paramvalue
+  ) values(
+  #paramtype#,#paramkey#,#paramvalue#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT00_system_param" parameterClass="com.ist.platform.dto.T00_system_param" resultClass="int"> 
+  update T00_system_param set 
+  paramvalue=#paramvalue#
+  where paramtype='1'
+  and paramkey=#paramkey# 
+  </statement> 
+  
+  <statement id="modifyT00_system_param2" parameterClass="com.ist.platform.dto.T00_system_param" resultClass="int"> 
+  update T00_system_param set 
+  paramvalue=#paramvalue#
+  where paramtype='2'
+  and paramkey=#paramkey# 
+  </statement>
+  
+  <statement id="modifyT00_system_param3" parameterClass="com.ist.platform.dto.T00_system_param" resultClass="int"> 
+  update T00_system_param set 
+  paramvalue=#paramvalue#
+  where paramtype='3'
+  and paramkey=#paramkey# 
+  </statement>
+  
+   <statement id="modifyT00_system_param4" parameterClass="com.ist.platform.dto.T00_system_param" resultClass="int"> 
+  update T00_system_param set 
+  paramvalue=#paramvalue#
+  where paramkey=#paramkey#  and paramtype=#paramtype#
+  </statement>
+  
+  <statement id="updateT00_system_param" parameterClass="com.ist.platform.dto.T00_system_param" resultClass="int"> 
+  update T00_system_param set 
+  paramvalue=null
+  where paramtype='3'
+  and paramkey!=#paramkey# 
+  </statement>         
+ 
+  <statement id="deleteT00_system_param" parameterClass="com.ist.platform.dto.T00_system_param" resultClass="int">
+  delete from T00_system_param where paramtype=#paramtype# and paramkey=#paramkey#
+  </statement> 
+
+  <statement id="getT00_system_paramDisp" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_system_param"> 
+  select paramvalue from T00_system_param where paramtype='3' and paramkey=#paramkey#
+  </statement> 
+ 
+  <statement id="getT00_system_paramDisp1" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_system_param"> 
+  select paramvalue from T00_system_param where paramtype='1' and paramkey=#paramkey#
+  </statement> 
+
+  <statement id="getT00_system_paramDisp2" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_system_param"> 
+  select paramvalue from T00_system_param where paramtype='2' and paramkey=#paramkey#
+  </statement> 
+  
+  <statement id="getT00_system_paramDisp3" parameterClass="com.ist.platform.dto.T00_system_param" resultClass="com.ist.platform.dto.T00_system_param"> 
+  select paramvalue from T00_system_param where paramtype=#paramtype# and paramkey=#paramkey#
+  </statement> 
+  
+  <statement id="getT00_system_paramValue" parameterClass="java.lang.String" resultClass="java.lang.String"> 
+  select paramvalue from T00_system_param where paramtype='3' and paramkey=#paramkey#
+  </statement>  
+    
+  <statement id="getT00_system_paramStatus" parameterClass="java.lang.String" resultClass="java.lang.String"> 
+  select des from t00_system_param where paramtype=#paramtype# and paramvalue is not null 
+  </statement>  
+  
+  <statement id="modifyT00_system_ruledistr_param"
+		parameterClass="com.ist.platform.dto.T00_system_param"
+		resultClass="int">
+		update T00_system_param set
+		paramtype=#paramtype#,paramkey=#paramkey#,paramvalue=#paramvalue#
+		where paramtype=#paramtype# and paramkey=#paramkey#
+  </statement>
+
+  <statement id="ssp_insertT00_system_param" parameterClass="com.ist.platform.dto.T00_system_param" resultClass="int"> 
+        insert into T00_system_param(
+        paramtype,paramkey,paramvalue,des
+        ) values(
+        #paramtype#,#paramkey#,#paramvalue#,#des#
+        ) 
+  </statement> 
+
+</sqlMap> 
+

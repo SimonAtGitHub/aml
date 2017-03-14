@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T13_relation_net">
+	<statement id="getT13_relation_netList" parameterClass="com.ist.mfa.dto.T13_rel_info"
+		resultClass="com.ist.mfa.dto.T13_rel_info">
+		SELECT * FROM T13_rel_info
+	  <dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="net_name">
+			NET_NAME like '%'||#net_name#||'%'
+	    </isNotEmpty>
+	    
+		<isNotEmpty prepend="AND" property="party_id">
+			NET_ID IN (	SELECT DISTINCT NET_ID 
+						  FROM t13_nd_acct 
+						 WHERE PARTY_ID =#party_id#
+					   )
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="createdate_start">
+	     <![CDATA[createdate >= #createdate_start#]]> 
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="createdate_end">
+	     <![CDATA[createdate <= #createdate_end#]]>
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organ">
+			organ IN ($organ$)
+	    </isNotEmpty>
+	 </dynamic>
+	</statement>
+	<statement id="getT13_relation_netCount" parameterClass="com.ist.mfa.dto.T13_rel_info"
+		resultClass="int">
+		SELECT count(*) FROM T13_REL_info
+	  <dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="net_name">
+			NET_NAME like '%'||#net_name#||'%'
+	          </isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			NET_ID IN (	SELECT DISTINCT NET_ID 
+						  FROM t13_nd_acct 
+						 WHERE PARTY_ID =#party_id#
+					   )
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="createdate_start">
+	     <![CDATA[createdate >= #createdate_start#]]> 
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="createdate_end">
+	     <![CDATA[createdate <= #createdate_end#]]>
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organ">
+			organ IN ($organ$)
+	    </isNotEmpty>
+	 </dynamic>
+	</statement>
+    <statement id="deleteT13_rel_infos" parameterClass="String"
+		resultClass="int">
+		delete from T13_rel_info where NET_id in ($value$)
+    </statement>
+    
+     <statement id="deleteT13_edges" parameterClass="String"
+		resultClass="int">
+		delete from T13_edge where NET_id in ($value$)
+    </statement>
+    
+    <statement id="deleteT13_edge_relations" parameterClass="String"
+		resultClass="int">
+		delete from T13_EDGE_RELATION where NET_id in ($value$)
+    </statement>
+    
+    <statement id="deleteT13_nodes" parameterClass="String"
+		resultClass="int">
+		delete from T13_node where NET_id in ($value$)
+    </statement>
+    
+    <statement id="deleteT13_nd_accts" parameterClass="String"
+		resultClass="int">
+		delete from T13_nd_acct where NET_id in ($value$)
+    </statement>
+    
+</sqlMap>
+

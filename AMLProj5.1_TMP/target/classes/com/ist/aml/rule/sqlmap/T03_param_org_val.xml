@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T03_param_org_val">
+	<statement id="getT03_param_org_valList"
+		parameterClass="com.ist.aml.rule.dto.T03_param_org_val"
+		resultClass="com.ist.aml.rule.dto.T03_param_org_val">
+		select d.tplakey, d.PARMVALKEY, d.ORGANKEY, d.organname, c.PARAM ,c.param2 
+		  from (select	a.tplakey, a.PARMVALKEY, b.ORGANKEY, b.organname 
+		          from T03_PARAM_ORG a, t00_organ b where 1=1
+				  <isNotEmpty prepend="and" property="organkey">
+						b.uporgankey = #organkey#
+				  </isNotEmpty>	) d 
+		  left join T03_PARAM_ORG_VAL c on d.ORGANKEY = c.ORGANKEY and d.PARMVALKEY = c.PARMVALKEY
+		  <dynamic prepend="where">
+			<isNotEmpty prepend="and" property="parmvalkey">
+				d.parmvalkey = #parmvalkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="tplakey">
+				d.tplakey = #tplakey#
+			</isNotEmpty>							
+		  </dynamic>
+		  order by ORGANKEY,ORGANNAME
+	</statement>
+	
+	
+	<statement id="getT03_param_org_valListTop"
+		parameterClass="com.ist.aml.rule.dto.T03_param_org_val"
+		resultClass="com.ist.aml.rule.dto.T03_param_org_val">
+		select d.tplakey, d.PARMVALKEY, d.ORGANKEY, d.organname, c.PARAM ,c.param2 
+		  from (select	a.tplakey, a.PARMVALKEY, b.ORGANKEY, b.organname 
+		          from T03_PARAM_ORG a, t00_organ b where 1=1
+				  <isNotEmpty prepend="and" property="organkey">
+						b.organkey = #organkey#
+				  </isNotEmpty>	) d 
+		  left join T03_PARAM_ORG_VAL c on d.ORGANKEY = c.ORGANKEY and d.PARMVALKEY = c.PARMVALKEY
+		  <dynamic prepend="where">
+			<isNotEmpty prepend="and" property="parmvalkey">
+				d.parmvalkey = #parmvalkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="tplakey">
+				d.tplakey = #tplakey#
+			</isNotEmpty>							
+		  </dynamic>
+	</statement>
+
+	<statement id="insertT03_param_org_val"
+		parameterClass="com.ist.aml.rule.dto.T03_param_org_val"
+		resultClass="int">
+		insert into T03_param_org_val( parmvalkey,tplakey,organkey,param,param2) 
+			 select '$parmvalkey$', '$tplakey$', b.organkey,  '$param$','$param2$'  from t00_organ a, T00_ORGAN_DIM b  
+		      where a.organkey=#organkey# and a.organkey=b.LEVEL_CODE_1
+	</statement>
+	<statement id="insertT03_param_org_valIsAll"
+		parameterClass="com.ist.aml.rule.dto.T03_param_org_val"
+		resultClass="int">
+		insert into T03_param_org_val( parmvalkey,tplakey,organkey,param,param2) 
+			 select '$parmvalkey$', '$tplakey$', b.organkey,  '$param$','$param2$'  from t00_organ a, T00_ORGAN_DIM b  
+		      where a.organkey=#organkey# and a.organkey=b.LEVEL_CODE_0
+		      UNION
+				SELECT '$parmvalkey$', '$tplakey$',ORGANKEY,  '$param$','$param2$'
+				FROM
+				t00_organ where ORGANKEY = #organkey#
+	</statement>
+	
+	<statement id="insertOrganValue"
+		parameterClass="com.ist.aml.rule.dto.T03_param_org_val"
+		resultClass="int">
+		insert into T03_param_org_val( parmvalkey,tplakey,organkey,param,param2) 
+		values (#parmvalkey#, #tplakey#, #organkey#, #param#,#param2#)
+	</statement>
+		
+
+	<statement id="modifyT03_param_org_val"
+		parameterClass="com.ist.aml.rule.dto.T03_param_org_val"
+		resultClass="int">
+		update T03_param_org_val set
+		parmvalkey=#parmvalkey#,tplakey=#tplakey#,organkey=#organkey#,param=#param#,param2=#param2#
+		where parmvalkey=#parmvalkey#
+	</statement>
+
+	<statement id="deleteT03_param_org_val"
+		parameterClass="com.ist.aml.rule.dto.T03_param_org_val" resultClass="int">
+		delete from T03_param_org_val where parmvalkey=#parmvalkey# and tplakey = #tplakey# 
+	</statement>
+
+	<statement id="getT03_param_org_valDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.rule.dto.T03_param_org_val">
+		select * from T03_param_org_val where parmvalkey=#value#
+	</statement>
+	<statement id="getT03_param_bsnList"
+		parameterClass="com.ist.aml.rule.dto.T03_param_list"
+		resultClass="com.ist.aml.rule.dto.T03_param_list">
+		select * from T03_param_org_val d
+		  <dynamic prepend="where">
+			<isNotEmpty prepend="and" property="parmvalkey">
+				d.parmvalkey = #parmvalkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="tplakey">
+				d.tplakey = #tplakey#
+			</isNotEmpty>							
+		  </dynamic>
+	</statement>
+	<statement id="getT03_param_org_valListByT03_param_org"
+		parameterClass="com.ist.aml.rule.dto.T03_param_org"
+		resultClass="com.ist.aml.rule.dto.T03_param_org_val">
+		select * from T03_param_org_val d
+		  <dynamic prepend="where">
+			<isNotEmpty prepend="and" property="parmvalkey">
+				d.parmvalkey = #parmvalkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="tplakey">
+				d.tplakey = #tplakey#
+			</isNotEmpty>							
+		  </dynamic>
+	</statement>
+	<statement id="deleteT03_param_org3_val"
+		parameterClass="com.ist.aml.rule.dto.T03_param_org_val" resultClass="int">
+		delete from T03_param_org_val where parmvalkey=#parmvalkey# and tplakey = #tplakey# and organkey in (select organkey from t00_organ where uporgankey = #organkey#)
+	</statement>
+	<statement id="insertT03_param_org3_val"
+		parameterClass="com.ist.aml.rule.dto.T03_param_org_val"
+		resultClass="int">
+		insert into T03_param_org_val( parmvalkey,tplakey,organkey,param,param2) 
+			 select '$parmvalkey$', '$tplakey$', b.organkey,  '$param$','$param2$'  from t00_organ a, T00_ORGAN_DIM b  
+		      where a.organkey=#organkey# and a.organkey=b.LEVEL_CODE_2
+	</statement>
+</sqlMap>
+

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_article_history"> 
+  <statement id="getT12_article_historyList" parameterClass="com.ist.cms.dto.T12_article_history" resultClass="com.ist.cms.dto.T12_article_history"> 
+  select programakey,articlekey,replykey from t12_article_history 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="programakey"> 
+    programakey = #programakey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT12_article_historyListCount" parameterClass="com.ist.cms.dto.T12_article_history" resultClass="int"> 
+  select count(*) from t12_article_history 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="programakey"> 
+    programakey = #programakey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+  
+  <statement id="insertT12_article_history" parameterClass="com.ist.cms.dto.T12_article_history" resultClass="int"> 
+  insert into T12_article_history(
+  programakey,articlekey,replykey
+  ) values(
+  #programakey#,#articlekey#,#replykey#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_article_history" parameterClass="com.ist.cms.dto.T12_article_history" resultClass="int"> 
+  update T12_article_history set 
+  programakey=#programakey#,articlekey=#articlekey#,replykey=#replykey#
+  where programakey=#programakey# 
+  </statement> 
+  
+  <statement id="deleteT12_article_history" parameterClass="com.ist.cms.dto.T12_article_history" resultClass="int">
+  delete from T12_article_history 
+  where  programakey = #programakey# and articlekey = #articlekey# 
+  </statement>
+ 
+  <statement id="getT12_article_historyDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_article_history"> 
+  select * from T12_article_history where programakey=#value# 
+  </statement> 
+ 
+</sqlMap> 
+

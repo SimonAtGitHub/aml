@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	
+	<bean id="t31_def_tempDAO" parent="baseDAO" class="com.ist.aml.newrisk.dao.T31_def_tempDAO" ></bean>
+	<bean id="t31_def_gsDAO" parent="baseDAO" class="com.ist.aml.newrisk.dao.T31_def_gsDAO" ></bean>
+	<bean id="t37_party_resultDAO" parent="baseDAO" class="com.ist.aml.newrisk.dao.T37_party_resultDAO" ></bean>
+	<bean id="t37_party_result_uhDAO" parent="baseDAO" class="com.ist.aml.newrisk.dao.T37_party_result_uhDAO" ></bean>
+	<bean id="t37_risk_attachDAO" parent="baseDAO" class="com.ist.aml.newrisk.dao.T37_risk_attachDAO" ></bean>
+	<bean id="t31_count_ruleDAO" parent="baseDAO" class="com.ist.aml.newrisk.dao.T31_count_ruleDAO" ></bean>
+	<bean id="t31_risk_levelDAO" parent="baseDAO" class="com.ist.aml.newrisk.dao.T31_risk_levelDAO" ></bean>
+	<bean id="t31_def_elementDAO" parent="baseDAO" class="com.ist.aml.newrisk.dao.T31_def_elementDAO" ></bean>
+	
+	
+	<bean id="t37_risk_attach_rateDAO" parent="baseDAO" class="com.ist.aml.risk_rate.dao.T37_risk_attachDAO" ></bean>
+	<bean id="t37_help_checkDAO" parent="baseDAO" class="com.ist.aml.risk_rate.dao.T37_help_checkDAO" ></bean>
+	<bean id="t37_party_result_rateDAO" parent="baseDAO" class="com.ist.aml.risk_rate.dao.T37_party_resultDAO" ></bean>
+
+</beans>

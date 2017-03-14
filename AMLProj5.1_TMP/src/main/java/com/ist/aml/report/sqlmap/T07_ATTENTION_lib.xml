@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T07_ATTENTION_lib">
+	<statement id="getT07_ATTENTION_libList" parameterClass="com.ist.aml.report.dto.T07_ATTENTION_lib"
+		resultClass="com.ist.aml.report.dto.T07_ATTENTION_lib">
+		select
+		atten_id,party_id,party_chn_name,party_class_cd,organkey,atten_type,status,create_dt,invalid_dt,delete_dt,card_type,card_no,atten_source,atten_post,add_post,extend_num
+		from 
+       
+         <isEqual property="is_his" compareValue="all">
+		     v07_attention_lib t
+		</isEqual>
+       <isNotEqual  property="is_his" compareValue="all">
+			<isEqual property="is_his" compareValue="1">
+			     t07_attention_lib_uh t
+			</isEqual>
+			 <isNotEqual  property="is_his" compareValue="1">
+			     t07_attention_lib t
+			</isNotEqual >
+		</isNotEqual>
+		<dynamic prepend="where">
+		    <isNotEmpty prepend="and" property="atten_post">
+		        <isNotEqual  property="atten_post" compareValue="P5">
+				   t.atten_post = #atten_post# 
+				</isNotEqual>
+    		</isNotEmpty>
+    		
+    		<isNotEmpty prepend="and" property="atten_type">
+				t.atten_type = #atten_type# 
+    		</isNotEmpty>
+    		<isNotEmpty prepend="and" property="atten_source">
+				t.atten_source = #atten_source# 
+    		</isNotEmpty>
+    		<isNotEmpty prepend="and" property="status">
+				t.status = #status# 
+    		</isNotEmpty>
+    		
+			<isNotEmpty prepend="and" property="party_id">
+				t.party_id = #party_id# 
+    		</isNotEmpty>
+    		
+    		<isNotEmpty prepend="and" property="party_chn_name">
+				t.party_chn_name like '%'|| #party_chn_name# ||'%'
+    		</isNotEmpty>
+    		
+    		<isNotEmpty prepend="and" property="party_class_cd">
+				t.party_class_cd = #party_class_cd# 
+    		</isNotEmpty>
+    		
+    		<isNotEmpty prepend="and" property="invalid_dt_begin">
+				<![CDATA[ invalid_dt >= #invalid_dt_begin#]]>
+    		</isNotEmpty>
+    		
+    		
+    		<isNotEmpty prepend="and" property="invalid_dt_end">
+				<![CDATA[ invalid_dt <= #invalid_dt_end#]]>
+    		</isNotEmpty>
+    		
+    		<isNotEmpty prepend="and" property="organkey">
+				t.organkey = #organkey# 
+    		</isNotEmpty>
+    		
+    		<isNotEmpty prepend="and" property="organStr">
+				t.organkey in ($organStr$) 
+    		</isNotEmpty>
+    		
+    		<isEqual prepend="and" compareValue="P4" property="atten_post">
+    		   <![CDATA[  #curr_dt# <= invalid_dt ]]>
+    		</isEqual>
+		</dynamic>
+	</statement>
+
+	<statement id="getT07_ATTENTION_libListCount" parameterClass="com.ist.aml.report.dto.T07_ATTENTION_lib"
+		resultClass="int">
+		select count(*) from 
+         <isEqual property="is_his" compareValue="all">
+		     v07_attention_lib t
+		</isEqual>
+       <isNotEqual  property="is_his" compareValue="all">
+			<isEqual property="is_his" compareValue="1">
+			     t07_attention_lib_uh t
+			</isEqual>
+			 <isNotEqual  property="is_his" compareValue="1">
+			     t07_attention_lib t
+			</isNotEqual >
+		</isNotEqual>
+		<dynamic prepend="where">
+		    <isNotEmpty prepend="and" property="atten_post">
+		        <isNotEqual  property="atten_post" compareValue="P5">
+				   t.atten_post = #atten_post# 
+				</isNotEqual>
+    		</isNotEmpty>
+    		<isNotEmpty prepend="and" property="atten_type">
+				t.atten_type = #atten_type# 
+    		</isNotEmpty>
+    		<isNotEmpty prepend="and" property="atten_source">
+				t.atten_source = #atten_source# 
+    		</isNotEmpty>
+    		<isNotEmpty prepend="and" property="status">
+				t.status = #status# 
+    		</isNotEmpty>
+    		
+			<isNotEmpty prepend="and" property="party_id">
+				t.party_id = #party_id# 
+    		</isNotEmpty>
+    		
+    		<isNotEmpty prepend="and" property="party_chn_name">
+				t.party_chn_name like '%'|| #party_chn_name# ||'%'
+    		</isNotEmpty>
+    		
+    		<isNotEmpty prepend="and" property="party_class_cd">
+				t.party_class_cd = #party_class_cd# 
+    		</isNotEmpty>
+    		
+    		<isNotEmpty prepend="and" property="invalid_dt_begin">
+				<![CDATA[ invalid_dt >= #invalid_dt_begin#]]>
+    		</isNotEmpty>
+    		
+    		
+    		<isNotEmpty prepend="and" property="invalid_dt_end">
+				<![CDATA[ invalid_dt <= #invalid_dt_end#]]>
+    		</isNotEmpty>
+    		
+    		<isNotEmpty prepend="and" property="organkey">
+				t.organkey = #organkey# 
+    		</isNotEmpty>
+    		
+    		<isNotEmpty prepend="and" property="organStr">
+				t.organkey in ($organStr$) 
+    		</isNotEmpty>
+    	
+    	    <isEqual prepend="and" compareValue="P4" property="atten_post">
+    		    <![CDATA[  #curr_dt# <= invalid_dt ]]>
+    		</isEqual>
+		</dynamic>
+	</statement>
+
+	<statement id="insertT07_ATTENTION_lib" parameterClass="com.ist.aml.report.dto.T07_ATTENTION_lib"
+		resultClass="int">
+		insert into T07_ATTENTION_lib(
+		atten_id,party_id,party_chn_name,party_class_cd,organkey,atten_type,status,create_dt,invalid_dt,delete_dt,card_type,card_no,atten_source,atten_post,add_post,extend_num
+		) values(
+		#atten_id#,#party_id#,#party_chn_name#,#party_class_cd#,#organkey#,#atten_type#,#op_result#,#create_dt#,#invalid_dt#,#delete_dt#,#card_type#,#card_no#,#atten_source#,#target_post#,#add_post#,#extend_num#
+		) 
+  </statement>
+  
+  	<statement id="insertT07_ATTENTION_lib_from_case" parameterClass="com.ist.aml.report.dto.T07_ATTENTION_lib"
+		resultClass="int">
+		insert into T07_ATTENTION_lib(
+		atten_id,party_id,party_chn_name,party_class_cd,organkey,atten_type,status,create_dt,invalid_dt,delete_dt,card_type,card_no,atten_source,atten_post,add_post,extend_num) 
+		select 
+		#atten_id#,party_id,party_chn_name,party_class_cd,organkey,#atten_type#,#op_result#,#create_dt#,#invalid_dt#,#delete_dt#,substr(CARD_TYPE,1,2),card_no,#atten_source#,#target_post#,#add_post#,#extend_num#
+		from t47_party where party_id=#party_id#
+		
+  </statement>
+  
+  
+  	<statement id="insertT07_ATTENTION_lib_uh" parameterClass="com.ist.aml.report.dto.T07_ATTENTION_lib"
+		resultClass="int">
+		insert into T07_ATTENTION_lib_uh(ATTEN_ID,PARTY_ID,PARTY_CHN_NAME,PARTY_CLASS_CD,ORGANKEY,ATTEN_TYPE,STATUS,CREATE_DT,INVALID_DT,DELETE_DT,CARD_TYPE,CARD_NO,ATTEN_SOURCE,ATTEN_POST,ADD_POST,EXTEND_NUM )
+		select ATTEN_ID,PARTY_ID,PARTY_CHN_NAME,PARTY_CLASS_CD,ORGANKEY,ATTEN_TYPE,#status#,CREATE_DT,INVALID_DT,#delete_dt#,CARD_TYPE,CARD_NO,ATTEN_SOURCE,#atten_post#,add_post,extend_num   from T07_ATTENTION_lib where atten_id in ($atten_id$)
+		
+  </statement>
+
+	<statement id="modifyT07_ATTENTION_lib" parameterClass="com.ist.aml.report.dto.T07_ATTENTION_lib"
+		resultClass="int">
+		update T07_ATTENTION_lib 
+		<dynamic prepend="set">
+			 <isNotEmpty prepend="," property="party_id">
+					party_id=#party_id#
+	    	 </isNotEmpty>
+	    	 <isNotEmpty prepend="," property="party_chn_name">
+					party_chn_name=#party_chn_name#
+	    	 </isNotEmpty>
+	    	 <isNotEmpty prepend="," property="party_class_cd">
+					party_class_cd=#party_class_cd#
+	    	 </isNotEmpty>
+	    	 <isNotEmpty prepend="," property="atten_type">
+					atten_type=#atten_type#
+	    	 </isNotEmpty>
+	    	 <isNotEmpty prepend="," property="organkey">
+					organkey=#organkey#
+	    	 </isNotEmpty>
+	    	 <isNotEmpty prepend="," property="op_result">
+					status=#op_result#
+	    	 </isNotEmpty>
+	    	  <isNotEmpty prepend="," property="invalid_dt">
+					invalid_dt=#invalid_dt#
+	    	 </isNotEmpty>
+	    	 <isNotEmpty prepend="," property="card_type">
+					card_type=#card_type#
+	    	 </isNotEmpty>
+	    	 <isNotEmpty prepend="," property="card_no">
+					card_no=#card_no#
+	    	 </isNotEmpty>
+	    	  <isNotEmpty prepend="," property="add_post">
+					add_post=#add_post#
+	    	 </isNotEmpty>
+	    	 <isNotEmpty prepend="," property="extend_num">
+					extend_num=#extend_num#
+	    	 </isNotEmpty>
+    	</dynamic>
+		where atten_id=#atten_id# 
+		
+  </statement>
+
+	<statement id="deleteT07_ATTENTION_lib" parameterClass="java.lang.String"
+		resultClass="int">
+		delete from T07_ATTENTION_lib where atten_id in ($value$)
+  </statement>
+
+	<statement id="getT07_ATTENTION_libDisp" parameterClass="com.ist.aml.report.dto.T07_ATTENTION_lib"
+		resultClass="com.ist.aml.report.dto.T07_ATTENTION_lib">
+		select atten_id,party_id,party_chn_name,party_class_cd,organkey,atten_type,status,create_dt,invalid_dt,delete_dt,card_type,card_no,atten_source,atten_post,add_post,extend_num
+		from 
+		  <isEqual property="is_his" compareValue="all">
+		     v07_attention_lib t
+		</isEqual>
+       <isNotEqual  property="is_his" compareValue="all">
+			<isEqual property="is_his" compareValue="1">
+			     t07_attention_lib_uh t
+			</isEqual>
+			 <isNotEqual  property="is_his" compareValue="1">
+			     t07_attention_lib t
+			</isNotEqual >
+		</isNotEqual>
+		 where atten_id=#atten_id# 
+  </statement>
+  
+  	<statement id="getOp_reason" parameterClass="com.ist.aml.report.dto.T07_ATTENTION_log"
+		resultClass="com.ist.aml.report.dto.T07_ATTENTION_log">
+		select ATTEN_ID,OP_TYPE,OP_PERSON,OP_TIME,OP_REASON  from t07_attention_log  t 
+	     where t.atten_id=#atten_id# and t.op_type in($op_type$)
+         order by op_time desc
+   </statement>
+  
+  
+  <statement id="modifyT07_ATTENTION_lib_status" parameterClass="com.ist.aml.report.dto.T07_ATTENTION_lib"
+		resultClass="int">
+		update T07_ATTENTION_lib t
+		<dynamic prepend="set">
+		    <isNotEmpty  prepend="," property="atten_post">
+				t.atten_post=#atten_post#
+    		</isNotEmpty> 
+    		<isNotEmpty  prepend="," property="status">
+				t.status=#status#
+    		</isNotEmpty>    		
+		</dynamic>
+		where t.atten_id in($atten_id$)
+  </statement>
+
+  <statement id="insertT07_ATTENTION_log" parameterClass="com.ist.aml.report.dto.T07_ATTENTION_log"
+		resultClass="int">
+		insert into t07_attention_log  (ATTEN_ID, OP_TYPE, OP_PERSON, OP_TIME
+		<isNotEmpty  prepend="," property="op_reason">
+				OP_REASON
+    		</isNotEmpty>       
+		)
+        select t.atten_id,#op_type#,#op_person#,#op_time#
+        <isNotEmpty  prepend="," property="op_reason">
+				#op_reason#
+    		</isNotEmpty>
+         from t07_attention_lib t where t.atten_id in ($atten_id$)
+
+  </statement>
+    <statement id="getT07_ATTENTION_logList" parameterClass="java.lang.String"
+		resultClass="com.ist.aml.report.dto.T07_ATTENTION_log">
+		select OP_TYPE, OP_PERSON, OP_TIME,OP_REASON from  T07_ATTENTION_log where atten_id=#value# order by OP_TIME 
+
+  </statement>
+  
+  <statement id="isExistParty_id" parameterClass="java.lang.String"
+		resultClass="int">
+		select count(*) from  T07_ATTENTION_lib where party_id=#value#
+
+  </statement>
+  
+
+</sqlMap> 
+

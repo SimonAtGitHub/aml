@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_se_file_db"> 
+  <statement id="getT12_se_file_dbList" parameterClass="com.ist.cms.dto.T12_se_file_db" resultClass="com.ist.cms.dto.T12_se_file_db"> 
+	select t.id,t.des,t.flag,t.setype,t.ishtml,t.block,t.sql,t.fields,t.url,t.createdate,t.creator,
+	CASE WHEN s.PROCESSDATE IS NULL THEN '' ELSE  s.PROCESSDATE END processdate
+	from t12_se_file_db t LEFT JOIN T12_SE_DB_STATUS s
+	ON t.id = s.ID where t.id NOT like'P%'
+  <dynamic prepend=""> 
+    <isNotEmpty prepend="and" property="id"> 
+    t.id = #id# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT12_se_file_dbListCount" parameterClass="com.ist.cms.dto.T12_se_file_db" resultClass="int"> 
+  select count(*)from t12_se_file_db t LEFT JOIN T12_SE_DB_STATUS s ON t.id = s.ID  where t.id NOT like'P%'
+  <dynamic prepend=""> 
+    <isNotEmpty prepend="and" property="id"> 
+    t.id = #id# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_se_file_db" parameterClass="com.ist.cms.dto.T12_se_file_db" resultClass="int"> 
+  insert into T12_se_file_db(
+  id,des,flag,setype,ishtml,block,sql,fields,url,createdate,creator
+  ) values(
+  #id#,#des#,#flag#,#setype#,#ishtml#,#block#,#sql#,#fields#,#url#,#createdate#,#creator#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_se_file_db" parameterClass="com.ist.cms.dto.T12_se_file_db" resultClass="int"> 
+  update T12_se_file_db set 
+  des=#des#,setype=#setype#,sql=#sql#,fields=#fields#,url=#url#,createdate=#createdate#,creator=#creator#
+  where id=#id# 
+  </statement> 
+ 
+  <statement id="deleteT12_se_file_db" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_se_file_db where id=#value# 
+  </statement> 
+ 
+  <statement id="getT12_se_file_dbDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_se_file_db"> 
+  select * from T12_se_file_db where id=#value# 
+  </statement> 
+  
+  
+  <statement id="getBlockList" parameterClass="com.ist.cms.dto.T12_se_file_db" resultClass="com.ist.cms.dto.T12_se_file_db"> 
+  
+     select t1.id,t1.des,t1.block from T12_se_file_db t1, T12_SE_DB_STATUS t2
+          where flag = '1' and block = #block# and t1.id = t2.id    
+     union
+     select id,des,block from T12_se_file_path 
+          where flag = '1' and block = #block#     
+     <!-- 
+     select id,des,block from T12_se_file_db
+       where flag = '1' and block = #block# 
+      -->  
+        
+  </statement> 
+  
+  <statement id="getBlockDisp" parameterClass="com.ist.cms.dto.T12_se_file_db" resultClass="com.ist.cms.dto.T12_se_file_db"> 
+     select id,des,block from T12_se_file_db where id = #id#
+     union
+     select id,des,block from T12_se_file_path where id = #id#
+     <!-- 
+      -->     
+  </statement>
+ 
+</sqlMap> 
+

@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+	<form-beans>
+	    <form-bean name="t47_partyActionForm"
+			type="com.ist.aml.information.controller.T47_partyActionForm" />
+		<form-bean name="t47_agreementActionForm" 
+			type="com.ist.aml.pbcreport.controller.T47_agreementActionForm"/>
+		<form-bean name="t47_opp_infoActionForm"
+			type="com.ist.aml.information.controller.T47_Opp_infoActionForm" />
+		<form-bean name="t47_OPP_bankActionForm"
+			type="com.ist.aml.information.controller.T47_OPP_bankActionForm" />
+			<form-bean name="t00_NOTICEActionForm"
+			type="com.ist.aml.information.controller.T00_NOTICEActionForm" />
+		<form-bean name="t07_supervise_msgActionForm" 
+		    type="com.ist.aml.information.controller.T07_Supervise_msgActionForm"/>
+	</form-beans>
+
+	<global-exceptions></global-exceptions>
+
+	<!-- global-forwards -->
+	<global-forwards type="org.apache.struts.action.ActionForward">
+		<forward name="failure" path="/../common/errors.jsp" />
+		<forward name="errors" path="/../common/errors.jsp" />
+		<forward name="nopower" path="/../common/nopower.jsp" />
+		<forward name="sessiontimeout"
+			path="/../common/sessiontimeout.jsp" />
+	</global-forwards>
+
+	<action-mappings>
+		<!-- party -->
+	    <action path="/client/t47_party_list"
+			parameter="getT47_partyList" name="t47_partyActionForm"
+			type="com.ist.aml.information.controller.T47_partyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/client/t47_party_list.jsp" />
+		</action>
+		<action path="/client/t47_party_disp"
+			parameter="getT47_partyDisp" name="t47_partyActionForm"
+			type="com.ist.aml.information.controller.T47_partyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/client/t47_party_disp.jsp" />
+		</action>
+		<action path="/client/t47_party_add" parameter="addT47_party"
+			name="t47_partyActionForm"
+			type="com.ist.aml.information.controller.T47_partyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/client/t47_party_add.jsp" />
+			<forward name="failure" path="/client/t47_party_list.do" />
+		</action>
+		<action path="/client/t47_party_add_do"
+			parameter="addT47_partyDo" name="t47_partyActionForm"
+			type="com.ist.aml.information.controller.T47_partyAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/client/t47_party_list.do" />
+			<forward name="failure" path="/client/t47_party_add.do" />
+		</action>
+		<action path="/client/t47_party_modify"
+			parameter="modifyT47_party" name="t47_partyActionForm"
+			type="com.ist.aml.information.controller.T47_partyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/client/t47_party_modify.jsp" />
+			<forward name="failure" path="/client/t47_party_list.do" />
+		</action>
+		<action path="/client/t47_party_modify_do"
+			parameter="modifyT47_partyDo" name="t47_partyActionForm"
+			type="com.ist.aml.information.controller.T47_partyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/client/t47_party_list.do" />
+			<forward name="failure" path="/client/t47_party_modify.do" />
+		</action>
+		<action path="/client/t47_party_modify1"
+			parameter="modify1T47_party" name="t47_partyActionForm"
+			type="com.ist.aml.information.controller.T47_partyAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/client/t47_party_modify1.jsp" />
+			<forward name="failure" path="/client/t47_party_list.do" />
+		</action>
+		<action path="/client/t47_party_modify1_do"
+			parameter="modify1T47_partyDo" name="t47_partyActionForm"
+			type="com.ist.aml.information.controller.T47_partyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/client/t47_party_list.do" />
+			<forward name="failure" path="/client/t47_party_modify1.do" />
+		</action>
+		
+		<!-- agreement -->
+		<action path="/client/t47_agreement_search"
+			parameter="searchT47_agreement" name="t47_agreementActionForm"
+			type="com.ist.aml.pbcreport.controller.T47_agreementAction"
+			validate="false" scope="request">
+			<forward name="success" path="/client/t47_agreement_list.jsp"/>
+		</action>
+		<action path="/client/t47_agreement_list"
+			parameter="getT47_agreementList" name="t47_agreementActionForm"
+			type="com.ist.aml.pbcreport.controller.T47_agreementAction"
+			validate="false" scope="request">
+			<forward name="success" path="/client/t47_agreement_list.jsp"/>
+		</action>
+		<action path="/client/t47_agreement_list_modify"
+			parameter="modifyT47_agreement" name="t47_agreementActionForm"
+			type="com.ist.aml.pbcreport.controller.T47_agreementAction"
+			validate="false" scope="request">
+			<forward name="success" path="/client/t47_agreement_modify.jsp"/>
+		</action>
+		<action path="/client/t47_agreement_list_modifyDo"
+		parameter="modifyT47_agreementDo" name="t47_agreementActionForm"
+			type="com.ist.aml.pbcreport.controller.T47_agreementAction"
+			validate="false" scope="request">
+			<forward name="success" path="/client/t47_agreement_list.do"/>
+		</action>
+		
+		
+		
+		
+		
+		
+		
+		<!-- opp_info -->
+		<action path="/oppinfo/t47_opp_info_list"
+			parameter="getT47_Opp_infoList" name="t47_opp_infoActionForm"
+			type="com.ist.aml.information.controller.T47_Opp_infoAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/oppinfo/t47_opp_info_list.jsp" />
+		</action>
+		<action path="/oppinfo/t47_opp_bank_list"
+			parameter="getT47_Opp_bankList" name="t47_OPP_bankActionForm"
+			type="com.ist.aml.information.controller.T47_OPP_bankAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/oppinfo/t47_opp_bank_list.jsp" />
+		</action>
+		<action path="/oppinfo/t47_opp_bank_add"
+			parameter="addT47_OPP_bank" name="t47_OPP_bankActionForm"
+			type="com.ist.aml.information.controller.T47_OPP_bankAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/oppinfo/t47_opp_bank_add.jsp" />
+			<forward name="failure"
+				path="/oppinfo/t47_opp_bank_list.do" />
+		</action>
+		<action path="/oppinfo/t47_opp_bank_add_do"
+			parameter="addT47_OPP_bankDo" name="t47_OPP_bankActionForm"
+			type="com.ist.aml.information.controller.T47_OPP_bankAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/oppinfo/t47_opp_bank_list.do" />
+			<forward name="failure" path="/oppinfo/t47_opp_bank_add.do" />
+		</action>
+		<action path="/oppinfo/t47_opp_bank_modify"
+			parameter="modifyT47_OPP_bank" name="t47_OPP_bankActionForm"
+			type="com.ist.aml.information.controller.T47_OPP_bankAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/oppinfo/t47_opp_bank_modify.jsp" />
+			<forward name="failure"
+				path="/oppinfo/t47_opp_bank_list.do" />
+		</action>
+
+		<action path="/oppinfo/t47_opp_bank_modify1"
+			parameter="modify1T47_OPP_bank" name="t47_OPP_bankActionForm"
+			type="com.ist.aml.information.controller.T47_OPP_bankAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/oppinfo/t47_opp_bank_modify.jsp" />
+			<forward name="failure"
+				path="/oppinfo/t47_opp_bank_list.do" />
+		</action>
+		<action path="/oppinfo/t47_opp_bank_modify_do"
+			parameter="modifyT47_OPP_bankDo" name="t47_OPP_bankActionForm"
+			type="com.ist.aml.information.controller.T47_OPP_bankAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/oppinfo/t47_opp_bank_list.do" />
+			<forward name="failure"
+				path="/oppinfo/t47_opp_bank_modify.do" />
+		</action>
+		<action path="/oppinfo/t47_opp_bank_delete_do"
+			parameter="deleteT47_OPP_bankDo" name="t47_OPP_bankActionForm"
+			type="com.ist.aml.information.controller.T47_OPP_bankAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/oppinfo/t47_opp_bank_list.do" />
+			<forward name="failure"
+				path="/oppinfo/t47_opp_bank_list.do" />
+		</action>
+		<action path="/oppinfo/t47_opp_info_add"
+			parameter="addT47_Opp_info" name="t47_opp_infoActionForm"
+			type="com.ist.aml.information.controller.T47_Opp_infoAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/oppinfo/t47_opp_info_add.jsp" />
+			<forward name="failure"
+				path="/oppinfo/t47_opp_info_list.do" />
+		</action>
+		<action path="/oppinfo/t47_opp_info_add_do"
+			parameter="addT47_Opp_infoDo" name="t47_opp_infoActionForm"
+			type="com.ist.aml.information.controller.T47_Opp_infoAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/oppinfo/t47_opp_info_list.do" />
+			<forward name="failure" path="/oppinfo/t47_opp_info_add.do" />
+		</action>
+		<action path="/oppinfo/t47_opp_info_modify"
+			parameter="modifyT47_Opp_info" name="t47_opp_infoActionForm"
+			type="com.ist.aml.information.controller.T47_Opp_infoAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/oppinfo/t47_opp_info_modify.jsp" />
+			<forward name="failure"
+				path="/oppinfo/t47_opp_info_list.do" />
+		</action>
+		<action path="/oppinfo/t47_opp_info_modify_do"
+			parameter="modifyT47_Opp_infoDo" name="t47_opp_infoActionForm"
+			type="com.ist.aml.information.controller.T47_Opp_infoAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/oppinfo/t47_opp_info_list.do" />
+			<forward name="failure"
+				path="/oppinfo/t47_opp_info_modify.do" />
+		</action>
+		<action path="/oppinfo/t47_opp_info_delete_do"
+			parameter="deleteT47_Opp_infoDo" name="t47_opp_infoActionForm"
+			type="com.ist.aml.information.controller.T47_Opp_infoAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/oppinfo/t47_opp_info_list.do" />
+			<forward name="failure"
+				path="/oppinfo/t47_opp_info_list.do" />
+		</action>
+		
+		
+		<!-- NOTICE -->
+		<action path="/t00_notice/t00_notice_list"
+			parameter="getT00_NOTICEList" name="t00_NOTICEActionForm"
+			type="com.ist.aml.information.controller.T00_NOTICEAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/t00_notice/t00_notice_list.jsp" />
+		</action>
+		<action path="/t00_notice/t00_notice_list1"
+			parameter="getT00_NOTICEList" name="t00_NOTICEActionForm"
+			type="com.ist.aml.information.controller.T00_NOTICEAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/t00_notice/t00_notice_list1.jsp" />
+		</action>
+		<action path="/t00_notice/t00_notice_list2"
+			parameter="getT00_NOTICEList" name="t00_NOTICEActionForm"
+			type="com.ist.aml.information.controller.T00_NOTICEAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/t00_notice/t00_notice_list2.jsp" />
+		</action>
+		<action path="/t00_notice/t00_notice_add"
+			parameter="addT00_NOTICE" name="t00_NOTICEActionForm"
+			type="com.ist.aml.information.controller.T00_NOTICEAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/t00_notice/t00_notice_add.jsp" />
+			<forward name="failure"
+				path="/t00_notice/t00_notice_list.do?newsearchflag=1" />
+		</action>
+		<action path="/t00_notice/t00_notice_add_do"
+			parameter="addT00_NOTICEDo" name="t00_NOTICEActionForm"
+			type="com.ist.aml.information.controller.T00_NOTICEAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/t00_notice/t00_notice_list.do?newsearchflag=1" />
+			<forward name="failure"
+				path="/t00_notice/t00_notice_add.do" />
+		</action>
+		<action path="/t00_notice/t00_notice_modify"
+			parameter="modifyT00_NOTICE" name="t00_NOTICEActionForm"
+			type="com.ist.aml.information.controller.T00_NOTICEAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/t00_notice/t00_notice_modify.jsp" />
+			<forward name="failure"
+				path="/t00_notice/t00_notice_modify.jsp" />
+		</action>
+		<action path="/t00_notice/t00_notice_modify_do"
+			parameter="modifyT00_NOTICEDo" name="t00_NOTICEActionForm"
+			type="com.ist.aml.information.controller.T00_NOTICEAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/t00_notice/t00_notice_list.do" />
+			<forward name="failure"
+				path="/t00_notice/t00_notice_modify.do" />
+		</action>
+		<action path="/t00_notice/t00_notice_delete_do"
+			parameter="deleteT00_NOTICEDo" name="t00_NOTICEActionForm"
+			type="com.ist.aml.information.controller.T00_NOTICEAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/t00_notice/t00_notice_list.do?newsearchflag=1" />
+			<forward name="failure"
+				path="/t00_notice/t00_notice_list.do?newsearchflag=1" />
+		</action>
+		<action path="/t00_notice/t00_notice_disp"
+			parameter="getT00_NOTICEDisp" name="t00_NOTICEActionForm"
+			type="com.ist.aml.information.controller.T00_NOTICEAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/t00_notice/t00_notice_disp.jsp" />
+		</action>
+		<!--start gongzuoduban -->
+         <action path="/t07_supervise_msg/t07_supervise_msg_list_do" parameter="getT07_Supervise_msgList_do" name="t07_supervise_msgActionForm" type="com.ist.aml.information.controller.T07_Supervise_msgAction" validate="false" scope="request"> 
+	            <forward name="success" path="/t07_supervise_msg/t07_supervise_msg_list_do.jsp"/> 
+         </action>
+         
+         <action path="/t07_supervise_msg/t07_supervise_msg_add" parameter="addT07_Supervise_msg" name="t07_supervise_msgActionForm" type="com.ist.aml.information.controller.T07_Supervise_msgAction" validate="false" scope="request"> 
+	           <forward name="success" path="/t07_supervise_msg/t07_supervise_msg_add.jsp"/> 
+	           <forward name="failure" path="/t07_supervise_msg/t07_supervise_msg_list.do"/> 
+         </action> 
+         <action path="/t07_supervise_msg/t07_supervise_msg_add_do" parameter="addT07_Supervise_msgDo" name="t07_supervise_msgActionForm" type="com.ist.aml.information.controller.T07_Supervise_msgAction" validate="false" scope="request"> 
+	           <forward name="success1" path="/t07_supervise_msg/t07_supervise_msg_list.do?msg_mode=1"/> 
+	           <forward name="success" path="/t07_supervise_msg/t07_supervise_msg_list_do.do"/> 
+	           <forward name="failure" path="/t07_supervise_msg/t07_supervise_msg_add.do"/> 
+        </action>
+        
+        
+        <action path="/t07_supervise_msg/t07_supervise_msg_list_export_do" parameter="exportT07_Supervise_msgList_do" name="t07_supervise_msgActionForm" type="com.ist.aml.information.controller.T07_Supervise_msgAction" validate="false" scope="request">
+    	       <forward name="success" path="/t07_supervise_msg/t07_supervise_msg_list_export_do.jsp"/>
+    	       <forward name="success1" path="/t07_supervise_msg/t07_supervise_msg_list_export_do1.jsp"/>
+    	       <forward name="success2" path="/t07_supervise_msg/t07_supervise_msg_list_export_do2.jsp"/>
+        </action> 
+         <!--start 督办管理 --> 
+        <action path="/t07_supervise_msg/t07_supervise_msg_list" parameter="getT07_Supervise_msgList" name="t07_supervise_msgActionForm" type="com.ist.aml.information.controller.T07_Supervise_msgAction" validate="false" scope="request"> 
+	             <forward name="success" path="/t07_supervise_msg/t07_supervise_msg_list.jsp"/> 
+        </action> 
+        
+        <action path="/t07_supervise_msg/t07_supervise_msg_delete_do" parameter="deleteT07_Supervise_msgDo" name="t07_supervise_msgActionForm" type="com.ist.aml.information.controller.T07_Supervise_msgAction" validate="false" scope="request"> 
+	             <forward name="success" path="/t07_supervise_msg/t07_supervise_msg_list.do"/> 
+                 <forward name="failure" path="/t07_supervise_msg/t07_supervise_msg_list.do"/> 
+        </action> 
+        
+        <action path="/t07_supervise_msg/t07_supervise_msg_list_export" parameter="exportT07_Supervise_msgList" name="t07_supervise_msgActionForm" type="com.ist.aml.information.controller.T07_Supervise_msgAction" validate="false" scope="request"> 
+	            <forward name="success" path="/t07_supervise_msg/t07_supervise_msg_list_export.jsp"/> 
+        </action>
+        
+        <action path="/t07_supervise_msg/t07_supervise_msg_detail" parameter="getT07_supervise_msg_detail" name="t07_supervise_msgActionForm" type="com.ist.aml.information.controller.T07_Supervise_msgAction" validate="false" scope="request"> 
+	            <forward name="success" path="/t07_supervise_msg/t07_supervise_msg_detail.jsp"/> 
+        </action>
+        <!--End 督办管理--> 
+        <!--start 督办查看 -->
+        <action path="/t07_supervise_msg/t07_supervise_msg_disp" parameter="getT07_Supervise_msgDisp" name="t07_supervise_msgActionForm" type="com.ist.aml.information.controller.T07_Supervise_msgAction" validate="false" scope="request"> 
+	           <forward name="success" path="/t07_supervise_msg/t07_supervise_msg_disp.jsp"/> 
+        </action>
+        
+        <action path="/t07_supervise_msg/t07_supervise_msg_modify1_do" parameter="modifyT07_Supervise_msg1Do" name="t07_supervise_msgActionForm" type="com.ist.aml.information.controller.T07_Supervise_msgAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t07_supervise_msg/t07_supervise_msg_list.do?msg_mode=2"/> 
+	    <forward name="failure" path="/t07_supervise_msg/t07_supervise_msg_disp.do"/> 
+    </action>
+    <!--End 督办查看-->
+        <!--End gongzuoduban--> 
+        
+        <!--客户归属机构维护  -->
+        <action path="/client/t07_modify_partyorgan_list"
+			   parameter="T07_modify_partyorganList" name="t47_partyActionForm"
+			type="com.ist.aml.information.controller.T47_partyAction" validate="false" scope="request">
+			   <forward name="success" path="/client/t07_modify_partyorgan_list.jsp" />
+	   </action>
+	   <action path="/client/t07_modify_partyorgan_add"
+			parameter="addT07_modify_partyorgan" name="t47_partyActionForm"
+			type="com.ist.aml.information.controller.T47_partyAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/client/t07_modify_partyorgan_add.jsp" />
+			<forward name="failure"
+				path="/client/t07_modify_partyorgan.do" />
+		</action>
+		<action path="/client/t07_modify_partyorgan_add_do"
+			parameter="addT07_modify_partyorganDo" name="t47_partyActionForm"
+			type="com.ist.aml.information.controller.T47_partyAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/client/t07_modify_partyorgan_list.do" />
+			<forward name="failure"
+				path="/client/t07_modify_partyorgan_list.do" />
+		</action>
+		
+	</action-mappings>
+	<message-resources parameter="ApplicationResources_zh_CN" />
+
+</struts-config>
+
+

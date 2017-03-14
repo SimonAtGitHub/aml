@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 基础管理平台模块配置 -->
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+  <data-sources />
+  <form-beans>
+    <form-bean name="t18_datasourceActionForm" type="com.ist.bmp.hpom.controller.T18_datasourceActionForm"/> 
+    <form-bean name="t18_ods_tableActionForm" type="com.ist.bmp.hpom.controller.T18_ods_tableActionForm"/>
+    <form-bean name="t18_ods_ftpActionForm" type="com.ist.bmp.hpom.controller.T18_ods_ftpActionForm"/>
+    <form-bean name="t18_ods_loadActionForm" type="com.ist.bmp.hpom.controller.T18_ods_loadActionForm"/>
+    <form-bean name="t18_dm_tableActionForm" type="com.ist.bmp.hpom.controller.T18_dm_tableActionForm"/>
+    <form-bean name="t18_ods2dmetlActionForm" type="com.ist.bmp.hpom.controller.T18_ods2dmetlActionForm"/>
+    <form-bean name="t18_ods_fetchActionForm" type="com.ist.bmp.hpom.controller.T18_ods_fetchActionForm"/> 
+    <form-bean name="t18_task_factActionForm" type="com.ist.bmp.hpom.controller.T18_task_factActionForm"/> 
+   	<form-bean name="t18_task_typeActionForm" type="com.ist.bmp.hpom.controller.T18_task_typeActionForm"/> 
+   	<form-bean name="t18_errorlogActionForm" type="com.ist.bmp.hpom.controller.T18_errorlogActionForm"/>
+   	<form-bean name="t18_callogActionForm" type="com.ist.bmp.hpom.controller.T18_callogActionForm"/>
+	<form-bean name="v18_dayActionForm" type="com.ist.bmp.hpom.controller.V18_dayActionForm"/>
+	<form-bean name="v18_day_detailActionForm" type="com.ist.bmp.hpom.controller.V18_day_detailActionForm"/> 
+	<form-bean name="t18_task_depandonActionForm" type="com.ist.bmp.hpom.controller.T18_task_depandonActionForm"/> 
+	<form-bean name="t18_tasklistActionForm" type="com.ist.bmp.hpom.controller.T18_tasklistActionForm"/> 
+	<form-bean name="t18_ods_dblinkActionForm" type="com.ist.bmp.hpom.controller.T18_ods_dblinkActionForm"/>
+	<form-bean name="T01_db_linkActionForm" type="com.ist.common.metadata.controller.T01_db_linkActionForm"/>
+	<form-bean name="t18_downloadActionForm" type="com.ist.bmp.hpom.controller.T18_downloadActionForm"/>
+  </form-beans>
+  <global-exceptions />
+  <global-forwards />
+  <action-mappings>
+        <!-- T00_system_param_usedby_ssp -->
+         <!-- 参数配置 -->
+         <!-- 参数维护 -->
+        <action path="/platform/t00_system_param/t00_parameter_manage" parameter="gotoT00_parameter_manage" name="t00_system_paramActionForm" type="com.ist.bmp.platform.controller.T00_system_paramAction" validate="false" scope="request">
+        <forward name="success" path="/../ssp/parameter/parameter_manage.jsp"/>
+      </action>
+
+      <action path="/platform/t00_system_param/searchT00_system_param" parameter="searchT00_system_param" name="t00_system_paramActionForm" type="com.ist.bmp.platform.controller.T00_system_paramAction" validate="false" scope="request">
+        <forward name="success" path="/../ssp/parameter/parameter_manage.jsp"/>
+      </action>
+      <action path="/platform/t00_system_param/modify_t00_system_param" parameter="ssp_modify_t00_system_param" name="t00_system_paramActionForm" type="com.ist.bmp.platform.controller.T00_system_paramAction" validate="false" scope="request">
+        <forward name="success" path="/platform/t00_system_param/t00_parameter_manage.do"/>
+      </action>
+
+   
+    
+ 
+<!--t18datasource add by shiran-->
+	<action path="/hpom/t18_datasource_search" parameter="searchT18_datasource" name="t18_datasourceActionForm" type="com.ist.bmp.hpom.controller.T18_datasourceAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/datasource/t18_datasource_search.jsp"/> 
+        <forward name="failure" path="/hpom/t18_datasource_list.do"/> 
+    </action> 
+    <action path="/hpom/t18_datasource_list" parameter="getT18_datasourceList" name="t18_datasourceActionForm" type="com.ist.bmp.hpom.controller.T18_datasourceAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/datasource/t18_datasource_list.jsp"/> 
+    </action> 
+    <action path="/hpom/t18_datasource_add" parameter="addT18_datasource" name="t18_datasourceActionForm" type="com.ist.bmp.hpom.controller.T18_datasourceAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/datasource/t18_datasource_add.jsp"/> 
+	    <forward name="failure" path="/hpom/t18_datasource_list.do"/> 
+    </action> 
+    <action path="/hpom/t18_datasource_add_do" parameter="addT18_datasourceDo" name="t18_datasourceActionForm" type="com.ist.bmp.hpom.controller.T18_datasourceAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_datasource_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_datasource_add.do"/> 
+    </action> 
+    <action path="/hpom/t18_datasource_modify" parameter="modifyT18_datasource" name="t18_datasourceActionForm" type="com.ist.bmp.hpom.controller.T18_datasourceAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/datasource/t18_datasource_modify.jsp"/> 
+	    <forward name="failure" path="/hpom/t18_datasource_list.do"/> 
+    </action> 
+    <action path="/hpom/t18_datasource_modify_do" parameter="modifyT18_datasourceDo" name="t18_datasourceActionForm" type="com.ist.bmp.hpom.controller.T18_datasourceAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_datasource_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_datasource_modify.do"/> 
+    </action> 
+    <action path="/hpom/t18_datasource_delete_do" parameter="deleteT18_datasourceDo" name="t18_datasourceActionForm" type="com.ist.bmp.hpom.controller.T18_datasourceAction" validate="false" scope="request"> 
+	<forward name="success" path="/hpom/t18_datasource_list.do"/> 
+        <forward name="failure" path="/hpom/t18_datasource_list.do"/> 
+    </action> 
+    <action path="/hpom/t18_datasource_disp" parameter="getT18_datasourceDisp" name="t18_datasourceActionForm" type="com.ist.bmp.hpom.controller.T18_datasourceAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/datasource/t18_datasource_disp.jsp"/> 
+    </action> 
+    <action path="/hpom/t18_datasource_deploy" parameter="deployT18_datasource" name="t18_datasourceActionForm" type="com.ist.bmp.hpom.controller.T18_datasourceAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_datasource_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_datasource_list.do"/> 
+    </action>
+    
+   <!-- add by jinliqun -->
+	 <action path="/t18_ods_tableList" parameter="getT18_ods_tableList" name="t18_ods_tableActionForm" type="com.ist.bmp.hpom.controller.T18_ods_tableAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/ods/t18_ods_table_list.jsp"/> 
+        <forward name="failure" path="/hpom/ods/t18_ods_table_list.jsp"/> 
+    </action>
+    <action path="/t18_ods_table_add" parameter="addT18_ods_table" name="t18_ods_tableActionForm" type="com.ist.bmp.hpom.controller.T18_ods_tableAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/ods/t18_ods_table_add.jsp"/> 
+        <forward name="failure" path="/t18_ods_tableList.do"/> 
+    </action>
+    <action path="/t18_ods_table_add_do" parameter="addT18_ods_tableDo" name="t18_ods_tableActionForm" type="com.ist.bmp.hpom.controller.T18_ods_tableAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/ods/t18_ods_table_result.jsp"/> 
+        <forward name="failure" path="/hpom/ods/t18_ods_table_result.jsp"/> 
+    </action>
+    <action path="/ods_tab_location_do" parameter="ods_tab_location_do" name="t18_ods_tableActionForm" type="com.ist.bmp.hpom.controller.T18_ods_tableAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/ods/t18_ods_table_add.jsp"/> 
+        <forward name="failure" path="/hpom/ods/t18_ods_table_result.jsp"/> 
+    </action>
+     <action path="/t18_ods_table_modify" parameter="modifyT18_ods_table" name="t18_ods_tableActionForm" type="com.ist.bmp.hpom.controller.T18_ods_tableAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/ods/t18_ods_table_modify.jsp"/> 
+        <forward name="failure" path="/t18_ods_tableList.do"/> 
+    </action>
+    <action path="/t18_ods_table_modify_do" parameter="modifyT18_ods_tableDo" name="t18_ods_tableActionForm" type="com.ist.bmp.hpom.controller.T18_ods_tableAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_ods_tableList.do"/> 
+        <forward name="failure" path="/t18_ods_table_modify.do"/> 
+    </action>
+    <action path="/t18_ods_table_delete_do" parameter="deleteT18_ods_tableDo" name="t18_ods_tableActionForm" type="com.ist.bmp.hpom.controller.T18_ods_tableAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_ods_tableList.do" redirect="true"/> 
+        <forward name="failure" path="/t18_ods_tableList.do"/> 
+    </action>
+   <!-- end by jinliqun -->
+<!--	 add by sr    -->
+<!--	ftp-->
+	<action path="/hpom/t18_ods_ftp_list" parameter="getT18_ods_ftpList" name="t18_ods_ftpActionForm" type="com.ist.bmp.hpom.controller.T18_ods_ftpAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/ftp/t18_ods_ftp_list.jsp"/> 
+    </action>
+    <action path="/hpom/t18_ods_ftp_modify" parameter="modifyT18_ods_ftp" name="t18_ods_ftpActionForm" type="com.ist.bmp.hpom.controller.T18_ods_ftpAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/ftp/t18_ods_ftp_modify.jsp"/> 
+	    <forward name="failure" path="/hpom/t18_ods_ftp_list.do"/> 
+    </action>  
+    <action path="/hpom/t18_ods_ftp_modify_do" parameter="modifyT18_ods_ftpDo" name="t18_ods_ftpActionForm" type="com.ist.bmp.hpom.controller.T18_ods_ftpAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods_ftp_list.do"/> 
+	    <forward name="failure" path="/hpom/ftp/t18_ods_ftp_modify.jsp"/> 
+    </action> 
+    <action path="/hpom/t18_ods_ftp_lock" parameter="lockT18_ods_ftp" name="t18_ods_ftpActionForm" type="com.ist.bmp.hpom.controller.T18_ods_ftpAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods_ftp_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_ods_ftp_list.do"/> 
+    </action>
+    <action path="/hpom/t18_ods_ftp_deploy" parameter="deployT18_ods_ftp" name="t18_ods_ftpActionForm" type="com.ist.bmp.hpom.controller.T18_ods_ftpAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods_ftp_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_ods_ftp_list.do"/> 
+    </action>
+    <action path="/hpom/t18_ods_ftp_synchro" parameter="synchroT18_ods_ftp" name="t18_ods_ftpActionForm" type="com.ist.bmp.hpom.controller.T18_ods_ftpAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods_ftp_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_ods_ftp_list.do"/> 
+    </action>
+     <action path="/hpom/t18_ods_ftp_save" parameter="saveT18_ods_ftp" name="t18_ods_ftpActionForm" type="com.ist.bmp.hpom.controller.T18_ods_ftpAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods_ftp_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_ods_ftp_list.do"/> 
+    </action>
+    
+<!--ftp_make_script  -->
+ <action path="/hpom/make_ftp_script" parameter="make_ftp_script" name="t18_ods_ftpActionForm" type="com.ist.bmp.hpom.controller.T18_ods_ftpAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods_ftp_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_ods_ftp_list.do"/> 
+    </action>
+<!--	 load  -->
+	<action path="/hpom/t18_ods_load_list" parameter="getT18_ods_loadList" name="t18_ods_loadActionForm" type="com.ist.bmp.hpom.controller.T18_ods_loadAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/load/t18_ods_load_list.jsp"/> 
+    </action>
+    <action path="/hpom/t18_ods_load_modify" parameter="modifyT18_ods_load" name="t18_ods_loadActionForm" type="com.ist.bmp.hpom.controller.T18_ods_loadAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/load/t18_ods_load_modify.jsp"/> 
+	    <forward name="failure" path="/hpom/t18_ods_load_list.do"/> 
+    </action>
+     <action path="/hpom/t18_ods_load_modify_do" parameter="modifyT18_ods_loadDo" name="t18_ods_loadActionForm" type="com.ist.bmp.hpom.controller.T18_ods_loadAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods_load_list.do"/> 
+	    <forward name="failure" path="/hpom/load/t18_ods_load_modify.jsp"/> 
+    </action>  
+    <action path="/hpom/t18_ods_load_lock" parameter="lockT18_ods_load" name="t18_ods_loadActionForm" type="com.ist.bmp.hpom.controller.T18_ods_loadAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods_load_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_ods_load_list.do"/> 
+    </action>
+    <action path="/hpom/t18_ods_load_deploy" parameter="deployT18_ods_load" name="t18_ods_loadActionForm" type="com.ist.bmp.hpom.controller.T18_ods_loadAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods_load_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_ods_load_list.do"/> 
+    </action>
+    <action path="/hpom/maintain_cols" parameter="maintain_cols" name="t18_ods_loadActionForm" type="com.ist.bmp.hpom.controller.T18_ods_loadAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/load/t18_ods_load_collist.jsp"/> 
+	    <forward name="failure" path="/hpom/load/t18_ods_load_collist.jsp"/> 
+    </action>
+    <action path="/hpom/maintain_cols_do" parameter="maintain_colsDo" name="t18_ods_loadActionForm" type="com.ist.bmp.hpom.controller.T18_ods_loadAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/collist_transfer_order.do"/> 
+	    <forward name="failure" path="/hpom/load/t18_ods_load_collist.jsp"/> 
+    </action>
+    <action path="/hpom/collist_transfer_order" parameter="collist_transfer_order" name="t18_ods_loadActionForm" type="com.ist.bmp.hpom.controller.T18_ods_loadAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/load/load_collist_transfer_order.jsp"/> 
+	    <forward name="failure" path="/hpom/load/load_collist_transfer_order.jsp"/> 
+    </action>
+     <action path="/hpom/t18_ods_load_disp" parameter="getT18_ods_loadDisp" name="t18_ods_loadActionForm" type="com.ist.bmp.hpom.controller.T18_ods_loadAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/load/t18_ods_load_disp.jsp"/> 
+	    <forward name="failure" path="/hpom/load/t18_ods_load_disp.jsp"/> 
+    </action>
+    
+ <!-- download script ftp -->  
+  <action path="/hpom/ftp_batch_download" parameter="ftp_batch_download" name="t18_ods_ftpActionForm" type="com.ist.bmp.hpom.controller.T18_ods_ftpAction" validate="false" scope="request"> 
+		<forward name="failure" path="/hpom/t18_ods_ftp_list.do"/>
+    </action> 
+  <!-- download script load -->  
+  <action path="/hpom/load_batch_download" parameter="load_batch_download" name="t18_ods_loadActionForm" type="com.ist.bmp.hpom.controller.T18_ods_loadAction" validate="false" scope="request"> 
+		<forward name="failure" path="/hpom/t18_ods_load_list.do"/>
+    </action>  
+    <!-- generate_script load-->
+    <action path="/hpom/generate_script" parameter="generate_script" name="t18_ods_loadActionForm" type="com.ist.bmp.hpom.controller.T18_ods_loadAction" validate="false" scope="request"> 
+		<forward name="success" path="/hpom/t18_ods_load_list.do"/>
+		<forward name="failure" path="/hpom/t18_ods_load_list.do"/>
+    </action>
+     <action path="/hpom/dgenerate_script" parameter="dgenerate_script" name="t18_ods_loadActionForm" type="com.ist.bmp.hpom.controller.T18_ods_loadAction" validate="false" scope="request"> 
+		<forward name="success" path="/hpom/t18_ods_load_modify.do"/>
+		<forward name="failure" path="/hpom/t18_ods_load_modify.do"/>
+    </action>
+<!--    dm-->
+	<action path="/hpom/t18_dmtable_list" parameter="getT18_dm_tableList" name="t18_dm_tableActionForm" type="com.ist.bmp.hpom.controller.T18_dm_tableAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/dm/t18_dm_table_list.jsp"/> 
+    </action>
+    <action path="/hpom/t18_dmtable_lock" parameter="lock_t18_dmtable" name="t18_dm_tableActionForm" type="com.ist.bmp.hpom.controller.T18_dm_tableAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_dmtable_list.do"/>
+	    <forward name="failure" path="/hpom/t18_dmtable_list.do"/>  
+    </action>
+    <action path="/hpom/t18_dmtable_deploy" parameter="deployT18_dmtable" name="t18_dm_tableActionForm" type="com.ist.bmp.hpom.controller.T18_dm_tableAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_dmtable_list.do"/>
+	    <forward name="failure" path="/hpom/t18_dmtable_list.do"/>  
+    </action>
+    <action path="/hpom/t18_dmtable_modify" parameter="modifyT18_dm_table" name="t18_dm_tableActionForm" type="com.ist.bmp.hpom.controller.T18_dm_tableAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/dm/t18_dm_table_modify.jsp"/>
+	    <forward name="failure" path="/hpom/t18_dmtable_list.do"/>  
+    </action>
+    <action path="/hpom/t18_dmtable_modify_do" parameter="modifyT18_dm_tableDo" name="t18_dm_tableActionForm" type="com.ist.bmp.hpom.controller.T18_dm_tableAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_dmtable_list.do"/>  
+	    <forward name="failure" path="/hpom/dm/t18_dm_table_modify.jsp"/>
+    </action>
+    <action path="/hpom/t18_dmtable_add" parameter="addT18_dm_table" name="t18_dm_tableActionForm" type="com.ist.bmp.hpom.controller.T18_dm_tableAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/dm/t18_dm_table_add.jsp"/>
+	    <forward name="failure" path="/hpom/t18_dmtable_list.do"/>  
+    </action>
+    <action path="/hpom/t18_dmtable_add_do" parameter="addT18_dm_tableDo" name="t18_dm_tableActionForm" type="com.ist.bmp.hpom.controller.T18_dm_tableAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_dmtable_list.do"/>
+	    <forward name="failure" path="/hpom/dm/t18_dm_table_add.jsp"/>
+    </action>
+    <action path="/hpom/delete_t18_dmtable_do" parameter="deleteT18_dm_tableDo" name="t18_dm_tableActionForm" type="com.ist.bmp.hpom.controller.T18_dm_tableAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_dmtable_list.do"/>
+	    <forward name="failure" path="/hpom/t18_dmtable_list.do"/>
+    </action>
+    <action path="/hpom/createtable" parameter="createtable" name="t18_dm_tableActionForm" type="com.ist.bmp.hpom.controller.T18_dm_tableAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/dm/createtable.jsp"/> 
+	    <forward name="failure" path="/hpom/t18_dmtable_list.do"/> 
+    </action>
+    <action path="/hpom/createtable_do" parameter="createtableDo" name="t18_dm_tableActionForm" type="com.ist.bmp.hpom.controller.T18_dm_tableAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/dm/t18_dmtable_result.jsp"/> 
+	    <forward name="failure" path="/hpom/t18_dmtable_list.do"/> 
+    </action>
+    
+    <action path="/hpom/t18_dm_tabledisp" parameter="getT18_dm_tableDisp" name="t18_dm_tableActionForm" type="com.ist.bmp.hpom.controller.T18_dm_tableAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/dm/t18_dmtable_disp.jsp"/> 
+	    <forward name="failure" path="/hpom/dm/t18_dmtable_disp.jsp"/> 
+    </action>
+    
+    <action path="/hpom/t18_Shfilename_disp" parameter="getT18_Shfilename_disp" name="t18_dm_tableActionForm" type="com.ist.bmp.hpom.controller.T18_dm_tableAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/dm/t18_shfilename_disp.jsp"/> 
+	    <forward name="failure" path="/hpom/dm/t18_shfilename_disp.jsp"/> 
+    </action>
+    
+     <action path="/hpom/t18_Shfilename_disp_do" parameter="getT18_Shfilename_dispDo" name="t18_dm_tableActionForm" type="com.ist.bmp.hpom.controller.T18_dm_tableAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/dm/t18_shfilename_result.jsp"/> 
+	    <forward name="failure" path="/hpom/dm/t18_shfilename_disp.jsp"/> 
+    </action>
+    
+     <!-- download script dm -->  
+  <action path="/hpom/dm_batch_download" parameter="dm_batch_download" name="t18_dm_tableActionForm" type="com.ist.bmp.hpom.controller.T18_dm_tableAction" validate="false" scope="request"> 
+		<forward name="failure" path="/hpom/t18_dm_table_list.do"/>
+    </action> 
+<!--	ods2dm--> 
+	<action path="/hpom/t18_ods2dm_list" parameter="getT18_ods2dmetlList" name="t18_ods2dmetlActionForm" type="com.ist.bmp.hpom.controller.T18_ods2dmetlAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/ods2dm/t18_ods2dm_list.jsp"/> 
+    </action>
+    <action path="/hpom/t18_ods2dm_modify" parameter="modifyT18_ods2dmetl" name="t18_ods2dmetlActionForm" type="com.ist.bmp.hpom.controller.T18_ods2dmetlAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/ods2dm/t18_ods2dm_modify.jsp"/> 
+	    <forward name="failure" path="/hpom/t18_ods2dm_list.do"/> 
+    </action>
+     <action path="/hpom/t18_ods2dm_modify_do" parameter="modifyT18_ods2dmetlDo" name="t18_ods2dmetlActionForm" type="com.ist.bmp.hpom.controller.T18_ods2dmetlAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods2dm_list.do"/> 
+	    <forward name="failure" path="/hpom/ods2dm/t18_ods2dm_modify.jsp"/> 
+    </action>
+     <action path="/hpom/deleteT18_ods2dmetlDo" parameter="deleteT18_ods2dmetlDo" name="t18_ods2dmetlActionForm" type="com.ist.bmp.hpom.controller.T18_ods2dmetlAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods2dm_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_ods2dm_list.do"/> 
+    </action>
+    <action path="/hpom/t18_ods2dm_lock" parameter="lockT18_ods_ods2dm" name="t18_ods2dmetlActionForm" type="com.ist.bmp.hpom.controller.T18_ods2dmetlAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods2dm_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_ods2dm_list.do"/> 
+    </action>
+    <action path="/hpom/t18_ods2dm_deploy" parameter="deployT18_ods2dm" name="t18_ods2dmetlActionForm" type="com.ist.bmp.hpom.controller.T18_ods2dmetlAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods2dm_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_ods2dm_list.do"/> 
+    </action>
+    <action path="/hpom/createtable_from_dm" parameter="createtable_from_dm" name="t18_ods2dmetlActionForm" type="com.ist.bmp.hpom.controller.T18_ods2dmetlAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/ods2dm/createtable_from_dm.jsp"/> 
+	    <forward name="failure" path="/hpom/t18_ods2dm_list.do"/> 
+    </action>
+	<action path="/hpom/createtable_from_dmdo" parameter="createtable_from_dmdo" name="t18_ods2dmetlActionForm" type="com.ist.bmp.hpom.controller.T18_ods2dmetlAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/ods2dm/t18_ods2dm_result.jsp"/> 
+	    <forward name="failure" path="/hpom/t18_ods2dm_list.do"/> 
+    </action>
+    <action path="/hpom/getserver_content" parameter="getserver_content" name="t18_ods2dmetlActionForm" type="com.ist.bmp.hpom.controller.T18_ods2dmetlAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/ods2dm/t18_server_content.jsp"/> 
+	    <forward name="failure" path="/hpom/ods2dm/t18_server_content.jsp"/> 
+    </action>
+    <action path="/hpom/generateProScript" parameter="generateProScript" name="t18_ods2dmetlActionForm" type="com.ist.bmp.hpom.controller.T18_ods2dmetlAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/ods2dm/t18_ods2dm_modify.jsp"/> 
+	    <forward name="failure" path="/hpom/ods2dm/t18_ods2dm_modify.jsp"/> 
+    </action>
+    
+    <!-- download script ods2dm -->  
+  <action path="/hpom/ods2dm_batch_download" parameter="ods2dm_batch_download" name="t18_ods2dmetlActionForm" type="com.ist.bmp.hpom.controller.T18_ods2dmetlAction" validate="false" scope="request"> 
+		<forward name="failure" path="/hpom/t18_ods_ods2dm_list.do"/>
+    </action>     
+<!--    ods fetch -->
+    <action path="/hpom/t18_ods_fetch_list" parameter="getT18_ods_fetchList" name="t18_ods_fetchActionForm" type="com.ist.bmp.hpom.controller.T18_ods_fetchAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/ods_fetch/t18_ods_fetch_list.jsp"/> 
+    </action> 
+    <action path="/hpom/t18_ods_fetch_add" parameter="addT18_ods_fetch" name="t18_ods_fetchActionForm" type="com.ist.bmp.hpom.controller.T18_ods_fetchAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/ods_fetch/t18_ods_fetch_add.jsp"/> 
+	    <forward name="failure" path="/hpom/t18_ods_fetch_list.do"/> 
+    </action> 
+    <action path="/hpom/t18_ods_fetch_add_do" parameter="addT18_ods_fetchDo" name="t18_ods_fetchActionForm" type="com.ist.bmp.hpom.controller.T18_ods_fetchAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods_fetch_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_ods_fetch_add.do"/> 
+    </action> 
+    <action path="/hpom/t18_ods_fetch_modify" parameter="modifyT18_ods_fetch" name="t18_ods_fetchActionForm" type="com.ist.bmp.hpom.controller.T18_ods_fetchAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/ods_fetch/t18_ods_fetch_modify.jsp"/> 
+	    <forward name="failure" path="/hpom/t18_ods_fetch_list.do"/> 
+    </action> 
+    <action path="/hpom/t18_ods_fetch_modify_do" parameter="modifyT18_ods_fetchDo" name="t18_ods_fetchActionForm" type="com.ist.bmp.hpom.controller.T18_ods_fetchAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods_fetch_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_ods_fetch_modify.do"/> 
+    </action> 
+    <action path="/hpom/t18_ods_fetch_delete_do" parameter="deleteT18_ods_fetchDo" name="t18_ods_fetchActionForm" type="com.ist.bmp.hpom.controller.T18_ods_fetchAction" validate="false" scope="request"> 
+	<forward name="success" path="/hpom/t18_ods_fetch_list.do"/> 
+        <forward name="failure" path="/hpom/t18_ods_fetch_list.do"/> 
+    </action> 
+    <action path="/hpom/t18_ods_fetch_disp" parameter="getT18_ods_fetchDisp" name="t18_ods_fetchActionForm" type="com.ist.bmp.hpom.controller.T18_ods_fetchAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/ods_fetch/t18_ods_fetch_disp.jsp"/> 
+    </action> 
+    
+	<action path="/hpom/t18_ods_fetch_lock" parameter="lockT18_ods_fetch" name="t18_ods_fetchActionForm" type="com.ist.bmp.hpom.controller.T18_ods_fetchAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods_fetch_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_ods_fetch_list.do"/> 
+    </action>
+    <action path="/hpom/t18_ods_fetch_deploy" parameter="deployT18_ods_fetch" name="t18_ods_fetchActionForm" type="com.ist.bmp.hpom.controller.T18_ods_fetchAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods_fetch_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_ods_fetch_list.do"/> 
+    </action>
+     <action path="/hpom/generate_script_db" parameter="generate_fetch_script" name="t18_ods_fetchActionForm" type="com.ist.bmp.hpom.controller.T18_ods_fetchAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods_fetch_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_ods_fetch_list.do"/> 
+    </action>
+    <action path="/hpom/db_batch_download" parameter="download_fetch_script" name="t18_ods_fetchActionForm" type="com.ist.bmp.hpom.controller.T18_ods_fetchAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods_fetch_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_ods_fetch_list.do"/> 
+    </action>
+    
+
+<!--	end by sr-->
+
+<!-- start by jinliqun -->
+	<!-- t18_task_fact -->
+	<action path="/t18_task_fact/t18_task_fact_search" parameter="searchT18_task_fact" name="t18_task_factActionForm" type="com.ist.bmp.hpom.controller.T18_task_factAction" validate="false" scope="request"> 
+   		<forward name="success" path="/t18_task_fact/t18_task_fact_search.jsp"/> 
+        <forward name="failure" path="/t18_task_fact/t18_task_fact_list.do"/> 
+    </action> 
+    <action path="/t18_task_fact/t18_task_fact_list" parameter="getT18_task_factList" name="t18_task_factActionForm" type="com.ist.bmp.hpom.controller.T18_task_factAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/task/t18_task_fact_list.jsp"/> 
+    </action> 
+     <action path="/t18_task_fact/t18_task_fact_list_ajax" parameter="getT18_task_factListByAjax" name="t18_task_factActionForm" type="com.ist.bmp.hpom.controller.T18_task_factAction" validate="false" scope="request"> 
+    </action>
+    <action path="/t18_task_fact/t18_task_fact_add" parameter="addT18_task_fact" name="t18_task_factActionForm" type="com.ist.bmp.hpom.controller.T18_task_factAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_task_fact/t18_task_fact_add.jsp"/> 
+	    <forward name="failure" path="/t18_task_fact/t18_task_fact_list.do"/> 
+    </action> 
+    <action path="/t18_task_fact/t18_task_fact_add_do" parameter="addT18_task_factDo" name="t18_task_factActionForm" type="com.ist.bmp.hpom.controller.T18_task_factAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_task_fact/t18_task_fact_list.do"/> 
+	    <forward name="failure" path="/t18_task_fact/t18_task_fact_add.do"/> 
+    </action> 
+    <action path="/t18_task_fact/t18_task_fact_modify" parameter="modifyT18_task_fact" name="t18_task_factActionForm" type="com.ist.bmp.hpom.controller.T18_task_factAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_task_fact/t18_task_fact_modify.jsp"/> 
+	    <forward name="failure" path="/t18_task_fact/t18_task_fact_list.do"/> 
+    </action> 
+    <action path="/t18_task_fact/t18_task_fact_modify_do" parameter="modifyT18_task_factDo" name="t18_task_factActionForm" type="com.ist.bmp.hpom.controller.T18_task_factAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_task_fact/t18_task_fact_list.do"/> 
+	    <forward name="failure" path="/t18_task_fact/t18_task_fact_modify.do"/> 
+    </action> 
+    <action path="/t18_task_fact/t18_task_fact_delete_do" parameter="deleteT18_task_factDo" name="t18_task_factActionForm" type="com.ist.bmp.hpom.controller.T18_task_factAction" validate="false" scope="request"> 
+	<forward name="success" path="/t18_task_fact/t18_task_fact_list.do"/> 
+        <forward name="failure" path="/t18_task_fact/t18_task_fact_list.do"/> 
+    </action> 
+    <action path="/t18_task_fact/t18_task_fact_disp" parameter="getT18_task_factDisp" name="t18_task_factActionForm" type="com.ist.bmp.hpom.controller.T18_task_factAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_task_fact/t18_task_fact_disp.jsp"/> 
+    </action>
+	 <action path="/t18_task_fact/getT18_task_fact_history" parameter="getT18_task_fact_history" name="t18_task_factActionForm" type="com.ist.bmp.hpom.controller.T18_task_factAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/task/t18_task_fact_histroy.jsp"/> 
+    </action>
+     <action path="/t18_task_fact/getT18_task_fact_error" parameter="getT18_task_fact_error" name="t18_task_factActionForm" type="com.ist.bmp.hpom.controller.T18_task_factAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/task/t18_task_fact_error.jsp"/> 
+    </action>   
+     <action path="/t18_task_fact/t18_errorlog_modify" parameter="modifyT18_errorlog" name="t18_errorlogActionForm" type="com.ist.bmp.hpom.controller.T18_errorlogAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/task/t18_errorlog_modify.jsp"/> 
+    </action> 
+    <action path="/t18_task_fact/t18_errorlog_modify_do" parameter="modifyT18_errorlogDo" name="t18_errorlogActionForm" type="com.ist.bmp.hpom.controller.T18_errorlogAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_task_fact/getT18_task_fact_error.do"/> 
+    </action>
+     <action path="/t18_task_fact/taskanalysis" parameter="taskanalysis" name="t18_task_factActionForm" type="com.ist.bmp.hpom.controller.T18_task_factAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/task/t18_task_fact_analysis.jsp"/> 
+    </action>
+    <action path="/t18_task_fact/restart_calculation" parameter="restart_calculation" name="t18_task_factActionForm" type="com.ist.bmp.hpom.controller.T18_task_factAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_task_fact/t18_task_fact_list.do"/> 
+	    <forward name="failure" path="/t18_task_fact/t18_task_fact_list.do"/>
+    </action>
+    
+    <!-- v18_day -->
+     <action path="/v18_day/v18_day_list" parameter="getV18_dayList" name="v18_dayActionForm" type="com.ist.bmp.hpom.controller.V18_dayAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/v18_day/v18_day_list.jsp"/> 
+    </action> 
+    <!-- v18_day_detail -->
+     <action path="/v18_day_detail/v18_day_detail_list" parameter="getV18_day_detailList" name="v18_day_detailActionForm" type="com.ist.bmp.hpom.controller.V18_day_detailAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/v18_day/v18_day_detail_list.jsp"/> 
+    </action> 
+<!-- eng by jinliqun -->
+
+
+	<!-- t18_errorlog add by dave -->
+	<action path="/hpom/t18_errorlog_search" parameter="searchT18_errorlog" name="t18_errorlogActionForm" type="com.ist.bmp.hpom.controller.T18_errorlogAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/errorlog/t18_errorlog_search.jsp"/> 
+        <forward name="failure" path="/hpom/t18_errorlog_list.do"/> 
+    </action> 
+    <action path="/hpom/t18_errorlog_list" parameter="getT18_errorlogList" name="t18_errorlogActionForm" type="com.ist.bmp.hpom.controller.T18_errorlogAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/errorlog/t18_errorlog_list.jsp"/> 
+    </action> 
+    <action path="/hpom/t18_errorlog_add" parameter="addT18_errorlog" name="t18_errorlogActionForm" type="com.ist.bmp.hpom.controller.T18_errorlogAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/errorlog/t18_errorlog_add.jsp"/> 
+	    <forward name="failure" path="/hpom/t18_errorlog_list.do"/> 
+    </action> 
+    <action path="/hpom/t18_errorlog_add_do" parameter="addT18_errorlogDo" name="t18_errorlogActionForm" type="com.ist.bmp.hpom.controller.T18_errorlogAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_errorlog_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_errorlog_add.do"/> 
+    </action> 
+    <action path="/hpom/t18_errorlog_modify" parameter="modifyT18_errorlog" name="t18_errorlogActionForm" type="com.ist.bmp.hpom.controller.T18_errorlogAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/errorlog/t18_errorlog_modify.jsp"/> 
+	    <forward name="failure" path="/hpom/t18_errorlog_list.do"/> 
+    </action> 
+    <action path="/hpom/t18_errorlog_modify_do" parameter="modifyT18_errorlogDo" name="t18_errorlogActionForm" type="com.ist.bmp.hpom.controller.T18_errorlogAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_errorlog_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_errorlog_modify.do"/> 
+    </action> 
+    <action path="/hpom/t18_errorlog_delete_do" parameter="deleteT18_errorlogDo" name="t18_errorlogActionForm" type="com.ist.bmp.hpom.controller.T18_errorlogAction" validate="false" scope="request"> 
+	<forward name="success" path="/hpom/t18_errorlog_list.do"/> 
+        <forward name="failure" path="/hpom/t18_errorlog_list.do"/> 
+    </action> 
+    <action path="/hpom/t18_errorlog_disp" parameter="getT18_errorlogDisp" name="t18_errorlogActionForm" type="com.ist.bmp.hpom.controller.T18_errorlogAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/errorlog/t18_errorlog_disp.jsp"/> 
+    </action> 
+	<!-- end of t18_errorlog -->
+	
+	<!-- t18_task_type list start added by shanbh -->
+		<action path="/t18_task_type/t18_task_type_list" parameter="getT18_task_typeList" name="t18_task_typeActionForm" 
+			type="com.ist.bmp.hpom.controller.T18_task_typeAction" validate="false" scope="request">
+			<forward name="success" path="/hpom/t18_task_type/t18_task_typeList.jsp"/> 
+	        <forward name="failure" path="/hpom/t18_task_type/t18_task_typeList.jsp"/> 
+		</action>
+		<action path="/t18_task_type/t18_task_type_modify" parameter="modifyT18_task_type" name="t18_task_typeActionForm" 
+			type="com.ist.bmp.hpom.controller.T18_task_typeAction" validate="false" scope="request">
+			<forward name="success" path="/hpom/t18_task_type/t18_task_typeModify.jsp"/> 
+	        <forward name="failure" path="/t18_task_type/t18_task_type_list.do"/> 
+		</action>
+		<action path="/t18_task_type/t18_task_type_modify_do" parameter="modifyT18_task_typeDo" name="t18_task_typeActionForm" 
+			type="com.ist.bmp.hpom.controller.T18_task_typeAction" validate="false" scope="request">
+			<forward name="success" path="/t18_task_type/t18_task_type_list.do"/> 
+	        <forward name="failure" path="/t18_task_type/t18_task_type_list.do"/> 
+		</action>
+	<!-- t18_task_type list end -->
+	
+	<!-- t18_tasklist start -->
+	 <action path="/t18_tasklist/t18_tasklist_search" parameter="searchT18_tasklist" name="t18_tasklistActionForm" type="com.ist.bmp.hpom.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_tasklist/t18_tasklist_search.jsp"/> 
+        <forward name="failure" path="/t18_tasklist/t18_tasklist_list.do"/> 
+    </action> 
+    <action path="/t18_tasklist/t18_tasklist_list" parameter="getT18_tasklistList" name="t18_tasklistActionForm" type="com.ist.bmp.hpom.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/task/t18_tasklist_list.jsp"/> 
+    </action> 
+    <action path="/t18_tasklist/t18_tasklist_autoset" parameter="autoSetDepandON" name="t18_tasklistActionForm" type="com.ist.bmp.hpom.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_tasklist/t18_tasklist_list.do"/>
+	    <forward name="failure" path="/t18_tasklist/t18_tasklist_list.do"/>  
+    </action>
+    <action path="/t18_tasklist/t18_tasklist_autodel" parameter="autoDelDepandON" name="t18_tasklistActionForm" type="com.ist.bmp.hpom.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_tasklist/t18_tasklist_list.do"/>
+	    <forward name="failure" path="/t18_tasklist/t18_tasklist_list.do"/>  
+    </action>       
+     <action path="/t18_tasklist/t18_task_time_dep" parameter="setTaskTimeDep" name="t18_tasklistActionForm" type="com.ist.bmp.hpom.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/task/t18_task_time_dep.jsp"/> 
+        <forward name="failure" path="/t18_tasklist/t18_tasklist_list.do"/> 
+    </action> 
+    <action path="/t18_tasklist/t18_task_time_dep_do" parameter="setTaskTimeDepDo" name="t18_tasklistActionForm" type="com.ist.bmp.hpom.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_tasklist/t18_tasklist_list.do"/> 
+        <forward name="failure" path="/t18_tasklist/t18_tasklist_list.do"/> 
+    </action> 
+    <action path="/t18_tasklist/t18_task_dep" parameter="setTaskDep" name="t18_tasklistActionForm" type="com.ist.bmp.hpom.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/task/t18_task_dep.jsp"/> 
+        <forward name="failure" path="/t18_tasklist/t18_tasklist_list.do"/> 
+    </action> 
+    <action path="/t18_tasklist/t18_task_dep_open" parameter="setTaskDep" name="t18_tasklistActionForm" type="com.ist.bmp.hpom.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/task/t18_task_dep_open.jsp"/> 
+        <forward name="failure" path="/t18_tasklist/t18_tasklist_list.do"/> 
+    </action> 
+    <action path="/t18_tasklist/t18_task_dep_open_do" parameter="setTaskDepDo" name="t18_tasklistActionForm" type="com.ist.bmp.hpom.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_tasklist/t18_task_dep_open.do"/> 
+        <forward name="failure" path="/t18_tasklist/t18_task_dep_open.do"/> 
+    </action> 
+    <action path="/t18_tasklist/t18_task_dep_do" parameter="setTaskDepDo" name="t18_tasklistActionForm" type="com.ist.bmp.hpom.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_tasklist/t18_tasklist_list.do"/> 
+        <forward name="failure" path="/t18_tasklist/t18_task_dep.do"/> 
+    </action> 
+     <action path="/t18_tasklist/t18_task_dep_check" parameter="checkTaskDepRelation" name="t18_tasklistActionForm" type="com.ist.bmp.hpom.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/task/t18_task_dep_check_list.jsp"/> 
+        <forward name="failure" path="/t18_tasklist/t18_tasklist_list.do"/> 
+    </action> 
+      <action path="/t18_tasklist/t18_task_dep_check_all" parameter="checkAllTaskDepRelation" name="t18_tasklistActionForm" type="com.ist.bmp.hpom.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/task/t18_task_dep_check_list.jsp"/> 
+        <forward name="failure" path="/t18_tasklist/t18_tasklist_list.do"/> 
+    </action>
+     <action path="/t18_tasklist/t18_task_dep_list" parameter="getTaskDepList" name="t18_tasklistActionForm" type="com.ist.bmp.hpom.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/task/t18_task_dep_list.jsp"/> 
+        <forward name="failure" path="/t18_tasklist/t18_tasklist_list.do"/> 
+    </action>
+    <action path="/t18_tasklist/t18_tasklist_add" parameter="addT18_tasklist" name="t18_tasklistActionForm" type="com.ist.bmp.hpom.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/task/t18_tasklist_add.jsp"/> 
+	    <forward name="failure" path="/t18_tasklist/t18_tasklist_list.do"/> 
+    </action> 
+    <action path="/t18_tasklist/t18_tasklist_add_do" parameter="addT18_tasklistDo" name="t18_tasklistActionForm" type="com.ist.bmp.hpom.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_tasklist/t18_tasklist_list.do"/> 
+	    <forward name="failure" path="/t18_tasklist/t18_tasklist_add.do"/> 
+    </action> 
+    <action path="/t18_tasklist/t18_tasklist_modify" parameter="modifyT18_tasklist" name="t18_tasklistActionForm" type="com.ist.bmp.hpom.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/task/t18_tasklist_modify.jsp"/> 
+	    <forward name="failure" path="/t18_tasklist/t18_tasklist_list.do"/> 
+    </action> 
+    <action path="/t18_tasklist/t18_tasklist_modify_do" parameter="modifyT18_tasklistDo" name="t18_tasklistActionForm" type="com.ist.bmp.hpom.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_tasklist/t18_tasklist_list.do"/> 
+	    <forward name="failure" path="/t18_tasklist/t18_tasklist_modify.do"/> 
+    </action> 
+    <action path="/t18_tasklist/t18_tasklist_delete_do" parameter="deleteT18_tasklistDo" name="t18_tasklistActionForm" type="com.ist.bmp.hpom.controller.T18_tasklistAction" validate="false" scope="request"> 
+	<forward name="success" path="/t18_tasklist/t18_tasklist_list.do"/> 
+        <forward name="failure" path="/t18_tasklist/t18_tasklist_list.do"/> 
+    </action> 
+    <action path="/t18_tasklist/t18_tasklist_disp" parameter="getT18_tasklistDisp" name="t18_tasklistActionForm" type="com.ist.bmp.hpom.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/task/t18_tasklist_disp.jsp"/> 
+    </action> 
+    
+    <action path="/t18_task_depandon/t18_task_depandon_search" parameter="searchT18_task_depandon" name="t18_task_depandonActionForm" type="com.ist.bmp.hpom.controller.T18_task_depandonAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_task_depandon/t18_task_depandon_search.jsp"/> 
+        <forward name="failure" path="/t18_task_depandon/t18_task_depandon_list.do"/> 
+    </action> 
+    <action path="/t18_task_depandon/t18_task_depandon_list" parameter="getT18_task_depandonList" name="t18_task_depandonActionForm" type="com.ist.bmp.hpom.controller.T18_task_depandonAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_task_depandon/t18_task_depandon_list.jsp"/> 
+    </action> 
+    <action path="/t18_task_depandon/t18_task_depandon_add" parameter="addT18_task_depandon" name="t18_task_depandonActionForm" type="com.ist.bmp.hpom.controller.T18_task_depandonAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_task_depandon/t18_task_depandon_add.jsp"/> 
+	    <forward name="failure" path="/t18_task_depandon/t18_task_depandon_list.do"/> 
+    </action> 
+    <action path="/t18_task_depandon/t18_task_depandon_add_do" parameter="addT18_task_depandonDo" name="t18_task_depandonActionForm" type="com.ist.bmp.hpom.controller.T18_task_depandonAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_task_depandon/t18_task_depandon_list.do"/> 
+	    <forward name="failure" path="/t18_task_depandon/t18_task_depandon_add.do"/> 
+    </action> 
+    <action path="/t18_task_depandon/t18_task_depandon_modify" parameter="modifyT18_task_depandon" name="t18_task_depandonActionForm" type="com.ist.bmp.hpom.controller.T18_task_depandonAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_task_depandon/t18_task_depandon_modify.jsp"/> 
+	    <forward name="failure" path="/t18_task_depandon/t18_task_depandon_list.do"/> 
+    </action> 
+    <action path="/t18_task_depandon/t18_task_depandon_modify_do" parameter="modifyT18_task_depandonDo" name="t18_task_depandonActionForm" type="com.ist.bmp.hpom.controller.T18_task_depandonAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_task_depandon/t18_task_depandon_list.do"/> 
+	    <forward name="failure" path="/t18_task_depandon/t18_task_depandon_modify.do"/> 
+    </action> 
+    <action path="/t18_task_depandon/t18_task_depandon_delete_do" parameter="deleteT18_task_depandonDo" name="t18_task_depandonActionForm" type="com.ist.bmp.hpom.controller.T18_task_depandonAction" validate="false" scope="request"> 
+	<forward name="success" path="/t18_task_depandon/t18_task_depandon_list.do"/> 
+        <forward name="failure" path="/t18_task_depandon/t18_task_depandon_list.do"/> 
+    </action> 
+    <action path="/t18_task_depandon/t18_task_depandon_disp" parameter="getT18_task_depandonDisp" name="t18_task_depandonActionForm" type="com.ist.bmp.hpom.controller.T18_task_depandonAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_task_depandon/t18_task_depandon_disp.jsp"/> 
+    </action> 
+	<!-- end -->
+	
+	<!-- ods_dblink --> 
+	<action path="/hpom/t18_ods_dblink_list" parameter="getT18_ods_dblinkList" name="t18_ods_dblinkActionForm" type="com.ist.bmp.hpom.controller.T18_ods_dblinkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/ods_dblink/t18_ods_dblink_list.jsp"/> 
+    </action>
+    <action path="/hpom/t18_ods_dblink_modify" parameter="modifyT18_ods_dblink" name="t18_ods_dblinkActionForm" type="com.ist.bmp.hpom.controller.T18_ods_dblinkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/ods_dblink/t18_ods_dblink_modify.jsp"/> 
+	    <forward name="failure" path="/hpom/t18_ods_dblink_list.do"/> 
+    </action>
+     <action path="/hpom/t18_ods_dblink_modify_do" parameter="modifyT18_ods_dblinkDo" name="t18_ods_dblinkActionForm" type="com.ist.bmp.hpom.controller.T18_ods_dblinkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods_dblink_list.do"/> 
+	    <forward name="failure" path="/hpom/ods_dblink/t18_ods_dblink_modify.jsp"/> 
+    </action>
+     <action path="/hpom/deleteT18_ods_dblinkDo" parameter="deleteT18_ods_dblinkDo" name="t18_ods_dblinkActionForm" type="com.ist.bmp.hpom.controller.T18_ods_dblinkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods_dblink_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_ods_dblink_list.do"/> 
+    </action>
+    <action path="/hpom/t18_ods_dblink_lock" parameter="lockT18_ods_dblink" name="t18_ods_dblinkActionForm" type="com.ist.bmp.hpom.controller.T18_ods_dblinkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods_dblink_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_ods_dblink_list.do"/> 
+    </action>
+    <action path="/hpom/t18_ods_dblink_deploy" parameter="deployT18_ods_dblink" name="t18_ods_dblinkActionForm" type="com.ist.bmp.hpom.controller.T18_ods_dblinkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods_dblink_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_ods_dblink_list.do"/> 
+    </action>
+    <action path="/hpom/generate_script_dblink" parameter="generate_script_dblink" name="t18_ods_dblinkActionForm" type="com.ist.bmp.hpom.controller.T18_ods_dblinkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods_dblink_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_ods_dblink_list.do"/> 
+    </action>  
+     <action path="/hpom/dblink_batch_download" parameter="download_dblink_script" name="t18_ods_dblinkActionForm" type="com.ist.bmp.hpom.controller.T18_ods_dblinkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/hpom/t18_ods_dblink_list.do"/> 
+	    <forward name="failure" path="/hpom/t18_ods_dblink_list.do"/> 
+    </action>
+<!-- ods_dblink -->
+<!-- t18_download begin -->
+	<action path="/hpom/t18_download/t18_mydownload_list" parameter="T18_mydownload"
+		name="t18_downloadActionForm" type="com.ist.bmp.hpom.controller.T18_downloadAction"
+		validate="false" scope="request">
+		<forward name="success" path="/hpom/t18_download/t18_mydownload_list.jsp" />
+	</action>
+	 <action path="/hpom/t18_download/t18_mydownload_downloadDo" parameter="t18_mydownload_downloadDo" name="t18_downloadActionForm" type="com.ist.bmp.hpom.controller.T18_downloadAction" validate="false" scope="request">
+    	<forward name="success" path="/hpom/t18_download/t18_mydownload_list.jsp"/>
+    	<forward name="failure" path="/hpom/t18_download/t18_mydownload_list.do?newsearchflag=1"/>
+    </action>
+<!-- end -->
+  </action-mappings>
+  <message-resources parameter="ApplicationResources_zh_CN" />
+</struts-config>

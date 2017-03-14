@@ -1,0 +1,1551 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+	<!-- add by cuihy -->
+<sqlMap namespace="T07_case_application">
+	<statement id="modifyT07_case_appvalidate_uc" parameterClass="java.lang.String"
+		resultClass="int">
+		UPDATE T07_CASE_APPLICATION SET VALIDATE_IND = '1' WHERE
+		APPLICATION_NUM=#application_num# 
+  </statement>
+	<statement id="getN_mt_restrictList" parameterClass="com.ist.aml.report.dto.CreditTask"
+		resultClass="com.ist.aml.report.dto.CreditTask">
+		SELECT T1.NODE_ID,T1.OPER_ID FROM T07_N_MT_RESTRICT T1 WHERE T1.NODE_ID =
+		#node_id# AND T1.OPER_ID= #oper_id# AND T1.RESTRICT_IND = '1' AND
+		T1.IS_USE ='1'
+  </statement>
+
+	<statement id="getTaskList" parameterClass="com.ist.aml.report.dto.CreditTask"
+		resultClass="com.ist.aml.report.dto.CreditTask">
+		SELECT T2.APPLICATION_NUM,T2.APPLICATION_ADVICE
+		FROM T07_APP_MOVEFATE T2
+		WHERE T2.APPLICATION_NUM = #application_num# AND T2.CURR_NODE = #node_id#
+		AND T2.CURR_POST = #post_id# AND FLOW_ID = #flow_id# AND CURRENT_IND =
+		'1'
+  </statement>
+	<statement id="modifyT07_case_appstatus" parameterClass="com.ist.aml.report.dto.T07_case_application"
+		resultClass="int">
+		UPDATE T07_CASE_APPLICATION SET
+		APP_STATE_CD=#app_state_cd#
+		<isNotEmpty prepend="" property="node_id">
+			,NODE_ID=#node_id#
+  </isNotEmpty>
+		<isNotEmpty prepend="" property="post_id">
+			,POST_ID=#post_id#
+  </isNotEmpty>
+		<isNotEmpty prepend="" property="application_advice">
+			,APPLICATION_ADVICE=#application_advice#
+  </isNotEmpty>
+		,LAST_UPD_DT=#last_upd_dt#,LAST_UPD_USER=#last_upd_user#
+		WHERE APPLICATION_NUM=#application_num#
+	</statement>
+	<statement id="modifyBatchT07_case_appstatus2"
+		parameterClass="com.ist.aml.report.dto.T07_case_application"
+		resultClass="int">
+		UPDATE T07_CASE_APPLICATION SET
+		<isNotEmpty prepend="" property="app_state_cd">
+			APP_STATE_CD=#app_state_cd#,
+  </isNotEmpty>
+		<!-- APP_STATE_CD=#app_state_cd#, -->
+		NODE_ID=#node_id#,POST_ID=#post_id#,LAST_UPD_DT=#last_upd_dt#,LAST_UPD_USER=#last_upd_user#
+		WHERE APPLICATION_NUM IN
+		<iterate prepend="" property="application_numList" open="("
+			close=")" conjunction=",">
+			#application_numList[]#
+  </iterate>
+		AND ALERT_LEVEL NOT IN
+		<iterate prepend="" property="alert_levelList" open="(" close=")"
+			conjunction=",">
+			#alert_levelList[]#
+  </iterate>
+	</statement>
+
+	<statement id="modifyBatchT07_case_appstatus1"
+		parameterClass="com.ist.aml.report.dto.T07_case_application"
+		resultClass="int">
+		UPDATE T07_CASE_APPLICATION SET
+		<isNotEmpty prepend="" property="app_state_cd">
+			APP_STATE_CD=#app_state_cd#,
+  </isNotEmpty>
+		<!-- APP_STATE_CD=#app_state_cd#, -->
+		NODE_ID=#node_id#,POST_ID=#post_id#,LAST_UPD_DT=#last_upd_dt#,LAST_UPD_USER=#last_upd_user#
+		WHERE APPLICATION_NUM IN
+		<iterate prepend="" property="application_numList" open="("
+			close=")" conjunction=",">
+			#application_numList[]#
+  </iterate>
+		AND ALERT_LEVEL IN
+		<iterate prepend="" property="alert_levelList" open="(" close=")"
+			conjunction=",">
+			#alert_levelList[]#
+  </iterate>
+	</statement>
+
+	<statement id="modifyBatchT07_case_appstatus" parameterClass="com.ist.aml.report.dto.T07_case_application"
+		resultClass="int">
+		UPDATE T07_CASE_APPLICATION SET
+		<isNotEmpty prepend="" property="app_state_cd">
+			APP_STATE_CD=#app_state_cd#,
+  </isNotEmpty>
+		<!-- APP_STATE_CD=#app_state_cd#, -->
+		NODE_ID=#node_id#,POST_ID=#post_id#,LAST_UPD_DT=#last_upd_dt#,LAST_UPD_USER=#last_upd_user#
+		WHERE APPLICATION_NUM IN
+		<iterate prepend="" property="application_numList" open="("
+			close=")" conjunction=",">
+			#application_numList[]#
+  </iterate>
+	</statement>
+	<statement id="modifyT07_app_movefate2" parameterClass="com.ist.aml.report.dto.T07_case_application"
+		resultClass="int">
+		UPDATE T07_APP_MOVEFATE SET CURRENT_IND=#current_ind# WHERE
+		APPLICATION_NUM=#application_num#
+		<isNotEmpty prepend="AND" property="orig_current_ind">
+			CURRENT_IND=#orig_current_ind# 
+    </isNotEmpty>
+		<isEmpty prepend="AND" property="orig_current_ind">
+			(CURRENT_IND IS NULL OR CURRENT_IND='')
+    </isEmpty>
+	</statement>
+	<statement id="updateT07_case_partyStatus" parameterClass="com.ist.aml.report.dto.T07_case_application"
+		resultClass="int">
+		UPDATE T07_CASE_PARTY SET STATUS_CD=#app_state_cd# WHERE APPLICATION_NUM =
+		#application_num#
+  </statement>
+	<statement id="getCase_advi" parameterClass="com.ist.aml.report.dto.T07_app_movefate"
+		resultClass="com.ist.aml.report.dto.T07_app_movefate">
+		SELECT FLOW_ID, APPLICATION_NUM,CURR_NODE,CURR_POST,APPLICATION_ADVICE
+		FROM T07_APP_MOVEFATE
+		WHERE APPLICATION_NUM = #application_num# AND CURR_NODE = #curr_node# AND
+		CURR_POST = #curr_post# AND FLOW_ID = #flow_id# AND CURRENT_IND = '1'
+	</statement>
+
+	<statement id="modifyApp_movefate" parameterClass="com.ist.aml.report.dto.T07_app_movefate"
+		resultClass="int">
+		UPDATE T07_APP_MOVEFATE SET
+		CURRENT_IND=#current_ind#,CURR_OPERATOR=#curr_operator#,CURR_OPER_ID=#curr_oper_id#,LAST_UPD_DT=#last_upd_dt#,LAST_UPD_USER=#last_upd_user#
+		WHERE APPLICATION_NUM=#application_num# AND FLOW_ID = #flow_id# AND
+		CURRENT_IND='1'
+  </statement>
+
+
+	<statement id="insertApp_movefate" parameterClass="com.ist.aml.report.dto.T07_app_movefate"
+		resultClass="int">
+		INSERT INTO T07_APP_MOVEFATE(
+		FLOW_ID,APPLICATION_NUM,RECHECK_NUM,SEQ_NUM,CURR_ORG,CURR_NODE,CURR_POST,CURRENT_IND,CURR_OPERATOR,CURR_OPER_ID,CREATE_DT,LAST_UPD_DT,LAST_UPD_USER
+		) VALUES(
+		#flow_id#,#application_num#,#recheck_num#,#seq_num#,#curr_org#,#curr_node#,#curr_post#,#current_ind#,#curr_operator#,#curr_oper_id#,#create_dt#,#last_upd_dt#,#last_upd_user#
+		) 
+  </statement>
+
+	<statement id="insertT18_onlineServer" parameterClass="com.ist.aml.report.dto.T18_OnlineServer"
+		resultClass="int">
+		INSERT INTO
+		T18_ONLINESERVER(TASKTYPE,TASKKEY,TASKNAME,EXECSTATUS,ENDTIME,LASTEXECDATE,CREATOR,CREATDATE,BEGINTIME,DES)
+		VALUES(#tasktype#,#taskkey#,#taskname#,#execstatus#,#endtime#,#lastexecdate#,#creator#,#creatdate#,#begintime#,#des#)
+	</statement>
+
+	<statement id="updateT18_onlineServer" parameterClass="com.ist.aml.report.dto.T18_OnlineServer"
+		resultClass="int">
+		UPDATE T18_ONLINESERVER SET EXECSTATUS=#execstatus# WHERE
+		TASKKEY=#taskkey#
+	</statement>
+	<statement id="getT18_onlineMaxTaskkey" parameterClass="java.util.Date"
+		resultClass="com.ist.aml.report.dto.T18_OnlineServer">
+		SELECT TASKKEY FROM T18_ONLINESERVER WHERE CREATDATE=#value:DATE# ORDER BY
+		BEGINTIME DESC
+    </statement>
+
+	<statement id="getT18_OnlineServerList" parameterClass="java.lang.String"
+		resultClass="com.ist.aml.report.dto.T18_OnlineServer">
+		SELECT TASKKEY FROM T18_ONLINESERVER WHERE execstatus!='3'
+    </statement>
+
+
+	<statement id="modifyT07_case_stcr_status" parameterClass="com.ist.aml.report.dto.T07_case_stcr"
+		resultClass="int">
+		UPDATE
+		<dynamic>
+			<isNotEmpty prepend="" property="case_type">
+				<isEqual property="case_type" compareValue="1">
+					T07_CASE_STCR_DE B 
+			  	</isEqual>
+				<isEqual property="case_type" compareValue="2">
+					T07_CASE_STCR_KY B
+			  	</isEqual>
+			</isNotEmpty>
+		</dynamic>
+		SET STATUS=#status#,ACCT_STATUS=#status#,PARTY_STATUS=#status#
+		WHERE APPLICATION_NUM=#application_num#
+		<dynamic>
+			<isNotEmpty prepend="AND" property="party_id">
+				PARTY_ID=#party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="acct_num">
+				ACCT_NUM=#acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="stcr">
+				STCR=#stcr#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="modifyT07_case_stcr_status1" parameterClass="com.ist.aml.report.dto.T07_case_stcr"
+		resultClass="int">
+		UPDATE
+		<dynamic>
+			<isNotEmpty prepend="" property="case_type">
+				<isEqual property="case_type" compareValue="1">
+					T07_CASE_STCR_DE B 
+			  	</isEqual>
+				<isEqual property="case_type" compareValue="2">
+					T07_CASE_STCR_KY B
+			  	</isEqual>
+			</isNotEmpty>
+		</dynamic>
+		SET STATUS=#status#
+        WHERE APPLICATION_NUM=#application_num# AND STCR=#stcr# AND STATUS='4'
+	</statement>
+	
+	<statement id="modifyT07_case_party_status" parameterClass="com.ist.aml.report.dto.T07_case_stcr"
+		resultClass="int">
+		UPDATE
+		<dynamic>
+			<isNotEmpty prepend="" property="case_type">
+				<isEqual property="case_type" compareValue="1">
+					T07_CASE_STCR_DE B 
+			  	</isEqual>
+				<isEqual property="case_type" compareValue="2">
+					T07_CASE_STCR_KY B
+			  	</isEqual>
+			</isNotEmpty>
+		</dynamic>
+		SET PARTY_STATUS=#status#
+        WHERE APPLICATION_NUM=#application_num# AND STCR=#stcr# AND PARTY_ID=#party_id# AND PARTY_STATUS='4'
+	</statement>
+	
+    <statement id="modifyT07_case_acct_status" parameterClass="com.ist.aml.report.dto.T07_case_stcr"
+		resultClass="int">
+		UPDATE
+		<dynamic>
+			<isNotEmpty prepend="" property="case_type">
+				<isEqual property="case_type" compareValue="1">
+					T07_CASE_STCR_DE B 
+			  	</isEqual>
+				<isEqual property="case_type" compareValue="2">
+					T07_CASE_STCR_KY B
+			  	</isEqual>
+			</isNotEmpty>
+		</dynamic>
+		SET ACCT_STATUS=#status#
+		WHERE APPLICATION_NUM=#application_num# AND STCR=#stcr# AND PARTY_ID=#party_id# AND ACCT_NUM=#acct_num# AND ACCT_STATUS='4'
+	</statement>
+
+	<statement id="modifyT07_stcr_trans_status" parameterClass="com.ist.aml.report.dto.T07_case_transaction"
+		resultClass="int">
+		UPDATE
+		<dynamic>
+			<isNotEmpty prepend="" property="case_type">
+				<isEqual property="case_type" compareValue="1">
+					T07_CASE_TRANSACTION_DE B 
+			  	</isEqual>
+				<isEqual property="case_type" compareValue="2">
+					T07_CASE_TRANSACTION_KY B 
+			  	</isEqual>
+			</isNotEmpty>
+		</dynamic>
+		SET STATUS_CD=#status_cd#
+		<isNotEmpty prepend="," property="dealadvise">
+			dealadvise=#dealadvise# 
+			</isNotEmpty>
+		WHERE APPLICATION_NUM=#application_num#
+		<dynamic>
+			<isNotEmpty prepend="AND" property="party_id">
+				PARTY_ID=#party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="stcr">
+				STCR=#stcr#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="transactionkey">
+				TRANSACTIONKEY=#transactionkey# 
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="getT07_stcr_trans_notList2" parameterClass="com.ist.aml.report.dto.T07_case_transaction"
+		resultClass="java.lang.String">
+		SELECT distinct a.TRANSACTIONKEY FROM T07_CASE_TRANSACTION
+		a,t47_transaction_uc b
+		WHERE a.TRANSACTIONKEY=b.transactionkey and
+		a.APPLICATION_NUM=#application_num#
+		and (b.validate_ind='0' or b.validate_ind2='0')
+		<dynamic>
+			<isNotEmpty prepend="AND" property="stcr">
+				a.STCR=#stcr#
+				</isNotEmpty>
+			<isNotEmpty prepend="AND" property="status_cd">
+				a.status_cd=#status_cd# 
+				</isNotEmpty>
+		</dynamic>
+
+	</statement>
+
+	<statement id="getT07_stcr_trans_notList1" parameterClass="com.ist.aml.report.dto.T07_case_transaction"
+		resultClass="java.lang.String">
+		SELECT distinct a.transactionkey FROM T07_CASE_TRANSACTION a ,(select distinct transactionkey 
+       from 	
+       <isNotEmpty prepend="" property="case_type">
+			<isEqual property="case_type" compareValue="2">
+             T07_CASE_TRANSACTION_KY
+             </isEqual>
+             <isEqual property="case_type" compareValue="1">
+             T07_CASE_TRANSACTION_DE
+             </isEqual>
+       </isNotEmpty>
+       <isEmpty prepend="" property="case_type">
+             T07_CASE_TRANSACTION
+       </isEmpty>
+
+        where  application_num=#application_num#) c
+       WHERE c.transactionkey=a.transactionkey and  a.APPLICATION_NUM!=#application_num#
+		and a.TRANSACTIONKEY IN ($trans$)
+		and a.STATUS_CD='1'
+	</statement>
+
+	<statement id="modifyT07_trans_uc_status1" parameterClass="com.ist.aml.report.dto.T07_case_transaction"
+		resultClass="int">
+		UPDATE T47_TRANSACTION_UC SET
+		HANDLE_STATUS_CD='1'
+		WHERE TRANSACTIONKEY IN (SELECT TRANSACTIONKEY FROM T07_CASE_TRANSACTION
+		WHERE APPLICATION_NUM=#application_num# and status_cd='1'
+		<isNotEmpty prepend="AND" property="stcr">
+				STCR=#stcr#
+		 </isNotEmpty>
+		) AND
+		HANDLE_STATUS_CD ='4'
+    </statement>
+    
+    <statement id="getCase_stcrList1" parameterClass="com.ist.aml.report.dto.T07_case_stcr"
+		resultClass="com.ist.aml.report.dto.T07_case_stcr">
+		SELECT * FROM 
+		(SELECT DISTINCT A.APPLICATION_NUM,A.PARTY_ID,A.STCR,'' AS stcr_disp,A.STATUS,'1' AS FLAG FROM
+		<isNotEmpty prepend="" property="casesearchtime">
+			<isEqual property="casesearchtime" compareValue="0">
+				<isNotEmpty prepend="" property="case_type">
+					<isEqual property="case_type" compareValue="1">
+						T07_CASE_STCR_DE A 
+					  	</isEqual>
+					<isEqual property="case_type" compareValue="2">
+						T07_CASE_STCR_KY A 
+					  	</isEqual>
+				</isNotEmpty>
+			</isEqual>
+			<isEqual property="casesearchtime" compareValue="1">
+				<isNotEmpty prepend="" property="case_type">
+					<isEqual property="case_type" compareValue="1">
+						T07_CASE_STCR_DE_UH A 
+					  	</isEqual>
+					<isEqual property="case_type" compareValue="2">
+						T07_CASE_STCR_KY_UH A 
+					  	</isEqual>
+				</isNotEmpty>
+			</isEqual>
+		</isNotEmpty>
+		<isEmpty prepend="" property="casesearchtime">
+			<isNotEmpty prepend="" property="case_type">
+				<isEqual property="case_type" compareValue="1">
+					T07_CASE_STCR_DE A 
+			  	</isEqual>
+				<isEqual property="case_type" compareValue="2">
+					T07_CASE_STCR_KY A 
+			  	</isEqual>
+			</isNotEmpty>
+		</isEmpty>
+
+			<isNotEmpty prepend="WHERE" property="application_num">
+				A.APPLICATION_NUM = #application_num# 
+		    </isNotEmpty>
+		
+		UNION
+		SELECT DISTINCT B.APPLICATION_NUM,'', B.STCR, B.DES AS stcr_disp, '' AS STATUS, '2' AS FLAG FROM
+		<isNotEmpty prepend="" property="casesearchtime">
+			<isEqual property="casesearchtime" compareValue="0">
+				T07_CASE_NET_INDIC B
+			</isEqual>
+			<isEqual property="casesearchtime" compareValue="1">
+				T07_CASE_NET_INDIC_UH B
+			</isEqual>
+		</isNotEmpty>
+		<isEmpty prepend="" property="casesearchtime">
+			T07_CASE_NET_INDIC B
+		</isEmpty>
+		
+			<isNotEmpty prepend="WHERE" property="application_num">
+				B.APPLICATION_NUM = #application_num# 
+		    </isNotEmpty>
+	
+		)C
+		
+		ORDER BY C.STCR desc
+	</statement>
+    
+	<statement id="getCase_stcrList" parameterClass="com.ist.aml.report.dto.T07_case_stcr"
+		resultClass="com.ist.aml.report.dto.T07_case_stcr">
+		SELECT * FROM 
+		(SELECT DISTINCT A.APPLICATION_NUM,A.STCR,'' AS stcr_disp,A.STATUS,'1' AS FLAG,0 AS RULEVALUE FROM
+		<isNotEmpty prepend="" property="casesearchtime">
+			<isEqual property="casesearchtime" compareValue="0">
+				<isNotEmpty prepend="" property="case_type">
+					<isEqual property="case_type" compareValue="1">
+						T07_CASE_STCR_DE A 
+					  	</isEqual>
+					<isEqual property="case_type" compareValue="2">
+						T07_CASE_STCR_KY A 
+					  	</isEqual>
+				</isNotEmpty>
+			</isEqual>
+			<isEqual property="casesearchtime" compareValue="1">
+				<isNotEmpty prepend="" property="case_type">
+					<isEqual property="case_type" compareValue="1">
+						T07_CASE_STCR_DE_UH A 
+					  	</isEqual>
+					<isEqual property="case_type" compareValue="2">
+						T07_CASE_STCR_KY_UH A 
+					  	</isEqual>
+				</isNotEmpty>
+			</isEqual>
+	
+		</isNotEmpty>
+		
+		<isEmpty prepend="" property="casesearchtime">
+			<isNotEmpty prepend="" property="case_type">
+				<isEqual property="case_type" compareValue="1">
+					T07_CASE_STCR_DE A 
+			  	</isEqual>
+				<isEqual property="case_type" compareValue="2">
+					T07_CASE_STCR_KY A 
+			  	</isEqual>
+			</isNotEmpty>
+		</isEmpty>
+		<isNotEmpty prepend="WHERE" property="application_num">
+				A.APPLICATION_NUM = #application_num# 
+		    </isNotEmpty>
+		UNION
+		SELECT DISTINCT B.APPLICATION_NUM, B.STCR, B.DES AS stcr_disp, '' AS STATUS, '2' AS FLAG,MIN(B.RULEVALUE) AS RULEVALUE FROM
+		<isNotEmpty prepend="" property="casesearchtime">
+			<isEqual property="casesearchtime" compareValue="0">
+				T07_CASE_NET_INDIC B
+			</isEqual>
+			<isEqual property="casesearchtime" compareValue="1">
+				T07_CASE_NET_INDIC_UH B
+			</isEqual>
+		</isNotEmpty>
+		<isEmpty prepend="" property="casesearchtime">
+			T07_CASE_NET_INDIC B
+		</isEmpty>
+		
+			<isNotEmpty prepend="WHERE" property="application_num">
+				B.APPLICATION_NUM = #application_num# 
+				GROUP BY B.APPLICATION_NUM, B.STCR, B.DES
+		    </isNotEmpty>
+
+		)C
+	
+		ORDER BY C.STCR desc
+	</statement>
+
+	<statement id="getCase_stcrListCount" parameterClass="com.ist.aml.report.dto.T07_case_stcr"
+		resultClass="int">
+		SELECT COUNT(DISTINCT STCR) FROM
+		(SELECT DISTINCT A.APPLICATION_NUM,A.STCR,'' AS stcr_disp,A.STATUS,'1' AS FLAG,0 AS RULEVALUE FROM
+		<isNotEmpty prepend="" property="casesearchtime">
+			<isEqual property="casesearchtime" compareValue="0">
+				<isNotEmpty prepend="" property="case_type">
+					<isEqual property="case_type" compareValue="1">
+						T07_CASE_STCR_DE A 
+					  	</isEqual>
+					<isEqual property="case_type" compareValue="2">
+						T07_CASE_STCR_KY A 
+					  	</isEqual>
+				</isNotEmpty>
+			</isEqual>
+			<isEqual property="casesearchtime" compareValue="1">
+				<isNotEmpty prepend="" property="case_type">
+					<isEqual property="case_type" compareValue="1">
+						T07_CASE_STCR_DE_UH A 
+					  	</isEqual>
+					<isEqual property="case_type" compareValue="2">
+						T07_CASE_STCR_KY_UH A 
+					  	</isEqual>
+				</isNotEmpty>
+			</isEqual>
+		</isNotEmpty>
+		<isEmpty prepend="" property="casesearchtime">
+			<isNotEmpty prepend="" property="case_type">
+				<isEqual property="case_type" compareValue="1">
+					T07_CASE_STCR_DE A 
+			  	</isEqual>
+				<isEqual property="case_type" compareValue="2">
+					T07_CASE_STCR_KY A 
+			  	</isEqual>
+			</isNotEmpty>
+		</isEmpty>
+		<isNotEmpty prepend="WHERE" property="application_num">
+				A.APPLICATION_NUM = #application_num# 
+		    </isNotEmpty>
+		UNION
+		SELECT DISTINCT B.APPLICATION_NUM, B.STCR, B.DES AS stcr_disp, '' AS STATUS, '2' AS FLAG,MIN(B.RULEVALUE) AS RULEVALUE FROM
+		<isNotEmpty prepend="" property="casesearchtime">
+			<isEqual property="casesearchtime" compareValue="0">
+				T07_CASE_NET_INDIC B
+			</isEqual>
+			<isEqual property="casesearchtime" compareValue="1">
+				T07_CASE_NET_INDIC_UH B
+			</isEqual>
+		</isNotEmpty>
+		<isEmpty prepend="" property="casesearchtime">
+			T07_CASE_NET_INDIC B
+		</isEmpty>
+		<isNotEmpty prepend="WHERE" property="application_num">
+				B.APPLICATION_NUM = #application_num#
+				GROUP BY B.APPLICATION_NUM, B.STCR, B.DES 
+		    </isNotEmpty>
+		)C
+		
+	</statement>
+
+	<statement id="getCase_adviList" parameterClass="com.ist.aml.report.dto.T07_case_application"
+		resultClass="com.ist.aml.report.dto.T07_case_application">
+		SELECT T.CURR_POST,B.Organkey AS
+		Curr_Org,T.LAST_UPD_USER,T.APPLICATION_ADVICE AS
+		REASON,T.CURR_OPER_ID,T.CREATE_DT
+		FROM
+		<isNotEmpty prepend="" property="casesearchtime">
+			<isEqual property="casesearchtime" compareValue="0">
+				T07_APP_MOVEFATE T,T00_user B
+				WHERE T.Last_Upd_User=B.Username
+	  	</isEqual>
+			<isEqual property="casesearchtime" compareValue="1">
+				T07_APP_MOVEFATE_UH T,T00_user B
+				WHERE T.Last_Upd_User=B.Username
+	  	</isEqual>
+		</isNotEmpty>
+		<isEmpty prepend="" property="casesearchtime">
+			T07_APP_MOVEFATE T,T00_user B
+			WHERE T.Last_Upd_User=B.Username
+	</isEmpty>
+
+		<isNotEmpty prepend="AND" property="application_num">
+			T.APPLICATION_NUM = #application_num# 
+    </isNotEmpty>
+
+		ORDER BY T.SEQ_NUM
+	</statement>
+	
+	<statement id="getT07_stcr_transList" parameterClass="com.ist.aml.report.dto.T07_case_stcr"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT
+		B.APPLICATION_NUM,B.STCR,B.STATUS_CD,A.TRANSACTIONKEY,A.TX_NO,A.PARTY_ID,A.PARTY_CHN_NAME,A.TX_DT,A.ORGANKEY,A.ACCT_NUM,A.OPP_NAME,A.CURRENCY_CD,A.AMT,A.USE_DES,A.DEBIT_CREDIT,A.CASH_TRANS_FLAG,A.VALIDATE_IND,A.VALIDATE_IND2
+		FROM
+		<dynamic>
+			<isNotEmpty prepend="" property="casesearchtime">
+				<isEqual property="casesearchtime" compareValue="0">
+					<isNotEmpty prepend="" property="case_type">
+						<isEqual property="case_type" compareValue="1">
+							T47_TRANSACTION_UC A, T07_CASE_TRANSACTION_DE B WHERE
+					  	</isEqual>
+						<isEqual property="case_type" compareValue="2">
+							T47_TRANSACTION_UC A, T07_CASE_TRANSACTION_KY B WHERE
+					  	</isEqual>
+					</isNotEmpty>
+				</isEqual>
+				<isEqual property="casesearchtime" compareValue="1">
+					<isNotEmpty prepend="" property="case_type">
+						<isEqual property="case_type" compareValue="1">
+							V47_TRANSACTION A, T07_CASE_TRANSACTION_DE_UH B WHERE
+					  	</isEqual>
+						<isEqual property="case_type" compareValue="2">
+							V47_TRANSACTION A, T07_CASE_TRANSACTION_KY_UH B WHERE
+					  	</isEqual>
+					</isNotEmpty>
+				</isEqual>
+			</isNotEmpty>
+			<isEmpty prepend="" property="casesearchtime">
+				<isNotEmpty prepend="" property="case_type">
+					<isEqual property="case_type" compareValue="1">
+						T47_TRANSACTION_UC A, T07_CASE_TRANSACTION_DE B WHERE
+				  	</isEqual>
+					<isEqual property="case_type" compareValue="2">
+						T47_TRANSACTION_UC A, T07_CASE_TRANSACTION_KY B WHERE
+				  	</isEqual>
+				</isNotEmpty>
+			</isEmpty>
+		</dynamic>
+		B.TRANSACTIONKEY = A.TRANSACTIONKEY
+		<dynamic>
+			<isNotEmpty prepend="and" property="application_num">
+				B.APPLICATION_NUM = #application_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="stcr">
+				B.STCR = #stcr#
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY A.TX_DT
+	</statement>
+
+	<statement id="getT07_stcr_transListCount" parameterClass="com.ist.aml.report.dto.T07_case_stcr"
+		resultClass="int">
+		SELECT COUNT(A.TRANSACTIONKEY) FROM
+		<dynamic>
+			<isNotEmpty prepend="" property="casesearchtime">
+				<isEqual property="casesearchtime" compareValue="0">
+					<isNotEmpty prepend="" property="case_type">
+						<isEqual property="case_type" compareValue="1">
+							T47_TRANSACTION_UC A, T07_CASE_TRANSACTION_DE B WHERE
+					  	</isEqual>
+						<isEqual property="case_type" compareValue="2">
+							T47_TRANSACTION_UC A, T07_CASE_TRANSACTION_KY B WHERE
+					  	</isEqual>
+					</isNotEmpty>
+				</isEqual>
+				<isEqual property="casesearchtime" compareValue="1">
+					<isNotEmpty prepend="" property="case_type">
+						<isEqual property="case_type" compareValue="1">
+							V47_TRANSACTION A, T07_CASE_TRANSACTION_DE_UH B WHERE
+					  	</isEqual>
+						<isEqual property="case_type" compareValue="2">
+							V47_TRANSACTION A, T07_CASE_TRANSACTION_KY_UH B WHERE
+					  	</isEqual>
+					</isNotEmpty>
+				</isEqual>
+			</isNotEmpty>
+			<isEmpty prepend="" property="casesearchtime">
+				<isNotEmpty prepend="" property="case_type">
+					<isEqual property="case_type" compareValue="1">
+						T47_TRANSACTION_UC A, T07_CASE_TRANSACTION_DE B WHERE
+				  	</isEqual>
+					<isEqual property="case_type" compareValue="2">
+						T47_TRANSACTION_UC A, T07_CASE_TRANSACTION_KY B WHERE
+				  	</isEqual>
+				</isNotEmpty>
+			</isEmpty>
+		</dynamic>
+		B.TRANSACTIONKEY = A.TRANSACTIONKEY
+		<dynamic>
+			<isNotEmpty prepend="and" property="application_num">
+				B.APPLICATION_NUM = #application_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="stcr">
+				B.STCR = #stcr#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+    <statement id="getT07_stcr_partyList" parameterClass="com.ist.aml.report.dto.T07_case_stcr"
+		resultClass="com.ist.aml.report.dto.T47_party">
+		SELECT 
+		DISTINCT A.PARTY_ID,A.PARTY_CHN_NAME,A.PARTY_CLASS_CD,A.CARD_NO,B.APPLICATION_NUM,B.STCR,B.PARTY_STATUS
+		
+		<dynamic>
+			<isNotEmpty prepend="" property="casesearchtime">
+				<isEqual property="casesearchtime" compareValue="0">
+					<isNotEmpty prepend="" property="case_type">
+					
+						<isEqual property="case_type" compareValue="1">
+						,A.VALIDATE_IND,A.VALIDATE_IND2
+						FROM	T47_PARTY_UC A, T07_CASE_STCR_DE B WHERE
+					  	</isEqual>
+						<isEqual property="case_type" compareValue="2">
+						,A.VALIDATE_IND,A.VALIDATE_IND2
+						FROM	T47_PARTY_UC A, T07_CASE_STCR_KY B WHERE
+					  	</isEqual>
+					</isNotEmpty>
+				</isEqual>
+				<isEqual property="casesearchtime" compareValue="1">
+					<isNotEmpty prepend="" property="case_type">
+						<isEqual property="case_type" compareValue="1">
+						FROM	T47_PARTY A, T07_CASE_STCR_DE_UH B WHERE
+					  	</isEqual>
+						<isEqual property="case_type" compareValue="2">
+						FROM	T47_PARTY A, T07_CASE_STCR_KY_UH B WHERE
+					  	</isEqual>
+					</isNotEmpty>
+				</isEqual>
+			</isNotEmpty>
+			<isEmpty prepend="" property="casesearchtime">
+				<isNotEmpty prepend="" property="case_type">
+				,A.VALIDATE_IND,A.VALIDATE_IND2
+					<isEqual property="case_type" compareValue="1">
+						FROM T47_PARTY_UC A, T07_CASE_STCR_DE B WHERE
+				  	</isEqual>
+					<isEqual property="case_type" compareValue="2">
+						FROM T47_PARTY_UC A, T07_CASE_STCR_KY B WHERE
+				  	</isEqual>
+				</isNotEmpty>
+			</isEmpty>
+		</dynamic>
+		A.PARTY_ID = B.PARTY_ID
+		<dynamic>
+			<isNotEmpty prepend="and" property="application_num">
+				B.APPLICATION_NUM = #application_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="stcr">
+				B.STCR = #stcr#
+			</isNotEmpty>
+		</dynamic>
+	
+	</statement>
+
+	<statement id="getT07_stcr_partyListCount" parameterClass="com.ist.aml.report.dto.T07_case_stcr"
+		resultClass="int">
+      SELECT COUNT(distinct a.PARTY_ID) FROM 
+		<dynamic>
+			<isNotEmpty prepend="" property="casesearchtime">
+				<isEqual property="casesearchtime" compareValue="0">
+					<isNotEmpty prepend="" property="case_type">
+						<isEqual property="case_type" compareValue="1">
+							T47_PARTY_UC A, T07_CASE_STCR_DE B WHERE
+					  	</isEqual>
+						<isEqual property="case_type" compareValue="2">
+							T47_PARTY_UC A, T07_CASE_STCR_KY B WHERE
+					  	</isEqual>
+					</isNotEmpty>
+				</isEqual>
+				<isEqual property="casesearchtime" compareValue="1">
+					<isNotEmpty prepend="" property="case_type">
+						<isEqual property="case_type" compareValue="1">
+							T47_PARTY A, T07_CASE_STCR_DE_UH B WHERE
+					  	</isEqual>
+						<isEqual property="case_type" compareValue="2">
+							T47_PARTY A, T07_CASE_STCR_KY_UH B WHERE
+					  	</isEqual>
+					</isNotEmpty>
+				</isEqual>
+			</isNotEmpty>
+			<isEmpty prepend="" property="casesearchtime">
+				<isNotEmpty prepend="" property="case_type">
+					<isEqual property="case_type" compareValue="1">
+						T47_PARTY_UC A, T07_CASE_STCR_DE B WHERE
+				  	</isEqual>
+					<isEqual property="case_type" compareValue="2">
+						T47_PARTY_UC A, T07_CASE_STCR_KY B WHERE
+				  	</isEqual>
+				</isNotEmpty>
+			</isEmpty>
+		</dynamic>
+		A.PARTY_ID = B.PARTY_ID
+		<dynamic>
+			<isNotEmpty prepend="and" property="application_num">
+				B.APPLICATION_NUM = #application_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="stcr">
+				B.STCR = #stcr#
+			</isNotEmpty>
+		</dynamic>
+	
+	</statement>
+
+	<statement id="getT07_stcr_acctList" parameterClass="com.ist.aml.report.dto.T07_case_stcr"
+		resultClass="com.ist.aml.pbcreport.dto.T47_agreement">
+		SELECT
+		B.APPLICATION_NUM,B.STCR,B.ACCT_STATUS,B.PARTY_ID,A.ACCT_NUM,A.OP_ORG_NUM,A.OPEN_DT,A.CLOSE_DT
+		FROM
+		<dynamic>
+			<isNotEmpty prepend="" property="casesearchtime">
+				<isEqual property="casesearchtime" compareValue="0">
+					<isNotEmpty prepend="" property="case_type">
+						<isEqual property="case_type" compareValue="1">
+							T47_ACCT_UC A, T07_CASE_STCR_DE B WHERE
+					  	</isEqual>
+						<isEqual property="case_type" compareValue="2">
+							T47_ACCT_UC A, T07_CASE_STCR_KY B WHERE
+					  	</isEqual>
+					</isNotEmpty>
+				</isEqual>
+				<isEqual property="casesearchtime" compareValue="1">
+					<isNotEmpty prepend="" property="case_type">
+						<isEqual property="case_type" compareValue="1">
+							T47_AGREEMENT A, T07_CASE_STCR_DE_UH B WHERE
+					  	</isEqual>
+						<isEqual property="case_type" compareValue="2">
+							T47_AGREEMENT A, T07_CASE_STCR_KY_UH B WHERE
+					  	</isEqual>
+					</isNotEmpty>
+				</isEqual>
+			</isNotEmpty>
+			<isEmpty prepend="" property="casesearchtime">
+				<isNotEmpty prepend="" property="case_type">
+					<isEqual property="case_type" compareValue="1">
+						T47_ACCT_UC A, T07_CASE_STCR_DE B WHERE
+				  	</isEqual>
+					<isEqual property="case_type" compareValue="2">
+						T47_ACCT_UC A, T07_CASE_STCR_KY B WHERE
+				  	</isEqual>
+				</isNotEmpty>
+			</isEmpty>
+		</dynamic>
+		A.ACCT_NUM = B.ACCT_NUM
+		<dynamic>
+			<isNotEmpty prepend="and" property="application_num">
+				B.APPLICATION_NUM = #application_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="stcr">
+				B.STCR = #stcr#
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY B.ACCT_NUM
+	</statement>
+
+	<statement id="getT07_stcr_acctListCount" parameterClass="com.ist.aml.report.dto.T07_case_stcr"
+		resultClass="int">
+		SELECT COUNT(B.ACCT_NUM)
+		FROM
+		<dynamic>
+			<isNotEmpty prepend="" property="casesearchtime">
+				<isEqual property="casesearchtime" compareValue="0">
+					<isNotEmpty prepend="" property="case_type">
+						<isEqual property="case_type" compareValue="1">
+							T47_ACCT_UC A,T07_CASE_STCR_DE B WHERE
+					  	</isEqual>
+						<isEqual property="case_type" compareValue="2">
+							T47_ACCT_UC A,T07_CASE_STCR_KY B WHERE
+					  	</isEqual>
+					</isNotEmpty>
+				</isEqual>
+				<isEqual property="casesearchtime" compareValue="1">
+					<isNotEmpty prepend="" property="case_type">
+						<isEqual property="case_type" compareValue="1">
+							T47_AGREEMENT A,T07_CASE_STCR_DE_UH B WHERE
+					  	</isEqual>
+						<isEqual property="case_type" compareValue="2">
+							T47_AGREEMENT A,T07_CASE_STCR_KY_UH B WHERE
+					  	</isEqual>
+					</isNotEmpty>
+				</isEqual>
+			</isNotEmpty>
+			<isEmpty prepend="" property="casesearchtime">
+				<isNotEmpty prepend="" property="case_type">
+					<isEqual property="case_type" compareValue="1">
+						T47_ACCT_UC A,T07_CASE_STCR_DE B WHERE
+				  	</isEqual>
+					<isEqual property="case_type" compareValue="2">
+						T47_ACCT_UC A,T07_CASE_STCR_KY B WHERE
+				  	</isEqual>
+				</isNotEmpty>
+			</isEmpty>
+		</dynamic>
+		A.ACCT_NUM = B.ACCT_NUM
+		<dynamic>
+			<isNotEmpty prepend="and" property="application_num">
+				B.APPLICATION_NUM = #application_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="stcr">
+				B.STCR = #stcr#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="getT07_stcr_trans_notList" parameterClass="com.ist.aml.report.dto.T07_case_transaction"
+		resultClass="com.ist.aml.report.dto.T07_case_transaction">
+		SELECT TRANSACTIONKEY
+		FROM T07_CASE_TRANSACTION_KY A WHERE NOT EXISTS(SELECT 'X' FROM T07_CASE_TRANSACTION B 
+		WHERE B.APPLICATION_NUM!=A.APPLICATION_NUM AND B.TRANSACTIONKEY=A.TRANSACTIONKEY AND  B.TRANSACTIONKEY=#transactionkey# AND B.STATUS_CD = '1')
+		AND A.APPLICATION_NUM=#application_num# AND  A.TRANSACTIONKEY=#transactionkey# AND A.STATUS_CD = '1'
+		
+	</statement>
+	<statement id="modifyT07_case_stcr" parameterClass="com.ist.aml.report.dto.T07_case_stcr"
+		resultClass="int">
+		UPDATE T07_CASE_STCR_KY B
+		SET STCR=#stcrkey#
+		WHERE APPLICATION_NUM=#application_num# AND STCR=#stcr#
+	</statement>
+
+	<statement id="modifyT07_case_trans_stcr" parameterClass="com.ist.aml.report.dto.T07_case_stcr"
+		resultClass="int">
+		UPDATE T07_CASE_TRANSACTION_KY B
+		SET STCR=#stcrkey#
+		WHERE APPLICATION_NUM=#application_num# AND STCR=#stcr#
+	</statement>
+
+	<statement id="modifyCase_advi" parameterClass="com.ist.aml.report.dto.T07_app_movefate"
+		resultClass="int">
+		UPDATE T07_APP_MOVEFATE SET
+		APPLICATION_ADVICE=#application_advice#,LAST_UPD_USER=#last_upd_user#,LAST_UPD_DT=#last_upd_dt#
+		WHERE APPLICATION_NUM = #application_num# AND CURR_NODE = #curr_node#
+		AND CURR_POST = #curr_post# AND FLOW_ID = #flow_id# AND CURRENT_IND =
+		'1'
+	</statement>
+	<statement id="insertCase_advi" parameterClass="com.ist.aml.report.dto.T07_app_movefate"
+		resultClass="int">
+		INSERT INTO T07_APP_MOVEFATE(
+		FLOW_ID,APPLICATION_NUM,RECHECK_NUM,SEQ_NUM,CURR_ORG,CURR_NODE,CURR_POST,CURRENT_IND,CREATE_DT,LAST_UPD_USER,LAST_UPD_DT,APPLICATION_ADVICE
+		) VALUES(
+		#flow_id#,#application_num#,#recheck_num#,#seq_num#,#curr_org#,#curr_node#,#curr_post#,#current_ind#,#create_dt#,#last_upd_user#,#last_upd_dt#,#application_advice#
+		) 
+    </statement>
+	<statement id="gett07_lip_view" parameterClass="java.lang.String"
+		resultClass="com.ist.aml.report.dto.T10_check_cust_ke">
+		select party_id,lip_flag
+		from t07_lip_view
+		where party_id =#value#
+  </statement>
+	<statement id="insertT07_case_application_all_field"
+		parameterClass="com.ist.aml.report.dto.T07_case_application"
+		resultClass="int">
+		INSERT INTO T07_CASE_APPLICATION (APPLICATION_NUM, RECHECK_NUM, FLOW_ID,
+		APP_DT, APP_ORG_ID, CASE_NAME, CAST_TYPE, CASE_KIND, CASE_LEVEL,
+		CASE_DATE, PARTY_ID, PARTY_NAME, APP_STATE_CD, DATE_STATUS_CD,
+		LAST_UPD_DT, LAST_UPD_USER, APP_CASE_REASON, CASE_TRAN_MINDATE,
+		CASE_TRAN_MAXDATE, CASE_END_DATE, CURR_CD, PARTY_CLASS_CD,
+		TAKE_ACTION, ACTION_DESCRIP, ALERT_LEVEL, VALIDATE_IND, POST_ID,
+		NODE_ID, IS_MENU,ISSTAFF,IS_GREY, OBJKEY,TRAN_COUNT, TRAN_AMT,ACCT_COUNT,PARTY_COUNT,CASE_SOURCE)
+		VALUES (
+		#application_num#,#recheck_num#,#flow_id#,#app_dt#,#app_org_id#,#case_name#,#cast_type#,#case_kind#,#case_level#,#case_date#,#party_id#,#party_name#,#app_state_cd#,#date_status_cd#,#last_upd_dt#,#last_upd_user#,#app_case_reason#,#case_tran_mindate#,#case_tran_maxdate#,#case_end_date#,#curr_cd#,#party_class_cd#,#take_action#,#action_descrip#,#alert_level#,#validate_ind#,#post_id#,#node_id#,#is_menu#,#is_staff#,#is_grey#,
+		#objkey#,$tran_count$,$tran_amt$,$acct_count$,$party_count$,#case_source#)
+	</statement>
+	<statement id="searchT07_case_applicationList_new"
+		parameterClass="com.ist.aml.report.dto.T07_case_application"
+		resultClass="com.ist.aml.report.dto.T07_case_application">
+		SELECT
+		A.APPLICATION_NUM,CAST_TYPE,CASE_NAME,A.APP_ORG_ID,CASE_KIND,APP_STATE_CD,APP_DT,
+		CASE_DATE,PARTY_NAME,PARTY_ID,CURR_CD,POST_ID,DATE_STATUS_CD,FLOW_ID,case_source FROM
+		<isNotEmpty prepend="" property="casesearchtime">
+			<isEqual property="casesearchtime" compareValue="0">
+				T07_CASE_APPLICATION A 
+  	</isEqual>
+			<isEqual property="casesearchtime" compareValue="1">
+				T07_CASE_APPLICATION_UH A 
+  	</isEqual>
+		</isNotEmpty>
+		<isEmpty prepend="" property="casesearchtime">
+			T07_CASE_APPLICATION A 
+  </isEmpty>
+		WHERE 1=1
+		<dynamic>
+			<isNotEmpty prepend="AND" property="application_num">
+				A.APPLICATION_NUM LIKE #application_num# 
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="curr_cd">
+				A.CURR_CD = #curr_cd#
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="case_name">
+				A.CASE_NAME LIKE #case_name#
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_name">
+				A.PARTY_NAME LIKE #party_name#
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#  
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="app_org_id">
+				A.APP_ORG_ID = #app_org_id#  
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="state">
+				APP_STATE_CD = #state# 
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				A.APP_ORG_ID in ($organkey$)  
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="type">
+				CAST_TYPE = #type# 
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				PARTY_CLASS_CD = #party_class_cd# 
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="post_id">
+				post_id = #post_id# 
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="level">
+				CASE_LEVEL = #level# 
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="kind">
+				CASE_KIND = #kind# 
+    </isNotEmpty>
+      <isNotEmpty prepend="AND" property="case_kind">
+				CASE_KIND in($case_kind$)
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="is_menu">
+				IS_MENU = #is_menu# 
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="app_dt_start"> 
+    <![CDATA[CASE_DATE >= #app_dt_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="app_dt_end"> 
+    <![CDATA[CASE_DATE <= #app_dt_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="delete_flag">
+				APP_STATE_CD IN('4')
+				<isNotEmpty prepend="AND" property="case_date_start"> 
+	        <![CDATA[CASE_DATE >= #case_date_start#]]>
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="case_date_end"> 
+	        <![CDATA[CASE_DATE <= #case_date_end#]]>
+				</isNotEmpty>
+			</isNotEmpty>
+			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY A.APPLICATION_NUM
+    </isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY CASE_NAME
+    </isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY A.APP_DT
+    </isEqual>
+				<isEqual property="orderby" compareValue="4">
+					ORDER BY CAST_TYPE
+    </isEqual>
+				<isEqual property="orderby" compareValue="5">
+					ORDER BY CASE_KIND
+    </isEqual>
+				<isEqual property="orderby" compareValue="6">
+					ORDER BY CASE_LEVEL
+    </isEqual>
+
+				<isNotEmpty property="order">
+					<isEqual property="order" compareValue="-1">
+					</isEqual>
+					<isEqual property="order" compareValue="1">
+					</isEqual>
+					<isEqual property="order" compareValue="2">
+						DESC
+    </isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="searchT07_case_applicationListCount_new"
+		parameterClass="com.ist.aml.report.dto.T07_case_application"
+		resultClass="int">
+		SELECT COUNT(*) FROM
+		<isNotEmpty prepend="" property="casesearchtime">
+			<isEqual property="casesearchtime" compareValue="0">
+				T07_CASE_APPLICATION A 
+  	</isEqual>
+			<isEqual property="casesearchtime" compareValue="1">
+				T07_CASE_APPLICATION_UH A 
+  	</isEqual>
+		</isNotEmpty>
+		<isEmpty prepend="" property="casesearchtime">
+			T07_CASE_APPLICATION A 
+  </isEmpty>
+		WHERE 1=1
+		<dynamic>
+			<isNotEmpty prepend="AND" property="application_num">
+				A.APPLICATION_NUM LIKE #application_num# 
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="curr_cd">
+				A.CURR_CD = #curr_cd#
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="case_name">
+				A.CASE_NAME LIKE #case_name#
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_name">
+				A.PARTY_NAME LIKE #party_name#
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#  
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="app_org_id">
+				A.APP_ORG_ID = #app_org_id#  
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="state">
+				APP_STATE_CD = #state# 
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				A.APP_ORG_ID in ($organkey$)  
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="type">
+				CAST_TYPE = #type# 
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				PARTY_CLASS_CD = #party_class_cd# 
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="post_id">
+				post_id = #post_id# 
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="level">
+				CASE_LEVEL = #level# 
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="kind">
+				CASE_KIND = #kind# 
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="case_kind">
+				CASE_KIND in($case_kind$)
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="is_menu">
+				IS_MENU = #is_menu# 
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="app_dt_start"> 
+    <![CDATA[CASE_DATE >= #app_dt_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="app_dt_end"> 
+    <![CDATA[CASE_DATE <= #app_dt_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="delete_flag">
+				APP_STATE_CD IN('4')
+				<isNotEmpty prepend="AND" property="case_date_start"> 
+	        <![CDATA[CASE_DATE >= #case_date_start#]]>
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="case_date_end"> 
+	        <![CDATA[CASE_DATE <= #case_date_end#]]>
+				</isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="modifyT07_case_app_UHstatus" parameterClass="com.ist.aml.report.dto.T07_case_application"
+		resultClass="int">
+		UPDATE T07_CASE_APPLICATION_UH SET
+		APP_STATE_CD=#app_state_cd#
+		<isNotEmpty prepend="" property="node_id">
+			,NODE_ID=#node_id#
+  </isNotEmpty>
+		<isNotEmpty prepend="" property="post_id">
+			,POST_ID=#post_id#
+  </isNotEmpty>
+		,LAST_UPD_DT=#last_upd_dt#,LAST_UPD_USER=#last_upd_user#
+		WHERE APPLICATION_NUM=#application_num#
+	</statement>
+
+	<statement id="modifyT07_case_application" parameterClass="com.ist.aml.report.dto.T07_case_application"
+		resultClass="int">
+		UPDATE T07_CASE_APPLICATION SET
+		TAKE_ACTION=#take_action#,ACTION_DESCRIP=#action_descrip#,
+		ALERT_LEVEL=#alert_level#
+        <isNotEmpty prepend="" property="action_explain">
+			,ACTION_EXPLAIN=#action_explain#
+    </isNotEmpty>
+		<isNotEmpty prepend="" property="case_tran_maxdate_disp">
+			,CASE_TRAN_MAXDATE=#case_tran_maxdate#
+    </isNotEmpty>
+    
+		<isNotEmpty prepend="" property="case_tran_mindate_disp">
+			,CASE_TRAN_MINDATE=#case_tran_mindate#
+    </isNotEmpty>
+
+		WHERE APPLICATION_NUM=#application_num# AND FLOW_ID=#flow_id#
+	</statement>
+	<statement id="getT07_case_stcr_adviDisp" parameterClass="com.ist.aml.report.dto.T07_case_alert_advi"
+		resultClass="com.ist.aml.report.dto.T07_case_alert_advi">
+		SELECT * FROM T07_CASE_ALERT_ADVI
+		WHERE APPLICATION_NUM=#application_num# AND STCR=#stcr# AND PARTT_ID=#party_id#
+    </statement>
+    
+    <statement id="getT07_case_stcr_adviDisp1" parameterClass="com.ist.aml.report.dto.T07_case_alert_advi"
+		resultClass="com.ist.aml.report.dto.T07_case_alert_advi">
+		SELECT REASON,SEQ_NUM FROM T07_CASE_ALERT_ADVI 
+		WHERE APPLICATION_NUM=#application_num# AND OBJKEY=#objkey# AND OBJTYPE=#objtype# 
+		ORDER BY SEQ_NUM DESC
+    </statement>
+
+	<statement id="getT07_case_stcr_adviList" parameterClass="com.ist.aml.report.dto.T07_case_alert_advi"
+		resultClass="com.ist.aml.report.dto.T07_case_alert_advi">
+		SELECT * FROM T07_CASE_ALERT_ADVI
+		WHERE APPLICATION_NUM=#application_num# AND OBJKEY=#objkey# AND OBJTYPE=#objtype# 
+    </statement>
+    
+	<statement id="modifyT07_case_stcr_advi" parameterClass="com.ist.aml.report.dto.T07_case_alert_advi"
+		resultClass="int">
+		UPDATE T07_CASE_ALERT_ADVI SET
+		REASON=#reason#,LAST_UPD_USER=#last_upd_user#,LAST_UPD_DT=#last_upd_dt#
+		WHERE APPLICATION_NUM=#application_num# AND
+		STCR=#stcr# 
+    </statement>
+
+	<statement id="insertT07_case_stcr_advi" parameterClass="com.ist.aml.report.dto.T07_case_alert_advi"
+		resultClass="int">
+		INSERT INTO T07_CASE_ALERT_ADVI(
+		APPLICATION_NUM,OBJKEY,SEQ_NUM,POST_ID,OBJTYPE,OPERTYPE,REASON,CREATE_USER,CREATE_DT
+		) VALUES(
+		#application_num#,#objkey#,#seq_num#,#post_id#,#objtype#,#opertype#,#reason#,#create_user#,#create_dt#
+		) 
+    </statement>
+	<statement id="getT07_pbcruleList2" resultClass="com.ist.aml.report.dto.T07_pbcrule">
+		SELECT PBCKEY,STCRKEY,PBC_DES FROM T07_PBCRULE WHERE INTERFACEKEY='BS' ORDER
+		BY STCRKEY DESC
+  </statement>
+	<statement id="modifyT07_trans_uc_status" parameterClass="com.ist.aml.report.dto.T07_case_transaction"
+		resultClass="int">
+		UPDATE T47_TRANSACTION_UC  A SET
+		HANDLE_STATUS_CD=#status_cd#
+		WHERE  EXISTS(SELECT 'X'  FROM 
+		 <isNotEmpty prepend="" property="case_type">
+			<isEqual property="case_type" compareValue="2">
+             T07_CASE_TRANSACTION_KY
+             </isEqual>
+             <isEqual property="case_type" compareValue="1">
+             T07_CASE_TRANSACTION_DE
+             </isEqual>
+       </isNotEmpty>
+       <isEmpty prepend="" property="case_type">
+             T07_CASE_TRANSACTION
+       </isEmpty>
+        B WHERE B.TRANSACTIONKEY=A.TRANSACTIONKEY 
+		AND B.APPLICATION_NUM=#application_num#) AND  A.TRANSACTIONKEY IN ($trans$) 
+		<isNotEmpty prepend="" property="status_cd">
+		    <isEqual property="status_cd" compareValue="1">
+		        AND HANDLE_STATUS_CD = '4'
+		    </isEqual>
+		    <isNotEqual property="status_cd" compareValue="1">
+		        AND HANDLE_STATUS_CD = '1'
+		    </isNotEqual>
+        </isNotEmpty>
+    </statement>
+
+	<statement id="getT07_case_applicationDisp" parameterClass="com.ist.aml.report.dto.T07_case_application"
+		resultClass="com.ist.aml.report.dto.T07_case_application">
+		SELECT
+		A.APPLICATION_NUM,A.RECHECK_NUM,A.FLOW_ID,A.APP_DT,A.APP_ORG_ID,A.CASE_NAME,A.CAST_TYPE,A.CASE_KIND,A.CASE_LEVEL,A.CASE_DATE,A.PARTY_ID,A.PARTY_NAME,A.APP_STATE_CD,A.DATE_STATUS_CD,A.LAST_UPD_DT,A.LAST_UPD_USER,A.APP_CASE_REASON,A.CASE_TRAN_MINDATE,A.CASE_TRAN_MAXDATE,A.CASE_END_DATE,A.CURR_CD,A.PARTY_CLASS_CD,A.TAKE_ACTION,
+		A.TRAN_COUNT,A.TRAN_AMT,A.ACTION_DESCRIP,A.ALERT_LEVEL,A.VALIDATE_IND,A.ACCT_COUNT,A.PARTY_COUNT,A.OBJKEY,A.POST_ID,A.CASE_SOURCE
+		FROM
+
+		<isNotEmpty prepend="" property="casesearchtime">
+			<isEqual property="casesearchtime" compareValue="0">
+				T07_CASE_APPLICATION A 
+  	</isEqual>
+			<isEqual property="casesearchtime" compareValue="1">
+				T07_CASE_APPLICATION_UH A  
+  	</isEqual>
+		</isNotEmpty>
+		<isEmpty prepend="" property="casesearchtime">
+			(SELECT
+			B.APPLICATION_NUM,B.RECHECK_NUM,B.FLOW_ID,B.APP_DT,B.APP_ORG_ID,B.CASE_NAME,B.CAST_TYPE,B.CASE_KIND,B.CASE_LEVEL,B.CASE_DATE,B.PARTY_ID,B.PARTY_NAME,B.APP_STATE_CD,B.DATE_STATUS_CD,B.LAST_UPD_DT,B.LAST_UPD_USER,B.APP_CASE_REASON,B.CASE_TRAN_MINDATE,B.CASE_TRAN_MAXDATE,B.CASE_END_DATE,B.CURR_CD,B.PARTY_CLASS_CD,B.TAKE_ACTION,B.ACTION_DESCRIP,B.ALERT_LEVEL,B.VALIDATE_IND
+			,B.TRAN_COUNT,B.TRAN_AMT,B.ACCT_COUNT,B.PARTY_COUNT,B.OBJKEY,B.POST_ID,B.CASE_SOURCE FROM T07_CASE_APPLICATION B
+			UNION
+			SELECT
+			C.APPLICATION_NUM,C.RECHECK_NUM,C.FLOW_ID,C.APP_DT,C.APP_ORG_ID,C.CASE_NAME,C.CAST_TYPE,C.CASE_KIND,C.CASE_LEVEL,C.CASE_DATE,C.PARTY_ID,C.PARTY_NAME,C.APP_STATE_CD,C.DATE_STATUS_CD,C.LAST_UPD_DT,C.LAST_UPD_USER,C.APP_CASE_REASON,C.CASE_TRAN_MINDATE,C.CASE_TRAN_MAXDATE,C.CASE_END_DATE,C.CURR_CD,C.PARTY_CLASS_CD,C.TAKE_ACTION,C.ACTION_DESCRIP,C.ALERT_LEVEL,C.VALIDATE_IND
+			,C.TRAN_COUNT,C.TRAN_AMT,C.ACCT_COUNT,C.PARTY_COUNT,C.OBJKEY,C.POST_ID,C.CASE_SOURCE FROM T07_CASE_APPLICATION_UH C) A 
+  </isEmpty>
+		WHERE APPLICATION_NUM=#application_num#
+	</statement>
+
+	<statement id="modifyBatchT07_reportstatus" parameterClass="com.ist.aml.report.dto.T07_case_application"
+		resultClass="int">
+
+		UPDATE T07_REPORT SET REPORT_STATUS_CD=#app_state_cd1# WHERE
+		( APPLICATION_NUM IN
+		<iterate prepend="" property="application_numList" open="("
+			close=")" conjunction=",">
+			#application_numList[]#
+  </iterate>
+		or orig_application_num in
+		<iterate prepend="" property="application_numList" open="("
+			close=")" conjunction=",">
+			#application_numList[]#
+  </iterate>
+		)
+	</statement>
+
+	<statement id="insertT07_case_application" parameterClass="com.ist.aml.report.dto.T07_case_application"
+		resultClass="int">
+		INSERT INTO T07_CASE_APPLICATION(
+		ALERT_LEVEL,TAKE_ACTION,ACTION_DESCRIP,APPLICATION_NUM,RECHECK_NUM,FLOW_ID,APP_DT,APP_ORG_ID,CASE_NAME,CAST_TYPE,CASE_KIND,CASE_LEVEL,CASE_DATE,PARTY_ID,PARTY_NAME,APP_STATE_CD,DATE_STATUS_CD,LAST_UPD_DT,LAST_UPD_USER,APP_CASE_REASON,CASE_TRAN_MINDATE,CASE_TRAN_MAXDATE,CASE_END_DATE,CURR_CD,PARTY_CLASS_CD,VALIDATE_IND,POST_ID,
+		NODE_ID,CASE_SOURCE
+		) VALUES(
+		#alert_level#,#take_action#,#action_descrip#,#application_num#,#recheck_num#,#flow_id#,#app_dt:DATE#,#app_org_id#,#case_name#,#cast_type#,#case_kind#,#case_level#,#case_date:DATE#,#party_id#,#party_name#,#app_state_cd#,#date_status_cd#,#last_upd_dt#,#last_upd_user#,#app_case_reason#,
+		#case_tran_mindate#,#case_tran_maxdate#,#case_end_date#,#curr_cd#,#party_class_cd#,#validate_ind#,#post_id#,#node_id#,#case_source#
+		) 
+  </statement>
+	<statement id="getT07_case_applicationList" parameterClass="com.ist.aml.report.dto.T07_case_application"
+		resultClass="com.ist.aml.report.dto.T07_case_application">
+		SELECT
+		A.APPLICATION_NUM,A.RECHECK_NUM,A.FLOW_ID,A.APP_DT,A.APP_ORG_ID,A.CASE_NAME,A.CAST_TYPE,A.CASE_KIND,A.CASE_LEVEL,A.CASE_DATE,A.PARTY_ID,A.PARTY_NAME,A.APP_STATE_CD,A.DATE_STATUS_CD,A.LAST_UPD_DT,A.LAST_UPD_USER,A.APP_CASE_REASON,A.CASE_TRAN_MINDATE,A.CASE_TRAN_MAXDATE,A.CASE_END_DATE,A.CURR_CD,A.PARTY_CLASS_CD,A.TAKE_ACTION,
+		A.TRAN_COUNT,A.TRAN_AMT,A.ACTION_DESCRIP,A.ALERT_LEVEL,A.VALIDATE_IND
+		FROM
+
+		T07_CASE_APPLICATION A WHERE 1>0
+		<isNotEmpty prepend="AND" property="application_num">
+			A.APPLICATION_NUM=#application_num# 
+  	 </isNotEmpty>
+		<isNotEmpty prepend="AND" property="app_state_cd">
+			A.app_state_cd=#app_state_cd#
+  	  </isNotEmpty>
+		<isNotEmpty prepend="AND" property="case_kind">
+			A.case_kind in($case_kind$)
+  	  </isNotEmpty>
+	</statement>
+	<statement id="insertT07_case_application_R" parameterClass="com.ist.aml.report.dto.T07_case_application"
+		resultClass="int">
+		INSERT INTO T07_CASE_APPLICATION(
+		APPLICATION_NUM,CASE_SOURCE,RECHECK_NUM,FLOW_ID,APP_DT,APP_ORG_ID,CASE_NAME,CAST_TYPE,CASE_KIND,CASE_DATE,APP_STATE_CD,DATE_STATUS_CD,CASE_END_DATE,CURR_CD,VALIDATE_IND,POST_ID,NODE_ID,PARTY_ID,PARTY_NAME,TRAN_COUNT,TRAN_AMT,ALERT_LEVEL
+		) VALUES(
+		#application_num#,#case_source#,#recheck_num#,#flow_id#,#app_dt:DATE#,#app_org_id#,#case_name#,#cast_type#,#case_kind#,#case_date:DATE#,#app_state_cd#,#date_status_cd#,
+		#case_end_date#,#curr_cd#,#validate_ind#,#post_id#,#node_id#,#party_id#,#party_name#,#tran_count#,#tran_amt#,#alert_level#
+		)
+	</statement>
+
+	<statement id="getT07_risk_case_applicationList"
+		parameterClass="com.ist.aml.report.dto.T07_case_application"
+		resultClass="com.ist.aml.report.dto.T07_case_application">
+
+		select * from(
+		SELECT
+		A.ALERT_LEVEL,A.TAKE_ACTION,A.ACTION_DESCRIP,c.stcr,A.APPLICATION_NUM,A.FLOW_ID,A.APP_DT,A.APP_ORG_ID,A.CASE_NAME,A.CAST_TYPE,A.CASE_KIND,
+		A.CASE_LEVEL,A.CASE_DATE,A.PARTY_ID,A.PARTY_NAME,A.DATE_STATUS_CD,A.LAST_UPD_DT,
+		A.LAST_UPD_USER,A.APP_CASE_REASON,TRAN_COUNT,TRAN_AMT,'0' as
+		APP_STATE_CD
+		FROM T07_CASE_APPLICATION A,(select
+		party_id,application_num,stcr from
+		t07_case_stcr_de b where
+		b.party_id=#party_id#
+		union all
+		select party_id,application_num,stcr from
+		t07_case_stcr_ky b where
+		b.party_id=#party_id#
+		)c
+		WHERE
+		a.application_num=c.application_num and a.party_id=c.party_id and
+		A.PARTY_ID=#party_id# AND A.APP_STATE_CD in('2','5')
+
+		union all
+		SELECT
+		A.ALERT_LEVEL,A.TAKE_ACTION,A.ACTION_DESCRIP,c.stcr,A.APPLICATION_NUM,A.FLOW_ID,A.APP_DT,A.APP_ORG_ID,A.CASE_NAME,A.CAST_TYPE,A.CASE_KIND,
+		A.CASE_LEVEL,A.CASE_DATE,A.PARTY_ID,A.PARTY_NAME,A.DATE_STATUS_CD,A.LAST_UPD_DT,
+		A.LAST_UPD_USER,A.APP_CASE_REASON,TRAN_COUNT,TRAN_AMT,'1' as
+		APP_STATE_CD
+		FROM T07_CASE_APPLICATION_UH A,(select
+		party_id,application_num,stcr from
+		t07_case_stcr_de_uh b where
+		b.party_id=#party_id#
+		union all
+		select party_id,application_num,stcr from
+		t07_case_stcr_ky_uh b where
+		b.party_id=#party_id#
+		)c
+		WHERE
+		a.application_num=c.application_num and a.party_id=c.party_id and
+		A.PARTY_ID=#party_id# AND A.APP_STATE_CD in('2','5')
+		)
+		<dynamic>
+			<isNotEmpty prepend="AND" property="num">
+				APPLICATION_NUM =
+				#application_num# 
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="app_state_cd">
+				REPORT_STATUS_CD =
+				#app_state_cd#
+     </isNotEmpty>
+			<isNotEmpty prepend="AND" property="app_dt_start"> 
+    <![CDATA[CASE_DATE >= #app_dt_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="app_dt_end"> 
+    <![CDATA[CASE_DATE <= #app_dt_end#]]>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+
+	<statement id="getT07_risk_case_applicationListCount"
+		parameterClass="com.ist.aml.report.dto.T07_case_application"
+		resultClass="int">
+		select count(0) from(
+		SELECT
+		A.ALERT_LEVEL,A.TAKE_ACTION,A.ACTION_DESCRIP,c.stcr,A.APPLICATION_NUM,A.FLOW_ID,A.APP_DT,A.APP_ORG_ID,A.CASE_NAME,A.CAST_TYPE,A.CASE_KIND,
+		A.CASE_LEVEL,A.CASE_DATE,A.PARTY_ID,A.PARTY_NAME,A.DATE_STATUS_CD,A.LAST_UPD_DT,
+		A.LAST_UPD_USER,A.APP_CASE_REASON,TRAN_COUNT,TRAN_AMT,'0' as
+		APP_STATE_CD
+		FROM T07_CASE_APPLICATION A,(select party_id,application_num,stcr from
+		t07_case_stcr_de b where b.party_id=#party_id#
+		union all
+		select party_id,application_num,stcr from t07_case_stcr_ky b where
+		b.party_id=#party_id#
+		)c
+		WHERE a.application_num=c.application_num and a.party_id=c.party_id and
+		A.PARTY_ID=#party_id# AND A.APP_STATE_CD in('2','5')
+
+		union all
+		SELECT
+		A.ALERT_LEVEL,A.TAKE_ACTION,A.ACTION_DESCRIP,c.stcr,A.APPLICATION_NUM,A.FLOW_ID,A.APP_DT,A.APP_ORG_ID,A.CASE_NAME,A.CAST_TYPE,A.CASE_KIND,
+		A.CASE_LEVEL,A.CASE_DATE,A.PARTY_ID,A.PARTY_NAME,A.DATE_STATUS_CD,A.LAST_UPD_DT,
+		A.LAST_UPD_USER,A.APP_CASE_REASON,TRAN_COUNT,TRAN_AMT,'1' as
+		APP_STATE_CD
+		FROM T07_CASE_APPLICATION_UH A,(select party_id,application_num,stcr from
+		t07_case_stcr_de_uh b where b.party_id=#party_id#
+		union all
+		select party_id,application_num,stcr from t07_case_stcr_ky_uh b where
+		b.party_id=#party_id#
+		)c
+		WHERE a.application_num=c.application_num and a.party_id=c.party_id and
+		A.PARTY_ID=#party_id# AND A.APP_STATE_CD in('2','5')
+		)
+		<dynamic>
+			<isNotEmpty prepend="AND" property="num">
+				APPLICATION_NUM = #application_num# 
+    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="app_state_cd">
+				app_state_cd = #app_state_cd#
+     </isNotEmpty>
+			<isNotEmpty prepend="AND" property="app_dt_start"> 
+    <![CDATA[CASE_DATE >= #app_dt_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="app_dt_end"> 
+    <![CDATA[CASE_DATE <= #app_dt_end#]]>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	  <statement id="getT07_risk_partyList" parameterClass="com.ist.aml.report.dto.T07_case_stcr"
+		resultClass="com.ist.aml.report.dto.T47_party">
+		select distinct  a.party_id,a.party_chn_name,a.organkey,a.party_class_cd,b.party_status,a.card_type,a.card_no
+         from 
+		      <isEqual property="case_type" compareValue="1">
+							t47_party_uc a,t07_case_stcr_de b
+					  	</isEqual>
+						<isEqual property="case_type" compareValue="2">
+							t47_party_uc a,t07_case_stcr_ky b
+					  	</isEqual>
+		
+		where a.party_id=b.party_id
+		
+		<dynamic>
+			<isNotEmpty prepend="and" property="application_num">
+				B.APPLICATION_NUM = #application_num#
+			</isNotEmpty>
+		</dynamic>
+		
+	</statement>
+
+	<statement id="getT07_risk_partyListCount" parameterClass="com.ist.aml.report.dto.T07_case_stcr"
+		resultClass="int">	
+		select count (distinct  a.party_id)
+         from 
+		      <isEqual property="case_type" compareValue="1">
+							t47_party_uc a,t07_case_stcr_de b
+					  	</isEqual>
+						<isEqual property="case_type" compareValue="2">
+							t47_party_uc a,t07_case_stcr_ky b
+					  	</isEqual>
+		
+		where a.party_id=b.party_id
+		
+		<dynamic>
+			<isNotEmpty prepend="and" property="application_num">
+				B.APPLICATION_NUM = #application_num#
+			</isNotEmpty>
+		</dynamic>
+		
+	</statement>
+
+	<statement id="getT07_case_featureDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.report.dto.T07_case_feature">
+		SELECT APPLICATION_NUM, TOTALAMT_IN, TOTALCOUNT_IN, TOTALAMT_OUT, TOTALCOUNT_OUT, DIRECTION, NETAMT, 
+			AVGAMT_IN, AVGAMT_OUT, AVGAMT, SPEED_IN, SPEED_OUT, SPEED FROM T07_CASE_FEATURE WHERE APPLICATION_NUM = #application_num#
+	</statement>
+	
+	<statement id="getT07_case_modelList" parameterClass="com.ist.aml.report.dto.T07_case_stcr" resultClass="com.ist.aml.report.dto.T07_case_stcr">
+	select distinct APPLICATION_NUM, MODEL_NO, MATCHING, STCR
+      FROM (
+	       SELECT A.APPLICATION_NUM, A.MODEL_NO, A.MATCHING, B.KEYSTCR AS STCR
+	          FROM T07_CASE_MODEL A, T23_MODULE_STCR B, T07_CASE_STCR_KY C
+	          WHERE A.MODEL_NO = B.MODULE_NO
+	          AND B.KEYSTCR = C.STCR
+	          AND A.APPLICATION_NUM = C.APPLICATION_NUM
+	       union
+	       SELECT A.APPLICATION_NUM, A.MODEL_NO, A.MATCHING, B.KEYSTCR AS STCR
+	          FROM T07_CASE_MODEL A, T23_MODULE_STCR B, T07_CASE_NET_INDIC C
+	          WHERE A.MODEL_NO = B.MODULE_NO
+	          AND B.KEYSTCR = C.STCR
+	          AND A.APPLICATION_NUM = C.APPLICATION_NUM
+	          ) 
+	   WHERE 1 > 0
+	   <isNotEmpty prepend="and" property="application_num">
+			APPLICATION_NUM=#application_num#
+	   </isNotEmpty>
+	   <isNotEmpty prepend="and" property="model_no">
+			MODEL_NO=#model_no#
+	   </isNotEmpty>
+		ORDER BY MODEL_NO
+	</statement>
+	<statement id="getModel_list" parameterClass="com.ist.aml.report.dto.T07_case_stcr" resultClass="com.ist.aml.report.dto.T07_case_stcr">
+		SELECT A.APPLICATION_NUM, A.MODEL_NO, A.MATCHING,B.MODULE_NAME AS model_name FROM T07_CASE_MODEL A , T23_RULE_MODULE B
+		WHERE A.APPLICATION_NUM=#application_num#
+		AND A.MODEL_NO = B.MODULE_NO
+		ORDER BY A.MODEL_NO
+	</statement>
+	
+	<!-- add by zhanjin 2013-7-30  -->
+	<statement id="getMODULESCORE_list" parameterClass="com.ist.aml.report.dto.T07_case_module" resultClass="com.ist.aml.report.dto.T07_case_module">
+	   SELECT DISTINCT T.APPLICATION_NUM,
+        T.MODULETYPE,
+        T.ALERTTYPE,
+        T.MODULE_NO,
+        min(T.SUMSCORE) as SUMSCORE,
+        min(T.TRANS_COUNT) as TRANS_COUNT,
+        min(T.TRANS_AMT) as TRANS_AMT
+   FROM T07_CASE_MODULE_SCORE T
+  where T.APPLICATION_NUM = #application_num#
+  group by T.MODULETYPE, T.ALERTTYPE, T.MODULE_NO, T.APPLICATION_NUM
+	</statement>
+  <statement id="getMax_app_num" parameterClass="com.ist.aml.report.dto.T07_case_application" resultClass="java.lang.String">
+	  select t.application_num from t07_case_application t 
+		 where t.cast_type='2'
+		 and t.case_kind='N'
+		 and t.app_state_cd='4'
+		 and t.date_status_cd='2'
+		 and t.date_status_cd='2'
+		 and t.is_delflag='1'
+		 and t.party_id=#party_id#
+		 <![CDATA[ and t.case_date > #case_date_start#]]>
+		 <![CDATA[ and t.case_date <= #case_date_end#]]>
+	    order by t.case_date desc ,t.tran_amt desc
+	</statement>
+	<statement id="modifyT07_case_appstatus_by_app_num" 
+	  parameterClass="com.ist.aml.report.dto.T07_case_application" resultClass="int">
+	  update t07_case_application t
+			set t.app_state_cd=#app_state_cd#
+			where t.application_num=#application_num#
+	</statement>
+	<statement id="modifyT07_case_application_is_grey" 
+	  parameterClass="com.ist.aml.report.dto.T07_case_application" resultClass="int">
+	  update t07_case_application t
+         set t.IS_GREY=#is_grey#
+       where t.application_num=#application_num#
+	</statement>
+	
+	<statement id="modifyT47_transaction_uc_isrecordflag" 
+	  parameterClass="com.ist.aml.report.dto.T07_case_application" resultClass="int">
+	  update t47_transaction_uc t
+         set t.is_recordflag = #is_grey#
+       where exists (select 1
+			          from 
+			          <isEqual property="cast_type" compareValue="1">
+			             t07_case_transaction_de k
+			          </isEqual>
+			          <isEqual property="cast_type" compareValue="2">
+			             t07_case_transaction_ky k
+			          </isEqual>
+			          
+			         where k.transactionkey = t.transactionkey
+			           and k.application_num = #application_num#)
+	</statement>
+	
+	<statement id="modifyT07_case_app_val" parameterClass="java.lang.String" resultClass="int">
+	UPDATE T07_CASE_APPLICATION SET VALIDATE_IND = '0' WHERE APPLICATION_NUM = #application_num#
+	</statement>
+	
+	<statement id="getCase_stcr_passCount" parameterClass="com.ist.aml.report.dto.CreditTask" resultClass="int">
+		select count(0) from 
+		<isEqual property="cast_type" compareValue="1">
+		(select distinct stcr from t07_case_stcr_de where application_num=#application_num# and status!='4') a
+		</isEqual>
+		<isEqual property="cast_type" compareValue="2">
+		(select distinct stcr from t07_case_stcr_ky where application_num=#application_num# and status!='4') a
+		</isEqual>
+		where not exists (select 'x' from 
+		<isEqual property="cast_type" compareValue="1">
+		t07_case_transaction_de c
+		</isEqual>
+		<isEqual property="cast_type" compareValue="2">
+		t07_case_transaction_ky c
+		</isEqual> 
+		where c.application_num=#application_num# and c.stcr=a.stcr)
+		or exists (select 'x' from 
+		<isEqual property="cast_type" compareValue="1">
+		t07_case_transaction_de b
+		</isEqual>
+		<isEqual property="cast_type" compareValue="2">
+		t07_case_transaction_ky b
+		</isEqual> 
+		where b.application_num=#application_num# and b.stcr=a.stcr and b.status_cd!='4') 
+	</statement>
+	
+</sqlMap> 

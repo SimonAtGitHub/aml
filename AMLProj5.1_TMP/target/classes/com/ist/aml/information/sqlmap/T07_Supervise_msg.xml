@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T07_Supervise_msg">
+	<statement id="getT07_Supervise_msgList_zh"
+		parameterClass="com.ist.aml.information.dto.T07_Supervise_msg"
+		resultClass="com.ist.aml.information.dto.T07_Supervise_msg">
+		select msg_id,msg_name,receipt_org,msg_type,msg_content, 
+     voer_dt,status,msg_state,create_dt,msg_org,create_user,case_type,party_class_cd,dealadvise
+		from T07_Supervise_msg where status='1' 
+		<dynamic>
+			<isNotEmpty prepend="AND" property="msg_name_s">
+				msg_name like '%'||#msg_name_s#||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="msg_type_s">
+				msg_type = #msg_type_s#
+			</isNotEmpty>
+				<isNotEmpty prepend="AND" property="case_type_s1">
+				    case_type = #case_type_s1#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd_s">
+				    party_class_cd = #party_class_cd_s#
+			 </isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[create_dt >= #start_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[create_dt<= #end_dt#]]>
+			</isNotEmpty>
+		<isEqual  property="msg_mode" compareValue="1">
+			<isNotEmpty prepend="AND" property="organkeys">
+			 msg_org in ($organkeys$)
+			</isNotEmpty>
+	    </isEqual>
+	    <isEqual  property="msg_mode" compareValue="2">
+			<isNotEmpty prepend="AND" property="organkeys">
+			 receipt_org in  ($organkeys$)
+			</isNotEmpty>
+	    </isEqual>
+	    	<isNotEmpty prepend="AND" property="receipt_org_s">
+			 receipt_org=#receipt_org_s#
+			</isNotEmpty>
+			 order by msg_state ,create_dt desc
+		</dynamic>
+	</statement>
+
+	<statement id="getT07_Supervise_msgListCount_zh"
+		parameterClass="com.ist.aml.information.dto.T07_Supervise_msg"
+		resultClass="int">
+		select count(*) from T07_Supervise_msg where status='1' 
+		<dynamic>
+			<isNotEmpty prepend="AND" property="msg_name_s">
+				msg_name like '%'||#msg_name_s#||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="msg_type_s">
+				msg_type = #msg_type_s#
+			</isNotEmpty>
+				<isNotEmpty prepend="AND" property="case_type_s1">
+				    case_type = #case_type_s1#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd_s">
+				    party_class_cd = #party_class_cd_s#
+			 </isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[create_dt >= #start_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[create_dt<= #end_dt#]]>
+			</isNotEmpty>
+		<isEqual  property="msg_mode" compareValue="1">
+			<isNotEmpty prepend="AND" property="organkeys">
+			 msg_org in ($organkeys$)
+			</isNotEmpty>
+	    </isEqual>
+	    <isEqual  property="msg_mode" compareValue="2">
+			<isNotEmpty prepend="AND" property="organkeys">
+			 receipt_org in  ($organkeys$)
+			</isNotEmpty>
+		
+	    </isEqual>
+	    	<isNotEmpty prepend="AND" property="receipt_org_s">
+			 receipt_org=#receipt_org_s#
+			</isNotEmpty>
+			 
+		</dynamic>
+	</statement>
+       <statement id="getT07_Supervise_msgList"
+		parameterClass="com.ist.aml.information.dto.T07_Supervise_msg"
+		resultClass="com.ist.aml.information.dto.T07_Supervise_msg">
+		SELECT a.DATE_DT ,a.ORGANKEY,a.TX_DT
+		,a.CASE_TYPE,a.POST_ID,a.validate_dt,a.party_class_cd
+		,sum(a.TOTAL_NUM) as total_num,sum(a.NOOPER_NUM) as nooper_num,sum(a.OPER_NUM) as oper_num
+		 FROM T07_WRITEOPER_TOTAL a
+        where 1>0
+		<dynamic>	
+			<isNotEmpty prepend="AND" property="organkeys">
+				a.organkey in ($organkeys$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="receipt_org_s">
+				 a.organkey IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE  ORGANKEY = #receipt_org_s#)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="case_type_s1">
+				    a.case_type = #case_type_s1#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd_s">
+				    a.party_class_cd = #party_class_cd_s#
+			 </isNotEmpty>
+			 <isNotEmpty prepend="AND" property="post_id">
+				    a.post_id = #post_id#
+			 </isNotEmpty>
+			<isNotEmpty  property="msg_type">
+			   <isEqual prepend="AND" property="msg_type" compareValue="7">
+				a.type in('7','8')
+					<isNotEmpty prepend="AND" property="case_type_s">
+				    a.case_type = #case_type_s#
+			        </isNotEmpty>
+			       <isNotEmpty prepend="AND" property="start_dt_disp">
+				     	<![CDATA[a.validate_dt >= #date_start_validate:DATE#]]>
+			        </isNotEmpty>
+			         <isNotEmpty prepend="AND" property="end_dt_disp">
+				     	<![CDATA[a.validate_dt <= #date_end_validate:DATE#]]>
+			        </isNotEmpty>
+			   </isEqual>
+			    <isNotEqual prepend="AND" property="msg_type" compareValue="7">
+				a.type = #msg_type#
+			   </isNotEqual>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[a.DATE_DT >= #date_start_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[a.DATE_DT<= #date_end_dt:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+		group by a.DATE_DT,a.ORGANKEY,a.TX_DT,a.CASE_TYPE,a.POST_ID,a.validate_dt,a.party_class_cd
+	
+	</statement>
+
+	<statement id="getT07_Supervise_msgListCount"
+		parameterClass="com.ist.aml.information.dto.T07_Supervise_msg"
+		resultClass="int">
+		select count(*) from(
+		SELECT a.DATE_DT ,a.ORGANKEY,a.TX_DT
+		,a.CASE_TYPE,a.POST_ID,a.validate_dt,a.party_class_cd
+		,sum(a.TOTAL_NUM) as total_num,sum(a.NOOPER_NUM) as nooper_num,sum(a.OPER_NUM) as oper_num
+		 FROM T07_WRITEOPER_TOTAL a
+        where 1>0
+		<dynamic>
+			
+			<isNotEmpty prepend="AND" property="organkeys">
+				a.organkey in ($organkeys$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="receipt_org_s">
+				 a.organkey IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE  ORGANKEY = #receipt_org_s#)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="case_type_s1">
+				    a.case_type = #case_type_s1#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd_s">
+				    a.party_class_cd = #party_class_cd_s#
+			 </isNotEmpty>
+			  <isNotEmpty prepend="AND" property="post_id">
+				    a.post_id = #post_id#
+			 </isNotEmpty>
+			<isNotEmpty  property="msg_type">
+			   <isEqual prepend="AND" property="msg_type" compareValue="7">
+				a.type in('7','8')
+					<isNotEmpty prepend="AND" property="case_type_s">
+				    a.case_type = #case_type_s#
+			        </isNotEmpty>
+			       <isNotEmpty prepend="AND" property="start_dt_disp">
+				     	<![CDATA[a.validate_dt >= #date_start_validate:DATE#]]>
+			        </isNotEmpty>
+			         <isNotEmpty prepend="AND" property="end_dt_disp">
+				     	<![CDATA[a.validate_dt <= #date_end_validate:DATE#]]>
+			        </isNotEmpty>
+			   </isEqual>
+			    <isNotEqual prepend="AND" property="msg_type" compareValue="7">
+				a.type = #msg_type#
+			   </isNotEqual>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[a.DATE_DT >= #date_start_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[a.DATE_DT<= #date_end_dt:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+		group by a.DATE_DT,a.ORGANKEY,a.TX_DT,a.CASE_TYPE,a.POST_ID,a.validate_dt,a.party_class_cd
+		) C
+	</statement>
+
+
+	<statement id="insertT07_Supervise_msg"
+		parameterClass="com.ist.aml.information.dto.T07_Supervise_msg"
+		resultClass="int">
+		INSERT INTO T07_SUPERVISE_MSG(MSG_ID,MSG_NAME,MSG_ORG,RECEIPT_ORG,case_type,party_class_cd,MSG_CONTENT,MSG_TYPE,STATUS,VOER_DT,MSG_STATE,CREATE_DT,CREATE_USER
+		) VALUES(
+		#msg_id#,#msg_name#,#msg_org#,#receipt_org#,#case_type#,#party_class_cd#,#msg_content#,#msg_type#,#status#,#voer_dt#,
+		#msg_state#,#create_dt#,#create_user#
+		)
+	</statement>
+
+	<statement id="modifyT07_Supervise_msg"
+		parameterClass="com.ist.aml.information.dto.T07_Supervise_msg"
+		resultClass="int">
+		update T07_Supervise_msg set
+		msg_id=#msg_id#,msg_name=#msg_name#,msg_org=#msg_org#,receipt_org=#receipt_org#,case_type=#case_type#,party_class_cd=#party_class_cd#,msg_content=#msg_content#,
+		msg_type=#msg_type#,msg_mode=#msg_mode#,msg_state=#msg_state#,create_dt=#create_dt#,create_user=#create_user#
+		where msg_id=#msg_id#
+	</statement>
+	
+		<statement id="modifyT07_Supervise_msg1"
+		parameterClass="com.ist.aml.information.dto.T07_Supervise_msg"
+		resultClass="int">
+		update T07_Supervise_msg set
+		dealadvise=#dealadvise#,deal_user=#deal_user#,deal_dt=#deal_dt#,msg_state='2'
+		where msg_id=#msg_id#
+	</statement>
+
+	<statement id="deleteT07_Supervise_msg"
+		parameterClass="java.lang.String" resultClass="int">
+		DELETE FROM T07_SUPERVISE_MSG WHERE MSG_ID=#msg_id#
+	</statement>
+
+	<statement id="getT07_Supervise_msgDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.information.dto.T07_Supervise_msg">
+		SELECT *
+	    FROM T07_SUPERVISE_MSG WHERE MSG_ID=#msg_id#
+	</statement>
+	<statement id="updateT07_Supervise_msgDisp"
+		parameterClass="java.lang.String" resultClass="int">
+		UPDATE T07_SUPERVISE_MSG SET MSG_STATE ='1' WHERE MSG_ID =
+		#msg_id#
+	</statement>
+	<statement id="getT07_Supervise_msgList1"
+		parameterClass="com.ist.aml.information.dto.T07_Supervise_msg"
+		resultClass="com.ist.aml.information.dto.T07_Supervise_msg">
+		select msg_id,msg_name,msg_state
+		from T07_Supervise_msg where status='1' 
+	    and (voer_dt>=#voer_dt# or voer_dt is null or voer_dt='') AND MSG_STATE = '0'
+		<dynamic>
+			<isNotEmpty prepend="AND" property="organkeys">
+			 receipt_org in ($organkeys$)
+			</isNotEmpty>	
+		</dynamic>
+		 order by msg_state ,create_dt desc
+	</statement>
+	<statement id="getT07_Writeoper_totalList"
+		parameterClass="com.ist.aml.information.dto.T07_Supervise_msg"
+		resultClass="com.ist.aml.information.dto.T07_Supervise_msg">
+		select TYPE as msg_type,post_id,sum(NOOPER_NUM) as nooper_num
+		from T07_WRITEOPER_TOTAL
+		 where  organkey in ($organkeys$)
+		 and type not in('2','3')
+         group by type,post_id
+	</statement>
+	<statement id="getT07_RiskAuditCount"
+		parameterClass="com.ist.aml.information.dto.T07_Supervise_msg"
+		resultClass="com.ist.aml.information.dto.T07_Supervise_msg">
+		select sum(NOOPER_NUM) as nooper_num
+		from T07_RISTAUDIT_TOTAL
+		 where  organkey in ($organkeys$) 
+      
+	</statement>
+		
+	<statement id="getT00_NoticeList"
+		parameterClass="com.ist.aml.information.dto.T00_NOTICE"
+		resultClass="com.ist.aml.information.dto.T00_NOTICE">
+		select NOTEICE_NO,NOTICE_TYPE,NOTICE_GORY,TITLE,CREATEDATE
+		from T00_NOTICE
+		 where  FLAG='2'
+		   and (INFACTDATE>=#infactdate# or INFACTDATE is null or INFACTDATE='')
+		 order by CREATEDATE desc
+	</statement>
+		<statement id="getT07_Sysdate"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.information.dto.T07_Supervise_msg">
+		select sys_date,system_key 
+        from t07_sysdate
+	</statement>
+	<statement id="getT07_Writeoper_DetailList1"
+		parameterClass="com.ist.aml.information.dto.T07_Supervise_msg"
+		resultClass="com.ist.aml.information.dto.T07_Supervise_msg">
+	select date_dt ,organkey,msg_org_name
+	,post_id,organlevel,sum(total_num) as total_num,sum(nooper_num) as
+	nooper_num
+	from(
+	select a.date_dt ,b.organkey,b.organname as
+	msg_org_name,a.post_id,b.organlevel,a.total_num,a.nooper_num
+	from T07_WRITEOPER_TOTAL a,T87_ORGAN_MAP c,t00_organ b
+	where a.organkey=c.suborgankey and b.organkey=c.organkey
+	and a.type=#msg_type#
+	and b.organkey in (SELECT organkey FROM t00_organ WHERE
+	uporgankey=#organkey#)
+	union all
+	select a.date_dt ,b.organkey,b.organname as
+	msg_org_name,a.post_id,$maxorganlevel$ as
+	organlevel,a.total_num,a.nooper_num
+	from T07_WRITEOPER_TOTAL a,t00_organ b
+	where a.organkey=b.organkey
+	and a.type=#msg_type#
+	and a.organkey =#organkey#
+	) C where 1>0
+ 
+         <dynamic>
+			<isNotEmpty prepend="AND" property="msg_org">
+			 organkey=#msg_org#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="msg_org_name">
+			msg_org_name like #msg_org_name#
+			</isNotEmpty>	
+				<isNotEmpty prepend="AND" property="post_id">
+			 post_id=#post_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt">
+			 <![CDATA[ date_dt = #date_dt:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+        group by date_dt ,organkey,msg_org_name,post_id,organlevel
+        
+	</statement>
+		<statement id="getT07_Writeoper_DetailList2"
+		parameterClass="com.ist.aml.information.dto.T07_Supervise_msg"
+		resultClass="com.ist.aml.information.dto.T07_Supervise_msg">
+		select a.date_dt ,c.organkey as organkey,c.organname as msg_org_name,a.post_id,c.organlevel,sum(a.total_num) as total_num, sum(a.nooper_num) as nooper_num
+		from T07_WRITEOPER_TOTAL a,t00_organ b,t00_organ c
+		 where a.organkey=b.organkey and b.uporgankey=c.organkey
+		  and a.type=#msg_type#
+		  and a.organkey in (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY!=SUBORGANKEY and ORGANKEY=#organkey# )
+        <dynamic>
+			<isNotEmpty prepend="AND" property="msg_org">
+			 c.organkey=#msg_org#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="msg_org_name">
+			 c.organname like #msg_org_name#
+			</isNotEmpty>
+				<isNotEmpty prepend="AND" property="post_id">
+			 a.post_id=#post_id#
+			</isNotEmpty>	
+			<isNotEmpty prepend="AND" property="create_dt">
+			 <![CDATA[ a.date_dt = #date_dt:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+         group by a.date_dt,c.organkey,a.post_id,c.organlevel,c.organname
+	</statement>
+	<statement id="getT07_Writeoper_DetailListCount1"
+		parameterClass="com.ist.aml.information.dto.T07_Supervise_msg"
+		resultClass="int">
+	  select count(*)
+	  from(
+		 select date_dt ,organkey,msg_org_name ,post_id,sum(total_num) as  total_num,sum(nooper_num) as nooper_num
+from(
+select a.date_dt ,b.organkey,b.organname as msg_org_name,a.post_id,a.total_num,a.nooper_num
+		from T07_WRITEOPER_TOTAL a,T87_ORGAN_MAP c,t00_organ b
+		 where a.organkey=c.suborgankey and  b.organkey=c.organkey
+		  and a.type=#msg_type#
+		  and b.organkey in (SELECT organkey FROM t00_organ WHERE uporgankey=#organkey#)
+ union all
+ select a.date_dt ,b.organkey,b.organname as msg_org_name,a.post_id,a.total_num,a.nooper_num
+		from T07_WRITEOPER_TOTAL a,t00_organ b
+		 where a.organkey=b.organkey 
+		  and a.type=#msg_type#
+		  and a.organkey =#organkey#
+ ) C where 1>0
+ 
+         <dynamic>
+			<isNotEmpty prepend="AND" property="msg_org">
+			 organkey=#msg_org#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="msg_org_name">
+			msg_org_name like #msg_org_name#
+			</isNotEmpty>	
+				<isNotEmpty prepend="AND" property="post_id">
+			 post_id=#post_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt">
+			 <![CDATA[ date_dt = #date_dt:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+        group by date_dt ,organkey,msg_org_name,post_id
+        ) D
+	</statement>
+		<statement id="getT07_Writeoper_DetailListCount2"
+		parameterClass="com.ist.aml.information.dto.T07_Supervise_msg"
+		resultClass="int">
+		select count(*)
+		from(
+		select a.date_dt ,c.organkey as organkey,c.organname as msg_org_name,a.post_id,sum(a.total_num) as total_num, sum(a.nooper_num) as nooper_num
+		from T07_WRITEOPER_TOTAL a,t00_organ b,t00_organ c
+		 where a.organkey=b.organkey and b.uporgankey=c.organkey
+		  and a.type=#msg_type#
+		  and a.organkey in (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY!=SUBORGANKEY and ORGANKEY=#organkey# )
+        <dynamic>
+			<isNotEmpty prepend="AND" property="msg_org">
+			 c.organkey=#msg_org#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="msg_org_name">
+			 c.organname like #msg_org_name#
+			</isNotEmpty>
+				<isNotEmpty prepend="AND" property="post_id">
+			 a.post_id=#post_id#
+			</isNotEmpty>	
+			<isNotEmpty prepend="AND" property="create_dt">
+			 <![CDATA[ a.date_dt = #date_dt:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+         group by a.date_dt,c.organkey,a.post_id,c.organname ) D
+	</statement>
+	<!-- added by shane at 140904 start -->
+	<statement id="getT07_case_assistCount" parameterClass="java.lang.String" resultClass="int">
+		select count(c.application_num) as noHelpCheckAppCount from t07_case_assist c where c.status='0' and c.deal_organkey in ($value$)
+	</statement>
+	<!-- added by shane at 140904 end -->
+		
+</sqlMap>
+

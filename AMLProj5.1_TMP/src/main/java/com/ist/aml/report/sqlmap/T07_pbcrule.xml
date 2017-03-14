@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T07_pbcrule">
+
+	<statement id="getT07_pbcruleID" parameterClass="com.ist.aml.report.dto.T07_pbcrule"
+		resultClass="com.ist.aml.report.dto.T07_pbcrule">
+		SELECT PBCKEY FROM T07_PBCRULE
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="pbc_type_cd">
+				PBC_TYPE_CD = #pbc_type_cd# 
+    </isNotEmpty>
+			<isNotEmpty prepend="OR" property="pbc_cd">
+				PBC_TYPE_CD = #pbc_cd# 
+    </isNotEmpty>
+		</dynamic>
+	</statement>
+
+
+</sqlMap> 
+

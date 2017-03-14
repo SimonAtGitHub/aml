@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T08_level">
+	<statement id="getT08_levelList"
+		parameterClass="com.ist.aml.risk.dto.T08_level"
+		resultClass="com.ist.aml.risk.dto.T08_level">
+		SELECT LEVELKEY,LEVELNAME,LEVELMAX,LEVELMIN,LEVELDES,CREATEDATE,
+		CREATOR,MODIFIER,MODIFYDATE,STATUS,MAXISCLOSED,MINISCLOSED FROM
+		T08_LEVEL
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="levelkey">
+				LEVELKEY = #levelkey#
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY LEVELMAX DESC
+
+
+	</statement>
+	
+	<statement id="getT08_levelListCount"
+		parameterClass="com.ist.aml.risk.dto.T08_level" resultClass="int">
+		SELECT COUNT(*) FROM T08_LEVEL
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="levelkey">
+				LEVELKEY = #levelkey#
+			</isNotEmpty>
+
+		</dynamic>
+	</statement>
+
+	<statement id="modifyT08_level"
+		parameterClass="com.ist.aml.risk.dto.T08_level" resultClass="int">
+		UPDATE T08_LEVEL SET LEVELMAX=#levelmax#, LEVELMIN=#levelmin#, LEVELDES=#leveldes#, MODIFIER=#modifier#, MODIFYDATE=#modifydate#, MAXISCLOSED=#maxisclosed#, MINISCLOSED=#minisclosed#
+		WHERE LEVELKEY = #levelkey#
+	</statement>
+	
+	<statement id="getT08_levelDisp"
+		parameterClass="java.lang.String" resultClass="com.ist.aml.risk.dto.T08_level">
+		SELECT * FROM T08_LEVEL
+		WHERE LEVELKEY = #value#
+	</statement>
+
+</sqlMap>
+

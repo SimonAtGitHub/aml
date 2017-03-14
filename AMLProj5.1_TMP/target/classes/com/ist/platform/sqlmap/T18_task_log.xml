@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T18_task_log">
+  <statement id="getT18_task_logList" parameterClass="com.ist.platform.dto.T18_task_log" resultClass="com.ist.platform.dto.T18_task_log">
+  select logkey,serverkey,taskkey,granularity,statisticdate,errdate,errinfo,note,domainkey,notedate,organkey from t18_task_log
+  <dynamic prepend="where">
+    <isNotEmpty prepend="and" property="domainkey">
+    domainkey = #domainkey#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="serverkey">
+    serverkey = #serverkey#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="taskkey">
+    taskkey = #taskkey#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="statisticdate">
+    statisticdate = #statisticdate#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organkey">
+    organkey = #organkey#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="granularity">
+    granularity = #granularity#
+    </isNotEmpty>
+  </dynamic>
+  </statement>
+
+  <statement id="modifyT18_task_log" parameterClass="com.ist.platform.dto.T18_task_log" resultClass="int">
+  update T18_task_log set
+  note=#note#,notedate=#notedate#
+  where logkey=#logkey#
+  </statement>
+
+  <statement id="deleteT18_task_log" parameterClass="java.lang.String" resultClass="int">
+  delete from T18_task_log where logkey=#value#
+  </statement>
+
+  <statement id="getT18_task_logDisp" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T18_task_log">
+  select * from T18_task_log where logkey=#value#
+  </statement>
+
+</sqlMap>
+

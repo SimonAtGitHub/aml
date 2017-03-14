@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T03_page_in_val"> 
+  <statement id="getT03_page_in_valList" parameterClass="com.ist.aml.rule.dto.T03_page_in_val" resultClass="com.ist.aml.rule.dto.T03_page_in_val"> 
+  select parmvalkey,tplakey,parmkey,parmname,parmcd,isness,ishidecol,parmseq,isvalcol from t03_page_in_val 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="isvalcol"> 
+    isvalcol = #isvalcol# 
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="tplakey"> 
+    tplakey = #tplakey# 
+    </isNotEmpty>  
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT03_page_in_valListCount" parameterClass="com.ist.aml.rule.dto.T03_page_in_val" resultClass="int"> 
+  select count(*) from t03_page_in_val 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="parmvalkey"> 
+    parmvalkey = #parmvalkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT03_page_in_val" parameterClass="com.ist.aml.rule.dto.T03_page_in_val" resultClass="int"> 
+  insert into T03_page_in_val(
+   tplakey,parmkey,isness,parmseq,parmvalkey,parmname,parmcd,isvalcol
+  ) values(
+  #tplakey#,#parmkey#,#isness:VARCHAR#,#parmseq:INTEGER#,#parmvalkey#,#parmname#,#parmcd:VARCHAR#,#isvalcol:VARCHAR#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT03_page_in_val" parameterClass="com.ist.aml.rule.dto.T03_page_in_val" resultClass="int"> 
+  update T03_page_in_val set 
+  parmvalkey=#parmvalkey#,tplakey=#tplakey#,parmkey=#parmkey#,parmname=#parmname#,parmcd=#parmcd#,isness=#isness#,ishidecol=#ishidecol#,parmseq=#parmseq#
+  where parmvalkey=#parmvalkey# 
+  </statement> 
+ 
+  <statement id="deleteT03_page_in_val" parameterClass="java.util.HashMap" resultClass="int">
+  delete from T03_page_in_val where tplakey=#tplakey#  and parmkey = #parmkey#
+  </statement> 
+  
+  <statement id="getT03_page_in_valListBytp" parameterClass="java.util.HashMap" resultClass="com.ist.aml.rule.dto.T03_page_in_val">
+  select parmvalkey from T03_page_in_val where tplakey=#tplakey#  and parmkey = #parmkey#
+  </statement> 
+  
+  <statement id="delT03_page_in_val" parameterClass="com.ist.aml.rule.dto.T03_page_in_val" resultClass="int">
+  delete from T03_page_in_val where tplakey=#tplakey#  and parmkey = #parmkey#
+		
+  </statement> 
+ 
+  <statement id="deleteT03_page_in_val_by_tplakey" parameterClass="java.lang.String" resultClass="int">
+  delete from T03_page_in_val where tplakey in ($value$)
+  </statement>
+  
+  <statement id="deleteT03_param_list_by_tplakey" parameterClass="java.lang.String" resultClass="int">
+  delete from T03_PARAM_LIST where tplakey in ($value$)
+  </statement>
+  
+  <statement id="deleteT03_param_listBy_parm" parameterClass="java.util.HashMap" resultClass="int">
+  delete from T03_PARAM_LIST where tplakey = #tplakey# and parmvalkey in ($parmvalkey$)
+  </statement>
+  
+  <statement id="getT03_page_in_valDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.rule.dto.T03_page_in_val"> 
+  select * from T03_page_in_val where parmvalkey=#value# 
+  </statement> 
+  
+  <statement id="getT03_page_in_valCodeValue" parameterClass="java.lang.String" resultClass="com.ist.aml.rule.dto.T03_page_in_val"> 
+   select parmcd,parmname from (
+    (select '@'||rtrim(ltrim(c.PARAMCD))||':'||
+	case c.RTNTYPE when '2' then 'number' when '3' then 'date' else 'char' end||'@' as parmcd,
+    rtrim(c.PARAMNAME) as parmname,c.dispseq as dispseq from t01_function_param c
+    )
+    UNION
+    (
+    select '@'||rtrim(ltrim(a.PARMCD))||':'||
+	case b.indatatype when '2' then 'number' when '3' then 'date' else 'char' end||'@' as parmcd,
+    rtrim(a.parmname) as parmname,b.dispseq as dispseq from T03_page_in_val a,T03_page_IN_PARM b  
+    where a.parmkey=b.parmkey and  a.tplakey=#tplakey# and b.tplakey=#tplakey#
+    )
+    )order by dispseq
+  </statement>
+    <statement id="getT03_page_in_valCodeValueAll" parameterClass="java.lang.String" resultClass="com.ist.aml.rule.dto.T03_page_in_val"> 
+  select rtrim(a.parmcd)||c.iscdt as parmcd,rtrim(a.parmname)as parmname  from T03_page_in_val a,T03_page_IN_PARM b ,T05_SYS_IN_PARM c 
+  where a.parmkey=b.parmkey and b.sysinparmkey=c.sysinparmkey and a.tplakey=#tplakey# 
+  order by b.dispseq
+  </statement>
+  
+  <statement id="getT03_page_in_valListWidthKeys" parameterClass="java.util.List" resultClass="com.ist.aml.rule.dto.T03_page_in_val">
+  	select * from T03_page_in_val where tplakey in
+  	<iterate open="(" close=")" conjunction=",">
+		#value[]#
+	</iterate>
+  </statement>
+  
+   <statement id="insertT03_param_list" parameterClass="com.ist.aml.rule.dto.T03_page_in_val" resultClass="int"> 
+  insert into T03_param_list(
+   tplakey,PARMVALKEY,SUBITEMKEY,SUBITEMNAME,PARAM
+  ) values(
+  #tplakey#,#parmvalkey#,#subitemkey#,#subitemname:VARCHAR#,#param#
+  ) 
+  </statement> 
+  
+  <statement id="delT03_page_in_val_byKey" parameterClass="java.lang.String" resultClass="int"> 
+  delete from  T03_page_in_val where tplakey=#value#
+  </statement> 
+  
+  <statement id="delT03_param_list" parameterClass="java.lang.String" resultClass="int"> 
+  delete from  T03_param_list where tplakey=#value# and PARMVALKEY not like  'p%'
+  </statement>
+  
+ <statement id="getT03_param_valList" parameterClass="java.lang.String" resultClass="com.ist.aml.rule.dto.T03_page_in_val">
+  select v.parmcd ,l.param ,l.SUBITEMKEY,l.SUBITEMNAME  from T03_PARAM_LIST l ,
+  T03_PAGE_IN_VAL v where l.PARMVALKEY = v.PARMVALKEY and l.tplakey=v.tplakey 
+  and l.tplakey=#value#
+ </statement>
+ 
+ <statement id="getT03_param_valListBy_parm" parameterClass="java.util.HashMap" resultClass="com.ist.aml.rule.dto.T03_page_in_val">
+  select v.parmcd ,l.param ,l.SUBITEMKEY,l.SUBITEMNAME  from T03_PARAM_LIST l ,
+  T03_PAGE_IN_VAL v where l.PARMVALKEY = v.PARMVALKEY and l.tplakey=v.tplakey 
+  and l.tplakey=#tplakey# and l.PARMVALKEY in ($parmvalkey$)
+ </statement>
+ 
+ <statement id="parmkeyAndParmcdMap" parameterClass="java.lang.String"
+		resultClass="com.ist.aml.rule.dto.T03_page_in_val">
+	    select parmcd,parmvalkey from t03_page_in_val where tplakey=#value#
+ </statement>
+  <statement id="delT03_param_listByObj" parameterClass="com.ist.aml.rule.dto.T03_page_in_val" resultClass="int"> 
+	delete  from T03_PARAM_LIST l where exists 
+	(select 'X' from T03_PAGE_IN_VAL v where v.parmvalkey=l.parmvalkey and v.parmkey=#parmkey# and v.tplakey=#tplakey#)
+ </statement>
+ 
+   <statement id="getT03_page_in_valByTplakey" parameterClass="java.lang.String" resultClass="com.ist.aml.rule.dto.T03_page_in_val"> 
+  	select t.*, t1.parmtype,t1.indatatype,t1.sysinparmkey from T03_PAGE_IN_VAL t , T03_PAGE_IN_PARM t1	where t.tplakey = t1.tplakey
+   	and t.parmkey = t1.parmkey 	and t.tplakey = #value#
+  </statement>
+	<statement id="getOld_t03_vallist" parameterClass="com.ist.aml.rule.dto.T03_page_in_val"
+		resultClass="com.ist.aml.rule.dto.T03_page_in_val">
+		select t.parmvalkey,t.tplakey from T03_PAGE_IN_VAL t where t.parmkey =
+		#parmkey# and t.tplakey =#tplakey#
+  </statement>
+	<statement id="getT03_param_list_list" parameterClass="com.ist.aml.rule.dto.T03_page_in_val"
+		resultClass="com.ist.aml.rule.dto.T03_param_list">
+		select t.* from T03_param_list t where t.parmvalkey = #parmvalkey# and
+		t.tplakey =#tplakey#
+  </statement>
+	<statement id="insertT03_param_listByParam" parameterClass="com.ist.aml.rule.dto.T03_param_list"
+		resultClass="int">
+		insert into T03_param_list(
+		tplakey,PARMVALKEY,SUBITEMKEY,SUBITEMNAME,PARAM
+		) values(
+		#tplakey#,#parmvalkey#,#subitemkey#,#subitemname:VARCHAR#,#param:VARCHAR#
+		) 
+  </statement>
+  
+</sqlMap> 
+

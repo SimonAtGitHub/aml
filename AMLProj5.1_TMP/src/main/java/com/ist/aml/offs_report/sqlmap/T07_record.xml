@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T07_record"> 
+  <statement id="getT07_recordList" parameterClass="com.ist.aml.offs_report.dto.T07_record" resultClass="com.ist.aml.offs_report.dto.T07_record"> 
+  SELECT RECORD_ID,RECORD_TYPE_CD,ORGANKEY,CONTENT,RECORD_OBJ,RECORD_USER,LAST_UPD_USER,LAST_UPD_DT,CREATE_DT,CREATE_END_DT,REMARK1,REMARK2,REMARK3 FROM T07_RECORD 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="record_id"> 
+    RECORD_ID = #record_id# 
+    </isNotEmpty> 
+    
+    <isNotEmpty prepend="AND" property="record_type_cd"> 
+    RECORD_TYPE_CD = #record_type_cd# 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="record_obj"> 
+    RECORD_OBJ LIKE '%'||#record_obj#||'%'
+    </isNotEmpty>  
+    
+    <isNotEmpty prepend="AND" property="content"> 
+    CONTENT LIKE '%'||#content#||'%' 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="remark1"> 
+    REMARK1 LIKE '%'||#remark1#||'%' 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="remark2"> 
+    REMARK2 LIKE '%'||#remark2#||'%' 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="remark3"> 
+    REMARK3 LIKE '%'||#remark3#||'%' 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="create_dt_disp"> 
+    CREATE_DT >= #create_dt# 
+    </isNotEmpty>  
+    
+    <isNotEmpty prepend="AND" property="create_dt_end_disp"> 
+    <![CDATA[create_dt<= #create_dt_end:DATE#]]>
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="create_end_dt_disp"> 
+    <![CDATA[
+    CREATE_END_DT>= #create_end_dt#]]>
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="organkey"> 
+    ORGANKEY IN ($organkey$)
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="organstr"> 
+    ORGANKEY IN ($organstr$)
+    </isNotEmpty> 
+    
+  </dynamic> 
+	<isNotEmpty property="orderby">
+		<isEqual property="orderby" compareValue="1">
+				ORDER BY organkey
+		</isEqual>
+		<isEqual property="orderby" compareValue="2">
+				ORDER BY create_dt
+		</isEqual>
+		<isEqual property="order" compareValue="1">ASC</isEqual>
+		<isEqual property="order" compareValue="2">DESC</isEqual>
+	</isNotEmpty>
+  </statement> 
+ 
+  <statement id="getT07_recordListCount" parameterClass="com.ist.aml.offs_report.dto.T07_record" resultClass="int"> 
+  SELECT COUNT(RECORD_ID) FROM T07_RECORD 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="record_id"> 
+    RECORD_ID = #record_id# 
+    </isNotEmpty> 
+    
+    <isNotEmpty prepend="AND" property="record_type_cd"> 
+    RECORD_TYPE_CD = #record_type_cd# 
+    </isNotEmpty> 
+    
+    <isNotEmpty prepend="AND" property="record_obj"> 
+    RECORD_OBJ LIKE '%'||#record_obj#||'%'
+    </isNotEmpty>  
+    
+    <isNotEmpty prepend="AND" property="content"> 
+    CONTENT LIKE '%'||#content#||'%' 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="remark1"> 
+    REMARK1 LIKE '%'||#remark1#||'%' 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="remark2"> 
+    REMARK2 LIKE '%'||#remark2#||'%' 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="remark3"> 
+    REMARK3 LIKE '%'||#remark3#||'%' 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="create_dt_disp"> 
+    CREATE_DT >= #create_dt# 
+    </isNotEmpty>  
+    
+    <isNotEmpty prepend="AND" property="create_dt_end_disp"> 
+    <![CDATA[CREATE_DT<= #create_dt_end:DATE#]]>
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="create_end_dt_disp"> 
+    <![CDATA[
+    CREATE_END_DT>= #create_end_dt#]]>
+    </isNotEmpty> 
+    
+    <isNotEmpty prepend="AND" property="organkey"> 
+    ORGANKEY IN ($organkey$)
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="organstr"> 
+    ORGANKEY IN ($organstr$)
+    </isNotEmpty>
+    
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT07_record" parameterClass="com.ist.aml.offs_report.dto.T07_record" resultClass="int"> 
+  INSERT INTO T07_RECORD(
+  RECORD_ID,RECORD_TYPE_CD,ORGANKEY,CONTENT,RECORD_OBJ,RECORD_USER,LAST_UPD_USER,REMARK1,REMARK2,REMARK3,
+  remark4,remark5,remark6,remark7,remark8,remark9,remark10,remark11,remark12
+  <isNotEmpty prepend="" property="last_upd_dt"> 
+,LAST_UPD_DT
+  </isNotEmpty>
+  <isNotEmpty prepend="" property="create_dt"> 
+,CREATE_DT
+  </isNotEmpty>
+  <isNotEmpty prepend="" property="create_end_dt"> 
+,CREATE_END_DT
+  </isNotEmpty>
+  ) 
+  VALUES(
+  #record_id#,#record_type_cd#,#organkey#,#content#,#record_obj#,#record_user#,#last_upd_user#,#remark1#,#remark2#,#remark3#,
+  #remark4#,#remark5#,#remark6#,#remark7#,#remark8#,#remark9#,#remark10#,#remark11#,#remark12#
+  <isNotEmpty prepend="" property="last_upd_dt"> 
+,#last_upd_dt#
+  </isNotEmpty>
+  <isNotEmpty prepend="" property="create_dt"> 
+,#create_dt#
+  </isNotEmpty>
+  <isNotEmpty prepend="" property="create_end_dt"> 
+,#create_end_dt#
+  </isNotEmpty>
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT07_record" parameterClass="com.ist.aml.offs_report.dto.T07_record" resultClass="int"> 
+  UPDATE T07_RECORD SET 
+  RECORD_ID=#record_id#,RECORD_TYPE_CD=#record_type_cd#,ORGANKEY=#organkey#,CONTENT=#content#,
+  RECORD_OBJ=#record_obj#,RECORD_USER=#record_user#,LAST_UPD_USER=#last_upd_user#,
+  REMARK1=#remark1#,REMARK2=#remark2#,REMARK3=#remark3#,
+  remark4=#remark4#,remark5=#remark5#,remark6=#remark6#,remark7=#remark7#,remark8=#remark8#,remark9=#remark9#,
+  remark10=#remark10#,remark11=#remark11#,remark12=#remark12#
+  <isNotEmpty prepend="" property="last_upd_dt"> 
+,LAST_UPD_DT=#last_upd_dt#
+  </isNotEmpty>
+  <isNotEmpty prepend="" property="create_dt"> 
+,CREATE_DT=#create_dt#
+  </isNotEmpty>
+  <isNotEmpty prepend="" property="create_end_dt"> 
+,CREATE_END_DT=#create_end_dt#
+  </isNotEmpty>
+  WHERE RECORD_ID=#record_id# 
+  </statement> 
+ 
+  <statement id="deleteT07_record" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T07_RECORD WHERE RECORD_ID=#value# 
+  </statement> 
+ 
+  <statement id="getT07_recordDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.offs_report.dto.T07_record"> 
+  SELECT RECORD_ID,RECORD_TYPE_CD,ORGANKEY,CONTENT,RECORD_OBJ,RECORD_USER,LAST_UPD_USER,LAST_UPD_DT,CREATE_DT,CREATE_END_DT,REMARK1,REMARK2,REMARK3,STATISTICDATE,REMARK4,REMARK5,REMARK6,REMARK7,REMARK8,REMARK9,REMARK11,REMARK12, REMARK10 FROM T07_RECORD WHERE RECORD_ID=#value# 
+  </statement> 
+ 
+   <!-- add by lixx 2010.10.22 -->
+  <statement id="getT07_recordsum" parameterClass="com.ist.aml.offs_report.dto.T07_record" resultClass="com.ist.aml.offs_report.dto.T07_record"> 
+  select sum(remark4) as remark4,sum(remark5) as remark5,sum(remark6) as remark6,sum(remark7) as remark7,
+  sum(remark8) as remark8,sum(remark9) as remark9,sum(remark10) as remark10,sum(remark11) as remark11,
+  sum(remark12) as remark12 from t07_record 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="record_id"> 
+    record_id = #record_id# 
+    </isNotEmpty> 
+    
+    <isNotEmpty prepend="and" property="record_type_cd"> 
+    record_type_cd = #record_type_cd# 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="record_obj"> 
+    record_obj like #record_obj# 
+    </isNotEmpty>  
+    
+    <isNotEmpty prepend="and" property="content"> 
+    content like #content#
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="remark1"> 
+    remark1 like #remark1# 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="remark2"> 
+    remark2 like #remark2# 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="remark3"> 
+    remark3 like #remark3# 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="create_dt_disp"> 
+    create_dt >= #create_dt# 
+    </isNotEmpty>  
+    
+    <isNotEmpty prepend="and" property="create_dt_end_disp"> 
+    <![CDATA[create_dt<= #create_dt_end:DATE#]]>
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="create_end_dt_disp"> 
+    <![CDATA[
+    create_end_dt>= #create_end_dt#]]>
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="organkey"> 
+    organkey in ($organkey$)
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="organstr"> 
+    organkey in ($organstr$)
+    </isNotEmpty> 
+    
+  </dynamic> 
+  </statement> 
+  
+  <statement id="getT07_recordor" parameterClass="com.ist.aml.offs_report.dto.T07_record" resultClass="com.ist.aml.offs_report.dto.T07_record"> 
+  select case when remark4 > 0 then '2' else '1' end as remark4,case when remark5 > 0 then '2' else '1' end as remark5,
+  case when remark6 > 0 then '2' else '1' end as remark6,case when remark7 > 0 then '1' else '2' end as remark7,
+  case when remark8 > 0 then '2' else '1' end as remark8,case when remark9 > 0 then '2' else '1' end as remark9,
+  case when remark10 > 0 then '2' else '1' end as remark10 from 
+  (select count(record_id) as remark4 from t07_record where remark4 = #remarkflag# 
+  <dynamic> 
+    <isNotEmpty prepend="and" property="record_id"> 
+    record_id = #record_id# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="record_type_cd"> 
+    record_type_cd = #record_type_cd# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="record_obj"> 
+    record_obj like #record_obj# 
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="content"> 
+    content like #content#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="remark1"> 
+    remark1 like #remark1# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="remark2"> 
+    remark2 like #remark2# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="remark3"> 
+    remark3 like #remark3# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="create_dt_disp"> 
+    create_dt >= #create_dt# 
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="create_dt_end_disp"> 
+    <![CDATA[create_dt<= #create_dt_end:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="create_end_dt_disp"> 
+    <![CDATA[
+    create_end_dt>= #create_end_dt#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organkey"> 
+    organkey in ($organkey$)
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organstr"> 
+    organkey in ($organstr$)
+    </isNotEmpty> 
+  </dynamic> 
+  ) T1,
+  (select count(record_id) as remark5 from t07_record where remark5 = #remarkflag# 
+  <dynamic> 
+    <isNotEmpty prepend="and" property="record_id"> 
+    record_id = #record_id# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="record_type_cd"> 
+    record_type_cd = #record_type_cd# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="record_obj"> 
+    record_obj like #record_obj# 
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="content"> 
+    content like #content#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="remark1"> 
+    remark1 like #remark1# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="remark2"> 
+    remark2 like #remark2# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="remark3"> 
+    remark3 like #remark3# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="create_dt_disp"> 
+    create_dt >= #create_dt# 
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="create_dt_end_disp"> 
+    <![CDATA[create_dt<= #create_dt_end:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="create_end_dt_disp"> 
+    <![CDATA[
+    create_end_dt>= #create_end_dt#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organkey"> 
+    organkey in ($organkey$)
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organstr"> 
+    organkey in ($organstr$)
+    </isNotEmpty> 
+  </dynamic> 
+  ) T2,
+  (select count(record_id) as remark6 from t07_record where remark6 = #remarkflag# 
+  <dynamic> 
+    <isNotEmpty prepend="and" property="record_id"> 
+    record_id = #record_id# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="record_type_cd"> 
+    record_type_cd = #record_type_cd# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="record_obj"> 
+    record_obj like #record_obj# 
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="content"> 
+    content like #content#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="remark1"> 
+    remark1 like #remark1# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="remark2"> 
+    remark2 like #remark2# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="remark3"> 
+    remark3 like #remark3# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="create_dt_disp"> 
+    create_dt >= #create_dt# 
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="create_dt_end_disp"> 
+    <![CDATA[create_dt<= #create_dt_end:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="create_end_dt_disp"> 
+    <![CDATA[
+    create_end_dt>= #create_end_dt#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organkey"> 
+    organkey in ($organkey$)
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organstr"> 
+    organkey in ($organstr$)
+    </isNotEmpty> 
+  </dynamic> 
+  ) T3,
+  (select count(record_id) as remark7 from t07_record where remark7 = #remarkflag1# 
+  <dynamic> 
+    <isNotEmpty prepend="and" property="record_id"> 
+    record_id = #record_id# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="record_type_cd"> 
+    record_type_cd = #record_type_cd# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="record_obj"> 
+    record_obj like #record_obj# 
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="content"> 
+    content like #content#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="remark1"> 
+    remark1 like #remark1# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="remark2"> 
+    remark2 like #remark2# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="remark3"> 
+    remark3 like #remark3# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="create_dt_disp"> 
+    create_dt >= #create_dt# 
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="create_dt_end_disp"> 
+    <![CDATA[create_dt<= #create_dt_end:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="create_end_dt_disp"> 
+    <![CDATA[
+    create_end_dt>= #create_end_dt#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organkey"> 
+    organkey in ($organkey$)
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organstr"> 
+    organkey in ($organstr$)
+    </isNotEmpty> 
+  </dynamic> 
+  ) T4,
+  (select count(record_id) as remark8 from t07_record where remark8 = #remarkflag#
+  <dynamic> 
+    <isNotEmpty prepend="and" property="record_id"> 
+    record_id = #record_id# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="record_type_cd"> 
+    record_type_cd = #record_type_cd# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="record_obj"> 
+    record_obj like #record_obj# 
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="content"> 
+    content like #content#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="remark1"> 
+    remark1 like #remark1# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="remark2"> 
+    remark2 like #remark2# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="remark3"> 
+    remark3 like #remark3# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="create_dt_disp"> 
+    create_dt >= #create_dt# 
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="create_dt_end_disp"> 
+    <![CDATA[create_dt<= #create_dt_end:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="create_end_dt_disp"> 
+    <![CDATA[
+    create_end_dt>= #create_end_dt#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organkey"> 
+    organkey in ($organkey$)
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organstr"> 
+    organkey in ($organstr$)
+    </isNotEmpty> 
+  </dynamic> 
+  ) T5,
+  (select count(record_id) as remark9 from t07_record where remark9 = #remarkflag#
+  <dynamic> 
+    <isNotEmpty prepend="and" property="record_id"> 
+    record_id = #record_id# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="record_type_cd"> 
+    record_type_cd = #record_type_cd# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="record_obj"> 
+    record_obj like #record_obj# 
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="content"> 
+    content like #content#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="remark1"> 
+    remark1 like #remark1# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="remark2"> 
+    remark2 like #remark2# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="remark3"> 
+    remark3 like #remark3# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="create_dt_disp"> 
+    create_dt >= #create_dt# 
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="create_dt_end_disp"> 
+    <![CDATA[create_dt<= #create_dt_end:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="create_end_dt_disp"> 
+    <![CDATA[
+    create_end_dt>= #create_end_dt#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organkey"> 
+    organkey in ($organkey$)
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organstr"> 
+    organkey in ($organstr$)
+    </isNotEmpty> 
+  </dynamic> 
+  ) T6,
+  (select count(record_id) as remark10 from t07_record where remark10 = #remarkflag#
+  <dynamic> 
+    <isNotEmpty prepend="and" property="record_id"> 
+    record_id = #record_id# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="record_type_cd"> 
+    record_type_cd = #record_type_cd# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="record_obj"> 
+    record_obj like #record_obj# 
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="content"> 
+    content like #content#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="remark1"> 
+    remark1 like #remark1# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="remark2"> 
+    remark2 like #remark2# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="remark3"> 
+    remark3 like #remark3# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="create_dt_disp"> 
+    create_dt >= #create_dt# 
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="create_dt_end_disp"> 
+    <![CDATA[create_dt<= #create_dt_end:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="create_end_dt_disp"> 
+    <![CDATA[
+    create_end_dt>= #create_end_dt#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organkey"> 
+    organkey in ($organkey$)
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organstr"> 
+    organkey in ($organstr$)
+    </isNotEmpty> 
+  </dynamic> 
+  ) T10
+  </statement>
+ <!-- end add -->
+ <statement id="getT07_recordsumdb2" parameterClass="com.ist.aml.offs_report.dto.T07_record" resultClass="com.ist.aml.offs_report.dto.T07_record"> 
+  select sum(decimal(remark4,19,2)) as remark4,sum(decimal(remark5,19,2)) as remark5,sum(decimal(remark6,19,2)) as remark6,sum(decimal(remark7,19,2)) as remark7,
+  sum(decimal(remark8,19,2)) as remark8,sum(decimal(remark9,19,2)) as remark9,sum(decimal(remark10,19,2)) as remark10,sum(decimal(remark11,19,2)) as remark11,
+  sum(decimal(remark12,19,2)) as remark12 from t07_record 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="record_id"> 
+    record_id = #record_id# 
+    </isNotEmpty> 
+    
+    <isNotEmpty prepend="and" property="record_type_cd"> 
+    record_type_cd = #record_type_cd# 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="record_obj"> 
+    record_obj like #record_obj# 
+    </isNotEmpty>  
+    
+    <isNotEmpty prepend="and" property="content"> 
+    content like #content#
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="remark1"> 
+    remark1 like #remark1# 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="remark2"> 
+    remark2 like #remark2# 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="remark3"> 
+    remark3 like #remark3# 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="create_dt_disp"> 
+    create_dt >= #create_dt# 
+    </isNotEmpty>  
+    
+    <isNotEmpty prepend="and" property="create_dt_end_disp"> 
+    <![CDATA[create_dt<= #create_dt_end:DATE#]]>
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="create_end_dt_disp"> 
+    <![CDATA[
+    create_end_dt>= #create_end_dt#]]>
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="organkey"> 
+    organkey in ($organkey$)
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="organstr"> 
+    organkey in ($organstr$)
+    </isNotEmpty> 
+    
+  </dynamic> 
+  </statement>
+</sqlMap> 
+

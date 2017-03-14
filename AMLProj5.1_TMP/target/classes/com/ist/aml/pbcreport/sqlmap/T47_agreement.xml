@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T47_agreement"> 
+  <statement id="getT47_agreementList" parameterClass="com.ist.aml.pbcreport.dto.T47_agreement" resultClass="com.ist.aml.pbcreport.dto.T47_agreement">
+  
+  SELECT * FROM T47_AGREEMENT 
+  
+  <dynamic prepend="WHERE"> 
+  	<isNotEmpty prepend="AND" property="acct_org_num">
+		 ACCT_ORG_NUM IN ($acct_org_num$)
+	</isNotEmpty>
+    <isNotEmpty prepend="AND" property="acct_num">
+    ACCT_NUM = #acct_num# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="customer_id">
+    customer_id=#customer_id#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="customer_name">
+    CUSTOMER_NAME=#customer_name#
+    </isNotEmpty>
+   	<isNotEmpty prepend="and" property="searchorgankey">
+   	OP_ORG_NUM=#searchorgankey#
+   	</isNotEmpty>
+    <isNotEmpty prepend="and" property="party_class_cd_s">
+   	ACCT_FROM=#party_class_cd_s#
+   	</isNotEmpty>
+  </dynamic> 
+  </statement>
+ 
+  <statement id="getT47_agreementListCount" parameterClass="com.ist.aml.pbcreport.dto.T47_agreement" resultClass="int"> 
+  SELECT COUNT(*) FROM T47_AGREEMENT 
+  <dynamic prepend="WHERE"> 
+  	<isNotEmpty prepend="AND" property="acct_org_num">
+		 ACCT_ORG_NUM IN ($acct_org_num$)
+	</isNotEmpty>
+    <isNotEmpty prepend="AND" property="acct_num"> 
+    ACCT_NUM = #acct_num# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="customer_id">
+    customer_id=#customer_id#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="customer_name">
+    CUSTOMER_NAME=#customer_name#
+    </isNotEmpty>
+   	<isNotEmpty prepend="and" property="searchorgankey">
+   	OP_ORG_NUM=#searchorgankey#
+   	</isNotEmpty>
+   	<isNotEmpty prepend="and" property="party_class_cd_s">
+   	ACCT_FROM=#party_class_cd_s#
+   	</isNotEmpty>
+  </dynamic> 
+  </statement>  
+ 
+  <statement id="insertT47_agreement" parameterClass="com.ist.aml.pbcreport.dto.T47_agreement" resultClass="int"> 
+  INSERT INTO T47_AGREEMENT(
+  ACCT_NUM,ACCT_MODIFIER_NUM,CUSTOMER_ID,CUSTOMER_NAME,CUSTOMER_NUM,OP_ORG_NUM,ACCT_ORG_NUM,ACCT_STATUS_CD,CURRENCY_CD,ACCT_CATEG_CD,ACCT_TYPE_CD,AML_ACCT_TYPE_CD,BIZ_TYPE_CD,SUBJECTKEY,SUBJECTNUM,DEPOSIT_AMT,OPEN_DT,CLOSE_DT,CONTRACT_NUM,LAST_ACCT_TX_DT,INT_CAL_METHOD_CD,ACCT_PROCESSING_DT,PERD_CD,INT_CAL_FREQ_CD,MATURE_DT,INPUT_DT
+  ) VALUES(
+  #acct_num#,#acct_modifier_num#,#customer_id#,#customer_name#,#customer_num#,#op_org_num#,#acct_org_num#,#acct_status_cd#,#currency_cd#,#acct_categ_cd#,#acct_type_cd#,#aml_acct_type_cd#,#biz_type_cd#,#subjectkey#,#subjectnum#,$deposit_amt$,#open_dt#,#close_dt#,#contract_num#,#last_acct_tx_dt#,#int_cal_method_cd#,#acct_processing_dt#,#perd_cd#,#int_cal_freq_cd#,#mature_dt#,#input_dt#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT47_agreement" parameterClass="com.ist.aml.pbcreport.dto.T47_agreement" resultClass="int"> 
+  UPDATE 
+  	   <isNotEmpty prepend="" property="acct_from">
+			<isEqual property="acct_from" compareValue ="C">
+  					T47_CP_DEPOSIT A  
+  			</isEqual>
+			<isEqual property="acct_from" compareValue ="I">
+					T47_ID_DEPOSIT A 
+			</isEqual>
+			
+		</isNotEmpty>
+	  <dynamic prepend="SET">
+		  	<isNotEmpty prepend="," property="aml_acct_type_cd">  
+		  AML_ACCT_TYPE_CD=#aml_acct_type_cd#
+		  	</isNotEmpty>
+		  	<isNotNull prepend="," property="open_dt">  
+		  OPEN_DT=#open_dt:DATE#
+		  	</isNotNull>
+		  	<isNotNull prepend="," property="close_dt">  
+		  CLOSE_DT=#close_dt:DATE#
+		  	</isNotNull>
+	  </dynamic>
+  WHERE ACCT_NUM=#acct_num#   
+  </statement> 
+ 
+  <statement id="deleteT47_agreement" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T47_AGREEMENT WHERE ACCT_NUM=#value# 
+  </statement> 
+ 
+  <statement id="getT47_agreementDisp" parameterClass="com.ist.aml.pbcreport.dto.T47_agreement" resultClass="com.ist.aml.pbcreport.dto.T47_agreement"> 
+  SELECT ACCT_NUM,AML_ACCT_TYPE_CD,OPEN_DT,CLOSE_DT
+   FROM 
+   <isNotEmpty prepend="" property="acct_from">
+			<isEqual property="acct_from" compareValue ="C">
+  					T47_CP_DEPOSIT A  
+  			</isEqual>
+			<isEqual property="acct_from" compareValue ="I">
+					T47_ID_DEPOSIT A 
+			</isEqual>
+			<isEqual property="acct_from" compareValue ="L">
+					T47_LOAN_ACCT A 
+			</isEqual>
+			
+		</isNotEmpty>
+   WHERE ACCT_NUM=#acct_num# 
+  </statement> 
+   <statement id="getT47_acct_ucDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.pbcreport.dto.T47_agreement"> 
+  SELECT ACCT_NUM,AML_ACCT_TYPE_CD,OPEN_DT,CLOSE_DT
+   FROM T47_ACCT_UC WHERE ACCT_NUM=#value# 
+  </statement> 
+  
+   <statement id="getT47_agreementDisp1" parameterClass="java.lang.String" resultClass="com.ist.aml.pbcreport.dto.T47_agreement"> 
+    SELECT ACCT_NUM,ACCT_MODIFIER_NUM,CUSTOMER_ID,CUSTOMER_NAME,CUSTOMER_NUM,OP_ORG_NUM,ACCT_ORG_NUM,ACCT_STATUS_CD,CURRENCY_CD,ACCT_CATEG_CD,ACCT_TYPE_CD,AML_ACCT_TYPE_CD,BIZ_TYPE_CD,SUBJECTKEY,SUBJECTNUM,DEPOSIT_AMT,OPEN_DT,CLOSE_DT,CONTRACT_NUM,LAST_ACCT_TX_DT,INT_CAL_METHOD_CD,ACCT_PROCESSING_DT,PERD_CD,INT_CAL_FREQ_CD,MATURE_DT,INPUT_DT 
+    FROM T47_AGREEMENT WHERE ACCT_NUM=#value# 
+  </statement> 
+ 
+  <statement id="getT47_agreementCloseList" parameterClass="com.ist.aml.pbcreport.dto.T47_agreement" resultClass="com.ist.aml.pbcreport.dto.T47_agreement"> 
+  SELECT ACCT_NUM,ACCT_MODIFIER_NUM,CUSTOMER_ID,CUSTOMER_NAME,CUSTOMER_NUM,OP_ORG_NUM,ACCT_ORG_NUM,ACCT_STATUS_CD,CURRENCY_CD,ACCT_CATEG_CD,ACCT_TYPE_CD,AML_ACCT_TYPE_CD,BIZ_TYPE_CD,SUBJECTKEY,SUBJECTNUM,DEPOSIT_AMT,OPEN_DT,CLOSE_DT,CONTRACT_NUM,LAST_ACCT_TX_DT,INT_CAL_METHOD_CD,ACCT_PROCESSING_DT,PERD_CD,INT_CAL_FREQ_CD,MATURE_DT,INPUT_DT FROM T47_AGREEMENT 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="customer_id">
+      CUSTOMER_ID = #customer_id# 
+    </isNotEmpty> 
+    <isNotNull prepend="AND" property="close_dt">  
+      CLOSE_DT>=#close_dt:DATE#
+  	</isNotNull>
+  </dynamic> 
+  </statement> 
+  
+  <statement id="getT47_agreementIsHaveList" parameterClass="com.ist.aml.pbcreport.dto.T47_agreement" resultClass="com.ist.aml.pbcreport.dto.T47_agreement"> 
+  SELECT ACCT_NUM,ACCT_MODIFIER_NUM,CUSTOMER_ID,CUSTOMER_NAME,CUSTOMER_NUM,OP_ORG_NUM,ACCT_ORG_NUM,ACCT_STATUS_CD,CURRENCY_CD,ACCT_CATEG_CD,ACCT_TYPE_CD,AML_ACCT_TYPE_CD,BIZ_TYPE_CD,SUBJECTKEY,SUBJECTNUM,DEPOSIT_AMT,OPEN_DT,CLOSE_DT,CONTRACT_NUM,LAST_ACCT_TX_DT,INT_CAL_METHOD_CD,ACCT_PROCESSING_DT,PERD_CD,INT_CAL_FREQ_CD,MATURE_DT,INPUT_DT FROM T47_AGREEMENT 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="customer_id">
+      CUSTOMER_ID = #customer_id# 
+    </isNotEmpty>    
+  </dynamic> 
+  </statement> 
+</sqlMap> 
+

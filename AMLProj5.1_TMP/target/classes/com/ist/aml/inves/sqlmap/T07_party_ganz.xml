@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T07_party_ganz"> 
+  <statement id="getT07_party_ganzList" parameterClass="com.ist.aml.inves.dto.T07_party_ganz"
+		resultClass="com.ist.aml.inves.dto.T07_party_ganz">
+		SELECT T.GENZ_NO, T.PARTY_ID, T.PARTY_CHN_NAME, T.CARD_TYPE, T.CARD_NO, T.CREATE_DATE, T.INFACT_DATE, T.STATUS_CD
+		FROM T07_PARTY_GANZ T
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="genz_no">
+				T.GENZ_NO = #genz_no#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id"> 
+    			T.PARTY_ID = #party_id# 
+    		</isNotEmpty>
+    		<isNotEmpty prepend="AND" property="party_chn_name"> 
+    		 	T.PARTY_CHN_NAME = #party_chn_name# 
+    	    </isNotEmpty> 
+			<isNotEmpty prepend="AND" property="create_date_disp">
+				<![CDATA[T.INFACT_DATE  >= #create_date_disp#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="infact_date_disp">
+				<![CDATA[T.CREATE_DATE <= #infact_date_disp#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="status_cd">
+				T.STATUS_CD = #status_cd#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="getT07_party_ganzCount" parameterClass="com.ist.aml.inves.dto.T07_party_ganz"
+		resultClass="int">
+		SELECT COUNT(T.GENZ_NO)
+		FROM T07_PARTY_GANZ T
+		<dynamic prepend=" WHERE">
+			<isNotEmpty prepend="AND" property="genz_no">
+				T.GENZ_NO = #genz_no#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id"> 
+    			T.PARTY_ID = #party_id# 
+    		</isNotEmpty>
+    		<isNotEmpty prepend="AND" property="party_chn_name"> 
+    		 	T.PARTY_CHN_NAME = #party_chn_name# 
+    	    </isNotEmpty> 
+			<isNotEmpty prepend="AND" property="create_date_disp">
+				<![CDATA[T.CREATE_DATE >= #create_date_disp#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="infact_date_disp">
+				<![CDATA[T.INFACT_DATE <= #infact_date_disp#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="status_cd">
+				T.STATUS_CD = #status_cd#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="insertT07_party_ganz" parameterClass="com.ist.aml.inves.dto.T07_party_ganz"
+		resultClass="int">
+		INSERT INTO T07_PARTY_GANZ 
+		(
+		GENZ_NO, 
+		PARTY_ID, PARTY_CHN_NAME, CARD_TYPE, CARD_NO, 
+		CREATE_DATE, INFACT_DATE, 
+		STATUS_CD
+		)
+		VALUES (
+		#genz_no#, 
+		#party_id#, #party_chn_name#, #card_type#, #card_no#, 
+		<![CDATA[#create_date_disp#]]>, <![CDATA[#infact_date_disp#]]>, 
+		#status_cd#
+		)
+	</statement>
+</sqlMap>

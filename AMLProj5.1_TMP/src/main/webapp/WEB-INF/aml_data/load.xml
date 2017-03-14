@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<load>
+	<db2>	
+		<script> db2 -v " #LOADWAY# from #WORKPATH#/#TABLEENAME#.#DB2FILETYPE# of #DB2FILETYPE# modified by #COLDEL# #COMMITCOUNT# #TIMESTAMPFORMAT# #LOADMODE# into #TABLEENAME#"</script>
+		<end>db2 TERMINATE # exit</end>
+	</db2>
+	<oracle>	
+		<ctl>
+			<first>Load data</first>
+			<second>infile 	'#WORKPATH#/#TABLEENAME#.#DB2FILETYPE#'</second>
+			<three>#LOADMODE#</three>
+			<four>into table #TABLEENAME#</four>
+			<five>fields terminated by '$|$'  trailing nullcols</five>
+		</ctl>
+		<script>sqlldr #DBUSER#/#DBPASS#@#DBLINKNAME# control=#LOADCMDPATH#/ctl/#TABLEENAME#.ctl, log=#LOADCMDPATH#/log/#TABLEENAME#.log, bad=#LOADCMDPATH#/bad/#TABLEENAME#.bad</script>
+	</oracle>
+	<db>
+		<delimiter>'$|$'</delimiter>
+	</db>
+</load>

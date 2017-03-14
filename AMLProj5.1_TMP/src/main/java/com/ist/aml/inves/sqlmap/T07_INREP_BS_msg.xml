@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T07_INREP_BS_msg">
+	<statement id="getT07_INREP_BS_msgList" parameterClass="com.ist.aml.inves.dto.T07_INREP_BS_msg"
+		resultClass="com.ist.aml.inves.dto.T07_INREP_BS_msg">
+		SELECT T.ORGANKEY,
+		SUM(T.MSG_N) AS MSG_N,
+		SUM(T.MSG_N) AS MSG_N,
+		SUM(T.MSG_R) AS MSG_R,
+		SUM(T.MSG_A) AS MSG_A,
+		SUM(T.MSG_C) AS MSG_C,
+		SUM(T.MSG_I) AS MSG_I
+		FROM T07_INREP_BS_MSG T
+		WHERE 1 = 1
+		<isNotEmpty prepend="AND" property="organStr">
+			T.ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			T.ORGANKEY = #organkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="report_dt_disp"> 
+			<![CDATA[T.REPORT_DT >= #report_dt_disp#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="report_dt_end"> 
+			<![CDATA[T.REPORT_DT <= #report_dt_end#]]>
+		</isNotEmpty>
+		GROUP BY T.ORGANKEY
+		order by T.ORGANKEY
+	</statement>
+
+	<statement id="getT07_INREP_BS_msgListCount" parameterClass="com.ist.aml.inves.dto.T07_INREP_BS_msg"
+		resultClass="int">
+		SELECT COUNT( distinct T.ORGANKEY)
+		FROM T07_INREP_BS_MSG T
+		WHERE 1 = 1
+		<isNotEmpty prepend="AND" property="organkey">
+			T.ORGANKEY in $organkey$  
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			T.ORGANKEY = #organkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="report_dt_disp"> 
+			<![CDATA[T.REPORT_DT >= #report_dt_disp#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="report_dt_end"> 
+			<![CDATA[T.REPORT_DT <= #report_dt_end#]]>
+		</isNotEmpty>
+	</statement>
+
+	<statement id="getT07_inrep_bs_msgList_msbs" parameterClass="com.ist.aml.inves.dto.T07_INREP_BS_msg"
+		resultClass="com.ist.aml.inves.dto.T07_INREP_BS_msg">
+		SELECT 
+		SUM(T.MSG_N) AS MSG_N,
+		SUM(T.MSG_N) AS MSG_N,
+		SUM(T.MSG_R) AS MSG_R,
+		SUM(T.MSG_A) AS MSG_A,
+		SUM(T.MSG_C) AS MSG_C,
+		SUM(T.MSG_I) AS MSG_I
+		FROM T07_INREP_BS_MSG T
+		WHERE 1 = 1
+		<isNotEmpty prepend="AND" property="organkey">
+			T.ORGANKEY in $organkey$  
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			T.ORGANKEY = #organkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="report_dt_disp"> 
+			<![CDATA[T.REPORT_DT >= #report_dt_disp#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="report_dt_end"> 
+			<![CDATA[T.REPORT_DT <= #report_dt_end#]]>
+		</isNotEmpty>
+		
+	</statement>
+
+</sqlMap> 
+

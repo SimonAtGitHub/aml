@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T10_trans_analysis"> 
+	<statement id="getT10_transcount_by_partyid"
+		parameterClass="com.ist.aml.report.dto.T10_trans_analysis"
+		resultClass="int">
+		SELECT COUNT(*)
+		FROM T47_TRANSACTION T
+	 	<dynamic prepend="WHERE">
+    		<isNotEmpty prepend="AND" property="party_id">
+				T.PARTY_ID = #party_id#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT10_transsumamt_by_partyid"
+		parameterClass="com.ist.aml.report.dto.T10_trans_analysis"
+		resultClass="double">
+		SELECT SUM(T.AMT)
+		FROM T47_TRANSACTION T
+	 	<dynamic prepend="WHERE">
+    		<isNotEmpty prepend="AND" property="party_id">
+				T.PARTY_ID = #party_id#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getCustTransGroupByChannel"
+		parameterClass="com.ist.aml.report.dto.T10_trans_analysis"
+		resultClass="com.ist.aml.report.dto.T10_trans_analysis">
+		SELECT T.CHANNEL AS PATTERN,COUNT(T.TRANSACTIONKEY) AS T_COUNT, SUM(T.AMT) AS T_AMT,
+		       ROUND(100*SUM(T.AMT)/SUM(SUM(T.AMT))OVER (PARTITION BY 1),2) AS AMT_PERCENT,
+		       ROUND(100*COUNT(T.TRANSACTIONKEY)/SUM(COUNT(T.TRANSACTIONKEY))OVER (PARTITION BY 1),2) AS COUNT_PERCENT
+  		FROM T47_TRANSACTION T
+ 		WHERE T.PARTY_ID = #party_id#
+ 		GROUP BY T.CHANNEL
+ 	
+	</statement>
+	
+	<statement id="getCustTransGroupByOrgankey"
+		parameterClass="com.ist.aml.report.dto.T10_trans_analysis"
+		resultClass="com.ist.aml.report.dto.T10_trans_analysis">
+		SELECT T.ORGANKEY AS PATTERN,COUNT(T.TRANSACTIONKEY) AS T_COUNT, SUM(T.AMT) AS T_AMT,
+		       ROUND(100*SUM(T.AMT)/SUM(SUM(T.AMT))OVER (PARTITION BY 1),2) AS AMT_PERCENT,
+		       ROUND(100*COUNT(T.TRANSACTIONKEY)/SUM(COUNT(T.TRANSACTIONKEY))OVER (PARTITION BY 1),2) AS COUNT_PERCENT
+  		FROM T47_TRANSACTION T
+ 		WHERE T.PARTY_ID = #party_id#
+ 		GROUP BY T.ORGANKEY
+ 		
+	</statement>
+	
+	<statement id="getCustTransGroupByTxgoarea"
+		parameterClass="com.ist.aml.report.dto.T10_trans_analysis"
+		resultClass="com.ist.aml.report.dto.T10_trans_analysis">
+		SELECT T.TX_GO_AREA AS PATTERN,COUNT(T.TRANSACTIONKEY) AS T_COUNT, SUM(T.AMT) AS T_AMT,
+		       ROUND(100*SUM(T.AMT)/SUM(SUM(T.AMT))OVER (PARTITION BY 1),2) AS AMT_PERCENT,
+		       ROUND(100*COUNT(T.TRANSACTIONKEY)/SUM(COUNT(T.TRANSACTIONKEY))OVER (PARTITION BY 1),2) AS COUNT_PERCENT
+  		FROM T47_TRANSACTION T
+ 		WHERE T.PARTY_ID = #party_id#
+ 		GROUP BY T.TX_GO_AREA
+ 		
+	</statement>
+	
+	<statement id="getCustTransGroupBySettletype"
+		parameterClass="com.ist.aml.report.dto.T10_trans_analysis"
+		resultClass="com.ist.aml.report.dto.T10_trans_analysis">
+		SELECT T.SETTLE_TYPE_CD AS PATTERN,COUNT(T.TRANSACTIONKEY) AS T_COUNT, SUM(T.AMT) AS T_AMT,
+		       ROUND(100*SUM(T.AMT)/SUM(SUM(T.AMT))OVER (PARTITION BY 1),2) AS AMT_PERCENT,
+		       ROUND(100*COUNT(T.TRANSACTIONKEY)/SUM(COUNT(T.TRANSACTIONKEY))OVER (PARTITION BY 1),2) AS COUNT_PERCENT
+  		FROM T47_TRANSACTION T
+ 		WHERE T.PARTY_ID = #party_id#
+ 		GROUP BY T.SETTLE_TYPE_CD 
+ 		
+	</statement>
+	
+	<statement id="getCustTransGroupByOppname"
+		parameterClass="com.ist.aml.report.dto.T10_trans_analysis"
+		resultClass="com.ist.aml.report.dto.T10_trans_analysis">
+		SELECT T.OPP_NAME AS PATTERN,COUNT(T.TRANSACTIONKEY) AS T_COUNT, SUM(T.AMT) AS T_AMT,
+		       ROUND(100*SUM(T.AMT)/SUM(SUM(T.AMT))OVER (PARTITION BY 1),2) AS AMT_PERCENT,
+		       ROUND(100*COUNT(T.TRANSACTIONKEY)/SUM(COUNT(T.TRANSACTIONKEY))OVER (PARTITION BY 1),2) AS COUNT_PERCENT
+  		FROM T47_TRANSACTION T
+ 		WHERE T.PARTY_ID = #party_id#
+ 		GROUP BY T.OPP_NAME
+ 		
+	</statement>
+	
+	<statement id="getOutCustCapitalChain"
+		parameterClass="com.ist.aml.report.dto.T10_capital_chain"
+		resultClass="com.ist.aml.report.dto.T10_capital_chain">
+		SELECT DISTINCT PARTY_ID,T.TRANSACTIONKEY,PARTY_CHN_NAME,ORGANKEY,TX_DT,CURRENCY_CD,TX_OCCUR_AREA,CASH_TRANS_FLAG,AMT
+  		FROM T47_TRANSACTION T
+ 		WHERE T.PARTY_ID = #party_id#
+ 		AND DEBIT_CREDIT = 'D'
+ 		<dynamic>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[T.TX_DT >= #start_dt:DATE#]]>
+			</isNotEmpty>           
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[T.TX_DT<= #end_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty property="order_type">
+				<isEqual property="order_type" compareValue="0">
+					ORDER BY T.TX_DT
+				</isEqual>
+				<isEqual property="order_type" compareValue="1">
+					ORDER BY T.AMT
+				</isEqual>
+				<isEqual property="order_type" compareValue="2">
+					ORDER BY T.ORGANKEY
+				</isEqual>
+				<isNotEmpty property="fashion">
+					<isEqual property="fashion" compareValue="asc"></isEqual>
+					<isEqual property="fashion" compareValue="desc">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="getOutCustCapitalChainTransCount"
+		parameterClass="com.ist.aml.report.dto.T10_capital_chain"
+		resultClass="int">
+		SELECT COUNT(T.TRANSACTIONKEY)
+  		FROM T47_TRANSACTION T
+ 		WHERE T.PARTY_ID = #party_id#
+ 		AND DEBIT_CREDIT = 'D'
+ 		<dynamic>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[T.TX_DT >= #start_dt:DATE#]]>
+			</isNotEmpty>           
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[T.TX_DT<= #end_dt:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getOutCustCapitalChainAmt"
+		parameterClass="com.ist.aml.report.dto.T10_capital_chain"
+		resultClass="double">
+		SELECT SUM(AMT)
+  		FROM T47_TRANSACTION T
+ 		WHERE T.PARTY_ID = #party_id#
+ 		AND DEBIT_CREDIT = 'D'
+ 		<dynamic>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[T.TX_DT >= #start_dt:DATE#]]>
+			</isNotEmpty>           
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[T.TX_DT<= #end_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="acct_num">
+				T.ACCT_NUM =#acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="subjectno">
+				T.SUBJECTNO =#subjectno#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_acct_num">
+				T.OPP_ACCT_NUM =#opp_acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_organkey">
+				T.OPP_ORGANKEY =#opp_organkey#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+		<statement id="getInCustCapitalChainAmt"
+		parameterClass="com.ist.aml.report.dto.T10_capital_chain"
+		resultClass="double">
+		SELECT SUM(AMT)
+  		FROM T47_TRANSACTION T
+ 		WHERE T.PARTY_ID = #party_id#
+ 		AND DEBIT_CREDIT = 'C'
+ 		<dynamic>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[T.TX_DT >= #start_dt:DATE#]]>
+			</isNotEmpty>           
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[T.TX_DT<= #end_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="acct_num">
+				T.ACCT_NUM =#acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="subjectno">
+				T.SUBJECTNO =#subjectno#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_acct_num">
+				T.OPP_ACCT_NUM =#opp_acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_organkey">
+				T.OPP_ORGANKEY =#opp_organkey#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getInCustCapitalChainTransCount"
+		parameterClass="com.ist.aml.report.dto.T10_capital_chain"
+		resultClass="int">
+		SELECT COUNT(T.TRANSACTIONKEY)
+  		FROM T47_TRANSACTION T
+ 		WHERE T.PARTY_ID = #party_id#
+ 		AND DEBIT_CREDIT = 'C'
+ 		<dynamic>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[T.TX_DT >= #start_dt:DATE#]]>
+			</isNotEmpty>           
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[T.TX_DT<= #end_dt:DATE#]]>
+			</isNotEmpty>
+			 <isNotEmpty prepend="AND" property="acct_num">
+				T.ACCT_NUM =#acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="subjectno">
+				T.SUBJECTNO =#subjectno#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_acct_num">
+				T.OPP_ACCT_NUM =#opp_acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_organkey">
+				T.OPP_ORGANKEY =#opp_organkey#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getInCustCapitalChain"
+		parameterClass="com.ist.aml.report.dto.T10_capital_chain"
+		resultClass="com.ist.aml.report.dto.T10_capital_chain">
+		SELECT  PARTY_ID,T.TRANSACTIONKEY,PARTY_CHN_NAME,ORGANKEY,TX_DT,CURRENCY_CD,TX_OCCUR_AREA,CASH_TRANS_FLAG,AMT,opp_party_id,opp_party_class_cd,opp_name,opp_organkey,
+		T.ACCT_NUM,T.SUBJECTNO,T.OPP_ACCT_NUM,T.OPP_ORGANKEY
+  		FROM T47_TRANSACTION T
+ 		WHERE T.PARTY_ID = #party_id#
+ 		AND DEBIT_CREDIT = 'C' 
+ 		<isNotEmpty prepend="AND" property="acct_num">
+			T.ACCT_NUM =#acct_num#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="subjectno">
+			T.SUBJECTNO =#subjectno#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="opp_acct_num">
+			T.OPP_ACCT_NUM =#opp_acct_num#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="opp_organkey">
+			T.OPP_ORGANKEY =#opp_organkey#
+		</isNotEmpty>
+ 		<dynamic>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[T.TX_DT >= #start_dt:DATE#]]>
+			</isNotEmpty>           
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[T.TX_DT<= #end_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty property="order_type">
+				<isEqual property="order_type" compareValue="0">
+					ORDER BY T.TX_DT
+				</isEqual>
+				<isEqual property="order_type" compareValue="1">
+					ORDER BY T.AMT
+				</isEqual>
+				<isEqual property="order_type" compareValue="2">
+					ORDER BY T.ORGANKEY
+				</isEqual>
+				<isNotEmpty property="fashion">
+					<isEqual property="fashion" compareValue="asc"></isEqual>
+					<isEqual property="fashion" compareValue="desc">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getInCustCapitalChain1"
+		parameterClass="com.ist.aml.report.dto.T10_capital_chain"
+		resultClass="com.ist.aml.report.dto.T10_capital_chain">
+		SELECT DISTINCT T.PARTY_ID,T.TRANSACTIONKEY,T.PARTY_CHN_NAME,T.ORGANKEY,T.TX_DT,T.CURRENCY_CD,T.TX_OCCUR_AREA,T.CASH_TRANS_FLAG,T.AMT,T.opp_party_id,T.opp_party_class_cd,T.opp_name,T.opp_organkey,
+		T.ACCT_NUM,T.SUBJECTNO,T.OPP_ACCT_NUM,T.OPP_ORGANKEY
+  		FROM T47_TRANSACTION T
+  		
+ 		WHERE  T.DEBIT_CREDIT = 'C'
+ 		<dynamic>
+ 		   <isNotEmpty prepend="" property="cast_type">
+						<isEqual property="cast_type" compareValue="1">
+						AND EXISTS(SELECT 'X' FROM T07_CASE_TRANSACTION_DE B 	WHERE T.TRANSACTIONKEY=B.TRANSACTIONKEY  AND B.APPLICATION_NUM=#application_num#)
+					  	</isEqual>
+						<isEqual property="cast_type" compareValue="2">
+							AND EXISTS(SELECT 'X' FROM T07_CASE_TRANSACTION_KY B 	WHERE T.TRANSACTIONKEY=B.TRANSACTIONKEY  AND B.APPLICATION_NUM=#application_num#) 
+					  	</isEqual>
+					</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[T.TX_DT >= #start_dt:DATE#]]>
+			</isNotEmpty>           
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[T.TX_DT<= #end_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="acct_num">
+				T.ACCT_NUM =#acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="subjectno">
+				T.SUBJECTNO =#subjectno#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_acct_num">
+				T.OPP_ACCT_NUM =#opp_acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_organkey">
+				T.OPP_ORGANKEY =#opp_organkey#
+			</isNotEmpty>
+	
+		 
+			<isNotEmpty property="order_type">
+				<isEqual property="order_type" compareValue="0">
+					ORDER BY T.TX_DT
+				</isEqual>
+				<isEqual property="order_type" compareValue="1">
+					ORDER BY T.AMT
+				</isEqual>
+				<isEqual property="order_type" compareValue="2">
+					ORDER BY T.ORGANKEY
+				</isEqual>
+				<isNotEmpty property="fashion">
+					<isEqual property="fashion" compareValue="asc"></isEqual>
+					<isEqual property="fashion" compareValue="desc">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	
+	<statement id="getInCustCapitalChainTransCount1"
+		parameterClass="com.ist.aml.report.dto.T10_capital_chain"
+		resultClass="int">
+		SELECT COUNT(T.TRANSACTIONKEY)
+  		FROM T47_TRANSACTION T
+  
+ 		WHERE  T.DEBIT_CREDIT = 'C'
+ 		<dynamic>
+ 		  <isNotEmpty prepend="" property="cast_type">
+						<isEqual property="cast_type" compareValue="1">
+						AND EXISTS(SELECT 'X' FROM T07_CASE_TRANSACTION_DE B 	WHERE T.TRANSACTIONKEY=B.TRANSACTIONKEY  AND B.APPLICATION_NUM=#application_num#)
+					  	</isEqual>
+						<isEqual property="cast_type" compareValue="2">
+							AND EXISTS(SELECT 'X' FROM T07_CASE_TRANSACTION_KY B 	WHERE T.TRANSACTIONKEY=B.TRANSACTIONKEY  AND B.APPLICATION_NUM=#application_num#) 
+					  	</isEqual>
+					</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[T.TX_DT >= #start_dt:DATE#]]>
+			</isNotEmpty>           
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[T.TX_DT<= #end_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="acct_num">
+			    T.ACCT_NUM =#acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="subjectno">
+				T.SUBJECTNO =#subjectno#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_acct_num">
+				T.OPP_ACCT_NUM =#opp_acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_organkey">
+				T.OPP_ORGANKEY =#opp_organkey#
+			</isNotEmpty>
+		</dynamic>
+			
+	</statement>
+
+
+	<statement id="getInCustCapitalChainAmt1"
+		parameterClass="com.ist.aml.report.dto.T10_capital_chain"
+		resultClass="double">
+		SELECT SUM(AMT)
+  		FROM T47_TRANSACTION T WHERE 
+  	
+ 		  T.DEBIT_CREDIT = 'C'
+ 		<dynamic>
+ 			 <isNotEmpty prepend="" property="cast_type">
+						<isEqual property="cast_type" compareValue="1">
+						AND EXISTS(SELECT 'X' FROM T07_CASE_TRANSACTION_DE B 	WHERE T.TRANSACTIONKEY=B.TRANSACTIONKEY  AND B.APPLICATION_NUM=#application_num#)
+					  	</isEqual>
+						<isEqual property="cast_type" compareValue="2">
+							AND EXISTS(SELECT 'X' FROM T07_CASE_TRANSACTION_KY B 	WHERE T.TRANSACTIONKEY=B.TRANSACTIONKEY  AND B.APPLICATION_NUM=#application_num# ) 
+					  	</isEqual>
+					</isNotEmpty>
+ 	
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[T.TX_DT >= #start_dt:DATE#]]>
+			</isNotEmpty>           
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[T.TX_DT<= #end_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="acct_num">
+			    T.ACCT_NUM =#acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="subjectno">
+				T.SUBJECTNO =#subjectno#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_acct_num">
+				T.OPP_ACCT_NUM =#opp_acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_organkey">
+				T.OPP_ORGANKEY =#opp_organkey#
+			</isNotEmpty>
+		</dynamic>
+			
+	</statement>
+	
+	<statement id="getOutCustCapitalChain1"
+		parameterClass="com.ist.aml.report.dto.T10_capital_chain"
+		resultClass="com.ist.aml.report.dto.T10_capital_chain">
+		SELECT  T.PARTY_ID,T.TRANSACTIONKEY,T.PARTY_CHN_NAME,T.ORGANKEY,T.TX_DT,T.CURRENCY_CD,T.TX_OCCUR_AREA,T.CASH_TRANS_FLAG,T.AMT,T.opp_party_id,T.opp_party_class_cd,T.opp_name,T.opp_organkey
+  		FROM T47_TRANSACTION T
+ 		WHERE  T.DEBIT_CREDIT = 'D'
+ 		<dynamic>
+ 		 <isNotEmpty prepend="" property="cast_type">
+						<isEqual property="cast_type" compareValue="1">
+						AND EXISTS(SELECT 'X' FROM T07_CASE_TRANSACTION_DE B 	WHERE T.TRANSACTIONKEY=B.TRANSACTIONKEY  AND B.APPLICATION_NUM=#application_num# )
+					  	</isEqual>
+						<isEqual property="cast_type" compareValue="2">
+							AND EXISTS(SELECT 'X' FROM T07_CASE_TRANSACTION_KY B 	WHERE T.TRANSACTIONKEY=B.TRANSACTIONKEY   AND B.APPLICATION_NUM=#application_num#) 
+					  	</isEqual>
+					</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[T.TX_DT >= #start_dt:DATE#]]>
+			</isNotEmpty>           
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[T.TX_DT<= #end_dt:DATE#]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="order_type">
+				<isEqual property="order_type" compareValue="0">
+					ORDER BY T.TX_DT
+				</isEqual>
+				<isEqual property="order_type" compareValue="1">
+					ORDER BY T.AMT
+				</isEqual>
+				<isEqual property="order_type" compareValue="2">
+					ORDER BY T.ORGANKEY
+				</isEqual>
+				<isNotEmpty property="fashion">
+					<isEqual property="fashion" compareValue="asc"></isEqual>
+					<isEqual property="fashion" compareValue="desc">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getOutCustCapitalChainTransCount1"
+		parameterClass="com.ist.aml.report.dto.T10_capital_chain"
+		resultClass="int">
+		SELECT COUNT(T.TRANSACTIONKEY)
+  		FROM T47_TRANSACTION T
+  		
+ 		WHERE  T.DEBIT_CREDIT = 'D'
+ 		<dynamic>
+ 		 <isNotEmpty prepend="" property="cast_type">
+						<isEqual property="cast_type" compareValue="1">
+						AND EXISTS(SELECT 'X' FROM T07_CASE_TRANSACTION_DE B 	WHERE T.TRANSACTIONKEY=B.TRANSACTIONKEY  AND B.APPLICATION_NUM=#application_num#)
+					  	</isEqual>
+						<isEqual property="cast_type" compareValue="2">
+							AND EXISTS(SELECT 'X' FROM T07_CASE_TRANSACTION_KY B 	WHERE T.TRANSACTIONKEY=B.TRANSACTIONKEY  AND B.APPLICATION_NUM=#application_num#) 
+					  	</isEqual>
+					</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[T.TX_DT >= #start_dt:DATE#]]>
+			</isNotEmpty>           
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[T.TX_DT<= #end_dt:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+			
+	</statement>
+	
+	<statement id="getOutCustCapitalChainAmt1"
+		parameterClass="com.ist.aml.report.dto.T10_capital_chain"
+		resultClass="double">
+		SELECT SUM(AMT)
+  		FROM T47_TRANSACTION T
+  		
+ 		WHERE T.DEBIT_CREDIT = 'D'
+ 		<dynamic>
+ 		 <isNotEmpty prepend="" property="cast_type">
+						<isEqual property="cast_type" compareValue="1">
+						AND EXISTS(SELECT 'X' FROM T07_CASE_TRANSACTION_DE B 	WHERE T.TRANSACTIONKEY=B.TRANSACTIONKEY  AND B.APPLICATION_NUM=#application_num#)
+					  	</isEqual>
+						<isEqual property="cast_type" compareValue="2">
+							AND EXISTS(SELECT 'X' FROM T07_CASE_TRANSACTION_KY B 	WHERE T.TRANSACTIONKEY=B.TRANSACTIONKEY  AND B.APPLICATION_NUM=#application_num#) 
+					  	</isEqual>
+					</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[T.TX_DT >= #start_dt:DATE#]]>
+			</isNotEmpty>           
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[T.TX_DT<= #end_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="acct_num">
+			    T.ACCT_NUM =#acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="subjectno">
+				T.SUBJECTNO =#subjectno#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_acct_num">
+				T.OPP_ACCT_NUM =#opp_acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_organkey">
+				T.OPP_ORGANKEY =#opp_organkey#
+			</isNotEmpty>
+		</dynamic>
+			
+	</statement>
+	
+</sqlMap> 

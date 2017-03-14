@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+
+<sqlMap namespace="T47_id_deposit"> 
+<statement id="getT47_id_depositDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.inves.dto.T47_id_deposit"> 
+  SELECT * FROM T47_ID_DEPOSIT WHERE ACCT_NUM=#value# 
+  </statement> 
+    <statement id="modifyT47_acct_uc" parameterClass="com.ist.aml.inves.dto.T47_id_deposit" resultClass="int"> 
+  UPDATE T47_acct_uc SET AML_ACCT_TYPE_CD=#aml_acct_type_cd#,validate_ind2='1' where ACCT_NUM=#acct_num# 
+ </statement>
+</sqlMap> 
+

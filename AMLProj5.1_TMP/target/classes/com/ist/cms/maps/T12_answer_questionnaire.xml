@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_answer_questionnaire"> 
+  <statement id="getT12_answer_questionnaireList" parameterClass="com.ist.cms.dto.T12_answer_questionnaire" resultClass="com.ist.cms.dto.T12_answer_questionnaire"> 
+  select answerkey,questionkey,publishkey,username,starttime,endtime,state from t12_answer_questionnaire 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="answerkey"> 
+    answerkey = #answerkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT12_answer_questionnaireListCount" parameterClass="com.ist.cms.dto.T12_answer_questionnaire" resultClass="int"> 
+  select count(*) from t12_answer_questionnaire 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="answerkey"> 
+    answerkey = #answerkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ <!--  -->
+ <statement id="getT12_answer_questionnaireManageList" parameterClass="com.ist.cms.dto.T12_answer_questionnaire" resultClass="com.ist.cms.dto.T12_answer_questionnaire"> 
+  	SELECT A.QUESTIONKEY,B.QUESTIONINSKEY,D.ANSWERKEY,B.PUBLISHKEY,B.TITLE AS publishTitle,A.QUESTIONTYPE,C.USERNAME,B.STARTTIME,B.ENDTIME,D.STATE FROM T12_QUESTION_INS A ,
+	T12_PUBLISH_QUESTIONNAIRE B LEFT JOIN T12_PUBLISH_USER C ON B.PUBLISHKEY=C.PUBLISHKEY 
+	LEFT JOIN T12_ANSWER_QUESTIONNAIRE  D ON B.PUBLISHKEY = D.PUBLISHKEY AND C.USERNAME=D.USERNAME
+  	WHERE A.FLAG='1' AND B.FLAG='1' AND B.ARCHIVED='0' AND B.STATE='2' AND (B.PUBLISHMODE='1' OR B.PUBLISHMODE='3') AND C.USERTYPE='0' AND A.QUESTIONINSKEY=B.QUESTIONINSKEY
+    <isNotEmpty prepend="AND" property="publishTitle"> 
+    	B.TITLE LIKE '%'||#publishTitle#||'%'
+    </isNotEmpty> 
+    <!--  
+    <isNotEmpty prepend="AND" property="starttime"> 
+    	B.STARTTIME >= #starttime#   
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="endtime"> 
+    	#endtime# >=B.ENDTIME
+    </isNotEmpty>
+    -->
+    <isNotEmpty prepend="AND" property="starttime"> 
+    	 #starttime# >= B.STARTTIME AND B.ENDTIME >= #starttime# 
+    </isNotEmpty>
+    <isNotEmpty prepend="" property="usernames"> 
+	    <iterate prepend="AND" property="usernames" open="(" close=")" conjunction="OR"> 
+	    	 C.USERNAME = #usernames[]#
+	    </iterate>
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="state"> 
+    	 D.STATE = #state#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="questiontype"> 
+    	 A.QUESTIONTYPE = #questiontype#
+    </isNotEmpty>
+    <isNotEmpty prepend="" property="sort_type"> 
+    	 ORDER BY $sort$ $sort_type$
+    </isNotEmpty>
+  </statement> 
+ 
+  <statement id="getT12_answer_questionnaireManageListCount" parameterClass="com.ist.cms.dto.T12_answer_questionnaire" resultClass="int"> 
+	 SELECT COUNT(*) FROM T12_QUESTION_INS A ,T12_PUBLISH_QUESTIONNAIRE B LEFT JOIN T12_PUBLISH_USER C ON B.PUBLISHKEY=C.PUBLISHKEY 
+		LEFT JOIN T12_ANSWER_QUESTIONNAIRE  D ON B.PUBLISHKEY = D.PUBLISHKEY AND C.USERNAME=D.USERNAME
+  	 WHERE A.FLAG='1' AND B.FLAG='1' AND B.ARCHIVED='0' AND B.STATE='2' AND (B.PUBLISHMODE='1' OR B.PUBLISHMODE='3') AND C.USERTYPE='0' AND A.QUESTIONINSKEY=B.QUESTIONINSKEY
+    <isNotEmpty prepend="AND" property="publishTitle"> 
+    	B.TITLE LIKE '%'||#publishTitle#||'%'
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="starttime"> 
+    	 #starttime# >= B.STARTTIME AND B.ENDTIME >= #starttime# 
+    </isNotEmpty>
+    <isNotEmpty prepend="" property="usernames"> 
+	    <iterate prepend="AND" property="usernames" open="(" close=")" conjunction="OR"> 
+	    	 C.USERNAME = #usernames[]#
+	    </iterate>
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="state"> 
+    	 D.STATE = #state#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="questiontype"> 
+    	 A.QUESTIONTYPE = #questiontype#
+    </isNotEmpty>
+  </statement> 
+ <!--  -->
+ 
+ 
+ 
+ 
+  <statement id="insertT12_answer_questionnaire" parameterClass="com.ist.cms.dto.T12_answer_questionnaire" resultClass="int"> 
+  	INSERT INTO T12_ANSWER_QUESTIONNAIRE(ANSWERKEY,QUESTIONKEY,QUESTIONINSKEY,PUBLISHKEY,USERNAME,ANSWERTIME,STARTTIME,ENDTIME,STATE)
+  	VALUES(#answerkey#,#questionkey#,#questioninskey#,#publishkey#,#username#,#answertime#,#starttime#,#endtime#,#state#) 
+  </statement> 
+ 
+  <statement id="modifyT12_answer_questionnaire" parameterClass="com.ist.cms.dto.T12_answer_questionnaire" resultClass="int"> 
+  update T12_answer_questionnaire set  answertime=#answertime#
+    <isNotEmpty prepend="," property="state"> 
+    	state=#state#
+    </isNotEmpty> 
+    <isNotEmpty prepend="," property="endtime"> 
+    	endtime=#endtime#
+    </isNotEmpty>
+   where answerkey=#answerkey# 
+  </statement> 
+ 
+  <statement id="deleteT12_answer_questionnaire" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_answer_questionnaire where answerkey=#value# 
+  </statement> 
+  
+   <!-- zhangqiaojun -->
+ <statement id="getT12_answer_questionnaireDisp2" parameterClass="com.ist.cms.dto.T12_answer_questionnaire" resultClass="com.ist.cms.dto.T12_answer_questionnaire"> 
+  select * from T12_answer_questionnaire
+  <dynamic prepend="where"> 
+  	 <isEmpty prepend="" property="answerkey"> 
+    	 <isNotEmpty prepend="AND" property="publishkey"> 
+    		publishkey = #publishkey# 
+    	</isNotEmpty> 
+    	<isNotEmpty prepend="AND" property="username"> 
+    		username = #username# 
+    	</isNotEmpty> 
+    </isEmpty> 
+  	<isNotEmpty prepend="AND" property="answerkey"> 
+    	answerkey = #answerkey# 
+    </isNotEmpty> 
+  </dynamic>
+ 
+  </statement> 
+<!-- zhangqiaojun -->
+  <statement id="updateT12_answer_questionnaireForReAnswer" parameterClass="com.ist.cms.dto.T12_answer_questionnaire" resultClass="int">
+  	UPDATE  T12_answer_questionnaire SET state=#state#,starttime=#starttime#,endtime=#endtime# WHERE answerkey = #answerkey#
+  </statement> 
+  
+  <statement id="getT12_answer_dispById" parameterClass="com.ist.cms.dto.T12_answer_questionnaire" resultClass="com.ist.cms.dto.T12_answer_questionnaire"> 
+   select * from T12_answer_questionnaire where publishkey=#publishkey#  and username=#username#
+  </statement> 
+  
+   <statement id="getT12_answer_listByKey" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_answer_questionnaire"> 
+  	  select u.username ,
+		 case when J.totalscore is null then 0 else j.totalscore end as totalscore ,   
+		 case when a.state is null then '0' else a.state end  as state,    
+		 case when a.starttime is null then p.starttime else a.starttime end as starttime,  
+		 case when a.endtime is null then p.endtime else a.endtime end as endtime,
+		 case when a.publishkey is null then p.publishkey else a.publishkey end as publishkey,  
+		 case when a.questionkey is null then p.questionkey else a.questionkey end as questionkey
+		from T12_PUBLISH_USER u  left join T12_ANSWER_QUESTIONNAIRE a on u.USERNAME = a.USERNAME and u.publishkey=a.publishkey 
+		 left join  (select s.JUDGMENTKEY ,sum(s.score) as totalscore ,j.answerkey from T12_JUDGMENT_QUESTIONNAIRE j ,T12_JUDGMENT_SUBJECT s where j.JUDGMENTKEY = s.JUDGMENTKEY
+		group by s.JUDGMENTKEY,j.answerkey) J on a.answerkey=j.answerkey  left join T12_PUBLISH_QUESTIONNAIRE p 
+		on u.publishkey = p.publishkey
+		where u.PUBLISHKEY=#value# and u.usertype='0'
+  </statement>  
+  
+</sqlMap> 
+

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+	<!-- modified by chenhao date:2010-05 start-->
+<sqlMap namespace="T37_help_check">
+	<statement id="getT37_help_checkList"
+		parameterClass="com.ist.aml.risk_rate.dto.T37_help_check"
+		resultClass="com.ist.aml.risk_rate.dto.T37_help_check">
+		SELECT
+		H.CHECK_NO,H.PARTY_ID,H.PARTY_CHN_NAME,H.SEND_ORG,H.SEND_DATE,H.CHECK_REASON,H.STATUS_CD,H.PARTY_CLASS_CD,H.CHECK_ORG
+		FROM T37_HELPCHECK H
+		WHERE 1=1
+		<isNotEmpty prepend="AND" property="organstr">
+			H.CHECK_ORG in ($organstr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="status_cd">
+				STATUS_CD=#status_cd#
+		</isNotEmpty>
+		<isEmpty prepend="AND" property="status_cd">
+			STATUS_CD in ('1','4')
+		</isEmpty>
+		<isNotEmpty prepend="AND" property="send_date">
+			SEND_DATE = #send_date#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			PARTY_ID = #party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="send_org">
+			SEND_ORG = #send_org#
+		</isNotEmpty>
+	</statement>
+	<statement id="getT37_help_recheckList"
+		parameterClass="com.ist.aml.risk_rate.dto.T37_help_check"
+		resultClass="com.ist.aml.risk_rate.dto.T37_help_check">
+		SELECT
+		H.CHECK_NO,H.PARTY_ID,H.PARTY_CHN_NAME,H.SEND_ORG,H.SEND_DATE,H.CHECK_REASON,H.STATUS_CD,
+		H.PARTY_CLASS_CD,H.DATA_SOURCE,H.RESULEKEY AS resultkey,H.DATA_SOURCE,H.ORGANKEY,H.CHECK_ORG
+		FROM T37_HELPCHECK H
+		WHERE STATUS_CD ='2'
+		<isNotEmpty prepend="AND" property="organstr">
+			CHECK_ORG in ($organstr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="send_date">
+			<![CDATA[SEND_DATE >= #send_date#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="send_date_end">
+			<![CDATA[SEND_DATE <= #send_date_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			PARTY_ID = #party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="send_org">
+			SEND_ORG = #send_org#
+		</isNotEmpty>
+	</statement>
+	<statement id="getT37_help_checkListCount"
+		parameterClass="com.ist.aml.risk_rate.dto.T37_help_check"
+		resultClass="int">
+		SELECT
+		count(*)
+		FROM T37_HELPCHECK
+		WHERE 1=1
+		<isEmpty prepend="AND" property="status_cd">
+			STATUS_CD in ('1','4')
+		</isEmpty>
+		<isNotEmpty prepend="AND" property="status_cd">
+			STATUS_CD = #status_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="send_date">
+			SEND_DATE = #send_date#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			PARTY_ID = #party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="send_org">
+			SEND_ORG = #send_org#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organstr">
+			CHECK_ORG in ($organstr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="resultkey">
+			RESULEKEY=#resultkey#
+		 </isNotEmpty>
+		
+	</statement>
+	<statement id="getT37_help_recheckListCount"
+		parameterClass="com.ist.aml.risk_rate.dto.T37_help_check"
+		resultClass="int">
+		SELECT
+		count(*)
+		FROM T37_HELPCHECK
+		WHERE STATUS_CD='2'
+		<isNotEmpty prepend="AND" property="organstr">
+			CHECK_ORG in ($organstr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="send_date">
+			<![CDATA[SEND_DATE >= #send_date#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="send_date_end">
+			<![CDATA[SEND_DATE <= #send_date_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			PARTY_ID = #party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="send_org">
+			SEND_ORG = #send_org#
+		</isNotEmpty>
+	</statement>
+	
+	<statement id="getT37_help_check"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.risk_rate.dto.T37_help_check">
+		SELECT
+		H.CHECK_NO,H.SEND_ORG,H.SEND_DATE,H.SEND_USER,H.CHECK_REASON,H.CHECK_RESULT,H.STATUS_CD
+		,H.PARTY_CHN_NAME,H.PARTY_ID,H.CHECK_ORG,H.DATA_SOURCE,H.RESULEKEY AS RESULTKEY,H.ORGANKEY
+		FROM T37_HELPCHECK H
+		WHERE CHECK_NO=#value#
+	</statement>
+	<statement id="updateT37_help_check_case"
+		parameterClass="com.ist.aml.risk_rate.dto.T37_help_check"
+		resultClass="int">
+		UPDATE T37_HELPCHECK H SET
+		H.CHECK_RESULT=#check_result#,H.STATUS_CD=#status_cd#
+		WHERE H.CHECK_NO=#check_no#
+	</statement>
+	<statement id="getT37_help_check_reason"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.risk_rate.dto.T37_help_check">
+		SELECT
+		PARTY_ID,SEND_DATE,CHECK_REASON,SEND_ORG,CHECK_ORG,CHECK_RESULT
+		FROM T37_HELPCHECK
+		WHERE CHECK_NO=#value#
+	</statement>
+	<statement id="getT37_help_check_status"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.risk_rate.dto.T37_help_check">
+		SELECT
+		RETURN_REASON,RETURN_DT,RETURN_USER
+		FROM T37_HELPCHECK
+		WHERE CHECK_NO=#value#
+	</statement>
+	<statement id="getT37_help_check_attachList"
+		parameterClass="com.ist.aml.risk_rate.dto.T37_helpcheck_attach"
+		resultClass="com.ist.aml.risk_rate.dto.T37_helpcheck_attach">
+		SELECT
+		A.CHECK_NO,A.ATTACHKEY,A.ATTACH_NAME,A.ATTACH_REALNAME,A.LOAD_DATE,A.LOAD_USER
+		FROM T37_HELPCHECK_ATTACH A
+		WHERE A.CHECK_NO = #check_no#
+	</statement>
+	<statement id="getT37_help_check_attachListCount"
+		parameterClass="com.ist.aml.risk_rate.dto.T37_helpcheck_attach"
+		resultClass="int">
+		SELECT
+		count(*)
+		FROM T37_HELPCHECK_ATTACH
+		WHERE CHECK_NO = #check_no#
+	</statement>
+	<statement id="deleteT37_help_check_attach"
+		parameterClass="java.lang.String"
+		resultClass="int">
+		DELETE
+		FROM T37_HELPCHECK_ATTACH
+		WHERE ATTACHKEY = #value#
+	</statement>
+	<statement id="insertT37_helpcheck_attach"
+		parameterClass="com.ist.aml.risk_rate.dto.T37_helpcheck_attach"
+		resultClass="int">
+		INSERT INTO T37_HELPCHECK_ATTACH(
+		ATTACHKEY,CHECK_NO,ATTACH_NAME,ATTACH_REALNAME,LOAD_DATE,LOAD_USER
+		) VALUES(
+		#attachKey#,#check_no#,#attach_name#,#attach_realName#,#load_date#,#load_user#
+		)
+	</statement>
+	<statement id="updateT37_help_recheck"
+		parameterClass="com.ist.aml.risk_rate.dto.T37_help_check"
+		resultClass="int">
+		UPDATE T37_HELPCHECK H SET
+		H.STATUS_CD='3'
+		WHERE 1=1
+		<isNotNull property="check_noList">
+			<iterate prepend="AND" property="check_noList" open="(" close=")" conjunction="or">
+				CHECK_NO=#check_noList[]#
+			</iterate>
+		</isNotNull>
+	</statement>
+	<statement id="updateUntreadT37_help_check_recheck"
+		parameterClass="com.ist.aml.risk_rate.dto.T37_help_check"
+		resultClass="int">
+		UPDATE T37_HELPCHECK H SET
+		H.RETURN_REASON = #return_reason#,
+		H.RETURN_USER = #return_user#,
+		H.RETURN_DT = #return_dt#,
+		H.STATUS_CD = '4'
+		WHERE H.CHECK_NO = #check_no#
+	</statement>
+	<!-- end -->
+	<!-- lzb start  -->
+    <statement id="getRisk_party_acctOrganList" parameterClass="java.lang.String" 
+	           resultClass="com.ist.platform.dto.T00_organ">
+     select  distinct c.op_org_num  as organkey 
+        from t47_agreement c
+        where c.CUSTOMER_ID=#value#
+    </statement>
+    <statement id="insertT37_help_check" parameterClass="com.ist.aml.risk_rate.dto.T37_help_check"
+		resultClass="int">
+		INSERT INTO T37_HELPCHECK(
+		CHECK_NO,RESULEKEY,PARTY_ID,PARTY_CLASS_CD,PARTY_CHN_NAME,ORGANKEY,SEND_ORG,SEND_DATE,SEND_USER,CHECK_REASON,CHECK_ORG,STATUS_CD,DATA_SOURCE
+		) VALUES(
+		#check_no#,#resultkey#,#party_id#,#party_class_cd#,#party_chn_name#,#organkey#,#send_org#,#send_date#,#send_user#,#check_reason#,#check_org#,#status_cd#,#data_source#
+		)
+	</statement>
+	<statement id="getT37_help_check_dispList"
+		parameterClass="com.ist.aml.risk_rate.dto.T37_help_check"
+		resultClass="com.ist.aml.risk_rate.dto.T37_help_check">
+		SELECT
+		H.CHECK_NO,H.RESULEKEY,H.ORGANKEY,H.PARTY_ID,H.PARTY_CHN_NAME,H.SEND_ORG,H.SEND_DATE,H.CHECK_REASON,H.STATUS_CD,H.PARTY_CLASS_CD
+		FROM T37_HELPCHECK H
+		WHERE H.RESULEKEY=#resultkey# 
+		<isNotEmpty prepend="AND" property="organkey">
+			H.ORGANKEY=#organkey#
+		 </isNotEmpty>
+	</statement>
+	<statement id="getT37_help_check_dispListCount"
+		parameterClass="com.ist.aml.risk_rate.dto.T37_help_check"
+		resultClass="int">
+		SELECT COUNT(*)
+		FROM T37_HELPCHECK H
+		WHERE H.RESULEKEY=#resultkey# 
+		<isNotEmpty prepend="AND" property="organkey">
+			H.ORGANKEY=#organkey#
+		 </isNotEmpty>
+	</statement>
+  <!-- lzb end -->
+</sqlMap>
+

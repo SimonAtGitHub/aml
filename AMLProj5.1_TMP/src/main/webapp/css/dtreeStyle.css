@@ -1,0 +1,170 @@
+.body {
+        font: normal 11px auto "Trebuchet MS", Verdana, Arial,
+		Helvetica, sans-serif;     
+		background-image:url(../images/right-bg-1.gif);
+}
+.dtree {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #036A79;
+	white-space: nowrap;
+}
+.dtree img {
+	border: 0px;
+	vertical-align: middle;
+}
+.dtree a {
+	color: #036A79;
+	text-decoration: none;
+}
+.dtree a.node, .dtree a.nodeSel {
+	white-space: nowrap;
+	padding: 1px 2px 1px 2px;
+}
+.dtree a.node:hover, .dtree a.nodeSel:hover {
+	color: #036A79;
+	text-decoration: underline;
+}
+.dtree a.nodeSel {
+	background-color: #c0d2ec;
+}
+.dtree .clip {
+	overflow: hidden;
+}
+
+.input {
+		border-left: 1px solid #C1DAD7;
+        border-top: 0;
+        background: #fff no-repeat;
+        font: 14px "Trebuchet MS", Verdana, Arial, Helvetica,
+		sans-serif;
+		width:300px;
+}
+.input2 {
+		border-left: 1px solid #C1DAD7;
+        border-top: 0;
+        background: #fff no-repeat;
+        font: 14px "Trebuchet MS", Verdana, Arial, Helvetica,
+		sans-serif;
+		width:300px;		
+}
+.button{
+	width:65px;
+	height:20px;
+	border:0px;
+	
+	color:#FFFFFF;
+}
+/*设置所有的botton的样式*/
+.awp_button{
+	border: #B1E2E8 1px solid; 
+	padding-top: 2px; 
+	padding-right: 2px; 
+	padding-left: 2px; 	
+	font-size: 12px; 
+	cursor: pointer; 
+	color: #4EA9B5; 
+	filter: progid:dximagetransform.microsoft.gradient(gradienttype=0, startcolorstr=#ffffff, endcolorstr=#B1E2E8); 
+
+}
+.texttd{
+        padding: 0 0 5px 0;
+        width: 120px;
+        font: 14px, "Trebuchet MS", Verdana, Arial, Helvetica;		
+		sans-serif;
+        text-align: right;
+}
+.texttd2{
+        padding: 0 0 5px 0;
+        width: 200px;
+        font: 14px, "Trebuchet MS", Verdana, Arial, Helvetica;		
+		sans-serif;
+        text-align: right;
+}
+.check{
+	clip: rect(6 17 17 6);
+	border-color:#330000;
+	BORDER-RIGHT: #7EBF4F 1px solid; 
+	PADDING-RIGHT: 3px; 
+	BORDER-TOP: #7EBF4F 2px solid; 
+	PADDING-LEFT: 3px; 
+	FONT-SIZE: 13px; 
+	filter:progid:DXImageTransform.Microsoft.MotionBlur(strength=10);
+			progid:DXImageTransform.Microsoft.BasicImage(mirror=1); 
+	BORDER-LEFT: #7EBF4F 1px solid; 
+	CURSOR: black; 
+	COLOR: black; 
+	PADDING-TOP: 8px;
+	PADDING-BOTTOM: 8px; 
+	BORDER-BOTTOM: #7EBF4F 2px solid;
+}
+.check_2{
+	position:absolute;
+	clip: rect(5 16 16 5)
+}
+.check_3{
+	position:absolute;
+	clip: rect(2 50 30 2)
+}
+
+.btn3_mouseout {
+BORDER-RIGHT: #2C59AA 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #2C59AA 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#C3DAF5); BORDER-LEFT: #2C59AA 1px solid; cursor:pointer; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #2C59AA 1px solid
+}
+.btn3_mouseover {
+BORDER-RIGHT: #2C59AA 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #2C59AA 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#D7E7FA); BORDER-LEFT: #2C59AA 1px solid; cursor:pointer; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #2C59AA 1px solid
+}
+.btn3_mousedown
+{
+BORDER-RIGHT: #FFE400 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #FFE400 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#C3DAF5); BORDER-LEFT: #FFE400 1px solid; cursor:pointer; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #FFE400 1px solid
+}
+.btn3_mouseup {
+BORDER-RIGHT: #2C59AA 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #2C59AA 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#C3DAF5); BORDER-LEFT: #2C59AA 1px solid; cursor:pointer; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #2C59AA 1px solid
+}
+/*公共页面(问题树+机构列表等)浮动按钮样式*/
+.flow_button_div{	
+ 	position: absolute; 
+ 	font-size:12px;
+ 	z-index:1000;
+ 	/*
+ 	width:100px;
+	border-bottom:#84A2C6 1px solid;
+	border-left:#84A2C6 1px solid;
+	border-right:#84A2C6 12px solid;
+	border-top:#84A2C6 1px solid;
+	height:36px;
+	background:#E7EFFF;
+	text-align:center;
+	padding-top:6px;
+	*/
+}
+.div_scroll{
+	width:95%;  
+  	height:400px;  
+ 	overflow-y:auto; 	
+}
+.botton{
+    border: #6CCBEB 1px solid; 
+	padding-top: 2px; 
+	padding-right: 2px; 
+	padding-left: 2px; 	
+	font-size: 12px; 
+	cursor:pointer; 
+	color: black; 
+	filter: progid:dximagetransform.microsoft.gradient(gradienttype=0, startcolorstr=#ffffff, endcolorstr=#6CCBEB); 
+}
+
+body,table,div{
+color:#036A79;
+font-size:12px;
+text-align:left;
+margin:0px;
+padding:0px;
+border-collapse:collapse;
+    scrollbar-arrow-color:#94CAD1;
+	scrollbar-face-color:#F0FBFB;
+	scrollbar-darkshadow-color:#94CAD1;
+	scrollbar-highlight-color:#F0FBFB;
+	scrollbar-3dlight-color:#94CAD1;
+	scrollbar-shadow-color:#F0FBFB;
+	scrollbar-track-color:#F0FBFB; 
+}

@@ -1,0 +1,1691 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 知识管理平台模块配置 -->
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+	<data-sources />
+
+	<form-beans>
+	    <form-bean name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleActionForm"/> 
+	    <form-bean name="t12_article_collectActionForm" type="com.ist.cms.controller.T12_article_collectActionForm"/>	
+	    <form-bean name="t12_article_contentActionForm" type="com.ist.cms.controller.T12_article_contentActionForm"/>
+	    <form-bean name="t12_article_historyActionForm" type="com.ist.cms.controller.T12_article_historyActionForm"/>
+	    <form-bean name="t12_article_keywordsActionForm" type="com.ist.cms.controller.T12_article_keywordsActionForm"/>
+	    <form-bean name="t12_article_logActionForm" type="com.ist.cms.controller.T12_article_logActionForm"/> 
+	    <form-bean name="t12_ca_programaActionForm" type="com.ist.cms.controller.T12_ca_programaActionForm"/>
+	    <form-bean name="t12_date_subscibeActionForm" type="com.ist.cms.controller.T12_date_subscibeActionForm"/>
+	    <form-bean name="t12_keywords_libraryActionForm" type="com.ist.cms.controller.T12_keywords_libraryActionForm"/>
+	    <form-bean name="t12_person_subscibeActionForm" type="com.ist.cms.controller.T12_person_subscibeActionForm"/>
+	    <form-bean name="t12_power_groupActionForm" type="com.ist.cms.controller.T12_power_groupActionForm"/>
+	    <form-bean name="t12_power_roleActionForm" type="com.ist.cms.controller.T12_power_roleActionForm"/>
+	    <form-bean name="t12_power_userActionForm" type="com.ist.cms.controller.T12_power_userActionForm"/> 
+	    <form-bean name="t12_programaActionForm" type="com.ist.cms.controller.T12_programaActionForm"/>
+	    <form-bean name="t12_programa_colsActionForm" type="com.ist.cms.controller.T12_programa_colsActionForm"/> 
+	    <form-bean name="t12_programa_defcolsActionForm" type="com.ist.cms.controller.T12_programa_defcolsActionForm"/>
+	    <form-bean name="t12_programa_powerActionForm" type="com.ist.cms.controller.T12_programa_powerActionForm"/>
+	    <form-bean name="t12_programa_subscibeActionForm" type="com.ist.cms.controller.T12_programa_subscibeActionForm"/>
+	    <form-bean name="t12_programa_tableActionForm" type="com.ist.cms.controller.T12_programa_tableActionForm"/>
+	    <form-bean name="t12_programa_table_relActionForm" type="com.ist.cms.controller.T12_programa_table_relActionForm"/>
+	    <form-bean name="t12_subscibeActionForm" type="com.ist.cms.controller.T12_subscibeActionForm"/>
+	    <form-bean name="t12_subscibe_tacticsActionForm" type="com.ist.cms.controller.T12_subscibe_tacticsActionForm"/>
+	    <form-bean name="t12_writebackActionForm" type="com.ist.cms.controller.T12_writebackActionForm"/> 
+	    <form-bean name="t12_searchActionForm" type="com.ist.cms.controller.T12_searchActionForm"/> 
+	    <form-bean name="t12_se_file_dbActionForm" type="com.ist.cms.controller.T12_se_file_dbActionForm"/>
+	    <form-bean name="t12_se_file_pathActionForm" type="com.ist.cms.controller.T12_se_file_pathActionForm"/>
+	    <form-bean name="t12_ca_articleActionForm" type="com.ist.cms.controller.T12_ca_articleActionForm"/> 
+		 <form-bean name="t12_article_coderuleActionForm" type="com.ist.cms.controller.T12_article_coderuleActionForm"/> 	
+		 <form-bean name="t12_programa_attachtypeActionForm" type="com.ist.cms.controller.T12_programa_attachtypeActionForm"/>	
+		<!-- zai xian kao shi begin -->	
+		<form-bean name="t12_questionnaireActionForm" 
+			type="com.ist.cms.controller.T12_questionnaireActionForm" />
+		<form-bean name="t12_questions_subjectActionForm" 
+			type="com.ist.cms.controller.T12_questions_subjectActionForm"/> 
+
+		<form-bean name="t12_publish_questionnaireActionForm" 
+		    type="com.ist.cms.controller.T12_publish_questionnaireActionForm"/> 
+	    <form-bean name="t12_judgment_questionnaireActionForm" 
+	        type="com.ist.cms.controller.T12_judgment_questionnaireActionForm"/> 
+
+		<form-bean name="t12_answer_questionnaireActionForm" 
+			type="com.ist.cms.controller.T12_answer_questionnaireActionForm"/> 
+		<form-bean name="t12_answer_subjectActionForm"
+		 type="com.ist.cms.controller.T12_answer_subjectActionForm"/> 
+		 <form-bean name="t12_categoryActionForm" type="com.ist.cms.controller.T12_categoryActionForm"/> 
+	</form-beans> 
+  
+	
+	<action-mappings>
+	    <!-- 业务管理/栏目管理 start -->
+	    <action path="/businessmanager/t12_programa/t12_programa_busi_menu" parameter="t12_programa_busi_menu" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programa_busiAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_programa/t12_programa_index.jsp"/> 
+	    </action> 
+	    
+	    <action path="/businessmanager/t12_programa/t12_programa_busi_search" parameter="searchT12_programa" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programa_busiAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_programa/t12_programa_search.jsp"/> 
+	        <forward name="failure" path="/businessmanager/t12_programa/t12_programa_busi_list.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_programa/t12_programa_busi_list" parameter="getT12_programa_busiList" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programa_busiAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_programa/t12_programa_list.jsp"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_programa/t12_programa_index_set" parameter="setT12_programaIndex" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programa_busiAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_programa/t12_programa_all_list.do"/> 
+	    </action>
+	    <action path="/businessmanager/t12_programa/t12_programa_generate_index" parameter="t12_programa_generate_index" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programa_busiAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_programa/t12_programa_all_list.do"/> 
+		    <forward name="dbSuccess" path="/system_manager/t12_se_file_db/t12_se_file_db_list.do"/> 
+	        <forward name="fileSuccess" path="/system_manager/t12_se_file_path/t12_se_file_path_list.do"/> 
+	    </action> 
+	     <action path="/businessmanager/t12_programa/t12_programa_all_list" parameter="getT12_programaAllList" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programa_busiAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_programa/t12_programa_sy_list.jsp"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_programa/t12_programa_busi_modify" parameter="modifyT12_programa" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programa_busiAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_programa/t12_programa_modify.jsp"/> 
+		    <forward name="failure" path="/businessmanager/t12_programa/t12_programa_busi_list.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_programa/t12_programa_busi_modify_do" parameter="modifyT12_programaDo" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programa_busiAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_programa/t12_programa_busi_list.do"/> 
+		    <forward name="failure" path="/businessmanager/t12_programa/t12_programa_busi_modify.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_programa/t12_programa_busi_disp" parameter="getT12_programaDisp" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programa_busiAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_programa/t12_programa_disp.jsp"/> 
+		    <forward name="failure" path="/businessmanager/t12_programa/t12_programa_busi_list.do"/> 
+	    </action>
+	    <action path="/businessmanager/t12_programa/t12_programa_busi_auditstat" parameter="t12_programa_busi_auditstat" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programa_busiAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_programa/t12_programa_busi_list.do"/> 
+		    <forward name="failure" path="/businessmanager/t12_programa/t12_programa_busi_list.do"/> 
+	    </action>
+	    <action path="/businessmanager/t12_programa/t12_programa_busi_power" parameter="t12_programa_busi_power" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programa_busiAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_programa/t12_programa_power.jsp"/> 
+		    <forward name="failure" path="/businessmanager/t12_programa/t12_programa_busi_list.do"/> 
+	    </action>
+	    <action path="/businessmanager/t12_programa/t12_programa_busi_power_do" parameter="t12_programa_busi_power_do" name="t12_programa_powerActionForm" type="com.ist.cms.controller.T12_programa_busiAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_programa/t12_programa_busi_list.do"/> 
+		    <forward name="failure" path="/businessmanager/t12_programa/t12_programa_busi_power.do"/> 
+	    </action>
+	    
+	    <action path="/businessmanager/t12_programa/t12_programa_busi_role" parameter="t12_programa_busi_role" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programa_busiAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_programa/t12_programa_role.jsp"/> 
+		    <forward name="failure" path="/businessmanager/t12_programa/t12_programa_role.jsp"/>
+	    </action>
+	    <action path="/businessmanager/t12_programa/t12_programa_busi_role_do" parameter="t12_programa_busi_role_do" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programa_busiAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_programa/t12_programa_busi_list.do"/> 
+		    <forward name="failure" path="/businessmanager/t12_programa/t12_programa_busi_list.do"/> 
+	    </action>
+	    <!-- 业务管理/栏目管理 end -->
+	    
+	    <!--t12_article start  -->
+	    <action path="/businessmanager/t12_article/release_articel_menu" parameter="release_articel_menu" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_article/t12_article_release_index.jsp"/> 
+	    </action> 
+	    
+		<action path="/businessmanager/t12_article/t12_article_search" parameter="searchT12_article" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article/t12_article_search.jsp"/> 
+	        <forward name="failure" path="/t12_article/t12_article_list.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_article/t12_article_list" parameter="getT12_articleList" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_article/t12_article_list.jsp"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_article/t12_article_norelease_list" parameter="getT12_article_norelease_List" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_article/t12_article_norelease_list.jsp"/> 
+		    <forward name="failure" path="/businessmanager/t12_article/t12_article_norelease_list.jsp"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_article/t12_article_norelease_add" parameter="addT12_article_norelease" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_article/t12_article_norelease_add.jsp"/> 
+		    <forward name="failure" path="/businessmanager/t12_article/t12_article_norelease_add.jsp"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_article/t12_article_norelease_add_do" parameter="addT12_article_norelease_do" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_article/t12_article_norelease_list.do"/> 
+		    <forward name="success_save" path="/businessmanager/t12_article/t12_article_norelease_list.do"/> 
+		    <forward name="success_release" path="/businessmanager/t12_article/t12_article_list.do"/>
+		    <forward name="failure" path="/businessmanager/t12_article/t12_article_norelease_add.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_article/t12_article_norelease_delete_do" parameter="deleteT12_article_norelease_do" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_article/t12_article_norelease_list.do"/> 
+	        <forward name="failure" path="/businessmanager/t12_article/t12_article_norelease_list.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_article/t12_article_add" parameter="addT12_article" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_article/t12_article_add.jsp"/> 
+		    <forward name="failure" path="/businessmanager/t12_article/t12_article_list.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_article/t12_article_add_do" parameter="addT12_articleDo" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_article/t12_article_list.do"/> 
+		    <forward name="success_save" path="/businessmanager/t12_article/t12_article_norelease_list.do"/> 
+		    <forward name="success_release" path="/businessmanager/t12_article/t12_article_list.do"/> 
+		    <forward name="failure" path="/businessmanager/t12_article/t12_article_add.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_article/t12_article_modify" parameter="modifyT12_article" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_article/t12_article_modify.jsp"/> 
+		    <forward name="failure" path="/businessmanager/t12_article/t12_article_list.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_article/t12_article_modify_do" parameter="modifyT12_articleDo" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_article/t12_article_list.do"/> 
+		    <forward name="failure" path="/businessmanager/t12_article/t12_article_modify.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_article/t12_article_delete_do" parameter="deleteT12_articleDo" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_article/t12_article_list.do"/> 
+	        <forward name="failure" path="/businessmanager/t12_article/t12_article_list.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_article/t12_article_disp" parameter="getT12_articleDisp" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_article/t12_article_disp.jsp"/> 
+		    <forward name="failure" path="/businessmanager/t12_article/t12_article_disp.jsp"/> 
+	    </action>
+	    
+	    <!-- 知识管理模块 开始 -->
+	    <action path="/knowledgemanager/t12_knowledge_list" parameter="getT12_knowledgeList" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/knowledgemanager/t12_knowledge_list.jsp"/> 
+		    <forward name="failure" path="/knowledgemanager/t12_knowledge_list.jsp"/> 
+		    <forward name="error" path="/knowledgemanager/t12_knowledge_error.jsp"/> 
+	    </action> 
+	    <action path="/knowledgemanager/t12_knowledge_norelease_list" parameter="getT12_knowledge_norelease_List" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/knowledgemanager/t12_knowledge_norelease_list.jsp"/> 
+		    <forward name="failure" path="/knowledgemanager/t12_knowledge_norelease_list.jsp"/> 
+	    </action> 
+	    <action path="/knowledgemanager/t12_knowledge_norelease_add" parameter="addT12_knowledge_norelease" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/knowledgemanager/t12_knowledge_norelease_add.jsp"/> 
+		    <forward name="failure" path="/knowledgemanager/t12_knowledge_norelease_add.jsp"/> 
+	    </action> 
+	    <action path="/knowledgemanager/t12_knowledge_norelease_add_do" parameter="addT12_knowledge_norelease_do" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/knowledgemanager/t12_knowledge_norelease_list.do"/> 
+		    <forward name="success_save" path="/knowledgemanager/t12_knowledge_norelease_list.do"/> 
+		    <forward name="success_release" path="/knowledgemanager/t12_knowledge_list.do"/>
+		    <forward name="failure" path="/knowledgemanager/t12_knowledge_norelease_add.do"/> 
+	    </action> 
+	    <action path="/knowledgemanager/t12_knowledge_add" parameter="addT12_knowledge" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/knowledgemanager/t12_knowledge_add.jsp"/> 
+		    <forward name="failure" path="/knowledgemanager/t12_knowledge_list.do"/> 
+	    </action> 
+	    <action path="/knowledgemanager/t12_knowledge_add_do" parameter="addT12_knowledgeDo" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/knowledgemanager/t12_knowledge_list.do"/> 
+		    <forward name="success_save" path="/knowledgemanager/t12_knowledge_norelease_list.do"/> 
+		    <forward name="success_release" path="/knowledgemanager/t12_knowledge_list.do"/> 
+		    <forward name="failure" path="/knowledgemanager/t12_knowledge_add.do"/> 
+	    </action> 
+	    <action path="/knowledgemanager/t12_knowledge_modify" parameter="modifyT12_knowledge" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/knowledgemanager/t12_knowledge_modify.jsp"/> 
+		    <forward name="failure" path="/knowledgemanager/t12_knowledge_list.do"/> 
+	    </action> 
+	    <action path="/knowledgemanager/t12_knowledge_modify_do" parameter="modifyT12_knowledgeDo" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/knowledgemanager/t12_knowledge_list.do"/> 
+		    <forward name="failure" path="/knowledgemanager/t12_knowledge_modify.do"/> 
+	    </action> 
+	    <action path="/knowledgemanager/t12_knowledge_delete_do" parameter="deleteT12_knowledgeDo" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/knowledgemanager/t12_knowledge_norelease_list.do"/> 
+	        <forward name="failure" path="/knowledgemanager/t12_knowledge_norelease_list.do"/> 
+	    </action> 
+	    <action path="/knowledgemanager/t12_knowledge_disp" parameter="getT12_knowledgeDisp" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/knowledgemanager/t12_knowledge_disp_format.jsp"/> 
+		    <forward name="failure" path="/knowledgemanager/t12_knowledge_disp_format.jsp"/>
+	    </action>
+	    <action path="/knowledgemanager/t12_knowledge_collect" parameter="collectT12_knowledge" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/knowledgemanager/t12_knowledge_disp.do"/> 
+		    <forward name="failure" path="/knowledgemanager/t12_knowledge_disp.do"/> 
+	    </action>	    
+	    <action path="/knowledgemanager/release_writeback" parameter="release_writeback" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/knowledgemanager/t12_knowledge_disp.do"/> 
+		    <forward name="failure" path="/knowledgemanager/t12_knowledge_disp.do"/> 
+	    </action>
+	    <action path="/knowledgemanager/getT12_articleIndex" parameter="getT12_articleIndex" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/knowledgemanager/t12_knowledge_index.jsp"/> 
+		    <forward name="failure" path="/knowledgemanager/t12_knowledge_index.jsp"/> 
+	    </action>
+	     <action path="/knowledgemanager/getT12_articleMain" parameter="getT12_articleMain" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/knowledgemanager/t12_knowledge_main.jsp"/> 
+		    <forward name="failure" path="/knowledgemanager/t12_knowledge_main.jsp"/> 
+	    </action>
+	    
+	    <!-- 知识管理模块 结束 -->
+	    
+	    <!-- 知识管理平台/业务管理/审核文章 begin -->
+	    <action path="/businessmanager/t12_article/t12_article_audit_tree" parameter="getT12_article_audit_tree" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_article/t12_article_audit_tree.jsp"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_article/t12_article_audit_sum_list" parameter="getT12_article_audit_sumList" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_article/t12_article_audit_sum_list.jsp"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_article/t12_article_audit_list" parameter="getT12_article_auditList" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_article/t12_article_audit_list.jsp"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_article/t12_article_audit_auditstat" parameter="t12_article_audit_auditstat" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_article/t12_article_audit_list.do"/> 
+		    <forward name="failure" path="/businessmanager/t12_article/t12_article_audit_list.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_article/t12_article_audit_modify" parameter="modifyT12_article_audit" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_article/t12_article_audit_modify.jsp"/> 
+		    <forward name="failure" path="/businessmanager/t12_article/t12_article_audit_list.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_article/t12_article_audit_modify_do" parameter="modifyT12_article_auditDo" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_article/t12_article_audit_list.do"/> 
+		    <forward name="failure" path="/businessmanager/t12_article/t12_article_audit_modify.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_article/t12_article_audit_delete_do" parameter="deleteT12_article_auditDo" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+			<forward name="success" path="/businessmanager/t12_article/t12_article_audit_list.do"/> 
+			<forward name="success1" path="/myknowledge/t12_myarticle/t12_myarticle_list.do"/> 
+	        <forward name="failure" path="/businessmanager/t12_article/t12_article_audit_list.do"/> 
+	        <forward name="failure1" path="/myknowledge/t12_myarticle/t12_myarticle_list.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_article/t12_article_audit_disp" parameter="getT12_article_auditDisp" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_article/t12_article_audit_disp.jsp"/> 
+		    <forward name="failure" path="/businessmanager/t12_article/t12_article_audit_list.do"/>
+	    </action>
+	    <!-- 知识管理平台/业务管理/审核文章 end -->
+	    <!--t12_article end  -->
+	    
+	    <!--t12_article_collect start  -->
+		<action path="/t12_article_collect/t12_article_collect_search" parameter="searchT12_article_collect" name="t12_article_collectActionForm" type="com.ist.cms.controller.T12_article_collectAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_collect/t12_article_collect_search.jsp"/> 
+	        <forward name="failure" path="/t12_article_collect/t12_article_collect_list.do"/> 
+	    </action> 
+	    <action path="/myknowledge/t12_article_collect/t12_article_collect_list" parameter="getT12_article_collectList" name="t12_article_collectActionForm" type="com.ist.cms.controller.T12_article_collectAction" validate="false" scope="request"> 
+		    <forward name="success" path="/myknowledge/t12_article_collect/t12_article_collect_list.jsp"/> 
+	    </action> 
+	    <action path="/t12_article_collect/t12_article_collect_add" parameter="addT12_article_collect" name="t12_article_collectActionForm" type="com.ist.cms.controller.T12_article_collectAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_collect/t12_article_collect_add.jsp"/> 
+		    <forward name="failure" path="/t12_article_collect/t12_article_collect_list.do"/> 
+	    </action> 
+	    <action path="/t12_article_collect/t12_article_collect_add_do" parameter="addT12_article_collectDo" name="t12_article_collectActionForm" type="com.ist.cms.controller.T12_article_collectAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_collect/t12_article_collect_list.do"/> 
+		    <forward name="failure" path="/t12_article_collect/t12_article_collect_add.do"/> 
+	    </action> 
+	    <action path="/t12_article_collect/t12_article_collect_modify" parameter="modifyT12_article_collect" name="t12_article_collectActionForm" type="com.ist.cms.controller.T12_article_collectAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_collect/t12_article_collect_modify.jsp"/> 
+		    <forward name="failure" path="/t12_article_collect/t12_article_collect_list.do"/> 
+	    </action> 
+	    <action path="/t12_article_collect/t12_article_collect_modify_do" parameter="modifyT12_article_collectDo" name="t12_article_collectActionForm" type="com.ist.cms.controller.T12_article_collectAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_collect/t12_article_collect_list.do"/> 
+		    <forward name="failure" path="/t12_article_collect/t12_article_collect_modify.do"/> 
+	    </action> 
+	    <action path="/myknowledge/t12_article_collect/t12_article_collect_delete_do" parameter="deleteT12_article_collectDo" name="t12_article_collectActionForm" type="com.ist.cms.controller.T12_article_collectAction" validate="false" scope="request"> 
+		<forward name="success" path="/myknowledge/t12_article_collect/t12_article_collect_list.do?newsearchfla=1"/> 
+	        <forward name="failure" path="/t12_article_collect/t12_article_collect_list.do"/> 
+	    </action> 
+	    <action path="/t12_article_collect/t12_article_collect_disp" parameter="getT12_article_collectDisp" name="t12_article_collectActionForm" type="com.ist.cms.controller.T12_article_collectAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_collect/t12_article_collect_disp.jsp"/> 
+	    </action> 
+	    <!--t12_article_collect end  -->
+	    
+	    <!--t12_article_content start  -->
+		<action path="/t12_article_content/t12_article_content_search" parameter="searchT12_article_content" name="t12_article_contentActionForm" type="com.ist.cms.controller.T12_article_contentAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_content/t12_article_content_search.jsp"/> 
+	        <forward name="failure" path="/t12_article_content/t12_article_content_list.do"/> 
+	    </action> 
+	    <action path="/t12_article_content/t12_article_content_list" parameter="getT12_article_contentList" name="t12_article_contentActionForm" type="com.ist.cms.controller.T12_article_contentAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_content/t12_article_content_list.jsp"/> 
+	    </action> 
+	    <action path="/t12_article_content/t12_article_content_add" parameter="addT12_article_content" name="t12_article_contentActionForm" type="com.ist.cms.controller.T12_article_contentAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_content/t12_article_content_add.jsp"/> 
+		    <forward name="failure" path="/t12_article_content/t12_article_content_list.do"/> 
+	    </action> 
+	    <action path="/t12_article_content/t12_article_content_add_do" parameter="addT12_article_contentDo" name="t12_article_contentActionForm" type="com.ist.cms.controller.T12_article_contentAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_content/t12_article_content_list.do"/> 
+		    <forward name="failure" path="/t12_article_content/t12_article_content_add.do"/> 
+	    </action> 
+	    <action path="/t12_article_content/t12_article_content_modify" parameter="modifyT12_article_content" name="t12_article_contentActionForm" type="com.ist.cms.controller.T12_article_contentAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_content/t12_article_content_modify.jsp"/> 
+		    <forward name="failure" path="/t12_article_content/t12_article_content_list.do"/> 
+	    </action> 
+	    <action path="/t12_article_content/t12_article_content_modify_do" parameter="modifyT12_article_contentDo" name="t12_article_contentActionForm" type="com.ist.cms.controller.T12_article_contentAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_content/t12_article_content_list.do"/> 
+		    <forward name="failure" path="/t12_article_content/t12_article_content_modify.do"/> 
+	    </action> 
+	    <action path="/t12_article_content/t12_article_content_delete_do" parameter="deleteT12_article_contentDo" name="t12_article_contentActionForm" type="com.ist.cms.controller.T12_article_contentAction" validate="false" scope="request"> 
+		<forward name="success" path="/t12_article_content/t12_article_content_list.do"/> 
+	        <forward name="failure" path="/t12_article_content/t12_article_content_list.do"/> 
+	    </action> 
+	    <action path="/t12_article_content/t12_article_content_disp" parameter="getT12_article_contentDisp" name="t12_article_contentActionForm" type="com.ist.cms.controller.T12_article_contentAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_content/t12_article_content_disp.jsp"/> 
+	    </action> 
+	    <!--t12_article_content end  -->
+	    
+	    <!--t12_article_history start  -->
+		<action path="/t12_article_history/t12_article_history_search" parameter="searchT12_article_history" name="t12_article_historyActionForm" type="com.ist.cms.controller.T12_article_historyAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_history/t12_article_history_search.jsp"/> 
+	        <forward name="failure" path="/t12_article_history/t12_article_history_list.do"/> 
+	    </action> 
+	    <action path="/t12_article_history/t12_article_history_list" parameter="getT12_article_historyList" name="t12_article_historyActionForm" type="com.ist.cms.controller.T12_article_historyAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_history/t12_article_history_list.jsp"/> 
+	    </action> 
+	    <action path="/t12_article_history/t12_article_history_add" parameter="addT12_article_history" name="t12_article_historyActionForm" type="com.ist.cms.controller.T12_article_historyAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_history/t12_article_history_add.jsp"/> 
+		    <forward name="failure" path="/t12_article_history/t12_article_history_list.do"/> 
+	    </action> 
+	    <action path="/t12_article_history/t12_article_history_add_do" parameter="addT12_article_historyDo" name="t12_article_historyActionForm" type="com.ist.cms.controller.T12_article_historyAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_history/t12_article_history_list.do"/> 
+		    <forward name="failure" path="/t12_article_history/t12_article_history_add.do"/> 
+	    </action> 
+	    <action path="/t12_article_history/t12_article_history_modify" parameter="modifyT12_article_history" name="t12_article_historyActionForm" type="com.ist.cms.controller.T12_article_historyAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_history/t12_article_history_modify.jsp"/> 
+		    <forward name="failure" path="/t12_article_history/t12_article_history_list.do"/> 
+	    </action> 
+	    <action path="/t12_article_history/t12_article_history_modify_do" parameter="modifyT12_article_historyDo" name="t12_article_historyActionForm" type="com.ist.cms.controller.T12_article_historyAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_history/t12_article_history_list.do"/> 
+		    <forward name="failure" path="/t12_article_history/t12_article_history_modify.do"/> 
+	    </action> 
+	    <action path="/t12_article_history/t12_article_history_delete_do" parameter="deleteT12_article_historyDo" name="t12_article_historyActionForm" type="com.ist.cms.controller.T12_article_historyAction" validate="false" scope="request"> 
+		<forward name="success" path="/t12_article_history/t12_article_history_list.do"/> 
+	        <forward name="failure" path="/t12_article_history/t12_article_history_list.do"/> 
+	    </action> 
+	    <action path="/t12_article_history/t12_article_history_disp" parameter="getT12_article_historyDisp" name="t12_article_historyActionForm" type="com.ist.cms.controller.T12_article_historyAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_history/t12_article_history_disp.jsp"/> 
+	    </action> 
+	    <!--t12_article_history end  -->
+	    
+	    <!--t12_article_keywords start  -->
+		<action path="/t12_article_keywords/t12_article_keywords_search" parameter="searchT12_article_keywords" name="t12_article_keywordsActionForm" type="com.ist.cms.controller.T12_article_keywordsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_keywords/t12_article_keywords_search.jsp"/> 
+	        <forward name="failure" path="/t12_article_keywords/t12_article_keywords_list.do"/> 
+	    </action> 
+	    <action path="/t12_article_keywords/t12_article_keywords_list" parameter="getT12_article_keywordsList" name="t12_article_keywordsActionForm" type="com.ist.cms.controller.T12_article_keywordsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_keywords/t12_article_keywords_list.jsp"/> 
+	    </action> 
+	    <action path="/t12_article_keywords/t12_article_keywords_add" parameter="addT12_article_keywords" name="t12_article_keywordsActionForm" type="com.ist.cms.controller.T12_article_keywordsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_keywords/t12_article_keywords_add.jsp"/> 
+		    <forward name="failure" path="/t12_article_keywords/t12_article_keywords_list.do"/> 
+	    </action> 
+	    <action path="/t12_article_keywords/t12_article_keywords_add_do" parameter="addT12_article_keywordsDo" name="t12_article_keywordsActionForm" type="com.ist.cms.controller.T12_article_keywordsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_keywords/t12_article_keywords_list.do"/> 
+		    <forward name="failure" path="/t12_article_keywords/t12_article_keywords_add.do"/> 
+	    </action> 
+	    <action path="/t12_article_keywords/t12_article_keywords_modify" parameter="modifyT12_article_keywords" name="t12_article_keywordsActionForm" type="com.ist.cms.controller.T12_article_keywordsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_keywords/t12_article_keywords_modify.jsp"/> 
+		    <forward name="failure" path="/t12_article_keywords/t12_article_keywords_list.do"/> 
+	    </action> 
+	    <action path="/t12_article_keywords/t12_article_keywords_modify_do" parameter="modifyT12_article_keywordsDo" name="t12_article_keywordsActionForm" type="com.ist.cms.controller.T12_article_keywordsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_keywords/t12_article_keywords_list.do"/> 
+		    <forward name="failure" path="/t12_article_keywords/t12_article_keywords_modify.do"/> 
+	    </action> 
+	    <action path="/t12_article_keywords/t12_article_keywords_delete_do" parameter="deleteT12_article_keywordsDo" name="t12_article_keywordsActionForm" type="com.ist.cms.controller.T12_article_keywordsAction" validate="false" scope="request"> 
+		<forward name="success" path="/t12_article_keywords/t12_article_keywords_list.do"/> 
+	        <forward name="failure" path="/t12_article_keywords/t12_article_keywords_list.do"/> 
+	    </action> 
+	    <action path="/t12_article_keywords/t12_article_keywords_disp" parameter="getT12_article_keywordsDisp" name="t12_article_keywordsActionForm" type="com.ist.cms.controller.T12_article_keywordsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_keywords/t12_article_keywords_disp.jsp"/> 
+	    </action>
+	    <!--t12_article_keywords end  -->
+	    <!-- t12_ca_article start -->
+	    <action path="/businessmanager/t12_ca_article/t12_ca_article_search" parameter="searchT12_ca_article" name="t12_ca_articleActionForm" type="com.ist.cms.controller.T12_ca_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_ca_article/t12_ca_article_search.jsp"/> 
+	        <forward name="failure" path="/businessmanager/t12_ca_article/t12_ca_article_list.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_ca_article/t12_ca_article_list" parameter="getT12_ca_articleList" name="t12_ca_articleActionForm" type="com.ist.cms.controller.T12_ca_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_ca_article/t12_ca_article_list.jsp"/> 
+		    <forward name="success1" path="/businessmanager/t12_ca_article/t12_ca_article_note.jsp"/> 
+		    <forward name="success2" path="/businessmanager/t12_ca_article/t12_ca_article_tree.jsp"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_ca_article/t12_article_list_bytype" parameter="getT12_article_list_bytype" name="t12_ca_articleActionForm" type="com.ist.cms.controller.T12_ca_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_ca_article/t12_article_list_tree.jsp"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_ca_article/t12_ca_article_add" parameter="addT12_ca_article" name="t12_ca_articleActionForm" type="com.ist.cms.controller.T12_ca_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_ca_article/t12_ca_article_add.jsp"/> 
+		    <forward name="failure" path="/businessmanager/t12_ca_article/t12_ca_article_list.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_ca_article/t12_ca_article_add_do" parameter="addT12_ca_articleDo" name="t12_ca_articleActionForm" type="com.ist.cms.controller.T12_ca_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_ca_article/t12_ca_article_list.do"/> 
+		    <forward name="failure" path="/businessmanager/t12_ca_article/t12_ca_article_add.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_ca_article/t12_ca_article_modify" parameter="modifyT12_ca_article" name="t12_ca_articleActionForm" type="com.ist.cms.controller.T12_ca_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_ca_article/t12_ca_article_modify.jsp"/> 
+		    <forward name="failure" path="/businessmanager/t12_ca_article/t12_ca_article_list.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_ca_article/t12_ca_article_modify_do" parameter="modifyT12_ca_articleDo" name="t12_ca_articleActionForm" type="com.ist.cms.controller.T12_ca_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_ca_article/t12_ca_article_list.do"/> 
+		    <forward name="failure" path="/businessmanager/t12_ca_article/t12_ca_article_modify.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_ca_article/t12_ca_article_delete_do" parameter="deleteT12_ca_articleDo" name="t12_ca_articleActionForm" type="com.ist.cms.controller.T12_ca_articleAction" validate="false" scope="request"> 
+		<forward name="success" path="/businessmanager/t12_ca_article/t12_ca_article_list.do"/> 
+	        <forward name="failure" path="/businessmanager/t12_ca_article/t12_ca_article_list.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_ca_article/t12_ca_article_disp" parameter="getT12_ca_articleDisp" name="t12_ca_articleActionForm" type="com.ist.cms.controller.T12_ca_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_ca_article/t12_ca_article_disp.jsp"/> 
+	    </action> 
+	     <!-- t12_ca_article end -->
+	     <!--t12_article_coderule start  -->
+	    <action path="/t12_article_coderule/t12_article_coderule_search" parameter="searchT12_article_coderule" name="t12_article_coderuleActionForm" type="com.ist.cms.controller.T12_article_coderuleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_coderule/t12_article_coderule_search.jsp"/> 
+	        <forward name="failure" path="/t12_article_coderule/t12_article_coderule_list.do"/> 
+	    </action> 
+	    <action path="/t12_article_coderule/t12_article_coderule_list" parameter="getT12_article_coderuleList" name="t12_article_coderuleActionForm" type="com.ist.cms.controller.T12_article_coderuleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_coderule/t12_article_coderule_list.jsp"/> 
+	    </action> 
+	    <action path="/t12_article_coderule/t12_article_coderule_add" parameter="addT12_article_coderule" name="t12_article_coderuleActionForm" type="com.ist.cms.controller.T12_article_coderuleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_coderule/t12_article_coderule_add.jsp"/> 
+		    <forward name="failure" path="/t12_article_coderule/t12_article_coderule_list.do"/> 
+	    </action> 
+	    <action path="/t12_article_coderule/t12_article_coderule_add_do" parameter="addT12_article_coderuleDo" name="t12_article_coderuleActionForm" type="com.ist.cms.controller.T12_article_coderuleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_coderule/t12_article_coderule_list.do"/> 
+		    <forward name="failure" path="/t12_article_coderule/t12_article_coderule_add.do"/> 
+	    </action> 
+	    <action path="/t12_article_coderule/t12_article_coderule_modify" parameter="modifyT12_article_coderule" name="t12_article_coderuleActionForm" type="com.ist.cms.controller.T12_article_coderuleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_coderule/t12_article_coderule_modify.jsp"/> 
+		    <forward name="failure" path="/t12_article_coderule/t12_article_coderule_list.do"/> 
+	    </action> 
+	    <action path="/t12_article_coderule/t12_article_coderule_modify_do" parameter="modifyT12_article_coderuleDo" name="t12_article_coderuleActionForm" type="com.ist.cms.controller.T12_article_coderuleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_coderule/t12_article_coderule_list.do"/> 
+		    <forward name="failure" path="/t12_article_coderule/t12_article_coderule_modify.do"/> 
+	    </action> 
+	    <action path="/t12_article_coderule/t12_article_coderule_delete_do" parameter="deleteT12_article_coderuleDo" name="t12_article_coderuleActionForm" type="com.ist.cms.controller.T12_article_coderuleAction" validate="false" scope="request"> 
+		<forward name="success" path="/t12_article_coderule/t12_article_coderule_list.do"/> 
+	        <forward name="failure" path="/t12_article_coderule/t12_article_coderule_list.do"/> 
+	    </action> 
+	    <action path="/t12_article_coderule/t12_article_coderule_disp" parameter="getT12_article_coderuleDisp" name="t12_article_coderuleActionForm" type="com.ist.cms.controller.T12_article_coderuleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_coderule/t12_article_coderule_disp.jsp"/> 
+	    </action> 
+	    <!-- t12_article_coderule end -->
+	    <!--t12_article_log start  -->
+		<action path="/t12_article_log/t12_article_log_search" parameter="searchT12_article_log" name="t12_article_logActionForm" type="com.ist.cms.controller.T12_article_logAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_log/t12_article_log_search.jsp"/> 
+	        <forward name="failure" path="/t12_article_log/t12_article_log_list.do"/> 
+	    </action> 
+	    <action path="/t12_article_log/t12_article_log_list" parameter="getT12_article_logList" name="t12_article_logActionForm" type="com.ist.cms.controller.T12_article_logAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_log/t12_article_log_list.jsp"/> 
+	    </action> 
+	    <action path="/t12_article_log/t12_article_log_add" parameter="addT12_article_log" name="t12_article_logActionForm" type="com.ist.cms.controller.T12_article_logAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_log/t12_article_log_add.jsp"/> 
+		    <forward name="failure" path="/t12_article_log/t12_article_log_list.do"/> 
+	    </action> 
+	    <action path="/t12_article_log/t12_article_log_add_do" parameter="addT12_article_logDo" name="t12_article_logActionForm" type="com.ist.cms.controller.T12_article_logAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_log/t12_article_log_list.do"/> 
+		    <forward name="failure" path="/t12_article_log/t12_article_log_add.do"/> 
+	    </action> 
+	    <action path="/t12_article_log/t12_article_log_modify" parameter="modifyT12_article_log" name="t12_article_logActionForm" type="com.ist.cms.controller.T12_article_logAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_log/t12_article_log_modify.jsp"/> 
+		    <forward name="failure" path="/t12_article_log/t12_article_log_list.do"/> 
+	    </action> 
+	    <action path="/t12_article_log/t12_article_log_modify_do" parameter="modifyT12_article_logDo" name="t12_article_logActionForm" type="com.ist.cms.controller.T12_article_logAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_log/t12_article_log_list.do"/> 
+		    <forward name="failure" path="/t12_article_log/t12_article_log_modify.do"/> 
+	    </action> 
+	    <action path="/t12_article_log/t12_article_log_delete_do" parameter="deleteT12_article_logDo" name="t12_article_logActionForm" type="com.ist.cms.controller.T12_article_logAction" validate="false" scope="request"> 
+		<forward name="success" path="/t12_article_log/t12_article_log_list.do"/> 
+	        <forward name="failure" path="/t12_article_log/t12_article_log_list.do"/> 
+	    </action> 
+	    <action path="/t12_article_log/t12_article_log_disp" parameter="getT12_article_logDisp" name="t12_article_logActionForm" type="com.ist.cms.controller.T12_article_logAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_article_log/t12_article_log_disp.jsp"/> 
+	    </action> 
+	    <!--t12_article_log end  -->
+	    
+	    <!--t12_date_subscibe strat  -->
+		<action path="/t12_date_subscibe/t12_date_subscibe_search" parameter="searchT12_date_subscibe" name="t12_date_subscibeActionForm" type="com.ist.cms.controller.T12_date_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_date_subscibe/t12_date_subscibe_search.jsp"/> 
+	        <forward name="failure" path="/t12_date_subscibe/t12_date_subscibe_list.do"/> 
+	    </action> 
+	    <action path="/t12_date_subscibe/t12_date_subscibe_list" parameter="getT12_date_subscibeList" name="t12_date_subscibeActionForm" type="com.ist.cms.controller.T12_date_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_date_subscibe/t12_date_subscibe_list.jsp"/> 
+	    </action> 
+	    <action path="/t12_date_subscibe/t12_date_subscibe_add" parameter="addT12_date_subscibe" name="t12_date_subscibeActionForm" type="com.ist.cms.controller.T12_date_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_date_subscibe/t12_date_subscibe_add.jsp"/> 
+		    <forward name="failure" path="/t12_date_subscibe/t12_date_subscibe_list.do"/> 
+	    </action> 
+	    <action path="/t12_date_subscibe/t12_date_subscibe_add_do" parameter="addT12_date_subscibeDo" name="t12_date_subscibeActionForm" type="com.ist.cms.controller.T12_date_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_date_subscibe/t12_date_subscibe_list.do"/> 
+		    <forward name="failure" path="/t12_date_subscibe/t12_date_subscibe_add.do"/> 
+	    </action> 
+	    <action path="/t12_date_subscibe/t12_date_subscibe_modify" parameter="modifyT12_date_subscibe" name="t12_date_subscibeActionForm" type="com.ist.cms.controller.T12_date_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_date_subscibe/t12_date_subscibe_modify.jsp"/> 
+		    <forward name="failure" path="/t12_date_subscibe/t12_date_subscibe_list.do"/> 
+	    </action> 
+	    <action path="/t12_date_subscibe/t12_date_subscibe_modify_do" parameter="modifyT12_date_subscibeDo" name="t12_date_subscibeActionForm" type="com.ist.cms.controller.T12_date_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_date_subscibe/t12_date_subscibe_list.do"/> 
+		    <forward name="failure" path="/t12_date_subscibe/t12_date_subscibe_modify.do"/> 
+	    </action> 
+	    <action path="/t12_date_subscibe/t12_date_subscibe_delete_do" parameter="deleteT12_date_subscibeDo" name="t12_date_subscibeActionForm" type="com.ist.cms.controller.T12_date_subscibeAction" validate="false" scope="request"> 
+		<forward name="success" path="/t12_date_subscibe/t12_date_subscibe_list.do"/> 
+	        <forward name="failure" path="/t12_date_subscibe/t12_date_subscibe_list.do"/> 
+	    </action> 
+	    <action path="/t12_date_subscibe/t12_date_subscibe_disp" parameter="getT12_date_subscibeDisp" name="t12_date_subscibeActionForm" type="com.ist.cms.controller.T12_date_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_date_subscibe/t12_date_subscibe_disp.jsp"/> 
+	    </action> 
+	    <!--t12_date_subscibe end  -->
+	    
+	    <!--t12_keywords_library start  -->
+		<action path="/system_manager/t12_keywords_library/t12_keywords_library_search" parameter="searchT12_keywords_library" name="t12_keywords_libraryActionForm" type="com.ist.cms.controller.T12_keywords_libraryAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_keywords_library/t12_keywords_library_search.jsp"/> 
+	        <forward name="failure" path="/t12_keywords_library/t12_keywords_library_list.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_keywords_library/t12_keywords_library_list" parameter="getT12_keywords_libraryList" name="t12_keywords_libraryActionForm" type="com.ist.cms.controller.T12_keywords_libraryAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/keywords/keywords_library_list.jsp"/> 
+	    </action> 
+	    <action path="/system_manager/t12_keywords_library/t12_keywords_library_add" parameter="addT12_keywords_library" name="t12_keywords_libraryActionForm" type="com.ist.cms.controller.T12_keywords_libraryAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/keywords/keywords_library_add.jsp"/> 
+		    <forward name="failure" path="/system_manager/t12_keywords_library/t12_keywords_library_list.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_keywords_library/t12_keywords_library_add_do" parameter="addT12_keywords_libraryDo" name="t12_keywords_libraryActionForm" type="com.ist.cms.controller.T12_keywords_libraryAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_keywords_library/t12_keywords_library_list.do?newsearchflag=1"/> 
+		    <forward name="failure" path="/system_manager/keywords/keywords_library_add.jsp"/> 
+	    </action> 
+	    <action path="/system_manager/t12_keywords_library/t12_keywords_library_modify" parameter="modifyT12_keywords_library" name="t12_keywords_libraryActionForm" type="com.ist.cms.controller.T12_keywords_libraryAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/keywords_library_modify.jsp"/> 
+		    <forward name="failure" path="/system_manager/t12_keywords_library/t12_keywords_library_list.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_keywords_library/t12_keywords_library_modify_do" parameter="modifyT12_keywords_libraryDo" name="t12_keywords_libraryActionForm" type="com.ist.cms.controller.T12_keywords_libraryAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_keywords_library/t12_keywords_library_list.do"/> 
+		    <forward name="failure" path="/system_manager/t12_keywords_library/t12_keywords_library_modify.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_keywords_library/t12_keywords_library_delete_do" parameter="deleteT12_keywords_libraryDo" name="t12_keywords_libraryActionForm" type="com.ist.cms.controller.T12_keywords_libraryAction" validate="false" scope="request"> 
+		<forward name="success" path="/system_manager/t12_keywords_library/t12_keywords_library_list.do"/> 
+	        <forward name="failure" path="/system_manager/t12_keywords_library/t12_keywords_library_list.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_keywords_library/t12_keywords_library_disp" parameter="getT12_keywords_libraryDisp" name="t12_keywords_libraryActionForm" type="com.ist.cms.controller.T12_keywords_libraryAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_keywords_library/t12_keywords_library_disp.jsp"/> 
+	    </action> 
+	    <!--t12_keywords_library end  -->
+	    
+	    <!--t12_person_subscibe start  -->
+		<action path="/t12_person_subscibe/t12_person_subscibe_search" parameter="searchT12_person_subscibe" name="t12_person_subscibeActionForm" type="com.ist.cms.controller.T12_person_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_person_subscibe/t12_person_subscibe_search.jsp"/> 
+	        <forward name="failure" path="/t12_person_subscibe/t12_person_subscibe_list.do"/> 
+	    </action> 
+	    <action path="/t12_person_subscibe/t12_person_subscibe_list" parameter="getT12_person_subscibeList" name="t12_person_subscibeActionForm" type="com.ist.cms.controller.T12_person_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_person_subscibe/t12_person_subscibe_list.jsp"/> 
+	    </action> 
+	    <action path="/t12_person_subscibe/t12_person_subscibe_add" parameter="addT12_person_subscibe" name="t12_person_subscibeActionForm" type="com.ist.cms.controller.T12_person_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_person_subscibe/t12_person_subscibe_add.jsp"/> 
+		    <forward name="failure" path="/t12_person_subscibe/t12_person_subscibe_list.do"/> 
+	    </action> 
+	    <action path="/t12_person_subscibe/t12_person_subscibe_add_do" parameter="addT12_person_subscibeDo" name="t12_person_subscibeActionForm" type="com.ist.cms.controller.T12_person_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_person_subscibe/t12_person_subscibe_list.do"/> 
+		    <forward name="failure" path="/t12_person_subscibe/t12_person_subscibe_add.do"/> 
+	    </action> 
+	    <action path="/t12_person_subscibe/t12_person_subscibe_modify" parameter="modifyT12_person_subscibe" name="t12_person_subscibeActionForm" type="com.ist.cms.controller.T12_person_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_person_subscibe/t12_person_subscibe_modify.jsp"/> 
+		    <forward name="failure" path="/t12_person_subscibe/t12_person_subscibe_list.do"/> 
+	    </action> 
+	    <action path="/t12_person_subscibe/t12_person_subscibe_modify_do" parameter="modifyT12_person_subscibeDo" name="t12_person_subscibeActionForm" type="com.ist.cms.controller.T12_person_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_person_subscibe/t12_person_subscibe_list.do"/> 
+		    <forward name="failure" path="/t12_person_subscibe/t12_person_subscibe_modify.do"/> 
+	    </action> 
+	    <action path="/t12_person_subscibe/t12_person_subscibe_delete_do" parameter="deleteT12_person_subscibeDo" name="t12_person_subscibeActionForm" type="com.ist.cms.controller.T12_person_subscibeAction" validate="false" scope="request"> 
+		<forward name="success" path="/t12_person_subscibe/t12_person_subscibe_list.do"/> 
+	        <forward name="failure" path="/t12_person_subscibe/t12_person_subscibe_list.do"/> 
+	    </action> 
+	    <action path="/t12_person_subscibe/t12_person_subscibe_disp" parameter="getT12_person_subscibeDisp" name="t12_person_subscibeActionForm" type="com.ist.cms.controller.T12_person_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_person_subscibe/t12_person_subscibe_disp.jsp"/> 
+	    </action>
+	    <!--t12_person_subscibe end  -->
+	    
+	    <!--t12_power_group start  -->
+		<action path="/t12_power_group/t12_power_group_search" parameter="searchT12_power_group" name="t12_power_groupActionForm" type="com.ist.cms.controller.T12_power_groupAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_power_group/t12_power_group_search.jsp"/> 
+	        <forward name="failure" path="/t12_power_group/t12_power_group_list.do"/> 
+	    </action> 
+	    <action path="/t12_power_group/t12_power_group_list" parameter="getT12_power_groupList" name="t12_power_groupActionForm" type="com.ist.cms.controller.T12_power_groupAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_power_group/t12_power_group_list.jsp"/> 
+	    </action> 
+	    <action path="/t12_power_group/t12_power_group_add" parameter="addT12_power_group" name="t12_power_groupActionForm" type="com.ist.cms.controller.T12_power_groupAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_power_group/t12_power_group_add.jsp"/> 
+		    <forward name="failure" path="/t12_power_group/t12_power_group_list.do"/> 
+	    </action> 
+	    <action path="/t12_power_group/t12_power_group_add_do" parameter="addT12_power_groupDo" name="t12_power_groupActionForm" type="com.ist.cms.controller.T12_power_groupAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_power_group/t12_power_group_list.do"/> 
+		    <forward name="failure" path="/t12_power_group/t12_power_group_add.do"/> 
+	    </action> 
+	    <action path="/t12_power_group/t12_power_group_modify" parameter="modifyT12_power_group" name="t12_power_groupActionForm" type="com.ist.cms.controller.T12_power_groupAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_power_group/t12_power_group_modify.jsp"/> 
+		    <forward name="failure" path="/t12_power_group/t12_power_group_list.do"/> 
+	    </action> 
+	    <action path="/t12_power_group/t12_power_group_modify_do" parameter="modifyT12_power_groupDo" name="t12_power_groupActionForm" type="com.ist.cms.controller.T12_power_groupAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_power_group/t12_power_group_list.do"/> 
+		    <forward name="failure" path="/t12_power_group/t12_power_group_modify.do"/> 
+	    </action> 
+	    <action path="/t12_power_group/t12_power_group_delete_do" parameter="deleteT12_power_groupDo" name="t12_power_groupActionForm" type="com.ist.cms.controller.T12_power_groupAction" validate="false" scope="request"> 
+		<forward name="success" path="/t12_power_group/t12_power_group_list.do"/> 
+	        <forward name="failure" path="/t12_power_group/t12_power_group_list.do"/> 
+	    </action> 
+	    <action path="/t12_power_group/t12_power_group_disp" parameter="getT12_power_groupDisp" name="t12_power_groupActionForm" type="com.ist.cms.controller.T12_power_groupAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_power_group/t12_power_group_disp.jsp"/> 
+	    </action>
+	    <!--t12_power_group end  -->
+	    
+	    <!--t12_power_role start  -->
+		<action path="/t12_power_role/t12_power_role_search" parameter="searchT12_power_role" name="t12_power_roleActionForm" type="com.ist.cms.controller.T12_power_roleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_power_role/t12_power_role_search.jsp"/> 
+	        <forward name="failure" path="/t12_power_role/t12_power_role_list.do"/> 
+	    </action> 
+	    <action path="/t12_power_role/t12_power_role_list" parameter="getT12_power_roleList" name="t12_power_roleActionForm" type="com.ist.cms.controller.T12_power_roleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_power_role/t12_power_role_list.jsp"/> 
+	    </action> 
+	    <action path="/t12_power_role/t12_power_role_add" parameter="addT12_power_role" name="t12_power_roleActionForm" type="com.ist.cms.controller.T12_power_roleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_power_role/t12_power_role_add.jsp"/> 
+		    <forward name="failure" path="/t12_power_role/t12_power_role_list.do"/> 
+	    </action> 
+	    <action path="/t12_power_role/t12_power_role_add_do" parameter="addT12_power_roleDo" name="t12_power_roleActionForm" type="com.ist.cms.controller.T12_power_roleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_power_role/t12_power_role_list.do"/> 
+		    <forward name="failure" path="/t12_power_role/t12_power_role_add.do"/> 
+	    </action> 
+	    <action path="/t12_power_role/t12_power_role_modify" parameter="modifyT12_power_role" name="t12_power_roleActionForm" type="com.ist.cms.controller.T12_power_roleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_power_role/t12_power_role_modify.jsp"/> 
+		    <forward name="failure" path="/t12_power_role/t12_power_role_list.do"/> 
+	    </action> 
+	    <action path="/t12_power_role/t12_power_role_modify_do" parameter="modifyT12_power_roleDo" name="t12_power_roleActionForm" type="com.ist.cms.controller.T12_power_roleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_power_role/t12_power_role_list.do"/> 
+		    <forward name="failure" path="/t12_power_role/t12_power_role_modify.do"/> 
+	    </action> 
+	    <action path="/t12_power_role/t12_power_role_delete_do" parameter="deleteT12_power_roleDo" name="t12_power_roleActionForm" type="com.ist.cms.controller.T12_power_roleAction" validate="false" scope="request"> 
+		<forward name="success" path="/t12_power_role/t12_power_role_list.do"/> 
+	        <forward name="failure" path="/t12_power_role/t12_power_role_list.do"/> 
+	    </action> 
+	    <action path="/t12_power_role/t12_power_role_disp" parameter="getT12_power_roleDisp" name="t12_power_roleActionForm" type="com.ist.cms.controller.T12_power_roleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_power_role/t12_power_role_disp.jsp"/> 
+	    </action>
+	    <!--t12_power_role end  -->
+	    
+	    <!--t12_power_user start  -->
+		<action path="/t12_power_user/t12_power_user_search" parameter="searchT12_power_user" name="t12_power_userActionForm" type="com.ist.cms.controller.T12_power_userAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_power_user/t12_power_user_search.jsp"/> 
+	        <forward name="failure" path="/t12_power_user/t12_power_user_list.do"/> 
+	    </action> 
+	    <action path="/t12_power_user/t12_power_user_list" parameter="getT12_power_userList" name="t12_power_userActionForm" type="com.ist.cms.controller.T12_power_userAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_power_user/t12_power_user_list.jsp"/> 
+	    </action> 
+	    <action path="/t12_power_user/t12_power_user_add" parameter="addT12_power_user" name="t12_power_userActionForm" type="com.ist.cms.controller.T12_power_userAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_power_user/t12_power_user_add.jsp"/> 
+		    <forward name="failure" path="/t12_power_user/t12_power_user_list.do"/> 
+	    </action> 
+	    <action path="/t12_power_user/t12_power_user_add_do" parameter="addT12_power_userDo" name="t12_power_userActionForm" type="com.ist.cms.controller.T12_power_userAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_power_user/t12_power_user_list.do"/> 
+		    <forward name="failure" path="/t12_power_user/t12_power_user_add.do"/> 
+	    </action> 
+	    <action path="/t12_power_user/t12_power_user_modify" parameter="modifyT12_power_user" name="t12_power_userActionForm" type="com.ist.cms.controller.T12_power_userAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_power_user/t12_power_user_modify.jsp"/> 
+		    <forward name="failure" path="/t12_power_user/t12_power_user_list.do"/> 
+	    </action> 
+	    <action path="/t12_power_user/t12_power_user_modify_do" parameter="modifyT12_power_userDo" name="t12_power_userActionForm" type="com.ist.cms.controller.T12_power_userAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_power_user/t12_power_user_list.do"/> 
+		    <forward name="failure" path="/t12_power_user/t12_power_user_modify.do"/> 
+	    </action> 
+	    <action path="/t12_power_user/t12_power_user_delete_do" parameter="deleteT12_power_userDo" name="t12_power_userActionForm" type="com.ist.cms.controller.T12_power_userAction" validate="false" scope="request"> 
+		<forward name="success" path="/t12_power_user/t12_power_user_list.do"/> 
+	        <forward name="failure" path="/t12_power_user/t12_power_user_list.do"/> 
+	    </action> 
+	    <action path="/t12_power_user/t12_power_user_disp" parameter="getT12_power_userDisp" name="t12_power_userActionForm" type="com.ist.cms.controller.T12_power_userAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_power_user/t12_power_user_disp.jsp"/> 
+	    </action> 
+	    <!--t12_power_user end  -->
+	    
+	    <!-- 系统管理 开始-->
+	   <!-- 菜单树 开始-->
+	   	
+	    <action path="/system_manager/t12_programa/menu_index_programa" parameter="indexT12_programa" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_programa/t12_programa_index.jsp"/> 
+	    </action> 
+	   
+	    <!-- 菜单树 结束-->
+	   <!-- 系统管理/栏目管理 栏目维护 开始-->
+	    <action path="/system_manager/t12_programa/t12_programa_search" parameter="searchT12_programa" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_programa/t12_programa_search.jsp"/> 
+	        <forward name="failure" path="/system_manager/t12_programa/t12_programa_list.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_programa/t12_programa_list" parameter="getT12_programaList" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_programa/t12_programa_list.jsp"/> 
+	    </action> 
+	    <action path="/system_manager/t12_programa/t12_programa_add" parameter="addT12_programa" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_programa/t12_programa_add.jsp"/> 
+		    <forward name="failure" path="/system_manager/t12_programa/t12_programa_list.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_programa/t12_programa_add_do" parameter="addT12_programaDo" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_programa/t12_programa_list.do"/> 
+		    <forward name="failure" path="/system_manager/t12_programa/t12_programa_add.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_programa/t12_programa_modify" parameter="modifyT12_programa" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_programa/t12_programa_modify.jsp"/> 
+		    <forward name="failure" path="/system_manager/t12_programa/t12_programa_list.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_programa/t12_programa_modify_do" parameter="modifyT12_programaDo" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_programa/t12_programa_list.do"/> 
+		    <forward name="failure" path="/system_manager/t12_programa/t12_programa_modify.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_programa/t12_programa_delete_do" parameter="deleteT12_programaDo" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programaAction" validate="false" scope="request"> 
+			<forward name="success" path="/system_manager/t12_programa/t12_programa_list.do"/> 
+	        <forward name="failure" path="/system_manager/t12_programa/t12_programa_list.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_programa/t12_programa_disp" parameter="getT12_programaDisp" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_programa/t12_programa_disp.jsp"/> 
+	    </action>
+	    <action path="/system_manager/t12_programa/t12_programa_table" parameter="t12_programa_table" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_programa/t12_programa_table.jsp"/> 
+		    <forward name="failure" path="/system_manager/t12_programa/t12_programa_list.do"/> 
+	    </action>
+	    <action path="/system_manager/t12_programa/t12_programa_table_modify_save" parameter="t12_programa_table_modify_save" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_programa/t12_programa_table.do"/> 
+		    <forward name="failure" path="/system_manager/t12_programa/t12_programa_table.do"/> 
+	    </action>
+	    <action path="/system_manager/t12_programa/t12_programa_table_modify_do" parameter="t12_programa_table_modify_do" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_programa/t12_programa_table.do"/> 
+		    <forward name="failure" path="/system_manager/t12_programa/t12_programa_table.do"/> 
+	    </action>
+	    <action path="/system_manager/t12_programa/t12_programa_table_add" parameter="t12_programa_table_add" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_programa/t12_programa_table_add.jsp"/> 
+		    <forward name="failure" path="/system_manager/t12_programa/t12_programa_table.do"/>
+	    </action>
+	    <action path="/system_manager/t12_programa/t12_programa_table_add_save" parameter="t12_programa_table_add_save" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_programa/t12_programa_table.do"/> 
+		    <forward name="failure" path="/system_manager/t12_programa/t12_programa_table_add.do"/> 
+	    </action>
+	    <action path="/system_manager/t12_programa/t12_programa_table_add_do" parameter="t12_programa_table_add_do" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_programa/t12_programa_table.do"/> 
+		    <forward name="failure" path="/system_manager/t12_programa/t12_programa_table_add.do"/> 
+	    </action>
+	    <action path="/system_manager/t12_programa/t12_programa_table_copy" parameter="t12_programa_table_copy" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_programa/t12_programa_table_copy.jsp"/> 
+		    <forward name="failure" path="/system_manager/t12_programa/t12_programa_table.do"/> 
+	    </action>
+	    <action path="/system_manager/t12_programa/t12_programa_table_copy_save" parameter="t12_programa_table_copy_save" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_programa/t12_programa_table.do"/> 
+		    <forward name="failure" path="/system_manager/t12_programa/t12_programa_table_copy.do"/> 
+	    </action>
+	    <action path="/system_manager/t12_programa/t12_programa_table_copy_do" parameter="t12_programa_table_copy_do" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_programa/t12_programa_table.do"/> 
+		    <forward name="failure" path="/system_manager/t12_programa/t12_programa_table_copy.do"/> 
+	    </action>
+	    <action path="/system_manager/t12_programa/t12_programa_role" parameter="t12_programa_role" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_programa/t12_programa_role.jsp"/> 
+		    <forward name="failure" path="/system_manager/t12_programa/t12_programa_role.jsp"/>
+	    </action>
+	    <action path="/system_manager/t12_programa/t12_programa_role_do" parameter="t12_programa_role_do" name="t12_programaActionForm" type="com.ist.cms.controller.T12_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_programa/t12_programa_list.do"/> 
+		    <forward name="failure" path="/system_manager/t12_programa/t12_programa_list.do"/> 
+	    </action>	   
+	    <!-- 系统管理/栏目管理 栏目维护 结束-->
+	    <!-- 系统管理/栏目管理 栏目类别维护 开始-->
+	    <action path="/system_manager/t12_ca_programa/t12_ca_programa_search" parameter="searchT12_ca_programa" name="t12_ca_programaActionForm" type="com.ist.cms.controller.T12_ca_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_ca_programa/t12_ca_programa_search.jsp"/> 
+	        <forward name="failure" path="/system_manager/t12_ca_programa/t12_ca_programa_list.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_ca_programa/t12_ca_programa_list" parameter="getT12_ca_programaList" name="t12_ca_programaActionForm" type="com.ist.cms.controller.T12_ca_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_ca_programa/t12_ca_programa_list.jsp"/> 
+	    </action> 
+	    <action path="/system_manager/t12_ca_programa/t12_ca_programa_list_n" parameter="getT12_ca_programaList" name="t12_ca_programaActionForm" type="com.ist.cms.controller.T12_ca_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_ca_programa/t12_ca_programa_n_list.jsp"/> 
+	    </action> 
+	    <action path="/system_manager/t12_ca_programa/t12_ca_programa_add" parameter="addT12_ca_programa" name="t12_ca_programaActionForm" type="com.ist.cms.controller.T12_ca_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_ca_programa/t12_ca_programa_add.jsp"/> 
+		    <forward name="failure" path="/system_manager/t12_ca_programa/t12_ca_programa_list.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_ca_programa/t12_ca_programa_add_do" parameter="addT12_ca_programaDo" name="t12_ca_programaActionForm" type="com.ist.cms.controller.T12_ca_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_ca_programa/t12_ca_programa_list.do"/> 
+		    <forward name="failure" path="/system_manager/t12_ca_programa/t12_ca_programa_add.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_ca_programa/t12_ca_programa_modify" parameter="modifyT12_ca_programa" name="t12_ca_programaActionForm" type="com.ist.cms.controller.T12_ca_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_ca_programa/t12_ca_programa_modify.jsp"/> 
+		    <forward name="failure" path="/system_manager/t12_ca_programa/t12_ca_programa_list.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_ca_programa/t12_ca_programa_modify_do" parameter="modifyT12_ca_programaDo" name="t12_ca_programaActionForm" type="com.ist.cms.controller.T12_ca_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_ca_programa/t12_ca_programa_list.do"/> 
+		    <forward name="failure" path="/system_manager/t12_ca_programa/t12_ca_programa_list.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_ca_programa/t12_ca_programa_delete_do" parameter="deleteT12_ca_programaDo" name="t12_ca_programaActionForm" type="com.ist.cms.controller.T12_ca_programaAction" validate="false" scope="request"> 
+		<forward name="success" path="/system_manager/t12_ca_programa/t12_ca_programa_list.do"/> 
+	        <forward name="failure" path="/system_manager/t12_ca_programa/t12_ca_programa_list.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_ca_programa/t12_ca_programa_disp" parameter="getT12_ca_programaDisp" name="t12_ca_programaActionForm" type="com.ist.cms.controller.T12_ca_programaAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_ca_programa/t12_ca_programa_disp.jsp"/> 
+	    </action>
+	    <!-- 系统管理/栏目管理 栏目类别维护 结束--> 
+	    
+	    <!-- 系统管理/知识库全文搜索  开始-->
+	    <action path="/system_manager/t12_search/t12_search_list" parameter="getT12_searchList" name="t12_searchActionForm" type="com.ist.cms.controller.T12_searchAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_search/t12_search_list.jsp"/> 
+		    <forward name="failure" path="/system_manager/t12_search/t12_search_list.jsp"/>
+	    </action> 
+	    <!-- 系统管理/知识库全文搜索  结束-->
+	    
+	    
+	    <!-- 系统管理/数据库搜索定义  开始-->
+	    <action path="/system_manager/t12_se_file_db/t12_se_file_db_search" parameter="searchT12_se_file_db" name="t12_se_file_dbActionForm" type="com.ist.cms.controller.T12_se_file_dbAction" validate="false" scope="request"> 
+	        <forward name="success" path="/system_manager/t12_se_file_db/t12_se_file_db_search.jsp"/> 
+            <forward name="failure" path="/system_manager/t12_se_file_db/t12_se_file_db_list.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_se_file_db/t12_se_file_db_list" parameter="getT12_se_file_dbList" name="t12_se_file_dbActionForm" type="com.ist.cms.controller.T12_se_file_dbAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_se_file_db/t12_se_file_db_list.jsp"/> 
+	    </action> 
+	    <action path="/system_manager/t12_se_file_db/t12_se_file_db_add" parameter="addT12_se_file_db" name="t12_se_file_dbActionForm" type="com.ist.cms.controller.T12_se_file_dbAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_se_file_db/t12_se_file_db_add.jsp"/> 
+		    <forward name="failure" path="/system_manager/t12_se_file_db/t12_se_file_db_list.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_se_file_db/t12_se_file_db_add_do" parameter="addT12_se_file_dbDo" name="t12_se_file_dbActionForm" type="com.ist.cms.controller.T12_se_file_dbAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_se_file_db/t12_se_file_db_list.do"/> 
+		    <forward name="failure" path="/system_manager/t12_se_file_db/t12_se_file_db_add.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_se_file_db/t12_se_file_db_modify" parameter="modifyT12_se_file_db" name="t12_se_file_dbActionForm" type="com.ist.cms.controller.T12_se_file_dbAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_se_file_db/t12_se_file_db_modify.jsp"/> 
+		    <forward name="failure" path="/system_manager/t12_se_file_db/t12_se_file_db_list.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_se_file_db/t12_se_file_db_modify_do" parameter="modifyT12_se_file_dbDo" name="t12_se_file_dbActionForm" type="com.ist.cms.controller.T12_se_file_dbAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_se_file_db/t12_se_file_db_list.do"/> 
+		    <forward name="failure" path="/system_manager/t12_se_file_db/t12_se_file_db_modify.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_se_file_db/t12_se_file_db_delete_do" parameter="deleteT12_se_file_dbDo" name="t12_se_file_dbActionForm" type="com.ist.cms.controller.T12_se_file_dbAction" validate="false" scope="request"> 
+		<forward name="success" path="/system_manager/t12_se_file_db/t12_se_file_db_list.do"/> 
+	        <forward name="failure" path="/system_manager/t12_se_file_db/t12_se_file_db_list.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_se_file_db/t12_se_file_db_disp" parameter="getT12_se_file_dbDisp" name="t12_se_file_dbActionForm" type="com.ist.cms.controller.T12_se_file_dbAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_se_file_db/t12_se_file_db_disp.jsp"/> 
+	    </action> 
+	    <!-- 系统管理/数据库搜索定义  结束-->
+	    
+	    <!-- 系统管理/文件搜索定义  开始-->
+	    <action path="/system_manager/t12_se_file_path/t12_se_file_path_search" parameter="searchT12_se_file_path" name="t12_se_file_pathActionForm" type="com.ist.cms.controller.T12_se_file_pathAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_se_file_path/t12_se_file_path_search.jsp"/> 
+	        <forward name="failure" path="/system_manager/t12_se_file_path/t12_se_file_path_list.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_se_file_path/t12_se_file_path_list" parameter="getT12_se_file_pathList" name="t12_se_file_pathActionForm" type="com.ist.cms.controller.T12_se_file_pathAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_se_file_path/t12_se_file_path_list.jsp"/> 
+	    </action> 
+	    <action path="/system_manager/t12_se_file_path/t12_se_file_path_add" parameter="addT12_se_file_path" name="t12_se_file_pathActionForm" type="com.ist.cms.controller.T12_se_file_pathAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_se_file_path/t12_se_file_path_add.jsp"/> 
+		    <forward name="failure" path="/system_manager/t12_se_file_path/t12_se_file_path_list.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_se_file_path/t12_se_file_path_add_do" parameter="addT12_se_file_pathDo" name="t12_se_file_pathActionForm" type="com.ist.cms.controller.T12_se_file_pathAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_se_file_path/t12_se_file_path_list.do"/> 
+		    <forward name="failure" path="/system_manager/t12_se_file_path/t12_se_file_path_add.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_se_file_path/t12_se_file_path_modify" parameter="modifyT12_se_file_path" name="t12_se_file_pathActionForm" type="com.ist.cms.controller.T12_se_file_pathAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_se_file_path/t12_se_file_path_modify.jsp"/> 
+		    <forward name="failure" path="/system_manager/t12_se_file_path/t12_se_file_path_list.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_se_file_path/t12_se_file_path_modify_do" parameter="modifyT12_se_file_pathDo" name="t12_se_file_pathActionForm" type="com.ist.cms.controller.T12_se_file_pathAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_se_file_path/t12_se_file_path_list.do"/> 
+		    <forward name="failure" path="/system_manager/t12_se_file_path/t12_se_file_path_modify.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_se_file_path/t12_se_file_path_delete_do" parameter="deleteT12_se_file_pathDo" name="t12_se_file_pathActionForm" type="com.ist.cms.controller.T12_se_file_pathAction" validate="false" scope="request"> 
+		<forward name="success" path="/system_manager/t12_se_file_path/t12_se_file_path_list.do"/> 
+	        <forward name="failure" path="/system_manager/t12_se_file_path/t12_se_file_path_list.do"/> 
+	    </action> 
+	    <action path="/system_manager/t12_se_file_path/t12_se_file_path_disp" parameter="getT12_se_file_pathDisp" name="t12_se_file_pathActionForm" type="com.ist.cms.controller.T12_se_file_pathAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_se_file_path/t12_se_file_path_disp.jsp"/> 
+	    </action> 
+	    <!-- 系统管理/文件搜索定义  结束-->
+	    
+	    <!-- 系统管理 结束-->
+	    
+	    <!--t12_programa_cols start  -->
+		<action path="/t12_programa_cols/t12_programa_cols_search" parameter="searchT12_programa_cols" name="t12_programa_colsActionForm" type="com.ist.cms.controller.T12_programa_colsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_cols/t12_programa_cols_search.jsp"/> 
+	        <forward name="failure" path="/t12_programa_cols/t12_programa_cols_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_cols/t12_programa_cols_list" parameter="getT12_programa_colsList" name="t12_programa_colsActionForm" type="com.ist.cms.controller.T12_programa_colsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_cols/t12_programa_cols_list.jsp"/> 
+	    </action> 
+	    <action path="/t12_programa_cols/t12_programa_cols_add" parameter="addT12_programa_cols" name="t12_programa_colsActionForm" type="com.ist.cms.controller.T12_programa_colsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_cols/t12_programa_cols_add.jsp"/> 
+		    <forward name="failure" path="/t12_programa_cols/t12_programa_cols_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_cols/t12_programa_cols_add_do" parameter="addT12_programa_colsDo" name="t12_programa_colsActionForm" type="com.ist.cms.controller.T12_programa_colsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_cols/t12_programa_cols_list.do"/> 
+		    <forward name="failure" path="/t12_programa_cols/t12_programa_cols_add.do"/> 
+	    </action> 
+	    <action path="/t12_programa_cols/t12_programa_cols_modify" parameter="modifyT12_programa_cols" name="t12_programa_colsActionForm" type="com.ist.cms.controller.T12_programa_colsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_cols/t12_programa_cols_modify.jsp"/> 
+		    <forward name="failure" path="/t12_programa_cols/t12_programa_cols_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_cols/t12_programa_cols_modify_do" parameter="modifyT12_programa_colsDo" name="t12_programa_colsActionForm" type="com.ist.cms.controller.T12_programa_colsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_cols/t12_programa_cols_list.do"/> 
+		    <forward name="failure" path="/t12_programa_cols/t12_programa_cols_modify.do"/> 
+	    </action> 
+	    <action path="/t12_programa_cols/t12_programa_cols_delete_do" parameter="deleteT12_programa_colsDo" name="t12_programa_colsActionForm" type="com.ist.cms.controller.T12_programa_colsAction" validate="false" scope="request"> 
+		<forward name="success" path="/t12_programa_cols/t12_programa_cols_list.do"/> 
+	        <forward name="failure" path="/t12_programa_cols/t12_programa_cols_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_cols/t12_programa_cols_disp" parameter="getT12_programa_colsDisp" name="t12_programa_colsActionForm" type="com.ist.cms.controller.T12_programa_colsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_cols/t12_programa_cols_disp.jsp"/> 
+	    </action>
+	      <action path="/system_manager/t12_programa/t12_programa_colsExtendAttriModiy" parameter="t12_programa_colsExtendAttriModi" name="t12_programa_colsActionForm" type="com.ist.cms.controller.T12_programa_colsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_programa/t12_programa_cols_modify.jsp"/> 
+	    </action>
+	    <action path="/system_manager/t12_programa/t12_programa_colsExtendAttriModiyDo" parameter="t12_programa_colsExtendAttriModiDo" name="t12_programa_colsActionForm" type="com.ist.cms.controller.T12_programa_colsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/system_manager/t12_programa/t12_programa_colsExtendAttriModiy.do"/> 
+		    <forward name="failure" path="/system_manager/t12_programa/t12_programa_colsExtendAttriModiy.do"/> 
+	    </action>
+	    <!--t12_programa_cols end  -->
+	    
+	    <!--t12_programa_defcols start  -->
+		<action path="/t12_programa_defcols/t12_programa_defcols_search" parameter="searchT12_programa_defcols" name="t12_programa_defcolsActionForm" type="com.ist.cms.controller.T12_programa_defcolsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_defcols/t12_programa_defcols_search.jsp"/> 
+	        <forward name="failure" path="/t12_programa_defcols/t12_programa_defcols_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_defcols/t12_programa_defcols_list" parameter="getT12_programa_defcolsList" name="t12_programa_defcolsActionForm" type="com.ist.cms.controller.T12_programa_defcolsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_defcols/t12_programa_defcols_list.jsp"/> 
+	    </action> 
+	    <action path="/t12_programa_defcols/t12_programa_defcols_add" parameter="addT12_programa_defcols" name="t12_programa_defcolsActionForm" type="com.ist.cms.controller.T12_programa_defcolsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_defcols/t12_programa_defcols_add.jsp"/> 
+		    <forward name="failure" path="/t12_programa_defcols/t12_programa_defcols_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_defcols/t12_programa_defcols_add_do" parameter="addT12_programa_defcolsDo" name="t12_programa_defcolsActionForm" type="com.ist.cms.controller.T12_programa_defcolsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_defcols/t12_programa_defcols_list.do"/> 
+		    <forward name="failure" path="/t12_programa_defcols/t12_programa_defcols_add.do"/> 
+	    </action> 
+	    <action path="/t12_programa_defcols/t12_programa_defcols_modify" parameter="modifyT12_programa_defcols" name="t12_programa_defcolsActionForm" type="com.ist.cms.controller.T12_programa_defcolsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_defcols/t12_programa_defcols_modify.jsp"/> 
+		    <forward name="failure" path="/t12_programa_defcols/t12_programa_defcols_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_defcols/t12_programa_defcols_modify_do" parameter="modifyT12_programa_defcolsDo" name="t12_programa_defcolsActionForm" type="com.ist.cms.controller.T12_programa_defcolsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_defcols/t12_programa_defcols_list.do"/> 
+		    <forward name="failure" path="/t12_programa_defcols/t12_programa_defcols_modify.do"/> 
+	    </action> 
+	    <action path="/t12_programa_defcols/t12_programa_defcols_delete_do" parameter="deleteT12_programa_defcolsDo" name="t12_programa_defcolsActionForm" type="com.ist.cms.controller.T12_programa_defcolsAction" validate="false" scope="request"> 
+		<forward name="success" path="/t12_programa_defcols/t12_programa_defcols_list.do"/> 
+	        <forward name="failure" path="/t12_programa_defcols/t12_programa_defcols_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_defcols/t12_programa_defcols_disp" parameter="getT12_programa_defcolsDisp" name="t12_programa_defcolsActionForm" type="com.ist.cms.controller.T12_programa_defcolsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_defcols/t12_programa_defcols_disp.jsp"/> 
+	    </action>
+	    <!--t12_programa_defcols end  -->
+	    
+	    <!--t12_programa_power start  -->
+		<action path="/t12_programa_power/t12_programa_power_search" parameter="searchT12_programa_power" name="t12_programa_powerActionForm" type="com.ist.cms.controller.T12_programa_powerAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_power/t12_programa_power_search.jsp"/> 
+	        <forward name="failure" path="/t12_programa_power/t12_programa_power_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_power/t12_programa_power_list" parameter="getT12_programa_powerList" name="t12_programa_powerActionForm" type="com.ist.cms.controller.T12_programa_powerAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_power/t12_programa_power_list.jsp"/> 
+	    </action> 
+	    <action path="/t12_programa_power/t12_programa_power_add" parameter="addT12_programa_power" name="t12_programa_powerActionForm" type="com.ist.cms.controller.T12_programa_powerAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_power/t12_programa_power_add.jsp"/> 
+		    <forward name="failure" path="/t12_programa_power/t12_programa_power_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_power/t12_programa_power_add_do" parameter="addT12_programa_powerDo" name="t12_programa_powerActionForm" type="com.ist.cms.controller.T12_programa_powerAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_power/t12_programa_power_list.do"/> 
+		    <forward name="failure" path="/t12_programa_power/t12_programa_power_add.do"/> 
+	    </action> 
+	    <action path="/t12_programa_power/t12_programa_power_modify" parameter="modifyT12_programa_power" name="t12_programa_powerActionForm" type="com.ist.cms.controller.T12_programa_powerAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_power/t12_programa_power_modify.jsp"/> 
+		    <forward name="failure" path="/t12_programa_power/t12_programa_power_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_power/t12_programa_power_modify_do" parameter="modifyT12_programa_powerDo" name="t12_programa_powerActionForm" type="com.ist.cms.controller.T12_programa_powerAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_power/t12_programa_power_list.do"/> 
+		    <forward name="failure" path="/t12_programa_power/t12_programa_power_modify.do"/> 
+	    </action> 
+	    <action path="/t12_programa_power/t12_programa_power_delete_do" parameter="deleteT12_programa_powerDo" name="t12_programa_powerActionForm" type="com.ist.cms.controller.T12_programa_powerAction" validate="false" scope="request"> 
+		<forward name="success" path="/t12_programa_power/t12_programa_power_list.do"/> 
+	        <forward name="failure" path="/t12_programa_power/t12_programa_power_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_power/t12_programa_power_disp" parameter="getT12_programa_powerDisp" name="t12_programa_powerActionForm" type="com.ist.cms.controller.T12_programa_powerAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_power/t12_programa_power_disp.jsp"/> 
+	    </action>
+	    <!--t12_programa_power end  -->
+	    
+	    <!--t12_programa_subscibe start  -->
+		<action path="/t12_programa_subscibe/t12_programa_subscibe_search" parameter="searchT12_programa_subscibe" name="t12_programa_subscibeActionForm" type="com.ist.cms.controller.T12_programa_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_subscibe/t12_programa_subscibe_search.jsp"/> 
+	        <forward name="failure" path="/t12_programa_subscibe/t12_programa_subscibe_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_subscibe/t12_programa_subscibe_list" parameter="getT12_programa_subscibeList" name="t12_programa_subscibeActionForm" type="com.ist.cms.controller.T12_programa_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_subscibe/t12_programa_subscibe_list.jsp"/> 
+	    </action> 
+	    <action path="/t12_programa_subscibe/t12_programa_subscibe_add" parameter="addT12_programa_subscibe" name="t12_programa_subscibeActionForm" type="com.ist.cms.controller.T12_programa_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_subscibe/t12_programa_subscibe_add.jsp"/> 
+		    <forward name="failure" path="/t12_programa_subscibe/t12_programa_subscibe_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_subscibe/t12_programa_subscibe_add_do" parameter="addT12_programa_subscibeDo" name="t12_programa_subscibeActionForm" type="com.ist.cms.controller.T12_programa_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_subscibe/t12_programa_subscibe_list.do"/> 
+		    <forward name="failure" path="/t12_programa_subscibe/t12_programa_subscibe_add.do"/> 
+	    </action> 
+	    <action path="/t12_programa_subscibe/t12_programa_subscibe_modify" parameter="modifyT12_programa_subscibe" name="t12_programa_subscibeActionForm" type="com.ist.cms.controller.T12_programa_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_subscibe/t12_programa_subscibe_modify.jsp"/> 
+		    <forward name="failure" path="/t12_programa_subscibe/t12_programa_subscibe_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_subscibe/t12_programa_subscibe_modify_do" parameter="modifyT12_programa_subscibeDo" name="t12_programa_subscibeActionForm" type="com.ist.cms.controller.T12_programa_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_subscibe/t12_programa_subscibe_list.do"/> 
+		    <forward name="failure" path="/t12_programa_subscibe/t12_programa_subscibe_modify.do"/> 
+	    </action> 
+	    <action path="/t12_programa_subscibe/t12_programa_subscibe_delete_do" parameter="deleteT12_programa_subscibeDo" name="t12_programa_subscibeActionForm" type="com.ist.cms.controller.T12_programa_subscibeAction" validate="false" scope="request"> 
+		<forward name="success" path="/t12_programa_subscibe/t12_programa_subscibe_list.do"/> 
+	        <forward name="failure" path="/t12_programa_subscibe/t12_programa_subscibe_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_subscibe/t12_programa_subscibe_disp" parameter="getT12_programa_subscibeDisp" name="t12_programa_subscibeActionForm" type="com.ist.cms.controller.T12_programa_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_subscibe/t12_programa_subscibe_disp.jsp"/> 
+	    </action>
+	    <!--t12_programa_subscibe end  -->
+	    
+	    <!--t12_programa_table start  -->
+		<action path="/t12_programa_table/t12_programa_table_search" parameter="searchT12_programa_table" name="t12_programa_tableActionForm" type="com.ist.cms.controller.T12_programa_tableAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_table/t12_programa_table_search.jsp"/> 
+	        <forward name="failure" path="/t12_programa_table/t12_programa_table_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_table/t12_programa_table_list" parameter="getT12_programa_tableList" name="t12_programa_tableActionForm" type="com.ist.cms.controller.T12_programa_tableAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_table/t12_programa_table_list.jsp"/> 
+	    </action> 
+	    <action path="/t12_programa_table/t12_programa_table_add" parameter="addT12_programa_table" name="t12_programa_tableActionForm" type="com.ist.cms.controller.T12_programa_tableAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_table/t12_programa_table_add.jsp"/> 
+		    <forward name="failure" path="/t12_programa_table/t12_programa_table_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_table/t12_programa_table_add_do" parameter="addT12_programa_tableDo" name="t12_programa_tableActionForm" type="com.ist.cms.controller.T12_programa_tableAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_table/t12_programa_table_list.do"/> 
+		    <forward name="failure" path="/t12_programa_table/t12_programa_table_add.do"/> 
+	    </action> 
+	    <action path="/t12_programa_table/t12_programa_table_modify" parameter="modifyT12_programa_table" name="t12_programa_tableActionForm" type="com.ist.cms.controller.T12_programa_tableAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_table/t12_programa_table_modify.jsp"/> 
+		    <forward name="failure" path="/t12_programa_table/t12_programa_table_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_table/t12_programa_table_modify_do" parameter="modifyT12_programa_tableDo" name="t12_programa_tableActionForm" type="com.ist.cms.controller.T12_programa_tableAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_table/t12_programa_table_list.do"/> 
+		    <forward name="failure" path="/t12_programa_table/t12_programa_table_modify.do"/> 
+	    </action> 
+	    <action path="/t12_programa_table/t12_programa_table_delete_do" parameter="deleteT12_programa_tableDo" name="t12_programa_tableActionForm" type="com.ist.cms.controller.T12_programa_tableAction" validate="false" scope="request"> 
+		<forward name="success" path="/t12_programa_table/t12_programa_table_list.do"/> 
+	        <forward name="failure" path="/t12_programa_table/t12_programa_table_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_table/t12_programa_table_disp" parameter="getT12_programa_tableDisp" name="t12_programa_tableActionForm" type="com.ist.cms.controller.T12_programa_tableAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_table/t12_programa_table_disp.jsp"/> 
+	    </action>
+	    <!--t12_programa_table end  -->
+	    
+	    <!--t12_programa_table_rel start  -->
+		<action path="/t12_programa_table_rel/t12_programa_table_rel_search" parameter="searchT12_programa_table_rel" name="t12_programa_table_relActionForm" type="com.ist.cms.controller.T12_programa_table_relAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_table_rel/t12_programa_table_rel_search.jsp"/> 
+	        <forward name="failure" path="/t12_programa_table_rel/t12_programa_table_rel_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_table_rel/t12_programa_table_rel_list" parameter="getT12_programa_table_relList" name="t12_programa_table_relActionForm" type="com.ist.cms.controller.T12_programa_table_relAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_table_rel/t12_programa_table_rel_list.jsp"/> 
+	    </action> 
+	    <action path="/t12_programa_table_rel/t12_programa_table_rel_add" parameter="addT12_programa_table_rel" name="t12_programa_table_relActionForm" type="com.ist.cms.controller.T12_programa_table_relAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_table_rel/t12_programa_table_rel_add.jsp"/> 
+		    <forward name="failure" path="/t12_programa_table_rel/t12_programa_table_rel_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_table_rel/t12_programa_table_rel_add_do" parameter="addT12_programa_table_relDo" name="t12_programa_table_relActionForm" type="com.ist.cms.controller.T12_programa_table_relAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_table_rel/t12_programa_table_rel_list.do"/> 
+		    <forward name="failure" path="/t12_programa_table_rel/t12_programa_table_rel_add.do"/> 
+	    </action> 
+	    <action path="/t12_programa_table_rel/t12_programa_table_rel_modify" parameter="modifyT12_programa_table_rel" name="t12_programa_table_relActionForm" type="com.ist.cms.controller.T12_programa_table_relAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_table_rel/t12_programa_table_rel_modify.jsp"/> 
+		    <forward name="failure" path="/t12_programa_table_rel/t12_programa_table_rel_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_table_rel/t12_programa_table_rel_modify_do" parameter="modifyT12_programa_table_relDo" name="t12_programa_table_relActionForm" type="com.ist.cms.controller.T12_programa_table_relAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_table_rel/t12_programa_table_rel_list.do"/> 
+		    <forward name="failure" path="/t12_programa_table_rel/t12_programa_table_rel_modify.do"/> 
+	    </action> 
+	    <action path="/t12_programa_table_rel/t12_programa_table_rel_delete_do" parameter="deleteT12_programa_table_relDo" name="t12_programa_table_relActionForm" type="com.ist.cms.controller.T12_programa_table_relAction" validate="false" scope="request"> 
+		<forward name="success" path="/t12_programa_table_rel/t12_programa_table_rel_list.do"/> 
+	        <forward name="failure" path="/t12_programa_table_rel/t12_programa_table_rel_list.do"/> 
+	    </action> 
+	    <action path="/t12_programa_table_rel/t12_programa_table_rel_disp" parameter="getT12_programa_table_relDisp" name="t12_programa_table_relActionForm" type="com.ist.cms.controller.T12_programa_table_relAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_programa_table_rel/t12_programa_table_rel_disp.jsp"/> 
+	    </action>
+	    <!--t12_programa_table_rel end  -->
+	    
+	    <!--t12_subscibe start  -->
+		<action path="/myknowledge/t12_subscibe/t12_subscibe_search" parameter="searchT12_subscibe" name="t12_subscibeActionForm" type="com.ist.cms.controller.T12_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/myknowledge/t12_subscibe/t12_subscibe_search.jsp"/> 
+	        <forward name="failure" path="/myknowledge/t12_subscibe/t12_subscibe_list.do"/> 
+	    </action> 
+	    <action path="/myknowledge/t12_subscibe/t12_subscibe_list" parameter="getT12_subscibeList" name="t12_subscibeActionForm" type="com.ist.cms.controller.T12_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/myknowledge/t12_subscibe/t12_subscibe_list.jsp"/> 
+	    </action> 
+	    <action path="/myknowledge/t12_subscibe/t12_subscibe_add" parameter="addT12_subscibe" name="t12_subscibeActionForm" type="com.ist.cms.controller.T12_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/myknowledge/t12_subscibe/t12_subscibe_add.jsp"/> 
+		    <forward name="failure" path="/myknowledge/t12_subscibe/t12_subscibe_list.do"/> 
+	    </action> 
+	    <action path="/myknowledge/t12_subscibe/t12_subscibe_add_do" parameter="addT12_subscibeDo" name="t12_subscibeActionForm" type="com.ist.cms.controller.T12_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/myknowledge/t12_subscibe/t12_subscibe_list.do"/> 
+		    <forward name="failure" path="/myknowledge/t12_subscibe/t12_subscibe_add.do"/> 
+	    </action> 
+	    <action path="/myknowledge/t12_subscibe/t12_subscibe_modify" parameter="modifyT12_subscibe" name="t12_subscibeActionForm" type="com.ist.cms.controller.T12_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/myknowledge/t12_subscibe/t12_subscibe_modify.jsp"/> 
+		    <forward name="failure" path="/myknowledge/t12_subscibe/t12_subscibe_list.do"/> 
+	    </action> 
+	    <action path="/myknowledge/t12_subscibe/t12_subscibe_modify_do" parameter="modifyT12_subscibeDo" name="t12_subscibeActionForm" type="com.ist.cms.controller.T12_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/myknowledge/t12_subscibe/t12_subscibe_list.do"/> 
+		    <forward name="failure" path="/myknowledge/t12_subscibe/t12_subscibe_modify.do"/> 
+	    </action> 
+	    <action path="/myknowledge/t12_subscibe/t12_subscibe_delete_do" parameter="deleteT12_subscibeDo" name="t12_subscibeActionForm" type="com.ist.cms.controller.T12_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/myknowledge/t12_subscibe/t12_subscibe_list.do"/> 
+	        <forward name="failure" path="/myknowledge/t12_subscibe/t12_subscibe_list.do"/> 
+	    </action> 
+	    <action path="/myknowledge/t12_subscibe/t12_subscibe_disp" parameter="getT12_subscibeDisp" name="t12_subscibeActionForm" type="com.ist.cms.controller.T12_subscibeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/myknowledge/t12_subscibe/t12_subscibe_disp.jsp"/> 
+	    </action>
+	    <!--t12_subscibe end  -->
+	    
+	    <!--t12_subscibe_tactics start  -->
+	    <action path="/myknowledge/t12_subscibe/t12_subscibe_tactics_search" parameter="searchT12_subscibe_tactics" name="t12_subscibe_tacticsActionForm" type="com.ist.cms.controller.T12_subscibe_tacticsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/myknowledge/t12_subscibe/t12_subscibe_tactics_search.jsp"/> 
+	        <forward name="failure" path="/myknowledge/t12_subscibe/t12_subscibe_tactics_list.do"/> 
+	    </action> 
+	    <action path="/myknowledge/t12_subscibe/t12_subscibe_tactics_list" parameter="getT12_subscibe_tacticsList" name="t12_subscibe_tacticsActionForm" type="com.ist.cms.controller.T12_subscibe_tacticsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/myknowledge/t12_subscibe/t12_subscibe_tactics_list.jsp"/> 
+	    </action> 
+	    <action path="/myknowledge/t12_subscibe/t12_subscibe_tactics_add" parameter="addT12_subscibe_tactics" name="t12_subscibe_tacticsActionForm" type="com.ist.cms.controller.T12_subscibe_tacticsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/myknowledge/t12_subscibe/t12_subscibe_tactics_add.jsp"/> 
+		    <forward name="failure" path="/myknowledge/t12_subscibe/t12_subscibe_tactics_list.do"/> 
+	    </action> 
+	    <action path="/myknowledge/t12_subscibe/t12_subscibe_tactics_add_do" parameter="addT12_subscibe_tacticsDo" name="t12_subscibe_tacticsActionForm" type="com.ist.cms.controller.T12_subscibe_tacticsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/myknowledge/t12_subscibe/t12_subscibe_tactics_list.do"/> 
+		    <forward name="failure" path="/myknowledge/t12_subscibe/t12_subscibe_tactics_add.do"/> 
+	    </action> 
+	    <action path="/myknowledge/t12_subscibe/t12_subscibe_tactics_modify" parameter="modifyT12_subscibe_tactics" name="t12_subscibe_tacticsActionForm" type="com.ist.cms.controller.T12_subscibe_tacticsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/myknowledge/t12_subscibe/t12_subscibe_tactics_modify.jsp"/> 
+		    <forward name="failure" path="/myknowledge/t12_subscibe/t12_subscibe_tactics_list.do"/> 
+	    </action> 
+	    <action path="/myknowledge/t12_subscibe/t12_subscibe_tactics_modify_do" parameter="modifyT12_subscibe_tacticsDo" name="t12_subscibe_tacticsActionForm" type="com.ist.cms.controller.T12_subscibe_tacticsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/myknowledge/t12_subscibe/t12_subscibe_tactics_list.do"/> 
+		    <forward name="failure" path="/myknowledge/t12_subscibe/t12_subscibe_tactics_modify.do"/> 
+	    </action> 
+	    <action path="/myknowledge/t12_subscibe/t12_subscibe_tactics_delete_do" parameter="deleteT12_subscibe_tacticsDo" name="t12_subscibe_tacticsActionForm" type="com.ist.cms.controller.T12_subscibe_tacticsAction" validate="false" scope="request"> 
+		<forward name="success" path="/myknowledge/t12_subscibe/t12_subscibe_tactics_list.do"/> 
+	        <forward name="failure" path="/myknowledge/t12_subscibe/t12_subscibe_tactics_list.do"/> 
+	    </action> 
+	    <action path="/myknowledge/t12_subscibe/t12_subscibe_tactics_disp" parameter="getT12_subscibe_tacticsDisp" name="t12_subscibe_tacticsActionForm" type="com.ist.cms.controller.T12_subscibe_tacticsAction" validate="false" scope="request"> 
+		    <forward name="success" path="/myknowledge/t12_subscibe/t12_subscibe_tactics_disp.jsp"/> 
+	    </action>
+	    <!--t12_subscibe_tactics end  -->
+	    
+	    <!-- 我的文章 start -->
+	    <action path="/myknowledge/t12_myarticle/getT12_myarticle_tree" parameter="getT12_myarticle_tree" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/myknowledge/t12_myarticle/t12_myarticle_tree.jsp"/> 
+	    </action> 
+	    
+		<action path="/myknowledge/t12_myarticle/t12_myarticle_search" parameter="searchT12_myarticle" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_myarticle/t12_myarticle_search.jsp"/> 
+	        <forward name="failure" path="/t12_myarticle/t12_myarticle_list.do"/> 
+	    </action> 
+	    <action path="/myknowledge/t12_myarticle/t12_myarticle_list" parameter="getT12_myarticleList" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/myknowledge/t12_myarticle/t12_myarticle_list.jsp"/> 
+	    </action> 
+	    <action path="/myknowledge/t12_myarticle/t12_myarticle_norelease_add" parameter="addT12_myarticle_norelease" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/myknowledge/t12_myarticle/t12_myarticle_norelease_add.jsp"/> 
+		    <forward name="failure" path="/myknowledge/t12_myarticle/t12_myarticle_list.do"/> 
+	    </action> 
+	    <action path="/myknowledge/t12_myarticle/t12_myarticle_norelease_add_do" parameter="addT12_myarticle_noreleaseDo" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/myknowledge/t12_myarticle/t12_myarticle_list.do"/> 
+		    <forward name="success_save" path="/myknowledge/t12_myarticle/t12_myarticle_list.do"/> 
+		    <forward name="success_release" path="/myknowledge/t12_myarticle/t12_myarticle_list.do"/>
+		    <forward name="failure" path="/myknowledge/t12_myarticle/t12_myarticle_norelease_add.do"/> 
+	    </action> 
+	    <action path="/myknowledge/t12_myarticle/t12_myarticle_modify" parameter="modifyt12_myarticle" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/myknowledge/t12_myarticle/t12_myarticle_modify.jsp"/> 
+		    <forward name="failure" path="/myknowledge/t12_myarticle/t12_myarticle_list.do"/> 
+	    </action> 
+	    <action path="/myknowledge/t12_myarticle/t12_myarticle_modify_do" parameter="modifyt12_myarticleDo" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/myknowledge/t12_myarticle/t12_myarticle_list.do"/> 
+		    <forward name="failure" path="/myknowledge/t12_myarticle/t12_myarticle_modify.do"/> 
+	    </action> 
+	    <action path="/myknowledge/t12_myarticle/t12_myarticle_delete_do" parameter="deletet12_myarticleDo" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		<forward name="success" path="/myknowledge/t12_myarticle/t12_myarticle_list.do"/> 
+	        <forward name="failure" path="/myknowledge/t12_myarticle/t12_myarticle_list.do"/> 
+	    </action> 
+	    <action path="/myknowledge/t12_myarticle/t12_myarticle_disp" parameter="getT12_myarticleDisp" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/myknowledge/t12_myarticle/t12_myarticle_disp.jsp"/> 
+		    <forward name="failure" path="/myknowledge/t12_myarticle/t12_myarticle_disp.jsp"/> 
+	    </action>
+	    <!-- 我的文章 end -->
+	    
+	    <!--t12_writeback start  -->
+	    <action path="/businessmanager/t12_writeback/t12_writeback_article_list" parameter="getT12_article2writebackList" name="t12_articleActionForm" type="com.ist.cms.controller.T12_articleAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_writeback/t12_writeback_article_list.jsp"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_writeback/t12_writeback_tree" parameter="getT12_writebackTree" name="t12_writebackActionForm" type="com.ist.cms.controller.T12_writebackAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_writeback/t12_writeback_tree.jsp"/> 
+	    </action>
+		<action path="/businessmanager/t12_writeback/t12_writeback_search" parameter="searchT12_writeback" name="t12_writebackActionForm" type="com.ist.cms.controller.T12_writebackAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_writeback/t12_writeback_search.jsp"/> 
+	        <forward name="failure" path="/businessmanager/t12_writeback/t12_writeback_list.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_writeback/t12_writeback_list" parameter="getT12_writebackList" name="t12_writebackActionForm" type="com.ist.cms.controller.T12_writebackAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_writeback/t12_writeback_list.jsp"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_writeback/t12_writeback_add" parameter="addT12_writeback" name="t12_writebackActionForm" type="com.ist.cms.controller.T12_writebackAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_writeback/t12_writeback_add.jsp"/> 
+		    <forward name="failure" path="/businessmanager/t12_writeback/t12_writeback_list.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_writeback/t12_writeback_add_do" parameter="addT12_writebackDo" name="t12_writebackActionForm" type="com.ist.cms.controller.T12_writebackAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_writeback/t12_writeback_add.do"/> 
+		    <forward name="failure" path="/businessmanager/t12_writeback/t12_writeback_add.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_writeback/t12_writeback_modify" parameter="modifyT12_writeback" name="t12_writebackActionForm" type="com.ist.cms.controller.T12_writebackAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_writeback/t12_writeback_modify.jsp"/> 
+		    <forward name="failure" path="/businessmanager/t12_writeback/t12_writeback_list.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_writeback/t12_writeback_modify_do" parameter="modifyT12_writebackDo" name="t12_writebackActionForm" type="com.ist.cms.controller.T12_writebackAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_writeback/t12_writeback_list.do"/> 
+		    <forward name="failure" path="/businessmanager/t12_writeback/t12_writeback_modify.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_writeback/t12_writeback_delete_do" parameter="deleteT12_writebackDo" name="t12_writebackActionForm" type="com.ist.cms.controller.T12_writebackAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_writeback/t12_writeback_list.do"/> 
+	        <forward name="failure" path="/businessmanager/t12_writeback/t12_writeback_list.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_writeback/t12_writeback_disp" parameter="getT12_writebackDisp" name="t12_writebackActionForm" type="com.ist.cms.controller.T12_writebackAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_writeback/t12_writeback_disp.jsp"/> 
+		    <forward name="failure" path="/businessmanager/t12_writeback/t12_writeback_list.do"/> 
+	    </action>
+	    <action path="/businessmanager/t12_writeback/t12_writeback_auditstat" parameter="t12_writeback_auditstat" name="t12_writebackActionForm" type="com.ist.cms.controller.T12_writebackAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_writeback/t12_writeback_list.do"/> 
+		    <forward name="failure" path="/businessmanager/t12_writeback/t12_writeback_list.do"/> 
+	    </action>
+	    <action path="/businessmanager/t12_writeback/t12_writeback_list_by_articlekey" parameter="getT12_writebackList_by_articlekey" name="t12_writebackActionForm" type="com.ist.cms.controller.T12_writebackAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_writeback/t12_writeback_list_by_articlekey.jsp"/> 
+		    <forward name="failure" path="/businessmanager/t12_writeback/t12_writeback_list_by_articlekey.jsp"/> 
+	    </action>
+	    <!--t12_writeback end  -->
+	    
+	    
+		
+		
+		<!-- zai xian kao shi add by zhangqiaojun  -->
+		 
+	    <action path="/t12_questionnaire_list" 
+	    	parameter="getT12_questionnaireList" 
+	    	name="t12_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_questionnaireAction" validate="false" 
+	    	scope="request"> 
+		    <forward name="success" path="/exam/t12_questionnaire_list.jsp" /> 
+		    <forward name="failure" path="/exam/t12_questionnaire_list.jsp" />
+	    </action> 
+	    <action path="/t12_questionnaire_add" 
+	    	parameter="addT12_questionnaire" 
+	    	name="t12_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_questionnaireAction" validate="false" 
+	    	scope="request"> 
+		    <forward name="success" path="/exam/t12_questionnaire_add.jsp" /> 
+		    <forward name="failure" path="/exam/t12_questionnaire_add.jsp" />
+	    </action> 
+	    <action path="/t12_questionnaire_add_do" 
+	    	parameter="addT12_questionnaireDo" 
+	    	name="t12_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_questionnaireAction" validate="false" 
+	    	scope="request"> 
+		    <forward name="success" path="/t12_test_question.do" /> 
+		    <forward name="failure" path="/exam/t12_questionnaire_add.jsp" />
+	    </action>
+	    <action path="/t12_questionnaire_disp" 
+	    	parameter="getT12_questionnaireDisp" 
+	    	name="t12_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_questionnaireAction" validate="false" 
+	    	scope="request"> 
+		    <forward name="success" path="/exam/t12_questionnaire_disp.jsp" /> 
+		    <forward name="failure" path="/t12_questionnaire_list.do" />
+	    </action>
+	    <action path="/t12_questio_ins_disp" 
+	    	parameter="getT12_question_insDisp" 
+	    	name="t12_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_questionnaireAction" validate="false" 
+	    	scope="request"> 
+		    <forward name="success" path="/exam/t12_question_ins_disp.jsp" /> 
+		    <forward name="failure" path="/t12_questionnaire_list.do" />
+	    </action>
+	    <action path="/t12_questio_ins_dispExport" 
+	    	parameter="getT12_question_insDispExport" 
+	    	name="t12_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_questionnaireAction" validate="false" 
+	    	scope="request"> 
+		    <forward name="success" path="/exam/t12_question_ins_disp.jsp" /> 
+		    <forward name="failure" path="/t12_questionnaire_list.do" />
+	    </action>
+	    <action path="/t12_questionnaire_transfer" 
+	    	parameter="t12_questionnarie_transfer" 
+	    	name="t12_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_questionnaireAction" validate="false" 
+	    	scope="request"> 
+		    <forward name="success" path="/exam/t12_questionnaire_transfer.jsp" /> 
+		    <forward name="failure" path="/exam/t12_questionnaire_transfer.jsp" />
+	    </action>
+	    <action path="/t12_questionnaire_transferDo" 
+	    	parameter="t12_questionnarie_transferDo" 
+	    	name="t12_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_questionnaireAction" validate="false" 
+	    	scope="request"> 
+		    <forward name="success" path="/t12_questionnaire_transfer.do" /> 
+		    <forward name="failure" path="/t12_questionnaire_transfer.do" />
+	    </action>
+	    <!-- 试卷复制 -->
+	    <action path="/t12_questionnaire_copy" 
+	    	parameter="t12_questionnaireCopy" 
+	    	name="t12_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_questionnaireAction" validate="false" 
+	    	scope="request"> 
+		    <forward name="success" path="/t12_questionnaire_list.do" /> 
+		    <forward name="failure" path="/t12_questionnaire_list.do" />
+	    </action>
+	    <!-- 逻辑删除 -->
+	    <action path="/t12_questionnaire_logic_delete_do" 
+	    	parameter="updateT12_questionnaireStateDo" 
+	    	name="t12_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_questionnaireAction" validate="false" 
+	    	scope="request"> 
+		    <forward name="success" path="/t12_questionnaire_list.do" /> 
+		    <forward name="failure" path="/t12_questionnaire_list.do" />
+	    </action>
+	    
+	    
+	    <!-- 创建试题 -->
+	    <action path="/t12_test_question" 
+	    	parameter="t12_test_question" 
+	    	name="t12_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_questionnaireAction" validate="false" 
+	    	scope="request"> 
+		    <forward name="success" path="/exam/t12_test_question.jsp" /> 
+		    <forward name="failure" path="/exam/t12_questionnaire_add.jsp" />
+	    </action>
+	    <action path="/t12_test_question_add" 
+	    	parameter="addT12_test_question" 
+	    	name="t12_questions_subjectActionForm" 
+	    	type="com.ist.cms.controller.T12_questionnaireAction" validate="false" 
+	    	scope="request"> 
+		    <forward name="1" path="/exam/t12_test_question_add1.jsp" /> 
+		    <forward name="2" path="/exam/t12_test_question_add2.jsp" /> 
+		    <forward name="3" path="/exam/t12_test_question_add3.jsp" /> 
+		    <forward name="4" path="/exam/t12_test_question_add4.jsp" /> 
+		    <forward name="failure" path="/exam/t12_questionnaire_add.jsp" />
+		</action>
+	    <action path="/t12_test_question_add_do" 
+	    	parameter="addT12_test_questionDo" 
+	    	name="t12_questions_subjectActionForm" 
+	    	type="com.ist.cms.controller.T12_questionnaireAction" validate="false" 
+	    	scope="request"> 
+		    <forward name="N" path="/t12_test_question.do" /> 
+		    <forward name="E" path="/t12_questionnaire_modify.do" /> 
+		    <forward name="failure" path="/exam/t12_questionnaire_add.jsp" />
+	    </action>
+		<!-- 在线考试统计 -->
+	    <action path="/t12_publish_list" parameter="getT12_publish_questionnaireList" name="t12_publish_questionnaireActionForm" type="com.ist.cms.controller.T12_publish_questionnaireAction" validate="false" scope="request"> 
+		    <forward name="success" path="/exam/t12_look_score.jsp"/> 
+	    </action>
+	    <!-- 在线调查统计 -->
+	    <action path="/t12_publish_onlinesurvey" parameter="getT12_publish_onlineSurvey" name="t12_publish_questionnaireActionForm" type="com.ist.cms.controller.T12_publish_questionnaireAction" validate="false" scope="request"> 
+		    <forward name="success" path="/exam/t12_onlinesurvey.jsp"/> 
+	    </action>  
+	    <action path="/t12_answer_sheet_list" parameter="getT12_answer_sheetList" name="t12_publish_questionnaireActionForm" type="com.ist.cms.controller.T12_publish_questionnaireAction" validate="false" scope="request"> 
+		    <forward name="success" path="/exam/t12_answer_list.jsp"/> 
+	    </action> 
+	    
+	    <action path="/t12_answer_finish_list" parameter="getT12_answer_finishList" name="t12_publish_questionnaireActionForm" type="com.ist.cms.controller.T12_publish_questionnaireAction" validate="false" scope="request"> 
+		    <forward name="success" path="/exam/t12_answer_finish_list.jsp"/> 
+	    </action> 
+	    
+	    <action path="/t12_judgment_list" parameter="getT12_judgment_questionnaireList" name="t12_judgment_questionnaireActionForm" type="com.ist.cms.controller.T12_judgment_questionnaireAction" validate="false" scope="request"> 
+		    <forward name="success" path="/exam/t12_judgment_list.jsp"/> 
+	    </action> 
+	    <action path="/t12_judgment_sheet" parameter="t12_judgment_sheet" name="t12_judgment_questionnaireActionForm" type="com.ist.cms.controller.T12_judgment_questionnaireAction" validate="false" scope="request"> 
+		    <forward name="success" path="/exam/t12_judgment_sheet.jsp"/> 
+		    <forward name="failure" path="/t12_judgment_questionnaire_list.do"/> 
+	    </action> 
+	   
+	    <action path="/t12_judgment_questionnaire_disp" parameter="getT12_judgment_questionnaireDisp" name="t12_judgment_questionnaireActionForm" type="com.ist.cms.controller.T12_judgment_questionnaireAction" validate="false" scope="request"> 
+		    <forward name="success" path="/exam/t12_judgment_questionnaire_disp.jsp"/> 
+	    </action> 
+		<action path="/t12_judgment_questionnaire_add_do" parameter="addT12_judgment_questionnaire" name="t12_judgment_questionnaireActionForm" type="com.ist.cms.controller.T12_judgment_questionnaireAction" validate="false" scope="request"> 
+		    <forward name="success" path="/exam/t12_judgment_close.jsp"/> 
+		    <forward name="failure" path="/t12_judgment_questionnaire_add.do"/> 
+	    </action> 
+	     <action path="/t12_answer_finish_sheet" 
+	    	parameter="t12_answer_finish_sheet" 
+	    	name="t12_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_questionnaireAction" validate="false" 
+	    	scope="request"> 
+		    <forward name="success" path="/exam/t12_answer_finish_sheet.jsp"/> 
+		    <forward name="failure" path="/t12_questionnaire_list.do?newsearchflag=1"/> 
+    	</action> 
+	    <!-- 修改试题 -->
+	    <action path="/t12_test_question_modify" 
+	    	parameter="modifyT12_test_question" 
+	    	name="t12_questions_subjectActionForm" 
+	    	type="com.ist.cms.controller.T12_questionnaireAction" validate="false" 
+	    	scope="request">  
+		    <forward name="1" path="/exam/t12_test_question_modi1.jsp" /> 
+		    <forward name="2" path="/exam/t12_test_question_modi2.jsp" /> 
+		    <forward name="3" path="/exam/t12_test_question_modi3.jsp" /> 
+		    <forward name="4" path="/exam/t12_test_question_modi4.jsp" /> 
+		    <forward name="failure" path="/t12_questionnaire_modify.do" />
+	    </action>
+	    <!-- 删除试题 -->
+	    <action path="/t12_questions_subject_delete_do" 
+	    	parameter="deleteT12_questions_subjectDo" 
+	    	name="t12_questions_subjectActionForm" 
+	    	type="com.ist.cms.controller.T12_questions_subjectAction" validate="false" 
+	    	scope="request">  
+		    <forward name="N" path="/t12_test_question.do" /> 
+		    <forward name="E" path="/t12_questionnaire_modify.do" />
+		    <forward name="failure" path="/t12_questionnaire_modify.do" />
+	    </action>
+	    <action path="/t12_test_question_modify_do" 
+	    	parameter="modifyT12_test_questionDo" 
+	    	name="t12_questions_subjectActionForm" 
+	    	type="com.ist.cms.controller.T12_questionnaireAction" validate="false" 
+	    	scope="request">
+		    <forward name="N" path="/t12_test_question.do" /> 
+		    <forward name="E" path="/t12_questionnaire_modify.do" /> 
+		    <forward name="failure" path="/t12_questionnaire_modify.do" />
+	    </action>
+	    <!-- 修改试卷 -->
+	    <action path="/t12_questionnaire_modify" 
+	    	parameter="modifyT12_questionnaire" 
+	    	name="t12_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_questionnaireAction" validate="false" 
+	    	scope="request"> 
+		    <forward name="success" path="/exam/t12_questionnaire_modify.jsp"/> 
+		    <forward name="failure" path="/t12_questionnaire_list.do?newsearchflag=1"/> 
+    	</action> 
+    	 <!-- 修改试卷 -->
+    	 <action path="/t12_answer_sheet" 
+	    	parameter="t12_answer_sheet" 
+	    	name="t12_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_questionnaireAction" validate="false" 
+	    	scope="request"> 
+		    <forward name="success" path="/exam/t12_answer_sheet.jsp"/> 
+		    <forward name="failure" path="/t12_questionnaire_list.do?newsearchflag=1"/> 
+    	</action> 
+    	<action path="/t12_questionnaire_modify_do" 
+	    	parameter="modifyT12_questionnaireDo" 
+	    	name="t12_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_questionnaireAction" validate="false" 
+	    	scope="request"> 
+		    <forward name="success" path="/t12_questionnaire_list.do"/> 
+		    <forward name="failure" path="/t12_questionnaire_modify.do"/> 
+    	</action> 
+   	    <action path="/t12_publish_questionnaire_list" 
+	    	parameter="getT12_publish_questionnaireList1" 
+	    	name="t12_publish_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_publish_questionnaireAction" validate="false" 
+	    	scope="request"> 
+	    	<forward name="success" path="/exam/t12_publish_questionnaire_list.jsp"/> 
+	    	<forward name="failure" path="/exam/t12_publish_questionnaire_list.jsp"/> 
+    	</action> 
+       <action path="/t12_publish_hold_list" 
+	    	parameter="getT12_publish_holdList" 
+	    	name="t12_publish_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_publish_questionnaireAction" validate="false" 
+	    	scope="request"> 
+	    	<forward name="success" path="/exam/t12_publish_hold_list.jsp"/> 
+	    	<forward name="failure" path="/exam/t12_publish_questionnaire_list.jsp"/> 
+    	</action> 
+    	<action path="/t12_publish_finish_hold_list" 
+	    	parameter="getT12_publish_finish_holdList" 
+	    	name="t12_publish_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_publish_questionnaireAction" validate="false" 
+	    	scope="request"> 
+	    	<forward name="success" path="/exam/t12_finish_hold_list.jsp"/> 
+	    	<forward name="failure" path="/exam/t12_publish_questionnaire_list.jsp"/> 
+    	</action> 
+    	<action path="/t12_publish_hold_sheet" 
+	    	parameter="getT12_publish_holdsheet" 
+	    	name="t12_publish_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_publish_questionnaireAction" validate="false" 
+	    	scope="request"> 
+	    	<forward name="success" path="/exam/t12_publish_hold_sheet.jsp"/> 
+	    	<forward name="failure" path="/exam/t12_publish_questionnaire_list.jsp"/> 
+    	</action> 
+    	<action path="/t12_finish_hold_sheet" 
+	    	parameter="getT12_finish_holdsheet" 
+	    	name="t12_publish_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_publish_questionnaireAction" validate="false" 
+	    	scope="request"> 
+	    	<forward name="success" path="/exam/t12_finish_hold_sheet.jsp"/> 
+	    	<forward name="failure" path="/exam/t12_publish_questionnaire_list.jsp"/> 
+    	</action>
+    	<action path="/t12_publish_hold_do" 
+	    	parameter="holdT12_publish_questionnaireDo" 
+	    	name="t12_publish_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_publish_questionnaireAction" validate="false" 
+	    	scope="request"> 
+	    	<forward name="success" path="/exam/t12_publish_update.jsp"/> 
+	    	<forward name="failure" path="/exam/t12_publish_questionnaire_list.jsp"/> 
+    	</action>
+    	
+    	<action path="/t12_publish_questionnaire_add" 
+	    	parameter="addT12_publish_questionnaire" 
+	    	name="t12_publish_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_publish_questionnaireAction" validate="false" 
+	    	scope="request"> 
+	    	<forward name="success" path="/exam/t12_publish_questionnaire_add.jsp"/> 
+	    	<forward name="failure" path="/t12_publish_questionnaire_list.do"/> 
+    	</action>
+    	<action path="/t12_publish_questionnaire_add_do" 
+	    	parameter="addT12_publish_questionnaireDo" 
+	    	name="t12_publish_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_publish_questionnaireAction" validate="false" 
+	    	scope="request"> 
+	    	<forward name="success" path="/t12_publish_questionnaire_list.do"/> 
+	    	<forward name="failure" path="/t12_publish_questionnaire_list.do"/> 
+    	</action>
+    	<action path="/t12_publish_questionnaire_modify" 
+	    	parameter="modifyT12_publish_questionnaire" 
+	    	name="t12_publish_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_publish_questionnaireAction" validate="false" 
+	    	scope="request"> 
+	    	<forward name="success" path="/exam/t12_publish_questionnaire_modify.jsp"/> 
+	    	<forward name="failure" path="/t12_publish_questionnaire_list.do"/> 
+    	</action>
+    	<action path="/t12_publish_questionnaire_modify_do" 
+	    	parameter="modifyT12_publish_questionnaireDo" 
+	    	name="t12_publish_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_publish_questionnaireAction" validate="false" 
+	    	scope="request"> 
+	    	<forward name="success" path="/t12_publish_questionnaire_list.do"/> 
+	    	<forward name="failure" path="/exam/t12_publish_questionnaire_modify.jsp"/> 
+    	</action>
+    	<action path="/deleteT12_publish_questionnaire_do"
+    		parameter="deleteT12_publish_questionnaireDo"
+    		name="t12_publish_questionnaireActionForm"
+    		type="com.ist.cms.controller.T12_publish_questionnaireAction" validate="false" 
+    		scope="request">
+    		<forward name="success" path="/t12_publish_questionnaire_list.do"/> 
+	    	<forward name="failure" path="/t12_publish_questionnaire_list.do"/> 
+    	</action>
+    	<action path="/t12_publish_questionnaire_questionAnswerAdd" 
+	    	parameter="getT12_questionAnswerNum" 
+	    	name="t12_publish_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_publish_questionnaireAction" validate="false" 
+	    	scope="request"> 
+	    	<forward name="success" path="/t12_publish_questionnaire_add.do"/> 
+	    	<forward name="failure" path="/t12_publish_questionnaire_add.do"/> 
+    	</action>
+    	<action path="/t12_publish_questionnaire_questionAnswerModi" 
+	    	parameter="getT12_questionAnswerNum2" 
+	    	name="t12_publish_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_publish_questionnaireAction" validate="false" 
+	    	scope="request"> 
+	    	<forward name="success" path="/t12_publish_questionnaire_modify.do"/> 
+	    	<forward name="failure" path="/t12_publish_questionnaire_modify.do"/> 
+    	</action>    	
+    	<action path="/t12_publish_questionnaire_publish_do" 
+	    	parameter="t12_publish_questionnaire_publishDo" 
+	    	name="t12_publish_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_publish_questionnaireAction" validate="false" 
+	    	scope="request"> 
+	    	<forward name="success" path="/t12_publish_questionnaire_list.do"/> 
+	    	<forward name="failure" path="/t12_publish_questionnaire_list.do"/> 
+    	</action>
+    	<!-- 停止答卷 -->
+    	<action path="/stop_t12_publish_questionnaire_do" 
+	    	parameter="stopT12_publish_questionnaireDo" 
+	    	name="t12_publish_questionnaireActionForm" 
+	    	type="com.ist.cms.controller.T12_publish_questionnaireAction" validate="false" 
+	    	scope="request"> 
+	    	<forward name="success" path="/t12_publish_questionnaire_list.do"/>  
+	    	<forward name="failure" path="/t12_publish_questionnaire_list.do"/> 
+    	</action>
+    	
+    	<!-- 问卷答题情况管理 -->
+    	<action path="/t12_answer_questionnaire_list" 
+    		parameter="getT12_answer_questionnaireList" 
+    		name="t12_answer_questionnaireActionForm" 
+    		type="com.ist.cms.controller.T12_answer_questionnaireAction" validate="false" 
+    		scope="request"> 
+	   	 <forward name="success" path="/exam/t12_answer_questionnaire_list.jsp"/> 
+   		</action>
+   		<action path="/t12_answer_questionnaire_reanswer" 
+    		parameter="t12_answer_questionnaireReAnswer" 
+    		name="t12_answer_questionnaireActionForm" 
+    		type="com.ist.cms.controller.T12_answer_questionnaireAction" validate="false" 
+    		scope="request"> 
+	   	 <forward name="success" path="/t12_answer_questionnaire_list.do"/> 
+   		</action>
+   		<action path="/t12_answer_questionnaire_disp2" 
+    		parameter="getT12_answer_questionnaireDisp2" 
+    		name="t12_answer_questionnaireActionForm" 
+    		type="com.ist.cms.controller.T12_answer_questionnaireAction" validate="false" 
+    		scope="request"> 
+	   	 <forward name="success" path="/exam/t12_answer_questionnaire_disp2.jsp"/> 
+   		</action>
+    	<action path="/t12_answer_subject_add" parameter="addT12_answer_subject" name="t12_answer_subjectActionForm" type="com.ist.cms.controller.T12_answer_subjectAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t12_answer_subject/t12_answer_subject_add.jsp"/> 
+		    <forward name="failure" path="/t12_answer_subject/t12_answer_subject_list.do"/> 
+	    </action>
+	  	<action path="/t12_answer_subject_add_do" parameter="t12_answer_subject_add" name="t12_answer_subjectActionForm" type="com.ist.cms.controller.T12_answer_subjectAction" validate="false" scope="request"> 
+		    <forward name="success" path="/exam/t12_answer_close.jsp"/> 
+		   
+    	</action>
+    	<action path="/t12_answer_questionnaire_disp3" 
+    		parameter="getT12_answer_questionnaireDisp2" 
+    		name="t12_answer_questionnaireActionForm" 
+    		type="com.ist.cms.controller.T12_answer_questionnaireAction" validate="false" 
+    		scope="request"> 
+	   	 <forward name="success" path="/exam/t12_answer_questionnaire_disp2.jsp"/> 
+   		</action>
+   		
+   	   <action path="/businessmanager/t12_category/t12_category_menu" parameter="t12_category_menu" name="t12_categoryActionForm" type="com.ist.cms.controller.T12_categoryAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_category/t12_category_index.jsp"/> 
+	   </action> 
+   	   <action path="/businessmanager/t12_category/t12_category_search" parameter="searchT12_category" name="t12_categoryActionForm" type="com.ist.cms.controller.T12_categoryAction" validate="false" scope="request"> 
+	   		<forward name="success" path="/t12_category/t12_category_search.jsp"/> 
+        	<forward name="failure" path="/businessmanager/t12_category/t12_category_list.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_category/t12_category_list" parameter="getT12_categoryList" name="t12_categoryActionForm" type="com.ist.cms.controller.T12_categoryAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_category/t12_category_list.jsp"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_category/t12_category_add" parameter="addT12_category" name="t12_categoryActionForm" type="com.ist.cms.controller.T12_categoryAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_category/t12_category_add.jsp"/> 
+		    <forward name="failure" path="/businessmanager/t12_category/t12_category_list.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_category/t12_category_add_do" parameter="addT12_categoryDo" name="t12_categoryActionForm" type="com.ist.cms.controller.T12_categoryAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_category/t12_category_list.do"/> 
+		    <forward name="failure" path="/businessmanager/t12_category/t12_category_add.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_category/t12_category_modify" parameter="modifyT12_category" name="t12_categoryActionForm" type="com.ist.cms.controller.T12_categoryAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_category/t12_category_modify.jsp"/> 
+		    <forward name="failure" path="/businessmanager/t12_category/t12_category_list.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_category/t12_category_modify_do" parameter="modifyT12_categoryDo" name="t12_categoryActionForm" type="com.ist.cms.controller.T12_categoryAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_category/t12_category_list.do"/> 
+		    <forward name="failure" path="/businessmanager/t12_category/t12_category_modify.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_category/t12_category_delete_do" parameter="deleteT12_categoryDo" name="t12_categoryActionForm" type="com.ist.cms.controller.T12_categoryAction" validate="false" scope="request"> 
+		<forward name="success" path="/businessmanager/t12_category/t12_category_list.do"/> 
+	        <forward name="failure" path="/businessmanager/t12_category/t12_category_list.do"/> 
+	    </action> 
+	    <action path="/businessmanager/t12_category/t12_category_disp" parameter="getT12_categoryDisp" name="t12_categoryActionForm" type="com.ist.cms.controller.T12_categoryAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_category/t12_category_disp.jsp"/> 
+	    </action> 
+	    	     <!-- 业务管理/栏目附件类别管理 start -->
+	    <action path="/businessmanager/t12_programa_attachtype/t12_programa_attachtype_menu" parameter="t12_programa_attachtype_menu" name="t12_programa_attachtypeActionForm" type="com.ist.cms.controller.T12_programa_attachtypeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_programa_attachtype/t12_programa_attachtype_index.jsp"/> 
+		    <forward name="failure" path="/businessmanager/t12_programa_attachtype/t12_programa_attachtype_index.jsp"/> 
+	    </action> 
+	     <action path="/businessmanager/t12_programa_attachtype/t12_programa_attachtype_list" parameter="getT12_programa_attachtypeList" name="t12_programa_attachtypeActionForm" type="com.ist.cms.controller.T12_programa_attachtypeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_programa_attachtype/t12_programa_attachtype_list.jsp"/> 
+		    <forward name="failure" path="/businessmanager/t12_programa_attachtype/t12_programa_attachtype_list.jsp"/> 
+	    </action> 
+	     <action path="/businessmanager/t12_programa_attachtype/t12_programa_attachtype_add" parameter="addT12_programa_attachtype" name="t12_programa_attachtypeActionForm" type="com.ist.cms.controller.T12_programa_attachtypeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_programa_attachtype/t12_programa_attachtype_add.jsp"/> 
+		    <forward name="failure" path="/businessmanager/t12_programa_attachtype/t12_programa_attachtype_add.jsp"/> 
+	    </action> 
+	     <action path="/businessmanager/t12_programa_attachtype/t12_programa_attachtype_add_do" parameter="addT12_programa_attachtypeDo" name="t12_programa_attachtypeActionForm" type="com.ist.cms.controller.T12_programa_attachtypeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_programa_attachtype/t12_programa_attachtype_list.do"/> 
+		    <forward name="failure" path="/businessmanager/t12_programa_attachtype/t12_programa_attachtype_add.jsp"/> 
+	    </action> 
+	     <action path="/businessmanager/t12_programa_attachtype/t12_programa_attachtype_delete_do" parameter="deleteT12_programa_attachtypeDo" name="t12_programa_attachtypeActionForm" type="com.ist.cms.controller.T12_programa_attachtypeAction" validate="false" scope="request"> 
+		    <forward name="success" path="/businessmanager/t12_programa_attachtype/t12_programa_attachtype_list.do"/> 
+		    <forward name="failure" path="/businessmanager/t12_programa_attachtype/t12_programa_attachtype_list.do"/> 
+	    </action>
+	</action-mappings>
+
+	<message-resources parameter="ApplicationResources_zh_CN" />
+</struts-config>

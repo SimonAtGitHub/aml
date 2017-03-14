@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T37_party_result_uh"> 
+ 
+  <statement id="getT37_party_resultList2" parameterClass="com.ist.aml.newrisk.dto.T37_party_result_uh" resultClass="com.ist.aml.newrisk.dto.T37_party_result_uh"> 
+  	SELECT  R.RESULEKEY,R.TEMPLATEKEY,R.PARTY_ID,R.PARTY_CHN_NAME, R.LEVELKEY,R.FRISTAPPRALEVEL, R.EMENDATIONLEVEL,
+        R.STATISTIC_DT,R.MODIFYDATE, R.ORGANKEY,R.PARTY_CLASS_CD,R.TEMPTYPE,R.CURR_POST,R.CREATE_DT,R.MODIFY_CD,LASTLEVELKEY,LASTCHECKFLAG
+        FROM	
+         <isNotEmpty prepend="" property="marked">
+			<isEqual property="marked" compareValue="0">
+				T37_PARTY_RESULT R
+			</isEqual>
+			<isEqual property="marked" compareValue="1">
+				T37_PARTY_RESULT_UH R
+			</isEqual>
+		</isNotEmpty>
+		
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="organStr">
+			R.ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="status_cd">
+			R.status_cd=#status_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="tempcategory">
+			R.TEMPCATEGORY =#tempcategory#
+		</isNotEmpty>
+	    <isNotEmpty prepend="AND" property="statistic_dt">
+			<![CDATA[STATISTIC_DT >= #statistic_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="statistic_dt_end">
+			<![CDATA[STATISTIC_DT <= #statistic_dt_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="modifydate">
+			<![CDATA[MODIFYDATE >= #modifydate#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="modifydate_end">
+			<![CDATA[MODIFYDATE <= #modifydate_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt">
+			<![CDATA[CREATE_DT >= #create_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt_end">
+			<![CDATA[CREATE_DT <= #create_dt_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			R.PARTY_ID =#party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			R.PARTY_CLASS_CD = #party_class_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			R.ORGANKEY = #organkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="fristappralevel">
+			R.FRISTAPPRALEVEL = #fristappralevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="emendationlevel">
+			R.emendationlevel=#emendationlevel# 
+			and R.MODIFY_CD='1'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="temptype">
+			R.TEMPTYPE = #temptype#
+		</isNotEmpty>
+		<isNotEmpty property="orderby">
+			<isEqual property="orderby" compareValue="1">
+				ORDER BY R.PARTY_CLASS_CD
+			</isEqual>
+			<isEqual property="orderby" compareValue="2">
+				ORDER BY R.ORGANKEY
+			</isEqual>
+			<isEqual property="orderby" compareValue="3">
+				ORDER BY R.PARTY_CHN_NAME
+			</isEqual>
+			<isEqual property="orderby" compareValue="4">
+				ORDER BY R.PARTY_ID
+			</isEqual>
+		</isNotEmpty>
+		<isNotEmpty property="orderby">
+			<isNotEmpty property="order">
+				<isEqual property="order" compareValue="1"></isEqual>
+				<isEqual property="order" compareValue="2">
+					DESC
+				</isEqual>
+			</isNotEmpty>
+		</isNotEmpty>
+	    </dynamic>
+  </statement> 
+ 
+  <statement id="getT37_party_resultListCount2" parameterClass="com.ist.aml.newrisk.dto.T37_party_result_uh" resultClass="int"> 
+  	SELECT COUNT(*) FROM	
+  		 <isNotEmpty prepend="" property="marked">
+			<isEqual property="marked" compareValue="0">
+				T37_PARTY_RESULT R
+			</isEqual>
+			<isEqual property="marked" compareValue="1">
+				T37_PARTY_RESULT_UH R
+			</isEqual>
+		</isNotEmpty>
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="organStr">
+			R.ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="status_cd">
+			R.status_cd=#status_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="tempcategory">
+			R.TEMPCATEGORY =#tempcategory#
+		</isNotEmpty>
+	    <isNotEmpty prepend="AND" property="statistic_dt">
+			<![CDATA[STATISTIC_DT >= #statistic_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="statistic_dt_end">
+			<![CDATA[STATISTIC_DT <= #statistic_dt_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="modifydate">
+			<![CDATA[MODIFYDATE >= #modifydate#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="modifydate_end">
+			<![CDATA[MODIFYDATE <= #modifydate_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt">
+			<![CDATA[CREATE_DT >= #create_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt_end">
+			<![CDATA[CREATE_DT <= #create_dt_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			R.PARTY_ID =#party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			R.PARTY_CLASS_CD = #party_class_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			R.ORGANKEY = #organkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="fristappralevel">
+			R.FRISTAPPRALEVEL = #fristappralevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="emendationlevel">
+			R.emendationlevel=#emendationlevel# 
+			and R.MODIFY_CD='1'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="temptype">
+			R.TEMPTYPE = #temptype#
+		</isNotEmpty>
+		</dynamic>
+  </statement>
+
+  <statement id="getT37_party_result_uhDisp" parameterClass="com.ist.aml.newrisk.dto.T37_party_result_uh" resultClass="com.ist.aml.newrisk.dto.T37_party_result_uh"> 
+ 	SELECT  R.RESULEKEY,R.TEMPLATEKEY,R.PARTY_ID,R.PARTY_CHN_NAME, R.LEVELKEY,R.FRISTAPPRALEVEL, R.EMENDATIONLEVEL,
+        R.STATISTIC_DT,R.MODIFYDATE, R.ORGANKEY,R.PARTY_CLASS_CD,R.TEMPTYPE,R.CURR_POST,R.CREATE_DT,R.MODIFY_CD,LASTLEVELKEY,LASTCHECKFLAG
+        FROM
+    <isNotEmpty prepend="" property="marked">
+			<isEqual property="marked" compareValue="0">
+				T37_PARTY_RESULT R
+			</isEqual>
+			<isEqual property="marked" compareValue="1">
+				T37_PARTY_RESULT_UH R
+			</isEqual>
+	</isNotEmpty>
+	WHERE R.RESULEKEY =#resulekey# 
+  </statement>
+ 
+  <statement id="getT37_party_result_notransList" parameterClass="com.ist.aml.newrisk.dto.T37_party_result_uh" resultClass="com.ist.aml.newrisk.dto.T37_party_result_uh"> 
+  	SELECT  R.RESULEKEY,R.TEMPLATEKEY,R.PARTY_ID,R.PARTY_CHN_NAME, R.LEVELKEY,R.FRISTAPPRALEVEL, R.EMENDATIONLEVEL, R.STATISTIC_DT, R.ORGANKEY,R.PARTY_CLASS_CD,R.TEMPTYPE,R.CURR_POST,R.CREATE_DT
+        FROM T37_PARTY_RESULT_NOTRANS R 	
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="organStr">
+			R.ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="status_cd">
+			R.status_cd=#status_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="tempcategory">
+			R.TEMPCATEGORY =#tempcategory#
+		</isNotEmpty>
+	    <isNotEmpty prepend="AND" property="statistic_dt">
+			<![CDATA[STATISTIC_DT >= #statistic_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="statistic_dt_end">
+			<![CDATA[STATISTIC_DT <= #statistic_dt_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt">
+			<![CDATA[CREATE_DT >= #create_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt_end">
+			<![CDATA[CREATE_DT <= #create_dt_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			R.PARTY_ID =#party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			R.PARTY_CLASS_CD = #party_class_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			R.ORGANKEY = #organkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="fristappralevel">
+			R.FRISTAPPRALEVEL = #fristappralevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="emendationlevel">
+			R.emendationlevel=#emendationlevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="temptype">
+			R.TEMPTYPE = #temptype#
+		</isNotEmpty>
+		<isNotEmpty property="orderby">
+			<isEqual property="orderby" compareValue="1">
+				ORDER BY R.PARTY_CLASS_CD
+			</isEqual>
+			<isEqual property="orderby" compareValue="2">
+				ORDER BY R.ORGANKEY
+			</isEqual>
+			<isEqual property="orderby" compareValue="3">
+				ORDER BY R.PARTY_CHN_NAME
+			</isEqual>
+			<isEqual property="orderby" compareValue="4">
+				ORDER BY R.PARTY_ID
+			</isEqual>
+		</isNotEmpty>
+		<isNotEmpty property="orderby">
+			<isNotEmpty property="order">
+				<isEqual property="order" compareValue="1"></isEqual>
+				<isEqual property="order" compareValue="2">
+					DESC
+				</isEqual>
+			</isNotEmpty>
+		</isNotEmpty>
+	    </dynamic>
+  </statement> 
+ 
+  <statement id="getT37_party_result_notransListCount" parameterClass="com.ist.aml.newrisk.dto.T37_party_result_uh" resultClass="int"> 
+  	SELECT COUNT(*) FROM	T37_PARTY_RESULT_NOTRANS R
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="organStr">
+			R.ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="status_cd">
+			R.status_cd=#status_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="tempcategory">
+			R.TEMPCATEGORY =#tempcategory#
+		</isNotEmpty>
+	    <isNotEmpty prepend="AND" property="statistic_dt">
+			<![CDATA[STATISTIC_DT >= #statistic_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="statistic_dt_end">
+			<![CDATA[STATISTIC_DT <= #statistic_dt_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt">
+			<![CDATA[CREATE_DT >= #create_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt_end">
+			<![CDATA[CREATE_DT <= #create_dt_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			R.PARTY_ID =#party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			R.PARTY_CLASS_CD = #party_class_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			R.ORGANKEY = #organkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="fristappralevel">
+			R.FRISTAPPRALEVEL = #fristappralevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="emendationlevel">
+			R.emendationlevel=#emendationlevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="temptype">
+			R.TEMPTYPE = #temptype#
+		</isNotEmpty>
+		</dynamic>
+   </statement>
+   
+   
+</sqlMap> 
+

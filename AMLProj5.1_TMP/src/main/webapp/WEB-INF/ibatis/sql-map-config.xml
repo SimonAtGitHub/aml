@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 公共模块配置 -->
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
+    "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+
+	
+
+	<!-- 基础管理平台模块配置 -->
+	<sqlMap resource="com/ist/platform/sqlmap/Common.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T18_task_fact.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T00_user.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T00_role.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T00_group.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T00_group_organ.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T00_role_auth.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T00_module.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T00_organ.xml" />
+	
+	<sqlMap resource="com/ist/platform/sqlmap/T00_com_auth.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T00_operate_log.xml" />
+	<sqlMap resource="com/ist/aml/information/sqlmap/T07_Supervise_msg.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T00_system_log.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T87_PBC_AREA.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T07_BJ_list_type_cd.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T18_task.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T18_task_log.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T18_server_log.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T18_server.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T87_tx_cd_08.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T87_attention_area.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T07_WORKDATE.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T07_defpara.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T07_valpara.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T07_nbs_templet.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T18_config_subject.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T87_subject.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/Para_export.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T00_category.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T00_tool.xml" />
+		
+	<sqlMap resource="com/ist/platform/sqlmap/T18_tasklist.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T18_task_type.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T18_task_depandon.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T07_rule_indic.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T18_dm_table.xml" />
+	<sqlMap resource="com/ist/platform/sqlmap/T00_system_param.xml" />
+	<sqlMap resource="com/ist/bmp/hpom/maps/T18_errorlog.xml" />
+	<sqlMap resource="com/ist/bmp/hpom/maps/T18_task_fact.xml" />
+	<sqlMap resource="com/ist/bmp/hpom/maps/T18_ods2dmetl.xml" />
+	<sqlMap resource="com/ist/bmp/hpom/maps/T18_shcontent.xml" />
+    <sqlMap resource="com/ist/bmp/hpom/maps/T18_onlinetask_fact.xml" />
+	<sqlMap resource="com/ist/aml/report/sqlmap/T47_transaction.xml" />
+	<sqlMap resource="com/ist/aml/report/sqlmap/T07_case_application.xml" />
+	<sqlMap resource="com/ist/aml/report/sqlmap/T07_flow.xml" />
+	<sqlMap resource="com/ist/aml/report/sqlmap/T47_party.xml" />
+	<sqlMap resource="com/ist/aml/report/sqlmap/T07_alert_attach.xml" />
+	<sqlMap resource="com/ist/aml/report/sqlmap/T07_case_Assist.xml" />
+	<sqlMap resource="com/ist/aml/report/sqlmap/T10_trans_analysis.xml" />
+	<sqlMap resource="com/ist/aml/report/sqlmap/T10_trans_analysis_case.xml" />
+	<sqlMap resource="com/ist/aml/report/sqlmap/T10_check_cust.xml" />
+	<sqlMap resource="com/ist/aml/report/sqlmap/T07_case_stcr.xml" />
+	<sqlMap resource="com/ist/aml/report/sqlmap/T07_case_transaction.xml" />
+	<sqlMap resource="com/ist/aml/inves/sqlmap/T47_id_deposit.xml" />
+	<sqlMap resource="com/ist/aml/inves/sqlmap/T47_cp_deposit.xml" />
+	<sqlMap resource="com/ist/aml/inves/sqlmap/T47_corporation.xml" />
+	<sqlMap resource="com/ist/aml/inves/sqlmap/T47_individual.xml" />
+	<sqlMap resource="com/ist/aml/pbcreport/sqlmap/T47_agreement.xml" />
+	<sqlMap resource="com/ist/aml/pbcreport/sqlmap/T07_data_trans.xml" />
+	<sqlMap resource="com/ist/aml/pbcreport/sqlmap/T07_nbh_ctif.xml" />
+    <sqlMap resource="com/ist/aml/pbcreport/sqlmap/T07_nbh_rbif.xml" />
+     <sqlMap resource="com/ist/aml/pbcreport/sqlmap/T07_nbh_tsdt.xml" />
+    <sqlMap resource="com/ist/aml/pbcreport/sqlmap/T07_nbs_ctif.xml" />
+    <sqlMap resource="com/ist/aml/pbcreport/sqlmap/T07_nbs_rbif.xml" />
+    <sqlMap resource="com/ist/aml/pbcreport/sqlmap/T07_nbs_rpdi.xml" />
+    <sqlMap resource="com/ist/aml/pbcreport/sqlmap/T07_receipt.xml" />
+    <sqlMap resource="com/ist/aml/pbcreport/sqlmap/T07_report.xml" />
+    <sqlMap resource="com/ist/aml/pbcreport/sqlmap/T07_report08.xml" />
+    <sqlMap resource="com/ist/aml/pbcreport/sqlmap/T08_ibh_tsdt.xml" />
+    <sqlMap resource="com/ist/aml/pbcreport/sqlmap/T07_nbs_atif.xml" />
+    <sqlMap resource="com/ist/aml/pbcreport/sqlmap/T07_cbh_tsdt.xml" />
+     <sqlMap resource="com/ist/aml/pbcreport/sqlmap/T07_msg.xml" />
+     <sqlMap resource="com/ist/aml/pbcreport/sqlmap/T07_pbc_sequence.xml" />
+    
+    <sqlMap resource="com/ist/aml/offs_report/sqlmap/T07_usesr_identity.xml" />
+    <sqlMap resource="com/ist/aml/offs_report/sqlmap/T07_usesr_identityUrge.xml" />
+    <sqlMap resource="com/ist/aml/offs_report/sqlmap/T07_amlpost.xml" />
+    <sqlMap resource="com/ist/aml/offs_report/sqlmap/T07_record.xml" />
+    <sqlMap resource="com/ist/aml/report/sqlmap/T07_OBJ_RULE.xml" />
+    <sqlMap resource="com/ist/aml/report/sqlmap/T07_Blacklist.xml" />
+    <sqlMap resource="com/ist/aml/report/sqlmap/T07_pbcrule.xml" />
+    <sqlMap resource="com/ist/aml/report/sqlmap/T07_report_organ.xml" />
+ 
+
+    <sqlMap resource="com/ist/aml/information/sqlmap/T47_OPP_bank.xml" />
+    <sqlMap resource="com/ist/aml/information/sqlmap/T47_Opp_info.xml" />
+    <sqlMap resource="com/ist/aml/information/sqlmap/T00_NOTICE.xml" />
+    <sqlMap resource="com/ist/aml/inves/sqlmap/T07_ReportSearch_ms.xml" />
+    <sqlMap resource="com/ist/aml/inves/sqlmap/T07_reportSearch.xml" />
+    <sqlMap resource="com/ist/aml/inves/sqlmap/T07_party_ganz.xml" />
+
+    <sqlMap resource="com/ist/aml/report/sqlmap/T07_alert.xml" />
+    <sqlMap resource="com/ist/aml/report/sqlmap/T07_report_by_organ.xml" />
+
+     
+ <!--  报表工具 -->
+ 	<sqlMap resource="com/ist/platform/sqlmap/T00_dict.xml" />
+ 
+  <!--rpp begin  --> 
+	<sqlMap resource="com/ist/rpp/report/maps/T10_report.xml" />
+	<sqlMap resource="com/ist/rpp/report/maps/T10_reportParm.xml" />
+	<sqlMap resource="com/ist/rpp/report/maps/T10_page_in_val.xml" />
+	<sqlMap resource="com/ist/rpp/report/maps/T10_rep_graph.xml" />
+	<!-- rpp end --> 
+	
+	<!-- iap start -->
+	<sqlMap resource="com/ist/iap/maps/T09_indicator_attr.xml" />
+	
+
+	<sqlMap resource="com/ist/iap/maps/T09_indic_subitem3.xml" />
+	<sqlMap resource="com/ist/iap/maps/T09_indicator.xml" />
+	<sqlMap resource="com/ist/iap/maps/T09_indic_colmap.xml" />
+	<sqlMap resource="com/ist/iap/maps/T09_indic_inout.xml" />
+	<sqlMap resource="com/ist/iap/maps/T09_indic_subitem1.xml" />
+	<sqlMap resource="com/ist/iap/maps/T09_page_in_parm.xml" />
+	<sqlMap resource="com/ist/iap/maps/T09_page_in_val.xml" />
+	<sqlMap resource="com/ist/iap/maps/T09_param_list.xml" />
+
+	
+	
+	<sqlMap resource="com/ist/common/metadata/maps/T01_mt_col_pro.xml" />
+	<!-- iap end-->
+	<!-- matadata start -->
+	<sqlMap resource="com/ist/common/metadata/maps/T01_custom_attr.xml"/>
+	<sqlMap resource="com/ist/common/metadata/maps/T01_db_link.xml"/>
+	<sqlMap resource="com/ist/common/metadata/maps/T01_mt_auth.xml"/>
+	<sqlMap resource="com/ist/common/metadata/maps/T01_mt_property.xml"/>
+	<sqlMap resource="com/ist/common/metadata/maps/T01_mt_share.xml"/>
+	<!--  <sqlMap resource="com/ist/common/metadata/maps/T01_mt_function.xml"/>-->
+	
+	<!-- matadata end -->
+	<!-- avp -->
+	<sqlMap resource="com/ist/avp/template/maps/T02_tp_bas_inf.xml"/>
+	<sqlMap resource="com/ist/avp/template/maps/T02_tp_in_parm.xml"/>
+	<sqlMap resource="com/ist/avp/template/maps/T02_page_in_val.xml"/>
+	<sqlMap resource="com/ist/avp/template/maps/T02_tp_exec_qry.xml"/>
+	<sqlMap resource="com/ist/avp/template/maps/T02_tp_disp_rst.xml"/>
+	<sqlMap resource="com/ist/avp/template/maps/T02_jump_tp.xml"/>
+	<sqlMap resource="com/ist/avp/template/maps/T02_cond_sub.xml"/>
+	<sqlMap resource="com/ist/avp/template/maps/T02_tp_exec_rst.xml"/>
+	<sqlMap resource="com/ist/avp/template/maps/T02_parm_sub.xml"/>
+	<sqlMap resource="com/ist/avp/template/maps/T02_tp_tab_rel.xml"/>
+	<sqlMap resource="com/ist/avp/template/maps/T02_tp_log.xml"/>
+	<sqlMap resource="com/ist/avp/template/maps/T02_tp_cus_action.xml"/>
+	<sqlMap resource="com/ist/avp/template/maps/T02_tp_report.xml"/>
+	<sqlMap resource="com/ist/avp/template/maps/T02_tp_chart.xml"/>
+	<sqlMap resource="com/ist/avp/template/maps/T02_tp_show.xml"/>
+	<sqlMap resource="com/ist/avp/template/maps/T02_tp_stat.xml"/>
+	<!-- avp end-->
+	
+	<!-- 统一视图   -->
+	<sqlMap resource="com/ist/avp/search/maps/T02_srch_eng_inf.xml" />
+	<sqlMap resource="com/ist/avp/search/maps/T02_crlt_srch.xml" />
+	<sqlMap resource="com/ist/avp/search/maps/T02_parm_elmt_rela.xml" />
+	<sqlMap resource="com/ist/avp/search/maps/T02_parm_elmt.xml" />
+	<sqlMap resource="com/ist/avp/search/maps/T02_srch_cate.xml" />
+	<sqlMap resource="com/ist/avp/search/maps/T02_srch_eng_log.xml" />
+	<sqlMap resource="com/ist/avp/search/maps/T02_srch_eng_parm.xml" />
+	<sqlMap resource="com/ist/avp/search/maps/T02_srch_inf.xml" />
+  <sqlMap resource="com/ist/common/download/maps/T18_onlinetask_fact.xml" />
+   <sqlMap resource="com/ist/common/download/maps/T18_download.xml" />
+	<!-- 统一视图end -->
+    
+    <!--list  -->
+    <sqlMap resource="com/ist/aml/lip/sqlmap/T07_lip.xml"/>
+    <!--list end  -->
+     <!-- rule -->
+        <sqlMap resource="com/ist/aml/rule/sqlmap/T21_defpara.xml"/>
+        <sqlMap resource="com/ist/aml/rule/sqlmap/T21_indic.xml"/>
+        <sqlMap resource="com/ist/aml/rule/sqlmap/T21_pbcrule.xml"/>
+        <sqlMap resource="com/ist/aml/rule/sqlmap/T21_rule.xml"/>
+        <sqlMap resource="com/ist/aml/rule/sqlmap/T27_alert.xml"/>
+        <sqlMap resource="com/ist/aml/rule/sqlmap/T03_page_in_parm.xml"/>
+        <sqlMap resource="com/ist/aml/rule/sqlmap/T03_page_in_val.xml"/>
+        <sqlMap resource="com/ist/aml/rule/sqlmap/T03_tp_exec_qry.xml"/>
+        <sqlMap resource="com/ist/aml/rule/sqlmap/T03_rule_entity_r.xml"/>
+        <sqlMap resource="com/ist/aml/rule/sqlmap/T03_entity_kind.xml"/>
+        <sqlMap resource="com/ist/aml/rule/sqlmap/T03_entity_kind_man.xml"/>
+        <sqlMap resource="com/ist/aml/rule/sqlmap/T03_param_org.xml"/>
+        <sqlMap resource="com/ist/aml/rule/sqlmap/T03_param_org_val.xml"/>
+        <sqlMap resource="com/ist/aml/rule/sqlmap/T01_function_param.xml"/>
+    <!-- mfa -->
+    <sqlMap resource="com/ist/mfa/sqlmap/T23_rule_module.xml" />
+	<sqlMap resource="com/ist/mfa/sqlmap/T23_module_stcr.xml" />
+	<sqlMap resource="com/ist/mfa/sqlmap/T23_net_para.xml" />  
+    <sqlMap resource="com/ist/mfa/sqlmap/T13_mfa.xml" />
+    <sqlMap resource="com/ist/mfa/sqlmap/T13_relation_net.xml" />
+    <sqlMap resource="com/ist/mfa/sqlmap/T13_mfa_info.xml" />
+    <sqlMap resource="com/ist/mfa/sqlmap/T13_mfa_deal.xml" />
+    
+    <!-- cust_identify -->
+    <sqlMap resource="com/ist/aml/cust_identify/sqlmap/T10_checkparty.xml" />
+    <sqlMap resource="com/ist/aml/cust_identify/sqlmap/T10_checkparty_fun.xml" />
+    <sqlMap resource="com/ist/aml/cust_identify/sqlmap/T10_party_cretal.xml" />
+    
+    <!-- newrisk -->
+    <sqlMap resource="com/ist/aml/newrisk/sqlmap/T31_def_temp.xml" />
+    <sqlMap resource="com/ist/aml/newrisk/sqlmap/T31_def_gs.xml" />
+    <sqlMap resource="com/ist/aml/newrisk/sqlmap/T31_def_element.xml" />
+    <sqlMap resource="com/ist/aml/newrisk/sqlmap/T37_party_result.xml" />
+     <sqlMap resource="com/ist/aml/newrisk/sqlmap/T37_party_result_uh.xml" />
+    <sqlMap resource="com/ist/aml/newrisk/sqlmap/T37_risk_attach.xml" />
+	 <sqlMap resource="com/ist/aml/newrisk/sqlmap/T31_count_rule.xml" />
+    <sqlMap resource="com/ist/aml/newrisk/sqlmap/T31_risk_level.xml" />
+    <!-- risk_rate start by shan -->
+    <sqlMap resource="com/ist/aml/risk_rate/sqlmap/T37_help_check.xml" />
+    <sqlMap resource="com/ist/aml/risk_rate/sqlmap/T37_party_result.xml" />
+    <sqlMap resource="com/ist/aml/risk_rate/sqlmap/T37_risk_attach.xml" />
+    <sqlMap resource="com/ist/aml/risk_rate/sqlmap/T37_party_result_curr.xml" />
+    <!-- risk_rate end -->
+    <!-- end -->
+	<!--    add by zhanjin for datasource-->
+    <sqlMap resource="com/ist/bmp/hpom/maps/T18_ods_ftp.xml" />
+    <sqlMap resource="com/ist/bmp/hpom/maps/T18_ods_dblink.xml" />
+    <sqlMap resource="com/ist/bmp/hpom/maps/T18_ods_load.xml" />
+    <sqlMap resource="com/ist/bmp/hpom/maps/T18_ods_table.xml" />
+    <sqlMap resource="com/ist/bmp/hpom/maps/T18_ods_fetch.xml" />
+    <sqlMap resource="com/ist/bmp/hpom/maps/T18_datasource.xml" />
+    <sqlMap resource="com/ist/bmp/hpom/maps/T18_dm_table.xml" />
+	<!--end-->
+	
+	<!-- added by shanbh for query t18_task_type -->
+    		<sqlMap  resource="com/ist/bmp/hpom/maps/T18_task_type.xml" />
+    	<!-- end by shanbh -->
+	<!-- 知识管理平台 开始-->	
+	<sqlMap resource="com/ist/cms/maps/T12_article_collect.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_article_content.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_article_history.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_article_relation.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_article_keywords.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_article_log.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_article.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_ca_programa.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_date_subscibe.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_keywords_library.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_person_subscibe.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_power_group.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_power_role.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_power_user.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_programa_cols.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_programa_defcols.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_programa_power.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_programa_subscibe.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_programa_table_rel.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_programa_table.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_programa.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_subscibe_tactics.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_subscibe.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_writeback.xml" />	
+	<sqlMap resource="com/ist/cms/maps/T12_se_file_db.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_se_file_path.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_questionnaire.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_questions_subject.xml"/>
+	<sqlMap resource="com/ist/cms/maps/T12_questions_choice.xml"/>
+	<sqlMap resource="com/ist/cms/maps/T12_publish_questionnaire.xml"/>
+	<sqlMap resource="com/ist/cms/maps/T12_publish_grade.xml"/>
+	<sqlMap resource="com/ist/cms/maps/T12_publish_user.xml"/>
+	<sqlMap resource="com/ist/cms/maps/T12_judgment_questionnaire.xml"/>
+	<sqlMap resource="com/ist/cms/maps/T12_answer_questionnaire.xml"/>
+	<sqlMap resource="com/ist/cms/maps/T12_answer_subject.xml"/>
+	<sqlMap resource="com/ist/cms/maps/T12_judgment_subject.xml"/>
+	<sqlMap resource="com/ist/cms/maps/T12_article_coderule.xml"/>
+	<sqlMap resource="com/ist/cms/maps/T12_category.xml"/>
+	<sqlMap resource="com/ist/cms/maps/T12_ca_article.xml"/>
+	<sqlMap resource="com/ist/cms/maps/T12_programa_attachtype.xml" />
+	<sqlMap resource="com/ist/cms/maps/T12_pp_programa.xml" />
+	<!-- cmp begin -->
+	<sqlMap resource="com/ist/common/attachment/maps/T01_attachment.xml" />
+	<sqlMap resource="com/ist/common/attachment/maps/T01_attach_map.xml" />
+	
+	<!-- custom mfa start-->
+    <sqlMap resource="com/ist/aml/nb/sqlmap/T13_mfa_nb.xml"/>
+    <!-- custom mfa end  -->
+
+    
+    <!-- attention lib begin  -->
+    <sqlMap resource="com/ist/aml/report/sqlmap/T07_ATTENTION_lib.xml"/>    
+    <!-- attention lib end  -->
+
+    <!-- new client check start by shanbh -->
+    <sqlMap resource="com/ist/aml/cust_identify/sqlmap/T10_newClientCheck.xml" />
+    <!-- new client check end -->
+    
+    <sqlMap resource="com/ist/aml/inves/sqlmap/T07_INREP_BH_msg.xml"/>
+    <sqlMap resource="com/ist/aml/inves/sqlmap/T07_INREP_BS_level.xml"/>
+    <sqlMap resource="com/ist/aml/inves/sqlmap/T07_INREP_BS_msg.xml"/>
+    <sqlMap resource="com/ist/aml/inves/sqlmap/T07_INREP_FR.xml"/>
+    <sqlMap resource="com/ist/aml/inves/sqlmap/T07_INREP_BH_cny_rep.xml"/>
+	<sqlMap resource="com/ist/aml/inves/sqlmap/T07_INREP_BH_cny_sta.xml" />
+	<sqlMap resource="com/ist/aml/inves/sqlmap/T07_INREP_BH_usd_rep.xml" />
+	<sqlMap resource="com/ist/aml/inves/sqlmap/T07_INREP_BH_usd_sta.xml" />
+	<sqlMap resource="com/ist/aml/inves/sqlmap/T07_INREP_BH_sum_rep.xml" />
+	<sqlMap resource="com/ist/aml/inves/sqlmap/T07_INREP_BH_sum_sta.xml" />
+
+	<sqlMap resource="com/ist/aml/report/sqlmap/T07_cd_apply.xml"/>
+	
+</sqlMapConfig>

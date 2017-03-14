@@ -1,0 +1,888 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T10_check_cust"> 
+  
+   <statement id="getT10_check_acctlist_nsh"
+		parameterClass="com.ist.aml.inves.dto.T47_cp_deposit"
+		resultClass="com.ist.aml.inves.dto.T47_cp_deposit">
+		SELECT ACCT_NUM ACCT_NUM,CUSTOMER_ID as PARTY_ID,ACCT_TYPE_CD
+		ACCT_TYPE_CD,AML_ACCT_TYPE_CD AML_ACCT_TYPE_CD ,CUSTOMER_NAME as PARTY_CHN_NAME,
+		OP_ORG_NUM ORGANKEY,
+		CURRENCY_CD CURRENCY_CD,SUBJECTKEY SUBJECTNO,OPEN_DT
+		OPEN_DT,ACCT_PROCESSING_DT ACCT_PROCESSING_DT,MATURE_DT
+		MATURE_DT,LAST_ACCT_TX_DT LAST_OCCUR_DT,CLOSE_DT CLOSE_DT,
+		 DEPOSIT_AMT AMT_VAL,CONTRACT_NUM as TOKEN_ID,ACCT_STATUS_CD
+		ACCT_STATUS_CD,OPEN_AMT FROM t47_agreement
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="party_id">
+			CUSTOMER_ID = #party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="acct_num">
+			ACCT_NUM = #acct_num#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="acct_status_cd">
+			ACCT_STATUS_CD = #acct_status_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="open_dt_start">
+			<![CDATA[OPEN_DT >= #open_dt_start:DATE#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="open_dt_end">
+			<![CDATA[OPEN_DT <= #open_dt_end:DATE#]]>
+		</isNotEmpty>
+		<isNotEmpty property="order_name">
+			ORDER BY $order_name$
+			<isNotEmpty property="order_type">
+		        <isEqual property="order_type"
+					compareValue="1">
+				</isEqual>
+				<isEqual property="order_type"
+					compareValue="2">
+					DESC
+				</isEqual>
+		    </isNotEmpty>
+		</isNotEmpty>	
+		
+	</dynamic> 
+	</statement>
+	
+	
+	<statement id="getT10_check_acctlistCount_nsh"
+		parameterClass="com.ist.aml.inves.dto.T47_cp_deposit"
+		resultClass="int">
+		SELECT COUNT(*)
+		 FROM t47_agreement
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="party_id">
+			CUSTOMER_ID = #party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="acct_num">
+			ACCT_NUM = #acct_num#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="acct_status_cd">
+			ACCT_STATUS_CD = #acct_status_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="open_dt_start">
+			<![CDATA[OPEN_DT >= #open_dt_start:DATE#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="open_dt_end">
+			<![CDATA[OPEN_DT <= #open_dt_end:DATE#]]>
+		</isNotEmpty>
+	</dynamic>
+	</statement>
+	 
+	<statement id="getT10_check_caselist_nsh" parameterClass="com.ist.aml.report.dto.T07_case_application"
+	resultClass="com.ist.aml.report.dto.T07_case_application">
+	SELECT
+	APPLICATION_NUM,CASE_NAME,CAST_TYPE,CASE_DATE,APP_STATE_CD,ACTION_DESCRIP,TAKE_ACTION,APPLICATION_ADVICE
+	FROM
+	<isNotEmpty prepend="" property="casesearchtime">
+		<isEqual property="casesearchtime" compareValue="0">
+			T07_CASE_APPLICATION T 
+  	</isEqual>
+		<isEqual property="casesearchtime" compareValue="1">
+			T07_CASE_APPLICATION_UH T
+  	</isEqual>
+		where 1>0
+		<isNotEmpty prepend="AND" property="party_id">
+			T.PARTY_ID = #party_id#
+			</isNotEmpty>
+		<isNotEmpty prepend="AND" property="cast_type">
+			T.CAST_TYPE = #cast_type#
+			</isNotEmpty>
+		<isNotEmpty prepend="AND" property="app_state_cd">
+			T.APP_STATE_CD = #app_state_cd#
+			</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			T.APP_ORG_ID = #organkey#
+			</isNotEmpty>
+		<isNotEmpty prepend="AND" property="application_num">
+			T.APPLICATION_NUM = #application_num#
+			</isNotEmpty>
+		<isNotEmpty prepend="AND" property="case_name">
+			T.CASE_NAME = #case_name#
+			</isNotEmpty>
+		<isNotEmpty prepend="and" property="case_date_start">
+				<![CDATA[T.CASE_DATE >= #case_date_start:DATE#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="case_date_end">
+				<![CDATA[T.CASE_DATE <= #case_date_end:DATE#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organStr">
+			T.APP_ORG_ID IN ($organStr$)
+			</isNotEmpty>
+	</isNotEmpty>
+</statement>
+		
+		<statement id="getT10_check_caselistCount_nsh"
+	parameterClass="com.ist.aml.report.dto.T07_case_application"
+	resultClass="int">
+	SELECT count(APPLICATION_NUM)
+	FROM
+	<isNotEmpty prepend="" property="casesearchtime">
+		<isEqual property="casesearchtime" compareValue="0">
+			T07_CASE_APPLICATION T
+  	</isEqual>
+		<isEqual property="casesearchtime" compareValue="1">
+			T07_CASE_APPLICATION_UH T
+  	</isEqual>
+		where 1>0
+		<isNotEmpty prepend="AND" property="party_id">
+			T.PARTY_ID = #party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="cast_type">
+			T.CAST_TYPE =
+			#cast_type#
+			</isNotEmpty>
+		<isNotEmpty prepend="AND" property="app_state_cd">
+			T.APP_STATE_CD =
+			#app_state_cd#
+			</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			T.APP_ORG_ID =
+			#organkey#
+			</isNotEmpty>
+		<isNotEmpty prepend="AND" property="application_num">
+			T.APPLICATION_NUM =
+			#application_num#
+			</isNotEmpty>
+		<isNotEmpty prepend="AND" property="case_name">
+			T.CASE_NAME =
+			#case_name#
+			</isNotEmpty>
+		<isNotEmpty prepend="and" property="case_date_start">
+				<![CDATA[T.CASE_DATE >= #case_date_start:DATE#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="case_date_end">
+				<![CDATA[T.CASE_DATE <= #case_date_end:DATE#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organStr">
+			T.APP_ORG_ID IN
+			($organStr$)
+			</isNotEmpty>
+	</isNotEmpty>
+</statement>
+		
+		
+	
+
+	<statement id="getT10_survey_cust_list_type_nsh" 
+		parameterClass="com.ist.aml.report.dto.T10_survey_cust" 
+		resultClass="com.ist.aml.report.dto.T10_survey_cust">
+		SELECT PARTY_ID,LIP_FLAG AS LIST_TYPE
+		FROM T07_LIP_VIEW WHERE PARTY_ID=#party_id#
+    </statement>
+    
+    <statement id="getT10_survey_i_cust_info_nsh" 
+		parameterClass="com.ist.aml.report.dto.T10_survey_cust" 
+		resultClass="com.ist.aml.report.dto.T10_survey_cust">
+		SELECT A.LAST_UPD_USER,A.PARTY_ID,A.PARTY_STATUS_CD,A.last_upd_dt,
+		A.PARTY_CHN_NAME,A.CARD_TYPE,A.CARD_NO,A.COUNTRY_CD,A.COUNTRY_RESIDENCE,A.ADDR1,A.TEL_NO,A.CELL_NO,A.ORGANKEY,B.COMPANY,
+		B.GENDER,B.OCCUPATION  ,B.MANAGER_NO,B.MANAGER_NAME,B.OTHER_INFO,B.CARD_END_DT,A.CREATE_DT
+		FROM T47_PARTY A,T47_INDIVIDUAL B WHERE A.PARTY_ID=B.PARTY_ID AND
+		B.PARTY_ID=#party_id#
+    </statement>
+    
+    <statement id="getT10_survey_c_cust_info_nsh" 
+		parameterClass="com.ist.aml.report.dto.T10_survey_cust" 
+		resultClass="com.ist.aml.report.dto.T10_survey_cust">
+		SELECT A.LAST_UPD_USER,A.PARTY_ID,A.PARTY_STATUS_CD,A.PARTY_CHN_NAME,
+		A.ORGANKEY,A.CARD_TYPE,A.CARD_NO,A.COUNTRY_CD,A.COUNTRY_RESIDENCE,B.NATION_AFFAIR_NO,
+		B.LOCAL_AFFAIR_NO,A.ADDR1,B.ORGAN_CODE,A.LAST_UPD_DT,
+		A.TEL_NO,A.CELL_NO,B.MANAGER_NO,B.MANAGER_NAME,B.OTHER_INFO,
+		B.ENROL_FUND_AMT,B.ENROL_FUND_CURRENCY_CD,
+		B.BASE_ACCT_NUM,B.BASE_BANK_ID,B.BASE_BANK_ORG,B.COMPANY_SCOPE,
+		B.INDUSTRYKEY,B.COMPANY_TYPE_CD,B.MAIN_MANAGE_SCOPE,
+		B.LEGAL_OBJ,B.LEGAL_CARD_TYPE,B.LEGAL_CARD_NO,B.LEGAL_ADDR,LEGAL_TEL,B.ORG_CREDIT_NO ,B.ORG_CREDIT_VT,
+		B.BUSINESS_LICENCE,B.LICENCE_END_DT,B.LEGAL_CARD_NO_END_DT,B.LOCAL_AFFAIR_END_DT,B.NATION_AFFAIR_END_DT,B.ORGAN_CODE_END_DT,B.flag,A.CREATE_DT
+		FROM T47_PARTY A,T47_CORPORATION B
+		WHERE  A.PARTY_ID=B.PARTY_ID AND B.PARTY_ID=#party_id#
+    </statement>
+    
+    <statement id="getacctinfobyaccnum_nsh"
+		parameterClass="com.ist.aml.inves.dto.T47_cp_deposit"
+		resultClass="com.ist.aml.inves.dto.T47_cp_deposit">
+		 select ACCT_NUM,CUSTOMER_ID as PARTY_ID,CUSTOMER_NAME as PARTY_CHN_NAME,
+		   OP_ORG_NUM as ORGANKEY,ACCT_ORG_NUM as organKeys,ACCT_STATUS_CD,
+		   ACCT_TYPE_CD,SUBJECTKEY as SUBJECTNO,DEPOSIT_AMT as AMT_VAL,     
+		   OPEN_DT,CLOSE_DT,CONTRACT_NUM as TOKEN_ID,LAST_ACCT_TX_DT as LAST_OCCUR_DT,
+		  ACCT_PROCESSING_DT,PERD_CD as ib_type_cd,MATURE_DT
+		   from t47_agreement where ACCT_NUM=#acct_num#
+	</statement>
+
+  <statement id="getT10_check_custkeAlertList" parameterClass="com.ist.aml.report.dto.T10_check_cust_ke" resultClass="com.ist.aml.report.dto.T10_check_cust_ke"> 
+    SELECT T.PARTY_ID,T.PARTY_NAME,T.PARTY_CLASS_CD,T.ORGANKEY,T.TRANS_ALL,T.TRANS_REP,T.TRANS_DEL,T.CASE_DE_ALL,T.CASE_KY_ALL,T.CASE_KY_REP,T.CHECK_STATUS,T.CHECK_RESULT
+ 	FROM (SELECT T1.PARTY_ID AS PARTY_ID,
+ 				 T1.PARTY_NAME AS PARTY_NAME,
+				 T1.PARTY_CLASS_CD AS PARTY_CLASS_CD,
+				 T1.ORGANKEY AS ORGANKEY,
+				 T1.TRANS_ALL AS TRANS_ALL,
+				 T1.TRANS_REP AS TRANS_REP,
+				 T1.TRANS_DEL AS TRANS_DEL,
+				 T1.CASE_DE_ALL AS CASE_DE_ALL,
+				 T1.CASE_KY_ALL AS CASE_KY_ALL,
+				 T1.CASE_KY_REP AS CASE_KY_REP,
+				 (CASE WHEN T2.VALID_DT IS NULL THEN '0'
+				 	   WHEN <![CDATA[T2.VALID_DT >= #curr_date#]]> THEN '1'
+			 	       WHEN <![CDATA[T2.VALID_DT < #curr_date#]]>  THEN '2' END)
+			 		   AS CHECK_STATUS,
+			    T2.CHECK_DT AS CHECK_DT,
+			    T2.CHECK_RESULT as CHECK_RESULT
+   	     FROM T10_CHECK_PARTY_KE T1 LEFT JOIN T10_CHECK_PARTY_RESULT T2 ON (T1.PARTY_ID = T2.PARTY_ID)) T
+    <dynamic prepend="WHERE">
+    		<isNotEmpty prepend="AND" property="party_id">
+				T.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_name">
+				T.PARTY_NAME = #party_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				T.PARTY_CLASS_CD = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				T.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="trans_rep">
+				T.TRANS_REP = #trans_rep#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_status">
+				T.CHECK_STATUS = #check_status#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organStr">
+				T.ORGANKEY IN ($organStr$)
+			</isNotEmpty>
+			<isNotEmpty property="order_check">
+				<isEqual property="order_check" compareValue="0">
+					ORDER BY T.PARTY_ID
+				</isEqual>
+				<isEqual property="order_check" compareValue="1">
+					ORDER BY T.PARTY_CLASS_CD
+				</isEqual>
+				<isEqual property="order_check" compareValue="2">
+					ORDER BY T.ORGANKEY
+				</isEqual>
+				<isEqual property="order_check" compareValue="3">
+					ORDER BY T.TRANS_REP
+				</isEqual>
+				<isNotEmpty property="fashion">
+					<isEqual property="fashion" compareValue="asc"></isEqual>
+					<isEqual property="fashion" compareValue="desc">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</dynamic> 
+  </statement>
+  
+  <statement id="getT10_check_custkeAlertListCount" parameterClass="com.ist.aml.report.dto.T10_check_cust_ke" resultClass="int"> 
+   SELECT COUNT(*)
+ 	FROM (SELECT T1.PARTY_ID AS PARTY_ID,
+ 				 T1.PARTY_NAME AS PARTY_NAME,
+				 T1.PARTY_CLASS_CD AS PARTY_CLASS_CD,
+				 T1.ORGANKEY AS ORGANKEY,
+				 T1.TRANS_ALL AS TRANS_ALL,
+				 T1.TRANS_REP AS TRANS_REP,
+				 T1.TRANS_DEL AS TRANS_DEL,
+				 T1.CASE_DE_ALL AS CASE_DE_ALL,
+				 T1.CASE_KY_ALL AS CASE_KY_ALL,
+				 T1.CASE_KY_REP AS CASE_KY_REP,
+				 (CASE WHEN T2.VALID_DT IS NULL THEN '0'
+				 	   WHEN <![CDATA[T2.VALID_DT >= #curr_date#]]> THEN '1'
+			 	       WHEN <![CDATA[T2.VALID_DT < #curr_date#]]>  THEN '2' END)
+			 		   AS CHECK_STATUS,
+			    T2.CHECK_DT AS CHECK_DT
+   	     FROM T10_CHECK_PARTY_KE T1 LEFT JOIN T10_CHECK_PARTY_RESULT T2 ON (T1.PARTY_ID = T2.PARTY_ID)) T
+    <dynamic prepend="WHERE">
+    		<isNotEmpty prepend="AND" property="party_id">
+				T.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_name">
+				T.PARTY_NAME = #party_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				T.PARTY_CLASS_CD = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				T.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="trans_rep">
+				T.TRANS_REP = #trans_rep#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_status">
+				T.CHECK_STATUS = #check_status#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organStr">
+				T.ORGANKEY IN ($organStr$)
+			</isNotEmpty>
+	</dynamic> 		
+  </statement>   
+  
+  <statement id="getT47_i_clientDisp"
+		parameterClass="com.ist.aml.report.dto.T10_check_cust_clue"
+		resultClass="com.ist.aml.report.dto.T10_check_cust_clue">
+		SELECT A.LAST_UPD_USER,A.PARTY_ID,A.PARTY_STATUS_CD,
+		A.PARTY_CHN_NAME,A.CARD_TYPE,A.CARD_NO,A.COUNTRY_CD,A.COUNTRY_RESIDENCE,A.ADDR1,A.TEL_NO,A.CELL_NO,A.ORGANKEY,B.COMPANY,
+		B.GENDER,B.OCCUPATION  ,B.MANAGER_NO,B.MANAGER_NAME,B.OTHER_INFO,B.CARD_END_DT
+		FROM T47_PARTY A,T47_INDIVIDUAL B WHERE A.PARTY_ID=B.PARTY_ID AND
+		B.PARTY_ID=#party_id#
+	</statement>
+	<statement id="getT47_c_clientDisp"
+		parameterClass="com.ist.aml.report.dto.T10_check_cust_clue"
+		resultClass="com.ist.aml.report.dto.T10_check_cust_clue">
+		SELECT A.LAST_UPD_USER,A.PARTY_ID,A.PARTY_STATUS_CD,A.PARTY_CHN_NAME,
+		A.ORGANKEY,A.CARD_TYPE,A.CARD_NO,A.COUNTRY_CD,A.COUNTRY_RESIDENCE,B.NATION_AFFAIR_NO,
+		B.LOCAL_AFFAIR_NO,A.ADDR1,B.ORGAN_CODE,
+		A.TEL_NO,B.MANAGER_NO,B.MANAGER_NAME,B.OTHER_INFO,
+		B.ENROL_FUND_AMT,B.ENROL_FUND_CURRENCY_CD,
+		B.BASE_ACCT_NUM,B.BASE_BANK_ID,B.BASE_BANK_ORG,B.COMPANY_SCOPE,
+		B.INDUSTRYKEY,B.COMPANY_TYPE_CD,B.MAIN_MANAGE_SCOPE,
+		B.LEGAL_OBJ,B.LEGAL_CARD_TYPE,B.LEGAL_CARD_NO,B.LEGAL_ADDR,LEGAL_TEL,
+		B.BUSINESS_LICENCE,B.LICENCE_END_DT,B.LEGAL_CARD_NO_END_DT,B.LOCAL_AFFAIR_END_DT,B.NATION_AFFAIR_END_DT,B.ORGAN_CODE_END_DT,B.flag,
+		B.ORG_CREDIT_NO ,B.ORG_CREDIT_VT FROM T47_PARTY A,T47_CORPORATION B
+		WHERE  A.PARTY_ID=B.PARTY_ID AND B.PARTY_ID=#party_id#
+	</statement>
+	<statement id="getT10_BUSINESSINFO"
+		parameterClass="com.ist.aml.report.dto.T10_check_cust_clue"
+		resultClass="com.ist.aml.report.dto.T10_check_cust_clue">
+		 select BACKGROUND,FUNDORIGIN,FOUNDUSE,RUNBUSI,NUM from T10_BUSINESS_INFO  where PARTY_ID=#party_id#
+	</statement>
+	
+	<statement id="getT10_ECONOMYINFO"
+		parameterClass="com.ist.aml.report.dto.T10_check_cust_clue"
+		resultClass="com.ist.aml.report.dto.T10_check_cust_clue">
+		 select TRADEANALYSE,RUNSTATANALYSE,FINANCEEANALYSE,NUM from T10_ECONOMY_INFO where PARTY_ID=#party_id#
+	</statement>
+	<statement id="delT10_ECONOMYINFO"
+		parameterClass="com.ist.aml.report.dto.T10_check_cust_clue"
+		resultClass="java.lang.Integer">
+		 delete from T10_ECONOMY_INFO where PARTY_ID=#party_id# and NUM = #num#
+	</statement>
+	
+	<statement id="getT10_CONTROLLERINFO"
+		parameterClass="com.ist.aml.report.dto.T10_check_cust_clue"
+		resultClass="com.ist.aml.report.dto.T10_check_cust_clue">
+		 select PARTY_NAME,CARD_TYPE,CARD_NO,CARD_DUE_DT,LINKMODE,AMT,NUM  from T10_CONTROLLERINFO where PARTY_ID=#party_id#
+	</statement>
+	<statement id="delT10_CONTROLLERINFO"
+		parameterClass="com.ist.aml.report.dto.T10_check_cust_clue"
+		resultClass="java.lang.Integer">
+		 delete from T10_CONTROLLERINFO where PARTY_ID=#party_id# and NUM = #num#
+	</statement>
+	
+	<statement id="getT10_DAIBANPERINFO"
+		parameterClass="com.ist.aml.report.dto.T10_check_cust_clue"
+		resultClass="com.ist.aml.report.dto.T10_check_cust_clue">
+		 select PARTY_NAME,CARD_TYPE,CARD_NO,CARD_DUE_DT,LINKMODE,NUM  from T10_AGENT_INFO where PARTY_ID=#party_id#
+	</statement>
+	<statement id="delT10_DAIBANPERINFO"
+		parameterClass="com.ist.aml.report.dto.T10_check_cust_clue"
+		resultClass="java.lang.Integer">
+		 delete from T10_AGENT_INFO where PARTY_ID=#party_id# and NUM = #num#
+	</statement>
+	
+	<statement id="getT10_OPPCUSTINFO"
+		parameterClass="com.ist.aml.report.dto.T10_check_cust_clue"
+		resultClass="com.ist.aml.report.dto.T10_check_cust_clue">
+		 select PARTY_NAME,CARD_NO,CARD_TYPE,PARTY_CLASS_CD,NUM  from T10_OPP_CUST_INFO where PARTY_ID=#party_id#
+	</statement>
+	<statement id="delT10_OPPCUSTINFO"
+		parameterClass="com.ist.aml.report.dto.T10_check_cust_clue"
+		resultClass="java.lang.Integer">
+		 delete from T10_OPP_CUST_INFO where PARTY_ID=#party_id# and NUM = #num#
+	</statement>
+	<statement id="insert_cust_tableT10_BUSINESS_INFO" parameterClass="com.ist.aml.report.dto.T10_check_cust_clue" resultClass="int"> 
+  insert into T10_BUSINESS_INFO(
+  	PARTY_ID        ,
+	BACKGROUND      ,
+	FUNDORIGIN      ,
+	FOUNDUSE        ,
+	RUNBUSI    		,
+	NUM
+	) 
+	values(
+  #party_id#,#background#,#fundorigin#,#founduse#,#runbusi#,#num#
+  ) 
+  </statement>
+  <statement id="insert_cust_tableT10_ECONOMY_INFO" parameterClass="com.ist.aml.report.dto.T10_check_cust_clue" resultClass="int"> 
+  insert into T10_ECONOMY_INFO(
+  	PARTY_ID              ,
+	TRADEANALYSE          ,
+	FUNDORIGIN            ,
+	RUNSTATANALYSE        ,
+	FINANCEEANALYSE       ,
+	NUM
+	) 
+	values(
+  #party_id#,#tradeanalyse#,#fundorigin#,#runstatanalyse#,#financeeanalyse#,#num#
+  ) 
+  </statement>
+  <statement id="get_cust_tableT10_ECONOMY_INFOCount" parameterClass="com.ist.aml.report.dto.T10_check_cust_clue" resultClass="int"> 
+  	select max(num) from T10_ECONOMY_INFO where party_id = #party_id#
+  </statement>
+  <statement id="insert_cust_tableT10_OPP_CUST_INFO" parameterClass="com.ist.aml.report.dto.T10_check_cust_clue" resultClass="int"> 
+  insert into T10_OPP_CUST_INFO(
+  	PARTY_ID                ,
+	PARTY_NAME              ,
+	PARTY_CLASS_CD          ,
+	INDUSTRYKEY             ,
+	ACCUNO                  ,
+	OPP_ORGAN_TYPE          ,
+	CARD_TYPE               ,
+	CARD_NO                 ,
+	OCCUPATION              ,
+	AREANO                  ,
+	AREANAME                ,
+	OPP_PARTY_ID        	,
+	NUM ) 
+	values(
+  #party_id#,#party_name#,#party_class_cd#,#industrykey#,#accuno#,#opp_organ_type#,#card_type#,#card_no#,#occupation#,#areano#,#areaname#,#opp_party_id#,#num#
+  ) 
+  </statement>
+  <statement id="get_cust_tableT10_OPP_CUST_INFOCount" parameterClass="com.ist.aml.report.dto.T10_check_cust_clue" resultClass="int"> 
+  	select max(num) from T10_OPP_CUST_INFO where party_id = #party_id#
+  </statement>
+  <statement id="insert_cust_tableT10_CONTROLLERINFO" parameterClass="com.ist.aml.report.dto.T10_check_cust_clue" resultClass="int"> 
+  insert into T10_CONTROLLERINFO(
+  	party_id       ,
+	party_name     ,
+	card_type      ,
+	card_no        ,
+	num			,
+	<isNotEmpty prepend="" property="card_due_dt_disp">
+				card_due_dt    ,
+	</isNotEmpty>
+	
+	linkmode       ,
+	amt            
+	) 
+	values(
+  #party_id#,#party_name#,#card_type#,#card_no#,#num#
+  ,
+  <isNotEmpty prepend="" property="card_due_dt_disp">
+				#card_due_dt:DATE# ,
+	</isNotEmpty>
+  #linkmode#,#amt_m#
+  ) 
+  </statement>
+  
+  <statement id="get_cust_tableT10_CONTROLLERINFOCount" parameterClass="com.ist.aml.report.dto.T10_check_cust_clue" resultClass="int"> 
+  	select max(num) from T10_CONTROLLERINFO where party_id = #party_id#
+  </statement>
+  <statement id="insert_cust_tableT10_AGENT_INFO" parameterClass="com.ist.aml.report.dto.T10_check_cust_clue" resultClass="int"> 
+  insert into T10_AGENT_INFO(
+  	party_id ,              
+party_name  ,           
+card_type ,             
+card_no  ,
+num		,
+<isNotEmpty prepend="" property="income_dt_disp">
+				card_due_dt    ,
+	</isNotEmpty>              
+           
+linkmode ,              
+addr   ) 
+	values(
+  #party_id#,#party_name#,#card_type#,#card_no#,#num#,
+  <isNotEmpty prepend="" property="income_dt_disp">
+				#card_due_dt:DATE# ,
+	</isNotEmpty>
+	#linkmode#,#addr#
+  ) 
+  </statement>
+  <statement id="get_cust_tableT10_AGENT_INFOCount" parameterClass="com.ist.aml.report.dto.T10_check_cust_clue" resultClass="int"> 
+  	select max(num) from T10_AGENT_INFO where party_id = #party_id#
+  </statement>
+  
+  <statement id="getT10_survey_cust_list_type" 
+		parameterClass="com.ist.aml.report.dto.T10_survey_cust" 
+		resultClass="com.ist.aml.report.dto.T10_survey_cust">
+		SELECT PARTY_ID,LIP_FLAG AS LIST_TYPE
+		FROM T07_LIP_VIEW WHERE PARTY_ID=#party_id#
+    </statement>
+    <statement id="modifyT47_party1"
+		parameterClass="com.ist.aml.report.dto.T10_check_cust_clue"
+		resultClass="int">
+		UPDATE T47_PARTY SET 
+		            <isEqual property="party_class_cd" compareValue="I"> 
+		             party_chn_name=#party_chn_name#,PARTY_STATUS_CD=#party_status_cd#
+		                ,country_cd=#country_cd#
+		                ,
+		             </isEqual>
+		             CARD_NO=#card_no#,CARD_TYPE=#card_type#,
+		             country_residence=#country_residence#,
+		                addr1=#addr1#,tel_no=#tel_no#,cell_no=#cell_no#,
+		               last_upd_dt=#last_upd_dt#
+		                ,last_upd_user=#last_upd_user#
+		WHERE PARTY_ID=#party_id#
+	</statement>
+	<statement id="modifyT47_client2"
+		parameterClass="com.ist.aml.report.dto.T10_check_cust_clue"
+		resultClass="int">
+		UPDATE
+		<isEqual property="party_class_cd" compareValue="I">
+			T47_INDIVIDUAL SET
+			LAST_UPD_USER=#last_upd_user#,last_upd_dt=#last_upd_dt#,
+			occupation=#occupation#,company=#company#,manager_no=#manager_no#,
+			manager_name=#manager_name#,gender=#gender#,other_info=#other_info#
+			<isNotEmpty prepend="" property="card_end_dt">
+				,CARD_END_DT=#card_end_dt#
+			</isNotEmpty>
+			WHERE PARTY_ID=#party_id#
+		</isEqual>
+
+		<isEqual property="party_class_cd" compareValue="C">
+			T47_CORPORATION SET
+			LAST_UPD_USER=#last_upd_user#,last_upd_dt=#last_upd_dt#,
+			business_licence=#business_licence#,
+			organ_code=#organ_code#,nation_affair_no=#nation_affair_no#,
+			local_affair_no=#local_affair_no#,
+			enrol_fund_currency_cd=#enrol_fund_currency_cd#,base_acct_num=#base_acct_num#,
+			base_bank_id=#base_bank_id#,base_bank_org=#base_bank_org#,
+			company_scope=#company_scope#,industrykey=#industrykey#,
+			company_type_cd=#company_type_cd#,main_manage_scope=#main_manage_scope#,
+			legal_obj=#legal_obj#,legal_card_type=#legal_card_type#,legal_card_no=#legal_card_no#,
+			legal_addr=#legal_addr#,legal_tel=#legal_tel#,manager_no=#manager_no#,
+			manager_name=#manager_name#,other_info=#other_info#,org_credit_no=#org_credit_no#
+			<isNotEmpty prepend="" property="enrol_fund_amt">
+				,ENROL_FUND_AMT=#enrol_fund_amt#
+			</isNotEmpty>
+			<isNotEmpty prepend="" property="licence_end_dt">
+				,LICENCE_END_DT=#licence_end_dt#
+			</isNotEmpty>
+			<isEmpty prepend="" property="licence_end_dt">
+			    ,LICENCE_END_DT=NULL
+			</isEmpty>
+			<isNotEmpty prepend="" property="legal_card_no_end_dt">
+				,legal_card_no_end_dt=#legal_card_no_end_dt#
+			</isNotEmpty>
+			<isNotEmpty prepend="" property="local_affair_end_dt">
+				,local_affair_end_dt=#local_affair_end_dt#
+			</isNotEmpty>
+			<isNotEmpty prepend="" property="nation_affair_end_dt">
+				,nation_affair_end_dt=#nation_affair_end_dt#
+			</isNotEmpty>
+			<isNotEmpty prepend="" property="organ_code_end_dt">
+				,organ_code_end_dt=#organ_code_end_dt#
+			</isNotEmpty>
+			<isNotEmpty prepend="" property="org_credit_vt_disp">
+				,org_credit_vt=#org_credit_vt#
+			</isNotEmpty>
+			<isEmpty prepend="" property="org_credit_vt_disp">
+			    ,org_credit_vt=NULL
+			</isEmpty>
+			WHERE PARTY_ID=#party_id#
+		</isEqual>
+	</statement>
+	 <statement id="getT10_CHECK_CUST_RESULT"
+		parameterClass="com.ist.aml.report.dto.T10_check_cust_clue"
+		resultClass="com.ist.aml.report.dto.T10_check_cust_clue">
+		 select CHECK_RESULT,CHECK_EXPLAIN,VALID_DT,CHECK_TYPE,CHECK_DT,CHECKER,CHECKER_ORG  from T10_CHECK_PARTY_RESULT where PARTY_ID=#party_id#
+	</statement>
+	<statement id="insert_T10_CHECK_CUST_RESULT_HIS" parameterClass="com.ist.aml.report.dto.T10_check_cust_clue" resultClass="int"> 
+  insert into T10_CHECK_PARTY_RESULT_HIS(PARTY_ID,
+			PARTY_NAME,
+			PARTY_CLASS_CD,
+			ORGANKEY,
+			CHECK_TYPE,
+			CHECK_DT,
+			VALID_DT,
+			CHECK_RESULT,
+			CHECK_EXPLAIN,
+			CHECKER,
+			CHECKER_ORG)
+			 select PARTY_ID,
+			PARTY_NAME,
+			PARTY_CLASS_CD,
+			ORGANKEY,
+			CHECK_TYPE,
+			CHECK_DT,
+			VALID_DT,
+			CHECK_RESULT,
+			CHECK_EXPLAIN,
+			CHECKER,
+			CHECKER_ORG  from T10_CHECK_PARTY_RESULT where PARTY_ID=#party_id#
+
+  </statement>
+  <statement id="delete_T10_CHECK_CUST_RESULT" parameterClass="com.ist.aml.report.dto.T10_check_cust_clue" resultClass="int"> 
+  delete  from T10_CHECK_PARTY_RESULT where PARTY_ID=#party_id#
+  </statement>
+  <statement id="insert_T10_CHECK_CUST_RESULT" parameterClass="com.ist.aml.report.dto.T10_check_cust_clue" resultClass="int"> 
+  insert into T10_CHECK_PARTY_RESULT(PARTY_ID,
+PARTY_NAME,
+PARTY_CLASS_CD,
+ORGANKEY,
+CHECK_TYPE,
+CHECK_DT,
+VALID_DT,
+CHECK_RESULT,
+CHECK_EXPLAIN,
+CHECKER,
+CHECKER_ORG)
+ values(#party_id#,#party_name#,#party_class_cd#,#organkey#,#check_type#,#check_dt#, #valid_dt:DATE#,
+ #check_result#,#check_explain#,#checker#,#checker_org#)
+  </statement>
+  <statement id="getnametablebyPartyid"
+		parameterClass="com.ist.aml.report.dto.T10_check_cust_clue"
+		resultClass="com.ist.aml.report.dto.T10_check_cust_clue">
+		 select PARTY_ID,OBJ_NAME,PARTY_CLASS_CD,RULE_TYPE,ISUSE,REASON_CREATE,VALIDATE_DT as VALIDATE_DT_NEW,INVALIDATE_DT as INVALIDATE_DT_NEW from T07_WHITELIST_INFO where PARTY_ID=#party_id#
+	</statement>
+	 <statement id="getblacknametablebyPartyid"
+		parameterClass="com.ist.aml.report.dto.T10_check_cust_clue"
+		resultClass="com.ist.aml.report.dto.T10_check_cust_clue">
+		 select PARTY_ID,OBJ_NAME,PARTY_CLASS_CD,m_list_type as list_type,ISUSE,REASON_CREATE,VALIDATE_DT as VALIDATE_DT_NEW,INVALIDATE_DT as INVALIDATE_DT_NEW from T07_BLACKLIST where PARTY_ID=#party_id# 
+	</statement>
+	
+	<statement id="insertT07_WHITELIST_INFO"
+		parameterClass="com.ist.aml.report.dto.T10_check_cust_clue"
+		resultClass="int">
+		insert into T07_WHITELIST_INFO (PARTY_ID,OBJ_NAME,ORGANKEY,ISUSE,PARTY_CLASS_CD,RULE_TYPE,REASON_CREATE
+		,VALIDATE_DT,INVALIDATE_DT,CREATE_USER,CREATE_DT,ISCHECK)
+		values(
+		#party_id#,#obj_name#,#organkey#,#isuse#,#party_class_cd#,#rule_type#,#reason_create#,
+ #validate_dt_new:DATE#,#invalidate_dt_new:DATE#,#checker#,#check_dt:DATE#,'2')
+	</statement>
+	<statement id="insertT07_BLACKLIST"
+		parameterClass="com.ist.aml.report.dto.T10_check_cust_clue"
+		resultClass="int">
+		insert into T07_BLACKLIST (PARTY_ID,OBJ_NAME,ORGANKEY,ISUSE,PARTY_CLASS_CD,LIST_TYPE,M_LIST_TYPE,REASON_CREATE
+		,VALIDATE_DT,INVALIDATE_DT,CREATE_USER,CREATE_DT,objkey,ISCHECK)
+		values(
+		#party_id#,#obj_name#,#organkey#,#isuse#,#party_class_cd#,'B',#list_type#,#reason_create#,
+ #validate_dt_new:DATE#,#invalidate_dt_new:DATE#,#checker#,#check_dt:DATE#,$other_info$,'2')
+	</statement>
+	 <statement id="getT10_check_custcardList" parameterClass="com.ist.aml.report.dto.T10_check_cust_card" resultClass="com.ist.aml.report.dto.T10_check_cust_card"> 
+   SELECT T.PARTY_ID,T.PARTY_NAME,T.PARTY_CLASS_CD,T.ORGANKEY,T.CARD_TYPE,T.CARD_NO,T.CARD_DUE_DT,T.CHECK_STATUS,T.CHECK_RESULT
+ 	FROM (SELECT T1.PARTY_ID AS PARTY_ID,
+ 				 T1.PARTY_NAME AS PARTY_NAME,
+				 T1.PARTY_CLASS_CD AS PARTY_CLASS_CD,
+				 T1.ORGANKEY AS ORGANKEY,
+				 T1.CARD_TYPE AS CARD_TYPE,
+				 T1.CARD_NO AS CARD_NO,
+				 T1.CARD_DUE_DT AS CARD_DUE_DT,
+				 (CASE WHEN T2.VALID_DT IS NULL THEN '0'
+				 
+				 	   WHEN <![CDATA[T2.VALID_DT >= #curr_date#]]> THEN '1'
+			 	       WHEN <![CDATA[T2.VALID_DT < #curr_date#]]>  THEN '2' END)
+			 		   AS CHECK_STATUS,
+			    T2.CHECK_DT AS CHECK_DT,
+			    T2.CHECK_RESULT as CHECK_RESULT
+   	     FROM T10_CHECK_PARTY_CARD T1 LEFT JOIN T10_CHECK_PARTY_RESULT T2 ON (T1.PARTY_ID = T2.PARTY_ID)) T
+    <dynamic prepend="WHERE">
+    		<isNotEmpty prepend="AND" property="party_id">
+				T.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_name">
+				T.PARTY_NAME = #party_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				T.PARTY_CLASS_CD = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				T.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_status">
+				T.CHECK_STATUS = #check_status#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="card_due_start">
+			<![CDATA[T.CARD_DUE_DT >= #card_due_start_dt:DATE#]]>
+				
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="card_due_end">
+			<![CDATA[T.CARD_DUE_DT<= #card_due_end_dt:DATE#]]>
+				
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organStr">
+				T.ORGANKEY IN ($organStr$)
+			</isNotEmpty>
+			<isNotEmpty property="order_check">
+				<isEqual property="order_check" compareValue="0">
+					ORDER BY T.PARTY_ID
+				</isEqual>
+				<isEqual property="order_check" compareValue="1">
+					ORDER BY T.PARTY_CLASS_CD
+				</isEqual>
+				<isEqual property="order_check" compareValue="2">
+					ORDER BY T.ORGANKEY
+				</isEqual>
+				<isEqual property="order_check" compareValue="3">
+					ORDER BY T.CARD_DUE_DT
+				</isEqual>
+				<isNotEmpty property="fashion">
+					<isEqual property="fashion"
+						compareValue="asc">
+					</isEqual>
+					<isEqual property="fashion"
+						compareValue="desc">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</dynamic> 
+  </statement> 
+  
+  <statement id="getT10_check_custcardListCount" parameterClass="com.ist.aml.report.dto.T10_check_cust_card" resultClass="int"> 
+   SELECT COUNT(*)
+ 	FROM (SELECT T1.PARTY_ID AS PARTY_ID,
+ 				 T1.PARTY_NAME AS PARTY_NAME,
+				 T1.PARTY_CLASS_CD AS PARTY_CLASS_CD,
+				 T1.ORGANKEY AS ORGANKEY,
+				 T1.CARD_TYPE AS CARD_TYPE,
+				 T1.CARD_NO AS CARD_NO,
+				 T1.CARD_DUE_DT AS CARD_DUE_DT,
+				 (CASE WHEN T2.VALID_DT IS NULL THEN '0'
+				 	   WHEN <![CDATA[T2.VALID_DT >= #curr_date#]]> THEN '1'
+			 	       WHEN <![CDATA[T2.VALID_DT < #curr_date#]]>  THEN '2' END)
+			 		   AS CHECK_STATUS,
+			    T2.CHECK_DT AS CHECK_DT
+   	     FROM T10_CHECK_PARTY_CARD T1 LEFT JOIN T10_CHECK_PARTY_RESULT T2 ON (T1.PARTY_ID = T2.PARTY_ID)) T
+    <dynamic prepend="WHERE">
+    		<isNotEmpty prepend="AND" property="party_id">
+				T.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_name">
+				T.PARTY_NAME = #party_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				T.PARTY_CLASS_CD = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				T.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_status">
+				T.CHECK_STATUS = #check_status#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="card_due_start">
+			<![CDATA[T.CARD_DUE_DT >= #card_due_start_dt:DATE#]]>
+				
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="card_due_end">
+			<![CDATA[T.CARD_DUE_DT <= #card_due_end_dt:DATE#]]>
+				
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organStr">
+				T.ORGANKEY IN ($organStr$)
+			</isNotEmpty>
+	  </dynamic> 
+  </statement>
+  <statement id="getT10_check_resultList"
+		parameterClass="com.ist.aml.report.dto.T10_check_cust_result"
+		resultClass="com.ist.aml.report.dto.T10_check_cust_result">
+		SELECT PARTY_ID,PARTY_NAME,PARTY_CLASS_CD,ORGANKEY,
+		CHECK_TYPE,CHECK_DT,VALID_DT,CHECK_RESULT,CHECK_EXPLAIN,CHECKER,CHECKER_ORG
+		FROM T10_CHECK_PARTY_RESULT T
+	 <dynamic prepend="WHERE">
+    		<isNotEmpty prepend="AND" property="party_id">
+				T.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_name">
+				T.PARTY_NAME = #party_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				T.PARTY_CLASS_CD = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				T.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_result">
+				T.CHECK_RESULT = #check_result#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_type">
+				T.CHECK_TYPE = #check_type#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="check_start_dt">
+			<![CDATA[T.CHECK_DT>= #check_start_dt_disp:DATE#]]>
+				
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="check_end_dt">
+				<![CDATA[T.CHECK_DT<= #check_end_dt_disp:DATE#]]>
+			
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organStr">
+				T.ORGANKEY IN ($organStr$)
+			</isNotEmpty>
+			<isNotEmpty property="order_check">
+				<isEqual property="order_check" compareValue="0">
+					ORDER BY T.PARTY_ID
+				</isEqual>
+				<isEqual property="order_check" compareValue="1">
+					ORDER BY T.PARTY_CLASS_CD
+				</isEqual>
+				<isEqual property="order_check" compareValue="2">
+					ORDER BY T.CHECK_RESULT
+				</isEqual>
+				<isEqual property="order_check" compareValue="3">
+					ORDER BY T.CHECK_TYPE
+				</isEqual>
+				<isEqual property="order_check" compareValue="4">
+					ORDER BY T.CHECK_DT
+				</isEqual>
+				<isNotEmpty property="fashion">
+					<isEqual property="fashion" compareValue="asc"></isEqual>
+					<isEqual property="fashion" compareValue="desc">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+		</statement>
+		
+		<statement id="getT10_check_resultListCount"
+		parameterClass="com.ist.aml.report.dto.T10_check_cust_result"
+		resultClass="int">
+		SELECT COUNT(*)
+		FROM t10_check_party_result T
+	 	<dynamic prepend="WHERE">
+    		<isNotEmpty prepend="AND" property="party_id">
+				T.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_name">
+				T.PARTY_NAME = #party_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				T.PARTY_CLASS_CD = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				T.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_result">
+				T.CHECK_RESULT = #check_result#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="check_type">
+				T.CHECK_TYPE = #check_type#
+			</isNotEmpty>
+				<isNotEmpty prepend="and" property="check_start_dt">
+			<![CDATA[T.CHECK_DT>= #check_start_dt_disp:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="check_end_dt">
+				<![CDATA[T.CHECK_DT<= #check_end_dt_disp:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organStr">
+				T.ORGANKEY IN ($organStr$)
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	 <statement id="get_cust_survey_result" 
+		parameterClass="java.lang.String" 
+		resultClass="com.ist.aml.report.dto.T10_check_cust_result">
+		SELECT PARTY_ID,PARTY_NAME AS PARTY_CHN_NAME,ORGANKEY,CHECK_TYPE,CHECK_DT,VALID_DT,CHECK_RESULT,CHECK_EXPLAIN,CHECKER,CHECKER_ORG
+		FROM T10_CHECK_PARTY_RESULT
+		WHERE PARTY_ID = #value#
+    </statement>
+    
+     <statement id="getT10_CHECK_CUST_RESULT_his"
+		parameterClass="com.ist.aml.report.dto.T10_check_cust_clue"
+		resultClass="com.ist.aml.report.dto.T10_check_cust_clue">
+		 select CHECK_TYPE,CHECK_DT,VALID_DT,CHECK_RESULT,CHECK_EXPLAIN,CHECKER,CHECKER_ORG  from T10_CHECK_PARTY_RESULT_HIS where PARTY_ID=#party_id#
+	</statement>
+    
+    <statement id="getT10_BUSINESSINFOCount"
+		parameterClass="com.ist.aml.report.dto.T10_check_cust_clue"
+		resultClass="java.lang.Integer">
+		 SELECT max(num) FROM T10_BUSINESS_INFO WHERE PARTY_ID=#party_id#
+	</statement>
+	<statement id="delT10_BUSINESSINFO"
+		parameterClass="com.ist.aml.report.dto.T10_check_cust_clue"
+		resultClass="java.lang.Integer">
+		 DELETE FROM T10_BUSINESS_INFO WHERE PARTY_ID=#party_id# AND NUM=#num#
+	</statement>
+</sqlMap> 

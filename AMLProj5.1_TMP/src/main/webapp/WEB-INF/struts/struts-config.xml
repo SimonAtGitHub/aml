@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 公共模块配置 -->
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+  <data-sources />
+  <form-beans>
+     <form-bean name="authActionForm" type="com.ist.platform.controller.AuthActionForm" />
+     <form-bean name="t00_userActionForm" type="com.ist.platform.controller.T00_userActionForm" />
+    <form-bean name="t00_organActionForm" type="com.ist.platform.controller.T00_organActionForm" />
+     <form-bean name="t47_partyActionForm" type="com.ist.aml.report.controller.T47_partyActionForm" />
+     <form-bean name="local_windowActionForm" type="com.ist.platform.controller.Local_windowActionForm" />
+  </form-beans>
+  <global-exceptions />
+
+  <global-forwards type="org.apache.struts.action.ActionForward">
+    <forward name="failure" path="/common/errors.jsp" />
+    <forward name="errors" path="/common/errors.jsp" />
+    <forward name="nopower" path="/common/nopower.jsp" />
+    <forward name="sessiontimeout"
+      path="/common/sessiontimeout.jsp" />
+  </global-forwards>
+
+  <action-mappings>
+  <action name="local_windowActionForm"
+      parameter="location_window" path="/common/location_window_dynamic"
+      scope="request"
+      type="com.ist.platform.controller.Local_windowAction"
+      validate="false">
+      <forward name="success" path="/common/local_window_dynamic.jsp" />
+    </action>
+  	<action path="/pub/menu_left_tree_add_parmeter" parameter="menuTree" name="t00_menuActionForm"
+	      type="com.ist.platform.controller.T00_menuAction"
+	      validate="false" scope="request">
+	      <forward name="success"
+	        path="/pub/menu_add_parmerter.jsp" />
+	    </action>
+    <action name="authActionForm" parameter="logoutPage" path="/logout" scope="request" type="com.ist.platform.controller.AuthAction" validate="false">
+      <forward name="success" path="/login.do" />
+      <forward name="successportal" path="/portallogout.jsp" />
+    </action>
+    <action name="authActionForm" parameter="loginPage" path="/login" scope="request" type="com.ist.platform.controller.AuthAction" validate="false">
+      <forward name="success" path="/login.jsp" />
+    </action>
+     <action name="authActionForm" parameter="authUser" path="/authuser" scope="request" type="com.ist.platform.controller.AuthAction" validate="false">
+      <forward name="success" path="/authgroup.do" />
+      <forward name="failure" path="/login.do" />
+    </action>
+    <action name="authActionForm" parameter="authGroup" path="/authgroup" scope="request" type="com.ist.platform.controller.AuthAction" validate="false">
+      <forward name="success" path="/pubmodule/index.do" />
+      <forward name="failure" path="/login.do" />
+    </action>
+    <action name="authActionForm" parameter="indexPage" path="/index" scope="request" type="com.ist.platform.controller.AuthAction" validate="false">
+      <forward name="success" path="/index.jsp" />
+      <forward name="failure" path="/login.do" />
+    </action>
+    <action name="authActionForm" parameter="urlGo" path="/url_go" scope="request" type="com.ist.platform.controller.AuthAction" validate="false" />
+    <action name="t00_organActionForm" parameter="organhidden" path="/common/organ_hidden" scope="request" type="com.ist.platform.controller.T00_organAction" validate="false">
+      <forward name="success" path="/common/organ_hidden.jsp" />
+    </action>
+    <action name="t00_userActionForm" parameter="locationT00_user" path="/common/t00_user_search" scope="request" type="com.ist.platform.controller.T00_userAction" validate="false">
+      <forward name="success" path="/common/t00_user_search.jsp" />
+    </action>
+    <action name="t00_userActionForm" parameter="locationT00_user1" path="/common/t00_user_search1" scope="request" type="com.ist.platform.controller.T00_userAction" validate="false">
+      <forward name="success" path="/common/t00_user_search1.jsp" />
+    </action>
+    <action name="t00_userActionForm" parameter="locationT00_userMulti" path="/common/t00_user_searchmulti" scope="request" type="com.ist.platform.controller.T00_userAction" validate="false">
+      <forward name="success" path="/common/t00_user_searchmulti.jsp" />
+    </action>
+    <action name="t00_userActionForm" parameter="locationT00_userDo" path="/common/t00_user_search_result" scope="request" type="com.ist.platform.controller.T00_userAction" validate="false">
+      <forward name="success" path="/common/t00_user_search_result.jsp" />
+    </action> 
+    <action name="t00_organActionForm" parameter="locationT00_organ" path="/common/t00_organ_search" scope="request" type="com.ist.platform.controller.T00_organAction" validate="false">
+      <forward name="success" path="/common/t00_organ_search.jsp" />
+    </action>
+    <action name="t00_organActionForm" parameter="locationT00_organDo" path="/common/t00_organ_search_result" scope="request" type="com.ist.platform.controller.T00_organAction" validate="false">
+      <forward name="success" path="/common/t00_organ_search_result.jsp" />
+    </action>
+    <action name="t00_organActionForm" parameter="locationT00_organDo1" path="/common/t00_organ_search_result1" scope="request" type="com.ist.platform.controller.T00_organAction" validate="false">
+      <forward name="success" path="/common/t00_organ_search_result1.jsp" />
+    </action>
+    <action name="t00_organActionForm" parameter="organhiddenByRigth" path="/common/organ_hiddenbyrigth" scope="request" type="com.ist.platform.controller.T00_organAction" validate="false">
+      <forward name="success" path="/common/organ_hiddenbyrigth.jsp" />
+    </action>
+    <action path="/common/t47_party_list" parameter="getT47_partyComm" name="t47_partyActionForm" type="com.ist.aml.report.controller.T47_partyAction" validate="false" scope="request">
+		<forward name="success" path="/common/t47_party_search.jsp" />
+	</action>
+	<action path="/common/t47_party_list1" parameter="getT47_partyComm1" name="t47_partyActionForm" type="com.ist.aml.report.controller.T47_partyAction" validate="false" scope="request">
+		<forward name="success" path="/common/t47_party_search1.jsp" />
+	</action>
+	<action path="/common/t47_party_list_for_flex" parameter="getT47_partyComm1" name="t47_partyActionForm" type="com.ist.aml.report.controller.T47_partyAction" validate="false" scope="request">
+		<forward name="success" path="/common/t47_party_search_for_flex.jsp" />
+	</action>
+	<!-- 报表工具 -->
+	
+      <action name="local_windowActionForm" parameter="location_windowDo" path="/platform/t00_dict/location_window_result"
+      scope="request" type="com.ist.platform.controller.Local_windowAction" validate="false">
+      <forward name="success"
+        path="/platform/common/local_window_result.jsp" />
+    </action>
+    <action name="local_windowActionForm"
+      parameter="location_window" path="/common/location_window"
+      scope="request"
+      type="com.ist.platform.controller.Local_windowAction"
+      validate="false">
+      <forward name="success" path="/common/local_window.jsp" />
+    </action>
+    
+    <action name="local_windowActionForm" parameter="location_treewindow" path="/common/location_treewindow"
+      scope="request" type="com.ist.platform.controller.Local_windowAction"
+      validate="false">
+      <forward name="success" path="/platform/common/local_treewindow.jsp" />
+    </action>
+        <action name="local_windowActionForm" parameter="location_treewindowDo"
+      path="/common/location_treewindow_result" scope="request" type="com.ist.platform.controller.Local_windowAction"
+      validate="false">
+      <forward name="success" path="/platform/common/local_treewindow_result.jsp" />
+    </action>
+    
+      <action name="local_windowActionForm"
+      parameter="location_commontreewindow" path="/common/location_commontreewindow"
+      scope="request"
+      type="com.ist.platform.controller.Local_windowAction"
+      validate="false">
+      <forward name="success"
+        path="/bmp/platform/common/local_commontreewindow.jsp" />
+    </action>
+      <action name="local_windowActionForm"
+      parameter="location_commontreewindowDo"
+      path="/common/location_commontreewindow_result" scope="request"
+      type="com.ist.platform.controller.Local_windowAction"
+      validate="false">
+      <forward name="success"
+        path="/bmp/platform/common/local_commontreewindow_result.jsp" />
+    </action>
+    
+      <!--  local_window start -->
+    <action name="local_windowActionForm"
+      parameter="location_orderwindow" path="/common/location_orderwindow"
+      scope="request"
+      type="com.ist.platform.controller.Local_windowAction"
+      validate="false">
+      <forward name="success"
+        path="/platform/common/local_setorder.jsp" />
+    </action>
+    <action name="local_windowActionForm"
+      parameter="location_orderwindowdo"
+      path="/common/location_orderwindowdo" scope="request"
+      type="com.ist.platform.controller.Local_windowAction"
+      validate="false">
+      <forward name="success"
+        path="/platform/common/local_orderset_result.jsp" />
+    </action>
+    <!--  local_window end -->
+  
+  </action-mappings>
+
+  <!-- <message-resources parameter="com.ist.common.struts.ApplicationResources" />  -->
+  <message-resources parameter="ApplicationResources_zh_CN" />
+
+  <!-- plug-in
+    className="org.springframework.web.struts.ContextLoaderPlugIn">
+    <set-property property="contextConfigLocation"
+      value="/WEB-INF/spring/applicationContext.xml,/WEB-INF/spring/applicationContext-bmp.xml,/WEB-INF/spring/applicationContext-pmp.xml,/WEB-INF/spring/applicationContext-workflow.xml,/WEB-INF/spring/applicationContext-oap.xml,/WEB-INF/spring/applicationContext-avp.xml,/WEB-INF/spring/applicationContext-pap.xml
+      ,/WEB-INF/spring/applicationContext-fdp.xml,/WEB-INF/spring/applicationContext-app.xml,/WEB-INF/spring/applicationContext-ssp.xml,/WEB-INF/spring/applicationContext-rmp.xml,/WEB-INF/spring/applicationContext-iap.xml,/WEB-INF/spring/applicationContext-cms.xml,/WEB-INF/spring/applicationContext-rpp.xml
+      " />
+  </plug-in-->
+</struts-config>
+

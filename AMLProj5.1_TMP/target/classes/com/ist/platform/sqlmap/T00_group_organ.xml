@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T00_group_organ"> 
+  <statement id="getT00_group_organList" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_group_organ"> 
+ 	select * from T00_GROUP_ORGAN where groupkey=#value#
+  </statement> 
+ 
+  <statement id="getT00_group_organListCount" parameterClass="com.ist.platform.dto.T00_group_organ" resultClass="int"> 
+  select count(*) from T00_GROUP_ORGAN 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="groupkey"> 
+    groupkey = #groupkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT00_group_organ" parameterClass="com.ist.platform.dto.T00_group_organ" resultClass="int"> 
+  insert into T00_GROUP_ORGAN(
+  groupkey,organkey
+  ) values(
+  #groupkey#,#organkey#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT00_group_organ" parameterClass="com.ist.platform.dto.T00_group_organ" resultClass="int"> 
+  update T00_GROUP_ORGAN set 
+  groupkey=#groupkey#,organkey=#organkey#
+  where groupkey=#groupkey# 
+  </statement> 
+ 
+  <statement id="deleteT00_group_organ" parameterClass="com.ist.platform.dto.T00_group_organ" resultClass="int">
+  delete from T00_GROUP_ORGAN where groupkey = #groupkey# 
+  </statement> 
+  
+  <statement id="deleteT00_singlegroup_organ" parameterClass="com.ist.platform.dto.T00_group_organ" resultClass="int">
+  delete from T00_GROUP_ORGAN 
+  where groupkey = #groupkey# 
+  and organkey = #organkey# 
+  
+  </statement>
+ 
+  <statement id="getT00_group_organStr" parameterClass="com.ist.platform.dto.T00_group_organ" resultClass="com.ist.platform.dto.T00_group_organ"> 
+  select organkey from T00_GROUP_ORGAN 
+   <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="groupkey"> 
+    groupkey = #groupkey# 
+    </isNotEmpty> 
+   
+  </dynamic> 
+  </statement>
+  
+  <!-- 
+   <statement id="getT00_group_organStrForUserOrg" parameterClass="com.ist.platform.dto.T00_group_organ" resultClass="com.ist.platform.dto.T00_group_organ"> 
+  select t1.organkey from T00_GROUP_ORGAN t1, T17_ORG_USER_MAPPING t2 
+  where t1.organkey = t2.organkey and t2.username = #username# and t2.invalidatedt = '3000-12-31'
+  </statement>
+   -->
+  
+  <statement id="getT00_group_organStrForUserOrg" parameterClass="com.ist.platform.dto.T00_group_organ" resultClass="com.ist.platform.dto.T00_group_organ"> 
+  select t1.organkey from T00_ORGAN t1, T17_ORG_USER_MAPPING t2 
+  where t1.organkey = t2.organkey and t2.username = #username# and t2.invalidatedt = '3000-12-31' and t2.currencyflag = #currencyflag#
+  </statement>
+ 
+   <statement id="getT00_group_organListByGroupkey" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_group_organ"> 
+ 		SELECT group_organ.ORGANKEY,organ.ORGANNAME FROM T00_GROUP_ORGAN group_organ JOIN T00_ORGAN organ ON group_organ.ORGANKEY=organ.ORGANKEY WHERE group_organ.GROUPKEY = #value#
+  </statement>
+  <statement id="getT00_group_organListByGroupkeyCount" parameterClass="com.ist.platform.dto.T00_group_organ" resultClass="int"> 
+ 		SELECT count(*) FROM T00_GROUP_ORGAN group_organ JOIN T00_ORGAN organ ON group_organ.ORGANKEY=organ.ORGANKEY WHERE group_organ.GROUPKEY = #groupkey#
+  </statement>
+ <statement id="insertToGROUP_ORGANFromORGAN" parameterClass="com.ist.platform.dto.T00_group_organ" resultClass="int"> 
+ 	INSERT INTO T00_GROUP_ORGAN(GROUPKEY,ORGANKEY) SELECT #groupkey#,ORGANKEY FROM T00_ORGAN WHERE ORGANKEY IN(SELECT O.SUBORGANKEY FROM T87_ORGAN_MAP O WHERE ORGANKEY=#organkey#)
+ </statement>
+</sqlMap> 

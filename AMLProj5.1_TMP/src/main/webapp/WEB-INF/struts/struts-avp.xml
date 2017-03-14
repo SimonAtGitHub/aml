@@ -1,0 +1,2036 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 审计查证平台模块配置 -->
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+	<data-sources />
+	<form-beans>
+
+		<!-- 模版使用actionFormBean -->
+		<form-bean name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infActionForm" />
+		<form-bean name="t02_tp_in_parmActionForm"
+			type="com.ist.avp.template.controller.T02_tp_in_parmActionForm" />
+		<form-bean name="t02_page_in_valActionForm"
+			type="com.ist.avp.template.controller.T02_page_in_valActionForm" />
+		<form-bean name="t02_tp_exec_qryActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_qryActionForm" />
+		<form-bean name="t02_tp_exec_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_rstActionForm" />
+		<form-bean name="t02_tp_disp_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_disp_rstActionForm" />
+		<form-bean name="t02_jump_tpActionForm"
+			type="com.ist.avp.template.controller.T02_jump_tpActionForm" />
+		<form-bean name="t02_rel_con_subActionForm"
+			type="com.ist.avp.template.controller.T02_rel_con_subActionForm" />
+		<form-bean name="t02_parm_subActionForm"
+			type="com.ist.avp.template.controller.T02_parm_subActionForm" />
+		<form-bean name="t02_cond_subActionForm"
+			type="com.ist.avp.template.controller.T02_cond_subActionForm" />
+		<form-bean name="t01_mt_propertyActionForm"
+			type="com.ist.common.metadata.controller.T01_mt_propertyActionForm" />
+		<form-bean name="tpla_image_analysisActionForm"
+			type="com.ist.avp.template.controller.Tpla_image_analysisActionForm" />
+	
+		<form-bean name="t02_tp_cus_actionActionForm" 
+			type="com.ist.avp.template.controller.T02_tp_cus_actionActionForm"/>
+		<!-- 模版查证使用FormBean -->
+		<form-bean name="TplaChkActionForm"
+			type="com.ist.avp.template.controller.TplaChkActionForm" />
+		<form-bean name="t02_tp_tab_relActionForm"
+			type="com.ist.avp.template.controller.T02_tp_tab_relActionForm" />
+		<form-bean name="TplaRowColConvertActionForm"
+			type="com.ist.avp.template.controller.TplaRowColConvertActionForm" />
+		<!-- 模版操作日志FormBean -->
+		<form-bean name="t02_tp_logActionForm"
+			type="com.ist.avp.template.controller.T02_tp_logActionForm" />
+	  <!-- 模版上传文件FormBean -->
+		<form-bean name="t01_attachmentActionForm"
+			type="com.ist.common.attachment.controller.T01_attachmentActionForm" />
+		<!-- 模版自定义动作FormBean -->
+		<form-bean name="t02_tp_cus_actionActionForm" 
+				type="com.ist.avp.template.controller.T02_tp_cus_actionActionForm"/>
+		
+		<!-- 统一视图bean -->
+		<form-bean name="t02_srch_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_infActionForm" />
+		<form-bean name="t02_crlt_srchActionForm"
+			type="com.ist.avp.search.controller.T02_crlt_srchActionForm" />
+		<form-bean name="t02_parm_elmtActionForm"
+			type="com.ist.avp.search.controller.T02_parm_elmtActionForm" />
+		<form-bean name="t02_parm_elmt_relaActionForm"
+			type="com.ist.avp.search.controller.T02_parm_elmt_relaActionForm" />
+		<form-bean name="t02_srch_cateActionForm"
+			type="com.ist.avp.search.controller.T02_srch_cateActionForm" />
+		<form-bean name="t02_srch_eng_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_infActionForm" />
+		<form-bean name="t02_srch_eng_logActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_logActionForm" />
+		<form-bean name="t02_srch_eng_parmActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_parmActionForm" />
+		
+		<!-- 统一视图运行FormBean -->
+		<form-bean name="searchEngineRunningActionForm"
+			type="com.ist.avp.search.controller.SearchEngineRunningActionForm" />
+		
+		<form-bean name="t02_tp_reportActionForm" type="com.ist.avp.template.controller.T02_tp_reportActionForm"/> 
+		<form-bean name="t02_tp_chartActionForm" type="com.ist.avp.template.controller.T02_tp_chartActionForm"/> 
+		<form-bean name="t02_tp_showActionForm" type="com.ist.avp.template.controller.T02_tp_showActionForm"/> 
+		<form-bean name="t02_tp_statActionForm" type="com.ist.avp.template.controller.T02_tp_statActionForm"/> 
+	</form-beans>
+	<global-exceptions />
+	<global-forwards />
+	<action-mappings>
+		<action path="/awpExport"
+			type="com.ist.bmp.platform.controller.DownLoadAction">
+		</action>
+		<!-- 模版查证使用begin -->
+		<!-- 查证框架页面 -->
+		<action path="/template/tpla_chk_index"
+			parameter="getTpla_chk_index" name="TplaChkActionForm"
+			type="com.ist.avp.template.controller.TplaChkAction" validate="false"
+			scope="request">
+			<forward name="success" path="/template/tpla_chk_index.jsp" />
+		</action>
+		<!-- 模型查证案例处理调用-->
+		<action path="/template/tpla_chk_t07_case_list"
+			parameter="chk_tpla_test" name="TplaChkActionForm"
+			type="com.ist.avp.template.controller.TplaChkAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/template/tpla_chk_t07_case_list.jsp" />
+		</action>
+		<!-- 模型查证 -->
+		<action path="/template/tpla_chk_main" parameter="chk_tpla"
+			name="TplaChkActionForm"
+			type="com.ist.avp.template.controller.TplaChkAction" validate="false"
+			scope="request">
+			<forward name="success" path="/template/tpla_chk_main.jsp" />
+			<forward name="successForT06_card" path="/../rcp/work_papers/tpla_chk_mainForT06_card.jsp" />
+			<forward name="failure" path="/template/tpla_chk_main.jsp" />
+			<forward name="clobpage"
+				path="/template/tpla_clob_disp.jsp" />
+		</action>
+		<!-- 模型查证测试 -->
+		<action path="/template/tpla_chk_main_test"
+			parameter="chk_tpla_test" name="TplaChkActionForm"
+			type="com.ist.avp.template.controller.TplaChkAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/template/tpla_chk_main_test.jsp" />
+			<forward name="failure" path="/template/tpla_chk_main.jsp" />
+			<forward name="failure2" path="/public_main.jsp" />
+			<forward name="clobpage"
+				path="/template/tpla_clob_disp.jsp" />
+		</action>
+		<!-- 模型排序_条件 -->
+		<action path="/template/tpla_sort_cond"
+			parameter="tpla_sort_cond" name="TplaChkActionForm"
+			type="com.ist.avp.template.controller.TplaChkAction" validate="false"
+			scope="request">
+			<forward name="success" path="/template/tpla_sort_cond.jsp" />
+			<forward name="failure" path="/template/tpla_chk_main.jsp" />
+		</action>
+		<!-- 模型排序_结果 -->
+		<action path="/template/tpla_sort_rslt"
+			parameter="tpla_sort_rslt" name="TplaChkActionForm"
+			type="com.ist.avp.template.controller.TplaChkAction" validate="false"
+			scope="request">
+			<forward name="success" path="/template/tpla_chk_main.jsp" />
+			<forward name="failure" path="/template/tpla_sort_cond.jsp" />
+		</action>
+		<!-- 模型导出选择字段_条件 -->
+		<action path="/template/tpla_export_field_cond"
+			parameter="tpla_export_field_cond" name="TplaChkActionForm"
+			type="com.ist.avp.template.controller.TplaChkAction" validate="false"
+			scope="request">
+			<forward name="success" path="/template/tpla_export_field_cond.jsp" />
+			<forward name="failure" path="/template/tpla_chk_main.jsp" />
+		</action>
+		<!-- 模型导出选择字段_结果 -->
+		<action path="/template/tpla_export_field_rslt"
+			parameter="tpla_export_field_rslt" name="TplaChkActionForm"
+			type="com.ist.avp.template.controller.TplaChkAction" validate="false"
+			scope="request">
+			<forward name="exportfile" path="/awpExport.do" />
+		</action>
+		<!-- 模型筛选_条件 -->
+		<action path="/template/tpla_filter_cond"
+			parameter="tpla_filter_cond" name="TplaChkActionForm"
+			type="com.ist.avp.template.controller.TplaChkAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/template/tpla_filter_cond.jsp" />
+			<forward name="failure" path="/template/tpla_chk_main.do" />
+		</action>
+		<!-- 模型统计_条件 -->
+		<action path="/template/tpla_stat_cond"
+			parameter="tpla_stat_cond" name="TplaChkActionForm"
+			type="com.ist.avp.template.controller.TplaChkAction" validate="false"
+			scope="request">
+			<forward name="success" path="/template/tpla_stat_cond.jsp" />
+		</action>
+		<!-- 模型统计_结果 -->
+		<action path="/template/tpla_stat_rslt"
+			parameter="tpla_stat_rslt" name="TplaChkActionForm"
+			type="com.ist.avp.template.controller.TplaChkAction" validate="false"
+			scope="request">
+			<forward name="success" path="/template/tpla_stat_rslt.jsp" />
+			<forward name="failure" path="/template/tpla_stat_cond.jsp" />
+		</action>
+		<!-- 模型统计_导出结果 -->
+		<action path="/template/tpla_stat_export"
+			parameter="tpla_stat_export" name="TplaChkActionForm"
+			type="com.ist.avp.template.controller.TplaChkAction" validate="false"
+			scope="request">
+			<forward name="exportfile" path="/awpExport.do" />
+		</action>
+		<!-- 模型结果导出条件 -->
+		<action path="/template/tpla_export_cond"
+			parameter="tpla_export_cond" name="TplaChkActionForm"
+			type="com.ist.avp.template.controller.TplaChkAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/template/tpla_export_cond.jsp" />
+			<forward name="success2"
+				path="/template/tpla_export_no_audit_cond.jsp" />
+		</action>
+		<!-- 模型结果审核导出条件 -->
+		<action path="/template/tpla_export_audit_cond"
+			parameter="tpla_export_audit_cond" name="TplaChkActionForm"
+			type="com.ist.avp.template.controller.TplaChkAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/template/tpla_export_audit_cond.jsp" />
+		</action>
+		<!-- importCheckListPreview -->
+		<action path="/template/importCheckListPreview"
+			parameter="importCheckListPreview" name="TplaChkActionForm"
+			type="com.ist.avp.template.controller.TplaChkAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/template/avp_data_import_checklist_preview.jsp" />
+			<forward name="failure" path="/template/tpla_export_cond.jsp" />
+		</action>
+		<action path="/template/avp_data_import_checklist_do"
+			parameter="avp_data_import_checklist_do" name="TplaChkActionForm"
+			type="com.ist.avp.template.controller.TplaChkAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/template/tpla_export_cond.jsp" />
+			<forward name="failure" path="/template/tpla_export_cond.jsp" />
+		</action>
+		<!-- 模型结果导出结果 -->
+		<action path="/template/tpla_export_rslt"
+			parameter="tpla_export_rslt" name="TplaChkActionForm"
+			type="com.ist.avp.template.controller.TplaChkAction" validate="false"
+			scope="request">
+			<forward name="exportfile" path="/awpExport.do" />
+		</action>
+		<!-- 模型结果导出审核结果 -->
+		<action path="/template/tpla_export_audit_rslt"
+			parameter="tpla_export_audit_rslt" name="TplaChkActionForm"
+			type="com.ist.avp.template.controller.TplaChkAction" validate="false"
+			scope="request">
+			<forward name="success" path="/template/tpla_export_audit_cond.do" />
+		</action>
+		<!-- 模型抽样_条件 -->
+		<action path="/template/tpla_samp_cond"
+			parameter="tpla_samp_cond" name="TplaChkActionForm"
+			type="com.ist.avp.template.controller.TplaChkAction" validate="false"
+			scope="request">
+			<forward name="success" path="/template/tpla_samp_cond.jsp" />
+			<forward name="success2" path="/template/tpla_samp_no_audit_cond.jsp" />
+		</action>
+		<!-- 模型抽样_结果导出 -->
+		<action path="/template/tpla_samp_export"
+			parameter="tpla_samp_export"
+			type="com.ist.avp.template.controller.TplaChkAction" validate="false"
+			scope="request">
+			<forward name="exportfile" path="/awpExport.do" />
+			<forward name="failure" path="/template/tpla_samp_cond.jsp" />
+		</action>
+
+			<!-- 行列转换_初期 -->
+		<action path="/template/tpla_row_col_convert"
+			parameter="tpla_row_col_convert" name="TplaRowColConvertActionForm"
+			type="com.ist.avp.template.controller.TplaRowColConvertAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/tpla_row_col_convert.jsp" />
+		</action>
+		<!-- 行列转换_定位 -->
+		<action path="/template/location_window_col_set"
+			parameter="location_window_col_set"
+			name="TplaRowColConvertActionForm"
+			type="com.ist.avp.template.controller.TplaRowColConvertAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/location_window_col_set.jsp" />
+			<forward name="failure"
+				path="/template/location_window_col_set.jsp" />
+		</action>
+		<!-- 行列转换_查看结果 -->
+		<action path="/template/tpla_row_col_convert_result"
+			parameter="tpla_row_col_convert_result"
+			name="TplaRowColConvertActionForm"
+			type="com.ist.avp.template.controller.TplaRowColConvertAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/report_view.jsp" />
+			<forward name="failure" path="/template/report_view.jsp" />
+		</action>
+		<!-- 模版查证使用end -->
+		
+		<!-- 专题查证使用begin -->
+		<action path="/special/spec_chk_index" parameter="getSpec_index"
+			type="com.ist.avp.special.controller.SpecChkAction" validate="false"
+			scope="request">
+			<forward name="success" path="/special/spec_chk_index.jsp" />
+		</action>
+		<action path="/special/spec_chk_cond" parameter="getSpec_cond"
+			type="com.ist.avp.special.controller.SpecChkAction" validate="false"
+			scope="request">
+			<forward name="success" path="/special/spec_chk_cond.jsp" />
+		</action>
+		<action path="/special/spec_chk_rslt" parameter="getSpec_rslt"
+			type="com.ist.avp.special.controller.SpecChkAction" validate="false"
+			scope="request">
+			<forward name="success" path="/special/spec_chk_rslt.jsp" />
+			<forward name="failure" path="/special/spec_chk_cond.jsp" />
+		</action>
+		<!-- 专题查证使用end -->
+
+		<action path="/template/tpla_ts_back_do"
+			parameter="setTpla_ts_backDo" name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/tpla_maint_list.do" />
+		</action>
+
+		<!-- 模版使用map映射 -->
+		<action path="/template/tpla_publish_list"
+			parameter="getT02_tp_bas_infList" name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/tpla_list.jsp" />
+		</action>
+		<!-- 模板发布 -->
+		<action path="/template/tpla_submit"
+			parameter="getT02_tp_bas_infSubmit" name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/tpla_publish_list.do" />
+			<forward name="failure"
+				path="/template/tpla_publish_list.do" />
+		</action>
+		<!-- 模板退回 -->
+		<action path="/template/tpla_recsubmit"
+			parameter="getT02_tp_bas_infRecSubmit"
+			name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/tpla_publish_list.do" />
+			<forward name="failure"
+				path="/template/tpla_publish_list.do" />
+		</action>
+		<!-- 模板管理 - 模板维护列表 -->
+		<action path="/template/tpla_maint_list"
+			parameter="getT02_tp_bas_infVindList" name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/tpla_maintain_list.jsp" />
+			<forward name="failure"
+				path="/template/tpla_maintain_list.jsp" />
+		</action>
+		<!-- 模板管理 - 模板复制 -->
+		<action path="/template/tpla_copy" parameter="modifyTpla_copy"
+			name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/tpla_maint_list.do" />
+			<forward name="failure"
+				path="/template/tpla_maintain_list.jsp" />
+			<forward name="psuccess"
+				path="/template/tpla_publish_list.do" />
+			<forward name="pfailure"
+				path="/template/tpla_publish_list.do" />
+		</action>
+		<!--  模板管理 - 模板申请发布 -->
+		<action path="/template/tpla_apply_submit"
+			parameter="getT02_tp_bas_infApplySubmit"
+			name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/tpla_maint_list.do" />
+			<forward name="failure" path="/template/tpla_maint_list.do" />
+		</action>
+		<!--  模板管理 - 模板删除 -->
+		<action path="/template/tpla_del"
+			parameter="getT02_tp_bas_infdel" name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/tpla_maint_list.do" />
+			<forward name="failure" path="/template/tpla_maint_list.do" />
+		</action>
+		<!-- 模板管理 - 模板添加界面 -->
+		<action path="/template/t02_tp_bas_inf_add"
+			parameter="addT02_tp_bas_inf" name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/tpla_add.jsp" />
+			<forward name="failure" path="/template/tpla_maint_list.do" />
+		</action>
+		<action path="/template/t02_tp_bzbas_inf_add"
+			parameter="addT02_tp_bas_inf" name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/tpla_bz_add.jsp" />
+			<forward name="failure" path="/template/tpla_maint_list.do" />
+		</action>
+		<!-- 模板管理 - 基本属性定义-->
+		<action path="/template/t02_tp_bas_inf_base_attr"
+			parameter="getT02_tp_bas_infDto" name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/tpla_base_attr.jsp" />
+			<forward name="failure" path="/template/tpla_add_main.jsp" />
+		</action>
+		<!-- 模板管理 - 脚本代码修改动作-->
+		<action path="/template/modifyT02_tp_scriptcd"
+			parameter="modifyT02_tp_scriptcd" name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/t02_tp_scriptcd_modify.jsp" />
+			<forward name="failure" path="/template/t02_tp_scriptcd_modify.jsp" />
+		</action>
+		<!-- 模板管理 - 脚本代码修改保存动作-->
+		<action path="/template/modifyT02_tp_scriptcdDo"
+			parameter="modifyT02_tp_scriptcdDo" name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/t02_tp_scriptcd_modify.jsp" />
+			<forward name="failure" path="/template/t02_tp_scriptcd_modify.jsp" />
+		</action>
+		<!-- 模板管理 - 模板信息汇总-->
+		<action path="/template/tpla_alltmpalt_info"
+			parameter="getT02_tpla_all_info" name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/tpla_alltmpalt_info.jsp" />
+			<forward name="failure" path="/template/tpla_add_main.jsp" />
+		</action>
+		<!-- 模板管理 - 模板追踪模型发布链接-->
+		<action path="/template/tpla_alltmpalt_info_link"
+			parameter="getT02_tpla_all_info" name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/tpla_alltmpalt_info_disp.jsp" />
+			<forward name="failure" path="/template/tpla_add_main.jsp" />
+		</action>
+		<!-- 模板管理 - 显示模板信息汇总-->
+		<action path="/template/tpla_tmpalt_info"
+			parameter="getT02_tpla_all_info" name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/tpla_tmpalt_info.jsp" />
+			<forward name="failure" path="" />
+		</action>
+		<!-- 模板管理 - 更新模板状态-->
+		<action path="/template/t02_jump_tp_achive"
+			parameter="t02_jump_tp_achive" name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/tpla_maint_list.do" />
+			<forward name="failure" path="/template/tpla_add_main.jsp" />
+		</action>
+		<!-- 模板管理 - 基本属性更新-->
+		<action path="/template/t02_tp_bas_inf_base_attr_modify"
+			parameter="addT02_tp_bas_infBase" name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_bas_inf_base_attr.do" />
+			<forward name="failure"
+				path="/template/t02_tp_bas_inf_base_attr.do" />
+		</action>
+		<!-- 模板管理 - 模板修改界面 -->
+		<action path="/template/t02_tp_bas_inf_modify_base"
+			parameter="modifyT02_tp_bas_infBase" name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/tpla_add.jsp" />
+			<forward name="success2" path="/template/tpla_bz_add.jsp" />
+			<forward name="failure" path="/template/tpla_maint_list.do" />
+		</action>
+		<!--  T02_TP_IN_PARM -->
+		<action path="/t02_tp_in_parm/t02_tp_in_parm_search"
+			parameter="searchT02_tp_in_parm" name="t02_tp_in_parmActionForm"
+			type="com.ist.avp.template.controller.T02_tp_in_parmAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_in_parm_search.jsp" />
+			<forward name="failure"
+				path="/template/t02_tp_in_parm_list.do" />
+		</action>
+		<!-- 模型管理 - 参数列表  -->
+		<action path="/template/t02_tp_in_parm_list"
+			parameter="getT02_tp_in_parmList" name="t02_tp_in_parmActionForm"
+			type="com.ist.avp.template.controller.T02_tp_in_parmAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/tpla_query_parm.jsp" />
+		</action>
+		<!-- 模型管理 - 参数添加界面 -->
+		<action path="/template/t02_tp_in_parm_add"
+			parameter="addT02_tp_in_parm" name="t02_tp_in_parmActionForm"
+			type="com.ist.avp.template.controller.T02_tp_in_parmAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/tpla_info_parm_add.jsp" />
+		</action>
+		<!-- 模型管理 - 参数添加动作 -->
+		<action path="/template/t02_tp_in_parm_add_do"
+			parameter="addT02_tp_in_parmDo" name="t02_tp_in_parmActionForm"
+			type="com.ist.avp.template.controller.T02_tp_in_parmAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_in_parm_list.do" />
+			<forward name="failure"
+				path="/template/t02_tp_in_parm_add.do" />
+		</action>
+		<!-- 模型管理 - 参数修改界面 -->
+		<action path="/template/t02_tp_in_parm_modify"
+			parameter="modifyT02_tp_in_parm" name="t02_tp_in_parmActionForm"
+			type="com.ist.avp.template.controller.T02_tp_in_parmAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/tpla_info_parm_modify.jsp" />
+			<forward name="failure"
+				path="/template/t02_tp_in_parm_list.do" />
+		</action>
+		<!-- 模型管理 - 参数修改动作 -->
+		<action path="/template/t02_tp_in_parm_modify_do"
+			parameter="modifyT02_tp_in_parmDo" name="t02_tp_in_parmActionForm"
+			type="com.ist.avp.template.controller.T02_tp_in_parmAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_in_parm_list.do" />
+			<forward name="failure"
+				path="/template/t02_tp_in_parm_modify.do" />
+		</action>
+		<!-- 模型管理 - 参数删除动作 -->
+		<action path="/template/t02_tp_in_parm_delete_do"
+			parameter="deleteT02_tp_in_parmDo" name="t02_tp_in_parmActionForm"
+			type="com.ist.avp.template.controller.T02_tp_in_parmAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_in_parm_list.do" />
+			<forward name="failure"
+				path="/template/t02_tp_in_parm_list.do" />
+		</action>
+		<!-- 模型管理 - 检查删除参数会影响其他模板 -->
+		<action path="/template/t02_tp_in_parm_check_do"
+			parameter="checkT02_tp_in_parmDo" name="t02_tp_in_parmActionForm"
+			type="com.ist.avp.template.controller.T02_tp_in_parmAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/tpla_check_list.jsp" />
+			<forward name="failure"
+				path="/template/tpla_check_list.jsp" />
+		</action>
+		<!-- T02_PAGE_IN_VAL -->
+		<action path="/template/t02_page_in_val_search"
+			parameter="searchT02_page_in_val" name="t02_page_in_valActionForm"
+			type="com.ist.avp.template.controller.T02_page_in_valAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_page_in_val_search.jsp" />
+			<forward name="failure"
+				path="/template/t02_page_in_val_list.do" />
+		</action>
+		<action path="/template/t02_page_in_val_list"
+			parameter="getT02_page_in_valList" name="t02_page_in_valActionForm"
+			type="com.ist.avp.template.controller.T02_page_in_valAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_page_in_val_list.jsp" />
+		</action>
+		<action path="/template/t02_page_in_val_add"
+			parameter="addT02_page_in_val" name="t02_page_in_valActionForm"
+			type="com.ist.avp.template.controller.T02_page_in_valAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_page_in_val_add.jsp" />
+			<forward name="failure"
+				path="/template/t02_page_in_val_list.do" />
+		</action>
+		<action path="/template/t02_page_in_val_add_do"
+			parameter="addT02_page_in_valDo" name="t02_page_in_valActionForm"
+			type="com.ist.avp.template.controller.T02_page_in_valAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_page_in_val_list.do" />
+			<forward name="failure"
+				path="/template/t02_page_in_val_add.do" />
+		</action>
+		<action path="/template/t02_page_in_val_modify"
+			parameter="modifyT02_page_in_val" name="t02_page_in_valActionForm"
+			type="com.ist.avp.template.controller.T02_page_in_valAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_page_in_val_modify.jsp" />
+			<forward name="failure"
+				path="/template/t02_page_in_val_list.do" />
+		</action>
+		<action path="/template/t02_page_in_val_modify_do"
+			parameter="modifyT02_page_in_valDo" name="t02_page_in_valActionForm"
+			type="com.ist.avp.template.controller.T02_page_in_valAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_page_in_val_list.do" />
+			<forward name="failure"
+				path="/template/t02_page_in_val_modify.do" />
+		</action>
+		<action path="/template/t02_page_in_val_delete_do"
+			parameter="deleteT02_page_in_valDo" name="t02_page_in_valActionForm"
+			type="com.ist.avp.template.controller.T02_page_in_valAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_page_in_val_list.do" />
+			<forward name="failure"
+				path="/template/t02_page_in_val_list.do" />
+		</action>
+		<action path="/template/t02_page_in_val_disp"
+			parameter="getT02_page_in_valDisp" name="t02_page_in_valActionForm"
+			type="com.ist.avp.template.controller.T02_page_in_valAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_page_in_val_disp.jsp" />
+		</action>
+
+		<!-- T02_TP_EXEC_QRY -->
+		<!-- 模版执行查询表 展现-->
+		<action path="/template/t02_tp_exec_qry_list"
+			parameter="getT02_tp_exec_qryList" name="t02_tp_exec_qryActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_qryAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/tpla_query_sql.jsp" />
+		</action>
+		<!--模版执行  SQL插入界面 -->
+		<action path="/template/t02_tp_exec_qry_add"
+			parameter="addT02_tp_exec_qry" name="t02_tp_exec_qryActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_qryAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/tpla_query_sql_add.jsp" />
+		</action>
+		<!--模版执行  SQL插入 -->
+		<action path="/template/t02_tp_exec_qry_add_do"
+			parameter="addT02_tp_exec_qryDo" name="t02_tp_exec_qryActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_qryAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_exec_qry_list.do" />
+			<forward name="failure"
+				path="/template/t02_tp_exec_qry_add.do" />
+		</action>
+		<!--模版执行  SQL插入 标准模板 add by zqingfu -->
+		<action path="/template/t02_tp_exec_qry_addstd_do"
+			parameter="mmT02_tp_exec_qry_addstdDo"
+			name="t02_tp_exec_qryActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_qryAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/tpla_alltmpalt_info.do" />
+			<forward name="failure"
+				path="/template/tpla_alltmpalt_info.do" />
+		</action>
+		<!--模版执行  SQL修改界面 -->
+		<action path="/template/t02_tp_exec_qry_modify"
+			parameter="modifyT02_tp_exec_qry" name="t02_tp_exec_qryActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_qryAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/tpla_query_sql_mod.jsp" />
+			<forward name="failure"
+				path="/template/t02_tp_exec_qry_list.do" />
+		</action>
+		<!--模版执行  SQL修改-->
+		<action path="/template/t02_tp_exec_qry_modify_do"
+			parameter="modifyT02_tp_exec_qryDo" name="t02_tp_exec_qryActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_qryAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_exec_qry_list.do" />
+			<forward name="failure"
+				path="/template/t02_tp_exec_qry_modify.do" />
+		</action>
+		<!--模版执行  SQL删除-->
+		<action path="/template/t02_tp_exec_qry_delete_do"
+			parameter="deleteT02_tp_exec_qryDo" name="t02_tp_exec_qryActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_qryAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_exec_qry_list.do" />
+			<forward name="failure"
+				path="/template/t02_tp_exec_qry_list.do" />
+		</action>
+		<action path="/template/t02_tp_exec_qry_disp"
+			parameter="getT02_tp_exec_qryDisp" name="t02_tp_exec_qryActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_qryAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_exec_qry_disp.jsp" />
+		</action>
+		<!--  T02_TP_EXEC_RST-->
+		<action path="/template/t02_tp_exec_rst_search"
+			parameter="searchT02_tp_exec_rst" name="t02_tp_exec_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_rstAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_exec_rst_search.jsp" />
+			<forward name="failure"
+				path="/template/t02_tp_exec_rst_list.do" />
+		</action>
+		<action path="/template/t02_tp_exec_rst_list"
+			parameter="getT02_tp_exec_rstList" name="t02_tp_exec_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_rstAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_exec_rst_list.jsp" />
+			<forward name="failure"
+				path="/template/t02_tp_exec_rst_list.jsp" />
+		</action>
+		<action path="/template/t02_tp_exec_rst_add"
+			parameter="addT02_tp_exec_rst" name="t02_tp_exec_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_rstAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_exec_rst_add.jsp" />
+			<forward name="failure"
+				path="/template/t02_tp_exec_rst_list.do" />
+		</action>
+		<action path="/template/t02_tp_exec_rst_add_do"
+			parameter="addT02_tp_exec_rstDo" name="t02_tp_exec_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_rstAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_exec_rst_list.do" />
+			<forward name="failure"
+				path="/template/t02_tp_exec_rst_add.do" />
+		</action>
+		<action path="/template/t02_tp_exec_rst_modify"
+			parameter="modifyT02_tp_exec_rst" name="t02_tp_exec_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_rstAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_exec_rst_modify.jsp" />
+			<forward name="failure"
+				path="/template/t02_tp_exec_rst_list.do" />
+		</action>
+		<action path="/template/t02_tp_exec_rst_modify_do"
+			parameter="modifyT02_tp_exec_rstDo" name="t02_tp_exec_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_rstAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_exec_rst_list.do" />
+			<forward name="failure"
+				path="/template/t02_tp_exec_rst_modify.do" />
+		</action>
+		<action path="/template/t02_tp_exec_rst_delete_do"
+			parameter="deleteT02_tp_exec_rstDo" name="t02_tp_exec_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_rstAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_exec_rst_list.do" />
+			<forward name="failure"
+				path="/template/t02_tp_exec_rst_list.do" />
+		</action>
+		<action path="/template/t02_tp_exec_rst_disp"
+			parameter="getT02_tp_exec_rstDisp" name="t02_tp_exec_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_rstAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_exec_rst_disp.jsp" />
+		</action>
+		<action path="/template/tpla_rela_cond"
+			parameter="getTpla_rela_cond" name="t02_tp_exec_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_rstAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/tpla_rela_cond.jsp" />
+		</action>
+		<action path="/template/t02_tp_rel_con_add_do"
+			parameter="getT02_tp_rel_con_add_do" name="t02_tp_exec_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_rstAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/tpla_rela_cond.do" />
+		</action>
+		<!-- 模板维护 - 确立排序条件   -->
+		<action path="/template/tpla_order_cond"
+			parameter="getTpla_order_cond" name="t02_tp_exec_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_rstAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/tpla_order_cond.jsp" />
+		</action>
+		<action path="/template/tpla_order_cond_add_do"
+			parameter="getTpla_order_con_add_do" name="t02_tp_exec_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_rstAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/tpla_order_cond.do" />
+		</action>
+		<!-- 模板维护 - 确立分组条件   -->
+		<action path="/template/tpla_group_cond"
+			parameter="getTpla_group_cond" name="t02_tp_exec_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_rstAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/tpla_group_cond.jsp" />
+		</action>
+		<action path="/template/tpla_group_cond_add_do"
+			parameter="getTpla_group_cond_add_do"
+			name="t02_tp_exec_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_rstAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/tpla_group_cond.do" />
+		</action>
+		<!--  T02_TP_DISP_RST-->
+		<!-- 模型管理 - 调整输出结果   -->
+		<action path="/t02_tp_disp_rst/t02_tp_disp_rst_search"
+			parameter="searchT02_tp_disp_rst" name="t02_tp_disp_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_disp_rstAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/t02_tp_disp_rst/t02_tp_disp_rst_search.jsp" />
+			<forward name="failure"
+				path="/t02_tp_disp_rst/t02_tp_disp_rst_list.do" />
+		</action>
+		<!-- 模型管理 - 输出结果展示  -->
+		<action path="/template/t02_tp_disp_rst_list"
+			parameter="getT02_tp_disp_rstList" name="t02_tp_disp_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_disp_rstAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/tpla_outpar_list.jsp" />
+		</action>
+		<action path="/template/t02_bztp_disp_rst_list"
+			parameter="getT02_bztp_disp_rstList" name="t02_tp_disp_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_disp_rstAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/tpla_bz_outpar_list.jsp" />
+		</action>
+		<!-- 模型管理 - 输出结果添加界面 -->
+		<action path="/template/t02_tp_disp_rst_add"
+			parameter="addT02_tp_disp_rst" name="t02_tp_disp_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_disp_rstAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/tpla_outpar_add.jsp" />
+			<forward name="failure"
+				path="/template/t02_tp_disp_rst_list.do" />
+		</action>
+
+		<!-- 模型管理 - 批量添加界面 -->
+		<action path="/template/t02_tp_disp_rst_addList"
+			parameter="addListT02_tp_disp_rst" name="t02_tp_disp_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_disp_rstAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/tpla_outpar_addList.jsp" />
+			<forward name="failure"
+				path="/template/t02_tp_disp_rst_list.do" />
+		</action>
+
+		<!-- 模型管理 - 输出结果添加 -->
+		<action path="/template/t02_tp_disp_rst_add_do"
+			parameter="addT02_tp_disp_rstDo" name="t02_tp_disp_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_disp_rstAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_disp_rst_list.do" />
+			<forward name="failure"
+				path="/template/t02_tp_disp_rst_add.do" />
+		</action>
+
+		<!-- 模型管理 - 输出结果批量添加 -->
+		<action path="/template/t02_tp_disp_rst_addList_do"
+			parameter="addListT02_tp_disp_rstDo" name="t02_tp_disp_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_disp_rstAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_disp_rst_list.do" />
+			<forward name="failure"
+				path="/template/t02_tp_disp_rst_list.do" />
+		</action>
+
+		<!-- 模型管理 - 输出结果修改页面 -->
+		<action path="/template/t02_tp_disp_rst_modify"
+			parameter="modifyT02_tp_disp_rst" name="t02_tp_disp_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_disp_rstAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/tpla_outpar_mod.jsp" />
+			<forward name="failure"
+				path="/template/t02_tp_disp_rst_list.do" />
+		</action>
+		<!-- 模型管理 - 输出结果修改 -->
+		<action path="/template/t02_tp_disp_rst_modify_do"
+			parameter="modifyT02_tp_disp_rstDo" name="t02_tp_disp_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_disp_rstAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_disp_rst_list.do" />
+			<forward name="failure"
+				path="/template/t02_tp_disp_rst_modify.do" />
+		</action>
+		<!-- 模型管理 - 输出结果删除-->
+		<action path="/template/t02_tp_disp_rst_delete_do"
+			parameter="deleteT02_tp_disp_rstDo" name="t02_tp_disp_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_disp_rstAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_disp_rst_list.do" />
+			<forward name="failure"
+				path="/template/t02_tp_disp_rst_list.do" />
+		</action>
+		<action path="/template/t02_tp_disp_rst_disp"
+			parameter="getT02_tp_disp_rstDisp" name="t02_tp_disp_rstActionForm"
+			type="com.ist.avp.template.controller.T02_tp_disp_rstAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_disp_rst_disp.jsp" />
+		</action>
+		<!--  T02_JUMP_TP-->
+		<action path="/template/t02_jump_tp_search"
+			parameter="searchT02_jump_tp" name="t02_jump_tpActionForm"
+			type="com.ist.avp.template.controller.T02_jump_tpAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_jump_tp_search.jsp" />
+			<forward name="failure"
+				path="/template/t02_jump_tp_list.do" />
+		</action>
+		<!-- 跳转模型展示LIST -->
+		<action path="/template/t02_jump_tp_list"
+			parameter="getT02_jump_tpList" name="t02_jump_tpActionForm"
+			type="com.ist.avp.template.controller.T02_jump_tpAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/tpla_link_list.jsp" />
+		</action>
+		<!-- 跳转模型添加 -->
+		<action path="/template/t02_jump_tp_add"
+			parameter="addT02_jump_tp" name="t02_jump_tpActionForm"
+			type="com.ist.avp.template.controller.T02_jump_tpAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/tpla_link_add.jsp" />
+			<forward name="failure"
+				path="/template/t02_jump_tp_list.do" />
+		</action>
+		<!-- 跳转模型添加动作 -->
+		<action path="/template/t02_jump_tp_add_do"
+			parameter="addT02_jump_tpDo" name="t02_jump_tpActionForm"
+			type="com.ist.avp.template.controller.T02_jump_tpAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_jump_tp_list.do" />
+			<forward name="failure" path="/template/t02_jump_tp_add.do" />
+		</action>
+		<action path="/template/t02_jump_tp_modify"
+			parameter="modifyT02_jump_tp" name="t02_jump_tpActionForm"
+			type="com.ist.avp.template.controller.T02_jump_tpAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_jump_tp_modify.jsp" />
+			<forward name="failure"
+				path="/template/t02_jump_tp_list.do" />
+		</action>
+		<action path="/template/t02_jump_tp_modify_do"
+			parameter="modifyT02_jump_tpDo" name="t02_jump_tpActionForm"
+			type="com.ist.avp.template.controller.T02_jump_tpAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_jump_tp_list.do" />
+			<forward name="failure"
+				path="/template/t02_jump_tp_modify.do" />
+		</action>
+		<action path="/template/t02_jump_tp_delete_do"
+			parameter="deleteT02_jump_tpDo" name="t02_jump_tpActionForm"
+			type="com.ist.avp.template.controller.T02_jump_tpAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_jump_tp_list.do" />
+			<forward name="failure"
+				path="/template/t02_jump_tp_list.do" />
+		</action>
+		<action path="/template/t02_jump_tp_disp"
+			parameter="getT02_jump_tpDisp" name="t02_jump_tpActionForm"
+			type="com.ist.avp.template.controller.T02_jump_tpAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_jump_tp_disp.jsp" />
+		</action>
+		<!--  T02_COND_SUB-->
+		<action path="/template/t02_rel_con_sub_search"
+			parameter="searchT02_rel_con_sub" name="t02_rel_con_subActionForm"
+			type="com.ist.avp.template.controller.T02_rel_con_subAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_rel_con_sub_search.jsp" />
+			<forward name="failure"
+				path="/template/t02_rel_con_sub_list.do" />
+		</action>
+		<action path="/template/t02_rel_con_sub_list"
+			parameter="getT02_rel_con_subList" name="t02_rel_con_subActionForm"
+			type="com.ist.avp.template.controller.T02_rel_con_subAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_rel_con_sub_list.jsp" />
+		</action>
+		<action path="/template/t02_rel_con_sub_add"
+			parameter="addT02_rel_con_sub" name="t02_rel_con_subActionForm"
+			type="com.ist.avp.template.controller.T02_rel_con_subAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_rel_con_sub_add.jsp" />
+			<forward name="failure"
+				path="/template/t02_rel_con_sub_list.do" />
+		</action>
+		<action path="/template/t02_rel_con_sub_add_do"
+			parameter="addT02_rel_con_subDo" name="t02_rel_con_subActionForm"
+			type="com.ist.avp.template.controller.T02_rel_con_subAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_rel_con_sub_list.do" />
+			<forward name="failure"
+				path="/template/t02_rel_con_sub_add.do" />
+		</action>
+		<action path="/template/t02_rel_con_sub_modify"
+			parameter="modifyT02_rel_con_sub" name="t02_rel_con_subActionForm"
+			type="com.ist.avp.template.controller.T02_rel_con_subAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_rel_con_sub_modify.jsp" />
+			<forward name="failure"
+				path="/template/t02_rel_con_sub_list.do" />
+		</action>
+		<action path="/template/t02_rel_con_sub_modify_do"
+			parameter="modifyT02_rel_con_subDo" name="t02_rel_con_subActionForm"
+			type="com.ist.avp.template.controller.T02_rel_con_subAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_rel_con_sub_list.do" />
+			<forward name="failure"
+				path="/template/t02_rel_con_sub_modify.do" />
+		</action>
+		<action path="/template/t02_rel_con_sub_delete_do"
+			parameter="deleteT02_rel_con_subDo" name="t02_rel_con_subActionForm"
+			type="com.ist.avp.template.controller.T02_rel_con_subAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_rel_con_sub_list.do" />
+			<forward name="failure"
+				path="/template/t02_rel_con_sub_list.do" />
+		</action>
+		<action path="/template/t02_rel_con_sub_disp"
+			parameter="getT02_rel_con_subDisp" name="t02_rel_con_subActionForm"
+			type="com.ist.avp.template.controller.T02_rel_con_subAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_rel_con_sub_disp.jsp" />
+		</action>
+		<!--T02_JUMP_TP  -->
+		<action path="/t02_jump_tp/t02_jump_tp_search"
+			parameter="searchT02_jump_tp" name="t02_jump_tpActionForm"
+			type="com.ist.avp.template.controller.T02_jump_tpAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/t02_jump_tp/t02_jump_tp_search.jsp" />
+			<forward name="failure"
+				path="/t02_jump_tp/t02_jump_tp_list.do" />
+		</action>
+		<action path="/t02_jump_tp/t02_jump_tp_list"
+			parameter="getT02_jump_tpList" name="t02_jump_tpActionForm"
+			type="com.ist.avp.template.controller.T02_jump_tpAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/t02_jump_tp/t02_jump_tp_list.jsp" />
+		</action>
+		<action path="/t02_jump_tp/t02_jump_tp_add"
+			parameter="addT02_jump_tp" name="t02_jump_tpActionForm"
+			type="com.ist.avp.template.controller.T02_jump_tpAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/t02_jump_tp/t02_jump_tp_add.jsp" />
+			<forward name="failure"
+				path="/t02_jump_tp/t02_jump_tp_list.do" />
+		</action>
+		<action path="/t02_jump_tp/t02_jump_tp_add_do"
+			parameter="addT02_jump_tpDo" name="t02_jump_tpActionForm"
+			type="com.ist.avp.template.controller.T02_jump_tpAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/t02_jump_tp/t02_jump_tp_list.do" />
+			<forward name="failure"
+				path="/t02_jump_tp/t02_jump_tp_add.do" />
+		</action>
+		<action path="/t02_jump_tp/t02_jump_tp_modify"
+			parameter="modifyT02_jump_tp" name="t02_jump_tpActionForm"
+			type="com.ist.avp.template.controller.T02_jump_tpAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/t02_jump_tp/t02_jump_tp_modify.jsp" />
+			<forward name="failure"
+				path="/t02_jump_tp/t02_jump_tp_list.do" />
+		</action>
+		<action path="/t02_jump_tp/t02_jump_tp_modify_do"
+			parameter="modifyT02_jump_tpDo" name="t02_jump_tpActionForm"
+			type="com.ist.avp.template.controller.T02_jump_tpAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/t02_jump_tp/t02_jump_tp_list.do" />
+			<forward name="failure"
+				path="/t02_jump_tp/t02_jump_tp_modify.do" />
+		</action>
+		<action path="/t02_jump_tp/t02_jump_tp_delete_do"
+			parameter="deleteT02_jump_tpDo" name="t02_jump_tpActionForm"
+			type="com.ist.avp.template.controller.T02_jump_tpAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/t02_jump_tp/t02_jump_tp_list.do" />
+			<forward name="failure"
+				path="/t02_jump_tp/t02_jump_tp_list.do" />
+		</action>
+
+		<action path="/t02_jump_tp/t02_jump_tp_disp"
+			parameter="getT02_jump_tpDisp" name="t02_jump_tpActionForm"
+			type="com.ist.avp.template.controller.T02_jump_tpAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/t02_jump_tp/t02_jump_tp_disp.jsp" />
+		</action>
+		
+		<!--  T02_PARM_SUB 模版跳转参数子表-->
+		<action path="/template/t02_parm_sub_search"
+			parameter="searchT02_parm_sub" name="t02_parm_subActionForm"
+			type="com.ist.avp.template.controller.T02_parm_subAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_parm_sub_search.jsp" />
+			<forward name="failure"
+				path="/template/t02_parm_sub_list.do" />
+		</action>
+		<action path="/template/t02_parm_sub_list"
+			parameter="getT02_parm_subList" name="t02_parm_subActionForm"
+			type="com.ist.avp.template.controller.T02_parm_subAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_parm_sub_list.jsp" />
+		</action>
+		<!-- 模版跳转参数子表和模版跳转条件子表增加界面 -->
+		<action path="/template/t02_parm_sub_add"
+			parameter="addT02_parm_sub" name="t02_parm_subActionForm"
+			type="com.ist.avp.template.controller.T02_parm_subAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/tpla_parm_conn_add.jsp" />
+			<forward name="failure"
+				path="/template/t02_parm_sub_list.do" />
+		</action>
+		<!-- 模版跳转参数子表和模版跳转条件子表增加动作 -->
+		<action path="/template/t02_parm_sub_add_do"
+			parameter="addT02_parm_subDo" name="t02_parm_subActionForm"
+			type="com.ist.avp.template.controller.T02_parm_subAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_jump_tp_list.do" />
+			<forward name="failure"
+				path="/template/t02_parm_sub_add.do" />
+		</action>
+		<action path="/template/adT02_cond_subDo"
+			parameter="adT02_cond_subDo" name="t02_cond_subActionForm"
+			type="com.ist.avp.template.controller.T02_cond_subAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_jump_tp_list.do" />
+			<forward name="failure"
+				path="/template/t02_parm_sub_add_do.do" />
+		</action>
+		<action path="/template/modT02_cond_subDo"
+			parameter="modifyT02_cond_sub" name="t02_cond_subActionForm"
+			type="com.ist.avp.template.controller.T02_cond_subAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_cond_sub_mod.jsp" />
+			<forward name="failure"
+				path="/template/t02_jump_tp_list.do" />
+		</action>
+		<action path="/template/t02_parm_sub_modify"
+			parameter="modifyT02_parm_sub" name="t02_parm_subActionForm"
+			type="com.ist.avp.template.controller.T02_parm_subAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_parm_sub_modify.jsp" />
+			<forward name="failure"
+				path="/template/t02_parm_sub_list.do" />
+		</action>
+		<action path="/template/t02_parm_sub_modify_do"
+			parameter="modifyT02_parm_subDo" name="t02_parm_subActionForm"
+			type="com.ist.avp.template.controller.T02_parm_subAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_parm_sub_list.do" />
+			<forward name="failure"
+				path="/template/t02_parm_sub_modify.do" />
+		</action>
+		<action path="/template/t02_parm_sub_delete_do"
+			parameter="deleteT02_parm_subDo" name="t02_parm_subActionForm"
+			type="com.ist.avp.template.controller.T02_parm_subAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_parm_sub_list.do" />
+			<forward name="failure"
+				path="/template/t02_parm_sub_list.do" />
+		</action>
+		<action path="/template/t02_parm_sub_disp"
+			parameter="getT02_parm_subDisp" name="t02_parm_subActionForm"
+			type="com.ist.avp.template.controller.T02_parm_subAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_parm_sub_disp.jsp" />
+		</action>
+		<!-- 图形分析查询条件页面 -->
+		<action path="/template/tpla_image_analysis"
+			parameter="getTpla_image_analysisCon" name="tpla_image_analysisActionForm"
+			type="com.ist.avp.template.controller.Tpla_image_analysisAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/tpla_chart_analysis.jsp" />
+			<forward name="failure" path="/template/tpla_chart_analysis.jsp" />
+		</action>
+		
+		<!-- 查看图片 -->
+		<action path="/template/show_image_analysis"
+			parameter="show_image_analysis" name="tpla_image_analysisActionForm"
+			type="com.ist.avp.template.controller.Tpla_image_analysisAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/show_tpla_chart.jsp" />
+			<forward name="failure" path="/template/show_tpla_chart.jsp" />
+		</action>
+		
+
+		
+		<!-- add by liangchunyu bz_tamplat -->
+		<action path="/template/t02_tp_tab_rel_list"
+			parameter="getT02_tp_tab_relList" name="t02_tp_tab_relActionForm"
+			type="com.ist.avp.template.controller.T02_tp_tab_relAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_tab_rel_list.jsp" />
+		</action>
+		<!-- 模板管理 - 模板导出doc -->
+		<action path="/template/exportT02_tpla_all_infoDoc"
+			parameter="exportT02_tpla_all_infoDoc"
+			name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction"
+			validate="false" scope="request">
+		</action>
+		<!-- 模板管理 - 模板导出列表 -->
+		<action path="/template/getT02_tp_bas_infExportList"
+			parameter="getT02_tp_bas_infExportList"
+			name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/export_tpla.jsp" />
+		</action>
+		
+		<!-- end add  -->
+
+		<!-- add by zhangqingfu bz_tamplat -->
+		<action path="/template/t02_tp_tab_rel_add"
+			parameter="addT02_tp_tab_rel" name="t01_mt_propertyActionForm"
+			type="com.ist.avp.template.controller.T02_tp_tab_relAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_tab_rel_add.jsp" />
+			<forward name="failure"
+				path="/template/t02_tp_tab_rel_list.do" />
+		</action>
+		<action path="/template/t02_tp_tab_rel_add_do"
+			parameter="addT02_tp_tab_relDo" name="t02_tp_tab_relActionForm"
+			type="com.ist.avp.template.controller.T02_tp_tab_relAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_tab_rel_list.do" />
+			<forward name="failure"
+				path="/template/t02_tp_tab_rel_add.do" />
+		</action>
+		<action path="/template/t02_tp_tab_rel_delete_do"
+			parameter="deleteT02_tp_tab_relDo" name="t02_tp_tab_relActionForm"
+			type="com.ist.avp.template.controller.T02_tp_tab_relAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_tab_rel_list.do" />
+			<forward name="failure"
+				path="/template/t02_tp_tab_rel_list.do" />
+		</action>
+		<!-- end add  -->
+		<!-- 模版操作日志begin -->
+		<action path="/template/t02_tp_log_list"
+			parameter="getT02_tp_logList" name="t02_tp_logActionForm"
+			type="com.ist.avp.template.controller.T02_tp_logAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t02_tp_log_list.jsp" />
+		</action>
+		<action path="/template/t02_tp_log_delete_do"
+			parameter="deleteT02_tp_logDo" name="t02_tp_logActionForm"
+			type="com.ist.avp.template.controller.T02_tp_logAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/t02_tp_log_list.do" />
+			<forward name="failure" path="/template/t02_tp_log_list.do" />
+		</action>
+		<action path="/template/getT02_tp_logDisp"
+			parameter="getT02_tp_logDisp" name="t02_tp_logActionForm"
+			type="com.ist.avp.template.controller.T02_tp_logAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/t02_tp_log_disp.jsp" />
+			<forward name="failure" path="/template/t02_tp_log_disp.jsp" />
+		</action>
+
+			<!-- 模板导出动作 -->
+		<action path="/template/export" parameter="templateExport"
+			name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.TemplateExpImpAction"
+			validate="false" scope="request">
+			<forward name="failureManager"
+				path="/template/tpla_maint_list.do" />
+			<forward name="failurePublic"
+				path="/template/tpla_publish_list.do" />
+		</action>
+		<!-- 模板导入页面动作 -->
+		<action path="/template/import" parameter="templateImport"
+			name="t01_attachmentActionForm"
+			type="com.ist.avp.template.controller.TemplateExpImpAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/tpla_import.jsp" />
+			<forward name="failure" path="/template/tpla_import.jsp" />
+		</action>
+		<!-- 模板导入执行上传动作 -->
+		<action path="/template/importDo" parameter="templateImportDo"
+			name="t01_attachmentActionForm"
+			type="com.ist.avp.template.controller.TemplateExpImpAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/tpla_import.jsp" />
+			<forward name="failure" path="/template/tpla_import.jsp" />
+		</action>
+		
+		<!-- 模板投产应用页面 -->
+		<action path="/template/tpla_maint_product" parameter="getT02_tp_bas_infProduct" name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction" validate="false" scope="request">
+			<forward name="success" path="/template/tpla_maintain_product.jsp" />
+			<forward name="failure" path="/template/tpla_maint_list.do" />
+		</action>
+		
+		<!-- 模板投产应用动作 -->
+		<action path="/template/tpla_maint_product_do" parameter="getT02_tp_bas_infProductDo" name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction" validate="false" scope="request">
+			<forward name="success" path="/template/tpla_maint_list.do" />
+			<forward name="failure" path="/template/tpla_maint_product.do" />
+		</action>
+		
+		<!-- 模板投产应用列表 -->
+		<action path="/template/tpla_maint_product_list" parameter="getT02_tp_bas_infProductList" name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction" validate="false" scope="request">
+			<forward name="success" path="/template/tpla_maintain_product_list.jsp" />
+			<forward name="failure" path="/template/tpla_maintain_product_list.jsp" />
+		</action>
+		<!-- 模板投产应用撤销 -->
+		<action path="/template/tpla_maint_tplareqstat2request" parameter="updateTplareqstat2request" name="t02_tp_bas_infActionForm"
+			type="com.ist.avp.template.controller.T02_tp_bas_infAction" validate="false" scope="request">
+			<forward name="success" path="/template/tpla_maint_product_list.do" />
+			<forward name="failure" path="/template/tpla_maint_product_list.do" />
+		</action>
+		
+		<!-- 模型自定义动作 begin -->
+		<action path="/template/t02_tp_cus_action_list" parameter="getT02_tp_cus_actionList" name="t02_tp_cus_actionActionForm" type="com.ist.avp.template.controller.T02_tp_cus_actionAction" validate="false" scope="request"> 
+		    <forward name="success" path="/template/t02_tp_cus_actionList.jsp"/> 
+		    <forward name="failure" path="/template/t02_tp_cus_actionList.jsp"/>
+	  </action> 
+	  <action path="/template/t02_tp_cus_action_add" parameter="addT02_tp_cus_action" name="t02_tp_cus_actionActionForm" type="com.ist.avp.template.controller.T02_tp_cus_actionAction" validate="false" scope="request"> 
+		    <forward name="success" path="/template/t02_tp_cus_actionAdd.jsp"/> 
+		    <forward name="failure" path="/template/t02_tp_cus_action_list.do"/> 
+	  </action> 
+	  <action path="/template/t02_tp_cus_action_add_do" parameter="addT02_tp_cus_actionDo" name="t02_tp_cus_actionActionForm" type="com.ist.avp.template.controller.T02_tp_cus_actionAction" validate="false" scope="request"> 
+		    <forward name="success" path="/template/t02_tp_cus_action_list.do"/> 
+		    <forward name="failure" path="/template/t02_tp_cus_action_add.do"/> 
+	  </action> 
+	  <action path="/template/t02_tp_cus_action_modify" parameter="modifyT02_tp_cus_action" name="t02_tp_cus_actionActionForm" type="com.ist.avp.template.controller.T02_tp_cus_actionAction" validate="false" scope="request"> 
+		    <forward name="success" path="/template/t02_tp_cus_actionModify.jsp"/> 
+		    <forward name="failure" path="/template/t02_tp_cus_action_list.do"/> 
+	  </action> 
+	  <action path="/template/t02_tp_cus_action_modify_do" parameter="modifyT02_tp_cus_actionDo" name="t02_tp_cus_actionActionForm" type="com.ist.avp.template.controller.T02_tp_cus_actionAction" validate="false" scope="request"> 
+		    <forward name="success" path="/template/t02_tp_cus_action_list.do"/> 
+		    <forward name="failure" path="/template/t02_tp_cus_actionModify.do"/> 
+	  </action> 
+	  <action path="/template/t02_tp_cus_action_delete_do" parameter="deleteT02_tp_cus_actionDo" name="t02_tp_cus_actionActionForm" type="com.ist.avp.template.controller.T02_tp_cus_actionAction" validate="false" scope="request"> 
+				<forward name="success" path="/template/t02_tp_cus_action_list.do"/> 
+	        <forward name="failure" path="/template/t02_tp_cus_action_list.do"/> 
+	  </action> 
+	  <!-- 模型自定义动作 end -->
+		
+		<!-- 引擎导出动作 -->
+		<action path="/search/srchEngExport" parameter="srchEngExport"
+			name="t02_srch_eng_infActionForm"
+			type="com.ist.avp.search.controller.SrchEngExportImportAction"
+			validate="false" scope="request">
+			<forward name="failureExport"
+				path="/search/t02_srch_eng_inf_list.do" />
+			<forward name="failurePublish"
+				path="/search/t02_srch_eng_inf_listPublish.do" />
+		</action>
+		<!-- 引擎导入页面动作 -->
+		<action path="/search/srchEngImport" parameter="srchEngImport"
+			name="t01_attachmentActionForm"
+			type="com.ist.avp.search.controller.SrchEngExportImportAction"
+			validate="false" scope="request">
+			<forward name="success" path="/search/srch_eng_import.jsp" />
+			<forward name="failure" path="/search/srch_eng_import.jsp" />
+		</action>
+		<!-- 引擎导入执行上传动作 -->
+		<action path="/search/srchEngImportDo" parameter="srchEngImportDo"
+			name="t01_attachmentActionForm"
+			type="com.ist.avp.search.controller.SrchEngExportImportAction"
+			validate="false" scope="request">
+			<forward name="success" path="/search/srch_eng_import.jsp" />
+			<forward name="failure" path="/search/srch_eng_import.jsp" />
+		</action>
+		<!--  T02_SRCH_ENG_INF 引擎管理-->
+		<action path="/search/t02_srch_eng_inf_list"
+			parameter="getT02_srch_eng_infList" name="t02_srch_eng_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_infAction"
+			validate="false" scope="request">
+			<forward name="success" path="/search/t02_srch_eng_info_list.jsp" />
+			<forward name="failure" path="/search/t02_srch_eng_info_list.jsp" />
+		</action>
+		<!--  T02_SRCH_ENG_INF 添加主页面-->
+		<action path="/search/main_add" parameter="main_add" name="t02_srch_eng_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_infAction" validate="false" scope="request">
+			<forward name="success" path="/search/main_add.jsp" />
+			<forward name="failure" path="/search/t02_srch_eng_inf_list.do" />
+		</action>
+		<!--  T02_SRCH_ENG_INF 添加引擎表-->
+		<action path="/search/addT02_srch_eng_inf" parameter="addT02_srch_eng_inf" name="t02_srch_eng_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_infAction" validate="false" scope="request">
+			<forward name="success" path="/search/t02_srch_eng_info_add.jsp" />
+			<forward name="failure" path="/search/t02_srch_eng_inf_list.do" />
+		</action>
+		<!--  T02_SRCH_ENG_INF 添加动作-->
+		<action path="/search/t02_srch_eng_inf_add_do" parameter="addT02_srch_eng_infDo" name="t02_srch_eng_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_infAction" validate="false" scope="request">
+			<forward name="success" path="/search/t02_srch_eng_info_add.jsp" />
+			<forward name="failure" path="/search/t02_parm_sub_list.do" />
+		</action>
+		<!--  T02_SRCH_ENG_INF 修改界面-->
+		<action path="/search/t02_srch_eng_inf_modify"
+			parameter="modifyT02_srch_eng_inf" name="t02_srch_eng_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_infAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_srch_eng_info_list.jsp" />
+			<forward name="failure" path="/search/t02_parm_sub_list.do" />
+		</action>
+		<!--  T02_SRCH_ENG_INF 修改动作-->
+		<action path="/search/t02_srch_eng_inf_modify_do"
+			parameter="modifyT02_srch_eng_infDo" name="t02_srch_eng_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_infAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_srch_eng_info_add.jsp" />
+			<forward name="failure" path="/search/t02_parm_sub_list.do" />
+		</action>
+		<!--  T02_SRCH_ENG_INF 引擎管理删除-->
+		<action path="/search/t02_srch_eng_inf_del"
+			parameter="deleteT02_srch_eng_infDo"
+			name="t02_srch_eng_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_infAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_srch_eng_inf_list.do" />
+			<forward name="failure" path="/search/t02_srch_eng_inf_list.do" />
+		</action>
+		
+		<!--  T02_SRCH_ENG_INF 引擎管理申请发布-->
+		<action path="/search/performReqIssueT02_srch_eng_inf"
+			parameter="performReqIssueT02_srch_eng_inf"
+			name="t02_srch_eng_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_infAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_srch_eng_inf_list.do" />
+			<forward name="failure" path="/search/t02_srch_eng_inf_list.do" />
+		</action>
+			<!--  T02_SRCH_ENG_INF 引擎管理 引擎参数 查询列表-->
+		<action path="/search/t02_srch_eng_parm_list"
+			parameter="getT02_srch_eng_parmList"
+			name="t02_srch_eng_parmActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_parmAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_srch_eng_parm_list.jsp" />
+			<forward name="failure" path="/search/t02_srch_eng_parm_list.jsp" />
+		</action>
+		<!--  T02_SRCH_ENG_INF 引擎管理 引擎参数 添加-->
+		<action path="/search/t02_srch_eng_parm_add"
+			parameter="addT02_srch_eng_parm"
+			name="t02_srch_eng_parmActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_parmAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_srch_eng_parm_add.jsp" />
+			<forward name="failure" path="/search/t02_srch_eng_parm_list.do" />
+		</action>
+		<!--  T02_SRCH_ENG_INF 引擎管理 引擎参数 添加动作-->
+		<action path="/search/t02_srch_eng_parm_add_do"
+			parameter="addT02_srch_eng_parmDo"
+			name="t02_srch_eng_parmActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_parmAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_srch_eng_parm_list.do" />
+			<forward name="failure" path="/search/t02_srch_eng_parm_list.do" />
+		</action>
+		<!--  T02_SRCH_ENG_INF 引擎管理 引擎参数 修改-->
+		<action path="/search/t02_srch_eng_parm_modify"
+			parameter="modifyT02_srch_eng_parm"
+			name="t02_srch_eng_parmActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_parmAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_srch_eng_parm_modify.jsp" />
+			<forward name="failure" path="/search/t02_srch_eng_parm_list.do" />
+		</action>
+		<!--  T02_SRCH_ENG_INF 引擎管理 引擎参数 修改动作-->
+		<action path="/search/t02_srch_eng_parm_modify_do"
+			parameter="modifyT02_srch_eng_parmDo"
+			name="t02_srch_eng_parmActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_parmAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_srch_eng_parm_list.do" />
+			<forward name="failure" path="/search/t02_srch_eng_parm_list.do" />
+		</action>
+		
+		<!--  T02_SRCH_ENG_INF 引擎管理 引擎参数 删除-->
+		<action path="/search/t02_srch_eng_parm_delete_do"
+			parameter="deleteT02_srch_eng_parmDo"
+			name="t02_srch_eng_parmActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_parmAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_srch_eng_parm_list.do" />
+			<forward name="failure" path="/search/t02_srch_eng_parm_list.do" />
+		</action>
+		<!--  T02_SRCH_CATE 引擎管理 - 定义类别-->
+		<action path="/search/t02_srch_cate_list"
+			parameter="getT02_srch_cateList"
+			name="t02_srch_cateActionForm"
+			type="com.ist.avp.search.controller.T02_srch_cateAction"
+			validate="false" scope="request">
+			<forward name="success" path="/search/t02_srch_cate_list.jsp" />
+		</action>
+		<!-- T02_SRCH_CATE 引擎管理 - 类别添加界面 -->
+		<action path="/search/t02_srch_cate_add"
+			parameter="addT02_srch_cate"
+			name="t02_srch_cateActionForm"
+			type="com.ist.avp.search.controller.T02_srch_cateAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_srch_cate_add.jsp" />
+			<forward name="failure"
+				path="/search/t02_srch_cate_list.do" />
+		</action>
+		<!-- T02_SRCH_CATE 引擎管理 - 类别添加动作 -->
+		<action path="/search/t02_srch_cate_add_do"
+			parameter="addT02_srch_cateDo"
+			name="t02_srch_cateActionForm"
+			type="com.ist.avp.search.controller.T02_srch_cateAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_srch_cate_list.do" />
+			<forward name="failure"
+				path="/search/t02_srch_cate_add.do" />
+		</action>
+		<!-- T02_SRCH_CATE 引擎管理 - 类别修改界面 -->
+		<action path="/search/t02_srch_cate_modify"
+			parameter="modifyT02_srch_cate"
+			name="t02_srch_cateActionForm"
+			type="com.ist.avp.search.controller.T02_srch_cateAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_srch_cate_modify.jsp" />
+			<forward name="failure"
+				path="/search/t02_srch_cate_list.do" />
+		</action>
+		<!-- T02_SRCH_CATE 引擎管理 - 类别修改动作 -->
+		<action path="/search/t02_srch_cate_modify_do"
+			parameter="modifyT02_srch_cateDo"
+			name="t02_srch_cateActionForm"
+			type="com.ist.avp.search.controller.T02_srch_cateAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_srch_cate_list.do" />
+			<forward name="failure"
+				path="/search/t02_srch_cate_modify.do" />
+		</action>
+		<!-- T02_SRCH_CATE 引擎管理 - 类别删除动作 -->
+		<action path="/search/t02_srch_cate_delete_do"
+			parameter="deleteT02_srch_cateDo"
+			name="t02_srch_cateActionForm"
+			type="com.ist.avp.search.controller.T02_srch_cateAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_srch_cate_list.do" />
+			<forward name="failure"
+				path="/search/t02_srch_cate_list.do" />
+		</action>
+	    <!-- T02_SRCH_INF 引擎管理 - 定义类别 - 模型列表 -->
+		<action path="/search/t02_srch_info_list"
+			parameter="getT02_srch_infList"
+			name="t02_srch_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_infAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_srch_info_list.jsp" />
+		</action>
+		<!-- T02_SRCH_INF 引擎管理 - 定义类别 - 模型添加界面 -->
+		<action path="/search/t02_srch_info_add"
+			parameter="addT02_srch_inf"
+			name="t02_srch_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_infAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_srch_info_add.jsp" />
+			<forward name="failure"
+				path="/search/t02_srch_info_list.do" />
+		</action>
+		<!-- T02_SRCH_INF 引擎管理 - 定义类别 - 模型添加动作 -->
+		<action path="/search/t02_srch_info_add_do"
+			parameter="addT02_srch_infDo"
+			name="t02_srch_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_infAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_srch_info_list.do" />
+			<forward name="failure"
+				path="/search/t02_srch_info_add.do" />
+		</action>
+		<!--  T02_SRCH_INF 引擎管理 - 定义类别 - 模型修改界面 -->
+		<action path="/search/t02_srch_info_modify"
+			parameter="modifyT02_srch_inf"
+			name="t02_srch_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_infAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_srch_info_modify.jsp" />
+			<forward name="failure"
+				path="/search/t02_srch_info_list.do" />
+		</action>
+		<!-- T02_SRCH_CATE 引擎管理 - 定义类别 - 模型修改动作 -->
+		<action path="/search/t02_srch_info_modify_do"
+			parameter="modifyT02_srch_infDo"
+			name="t02_srch_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_infAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_srch_info_list.do" />
+			<forward name="failure"
+				path="/search/t02_srch_info_modify.do" />
+		</action>
+		<!-- T02_SRCH_CATE 引擎管理 - 定义类别 - 模型删除动作 -->
+		<action path="/search/t02_srch_info_delete_do"
+			parameter="deleteT02_srch_infDo"
+			name="t02_srch_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_infAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_srch_info_list.do" />
+			<forward name="failure"
+				path="/search/t02_srch_info_list.do" />
+		</action>
+		<!--  T02_SRCH_ENG_INF 引擎发布管理-->
+		<action path="/search/t02_srch_eng_inf_listPublish"
+			parameter="getT02_srch_eng_infPublishList" name="t02_srch_eng_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_infAction"
+			validate="false" scope="request">
+			<forward name="success" path="/search/t02_srch_eng_info_publish.jsp" />
+			<forward name="failure" path="/search/t02_srch_eng_inf_publish.jsp" />
+		</action>
+		<!--  T02_SRCH_ENG_INF 引擎发布动作-->
+		<action path="/search/srchEngPublishDo"
+			parameter="srchEngPublishDo" name="t02_srch_eng_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_infAction"
+			validate="false" scope="request">
+			<forward name="success" path="/search/t02_srch_eng_inf_listPublish.do" />
+			<forward name="failure" path="/search/t02_srch_eng_inf_publish.jsp" />
+		</action>
+		<!--  T02_SRCH_ENG_INF 引擎退回动作-->
+		<action path="/search/srchEngReturnDo"
+			parameter="srchEngReturnDo" name="t02_srch_eng_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_infAction"
+			validate="false" scope="request">
+			<forward name="success" path="/search/t02_srch_eng_inf_listPublish.do" />
+			<forward name="failure" path="/search/t02_srch_eng_inf_publish.jsp" />
+		</action>
+	    <!-- 引擎管理 - 引擎汇总-->
+		<action path="/search/srch_eng_info_view"
+			parameter="viewEngInfo" name="t02_srch_eng_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_infAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/srch_eng_info_view.jsp" />
+			<forward name="failure" path="/search/srch_eng_info_view.jsp" />
+		</action>
+		<!-- 引擎管理 - 引擎汇总(完成)-->
+		<action path="/search/srch_eng_info_view_complete"
+			parameter="viewEngInfoComplete" name="t02_srch_eng_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_infAction"
+			validate="false" scope="request">
+			<forward name="success" path="/search/srch_eng_info_view.jsp" />
+			<forward name="failure" path="/search/srch_eng_info_view.jsp" />
+		</action>
+		<!--  T02_CRLT_SRCH 引擎管理 - 关联搜索-->
+		<action path="/search/t02_crlt_srch_list"
+			parameter="getT02_crlt_srchList"
+			name="t02_crlt_srchActionForm"
+			type="com.ist.avp.search.controller.T02_crlt_srchAction"
+			validate="false" scope="request">
+			<forward name="success" path="/search/t02_crlt_srch_list.jsp" />
+		</action>
+		<!-- T02_CRLT_SRCH 引擎管理 - 关联搜索添加界面 -->
+		<action path="/search/t02_crlt_srch_add"
+			parameter="addT02_crlt_srch"
+			name="t02_crlt_srchActionForm"
+			type="com.ist.avp.search.controller.T02_crlt_srchAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_crlt_srch_add.jsp" />
+			<forward name="failure"
+				path="/search/t02_crlt_srch_list.do" />
+		</action>
+		<!-- T02_CRLT_SRCH 引擎管理 - 关联搜索添加动作 -->
+		<action path="/search/t02_crlt_srch_add_do"
+			parameter="addT02_crlt_srchDo"
+			name="t02_crlt_srchActionForm"
+			type="com.ist.avp.search.controller.T02_crlt_srchAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_crlt_srch_list.do" />
+			<forward name="failure"
+				path="/search/t02_crlt_srch_add.do" />
+		</action>
+		<!-- T02_CRLT_SRCH 引擎管理 - 关联搜索修改界面 -->
+		<action path="/search/t02_crlt_srch_modify"
+			parameter="modifyT02_crlt_srch"
+			name="t02_crlt_srchActionForm"
+			type="com.ist.avp.search.controller.T02_crlt_srchAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_crlt_srch_modify.jsp" />
+			<forward name="failure"
+				path="/search/t02_crlt_srch_list.do" />
+		</action>
+		<!-- T02_CRLT_SRCH 引擎管理 - 关联搜索修改动作 -->
+		<action path="/search/t02_crlt_srch_modify_do"
+			parameter="modifyT02_crlt_srchDo"
+			name="t02_crlt_srchActionForm"
+			type="com.ist.avp.search.controller.T02_crlt_srchAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_crlt_srch_list.do" />
+			<forward name="failure"
+				path="/search/t02_crlt_srch_modify.do" />
+		</action>
+		<!-- T02_CRLT_SRCH 引擎管理 - 关联搜索删除动作 -->
+		<action path="/search/t02_crlt_srch_delete_do"
+			parameter="deleteT02_crlt_srchDo"
+			name="t02_crlt_srchActionForm"
+			type="com.ist.avp.search.controller.T02_crlt_srchAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_crlt_srch_list.do" />
+			<forward name="failure"
+				path="/search/t02_crlt_srch_list.do" />
+		</action>
+		<!--  T02_SRCH_ENG_INF 添加应用主页面-->
+		<action path="/search/eng_init" parameter="eng_init" name="t02_srch_eng_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_infAction" validate="false" scope="request">
+			<forward name="success" path="/search/t02_srch_eng_info_application.jsp" />
+			<forward name="failure" path="/search/t02_srch_eng_info_application.jsp" />
+		</action>
+		<!--  T02_SRCH_ENG_INF 查询条件-->
+		<action path="/search/performEng_chk_main" parameter="performEng_chk_main" name="t02_srch_eng_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_infAction" validate="false" scope="request">
+			<forward name="success" path="/search/eng_app_con.jsp" />
+			<forward name="failure" path="/search/eng_app_con.jsp" />
+		</action>
+		<!-- T02_PARM_ELMT_RELA 引擎管理 - 参数元素对应关系列表 -->
+		<action path="/search/addT02_parm_elmt_rela"
+			parameter="addT02_parm_elmt_rela"
+			name="t02_parm_elmt_relaActionForm"
+			type="com.ist.avp.search.controller.T02_parm_elmt_relaAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/t02_parm_elmt_rela_list.jsp" />
+			<forward name="failure"
+				path="/search/t02_srch_info_list.do" />
+		</action>
+		<!-- T02_PARM_ELMT_RELA 引擎管理 - 参数元素对应关系保存 -->
+		<action path="/search/addT02_parm_elmt_relaDo"
+			parameter="addT02_parm_elmt_relaDo"
+			name="t02_parm_elmt_relaActionForm"
+			type="com.ist.avp.search.controller.T02_parm_elmt_relaAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/search/addT02_parm_elmt_rela.do" />
+			<forward name="failure"
+				path="/search/addT02_parm_elmt_rela.do" />
+		</action>
+		<!--  T02_SRCH_ENG_INF 引擎发布管理-->
+		<action path="/search/t02_srch_eng_inf_app_list"
+			parameter="t02_srch_eng_inf_app_list" name="t02_srch_eng_infActionForm"
+			type="com.ist.avp.search.controller.T02_srch_eng_infAction"
+			validate="false" scope="request">
+			<forward name="success" path="/search/t02_srch_eng_info_app_list.jsp" />
+			<forward name="failure" path="/search/t02_srch_eng_info_app_list.jsp" />
+		</action>
+		<!-- 搜索引擎运行请求 -->
+		<action path="/search/search_engine_running"
+			parameter="search_engine_running"
+			name="searchEngineRunningActionForm"
+			type="com.ist.avp.search.controller.SearchEngineRunningAction"
+			validate="false" scope="request">
+			<forward name="success" path="/template/tpla_chk_main.do" redirect="true"/>
+			<forward name="failure" path="/search/srch_eng_add_main.jsp" />
+		</action>
+		<!-- 客户搜索 - 相关搜索链接-->
+		<action path="/search/user_crlt_srch_link"
+			parameter="user_crlt_srch_link" name="t02_crlt_srchActionForm"
+			type="com.ist.avp.search.controller.T02_crlt_srchAction"
+			validate="false" scope="request">
+			<forward name="success" path="/search/user_crlt_srch_list.jsp" />
+			<forward name="failure" path="/search/performEng_chk_main.do" />
+		</action>
+		<!-- end add  -->
+		
+		
+		<!-- 临时表管理 -->
+		<action path="/template/t01_mt_property_tmp_list"
+			parameter="getT01_mt_property_tmp_list"
+			name="t01_mt_propertyActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_qryAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/tmp/t01_mt_property_tmp_list.jsp" />
+		</action>
+		<action path="/template/addT01_mt_property_tmp"
+			parameter="addT01_mt_property_tmp" name="t01_mt_propertyActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_qryAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/tmp/t01_mt_property_tmp_add.jsp" />
+			<forward name="failure"
+				path="/template/t01_mt_property_tmp_list.do" />
+		</action>
+		<action path="/template/addT01_mt_property_tmpDo"
+			parameter="addT01_mt_property_tmpDo" name="t01_mt_propertyActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_qryAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t01_mt_property_tmp_list.do" />
+			<forward name="failure"
+				path="/template/addT01_mt_property_tmp.do" />
+		</action>
+		<action path="/template/deleteT01_mt_property_tmpDo"
+			parameter="deleteT01_mt_property_tmpDo"
+			name="t01_mt_propertyActionForm"
+			type="com.ist.avp.template.controller.T02_tp_exec_qryAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/t01_mt_property_tmp_list.do" />
+			<forward name="failure"
+				path="/template/t01_mt_property_tmp_list.do" />
+		</action>
+		
+		<action path="/template/avp_help"
+			parameter="getAvp_help"
+			name="TplaChkActionForm"
+			type="com.ist.avp.template.controller.TplaChkAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/template/help.jsp" />
+			<forward name="failure"
+				path="/template/help.jsp" />
+		</action>
+
+<!-- t02_tp_show  -->
+
+	<action path="/template/t02_tp_manager_list" parameter="getT02_tp_manager_list"
+		name="t02_tp_showActionForm" type="com.ist.avp.template.controller.T02_tp_showAction"
+		validate="false" scope="request">
+		<forward name="success" path="/template/t02_tp_manager_list.jsp" />
+		<forward name="failure" path="/template/t02_tp_manager_list.jsp" />
+	</action>
+	<action path="/template/delete_t02_tp_manager" parameter="delete_t02_tp_manager"
+		name="t02_tp_showActionForm" type="com.ist.avp.template.controller.T02_tp_showAction"
+		validate="false" scope="request">
+		<forward name="success" path="/template/t02_tp_manager_list.do" />
+		<forward name="failure" path="/template/t02_tp_manager_list.do" />
+	</action>
+
+
+	<action path="/template/t02_tp_show_list" parameter="getT02_tp_showList"
+		name="t02_tp_showActionForm" type="com.ist.avp.template.controller.T02_tp_showAction"
+		validate="false" scope="request">
+		<forward name="success" path="/template/t02_tp_show_list.jsp" />
+	</action>
+	<action path="/template/t02_tp_show_add" parameter="addT02_tp_show"
+		name="t02_tp_showActionForm" type="com.ist.avp.template.controller.T02_tp_showAction"
+		validate="false" scope="request">
+		<forward name="success" path="/template/t02_tp_show_add.jsp" />
+		<forward name="failure" path="/template/t02_tp_show_list.do" />
+	</action>
+	<action path="/template/t02_tp_show_add_do" parameter="addT02_tp_showDo"
+		name="t02_tp_showActionForm" type="com.ist.avp.template.controller.T02_tp_showAction"
+		validate="false" scope="request">
+		<forward name="success" path="/template/t02_tp_show_list.do" />
+		<forward name="failure" path="/template/t02_tp_show_add.do" />
+	</action>
+	<action path="/template/t02_tp_show_modify" parameter="modifyT02_tp_show"
+		name="t02_tp_showActionForm" type="com.ist.avp.template.controller.T02_tp_showAction"
+		validate="false" scope="request">
+		<forward name="success" path="/template/t02_tp_show_modify.jsp" />
+		<forward name="failure" path="/template/t02_tp_show_list.do" />
+	</action>
+	<action path="/template/t02_tp_show_modify_do" parameter="modifyT02_tp_showDo"
+		name="t02_tp_showActionForm" type="com.ist.avp.template.controller.T02_tp_showAction"
+		validate="false" scope="request">
+		<forward name="success" path="/template/t02_tp_show_list.do" />
+		<forward name="failure" path="/template/t02_tp_show_modify.do" />
+	</action>
+	<action path="/template/t02_tp_show_delete_do" parameter="deleteT02_tp_showDo"
+		name="t02_tp_showActionForm" type="com.ist.avp.template.controller.T02_tp_showAction"
+		validate="false" scope="request">
+		<forward name="success" path="/template/t02_tp_show_list.do" />
+		<forward name="failure" path="/template/t02_tp_show_list.do" />
+	</action>
+	<action path="/template/t02_tp_show_disp" parameter="getT02_tp_showDisp"
+		name="t02_tp_showActionForm" type="com.ist.avp.template.controller.T02_tp_showAction"
+		validate="false" scope="request">
+		<forward name="success" path="/template/t02_tp_show_disp.jsp" />
+	</action> 
+		
+	<!-- end  -->	
+	
+		<!-- t02_tp_chart begin -->
+	<action path="/template/t02_tp_chart_search" parameter="searchT02_tp_chart" name="t02_tp_chartActionForm" type="com.ist.avp.template.controller.T02_tp_chartAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t02_tp_chart/t02_tp_chart_search.jsp"/> 
+        <forward name="failure" path="/t02_tp_chart/t02_tp_chart_list.do"/> 
+    </action> 
+    <action path="/template/t02_tp_chart_list" parameter="getT02_tp_chartList" name="t02_tp_chartActionForm" type="com.ist.avp.template.controller.T02_tp_chartAction" validate="false" scope="request"> 
+	    <forward name="success" path="/template/t02_tp_chart_list.jsp"/>
+	    <forward name="failure" path="/template/t02_tp_chart_list.jsp"/> 
+    </action> 
+    <action path="/template/t02_tp_chart_add" parameter="addT02_tp_chart" name="t02_tp_chartActionForm" type="com.ist.avp.template.controller.T02_tp_chartAction" validate="false" scope="request"> 
+	    <forward name="success" path="/template/t02_tp_chart_add.jsp"/> 
+	    <forward name="failure" path="/template/t02_tp_manager_list.do"/> 
+    </action> 
+    <action path="/template/t02_tp_chart_add_do" parameter="addT02_tp_chartDo" name="t02_tp_chartActionForm" type="com.ist.avp.template.controller.T02_tp_chartAction" validate="false" scope="request"> 
+	    <forward name="success" path="/template/t02_tp_manager_list.do"/> 
+	    <forward name="failure" path="/template/t02_tp_chart_add.do"/> 
+    </action> 
+    <action path="/template/t02_tp_chart_modify" parameter="modifyT02_tp_chart" name="t02_tp_chartActionForm" type="com.ist.avp.template.controller.T02_tp_chartAction" validate="false" scope="request"> 
+	    <forward name="success" path="/template/t02_tp_chart_modify.jsp"/> 
+	    <forward name="failure" path="/template/t02_tp_manager_list.do"/> 
+    </action> 
+    <action path="/template/t02_tp_chart_modify_do" parameter="modifyT02_tp_chartDo" name="t02_tp_chartActionForm" type="com.ist.avp.template.controller.T02_tp_chartAction" validate="false" scope="request"> 
+	    <forward name="success" path="/template/t02_tp_manager_list.do"/> 
+	    <forward name="failure" path="/template/t02_tp_chart_modify.do"/> 
+    </action> 
+    <action path="/template/t02_tp_chart_delete_do" parameter="deleteT02_tp_chartDo" name="t02_tp_chartActionForm" type="com.ist.avp.template.controller.T02_tp_chartAction" validate="false" scope="request"> 
+	<forward name="success" path="/template/t02_tp_chart_list.do"/> 
+        <forward name="failure" path="/template/t02_tp_chart_list.do"/> 
+    </action> 
+    <action path="/template/t02_tp_chart_disp" parameter="getT02_tp_chartDisp" name="t02_tp_chartActionForm" type="com.ist.avp.template.controller.T02_tp_chartAction" validate="false" scope="request"> 
+	    <forward name="success" path="/template/t02_tp_chart_disp.jsp"/> 
+    </action> 
+		<!-- t02_tp_chart end -->
+		
+		<!-- t02_tp_report begin-->
+		 <action path="/template/t02_tp_report_search" parameter="searchT02_tp_report" name="t02_tp_reportActionForm" type="com.ist.avp.template.controller.T02_tp_reportAction" validate="false" scope="request"> 
+	    <forward name="success" path="/template/t02_tp_report_search.jsp"/> 
+        <forward name="failure" path="/template/t02_tp_report_list.do"/> 
+	    </action> 
+	    <action path="/template/t02_tp_report_list" parameter="getT02_tp_reportList" name="t02_tp_reportActionForm" type="com.ist.avp.template.controller.T02_tp_reportAction" validate="false" scope="request"> 
+		    <forward name="success" path="/template/t02_tp_report_list.jsp"/> 
+	    </action> 
+	    <action path="/template/t02_tp_report_add" parameter="addT02_tp_report" name="t02_tp_reportActionForm" type="com.ist.avp.template.controller.T02_tp_reportAction" validate="false" scope="request"> 
+		    <forward name="success" path="/template/t02_tp_report_add.jsp"/> 
+		    <forward name="failure" path="/template/t02_tp_manager_list.do"/> 
+	    </action> 
+	    <action path="/template/t02_tp_report_add_do" parameter="addT02_tp_reportDo" name="t02_tp_reportActionForm" type="com.ist.avp.template.controller.T02_tp_reportAction" validate="false" scope="request"> 
+		    <forward name="success" path="/template/t02_tp_manager_list.do"/> 
+		    <forward name="failure" path="/template/t02_tp_report_add.do"/> 
+	    </action> 
+	    <action path="/template/t02_tp_report_modify" parameter="modifyT02_tp_report" name="t02_tp_reportActionForm" type="com.ist.avp.template.controller.T02_tp_reportAction" validate="false" scope="request"> 
+		    <forward name="success" path="/template/t02_tp_report_modify.jsp"/> 
+		    <forward name="failure" path="/template/t02_tp_manager_list.do"/> 
+	    </action> 
+	    <action path="/template/t02_tp_report_modify_do" parameter="modifyT02_tp_reportDo" name="t02_tp_reportActionForm" type="com.ist.avp.template.controller.T02_tp_reportAction" validate="false" scope="request"> 
+		    <forward name="success" path="/template/t02_tp_manager_list.do"/> 
+		    <forward name="failure" path="/template/t02_tp_report_modify.do"/> 
+	    </action> 
+	    <action path="/template/t02_tp_report_delete_do" parameter="deleteT02_tp_reportDo" name="t02_tp_reportActionForm" type="com.ist.avp.template.controller.T02_tp_reportAction" validate="false" scope="request"> 
+		<forward name="success" path="/template/t02_tp_manager_list.do"/> 
+	        <forward name="failure" path="/template/t02_tp_manager_list.do"/> 
+	    </action> 
+	    <action path="/template/t02_tp_report_disp" parameter="getT02_tp_reportDisp" name="t02_tp_reportActionForm" type="com.ist.avp.template.controller.T02_tp_reportAction" validate="false" scope="request"> 
+		    <forward name="success" path="/template/t02_tp_report_disp.jsp"/> 
+	    </action> 
+	    <action path="/template/location_window_col_set_report"
+			parameter="location_window_col_set_report"
+			name="t02_tp_reportActionForm"
+			type="com.ist.avp.template.controller.T02_tp_reportAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/template/location_window_col_set.jsp" />
+			<forward name="failure"
+				path="/template/location_window_col_set.jsp" />
+		</action>
+		<!-- t02_tp_report end -->
+		
+		<action path="/template/t02_tp_stat_add" parameter="addT02_tp_stat" name="t02_tp_statActionForm" type="com.ist.avp.template.controller.T02_tp_statAction" validate="false" scope="request"> 
+		    <forward name="success" path="/template/t02_tp_stat_add.jsp"/> 
+		    <forward name="failure" path="/template/t02_tp_manager_list.do"/> 
+	    </action> 
+	    <action path="/template/t02_tp_stat_add_do" parameter="addT02_tp_statDo" name="t02_tp_statActionForm" type="com.ist.avp.template.controller.T02_tp_statAction" validate="false" scope="request"> 
+		    <forward name="success" path="/template/t02_tp_manager_list.do"/> 
+		    <forward name="failure" path="/template/t02_tp_report_add.do"/> 
+	    </action> 
+	    <action path="/template/t02_tp_stat_modify" parameter="modifyT02_tp_stat" name="t02_tp_statActionForm" type="com.ist.avp.template.controller.T02_tp_statAction" validate="false" scope="request"> 
+		    <forward name="success" path="/template/t02_tp_stat_modify.jsp"/> 
+		    <forward name="failure" path="/template/t02_tp_manager_list.do"/> 
+	    </action> 
+	    <action path="/template/t02_tp_stat_modify_do" parameter="modifyT02_tp_statDo" name="t02_tp_statActionForm" type="com.ist.avp.template.controller.T02_tp_statAction" validate="false" scope="request"> 
+		    <forward name="success" path="/template/t02_tp_manager_list.do"/> 
+		    <forward name="failure" path="/template/t02_tp_report_modify.do"/> 
+	    </action> 
+	
+	</action-mappings>
+	<message-resources parameter="ApplicationResources_zh_CN" />
+</struts-config>
+

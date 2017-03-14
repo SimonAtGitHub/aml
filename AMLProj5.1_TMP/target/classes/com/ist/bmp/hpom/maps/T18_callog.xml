@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T18_callog">
+	<statement id="getT18_callogList" parameterClass="com.ist.bmp.hpom.dto.T18_callog"
+		resultClass="com.ist.bmp.hpom.dto.T18_callog">
+		select
+		logkey,domainkey,taskkey,serverkey,tasktype,businesskey,statisticdate,dskey,granularity,organkey,begintime,endtime,usetime,calstatus,calseq
+		from t18_callog
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="logkey">
+				logkey = #logkey# 
+    </isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="getT18_callogListCount" parameterClass="com.ist.bmp.hpom.dto.T18_callog"
+		resultClass="int">
+		select count(*) from t18_callog
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="logkey">
+				logkey = #logkey# 
+    </isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="insertT18_callog" parameterClass="com.ist.bmp.hpom.dto.T18_callog"
+		resultClass="int">
+		insert into T18_callog(
+		logkey,domainkey,taskkey,serverkey,tasktype,businesskey,statisticdate,dskey,granularity,organkey,begintime,endtime,usetime,calstatus,calseq
+		) values(
+		#logkey#,#domainkey#,#taskkey#,#serverkey#,#tasktype#,#businesskey#,#statisticdate#,#dskey#,#granularity#,#organkey#,#begintime#,#endtime#,#usetime#,#calstatus#,#calseq#
+		) 
+  </statement>
+
+	<statement id="modifyT18_callog" parameterClass="com.ist.bmp.hpom.dto.T18_callog"
+		resultClass="int">
+		update T18_callog set
+		logkey=#logkey#,domainkey=#domainkey#,taskkey=#taskkey#,serverkey=#serverkey#,tasktype=#tasktype#,businesskey=#businesskey#,statisticdate=#statisticdate#,dskey=#dskey#,granularity=#granularity#,organkey=#organkey#,begintime=#begintime#,endtime=#endtime#,usetime=#usetime#,calstatus=#calstatus#,calseq=#calseq#
+		where logkey=#logkey# 
+  </statement>
+
+	<statement id="deleteT18_callog" parameterClass="java.lang.String"
+		resultClass="int">
+		delete from T18_callog where logkey=#value# 
+  </statement>
+
+	<statement id="getT18_callogDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.bmp.hpom.dto.T18_callog">
+		select * from T18_callog where logkey=#value# 
+  </statement>
+  
+  <statement id="getT18_callogListByTaskkey" parameterClass="com.ist.bmp.hpom.dto.T18_callog"
+		resultClass="com.ist.bmp.hpom.dto.T18_callog">
+		select t.logkey,t.taskkey,t1.typename,t.businesskey,t.statisticdate,d.dsname,t.granularity,t.begintime,t.endtime,t.usetime,t.calstatus,t.calseq
+		 from T18_callog t,t18_datasource d ,t18_task_type t1 where t.dskey = d.dskey and t.tasktype = t1.tasktype
+		 <isNotEmpty prepend="and" property="taskkey">
+				t.taskkey = #taskkey# 
+    </isNotEmpty>
+     <isNotEmpty prepend="and" property="statisticdate">
+				t.statisticdate = #statisticdate# 
+    </isNotEmpty>
+  </statement>
+
+</sqlMap> 
+

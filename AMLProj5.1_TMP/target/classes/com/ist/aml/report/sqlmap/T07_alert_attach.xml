@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T07_alert_attach"> 
+  <statement id="getT07_alert_attachList" parameterClass="com.ist.aml.report.dto.T07_alert_attach" resultClass="com.ist.aml.report.dto.T07_alert_attach"> 
+  SELECT APPLICATION_NUM,ALERTKEY,ATTACHKEY,ATTACH_NAME,ATTACH_REALNAME,LOAD_DATE,LOAD_USER FROM T07_ALERT_ATTACH 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="application_num"> 
+    APPLICATION_NUM = #application_num# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="alertkey"> 
+    ALERTKEY = #alertkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT07_alert_attachListCount" parameterClass="com.ist.aml.report.dto.T07_alert_attach" resultClass="int"> 
+  SELECT COUNT(*) FROM T07_ALERT_ATTACH 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="application_num"> 
+    APPLICATION_NUM = #application_num# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="alertkey"> 
+    ALERTKEY = #alertkey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="attachkey"> 
+    ATTACHKEY = #attachkey# 
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT07_alert_attach" parameterClass="com.ist.aml.report.dto.T07_alert_attach" resultClass="int"> 
+  INSERT INTO T07_ALERT_ATTACH(
+  APPLICATION_NUM,ALERTKEY,ATTACHKEY,ATTACH_NAME,ATTACH_REALNAME,LOAD_DATE,LOAD_USER
+  ) VALUES(
+  #application_num#,#alertkey#,#attachkey#,#attach_name#,#attach_realname#,#load_date#,#load_user#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT07_alert_attach" parameterClass="com.ist.aml.report.dto.T07_alert_attach" resultClass="int"> 
+  UPDATE T07_ALERT_ATTACH SET 
+  APPLICATION_NUM=#application_num#,ALERTKEY=#alertkey#,ATTACHKEY=#attachkey#,ATTACH_NAME=#attach_name#,ATTACH_REALNAME=#attach_realname#,LOAD_DATE=#load_date#,LOAD_USER=#load_user#
+  WHERE APPLICATION_NUM=#application_num# 
+  </statement> 
+ 
+  <statement id="deleteT07_alert_attach" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T07_ALERT_ATTACH WHERE ATTACHKEY=#value# 
+  </statement> 
+ 
+ <statement id="deleteT07_alert_attach1" parameterClass="com.ist.aml.report.dto.T07_alert_attach" resultClass="int">
+  DELETE FROM T07_ALERT_ATTACH WHERE APPLICATION_NUM=#application_num# AND ATTACHKEY=#attachkey# 
+  </statement>
+  
+  <statement id="getT07_alert_attachDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.report.dto.T07_alert_attach"> 
+  SELECT * FROM T07_ALERT_ATTACH WHERE APPLICATION_NUM=#value# 
+  </statement> 
+ <statement id="getT07_alert_attachDispByAttachkey" parameterClass="java.lang.String" resultClass="com.ist.aml.report.dto.T07_alert_attach"> 
+  SELECT * FROM T07_ALERT_ATTACH WHERE ATTACHKEY=#value# 
+  </statement>
+  
+  <statement id="getT07_alert_attachDisp1" parameterClass="com.ist.aml.report.dto.T07_alert_attach" resultClass="com.ist.aml.report.dto.T07_alert_attach"> 
+  SELECT * FROM T07_ALERT_ATTACH WHERE APPLICATION_NUM=#application_num# AND ATTACHKEY=#attachkey#
+  </statement> 
+</sqlMap> 
+

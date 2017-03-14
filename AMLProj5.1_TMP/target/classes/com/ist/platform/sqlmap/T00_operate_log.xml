@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T00_operate_log"> 
+  <statement id="getT00_operate_logList" parameterClass="com.ist.platform.dto.T00_operate_log" resultClass="com.ist.platform.dto.T00_operate_log"> 
+  SELECT LOG_KEY,CREATEDATE,USERNAME,REALNAME,SYSTEMKEY,MODULEKEY,MODULENAME,MODULE_KEY_SUB1,MODULE_KEY_SUB2,OPERATE_OBJ1_TYPE,OPERATE_OBJ2_TYPE,OPERATE_OBJ1,OPERATE_OBJ2,OPERATE_DESC,OPERATE_TYPE,IS_SUCC FROM T00_OPERATE_LOG 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="log_key"> 
+    LOG_KEY = #log_key# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT00_operate_logListCount" parameterClass="com.ist.platform.dto.T00_operate_log" resultClass="int"> 
+  SELECT COUNT(*) FROM T00_OPERATE_LOG
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="log_key"> 
+    LOG_KEY = #log_key# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT00_operate_log" parameterClass="com.ist.platform.dto.T00_operate_log" resultClass="int"> 
+  INSERT INTO T00_OPERATE_LOG(
+  LOG_KEY,CREATEDATE,USERNAME,REALNAME,SYSTEMKEY,MODULEKEY,MODULENAME,MODULE_KEY_SUB1,MODULE_KEY_SUB2,OPERATE_OBJ1_TYPE,OPERATE_OBJ2_TYPE,OPERATE_OBJ1,OPERATE_OBJ2,OPERATE_DESC,OPERATE_TYPE,IS_SUCC
+  ) values(
+  #log_key#,#createdate#,#username#,#realname#,#systemkey#,#modulekey#,#modulename#,#module_key_sub1#,#module_key_sub2#,#operate_obj1_type#,#operate_obj2_type#,#operate_obj1#,#operate_obj2#,#operate_desc#,#operate_type#,#is_succ#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT00_operate_log" parameterClass="com.ist.platform.dto.T00_operate_log" resultClass="int"> 
+  UPDATE T00_OPERATE_LOG SET 
+  LOG_KEY=#log_key#,CREATEDATE=#createdate#,USERNAME=#username#,REALNAME=#realname#,SYSTEMKEY=#systemkey#,MODULEKEY=#modulekey#,MODULENAME=#modulename#,MODULE_KEY_SUB1=#module_key_sub1#,MODULE_KEY_SUB2=#module_key_sub2#,OPERATE_OBJ1_TYPE=#operate_obj1_type#,OPERATE_OBJ2_TYPE=#operate_obj2_type#,OPERATE_OBJ1=#operate_obj1#,OPERATE_OBJ2=#operate_obj2#,OPERATE_DESC=#operate_desc#,OPERATE_TYPE=#operate_type#,IS_SUCC=#is_succ#
+  WHERE LOG_KEY=#log_key# 
+  </statement> 
+ 
+  <statement id="deleteT00_operate_log" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T00_OPERATE_LOG WHERE LOG_KEY=#value# 
+  </statement> 
+ 
+  <statement id="getT00_operate_logDisp" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_operate_log"> 
+  SELECT * FROM T00_OPERATE_LOG WHERE LOG_KEY=#value# 
+  </statement> 
+ 
+</sqlMap> 
+

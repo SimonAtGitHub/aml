@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_article_collect"> 
+  <statement id="getT12_article_collectList" parameterClass="com.ist.cms.dto.T12_article_collect" resultClass="com.ist.cms.dto.T12_article_collect"> 
+  select t1.articlekey,t4.articlename,t4.programakey,t4.programaname,t4.realname,t1.collectdt
+         ,t4.creator,t4.createdate 
+  from t12_article_collect t1 left join 
+       (
+         select t2.articlekey,t2.articlename,t2.programakey,
+         t2.creator,t2.createdate,t3.programaname,t5.realname 
+         from  t12_article t2,t12_programa t3,t00_user t5  
+         where 
+         t2.programakey=t3.programakey and t2.creator = t5.username
+        ) t4 on  t1.articlekey=t4.articlekey 
+  where t1.collectps = #collectps# 
+  <dynamic prepend="">
+    <isNotEmpty prepend="and" property="realname"> 
+            t4.realname like '%'||#realname#||'%' 
+    </isNotEmpty>      
+    <isNotEmpty prepend="and" property="articlename"> 
+            t4.articlename like '%'||#articlename#||'%' 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="programaname"> 
+            t4.programaname like '%'||#programaname#||'%' 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="begindate"> 
+    <![CDATA[
+    		t1.collectdt >= #begindate#
+    ]]> 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="enddate"> 
+    <![CDATA[
+    		t1.collectdt <= #enddate#
+    ]]> 
+    </isNotEmpty>
+    <isNotEmpty prepend="" property="sort_type"> 
+    order by $sort$  $sort_type$ 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT12_article_collectListCount" parameterClass="com.ist.cms.dto.T12_article_collect" resultClass="int"> 
+  select count(*) from t12_article_collect t1 left join 
+       (
+         select t2.articlekey,t2.articlename,t2.programakey,t3.programaname,t5.realname  
+         from  t12_article t2,t12_programa t3,t00_user t5 
+         where t2.programakey=t3.programakey and t2.creator = t5.username          
+        ) t4 on  t1.articlekey=t4.articlekey 
+  where t1.collectps = #collectps# 
+  <dynamic prepend="">     
+    <isNotEmpty prepend="and" property="realname"> 
+            t4.realname like '%'||#realname#||'%' 
+          </isNotEmpty> 
+    <isNotEmpty prepend="and" property="articlename"> 
+            t4.articlename like '%'||#articlename#||'%' 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="programaname"> 
+            t4.programaname like '%'||#programaname#||'%' 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="begindate"> 
+    <![CDATA[
+    		t1.collectdt >= #begindate#
+    ]]> 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="enddate"> 
+    <![CDATA[
+    		t1.collectdt <= #enddate#
+    ]]> 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_article_collect" parameterClass="com.ist.cms.dto.T12_article_collect" resultClass="int"> 
+  insert into T12_article_collect(
+  articlekey,collectps,collectdt
+  ) values(
+  #articlekey#,#collectps#,#collectdt#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_article_collect" parameterClass="com.ist.cms.dto.T12_article_collect" resultClass="int"> 
+  update T12_article_collect set 
+  articlekey=#articlekey#,collectps=#collectps#,collectdt=#collectdt#
+  where articlekey=#articlekey# 
+  </statement> 
+ 
+  <statement id="deleteT12_article_collect" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_article_collect where articlekey=#value# 
+  </statement> 
+ 
+  <statement id="getT12_article_collectDisp" parameterClass="com.ist.cms.dto.T12_article_collect" resultClass="com.ist.cms.dto.T12_article_collect"> 
+  select * from T12_article_collect 
+  where articlekey=#articlekey#  and collectps=#collectps#
+  </statement> 
+ 
+</sqlMap> 
+

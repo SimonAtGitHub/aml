@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+	<form-beans>
+		
+		<form-bean name="t37_risk_attachActionForm" type="com.ist.aml.risk_rate.controller.T37_risk_attachActionForm" />
+		<form-bean name="t37_party_resultActionForm" type="com.ist.aml.risk_rate.controller.T37_party_resultActionForm" />
+		<form-bean name="t37_help_checkActionForm" type="com.ist.aml.risk_rate.controller.T37_help_checkActionForm" />
+		<form-bean name="t37_helpcheck_attachActionForm" type="com.ist.aml.risk_rate.controller.T37_helpcheck_attachActionForm" />
+	</form-beans>
+
+
+	<global-exceptions></global-exceptions>
+
+	<!-- global-forwards -->
+	<global-forwards type="org.apache.struts.action.ActionForward">
+		<forward name="failure" path="/../common/errors.jsp" />
+		<forward name="errors" path="/../common/errors.jsp" />
+		<forward name="nopower" path="/../common/nopower.jsp" />
+		<forward name="sessiontimeout"
+			path="/../common/sessiontimeout.jsp" />
+	</global-forwards>
+
+	<action-mappings>
+		<!-- 上传附件 -->
+		<action path="/t37_risk_attach/t37_risk_attach_list" 
+				parameter="getT37_risk_attachList" 
+				name="t37_risk_attachActionForm" 
+				type="com.ist.aml.risk_rate.controller.T37_risk_attachAction" 
+				validate="false" scope="request">
+	    <forward name="success" path="/attach/risk_attach_list.jsp"/> 
+    	</action>
+   		<action path="/t37_risk_attach/t37_risk_attach_dispList" 
+			parameter="getT37_risk_attachList" 
+			name="t37_risk_attachActionForm" 
+			type="com.ist.aml.risk_rate.controller.T37_risk_attachAction" 
+			validate="false" scope="request">
+	    <forward name="success" path="/attach/risk_attach_dispList.jsp"/> 
+    	</action>
+		
+
+		<action path="/t37_risk_attach/t37_risk_attach_add" 
+    			parameter="addT37_risk_attach" 
+    			name="t37_risk_attachActionForm" 
+    			type="com.ist.aml.risk_rate.controller.T37_risk_attachAction" 
+    			validate="false" scope="request"> 
+	    <forward name="success" path="/attach/risk_attach_add.jsp"/> 
+	    <forward name="failure" path="/t37_risk_attach/t37_risk_attach_list.do"/> 
+    	</action>
+    	
+    	<action path="/t37_risk_attach/t37_risk_attach_delete_do" 
+    			parameter="deleteT37_risk_attachDo" 
+    			name="t37_risk_attachActionForm" 
+    			type="com.ist.aml.risk_rate.controller.T37_risk_attachAction" 
+    			validate="false" scope="request"> 
+		<forward name="success" path="/t37_risk_attach/t37_risk_attach_list.do"/> 
+        <forward name="failure" path="/t37_risk_attach/t37_risk_attach_list.do"/> 
+    	</action>
+    	
+    	<action path="/t37_risk_attach/t37_risk_attach_add_do" 
+    			parameter="addT37_risk_attachDo" 
+    			name="t37_risk_attachActionForm" 
+    			type="com.ist.aml.risk_rate.controller.T37_risk_attachAction" 
+    			validate="false" scope="request"> 
+	    <forward name="success" path="/t37_risk_attach/t37_risk_attach_list.do"/> 
+	    <forward name="failure" path="/t37_risk_attach/t37_risk_attach_add.do"/> 
+    	</action>
+    
+    	<!-- 评级协查 start added by shanbh -->
+	    	<!-- 查询列表页面和查询动作 -->
+	    	<action path="/check/t37_help_check_list"
+	    			parameter="getT37_help_checkList" 
+	    			name="t37_help_checkActionForm"
+	    			type="com.ist.aml.risk_rate.controller.T37_help_checkAction" validate="false" scope="request">
+	    		<forward name="success" path="/check/t37_help_check_list.jsp" />
+	    		<forward name="failure" path="/check/t37_help_check_list.jsp" />
+	    	</action>
+	    	<!-- 点击客户号时进入详细信息页面和动作 -->
+	    	<action path="/check/t37_help_checkDisp"
+	    			parameter="getT37_help_checkDisp"
+	    			name="t37_help_checkActionForm"
+	    			type="com.ist.aml.risk_rate.controller.T37_help_checkAction" validate="false" scope="request">
+	    		<forward name="success" path="/check/t37_help_checkDisp.jsp" />
+	    		<forward name="failure" path="/check/t37_help_check_list.jsp" />
+	    	</action>
+	    	<!-- 点击协查原因时进入详细信息页面 -->
+	    	<action path="/check/t37_help_check_reasonDisp"
+	    			parameter="getT37_help_check_reasonDisp"
+	    			name="t37_help_checkActionForm"
+	    			type="com.ist.aml.risk_rate.controller.T37_help_checkAction" validate="false" scope="request">
+	    		<forward name="success" path="/check/t37_help_check_reasonDisp.jsp" />
+	    		<forward name="failure" path="/check/t37_help_check_list.jsp" />
+	    	</action>
+	    	<!-- 点击退回状态时进入详细信息页面 -->
+	    	<action path="/check/t37_help_check_statusDisp"
+	    			parameter="getT37_help_check_statusDisp"
+	    			name="t37_help_checkActionForm"
+	    			type="com.ist.aml.risk_rate.controller.T37_help_checkAction" validate="false" scope="request">
+	    		<forward name="success" path="/check/t37_help_check_statusDisp.jsp" />
+	    		<forward name="failure" path="/check/t37_help_check_list.jsp" />
+	    	</action>
+	    	<!-- 点击客户号详细页面中协查信息展示 -->
+	    	<action path="/check/t37_help_case"
+	    			parameter="getT37_help_caseDisp"
+	    			name="t37_help_checkActionForm"
+	    			type="com.ist.aml.risk_rate.controller.T37_help_checkAction" validate="false" scope="request">
+	    		<forward name="success" path="/check/t37_help_caseDisp.jsp" />
+	    		<forward name="failure" path="/check/t37_help_checkDisp.jsp" />
+	    	</action>
+	    	<!-- 点击协查信息提交时动作 -->
+	    	<action path="/check/t37_help_case_do"
+	    			parameter="updateT37_help_caseDisp"
+	    			name="t37_help_checkActionForm"
+	    			type="com.ist.aml.risk_rate.controller.T37_help_checkAction" validate="false" scope="request">
+	    		<forward name="success" path="/check/t37_help_check_list.jsp" />
+	    		<forward name="failure" path="/check/t37_help_caseDisp.jsp" />
+	    	</action>
+	    	<!-- 附件信息列表 -->
+	    	<action path="/check/t37_help_check_attachList"
+	    			parameter="getT37_help_check_attachList"
+	    			name="t37_helpcheck_attachActionForm"
+	    			type="com.ist.aml.risk_rate.controller.T37_help_checkAction" validate="false" scope="request">
+	    		<forward name="success" path="/check/t37_help_check_attachList.jsp" />
+	    		<forward name="failure" path="/check/t37_help_caseDisp.jsp" />
+	    	</action>
+	    	<!-- 删除单条附件 -->
+	    	<action path="/check/t37_helpcheck_attach_del"
+	    			parameter="deleteT37_help_check_attach"
+	    			name="t37_helpcheck_attachActionForm"
+	    			type="com.ist.aml.risk_rate.controller.T37_help_checkAction" validate="false" scope="request">
+	    		<forward name="success" path="/check/t37_help_check_attachList.do" />
+	    	</action>
+	    	<!-- 上传附件page -->
+	    	<action path="/check/t37_helpcheck_attach_add"
+	    			parameter="addT37_help_check_attach"
+	    			name="t37_helpcheck_attachActionForm"
+	    			type="com.ist.aml.risk_rate.controller.T37_help_checkAction" validate="false" scope="request">
+	    		<forward name="success" path="/check/t37_help_check_attachAdd.jsp" />
+	    	</action>
+	    	<!-- 上传附件action -->
+	    	<action path="/check/t37_help_check_attach_add_do"
+					parameter="addT37_help_check_attach_do"
+	    			name="t37_helpcheck_attachActionForm"
+	    			type="com.ist.aml.risk_rate.controller.T37_help_checkAction" validate="false" scope="request">
+	    		<forward name="success" path="/check/t37_help_check_attachList.do" />
+	    		<forward name="failure" path="/check/t37_helpcheck_attach_add.do"></forward>
+	    	</action>
+    	<!-- 评级协查end -->
+    	
+    	<!-- 评级协查复核 start added by shanbh -->
+    		<!-- 查询列表页面和查询动作 -->
+	    	<action path="/check/t37_help_recheck_list"
+	    			parameter="getT37_help_recheckList" 
+	    			name="t37_help_checkActionForm"
+	    			type="com.ist.aml.risk_rate.controller.T37_help_checkAction" validate="false" scope="request">
+	    		<forward name="success" path="/check/t37_help_recheck_list.jsp" />
+	    		<forward name="failure" path="/check/t37_help_recheck_list.jsp" />
+	    	</action>
+	    	<!-- 复核通过 -->
+	    	<action path="/check/t37_recheck_pass"
+					parameter="passT37_help_recheck" 
+	    			name="t37_help_checkActionForm"
+	    			type="com.ist.aml.risk_rate.controller.T37_help_checkAction" validate="false" scope="request">
+	    		<forward name="success" path="/check/t37_help_recheck_list.do" />
+	    		<forward name="failure" path="/check/t37_help_recheck_list.jsp" />
+	    	</action>
+	    	<!-- 复核不通过-退回页面 -->
+	    	<action path="/check/t37_recheck_untread"
+	    			parameter="untreadT37_help_recheck" 
+	    			name="t37_help_checkActionForm"
+	    			type="com.ist.aml.risk_rate.controller.T37_help_checkAction" validate="false" scope="request">
+	    		<forward name="success" path="/check/t37_help_recheck_untread.jsp" />
+	    		<forward name="failure" path="/check/t37_help_recheck_list.jsp" />
+	    	</action>
+	    	<!-- 复核不通过-退回动作 -->
+	    	<action path="/check/t37_recheck_untread_do"
+	    			parameter="untreadT37_help_recheck_do" 
+	    			name="t37_help_checkActionForm"
+	    			type="com.ist.aml.risk_rate.controller.T37_help_checkAction" validate="false" scope="request">
+	    		<forward name="success" path="/check/t37_help_recheck_list.do?newsearchflag=1" />
+	    		<forward name="failure" path="/check/t37_help_recheck_list.do" />
+	    	</action>
+    	<!-- 评级协查复核end -->
+    
+    <!-- KYC审查 start -->
+		<action path="/result/t37_party_result_list"
+			parameter="getT37_party_resultList" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/t37_party_result_list.jsp" />
+		</action> 
+		<action path="/result/t37_party_result_checkList"
+			parameter="getT37_party_result_checkList" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/t37_party_result_checkList.jsp" />
+		</action>
+		<action path="/result/t37_party_result_surveyList"
+			parameter="getT37_party_resultList" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/t37_party_result_surveyList.jsp" />
+		</action>
+		<action path="/result/t37_party_result_uhlist"
+			parameter="getT37_party_result_uhList" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_result_uhAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/t37_party_result_uhlist.jsp" />
+		</action>
+		<action path="/result/t37_party_gs_result_uhDisp"
+			parameter="getT37_party_gs_resultDisp" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_result_uhAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/result_gs_disp.jsp" />
+		</action>
+		<action path="/result/t37_party_jf_result_uhDisp"
+			parameter="getT37_party_jf_resultDisp" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_result_uhAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/result_jf_disp.jsp" />
+		</action>
+		<action path="/result/t37_party_gs_result_rateDisp"
+			parameter="getT37_party_gs_resultDisp" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_result_uhAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/result_gs_disp.jsp" />
+			<forward name="failure" path="/result/error_result_disp.jsp" />
+		</action>
+		<action path="/result/t37_party_jf_result_rateDisp"
+			parameter="getT37_party_jf_resultDisp" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_result_uhAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/result_jf_disp.jsp" />
+			<forward name="failure" path="/result/error_result_disp.jsp" />
+		</action> 
+		
+		<action path="/result/t37_result_auditList"
+			parameter="getT37_party_result_checkList" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/t37_result_auditList.jsp" />
+		</action>
+		<action path="/result/t37_result_currView"
+			parameter="getT37_curr_rate_resultList" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultCurrAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/t37_result_currView.jsp" />
+		</action>
+		<action path="/result/t37_result_currToAuditVerify"
+			parameter="t37_result_currToAuditDoVerify" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultCurrAction" validate="false"
+			scope="request">
+		</action>
+		<action path="/result/t37_result_currToAudit"
+			parameter="t37_result_currToAuditDo" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultCurrAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/return_midReason.jsp" />
+		</action>
+		<action path="/result/t37_result_deleteAudit"
+			parameter="t37_result_deleteAuditDo" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultCurrAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/t37_result_auditList.do" />
+		</action>
+		<action path="/result/getT37_level_auditList"
+			parameter="getT37_level_auditList" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/t37_level_auditList.jsp" />
+		</action>
+		<action path="/result/getT37_helpcheckList"
+			parameter="getT37_helpcheckList" name="t37_help_checkActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/t37_helpcheckList.jsp" />
+		</action>
+		<action path="/result/t37_flow_workbench_oper"
+			parameter="flow_workbench_oper" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/t37_party_result_list.do" />
+			<forward name="failure" path="/result/t37_party_result_list.do" />
+		</action>
+		<action path="/result/t37_flow_single_oper"
+			parameter="flow_workbench_oper" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/t37_party_result_checkList.do" />
+			<forward name="failure" path="/result/t37_party_result_checkList.do" />
+		</action>
+		<action path="/result/t37_flow_batch_oper"
+			parameter="flow_batch_oper" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/t37_party_result_checkList.do" />
+			<forward name="failure" path="/result/t37_party_result_checkList.do" />
+		</action>
+		<action path="/result/t37_flow_workbench_check"
+			parameter="flow_workbench_oper" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/t37_party_result_checkList.do" />
+			<forward name="failure" path="/result/t37_party_result_checkList.do" />
+		</action> 
+        <action path="/result/t10_checkparty_main"
+			parameter="getT10_checkparty_main" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success0" path="/result/checkparty_newMain.jsp" />
+			<forward name="success" path="/result/checkparty_stockMain.jsp" />
+			<forward name="success1" path="/result/checkparty_disp_main.jsp" />
+		</action>
+		<action path="/result/t37_party_resultMain"
+			parameter="t37_party_resultMain" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/t37_party_result_main.jsp" />
+		</action>
+		<action path="/result/t37_party_viewMain"
+			parameter="t37_party_viewMain" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/t37_party_view_main.jsp" />
+		</action>
+		<action path="/result/t37_party_viewAdjust"
+			parameter="t37_party_viewMain" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/t37_party_view_adjust.jsp" />
+		</action>
+		<action path="/result/t37_party_view_disp"
+			parameter="t37_party_viewMain" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/t37_party_view_disp.jsp" />
+		</action>
+		<action path="/result/t37_party_gs_result"
+			parameter="t37_party_gs_result" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/result_gs_modify.jsp" />
+		</action> 
+		<action path="/result/t37_party_jf_result"
+			parameter="t37_party_jf_result" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/result_jf_modify.jsp" />
+		</action>
+		<action path="/check/t37_helpcheck"
+			parameter="t37_helpcheck" name="t37_help_checkActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_help_checkAction" validate="false"
+			scope="request">
+			<forward name="success" path="/check/hcheck_add.jsp" />
+		</action> 
+		<action path="/check/t37_helpcheckDo"
+			parameter="t37_helpcheckDo" name="t37_help_checkActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_help_checkAction" validate="false"
+			scope="request">
+			<forward name="success" path="/check/hcheck_mid.jsp" />
+		</action> 
+		<action path="/result/t37_result_modify_do"
+			parameter="modifyT37_party_resultDo" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/mod_result.jsp" />
+		</action> 
+		<action path="/result/t37_party_resultReturn" parameter="returnT37_party_result" name="t37_party_resultActionForm"
+				type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false" scope="request">
+			<forward name="success" path="/result/return_reason.jsp" />
+		</action>
+		<action path="/result/t37_party_resultReturnDo" parameter="returnT37_party_resultDo" name="t37_party_resultActionForm"
+				type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false" scope="request">
+				<forward name="success" path="/result/return_midReason.jsp" />
+		</action>
+		<action path="/result/t37_appr_bas_rsltList"
+			parameter="getT37_appr_bas_rsltList" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/result_integral_List.jsp" />
+			<forward name="failure" path="/result/t37_party_result_list.do" />
+		</action>
+		<action path="/result/recountT37_party_result"
+			parameter="recountT37_party_result" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/t37_party_jf_result.do" />
+			<forward name="failure" path="/result/t37_appr_bas_rsltList.do" />
+		</action> 
+		<action path="/result/change_riskLevel"
+			parameter="changeLevelByLastscore" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+		</action>
+		<!-- 点击客户号详细页面中协查信息展示 -->
+		<action path="/result/t37_help_case"
+    			parameter="getT37_help_caseDisp"
+    			name="t37_help_checkActionForm"
+    			type="com.ist.aml.risk_rate.controller.T37_help_checkAction" validate="false" scope="request">
+    		<forward name="success" path="/result/t37_help_caseDisp.jsp" />
+    		<forward name="failure" path="/check/t37_help_checkDisp.jsp" />
+    	</action>
+        <!-- KYC审查 end -->
+        	<!-- 结果查询-当前评级结果 start added by shanbh -->
+    		<action path="/check/t37_curr_rate_result_list"
+    				parameter="getT37_curr_rate_resultList" 
+	    			name="t37_party_resultActionForm"
+	    			type="com.ist.aml.risk_rate.controller.T37_party_resultCurrAction" validate="false" scope="request">
+	    		<forward name="success" path="/check/t37_curr_rate_result_list.jsp" />
+	    		<forward name="failure" path="/check/t37_curr_rate_result_list.jsp" />
+    		</action>
+    		<!-- 导出客户风险信息 -->
+    		<action path="/check/t37_curr_rate_result_export"
+    				parameter="exportT37_curr_rate_result" 
+	    			name="t37_party_resultActionForm"
+	    			type="com.ist.aml.risk_rate.controller.T37_party_resultCurrAction" validate="false" scope="request">
+	    		<forward name="success" path="/check/t37_curr_rate_result_export.jsp" />
+	    		<forward name="failure" path="/check/t37_curr_rate_result_list.jsp" />
+    		</action>
+    		<!-- 全部导出客户风险信息 -->
+	    	<action path="/check/t37_curr_rate_result_exportall"
+	    			parameter="exportT37_curr_rate_resultAll" 
+	    			name="t37_party_resultActionForm"
+	    			type="com.ist.aml.risk_rate.controller.T37_party_resultCurrAction" validate="false" scope="request">
+	    		<forward name="success" path="/check/t37_curr_rate_result_export.jsp" />
+	    		<forward name="failure" path="/check/t37_curr_rate_result_list.jsp" />
+	    	</action>
+    	<!-- 结果查询-当前评级结果 end -->
+    	
+    	<!-- 结果查询-等级调整进度查询 start added by shanbh -->
+    		<action path="/check/t37_level_adjust_progress"
+    				parameter="getT37_level_adjust_progressList" 
+	    			name="t37_party_resultActionForm"
+	    			type="com.ist.aml.risk_rate.controller.T37_party_resultCurrAction" validate="false" scope="request">
+	    		<forward name="success" path="/check/t37_level_adjust_progress.jsp" />
+	    		<forward name="failure" path="/check/t37_level_adjust_progress.jsp" />
+    		</action>
+    	<!-- 结果查询-等级调整进度查询 end -->
+    	
+    	
+    	<action path="/result/t37_appr_elem_rslt_dispList"
+			parameter="getT37_appr_elem_rslt_dispList" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/result_jf_modify.jsp" />
+		</action>
+		<action path="/result/t37_appr_elem_rslt_dispList2"
+			parameter="getT37_appr_elem_rslt_dispList2" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+		</action>
+	</action-mappings>
+	<message-resources parameter="ApplicationResources_zh_CN" />
+
+</struts-config>
+
+

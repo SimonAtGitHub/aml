@@ -1,0 +1,146 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+@namespace view "com.ist.mfa.view.*";
+@namespace c "com.ist.mfa.components.*";
+
+s|Application
+{
+	font-size:12;
+	font-family:������;
+	font-style:normal;
+	font-weight:normal;
+}
+
+s|TextInput
+{
+	borderColor: #3286A0;
+}
+
+mx|TextInput
+{
+	borderColor: #3286A0;
+}
+
+s|TextArea
+{
+	borderColor: #3286A0;
+}
+mx|TextArea
+{
+	borderColor: #3286A0;
+}
+
+s|Button
+{
+	chromeColor: #C1E1EC;
+}
+mx|Button
+{
+	chromeColor: #C1E1EC;
+}
+s|BorderContainer
+{
+	borderColor: #9CD1DF;
+}
+c|TitleBorderContainer
+{
+	skinClass: ClassReference("com.ist.mfa.components.skins.TitleBorderContainerSkin");
+}
+
+s|TitleWindow
+{
+	borderColor: #2290C3;
+	borderVisible: true;
+	chromeColor: #E0EDF5;
+	fontFamily: Arial;
+	fontWeight: normal;
+}
+mx|DataGrid
+{
+	borderColor: #9CD1DF;
+	verticalGridLineColor:#9CD1DF;
+}
+mx|TabNavigator
+{
+	borderColor: #9CD1DF;
+}
+.buttonBarButton
+{
+	overSkin: 							Embed(source="assets/primeval/images/hoverbg.png",
+											  scaleGridTop="5",
+											  scaleGridLeft="6",
+											  scaleGridRight="32",
+											  scaleGridBottom="17");
+		
+	upSkin: 							Embed(source="assets/primeval/images/light_center.png",
+										scaleGridTop="5",
+										scaleGridLeft="6",
+										scaleGridRight="32",
+										scaleGridBottom="17");
+}
+
+.buttonBarFirstButton
+{	
+	overSkin: 							Embed(source="assets/primeval/images/hoverbg.png",
+											  scaleGridTop="5",
+											  scaleGridLeft="6",
+											  scaleGridRight="32",
+											  scaleGridBottom="17");
+	
+	upSkin: 							Embed(source="assets/primeval/images/light_left.png",
+		scaleGridTop="5",
+		scaleGridLeft="6",
+		scaleGridRight="32",
+		scaleGridBottom="17");
+	
+	
+}	
+
+.buttonBarLastButton
+{
+	overSkin: 							Embed(source="assets/primeval/images/hoverbg.png",
+											  scaleGridTop="5",
+											  scaleGridLeft="6",
+											  scaleGridRight="32",
+											  scaleGridBottom="17");
+	
+	upSkin: 							Embed(source="assets/primeval/images/light_right.png",
+		scaleGridTop="5",
+		scaleGridLeft="6",
+		scaleGridRight="32",
+		scaleGridBottom="17");
+}
+
+.gridTitleCenter
+{
+	text-align : center;
+}
+
+
+.tileList
+{
+	backgroundImage: Embed(source="assets/primeval/images/hoverbg.png",
+		scaleGridTop="5",
+		scaleGridLeft="6",
+		scaleGridRight="32",
+		scaleGridBottom="17");
+	
+}
+
+view|GripButton
+{
+	backgroundColor: #E0EDF5;
+	backgroundAlpha: 0.6;
+}
+mx|Form
+{
+	paddingBottom: 0;
+	paddingLeft: 0;
+	paddingRight: 0;
+	paddingTop: 0;
+}
+global
+{
+	content-background-alpha: 1.0;
+}

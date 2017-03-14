@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_article_relation"> 
+  <statement id="getT12_article_relationList" parameterClass="com.ist.cms.dto.T12_article_relation" resultClass="com.ist.cms.dto.T12_article_relation"> 
+  select programakey,articlekey,relationkey,colkey from t12_article_relation 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="programakey"> 
+    programakey = #programakey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT12_article_relationListCount" parameterClass="com.ist.cms.dto.T12_article_relation" resultClass="int"> 
+  select count(*) from t12_article_relation 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="programakey"> 
+    programakey = #programakey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+  
+  <statement id="insertT12_article_relation" parameterClass="com.ist.cms.dto.T12_article_relation" resultClass="int"> 
+  insert into T12_article_relation(
+  programakey,articlekey,colkey,relationkey
+  ) values(
+  #programakey#,#articlekey#,#colkey#,#relationkey#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_article_relation" parameterClass="com.ist.cms.dto.T12_article_relation" resultClass="int"> 
+  update T12_article_relation set 
+  programakey=#programakey#,articlekey=#articlekey#,relationkey=#relationkey#,colkey=#colkey#
+  where programakey=#programakey# 
+  </statement> 
+  
+  <statement id="deleteT12_article_relation" parameterClass="com.ist.cms.dto.T12_article_relation" resultClass="int">
+  delete from T12_article_relation 
+  where programakey = #programakey# and articlekey = #articlekey# and colkey=#colkey# and relationkey=#relationkey#
+  
+  </statement>
+ 
+  <statement id="getT12_article_relationDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_article_relation"> 
+  select * from T12_article_relation where programakey=#value# 
+  </statement> 
+ 
+  <statement id="getT12_article_relationListByKey" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_article_relation"> 
+   select distinct(PROGRAMAKEY) from T12_article_relation where RELATIONKEY=#value# 
+  </statement> 
+  
+  <statement id="getRelArticleList" parameterClass="com.ist.cms.dto.T12_article_relation" resultClass="com.ist.cms.dto.T12_article_relation"> 
+   select t.programakey,e.articlekey,e.articlename from T12_ARTICLE_RELATION t left join T12_ARTICLE e  on  t.articlekey = e.articlekey 
+   where t.programakey=#programakey# and t.RELATIONKEY=#relationkey#
+  </statement>  
+ 
+</sqlMap> 
+

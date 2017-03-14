@@ -1,0 +1,661 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T07_report08">
+<statement id="getT07_ibh_tsdtValidateCount"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_ibh_tsdt"
+		resultClass="int">
+		SELECT COUNT(*) FROM T07_IBH_TSDT WHERE (VALIDATE_IND IS NULL OR VALIDATE_IND='0')
+		<dynamic>
+			<isNotEmpty prepend="AND" property="reportkey">
+				REPORTKEY = #reportkey#
+			</isNotEmpty>
+	    </dynamic>
+	 </statement>
+<statement id="modifyValidateT07_ibh_tsdt_20091211"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_ibh_tsdt"
+		resultClass="int">
+		UPDATE T07_IBH_TSDT SET VALIDATE_IND=#validate_ind#
+		<dynamic>
+		<isNotEqual prepend="," property="finn" compareValue="#">
+			FINN=#finn#
+		</isNotEqual>
+		<isNotEqual prepend="," property="firc" compareValue="#">
+			FIRC=#firc#
+		</isNotEqual>
+		<isNotEqual prepend="," property="rltp" compareValue="#">
+			RLTP=#rltp#
+		</isNotEqual>
+		<isNotEqual prepend="," property="fict" compareValue="#">
+			FICT=#fict#
+		</isNotEqual>
+		<isNotEqual prepend="," property="finc" compareValue="#">
+			FINC=#finc#
+		</isNotEqual>
+		<isNotEqual prepend="," property="tdrc" compareValue="#">
+			TDRC=#tdrc#
+		</isNotEqual>
+		<isNotEqual prepend="," property="catp" compareValue="#">
+			CATP=#catp#
+		</isNotEqual>
+		<isNotEqual prepend="," property="ctac" compareValue="#">
+			CTAC=#ctac#
+		</isNotEqual>
+		<isNotEqual prepend="," property="tstm_disp" compareValue="#">
+			TSTM=#tstm#
+		</isNotEqual>
+		<isNotEqual prepend="," property="ticd" compareValue="#">
+			TICD=#ticd#
+		</isNotEqual>
+		<isNotEqual prepend="," property="tsdr" compareValue="#">
+			TSDR=#tsdr#
+		</isNotEqual>
+		<isNotEqual prepend="," property="crtp" compareValue="#">
+			CRTP=#crtp#
+		</isNotEqual>
+		<isNotEqual prepend="," property="trcd" compareValue="#">
+			TRCD=#trcd#
+		</isNotEqual>
+		<isNotEqual prepend="," property="tbnm" compareValue="#">
+			TBNM=#tbnm#
+		</isNotEqual>
+		<isNotEqual prepend="," property="tbit" compareValue="#">
+			TBIT=#tbit#
+		</isNotEqual>
+		<isNotEqual prepend="," property="tbid" compareValue="#">
+			TBID=#tbid#
+		</isNotEqual>
+		<isNotEqual prepend="," property="tbnt" compareValue="#">
+			TBNT=#tbnt#
+		</isNotEqual>
+		<isNotEqual prepend="," property="tstp" compareValue="#">
+			TSTP=#tstp#
+		</isNotEqual>
+		<isNotEqual prepend="," property="tsct" compareValue="#">
+			TSCT=#tsct#
+		</isNotEqual>
+		<isNotEqual prepend="," property="crpp" compareValue="#">
+			CRPP=#crpp#
+		</isNotEqual>
+		<isNotEqual prepend="," property="cfin" compareValue="#">
+			CFIN=#cfin#
+		</isNotEqual>
+		<isNotEqual prepend="," property="cfct" compareValue="#">
+			CFCT=#cfct#
+		</isNotEqual>
+		<isNotEqual prepend="," property="cfic" compareValue="#">
+			CFIC=#cfic#
+		</isNotEqual>
+		<isNotEqual prepend="," property="tcnm" compareValue="#">
+			TCNM=#tcnm#
+		</isNotEqual>
+		<isNotEqual prepend="," property="tcit" compareValue="#">
+			TCIT=#tcit#
+		</isNotEqual>
+		<isNotEqual prepend="," property="tcid" compareValue="#">
+			TCID=#tcid#
+		</isNotEqual>
+		<isNotEqual prepend="," property="tcat" compareValue="#">
+			TCAT=#tcat#
+		</isNotEqual>
+		<isNotEqual prepend="," property="tcac" compareValue="#">
+			TCAC=#tcac#
+		</isNotEqual>
+		</dynamic>
+		WHERE REPORTKEY=#reportkey# AND TSDT_SEQNO=$tsdt_seqno$
+	</statement>
+
+
+
+
+
+<!-- add by lcy kyIbs -->
+<statement id="getT07_nbh_tsdtAllList"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_ibh_tsdt"
+		resultClass="com.ist.aml.pbcreport.dto.T07_ibh_tsdt">
+  SELECT T2.REPORTKEY,T2.TICD,T1.CSNM AS OCNM,T1.CTNM,T2.TSTM  AS OTDT,T2.FINC,T2.CRAT,T2.CRTP
+  ,T2.TSDR,T2.CRCD,T2.CATI_SEQNO,T2.TSDT_SEQNO,T2.VALIDATE_IND       
+  FROM T07_NBH_CTIF T1,T07_NBH_TSDT T2,T07_REPORT T3
+  WHERE T1.REPORTKEY = T2.REPORTKEY AND T1.CATI_SEQNO = T2.CATI_SEQNO 
+    AND T2.REPORTKEY = T3.REPORTKEY
+			<isNotEmpty prepend="AND" property="reportkey">
+				T2.REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_msg_type_cd">
+				T3.PBC_MSG_TYPE_CD = #pbc_msg_type_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[T2.TSTM >= #start_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[T2.TSTM <= #end_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="otic">
+				T2.TICD = #otic#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="finc">
+				T2.FINC  IN ($finc$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				T2.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ocnm">
+				T1.csnm = #ocnm#
+			</isNotEmpty>
+			
+			<!-- add 2010.12.30 -->
+			<isNotEmpty prepend="AND" property="teller">
+				substr(T2.TICD,9,8) = #teller#
+			</isNotEmpty>
+			<!-- end add -->
+			
+	</statement>
+<statement id="getT07_nbh_tsdtAllList_count"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_ibh_tsdt"
+		resultClass="int">
+   SELECT COUNT(T2.REPORTKEY) FROM T07_NBH_CTIF T1,T07_NBH_TSDT T2,T07_REPORT T3
+  WHERE T1.REPORTKEY = T2.REPORTKEY AND T1.CATI_SEQNO = T2.CATI_SEQNO 
+    AND T2.REPORTKEY = T3.REPORTKEY
+			<isNotEmpty prepend="AND" property="reportkey">
+				T2.REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_msg_type_cd">
+				T3.PBC_MSG_TYPE_CD = #pbc_msg_type_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[T2.TSTM >= #start_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[T2.TSTM <= #end_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="otic">
+				T2.TICD = #otic#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="finc">
+				T2.FINC  IN ($finc$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				T2.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ocnm">
+				T1.csnm = #ocnm#
+			</isNotEmpty>
+			
+			<!-- add 2010.12.30 -->
+			<isNotEmpty prepend="AND" property="teller">
+				substr(T2.TICD,9,8) = #teller#
+			</isNotEmpty>
+			<!-- end add -->
+			
+	</statement>
+<statement id="getT07_nbs_rpdiAllList"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_ibh_tsdt"
+		resultClass="com.ist.aml.pbcreport.dto.T07_ibh_tsdt">
+		SELECT T1.REPORTKEY,T1.TICD,T1.CSNM AS OCNM,T1.TSTM AS OTDT,T1.FINC,T1.CRAT,T1.CRTP,T1.TSDR,T1.VALIDATE_IND,T1.TRANS_TYPE    
+  FROM V07_TRANS_ERRORS T1 WHERE 1>0
+			<isNotEmpty prepend="AND" property="reportkey">
+				T2.REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[T1.TSTM >= #start_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[T1.TSTM <= #end_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="otic">
+				T1.TICD = #otic#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="finc">
+				T1.FINC  IN ($finc$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				T1.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ocnm">
+				T1.CSNM = #ocnm#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="casetype">
+				T1.TRANS_TYPE like #casetype#
+			</isNotEmpty>				
+	</statement>
+	<statement id="getT07_nbs_rpdiAllList_count"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_ibh_tsdt"
+		resultClass="int">
+		SELECT count(1)  FROM V07_TRANS_ERRORS T1 WHERE 1>0
+			<isNotEmpty prepend="AND" property="reportkey">
+				T2.REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[T1.TSTM >= #start_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[T1.TSTM <= #end_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="otic">
+				T1.TICD = #otic#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="finc">
+				T1.FINC  IN ($finc$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ocnm">
+				T1.CSNM = #ocnm#
+			</isNotEmpty>	
+			<isNotEmpty prepend="AND" property="casetype">
+				T1.TRANS_TYPE like #casetype#
+			</isNotEmpty>			
+			
+	</statement>
+	<!-- end by lcy -->
+	
+	<statement id="modifyT07_report08Case_status"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_report"
+		resultClass="int">
+		UPDATE T07_REPORT SET VALIDATE_IND='1',REPORT_STATUS_CD=#report_status_cd# WHERE
+		REPORTKEY IN ( SELECT REPORTKEY FROM T07_REPORT_CASE WHERE
+		APPLICATION_NUM=#application_num# )
+	</statement>
+	<statement id="getT07_ibh_tsdtList"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_ibh_tsdt"
+		resultClass="com.ist.aml.pbcreport.dto.T07_ibh_tsdt">
+		SELECT REPORTKEY,TSDT_SEQNO,OCNM,OTDT,OTCD,OTIC,VALIDATE_IND
+		FROM T07_IBH_TSDT
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="reportkey">
+				REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_time">
+				<![CDATA[OTDT >= #start_time#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_time">
+				<![CDATA[OTDT <= #end_time#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="otic">
+				OTIC = #otic#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="finc">
+				FINC  IN ($finc$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ocnm">
+				ocnm = #ocnm#
+			</isNotEmpty>
+			
+			<!-- add 2010.12.30 -->
+			<isNotEmpty prepend="AND" property="teller">
+				substr(OTIC,9,8) = #teller#
+			</isNotEmpty>
+			<!-- end add -->
+			
+		</dynamic>
+	</statement>
+		<statement id="getT07_ibh_tsdtErrorList"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_ibh_tsdt"
+		resultClass="com.ist.aml.pbcreport.dto.T07_receipt">
+		SELECT V.ERR_LOCATION,V.ERRS FROM V07_RECEIPT V,T07_08_FDRC_BH_FCRC R where v.RECEIPTKEY=R.RECEIPTKEY
+        AND V.ERR_SEQNO=R.FCRC_SEQNO
+			<isNotEmpty prepend="AND" property="reportkey">
+				V.REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="otic">
+				R.OTIC = #otic#
+			</isNotEmpty>
+			UNION SELECT V.ERR_LOCATION,V.ERRS FROM V07_RECEIPT V 
+			,T07_FDCF_FCER R WHERE V.RECEIPTKEY=R.RECEIPTKEY   AND V.ERR_SEQNO=R.FCER_SEQNO
+			AND V.REPORTKEY=#reportkey#
+	</statement>
+		<statement id="getT07_ibh_tsdtList_count"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_ibh_tsdt"
+		resultClass="int">
+		SELECT COUNT(1)
+		FROM T07_IBH_TSDT
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="reportkey">
+				REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_time">
+				<![CDATA[OTDT >= #start_time#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_time">
+				<![CDATA[OTDT <= #end_time#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="otic">
+				OTIC = #otic#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="finc">
+				FINC  IN ($finc$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ocnm">
+				ocnm = #ocnm#
+			</isNotEmpty>
+			
+			<!-- add 2010.12.30 -->
+			<isNotEmpty prepend="AND" property="teller">
+				substr(OTIC,9,8) = #teller#
+			</isNotEmpty>
+			<!-- end add -->
+			
+		</dynamic>
+	</statement>
+	
+	<statement id="modifyValidateT07_ibh_tsdt"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_ibh_tsdt"
+		resultClass="int">
+		UPDATE T07_IBH_TSDT SET FINN=#finn#, FIRC=#firc#, RLTP=#rltp#,
+		FICT=#fict#, FINC=#finc#, TDRC=#tdrc#, CATP=#catp#, CTAC=#ctac#,
+		TSTM=#tstm#, TICD=#ticd#, TSDR=#tsdr#, CRTP=#crtp#, CRAT=$crat$,
+		TRCD=#trcd#, TBNM=#tbnm#, TBIT=#tbit#, TBID=#tbid#, TBNT=#tbnt#,
+		TSTP=#tstp#, TSCT=#tsct#, CRPP=#crpp#, CFIN=#cfin#, CFCT=#cfct#,
+		CFIC=#cfic#, TCNM=#tcnm#, TCIT=#tcit#, TCID=#tcid#, TCAT=#tcat#,
+		TCAC=#tcac#, VALIDATE_IND=#validate_ind# WHERE
+		REPORTKEY=#reportkey# AND TSDT_SEQNO=$tsdt_seqno$
+	</statement>
+	
+	
+	<statement id="getT07_ibh_rbifDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.pbcreport.dto.T07_ibh_rbif">
+		SELECT REPORTKEY,RINM,RICD,IRDT,TSTN
+		FROM T07_IBH_RBIF 
+		WHERE REPORTKEY = #value#
+	</statement>
+	<statement id="getT07_ibh_tsdt_reportkeyList"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.pbcreport.dto.T07_ibh_tsdt">
+		SELECT
+		REPORTKEY,TSDT_SEQNO,OCNM,OTDT,OTCD,OTIC,FINN,FIRC,RLTP,FICT,FINC,CATP,CTAC,TBNM,TBIT,TBID,TBNT,TSTM,TICD,
+		TSTP,TSCT,TSDR,TDRC,TRCD,CRPP,CRTP,CRAT,CFIN,CFCT,CFIC,TCNM,TCIT,TCID,TCAT,TCAC,VALIDATE_IND
+		FROM T07_IBH_TSDT
+		WHERE REPORTKEY = #value#
+		ORDER BY TSDT_SEQNO
+	</statement>
+	
+		<statement id="getReportValidate_indDisp"
+		parameterClass="java.lang.String"
+		resultClass="java.lang.String">
+        SELECT A.VALIDATE_IND
+        FROM T07_REPORT A,T07_REPORT_CASE B
+        WHERE A.REPORTKEY=B.REPORTKEY AND B.APPLICATION_NUM=#value#
+	</statement>
+	<statement id="getT08_ibh_detailtsdtList" parameterClass="com.ist.aml.pbcreport.dto.T07_ibh_tsdt" resultClass="com.ist.aml.pbcreport.dto.T08_ibh_tsdt"> 
+SELECT
+		REPORTKEY,OTCD,TSDT_SEQNO,FINN,FIRC,RLTP,FICT,FINC,CATP,CTAC,TBNM,TBIT,TBID,TBNT,TSTM,TICD,TSTP,TSCT,TSDR,TDRC,TRCD,CRPP,CRTP,CRAT,CFIN,CFCT,CFIC,TCNM,TCIT,TCID,TCAT,TCAC,VALIDATE_IND
+		FROM T07_IBH_TSDT
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="reportkey"> 
+    REPORTKEY = #reportkey# 
+    </isNotEmpty> 
+      <isNotEmpty prepend="AND" property="tsdt_seqno"> 
+    TSDT_SEQNO = #tsdt_seqno# 
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+   <statement id="getT08_ibh_detailtsdtList1" parameterClass="com.ist.aml.pbcreport.dto.T08_ibh_tsdt" resultClass="com.ist.aml.pbcreport.dto.T08_ibh_tsdt"> 
+        SELECT
+		REPORTKEY,ticd,TSDT_SEQNO,FINN,FIRC,RLTP,FICT,FINC,CATP,CTAC,TBNM,TBIT,TBID,TBNT,TSTM,TICD,TSTP,TSCT,TSDR,TDRC,TRCD,CRPP,CRTP,CRAT,CFIN,CFCT,CFIC,TCNM,TCIT,TCID,TCAT,TCAC,VALIDATE_IND
+	<isEqual property="fromcase" compareValue ="1">
+	
+	,CRCD as OTCD FROM T07_NBH_TSDT
+
+	</isEqual>
+	<isNotEqual property="fromcase" compareValue ="1">
+	
+	 ,CRCD as OTCD FROM T07_NBH_TSDT_UH
+	
+	</isNotEqual>
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="reportkey"> 
+    REPORTKEY = #reportkey# 
+    </isNotEmpty> 
+      <isNotEmpty prepend="AND" property="tsdt_seqno"> 
+    TSDT_SEQNO = #tsdt_seqno# 
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="cati_seqno">
+          <isNotEqual property="cati_seqno" compareValue ="0">
+			CATI_SEQNO = $cati_seqno$
+			</isNotEqual>
+	</isNotEmpty>
+	<isNotEmpty prepend="AND" property="crcd">
+			CRCD = #crcd#
+	 </isNotEmpty>
+  </dynamic> 
+  </statement>  
+  
+   <statement id="getT07Case_dbh_dtdtList" parameterClass="com.ist.aml.pbcreport.dto.T07_dbh_dtdt" resultClass="com.ist.aml.pbcreport.dto.T07_dbh_dtdt"> 
+  SELECT R.APPLICATION_NUM,D.REPORTKEY,D.DTDT_SEQNO,D.HTDT,D.CSNM,D.CRCD,D.TICD,D.VALIDATE_IND 
+  FROM T07_DBH_DTDT D,T07_REPORT R WHERE D.REPORTKEY=R.REPORTKEY
+    <isNotEmpty prepend="AND" property="reportkey"> 
+    REPORTKEY = #reportkey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="application_num"> 
+    R.APPLICATION_NUM = #application_num# 
+    </isNotEmpty> 
+  </statement> 
+  <statement id="getT07_packetListCount2"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_packet"
+		resultClass="int">
+		SELECT COUNT(*) FROM T07_PACKET A,T07_REPORT_ORGAN_MAP B WHERE A.REPORTORGANKEY=B.REPORT_ORGANKEY
+		<dynamic prepend="">
+			<isNotEmpty prepend="AND" property="packet_type_cd">
+				PACKET_TYPE_CD = #packet_type_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="packet_filename">
+			PACKET_FILENAME = #packet_filename#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="report_type_cd">
+				REPORT_TYPE_CD = #report_type_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="reportorgankey">
+			B.ORGANKEY = #reportorgankey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchReportorgankey">
+				REPORTORGANKEY = #searchReportorgankey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="senddate_ch">
+				SENDDATE_CH = #senddate_ch#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+			<![CDATA[SENDDATE_DT >= #start_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_dt">
+			<![CDATA[SENDDATE_DT <= #end_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="batch_seq">
+				BATCH_SEQ = #batch_seq#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="packet_status_cd">
+				PACKET_STATUS_CD = #packet_status_cd#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+<statement id="getT07_packetList_today"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_packet"
+		resultClass="com.ist.aml.pbcreport.dto.T07_packet">
+		SELECT
+		PACKETKEY,PACKET_TYPE_CD,REPORT_TYPE_CD,REPORTORGANKEY,SENDDATE_DT,BATCH_SEQ,PACKET_FILENAME,PACKET_FILEPATH,PACKET_STATUS_CD,ORIG_PACKETKEY,CREATE_DT,SENDDATE_CH
+		FROM T07_PACKET A,T07_REPORT_ORGAN_MAP B WHERE  A.REPORTORGANKEY=B.REPORT_ORGANKEY
+		<isNotEmpty prepend="AND" property="packet_type_cd">
+			PACKET_TYPE_CD = #packet_type_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="packetkey">
+			PACKET_FILENAME = #packetkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="report_type_cd">
+			REPORT_TYPE_CD = #report_type_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="reportorgankey">
+			B.ORGANKEY = #reportorgankey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="searchReportorgankey">
+			REPORTORGANKEY = #searchReportorgankey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="senddate_ch">
+			SENDDATE_CH = #senddate_ch#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="batch_seq">
+			BATCH_SEQ = #batch_seq#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="packet_status_cd">
+			PACKET_STATUS_CD = #packet_status_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="senddate_dt">
+			SENDDATE_DT >= #senddate_dt#
+		</isNotEmpty>
+		<isEmpty property="packetorder">ORDER BY SENDDATE_DT</isEmpty>
+		<isNotEmpty property="packetorder">
+			<isEqual property="packetorder" compareValue="1">
+				ORDER BY PACKETKEY
+			</isEqual>
+			<isEqual property="packetorder" compareValue="2">
+				ORDER BY PACKET_TYPE_CD
+			</isEqual>
+			<isEqual property="packetorder" compareValue="3">
+				ORDER BY REPORT_TYPE_CD
+			</isEqual>
+			<isEqual property="packetorder" compareValue="4">
+				ORDER BY REPORTORGANKEY
+			</isEqual>
+			<isEqual property="packetorder" compareValue="5">
+				ORDER BY SENDDATE_CH
+			</isEqual>
+			<isEqual property="packetorder" compareValue="6">
+				ORDER BY BATCH_SEQ
+			</isEqual>
+			
+		</isNotEmpty>
+		<isEmpty property="order">DESC</isEmpty>
+		<isNotEmpty property="order">
+			<isEqual property="order" compareValue="1"></isEqual>
+			<isEqual property="order" compareValue="2">DESC</isEqual>
+		</isNotEmpty>
+	</statement>
+	
+	<statement id="getT07_packetList2"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_packet"
+		resultClass="com.ist.aml.pbcreport.dto.T07_packet">
+		SELECT
+		PACKETKEY,PACKET_TYPE_CD,REPORT_TYPE_CD,REPORTORGANKEY,SENDDATE_DT,BATCH_SEQ,PACKET_FILENAME,
+		PACKET_FILEPATH,PACKET_STATUS_CD,ORIG_PACKETKEY,CREATE_DT,SENDDATE_CH,ORIG_PACKET_FILENAME
+		FROM T07_PACKET A,T07_REPORT_ORGAN_MAP B WHERE A.REPORTORGANKEY=B.REPORT_ORGANKEY
+		<isNotEmpty prepend="AND" property="packet_type_cd">
+			PACKET_TYPE_CD = #packet_type_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="packet_filename">
+			PACKET_FILENAME = #packet_filename#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="reportorgankey">
+			B.ORGANKEY = #reportorgankey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="report_type_cd">
+			REPORT_TYPE_CD = #report_type_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="searchReportorgankey">
+			REPORTORGANKEY = #searchReportorgankey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="senddate_ch">
+			SENDDATE_CH = #senddate_ch#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="start_dt">
+		<![CDATA[SENDDATE_DT >= #start_dt:DATE#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="end_dt">
+		<![CDATA[SENDDATE_DT <= #end_dt:DATE#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="batch_seq">
+			BATCH_SEQ = #batch_seq#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="packet_status_cd">
+			PACKET_STATUS_CD = #packet_status_cd#
+		</isNotEmpty>
+		<isEmpty property="packetorder">ORDER BY SENDDATE_DT</isEmpty>
+		<isNotEmpty property="packetorder">
+			<isEqual property="packetorder" compareValue="1">
+				ORDER BY PACKETKEY
+			</isEqual>
+			<isEqual property="packetorder" compareValue="2">
+				ORDER BY PACKET_TYPE_CD
+			</isEqual>
+			<isEqual property="packetorder" compareValue="3">
+				ORDER BY REPORT_TYPE_CD
+			</isEqual>
+			<isEqual property="packetorder" compareValue="4">
+				ORDER BY REPORTORGANKEY
+			</isEqual>
+			<isEqual property="packetorder" compareValue="5">
+				ORDER BY SENDDATE_CH
+			</isEqual>
+			<isEqual property="packetorder" compareValue="6">
+				ORDER BY BATCH_SEQ
+			</isEqual>
+		
+		</isNotEmpty>
+		<isEmpty property="order">DESC</isEmpty>
+		<isNotEmpty property="order">
+			<isEqual property="order" compareValue="1"></isEqual>
+			<isEqual property="order" compareValue="2">DESC</isEqual>
+		</isNotEmpty>
+
+	</statement>
+	<statement id="checkT07_msgbypacket"
+		parameterClass="java.lang.String" resultClass="int">
+		SELECT COUNT(*) FROM T07_MSG T1,T07_PACKET T2 WHERE T1.PACKETKEY = T2.PACKETKEY AND T1.MSG_STATUS_CD ='3' AND T2.PACKETKEY=#value#
+	</statement>
+	
+	<statement id="modifyT07_reportbypacket"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_packet"
+		resultClass="int">
+		UPDATE T07_REPORT SET REPORT_STATUS_CD='3' WHERE REPORTKEY IN (
+		SELECT B.REPORTKEY FROM T07_MSG B,T07_PACKET C WHERE
+		T07_REPORT.REPORTKEY = B.REPORTKEY AND B.PACKETKEY = C.PACKETKEY
+		AND C.PACKETKEY=#packetkey# )
+
+	</statement>
+	<statement id="deleteT07_msgbypacket"
+		parameterClass="java.lang.String" resultClass="int">
+		DELETE FROM T07_MSG WHERE PACKETKEY=#value#
+	</statement>
+		<statement id="deleteT07_packet" parameterClass="java.lang.String"
+		resultClass="int">
+		DELETE FROM T07_PACKET WHERE PACKETKEY=#value#
+	</statement>
+	
+	<statement id="modifyT07_packet_status"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_packet"
+		resultClass="int">
+		UPDATE T07_PACKET SET PACKETKEY=#packetkey#
+		<isNotEmpty prepend="," property="packet_status_cd">
+			PACKET_STATUS_CD = #packet_status_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="packet_filepath">
+			PACKET_FILEPATH = #packet_filepath#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="packet_status_cd">
+			SENDDATE_DT = #senddate_dt#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="packet_filepath">
+			SENDDATE_CH = #senddate_ch#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="packet_status_cd">
+			BATCH_SEQ = #batch_seq#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="packet_filepath">
+			PACKET_FILENAME = #packet_filename#
+		</isNotEmpty>
+		WHERE PACKETKEY=#packetkey#
+	</statement>
+	
+	<statement id="modifyT07_packet_statusfordownload"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_packet"
+		resultClass="int">
+		UPDATE T07_PACKET SET	PACKET_STATUS_CD = '3'
+	    WHERE PACKETKEY=#packetkey#
+	</statement>
+	
+	
+	</sqlMap>
+	

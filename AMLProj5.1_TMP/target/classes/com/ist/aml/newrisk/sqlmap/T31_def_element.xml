@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T31_def_element">
+	<statement id="getT31_def_elementList" parameterClass="com.ist.aml.newrisk.dto.T31_def_element"
+		resultClass="com.ist.aml.newrisk.dto.T31_def_element">
+		select
+		base_occ,base_score,caltype,des,element_score,elementkey,elementname,is_last,is_sum,riskcaltype,templatekey,treelaye,upelementkey,indickey,valnum,is_audit
+		from t31_def_element t
+		where t.templatekey=#templatekey#
+		and t.upelementkey=#upelementkey# 
+		<isNotEmpty property="elementkeys">
+		   <iterate prepend="and t.elementkey not in" conjunction=","  open="(" close=")" property="elementkeys">
+		   
+		      <isNotEmpty property="elementkeys[]">
+		       	#elementkeys[]#
+		      </isNotEmpty>
+		      		  	 
+		   </iterate>
+	   </isNotEmpty>
+  </statement>
+
+
+	<statement id="getT31_def_elementListCount" parameterClass="com.ist.aml.newrisk.dto.T31_def_element"
+		resultClass="int">
+		select count(*) from t31_def_element t
+		where t.templatekey=#templatekey#
+		and t.upelementkey=#upelementkey#  
+		<isNotEmpty property="elementkeys">
+		   <iterate prepend="and t.elementkey not in" conjunction=","  open="(" close=")" property="elementkeys">
+		   
+		      <isNotEmpty property="elementkeys[]">
+		       	#elementkeys[]#
+		      </isNotEmpty>
+		   </iterate>
+	   </isNotEmpty>
+  </statement>
+
+	<statement id="insertT31_def_element" parameterClass="com.ist.aml.newrisk.dto.T31_def_element"
+		resultClass="int">
+		insert into T31_def_element(
+		base_occ,base_score,caltype,des,element_score,elementkey,elementname,is_last,is_sum,riskcaltype,templatekey,treelaye,upelementkey,indickey,valnum,is_audit
+		) values(
+		#base_occ_d#,#base_score_d#,#caltype#,#des#,#element_score_d#,#elementkey#,#elementname#,#is_last#,#is_sum#,#riskcaltype#,#templatekey#,#treelaye#,#upelementkey#,#indickey#,#valnum#,#is_audit#
+		) 
+  </statement>
+
+	<statement id="modifyT31_def_element" parameterClass="com.ist.aml.newrisk.dto.T31_def_element"
+		resultClass="int">
+		update T31_def_element set
+		base_occ=#base_occ_d#,base_score=#base_score_d#,caltype=#caltype#,des=#des#,element_score=#element_score_d#,elementname=#elementname#,is_last=#is_last#,is_sum=#is_sum#,riskcaltype=#riskcaltype#,indickey=#indickey#,valnum=#valnum#,is_audit=#is_audit#
+		where templatekey=#templatekey# and  elementkey=#elementkey#
+  </statement>
+
+	<statement id="deleteT31_def_element" parameterClass="java.lang.String"
+		resultClass="int">
+		delete from t31_def_element t where 	t.elementkey in ($value$)
+	
+  </statement>
+ 
+ <statement id="deleteT31_def_elementscore" parameterClass="java.lang.String"
+		resultClass="int">
+		delete from t31_def_elementscore t where 	t.elementkey in ($value$)
+	
+  </statement>
+  <statement id="deleteT31_def_elementscoreByElementkeys" 
+		resultClass="int">
+		DELETE FROM T31_DEF_ELEMENTSCORE s
+		WHERE 
+		
+		 <iterate  conjunction="or">
+		   s.ELEMENTKEY=#[]#
+		  </iterate>
+		
+		
+	
+  </statement>
+  
+  	<statement id="deleteT31_def_element2" parameterClass="com.ist.aml.newrisk.dto.T31_def_element"
+		resultClass="int">
+		delete from t31_def_element t where  t.templatekey=#templatekey# and t.upelementkey=#upelementkey#
+	
+  </statement>
+
+
+  
+  <statement id="getT31_def_elementDisp" parameterClass="com.ist.aml.newrisk.dto.T31_def_element"
+		resultClass="com.ist.aml.newrisk.dto.T31_def_element">
+		select
+		base_occ,base_score,caltype,des,element_score,elementkey,elementname,is_last,is_sum,riskcaltype,templatekey,treelaye,upelementkey,indickey,valnum,is_audit
+		from t31_def_element t
+		where t.templatekey=#templatekey#
+		<isEmpty prepend="and" property="elementkey">
+			 t.elementkey=#upelementkey#
+		</isEmpty>
+		<isNotEmpty prepend="and" property="elementkey">
+			 t.elementkey=#elementkey#
+		</isNotEmpty>
+		
+  </statement>
+
+	<statement id="getTemp_jf_tree" parameterClass="java.util.HashMap"
+		resultClass="com.ist.common.menu.Menu">
+
+		SELECT t.ELEMENTKEY AS id,t.UPELEMENTKEY AS parent_id,
+		t.ELEMENTNAME AS NAME ,t.TREELAYE AS levels
+		FROM T31_DEF_ELEMENT t 
+		
+		where t.templatekey=#templatekey#
+	
+
+ </statement>
+
+	<statement id="getELementList_for_cascade_del"
+		parameterClass="com.ist.aml.newrisk.dto.T31_def_element"
+		 resultClass="com.ist.aml.newrisk.dto.T31_def_element">
+		 
+		 select base_occ,base_score,caltype,des,element_score,elementkey,elementname,
+				is_last,is_sum,riskcaltype,templatekey,treelaye,upelementkey
+	 	from t31_def_element t
+		where t.templatekey=#templatekey#
+<!--		and treelaye>=#treelaye# -->
+		
+	
+	</statement>
+
+	<statement id="getTreelaye"
+		parameterClass="java.lang.String"
+		 resultClass="java.lang.String">
+		 
+		 select treelaye
+	 	from t31_def_element t
+		where elementkey=#value#
+		
+	
+	</statement>
+	<statement id="getT31_def_elementLocate" parameterClass="com.ist.aml.newrisk.dto.T31_def_element"
+		resultClass="com.ist.aml.newrisk.dto.T31_def_element">
+		select
+		base_occ,base_score,caltype,des,element_score,elementkey,elementname,is_last,is_sum,riskcaltype,templatekey,treelaye,upelementkey,indickey,valnum
+		from t31_def_element t
+		where is_last='1'
+		and caltype='2'
+		<isNotEmpty prepend="and" property="elementkey">
+			elementkey = #elementkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="elementname">
+			elementname like '%'||#elementname#||'%'
+		</isNotEmpty>
+
+  </statement>
+
+	<statement id="getT31_def_elementLocateCount" parameterClass="com.ist.aml.newrisk.dto.T31_def_element"
+		resultClass="int">
+		select count(*)
+		from t31_def_element t
+		where is_last='1'
+		and caltype='2'
+		<isNotEmpty prepend="and" property="elementkey">
+			elementkey = #elementkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="elementname">
+			elementname like '%'||#elementname#||'%'
+		</isNotEmpty>
+
+  </statement>
+  
+  <statement id="copyT31_def_element"  parameterClass="com.ist.aml.newrisk.dto.T31_def_temp">
+  insert into T31_DEF_ELEMENT  
+		  (TEMPLATEKEY,   ELEMENTKEY,   ELEMENTNAME,   DES,   TREELAYE,   UPELEMENTKEY,
+		   BASE_OCC,   IS_LAST,   CALTYPE,   BASE_SCORE,   RISKCALTYPE,   ELEMENT_SCORE,
+		   IS_SUM,   INDICKEY,   VALNUM,JS_TYPE)
+  SELECT '$templatekey$'  as templatekey,
+        ELEMENTKEY || '$copy_key$'  AS ELEMENTKEY,
+         ELEMENTNAME,         DES,         TREELAYE,       
+           UPELEMENTKEY || '$copy_key$' as UPELEMENTKEY,
+         BASE_OCC,         IS_LAST,         CALTYPE,         BASE_SCORE,
+         RISKCALTYPE,         ELEMENT_SCORE,         IS_SUM,         INDICKEY,         VALNUM,JS_TYPE
+    FROM T31_DEF_ELEMENT t
+   WHERE t.TEMPLATEKEY = #templatekey_temp#
+  
+  </statement>
+  
+    <statement id="copyT31_def_elementscore"  parameterClass="com.ist.aml.newrisk.dto.T31_def_temp">
+	  insert into T31_DEF_ELEMENTSCORE  
+			  (ELEMENTKEY,	SCOREID,	DES,	MIN_SCORE,	MAX_SCORE,	SCORE )
+	  SELECT  t.ELEMENTKEY || '$copy_key$' as ELEMENTKEY,
+	          t.SCOREID || '$copy_key$' as SCOREID,
+	          t.DES,	t.MIN_SCORE,	t.MAX_SCORE,	t.SCORE 
+	    FROM T31_DEF_ELEMENTSCORE t,T31_DEF_ELEMENT e
+	   WHERE t.ELEMENTKEY=e.ELEMENTKEY
+	    and  e.TEMPLATEKEY = #templatekey_temp#
+
+  
+  </statement>
+  
+  
+  	<statement id="insertT31_def_elementscore" parameterClass="com.ist.aml.newrisk.dto.T31_def_elementscore"
+		resultClass="int">
+		INSERT INTO T31_DEF_ELEMENTSCORE(
+		ELEMENTKEY,	SCOREID,	DES,	MIN_SCORE,	MAX_SCORE,	SCORE	)
+		VALUES(
+		#elementkey#,	#scoreid#,	#des:VARCHAR#,	#min_score_d:DOUBLE#,	#max_score_d:DOUBLE#,	#score_d#)
+
+  </statement>
+  
+   <statement id="deleteT31_def_elementscoreByElementkey" parameterClass="com.ist.aml.newrisk.dto.T31_def_elementscore"
+		resultClass="int">
+		DELETE FROM  T31_DEF_ELEMENTSCORE
+			WHERE elementkey=#elementkey#
+  </statement>
+  
+  <statement id="getT31_def_elementscoreMap" parameterClass="com.ist.aml.newrisk.dto.T31_def_element"
+		resultClass="com.ist.aml.newrisk.dto.T31_def_elementscore">
+		SELECT s.* FROM T31_DEF_ELEMENT t ,T31_DEF_ELEMENTSCORE s 
+		WHERE t.ELEMENTKEY=s.ELEMENTKEY
+		AND t.TEMPLATEKEY=#templatekey#
+		order by s.scoreid
+  </statement>
+  
+  	<statement id="updateT31_def_element_jsType" parameterClass="com.ist.aml.newrisk.dto.T31_def_element"
+		resultClass="int">
+		update T31_def_element set js_type=#js_type#		
+		where templatekey=#templatekey# and  elementkey=#upelementkey#
+  </statement>
+  
+  <statement id="getT31_def_element_jsType" parameterClass="com.ist.aml.newrisk.dto.T31_def_element"
+		resultClass="String">
+		select js_type from  T31_def_element
+		where templatekey=#templatekey# and  elementkey=#upelementkey#
+  </statement>
+  
+  <statement id="updateT31_def_element_name" parameterClass="com.ist.aml.newrisk.dto.T31_def_element"
+		resultClass="int">
+		update T31_def_element set elementname=#elementname# ,upelementkey='-1'		
+		where templatekey=#templatekey# and  treelaye='0'
+  </statement>
+</sqlMap> 
+

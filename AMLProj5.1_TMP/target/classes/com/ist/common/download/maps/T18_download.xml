@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T18_download"> 
+  <statement id="getT18_downloadList" parameterClass="com.ist.common.download.dto.T18_download" resultClass="com.ist.common.download.dto.T18_download"> 
+  select dloadkey,dloadname,dloadtype,auditstat,appname,apptime,auditname,audittime,flag,minnum,maxnum,pagenum ,appdesc
+  from t18_download t where t.appname in (SELECT DISTINCT T1.USERNAME
+    FROM T00_USER T1, T00_COM_AUTH T3, T00_ROLE_AUTH T4
+    WHERE T1.USERNAME = T3.USERNAME AND T3.ROLEKEY = T4.ROLEKEY
+    AND T1.FLAG = '1' and t4.modulekey IN ('240310') 
+    and t3.groupkey = #groupkey#
+    ) and t.auditstat = '1'
+  <dynamic prepend=""> 
+    <isNotEmpty prepend="and" property="dloadkey"> 
+    t.dloadkey = #dloadkey# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="and" property="dloadname"> 
+    t.dloadname like '%$dloadname$%' 
+    </isNotEmpty> 
+     <isNotEmpty prepend="and" property="dloadtype"> 
+    t.dloadtype = #dloadtype# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="and" property="auditstat"> 
+    t.auditstat = #auditstat# 
+    </isNotEmpty> 
+  </dynamic> 
+  order by t.apptime desc
+  </statement> 
+ 
+  <statement id="getT18_downloadListCount" parameterClass="com.ist.common.download.dto.T18_download" resultClass="int"> 
+   select count(*) 
+   from t18_download t where t.appname in (SELECT DISTINCT T1.USERNAME
+    FROM T00_USER T1, T00_COM_AUTH T3, T00_ROLE_AUTH T4
+    WHERE T1.USERNAME = T3.USERNAME AND T3.ROLEKEY = T4.ROLEKEY
+    AND T1.FLAG = '1' and t4.modulekey IN ('240310') 
+    and t3.groupkey = #groupkey#
+    )and t.auditstat = '1'
+  <dynamic prepend=""> 
+    <isNotEmpty prepend="and" property="dloadkey"> 
+    t.dloadkey like '%$dloadkey$%' 
+    </isNotEmpty> 
+     <isNotEmpty prepend="and" property="dloadname"> 
+    t.dloadname like '%$dloadname$%' 
+    </isNotEmpty> 
+     <isNotEmpty prepend="and" property="dloadtype"> 
+    t.dloadtype = #dloadtype# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="and" property="auditstat"> 
+    t.auditstat = #auditstat# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT18_download" parameterClass="com.ist.common.download.dto.T18_download" resultClass="int"> 
+  insert into T18_download(
+  dloadkey,dloadname,dloadtype,auditstat,appname,apptime,auditname,audittime,flag,minnum,maxnum,pagenum,appdesc
+  ) values(
+  #dloadkey#,#dloadname#,#dloadtype#,#auditstat#,#appname#,#apptime#,#auditname#,#audittime#,#flag#,#minnum:VARCHAR:NULL#,#maxnum:VARCHAR:NULL#,#pagenum:VARCHAR:NULL#,#appdesc#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT18_download" parameterClass="com.ist.common.download.dto.T18_download" resultClass="int"> 
+  update T18_DOWNLOAD set 
+  dloadkey=#dloadkey#,dloadname=#dloadname#,dloadtype=#dloadtype#,auditstat=#auditstat#,appname=#appname#,apptime=#apptime#,auditname=#auditname#,audittime=#audittime#,begintime=#begintime#,endtime=#endtime#,usetime=#usetime#,calstatus=#calstatus#,flag=#flag#,minnum=#minnum#,maxnum=#maxnum#,pagenum=#pagenum#
+  where dloadkey=#dloadkey# 
+  </statement> 
+ 
+  <statement id="deleteT18_download" parameterClass="java.lang.String" resultClass="int">
+  delete from T18_DOWNLOAD where dloadkey=#value# 
+  </statement> 
+ 
+  <statement id="getT18_downloadDisp" parameterClass="java.lang.String" resultClass="com.ist.common.download.dto.T18_download"> 
+  select * from T18_DOWNLOAD where dloadkey=#value# 
+  </statement>
+
+  <statement id="modifyT18_download_pass" parameterClass="com.ist.common.download.dto.T18_download"
+		resultClass="int">
+		update T18_download set
+		auditstat=#auditstat#,auditname=#auditname#,audittime=#audittime#,auditdesc=#auditdesc#
+		where dloadkey=#dloadkey#
+  </statement> 
+  
+   <statement id="getMyT18_downloadList" parameterClass="com.ist.common.download.dto.T18_download" resultClass="com.ist.common.download.dto.T18_download"> 
+  	select dloadkey,dloadname,dloadtype,auditstat,appname,apptime,auditname,audittime,flag,minnum,maxnum,pagenum,t2.USETIME,t2.BEGINTIME,t2.ENDTIME,t2.CALSTATUS,t1.auditdesc 
+	from t18_download t1 left JOIN T18_ONLINE_TASK_FACT t2 
+	ON t1.DLOADKEY = t2.TASKKEY  
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="dloadkey_query"> 
+    t1.dloadkey like '%$dloadkey_query$%' 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="appname"> 
+    t1.appname = #appname#
+    </isNotEmpty> 
+     <isNotEmpty prepend="and" property="dloadname"> 
+    t1.dloadname like '%$dloadname$%' 
+    </isNotEmpty> 
+     <isNotEmpty prepend="and" property="dloadtype"> 
+    t1.dloadtype = #dloadtype# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="and" property="auditstat"> 
+    t1.auditstat = #auditstat# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="and" property="app_begintime">
+		<![CDATA[ t1.apptime >= #app_begintime#]]>
+	</isNotEmpty>
+	<isNotEmpty prepend="AND" property="app_endtime">
+		<![CDATA[ t1.apptime <= #app_endtime#]]>
+	</isNotEmpty>
+  </dynamic> 
+  order by t1.apptime desc
+  </statement> 
+  
+   <statement id="getT18_mydownloadListCount" parameterClass="com.ist.common.download.dto.T18_download" resultClass="int"> 
+  	select count(*) 
+	from t18_download t1 left JOIN T18_ONLINE_TASK_FACT t2
+	ON t1.DLOADKEY = t2.TASKKEY  
+  <dynamic prepend="where"> 
+     <isNotEmpty prepend="and" property="dloadkey_query"> 
+    t1.dloadkey like '%$dloadkey_query$%' 
+    </isNotEmpty> 
+     <isNotEmpty prepend="and" property="dloadname"> 
+    t1.dloadname like '%$dloadname$%' 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="appname"> 
+    t1.appname = #appname#
+    </isNotEmpty> 
+     <isNotEmpty prepend="and" property="dloadtype"> 
+    t1.dloadtype = #dloadtype# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="and" property="auditstat"> 
+    t1.auditstat = #auditstat# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="app_begintime">
+		<![CDATA[ t1.apptime >= #app_begintime#]]>
+	</isNotEmpty>
+	<isNotEmpty prepend="AND" property="app_endtime">
+		<![CDATA[ t1.apptime <= #app_endtime#]]>
+	</isNotEmpty> 
+  </dynamic> 
+  </statement> 
+  
+  
+  <statement id="getDownloadlist" resultClass="java.lang.String"> 
+  	select dloadkey
+	from t18_download t1 INNER JOIN T18_ONLINE_TASK_FACT t2
+	ON t1.DLOADKEY = t2.TASKKEY  where t2.CALSTATUS ='4' and t1.flag in ('1','4')
+  </statement>
+  
+  
+  <statement id="updateT18_download_flag" parameterClass="java.util.Map"
+		resultClass="int">
+		update T18_download set flag=#flag# where dloadkey=#dloadkey#
+  </statement>
+ 
+</sqlMap> 

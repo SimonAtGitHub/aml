@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T00_group">
+	<statement id="getT00_groupList" parameterClass="com.ist.platform.dto.T00_group"
+		resultClass="com.ist.platform.dto.T00_group">
+		select
+		t.groupkey,t.upgroupkey,t.groupname,t.isbuildin,t.des,t.flag,t.createdate,t.creator,t.modifydate,t.modifier,t.grouplevel,t.ispowerctrl
+		from t00_group t
+		<dynamic prepend=" WHERE">
+			<isNotEmpty prepend="AND" property="groupname">
+				t.GROUPNAME  like '%$groupname$%'
+			 </isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start">
+				<![CDATA[t.CREATEDATE >= #date_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end">
+				<![CDATA[t.CREATEDATE <= #date_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="flag">
+				t.FLAG = #flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_org">
+				t.CREATE_ORG IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY=#create_org#)
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="getT00_groupListForAuth" parameterClass="java.lang.String"
+		resultClass="com.ist.platform.dto.T00_group">
+		select
+		t1.groupkey,t1.upgroupkey,t1.groupname,t1.grouplevel,t1.ispowerctrl,t1.isbuildin
+		from T00_GROUP t1,
+		(select distinct groupkey from T00_COM_AUTH where
+		username=#value# ) t2
+		where t1.groupkey=t2.groupkey and t1.flag='1'
+	</statement>
+
+	<statement id="getT00_groupListCount" parameterClass="com.ist.platform.dto.T00_group"
+		resultClass="int">
+		select count(*) from t00_group
+		<dynamic prepend=" WHERE">
+			<isNotEmpty prepend="AND" property="groupname">
+				GROUPNAME like '%$groupname$%'
+			 </isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_start">
+				<![CDATA[CREATEDATE >= #date_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="date_end">
+				<![CDATA[CREATEDATE <= #date_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="flag">
+				FLAG = #flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_org">
+				CREATE_ORG IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY=#create_org#)
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="insertT00_group" parameterClass="com.ist.platform.dto.T00_group"
+		resultClass="int">
+		insert into T00_group(
+		groupkey,upgroupkey,groupname,isbuildin,des,flag,createdate,creator,create_org,modifydate,modifier,grouplevel,ispowerctrl
+		) values(
+		#groupkey#,#upgroupkey#,#groupname#,#isbuildin#,#des#,#flag#,#createdate#,#creator#,#create_org#,#modifydate#,#modifier#,#grouplevel#,#ispowerctrl#
+		)
+	</statement>
+
+	<statement id="modifyT00_group" parameterClass="com.ist.platform.dto.T00_group"
+		resultClass="int">
+		update T00_group set
+		groupkey=#groupkey#,upgroupkey=#upgroupkey#,groupname=#groupname#,des=#des#,flag=#flag#,modifydate=#modifydate#,modifier=#modifier#
+		where groupkey=#groupkey#
+	</statement>
+
+	<statement id="modifyT00_groupIsPowerCtrl" parameterClass="com.ist.platform.dto.T00_group"
+		resultClass="int">
+		update T00_group set
+		ispowerctrl=#ispowerctrl#,modifydate=#modifydate#,modifier=#modifier#
+		where groupkey=#groupkey#
+	</statement>
+
+	<statement id="deleteT00_group" parameterClass="java.lang.String"
+		resultClass="int">
+		delete from T00_group where groupkey=#value#
+	</statement>
+
+	<statement id="getT00_groupDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.platform.dto.T00_group">
+		select * from T00_group where groupkey=#value#
+	</statement>
+
+	<statement id="getT00_groupDispByName" parameterClass="java.lang.String"
+		resultClass="com.ist.platform.dto.T00_group">
+		select * from T00_group where groupname=#value#
+	</statement>
+
+	<statement id="getT00_groupListByUsername" parameterClass="java.lang.String"
+		resultClass="com.ist.platform.dto.T00_group">
+		select t1.* from t00_group t1,t00_com_auth t2
+		where
+		t1.groupkey=t2.groupkey
+		and t2.username=#value#
+		order by t1.groupkey
+	</statement>
+
+	<statement id="getT00_groupTreeList" parameterClass="java.lang.String"
+		resultClass="com.ist.common.menu.Menu">
+		select groupkey as id ,upgroupkey as parent_id,groupname
+		as name from t00_group where flag = '1' order by groupkey
+	</statement>
+
+	<statement id="syncT00_groupLevel1" parameterClass="java.lang.String"
+		resultClass="int">
+		update t00_group set grouplevel='1' where upgroupkey='-1'
+	</statement>
+	<statement id="syncT00_groupLevel2" parameterClass="java.lang.String"
+		resultClass="int">
+		update t00_group g set g.grouplevel=(select
+		(g1.grouplevel+1) from t00_group g1 where g.upgroupkey=g1.groupkey)
+		where upgroupkey!='-1'
+	</statement>
+	<statement id="syncT00_groupLevel2DB2" parameterClass="java.lang.String"
+		resultClass="int">
+		update t00_group g set g.grouplevel=(select
+		char((int(g1.grouplevel)+1)) from t00_group g1 where
+		g.upgroupkey=g1.groupkey) where upgroupkey!='-1'
+	</statement>
+	<statement id="getT00_upgroupList" parameterClass="java.lang.String"
+		resultClass="com.ist.platform.dto.T00_group">
+		select groupkey,groupname from T00_group where (upgroupkey
+		= #value# or groupkey = #value#) and flag='1' order by groupkey
+	</statement>
+	<select id="getorganList" parameterClass="com.ist.platform.dto.T00_group"
+		resultClass="com.ist.platform.dto.T00_group_organ">
+		select distinct t1.organkey,t1.organname from t00_organ
+		t1,t00_group_organ t2 where t1.organkey = t2.organkey
+		<dynamic prepend="">
+			<isNotEmpty prepend="and" property="groupkey">
+				t2.groupkey =#groupkey#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+</sqlMap>
+

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN" "http://www.getahead.ltd.uk/dwr/dwr20.dtd">
+<dwr>
+	<allow>
+		<create creator="new" javascript="JDate" scope="page">
+			<param name="class" value="java.util.Date" />
+		</create><!--
+		<create creator="new" javascript="NetWorkAnalysis" scope="page">
+			<param name="class" value="com.ist.aml.inves.server.NetWorkAnalysis" />
+		</create>
+		--><!-- <create creator="new" javascript="CustomerInfo" scope="page">
+			<param name="class" value="com.ist.aml.inves.server.CustomerInfo" />
+		</create>
+		<create creator="new" javascript="AccountInfo" scope="page">
+			<param name="class" value="com.ist.aml.inves.server.AccountInfo" />
+		</create>
+		<create creator="new" javascript="TellerInfo" scope="page">
+			<param name="class" value="com.ist.aml.inves.server.TellerInfo" />
+		</create> -->
+		
+		<convert converter="bean" match="com.ist.aml.inves.server.CustomerInfo" />
+		<convert converter="bean" match="com.ist.aml.inves.server.AccountInfo" />
+		<convert converter="bean" match="com.ist.aml.inves.server.TellerInfo" />
+		
+		<create creator="spring" javascript="BasicReport" >
+			<param name="beanName" value="BasicReport" />
+			<include method="validateItem"/>
+			<include method="validateOneItem"/>
+			<include method="validateOneItem1"/>
+		
+		</create>
+		<convert converter="bean" match="com.ist.aml.pbcreport.bo.validator.ValidateResult"/>
+		<convert converter="bean" match="com.ist.aml.pbcreport.bo.validator.ValidateParameter">
+			<param name="include" value="app_id, field_id, value, ref1, ref2, alertType, tsdr, cfrc, tdrc, tstp" />
+		</convert>
+		<convert converter="bean" match="java.lang.Object" />
+		<convert converter="bean" match="com.ist.aml.pbcreport.bo.PairBean" />
+		<create creator="spring" javascript="CountryArea" >
+			<param name="beanName" value="CountryArea" />
+		</create>
+		<create creator="spring" javascript="TransWay" scope="page">
+			<param name="beanName" value="TransWay" />		
+		</create>
+		<create creator="spring" javascript="Tsct" scope="page">
+			<param name="beanName" value="Tsct" />
+		</create>	
+		<create creator="spring" javascript="ChangeStatus" scope="page">
+			<param name="beanName" value="TransWay" />
+			<include method="modifyT07_packet_statusfordownload"/>
+		</create>	
+		
+		
+		<!--<create creator="new" javascript="CodeType" scope="page">
+			<param name="class" value="com.ist.aml.para.dao.T87_xt_codeDAO" />
+			<include method="getT87_xt_code"/>
+		</create>
+			
+		
+		<create creator="new" javascript="ChangeCardStatus" scope="page">
+			<param name="class" value="com.ist.aml.cmbc.dao.T07_sendPacketDAO" />
+			<include method="modifyT07_card_statusfordownload"/>
+		</create>
+		<create creator="new" javascript="ChangeReceiptStatus" scope="page">
+			<param name="class" value="com.ist.aml.pbcreport08.dao.T07_receiptDAO" />
+			<include method="modifyT07_receipt_card_statusfordownload"/>
+		</create>
+		<create creator="new" javascript="Case" scope="page">
+			<param name="class" value="com.ist.aml.report.bo.T07_CaseDo" />
+			<include method="sysRule"/>
+		</create>-->
+	</allow>
+</dwr>

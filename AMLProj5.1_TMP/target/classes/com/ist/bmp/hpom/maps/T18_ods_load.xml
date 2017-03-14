@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T18_ods_load"> 
+  <statement id="getT18_ods_loadList" parameterClass="com.ist.bmp.hpom.dto.T18_ods_load" resultClass="com.ist.bmp.hpom.dto.T18_ods_load"> 
+  select b.dsname,a.tableename,a.shfilename,a.isedit,a.islock,a.deploytime,a.isdeploy,a.creator,a.createdate,a.modifier,a.modifydate ,a.loadmode,a.loadway,t.granularity
+  from t18_ods_load a,t18_datasource b,t18_ods_table t
+  where a.dskey=b.dskey and b.flag = '1' AND a.TABLEENAME = t.TABLEENAME
+    <isNotEmpty prepend="and" property="tableename"> 
+    a.tableename like  '%'||#tableename#||'%'
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="shfilename"> 
+    a.shfilename like  '%'||#shfilename#||'%'
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="isedit"> 
+    a.isedit = #isedit#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="isdeploy"> 
+    a.isdeploy = #isdeploy#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="createdate"> 
+    a.createdate like '%'||#createdate#||'%'
+    </isNotEmpty>   
+    <dynamic prepend="">
+     <isNotEmpty prepend="" property="sort">
+    <isNotEmpty prepend="" property="sort_type">
+	 ORDER BY $sort$ $sort_type$
+	</isNotEmpty>
+	</isNotEmpty>
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT18_ods_loadListCount" parameterClass="com.ist.bmp.hpom.dto.T18_ods_load" resultClass="int"> 
+  select count(*)  from t18_ods_load a,t18_datasource b
+  where a.dskey=b.dskey and b.flag = '1'
+  <dynamic> 
+   	<isNotEmpty prepend="and" property="tableename"> 
+    a.tableename like  '%'||#tableename#||'%'
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="shfilename"> 
+    a.shfilename like  '%'||#shfilename#||'%'
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="isedit"> 
+    a.isedit = #isedit#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="isdeploy"> 
+    a.isdeploy = #isdeploy#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="createdate"> 
+    a.createdate like '%'||#createdate#||'%'
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT18_ods_load" parameterClass="com.ist.bmp.hpom.dto.T18_ods_load" resultClass="int"> 
+  insert into T18_ods_load(
+  tableename,shfilename,isedit,islock,deploytime,isdeploy,creator,createdate,modifier,modifydate,dskey,loadmode,loadway
+  ) values(
+  #tableename#,#shfilename#,#isedit#,#islock#,#deploytime#,#isdeploy#,#creator#,#createdate#,#modifier#,#modifydate#,#dskey#,#loadmode#,#loadway#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT18_ods_load" parameterClass="com.ist.bmp.hpom.dto.T18_ods_load" resultClass="int"> 
+  update T18_ods_load set 
+ tableename=#tableename#,shfilename=#shfilename#,modifier=#modifier#,modifydate=#modifydate#,isedit=#isedit#,loadmode=#loadmode#,loadway=#loadway#
+  where tableename=#tableename# 
+  </statement> 
+ 
+  <statement id="deleteT18_ods_load" parameterClass="java.lang.String" resultClass="int">
+  delete from T18_ods_load where tableename=#value# 
+  </statement> 
+ 
+  <statement id="getT18_ods_loadDisp" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_ods_load"> 
+  select * from T18_ods_load where tableename=#value# 
+  </statement> 
+  
+  <statement id="lockT18_ods_load" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_ods_load"> 
+  update T18_ods_load set islock ='1' where tableename=#value# 
+  </statement> 
+  
+   <statement id="unlockT18_ods_load" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_ods_load"> 
+  update T18_ods_load set islock ='0' where tableename=#value# 
+  </statement> 
+ 
+  <statement id="deployT18_ods_load" parameterClass="com.ist.bmp.hpom.dto.T18_ods_load" resultClass="com.ist.bmp.hpom.dto.T18_ods_load"> 
+  update T18_ods_load set isdeploy =#isdeploy# ,deploytime=#deploytime# where tableename=#tableename# 
+  </statement> 
+ 
+  <statement id="getT18_ods_load_shcontent" parameterClass="com.ist.bmp.hpom.dto.T18_ods_load" resultClass="com.ist.bmp.hpom.dto.T18_ods_load"> 
+  	select * from t18_shcontent 
+  	<dynamic prepend="where"> 
+  	<isNotEmpty prepend="and" property="tableename"> 
+    tableename = #tableename#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="shcontenttype"> 
+    shcontenttype = #shcontenttype#
+    </isNotEmpty>
+    </dynamic> 
+    order by SEQ
+  </statement> 
+  <statement id="getT18_ods_loadByTableename" parameterClass="java.lang.String" resultClass="int"> 
+  	select count(*) from T18_ods_load where  tableename=#value#	
+  </statement>
+  
+  <statement id="getT18_funcByTableename" parameterClass="java.lang.String" resultClass="int"> 
+  	select count(*) from t18_func where  tableename=#value#	
+  </statement>
+  
+  <statement id="deleteT18_shcontent_load" parameterClass="com.ist.bmp.hpom.dto.T18_ods_load" resultClass="int"> 
+	  delete from  T18_shcontent  
+	  where tableename=#tableename# and shcontenttype=#shcontenttype#
+  </statement>
+
+  <statement id="insertT18_shcontent_load" parameterClass="com.ist.bmp.hpom.dto.T18_ods_load" resultClass="int"> 
+	  insert into  T18_shcontent  (tableename,seq,shcontenttype,shcontent)
+	  values (#tableename#,#seq#,#shcontenttype#,#shcontent#)
+  </statement>
+  
+  <statement id="insertT18_func" parameterClass="com.ist.bmp.hpom.dto.T18_func" resultClass="int"> 
+	  insert into  t18_func  (dskey,tableename,colename,funccnname,executeseq)
+	  values (#dskey#,#tableename#,#colename#,#funccnname#,#executeseq#)
+  </statement>
+  
+  <statement id="deleteT18_func" parameterClass="java.lang.String" resultClass="int"> 
+	  delete from  t18_func  
+	  where tableename=#value#
+  </statement>
+  
+  <statement id="getT18_funcList" parameterClass="com.ist.bmp.hpom.dto.T18_func" resultClass="com.ist.bmp.hpom.dto.T18_func"> 
+	  select * from  t18_func  
+	  where tableename=#tableename# and colename=#colename# order by executeseq
+  </statement>
+  
+  <statement id="insertT18_col_pro" parameterClass="com.ist.bmp.hpom.dto.T18_col_pro" resultClass="int"> 
+	  insert into  t18_col_pro  (tableename,dskey,colename,colcname,colexpress,coltype,colprecision,colscale,dispseq,flag)
+	  values (#tableename#,#dskey#,#colename#,#colcname#,#colexpress#,#coltype#,#colprecision#,#colscale#,#dispseq#,#flag#)
+  </statement>
+  
+   <statement id="deleteT18_col_pro" parameterClass="java.lang.String" resultClass="int"> 
+	  delete from  t18_col_pro  
+	  where tableename=#value#
+   </statement>
+   
+   <statement id="getT18_col_proList" parameterClass="com.ist.bmp.hpom.dto.T18_col_pro" resultClass="com.ist.bmp.hpom.dto.T18_col_pro"> 
+	  select * from   t18_col_pro 
+	
+	<isNotEmpty prepend="where" property="tableename"> 
+    	tableename =#tableename#
+    </isNotEmpty>
+	<dynamic prepend="">
+     <isNotEmpty prepend="" property="sort">
+     <isNotEmpty prepend="" property="sort_type">
+	 	ORDER BY $sort$ $sort_type$
+	 </isNotEmpty>
+	 </isNotEmpty>
+  </dynamic> 
+  
+  </statement>
+    <statement id="getStrvalueBySql" parameterClass="java.lang.String" remapResults="true" resultClass="java.lang.String"> 
+		<![CDATA[$sql$]]>
+	</statement>
+   <statement id="modifyT18_ods_loadBytableename" parameterClass="com.ist.bmp.hpom.dto.T18_ods_load" resultClass="int"> 
+	 update  t18_ods_load set  shfilename=#shfilename#
+	  where tableename=#tableename#
+   </statement>   
+   <statement id="modifyT18_ods_loadBytableenameAndDskey" parameterClass="com.ist.bmp.hpom.dto.T18_ods_load" resultClass="int"> 
+	 update  t18_ods_load set  shfilename=#shfilename#
+	  where tableename=#tableename# and dskey=#dskey#
+   </statement>
+   
+   <statement id="getTableColumnList" parameterClass="com.ist.bmp.hpom.dto.T18_col_pro"
+		resultClass="com.ist.bmp.hpom.dto.T18_col_pro">	
+   	SELECT * from T18_col_pro where tableename=#tableename# and dskey=#dskey#
+	</statement>
+	
+	<statement id="getDskeyListBytableename" parameterClass="com.ist.bmp.hpom.dto.T18_ods_load"
+		resultClass="com.ist.bmp.hpom.dto.T18_ods_load">	
+   	SELECT dskey,tableename from T18_ods_load 
+   	<dynamic prepend="where">    
+    <isNotNull prepend="" property="selectloadkey"> 
+	    <iterate prepend="AND" property="selectloadkey" open="(" close=")" conjunction="OR"> 
+	    	tableename = #selectloadkey[]# 
+	    </iterate>
+	</isNotNull>
+   	</dynamic>
+   	
+	</statement>
+	
+  
+</sqlMap> 
+

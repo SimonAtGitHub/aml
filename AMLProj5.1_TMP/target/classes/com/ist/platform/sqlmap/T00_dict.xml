@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T00_dict"> 
+
+<statement id="getT00_dict_infoList" parameterClass="com.ist.platform.dto.T00_dict" resultClass="com.ist.platform.dto.T00_dict"> 
+  select disctype,disctypename,disckey,discname,des,flag,dispseq,applytype from t00_dict 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="disctype"> 
+    disctype like '%'||#disctype# ||'%' 
+    </isNotEmpty> 
+     <isNotEmpty prepend="and" property="disctypename"> 
+    disctypename like '%'||#disctypename# ||'%'
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="disckey"> 
+    disckey like '%'||#disckey# ||'%' 
+    </isNotEmpty> 
+     <isNotEmpty prepend="and" property="discname"> 
+    discname like '%'||#discname# ||'%'
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="applytype"> 
+    applytype = #applytype#
+    </isNotEmpty>
+  </dynamic> 
+  order by disctype,disckey
+  </statement> 
+  
+  <statement id="getT00_dict_infoListCount" parameterClass="com.ist.platform.dto.T00_dict" resultClass="int"> 
+  select count(*) from t00_dict 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="disctype"> 
+    disctype like '%'||#disctype# ||'%' 
+    </isNotEmpty> 
+     <isNotEmpty prepend="and" property="disctypename"> 
+    disctypename like '%'||#disctypename# ||'%'
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="disckey"> 
+    disckey like '%'||#disckey# ||'%' 
+    </isNotEmpty> 
+     <isNotEmpty prepend="and" property="discname"> 
+    discname like '%'||#discname#||'%'
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="applytype"> 
+    applytype = #applytype#
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+  
+  <statement id="getT00_dict_listByType" parameterClass="com.ist.platform.dto.T00_dict" resultClass="com.ist.platform.dto.T00_dict"> 
+  select distinct disctype ,disctypename from t00_dict
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="disctype"> 
+    disctype like '%'||#disctype# ||'%' 
+    </isNotEmpty> 
+     <isNotEmpty prepend="and" property="disctypename"> 
+    disctypename like '%'||#disctypename# ||'%'
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="applytype"> 
+    applytype = #applytype#
+    </isNotEmpty>
+  </dynamic> 
+  order by disctype
+  </statement> 
+ 
+   <statement id="getT00_dict_ListByTypeCount" parameterClass="com.ist.platform.dto.T00_dict" resultClass="int"> 
+   select count(distinct(disctype)) from t00_dict
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="disctype"> 
+    disctype like '%'||#disctype# ||'%' 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="disctypename"> 
+    disctypename like '%'||#disctypename# ||'%'
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="applytype"> 
+    applytype = #applytype#
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+  
+  <statement id="getT00_dictListCount" parameterClass="com.ist.platform.dto.T00_dict" resultClass="int"> 
+  select count(*) from t00_dict 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="disctype"> 
+    disctype = #disctype# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT00_dict" parameterClass="com.ist.platform.dto.T00_dict" resultClass="int"> 
+  insert into T00_dict(
+  disctype,disctypename,disckey,discname,des,flag,dispseq,applytype
+  ) values(
+  #disctype#,#disctypename#,#disckey#,#discname#,#des#,#flag#,$dispseq$,#applytype#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT00_dict" parameterClass="com.ist.platform.dto.T00_dict" resultClass="int"> 
+  update T00_dict set 
+  disctype=#disctype#,disctypename=#disctypename#,disckey=#disckeys#,discname=#discname#,des=#des#,flag=#flag#,dispseq=#dispseq#,applytype=#applytype#
+  where disctype='T00001' and disckey=#disckey#
+  </statement> 
+ 
+  <statement id="deleteT00_dict" parameterClass="com.ist.platform.dto.T00_dict" resultClass="int">
+  delete from T00_dict where disckey=#disckey# and disctype=#disctype#
+  </statement> 
+ 
+  <statement id="getT00_dictDisp" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_dict"> 
+  select * from T00_dict where disckey=#value# 
+  </statement> 
+ 
+  <statement id="getCountByDisctype" parameterClass="com.ist.platform.dto.T00_dict" resultClass="int"> 
+  select count(*) from T00_dict where disctype=#disctype# 
+  </statement> 
+  
+  <statement id="getT00_dictinfo" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_dict"> 
+  select distinct disctype ,disctypename from T00_dict where disctype=#value# 
+  </statement> 
+  
+  <statement id="deleteT00_dict_by_type" parameterClass="java.lang.String" resultClass="int">
+  delete from T00_dict where  disctype=#value#
+  </statement> 
+  
+  <statement id="getT00_dictWinList" parameterClass="com.ist.platform.dto.T00_dict" resultClass="com.ist.platform.dto.T00_dict">
+   select typekey as typekey ,typename as typename from V00_CATEGORY 
+   <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="typekey"> 
+    typekey like '%'||#typekey# ||'%'
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="typename"> 
+     typename like '%'||#typename# ||'%'
+    </isNotEmpty> 
+    </dynamic> 
+   ORDER BY typekey
+  </statement> 
+  
+  <statement id="getT00_treeWinList" parameterClass="com.ist.platform.dto.T00_dict" resultClass="com.ist.platform.dto.T00_dict">
+   select menuid as typekey ,roottitle as typename from T00_TREE
+   <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="typekey"> 
+     menuid  like '%'||#typekey# ||'%'
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="typename"> 
+     roottitle like '%'||#typename# ||'%'
+    </isNotEmpty>
+   </dynamic> 
+  </statement> 
+  
+  <statement id="getT00_jcs_locationWinList" parameterClass="com.ist.platform.dto.T00_dict" resultClass="com.ist.platform.dto.T00_dict">
+  select jname as typekey ,jdes as typename from T00_JCS_LOCATION
+   <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="typekey"> 
+     jname  like '%'||#typekey# ||'%'
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="typename"> 
+     jdes like '%'||#typename# ||'%'
+    </isNotEmpty> 
+  </dynamic> 
+  </statement>
+  
+  <statement id="getT00_dictWinListCount" parameterClass="com.ist.platform.dto.T00_dict" resultClass="int">
+   select count(*) from V00_CATEGORY
+   <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="typekey"> 
+     typekey like '%'||#typekey# ||'%'
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="typename"> 
+     typename like '%'||#typename# ||'%'
+    </isNotEmpty> 
+  </dynamic> 
+  
+  </statement> 
+  
+  <statement id="getT00_treeWinListCount" parameterClass="com.ist.platform.dto.T00_dict" resultClass="int">
+  select count(*) from T00_TREE
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="typekey"> 
+     menuid  like '%'||#typekey# ||'%'
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="typename"> 
+     roottitle like '%'||#typename# ||'%'
+    </isNotEmpty> 
+   </dynamic> 
+  </statement> 
+  
+  <statement id="getT00_jcs_locationWinListCount" parameterClass="com.ist.platform.dto.T00_dict" resultClass="int">
+  select count(*) from T00_JCS_LOCATION
+   <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="typekey"> 
+     jname  like '%'||#typekey# ||'%'
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="typename"> 
+     jdes like '%'||#typename# ||'%'
+    </isNotEmpty> 
+  </dynamic> 
+  </statement>
+</sqlMap> 
+

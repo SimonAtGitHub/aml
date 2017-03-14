@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T18_ds_log"> 
+  <statement id="getT18_ds_logList" parameterClass="com.ist.bmp.hpom.dto.T18_ds_log" resultClass="com.ist.bmp.hpom.dto.T18_ds_log"> 
+  select statisticdate,dskey,flag from t18_ds_log 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="statisticdate"> 
+    statisticdate = #statisticdate# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT18_ds_logListCount" parameterClass="com.ist.bmp.hpom.dto.T18_ds_log" resultClass="int"> 
+  select count(*) from t18_ds_log 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="statisticdate"> 
+    statisticdate = #statisticdate# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT18_ds_log" parameterClass="com.ist.bmp.hpom.dto.T18_ds_log" resultClass="int"> 
+  insert into T18_ds_log(
+  statisticdate,dskey,flag
+  ) values(
+  #statisticdate#,#dskey#,#flag#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT18_ds_log" parameterClass="com.ist.bmp.hpom.dto.T18_ds_log" resultClass="int"> 
+  update T18_ds_log set 
+  statisticdate=#statisticdate#,dskey=#dskey#,flag=#flag#
+  where statisticdate=#statisticdate# 
+  </statement> 
+ 
+  <statement id="deleteT18_ds_log" parameterClass="java.lang.String" resultClass="int">
+  delete from T18_ds_log where statisticdate=#value# 
+  </statement> 
+ 
+  <statement id="getT18_ds_logDisp" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_ds_log"> 
+  select * from T18_ds_log where statisticdate=#value# 
+  </statement> 
+ 
+
+  <statement id="getT18_ds_logListByPK" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_ds_log"> 
+  select t.statisticdate,t.dskey,d.dsname,t.flag from t18_ds_log t ,T18_DATASOURCE d
+  where t.dskey = d.dskey and   statisticdate = #value#  
+   
+  
+  </statement> 
+ 
+</sqlMap> 
+

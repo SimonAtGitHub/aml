@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_article"> 
+  <statement id="getT12_articleList" parameterClass="com.ist.cms.dto.T12_article" resultClass="com.ist.cms.dto.T12_article"> 
+  select t1.programakey,t1.articlekey,t1.articlename,t1.auditstat,t1.savetype,t1.flag,t1.seq
+  		,t1.creator,t1.createdate,t1.modifier,t1.modifydate,t1.seclevel,t1.checker,t1.checkdate,
+  		t1.isadminmodify,t1.admintor,t1.admindate,t2.programaname,t3.realname
+   	from t12_article t1,T12_PROGRAMA t2,t00_user t3
+  	where t2.auditstat='1' and t2.flag='1' and t1.flag !='2' 
+  	      and t1.programakey = t2.programakey and t1.creator = t3.username
+  <dynamic > 
+    <isNotEmpty prepend="and" property="programakey"> 
+      t1.programakey = #programakey#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="categorykey"> 
+      t2.categorykey = #categorykey#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="programaname"> 
+      programaname like '%'||#programaname#||'%' 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="articlename"> 
+      articlename like '%'||#articlename#||'%' 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="auditstat"> 
+      t1.auditstat = #auditstat# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="flag"> 
+      t1.flag in ($flag$) 
+    </isNotEmpty> 
+    
+    <isNotEmpty prepend="and" property="creator"> 
+      t1.creator like '%'||#creator#||'%' 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="realname"> 
+      t3.realname like '%'||#realname#||'%' 
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="and" property="owner"> 
+      t1.creator = #owner#
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="createdate_min">
+		<![CDATA[ t1.createdate >= #createdate_min#||' 00:00:00']]>
+	</isNotEmpty>
+	<isNotEmpty prepend="AND" property="createdate_max">
+		<![CDATA[ t1.createdate <= #createdate_max#||' 23:59:59']]>
+	</isNotEmpty>
+    
+  </dynamic> 
+  
+  order by t1.createdate desc
+  </statement> 
+ 
+  <statement id="getT12_articleListCount" parameterClass="com.ist.cms.dto.T12_article" resultClass="int"> 
+    select count(1) from t12_article t1,T12_PROGRAMA t2,t00_user t3
+    	where t2.auditstat='1' and t2.flag='1' and t1.flag !='2' 
+    	      and t1.programakey = t2.programakey and t1.creator = t3.username
+	  <dynamic> 
+	    <isNotEmpty prepend="and" property="programakey"> 
+	      t1.programakey = #programakey#
+	    </isNotEmpty> 
+	    <isNotEmpty prepend="and" property="categorykey"> 
+	      t2.categorykey = #categorykey#
+	    </isNotEmpty> 
+	    <isNotEmpty prepend="and" property="programaname"> 
+	      programaname like '%'||#programaname#||'%' 
+	    </isNotEmpty> 
+	    <isNotEmpty prepend="and" property="articlename"> 
+	      articlename like '%'||#articlename#||'%' 
+	    </isNotEmpty>
+	    <isNotEmpty prepend="and" property="auditstat"> 
+	      t1.auditstat = #auditstat# 
+	    </isNotEmpty> 
+	    <isNotEmpty prepend="and" property="flag"> 
+	      t1.flag in ($flag$) 
+	    </isNotEmpty> 
+	    
+	    <isNotEmpty prepend="and" property="creator"> 
+	        t1.creator like '%'||#creator#||'%' 
+	    </isNotEmpty>
+	    
+	    <isNotEmpty prepend="and" property="realname"> 
+           t3.realname like '%'||#realname#||'%' 
+        </isNotEmpty>
+	    
+	    <isNotEmpty prepend="and" property="owner"> 
+          t1.creator = #owner#
+        </isNotEmpty>
+	    
+	    <isNotEmpty prepend="AND" property="createdate_min">
+			<![CDATA[ t1.createdate >= #createdate_min#||' 00:00:00']]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="createdate_max">
+			<![CDATA[ t1.createdate <= #createdate_max#||' 23:59:59']]>
+		</isNotEmpty>
+		    
+	  </dynamic>
+  </statement> 
+  
+  <!--  文章审核状态的统计列表 -->
+  <statement id="getT12_article_sumList" parameterClass="com.ist.cms.dto.T12_article" resultClass="com.ist.cms.dto.T12_article"> 
+	  select t1.programakey,t3.programaname,count(*) as sum_all,
+	(select count(*) from T12_ARTICLE t2 where t2.auditstat ='0' and t2.flag in ('1') and  t2.programakey = t1.programakey ) as sum_notneed,
+	(select count(*) from T12_ARTICLE t2 where t2.auditstat ='1' and t2.flag in ('1') and  t2.programakey = t1.programakey ) as sum_wait,
+	(select count(*) from T12_ARTICLE t2 where t2.auditstat ='2' and t2.flag in ('1') and  t2.programakey = t1.programakey ) as sum_fail,
+	(select count(*) from T12_ARTICLE t2 where t2.auditstat ='3' and t2.flag in ('1') and  t2.programakey = t1.programakey ) as sum_already
+	from T12_ARTICLE t1, t12_PROGRAMa t3
+	
+	where t1.flag in ('1')
+	AND   t3.flag = '1'
+	and   t3.auditstat = '1'	
+  <dynamic > 
+    <isNotEmpty prepend="and" property="programakey"> 
+      t1.programakey = #programakey#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="categorykey"> 
+      t3.categorykey = #categorykey#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="programaname"> 
+      t3.programaname like '%'||#programaname#||'%' 
+    </isNotEmpty> 
+  </dynamic> 
+    and   t1.programakey = t3.programakey
+	group by t1.programakey,t3.programaname
+	
+	<isNotEmpty prepend="" property="sort_type"> 
+       order by $sort_column$ $sort_type$ 
+    </isNotEmpty> 
+  </statement> 
+  
+  <!--  文章审核状态的统计合计 -->
+  <statement id="getT12_article_sumTotal" parameterClass="com.ist.cms.dto.T12_article" resultClass="com.ist.cms.dto.T12_article"> 
+    select sum(sum_all) as sum_all,sum(sum_notneed) as sum_notneed,sum(sum_wait) as sum_wait,
+    sum(sum_fail) as sum_fail, sum(sum_already) as sum_already from 
+    (
+	  select t1.programakey,t3.programaname,count(*) as sum_all,
+	(select count(*) from T12_ARTICLE t2 where t2.auditstat ='0' and t2.flag in ('1') and  t2.programakey = t1.programakey ) as sum_notneed,
+	(select count(*) from T12_ARTICLE t2 where t2.auditstat ='1' and t2.flag in ('1') and  t2.programakey = t1.programakey ) as sum_wait,
+	(select count(*) from T12_ARTICLE t2 where t2.auditstat ='2' and t2.flag in ('1') and  t2.programakey = t1.programakey ) as sum_fail,
+	(select count(*) from T12_ARTICLE t2 where t2.auditstat ='3' and t2.flag in ('1') and  t2.programakey = t1.programakey ) as sum_already
+	from T12_ARTICLE t1, t12_PROGRAMa t3
+	
+	where t1.flag in ('1')
+	AND   t3.flag = '1'
+	and   t3.auditstat = '1'	
+  <dynamic > 
+    <isNotEmpty prepend="and" property="programakey"> 
+      t1.programakey = #programakey#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="categorykey"> 
+      t3.categorykey = #categorykey#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="programaname"> 
+      t3.programaname like '%'||#programaname#||'%' 
+    </isNotEmpty> 
+  </dynamic> 
+    and   t1.programakey = t3.programakey
+	group by t1.programakey,t3.programaname
+	) haha
+  </statement> 
+ 
+  <!--  文章审核状态的统计列表的记录数 -->
+  <statement id="getT12_article_sumListCount" parameterClass="com.ist.cms.dto.T12_article" resultClass="int"> 
+      select count(*)  from (
+      
+      select t1.programakey,t3.programaname,count(*) as sum_all,
+	(select count(*) from T12_ARTICLE t2 where t2.auditstat ='0' and t2.flag in ('1') and  t2.programakey = t1.programakey ) as sum_notneed,
+	(select count(*) from T12_ARTICLE t2 where t2.auditstat ='1' and t2.flag in ('1') and  t2.programakey = t1.programakey ) as sum_wait,
+	(select count(*) from T12_ARTICLE t2 where t2.auditstat ='2' and t2.flag in ('1') and  t2.programakey = t1.programakey ) as sum_fail,
+	(select count(*) from T12_ARTICLE t2 where t2.auditstat ='3' and t2.flag in ('1') and  t2.programakey = t1.programakey ) as sum_already
+	from T12_ARTICLE t1, t12_PROGRAMa t3
+	
+	where t1.flag in ('1')
+	AND   t3.flag = '1'
+	and   t3.auditstat = '1'	
+  <dynamic > 
+    <isNotEmpty prepend="and" property="programakey"> 
+      t1.programakey = #programakey#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="categorykey"> 
+      t3.categorykey = #categorykey#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="programaname"> 
+      t3.programaname like '%'||#programaname#||'%' 
+    </isNotEmpty> 
+   </dynamic> 
+    and   t1.programakey = t3.programakey
+	group by t1.programakey,t3.programaname
+	
+	)  haha
+  </statement> 
+  
+  <!--  针对文章回复的文章列表情况 -->
+  <statement id="getT12_article_sum2writebackList" parameterClass="com.ist.cms.dto.T12_article" resultClass="com.ist.cms.dto.T12_article"> 
+	  select t1.*,t3.programaname,t4.realname,
+
+	(select count(*) from T12_WRITEBACK t2 where t2.flag='1' and  t2.auditstat='0' and t2.articlekey = t1.articlekey) as sum_notneed,
+	(select count(*) from T12_WRITEBACK t2 where t2.flag='1' and  t2.auditstat='1' and t2.articlekey = t1.articlekey) as sum_wait,
+	(select count(*) from T12_WRITEBACK t2 where t2.flag='1' and  t2.auditstat='2' and t2.articlekey = t1.articlekey) as sum_fail,
+	(select count(*) from T12_WRITEBACK t2 where t2.flag='1' and  t2.auditstat='3' and t2.articlekey = t1.articlekey) as sum_already,
+	(select count(*) from T12_WRITEBACK t2 where t2.flag='1' and t2.articlekey = t1.articlekey) as sum_all
+	
+	from T12_ARTICLE t1,T12_PROGRAMA t3,t00_user t4
+	
+	where  t1.flag in ('1')
+	and t1.auditstat in ('0','3')
+	and t3.flag = '1'
+	and t3.auditstat = '1'
+	
+  <dynamic > 
+    <isNotEmpty prepend="and" property="programakey"> 
+      t1.programakey = #programakey#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="articlename"> 
+	  t1.articlename like '%'||#articlename#||'%' 
+	</isNotEmpty>
+    <isNotEmpty prepend="and" property="categorykey"> 
+      t3.categorykey = #categorykey#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="programaname"> 
+      t3.programaname like '%'||#programaname#||'%' 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="realname"> 
+      t4.realname like '%'||#realname#||'%' 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="createdate_min"> 
+    <![CDATA[
+        t1.createdate >= #createdate_min# ||' 00:00:00'
+    ]]>
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="createdate_max"> 
+    <![CDATA[
+        t1.createdate <= #createdate_max# ||' 23:59:59'
+    ]]>
+    </isNotEmpty> 
+  </dynamic> 
+  
+    and t1.programakey = t3.programakey	
+    and t1.creator = t4.username
+    
+    <isNotEmpty prepend="" property="sort_type"> 
+       order by $sort_column$ $sort_type$ 
+    </isNotEmpty>
+    
+  </statement> 
+  
+  
+  <!--  针对文章回复的文章列表的记录数 -->
+  <statement id="getT12_article_sum2writebackListCount" parameterClass="com.ist.cms.dto.T12_article" resultClass="int"> 
+    select count(*)  from 
+    (
+	  select t1.articlekey,t1.articlename,t1.programakey,t3.programaname,
+
+	(select count(*) from T12_WRITEBACK t2 where t2.flag='1' and  t2.auditstat='0' and t2.articlekey = t1.articlekey) as sum_notneed,
+	(select count(*) from T12_WRITEBACK t2 where t2.flag='1' and  t2.auditstat='1' and t2.articlekey = t1.articlekey) as sum_wait,
+	(select count(*) from T12_WRITEBACK t2 where t2.flag='1' and  t2.auditstat='2' and t2.articlekey = t1.articlekey) as sum_fail,
+	(select count(*) from T12_WRITEBACK t2 where t2.flag='1' and  t2.auditstat='3' and t2.articlekey = t1.articlekey) as sum_already,
+	(select count(*) from T12_WRITEBACK t2 where t2.flag='1' and t2.articlekey = t1.articlekey) as sum_all
+	
+	from T12_ARTICLE t1,T12_PROGRAMA t3,t00_user t4
+	
+	where  t1.flag in ('1')
+	and t1.auditstat in ('0','3')
+	and t3.flag = '1'
+	and t3.auditstat = '1'
+	
+  <dynamic > 
+    <isNotEmpty prepend="and" property="programakey"> 
+      t1.programakey = #programakey#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="articlename"> 
+	  t1.articlename like '%'||#articlename#||'%' 
+	</isNotEmpty>
+    <isNotEmpty prepend="and" property="categorykey"> 
+      t3.categorykey = #categorykey#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="programaname"> 
+      t3.programaname like '%'||#programaname#||'%' 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="realname"> 
+      t4.realname like '%'||#realname#||'%' 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="createdate_min"> 
+    <![CDATA[
+        t1.createdate >= #createdate_min# ||' 00:00:00'
+    ]]>
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="createdate_max"> 
+    <![CDATA[
+        t1.createdate <= #createdate_max# ||' 23:59:59'
+    ]]>
+    </isNotEmpty> 
+  </dynamic> 
+  
+    and t1.programakey = t3.programakey	
+    and t1.creator = t4.username
+    )  haha
+  </statement> 
+   
+  <!-- 取得历史版本文章列表 -->
+  <statement id="getT12_hisArticleList" parameterClass="com.ist.cms.dto.T12_article" resultClass="com.ist.cms.dto.T12_article"> 
+	  select t1.programakey,t1.articlekey,t1.articlename,t1.auditstat,t1.savetype,t1.flag,t1.seq,t1.creator,t1.createdate,t1.modifier,t1.modifydate,t1.seclevel  
+	  from t12_article t1,t12_article_history t2
+	  where 1 > 0  and t1.flag = '1' and t1.auditstat in ('0','3')
+	  <dynamic > 
+	    <isNotEmpty prepend="and" property="articlekey"> 
+	      t2.articlekey = #articlekey#
+	    </isNotEmpty>  
+	  </dynamic> 
+	  and t1.articlekey = t2.replykey
+  </statement>
+  
+  
+  <!-- 取得相关文章列表  and t1.programakey=t2.programakey -->
+  <statement id="getT12_relationArticleList" parameterClass="com.ist.cms.dto.T12_article" resultClass="com.ist.cms.dto.T12_article"> 
+	  select t1.programakey,t1.articlekey,t1.articlename,t1.auditstat,t1.savetype,t1.flag,t1.seq,t1.creator,t1.createdate,t1.modifier,t1.modifydate,t1.seclevel,t1.artcode , t2.colkey  
+	  from t12_article t1,t12_article_relation t2
+	  where 1 > 0  and t1.flag = '1' 
+	  and t1.auditstat in ('0','3')
+	  
+	  <dynamic > 
+	    <isNotEmpty prepend="and" property="articlekey"> 
+	      t2.articlekey = #articlekey#
+	    </isNotEmpty>  
+	    <isNotEmpty prepend="and" property="articlekey"> 
+	      t2.colkey = #colkey#
+	    </isNotEmpty>
+	  </dynamic> 
+	  and t1.articlekey = t2.relationkey
+  </statement>
+  
+  <statement id="insertT12_article" parameterClass="com.ist.cms.dto.T12_article" resultClass="int"> 
+  insert into T12_article(
+  programakey,articlekey,articlename,auditstat,savetype,flag,seq,creator,createdate,modifier,modifydate,seclevel,artcategorykey,artcode
+  ) values(
+  #programakey#,#articlekey#,#articlename#,#auditstat#,#savetype#,#flag#,#seq#,#creator#,#createdate#,#modifier#,#modifydate#,#seclevel#,#artcategorykey#,#artcode#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_article" parameterClass="com.ist.cms.dto.T12_article" resultClass="int"> 
+  update T12_article set 
+  auditstat=#auditstat#,savetype=#savetype#,flag=#flag#,articlename=#articlename#,seclevel=#seclevel#
+  ,modifier=#modifier#,modifydate=#modifydate#
+  where articlekey=#articlekey#
+  </statement> 
+  
+  <!-- 更新文章审核状态 -->
+  <statement id="modifyT12_article_auditstat" parameterClass="com.ist.cms.dto.T12_article" resultClass="int"> 
+  update T12_article set auditstat=#auditstat#,checker=#checker#,checkdate=#checkdate#
+  where articlekey=#articlekey#
+  </statement>
+  
+  <!-- 更新文章状态 -->
+  <statement id="modifyT12_article_flag" parameterClass="com.ist.cms.dto.T12_article" resultClass="int"> 
+	  update T12_article set 
+	  flag=#flag#
+	  where articlekey=#articlekey#
+  </statement>
+  
+  <!-- 更新文章名称(标题) -->
+  <statement id="modifyT12_article_name" parameterClass="com.ist.cms.dto.T12_article" resultClass="int"> 
+  update T12_article set 
+  	articlename=#articlename#,savetype=#savetype#,seclevel=#seclevel#,modifier=#modifier#,modifydate=#modifydate#
+  	<isNotEmpty prepend="," property="flag"> 
+	  flag = #flag#
+	</isNotEmpty> 
+	<isNotEmpty prepend="," property="auditstat"> 
+	  auditstat = #auditstat#
+	</isNotEmpty> 
+	<isNotEmpty prepend="," property="artcategorykey"> 
+	  artcategorykey = #artcategorykey#
+	</isNotEmpty> 
+	<isNotEmpty prepend="," property="artcode"> 
+	  artcode = #artcode#
+	</isNotEmpty> 
+	<isNotEmpty prepend="," property="isadminmodify">
+	   isadminmodify=#isadminmodify#,admintor=#admintor#,admindate=#admindate#
+	</isNotEmpty>
+  	where articlekey=#articlekey#
+  </statement>
+ 
+  <statement id="deleteT12_article" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_article where articlekey=#value# 
+  </statement> 
+ 
+  <statement id="getT12_articleDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_article"> 
+   select t.*,t3.realname as adminrealname  from (
+   select t1.*,t2.realname from T12_article t1 
+                          left join T00_user t2 
+						  on t1.creator = t2.username  
+     where articlekey=#value#             
+ ) t left join T00_user t3  on t.admintor = t3.username   
+ 
+  </statement> 
+ 
+   <statement id="getArticleListByCategorykey" parameterClass="com.ist.cms.dto.T12_article" resultClass="com.ist.cms.dto.T12_article"> 
+	  select articlekey,articlename,artcode from t12_article where  flag = '1' and auditstat in ('3','0') and programakey = #programakey# and artcategorykey = #artcategorykey#
+   </statement>
+</sqlMap> 
+

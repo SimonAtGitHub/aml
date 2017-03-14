@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T08_def_cat">
+	<statement id="getT08_def_catList"
+		parameterClass="com.ist.aml.risk.dto.T08_def_cat"
+		resultClass="com.ist.aml.risk.dto.T08_def_cat">
+		SELECT CATEGORYKEY,TEMPLATEKEY,OPERATIONAME,DES,TREELAYE,
+		UPCATEGORYKEY,OCC,IS_LAST FROM T08_DEF_CAT
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="categorykey">
+				CATEGORYKEY = #categorykey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="templatekey">
+				TEMPLATEKEY = #templatekey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="upcategorykey">
+				UPCATEGORYKEY = #upcategorykey#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	
+
+	<statement id="deleteT08_def_cat" parameterClass="java.lang.String"
+		resultClass="int">
+		DELETE FROM T08_DEF_CAT WHERE CATEGORYKEY=#value#
+	</statement>
+
+
+	<statement id="getT08_def_catDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.aml.risk.dto.T08_def_cat">
+		SELECT * FROM T08_DEF_CAT WHERE CATEGORYKEY=#value#
+	</statement>
+	<statement id="getT08_def_catDisp1"
+		parameterClass="com.ist.aml.risk.dto.T08_def_cat"
+		resultClass="com.ist.aml.risk.dto.T08_def_cat">
+		SELECT * FROM T08_DEF_CAT WHERE CATEGORYKEY=#categorykey# AND
+		TEMPLATEKEY=#templatekey#
+	</statement>
+</sqlMap>
+
+

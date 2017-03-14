@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_programa_cols"> 
+  <statement id="getT12_programa_colsList" parameterClass="com.ist.cms.dto.T12_programa_cols" resultClass="com.ist.cms.dto.T12_programa_cols"> 
+  select tablecode,colkey,expression,colname,collength,iscond,isshow,issort,isapply,isdefaultfield,fieldtype,flag,creator,createdate,modifier,modifydate,dispseq from t12_programa_cols 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="tablecode"> 
+    tablecode = #tablecode# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="flag"> 
+    flag = #flag# 
+    </isNotEmpty> 
+  </dynamic> 
+  order by dispseq
+  </statement>
+  <!-- 根据栏目获取数据列的列表 -->
+  <statement id="getT12_programa_colsListByPrograma" parameterClass="com.ist.cms.dto.T12_programa" resultClass="com.ist.cms.dto.T12_programa_cols"> 
+  select t1.tablecode,t1.colkey,t1.expression,t1.colname,t1.collength,t1.iscond,t1.isshow,t1.issort,t1.isapply,t1.isdefaultfield,t1.fieldtype,t1.flag,t1.creator,t1.createdate,t1.modifier,t1.modifydate,t1.dispseq 
+  from t12_programa_cols t1,t12_programa_table_rel t2
+  <![CDATA[where t1.tablecode = t2.tablecode and t2.programakey=#programakey# and (t1.flag <> '2' or t1.flag is null) ]]>
+  order by t1.dispseq
+  </statement> 
+  
+  <!-- 根据栏目获取数据列的列表(只取显示字段 或查询条件字段 或 排序字段) -->
+  <statement id="getT12_programa_colsListBycol" parameterClass="com.ist.cms.dto.T12_programa_cols" resultClass="com.ist.cms.dto.T12_programa_cols"> 
+  select t1.tablecode,t1.colkey,t1.expression,t1.colname,t1.collength,t1.iscond,t1.isshow,t1.issort,t1.isapply,t1.isdefaultfield,t1.fieldtype,t1.flag,t1.creator,t1.createdate,t1.modifier,t1.modifydate,t1.dispseq,t1.isrelevance,t1.relevancetype
+  ,t1.parmtype,t1.sysinparmkey,t1.parmintype,t1.targetcde,t1.keyvisible,t1.isdefault,t1.defaultvalue from t12_programa_cols t1,t12_programa_table_rel t2
+  <![CDATA[where t1.tablecode = t2.tablecode  and (t1.flag <> '2' or t1.flag is null) ]]>
+  <dynamic prepend=""> 
+    <isNotEmpty prepend="and" property="programakey"> 
+    t2.programakey = #programakey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="tablecode"> 
+    t1.tablecode = #tablecode# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="isshow"> 
+    isshow = #isshow# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="isdefaultfield"> 
+    isdefaultfield = #isdefaultfield# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="iscond"> 
+    iscond = #iscond# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="issort"> 
+    issort = #issort# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="isapply"> 
+    isapply = #isapply# 
+    </isNotEmpty> 
+  </dynamic> 
+  order by t1.isshow desc,t1.dispseq asc
+  </statement>
+  <!-- 根据栏目获取数据列的列表(只取显示字段 或 非默认且不显示字段) -->
+  <statement id="getT12_programa_colsListBycol1" parameterClass="com.ist.cms.dto.T12_programa_cols" resultClass="com.ist.cms.dto.T12_programa_cols"> 
+  select t1.tablecode,t1.colkey,t1.expression,t1.colname,t1.collength,t1.iscond,t1.isshow,t1.issort,t1.isapply,t1.isdefaultfield,t1.fieldtype,t1.flag,t1.creator,t1.createdate,t1.modifier,t1.modifydate,t1.dispseq,t1.isrelevance,t1.relevancetype
+  ,t1.parmtype,t1.sysinparmkey,t1.parmintype,t1.targetcde,t1.keyvisible,t1.isdefault,t1.defaultvalue from t12_programa_cols t1,t12_programa_table_rel t2
+  <![CDATA[where t1.tablecode = t2.tablecode  and (t1.flag <> '2' or t1.flag is null) ]]>
+  <dynamic prepend=""> 
+    <isNotEmpty prepend="and" property="programakey"> 
+    t2.programakey = #programakey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="tablecode"> 
+    t1.tablecode = #tablecode# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="isshow"> 
+    <![CDATA[ (isshow = #isshow# or (ISSHOW = '0' and T1.ISDEFAULTFIELD <> '1')) ]]>
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="isdefaultfield"> 
+    isdefaultfield = #isdefaultfield# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="iscond"> 
+    iscond = #iscond# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="issort"> 
+    issort = #issort# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="isapply"> 
+    isapply = #isapply# 
+    </isNotEmpty> 
+  </dynamic> 
+  order by t1.isshow desc,t1.dispseq asc
+  </statement>  
+ 
+  <statement id="getT12_programa_colsListCount" parameterClass="com.ist.cms.dto.T12_programa_cols" resultClass="int"> 
+  select count(*) from t12_programa_cols 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="tablecode"> 
+    tablecode = #tablecode# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="and" property="flag"> 
+    flag = #flag# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_programa_cols" parameterClass="com.ist.cms.dto.T12_programa_cols" resultClass="int"> 
+  insert into T12_programa_cols(
+  tablecode,colkey,expression,colname,collength,iscond,isshow,issort,isapply,isdefaultfield,fieldtype,flag,creator,createdate,modifier,modifydate,dispseq,isrelevance,relevancetype,parmtype,sysinparmkey,parmintype,targetcde,keyvisible,isdefault,defaultvalue
+  ) values(
+  #tablecode#,#colkey#,#expression#,#colname#,#collength#,#iscond#,#isshow#,#issort#,#isapply#,#isdefaultfield#,#fieldtype#,#flag#,#creator#,#createdate#,#modifier#,#modifydate#,#dispseq#,#isrelevance#,#relevancetype#,#parmtype#,#sysinparmkey#,#parmintype#,#targetcde#,#keyvisible#,#isdefault#,#defaultvalue#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_programa_cols" parameterClass="com.ist.cms.dto.T12_programa_cols" resultClass="int"> 
+  update T12_programa_cols set 
+  expression=#expression#,colname=#colname#,collength=#collength#,iscond=#iscond#,isshow=#isshow#,issort=#issort#,isapply=#isapply#,isdefaultfield=#isdefaultfield#,fieldtype=#fieldtype#,flag=#flag#,creator=#creator#,createdate=#createdate#,modifier=#modifier#,modifydate=#modifydate#
+  where colkey=#colkey# and tablecode=#tablecode#
+  </statement> 
+  
+  <statement id="modifyT12_programa_cols_part" parameterClass="com.ist.cms.dto.T12_programa_cols" resultClass="int"> 
+  update T12_programa_cols set 
+   colname=#colname#,collength=#collength#,iscond=#iscond#,isshow=#isshow#,issort=#issort#,modifier=#modifier#,modifydate=#modifydate#,dispseq=#dispseq#,isrelevance=#isrelevance#,relevancetype=#relevancetype#
+  where colkey=#colkey# and tablecode=#tablecode#
+  </statement> 
+ 
+  <statement id="deleteT12_programa_cols" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_programa_cols where programakey=#value# 
+  </statement>
+  <!-- 根据栏目代码对数据列进行逻辑删除 -->
+  <statement id="deleteT12_programa_cols_by_programakey" parameterClass="com.ist.cms.dto.T12_programa" resultClass="int">
+	update 	t12_programa_cols t1 
+	set 	t1.flag='2',t1.modifier=#modifier#,t1.modifydate=#modifydate#
+	where exists
+	(
+	 	select 	1 
+	 	from 	t12_programa_table_rel t2,t12_programa_table t3
+	 	where 	t2.programakey = #programakey#
+	 	and   	t2.tablecode = t1.tablecode
+	 	and   	t2.tablecode = t3.tablecode
+	)
+  </statement> 
+  
+  <!-- 进行逻辑删除 -->
+  <statement id="deleteT12_programa_cols_by_logic" parameterClass="com.ist.cms.dto.T12_programa_cols" resultClass="int">
+	update 	t12_programa_cols t1 
+	set 	t1.flag='2',t1.modifier=#modifier#,t1.modifydate=#modifydate#
+	where t1.tablecode=#tablecode# and t1.isdefaultfield='0' and t1.colkey not in ($colkey$)
+  </statement> 
+ 
+  <statement id="getT12_programa_colsDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_programa_cols"> 
+  select * from T12_programa_cols where colkey=#value# 
+  </statement> 
+   <statement id="getT12_programa_colsDispByTablecodeColkey" parameterClass="com.ist.cms.dto.T12_programa_cols" resultClass="com.ist.cms.dto.T12_programa_cols"> 
+  select * from T12_programa_cols where tablecode=#tablecode# and colkey=#colkey# 
+  </statement>
+  <statement id="modifyT12_programa_cols_extendAttri" parameterClass="com.ist.cms.dto.T12_programa_cols" resultClass="int"> 
+  update T12_programa_cols set 
+  parmtype=#parmtype#,sysinparmkey=#sysinparmkey#,parmintype=#parmintype#,targetcde=#targetcde#,keyvisible=#keyvisible#,isdefault=#isdefault#,defaultvalue=#defaultvalue# where colkey=#colkey# and tablecode=#tablecode#
+  </statement> 
+</sqlMap> 
+

@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="T07_alert">
+
+
+	<statement id="getT07_alertList"
+		parameterClass="com.ist.aml.report.dto.T07_alert"
+		resultClass="com.ist.aml.report.dto.T07_alert">
+		SELECT
+		A.ALERTKEY,A.APPLICATION_NUM,A.ALERT_MODE_CD,A.ALERT_TYPE_CD,A.RULEKEY,A.PBCKEY,A.ALERT_DT,A.ORGANKEY,
+		A.OBJ_TYPE_CD,A.OBJKEY,A.OBJNAME,A.ALERT_STATUS_CD,A.AMOUNT,A.TRANS_NUM,A.STAFF_IND,
+		A.STAFF_IN_IND,A.TXT,A.HANDLE_USR,A.CREATE_DT,A.RECORD_STATUS_CD
+		FROM 
+		<isNotEmpty prepend="" property="alertsearchtime">
+			<isEqual property="alertsearchtime" compareValue ="0">
+			<isEqual property="alert_type_cd" compareValue ="1">
+				T07_ALERT_DE A  
+			</isEqual>
+		    <isEqual property="alert_type_cd" compareValue ="2">
+		    	T07_ALERT_KY A  
+			</isEqual>	
+  			</isEqual>
+			<isEqual property="alertsearchtime" compareValue ="1">
+			<isEqual property="alert_type_cd" compareValue ="1">
+				T07_ALERT_DE_UH A 
+			</isEqual>
+		    <isEqual property="alert_type_cd" compareValue ="2">
+		    	T07_ALERT_KY_UH A 
+			</isEqual>	
+					
+			</isEqual>
+		</isNotEmpty>
+		WHERE 1>0
+		<dynamic>
+			<isNotEmpty prepend="and" property="alertkey">
+				A.ALERTKEY = #alertkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="objkey">
+				A.OBJKEY = #objkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="organnum">
+				A.ORGANKEY  IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY=#organnum#)                           
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="organkey">
+				A.ORGANKEY IN ($organkey$)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="objname">
+				A.OBJNAME LIKE #objname#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="status">
+				A.ALERT_STATUS_CD = #status#
+			</isNotEmpty>
+	
+			<isNotEmpty prepend="and" property="kind">
+				A.ALERT_MODE_CD = #kind#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="and" property="alert_type_cd">
+				A.ALERT_TYPE_CD = #alert_type_cd#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="and" property="pbckey">
+				A.PBCKEY = #pbckey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="application_num">
+				A.APPLICATION_NUM = #application_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alert_dt_start">
+				<![CDATA[A.ALERT_DT >= #alert_dt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alert_dt_end">
+				<![CDATA[A.ALERT_DT <= #alert_dt_end:DATE#]]>
+			</isNotEmpty>
+
+			<isNotEmpty prepend="and" property="curr_cd">
+			  A.CURR_CD = #curr_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="pbcrule">
+			  A.PBCKEY = #pbcrule#
+			</isNotEmpty>
+			
+			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY A.ALERTKEY
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY A.ALERT_DT
+				</isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY A.ALERT_TYPE_CD
+				</isEqual>
+				<isEqual property="orderby" compareValue="4">
+					ORDER BY A.AMOUNT
+				</isEqual>
+				<isEqual property="orderby" compareValue="5">
+					ORDER BY A.ORGANKEY
+				</isEqual>
+			
+			<isNotEmpty property="order">
+				<isEqual property="order" compareValue="-1"></isEqual>
+				<isEqual property="order" compareValue="1"></isEqual>
+				<isEqual property="order" compareValue="2">
+					DESC
+				</isEqual>
+			</isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	
+
+	<statement id="getT07_alertListCount"
+		parameterClass="com.ist.aml.report.dto.T07_alert" resultClass="int">
+		SELECT COUNT(*) FROM 
+		<isEqual property="alertsearchtime" compareValue ="0">
+			<isEqual property="alert_type_cd" compareValue ="1">
+				T07_ALERT_DE A  
+			</isEqual>
+		    <isEqual property="alert_type_cd" compareValue ="2">
+		    	T07_ALERT_KY A  
+			</isEqual>	
+  			</isEqual>
+			<isEqual property="alertsearchtime" compareValue ="1">
+			<isEqual property="alert_type_cd" compareValue ="1">
+				T07_ALERT_DE_UH A 
+			</isEqual>
+		    <isEqual property="alert_type_cd" compareValue ="2">
+		    	T07_ALERT_KY_UH A 
+			</isEqual>	
+					
+			</isEqual>
+		WHERE 1>0
+		<dynamic>
+			<isNotEmpty prepend="and" property="alertkey">
+				A.ALERTKEY = #alertkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="objkey">
+				A.OBJKEY = #objkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="organnum">
+				A.ORGANKEY  IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY=#organnum#)                           
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="organkey">
+				A.ORGANKEY IN ($organkey$)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="objname">
+				A.OBJNAME LIKE #objname#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="and" property="pbcrule">
+				A.PBCKEY = #pbcrule#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="and" property="alert_type_cd">
+				A.ALERT_TYPE_CD = #alert_type_cd#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="and" property="pbckey">
+				A.PBCKEY = #pbckey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="application_num">
+				A.APPLICATION_NUM = #application_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alert_dt_start">
+				<![CDATA[A.ALERT_DT >= #alert_dt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alert_dt_end">
+				<![CDATA[A.ALERT_DT <= #alert_dt_end:DATE#]]>
+			</isNotEmpty>
+			
+	
+			<isNotEmpty prepend="and" property="curr_cd">
+			  A.CURR_CD = #curr_cd#
+			</isNotEmpty>
+			
+		</dynamic>
+	</statement>
+	<statement id="T07_alert_trans_list"
+		parameterClass="com.ist.aml.report.dto.T07_alert"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT
+		A.TX_GO_COUNTRY,A.TX_GO_AREA,A.HOST_CUST_ID,A.CASH_IND,A.CURR_CD,A.TX_OCCUR_COUNTRY
+		,A.TX_OCCUR_AREA,A.OPP_COUNTRY,A.OPP_AREA,A.OPP_ORGANNAME,A.AGENT_NAME,A.AGENT_COUNTRY,A.ORG_TRANS_RELA,
+		A.AGENT_CARD_TYPE,A.AGENT_CARD_NO,
+		A.TRANSACTIONKEY,A.CB_PK,A.TX_NO,A.ORGANKEY,A.TX_DT,A.DT_TIME,A.ACCT_NUM,A.PARTY_ID,
+		A.PARTY_CLASS_CD,A.TX_CD,A.CB_TX_CD,A.BUS_TYPE_CD,A.TX_TYPE_CD,A.DEBIT_CREDIT,A.RECEIVE_PAY_CD,
+		A.SUBJECTNO,A.CURRENCY_CD,A.AMT,A.CNY_AMT,A.USD_AMT,A.CASH_TRANS_FLAG,A.REMIT_TYPE_CD,A.DES,
+		A.OVERAREA_IND,A.SETTLE_TYPE_CD,A.USE_DES,A.OPP_SYS_ID,A.OPP_AREA,A.OPP_ORGAN_TYPE,A.OPP_ORGANKEY,A.OPP_PBC_PARTY_CLASS_CD,
+		A.OPP_PARTY_ID,A.OPP_NAME,A.OPP_ACCT_NUM,A.OPP_TX_DT,A.OPP_ACCT_TYPE_CD,A.OPP_CARD_TYPE,A.OPP_CARD_NO,
+		A.OPP_PARTY_CLASS_CD,A.BATCH_IND,A.TELLER,A.RE_IND,A.HANDLE_STATUS_CD,A.PARTY_CHN_NAME,A.ADDTIONAL, 
+		A.VOUCHER_NO,A.HOST_CUST_ID,A.OPP_OFF_SHORE_IND,A.CAL_IND,A.VALIDATE_IND2,A.VALIDATE_IND,A.TSCTKEY,
+	    C.ALERTKEY,C.ALERT_DT,C.RULEKEY FROM
+		<isNotEmpty prepend="" property="alertsearchtime">
+			<isEqual property="alertsearchtime" compareValue ="0">
+			<isEqual property="alert_type_cd" compareValue ="1">
+				T07_ALERT_TRANS_DE B,T47_TRANSACTION_UC A ,T07_ALERT_DE C
+			</isEqual>
+		    <isEqual property="alert_type_cd" compareValue ="2">
+		    	T07_ALERT_TRANS_KY B , T47_TRANSACTION_UC A ,T07_ALERT_KY C
+			</isEqual>	
+  			</isEqual>
+			<isEqual property="alertsearchtime" compareValue ="1">
+			<isEqual property="alert_type_cd" compareValue ="1">
+				T07_ALERT_TRANS_DE_UH B ,V47_TRANSACTION A ,T07_ALERT_DE_UH C
+			</isEqual>
+		    <isEqual property="alert_type_cd" compareValue ="2">
+		    	T07_ALERT_TRANS_KY_UH B ,V47_TRANSACTION A ,T07_ALERT_KY_UH C
+			</isEqual>	
+					
+			</isEqual>
+		</isNotEmpty>
+		WHERE B.ALERTKEY=C.ALERTKEY AND  B.TRANSACTIONKEY=A.TRANSACTIONKEY
+
+			<isNotEmpty prepend="and" property="alertkey">
+				C.ALERTKEY = #alertkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="objkey">
+				C.OBJKEY = #objkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="organnum">
+				C.ORGANKEY  IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY=#organnum#)                           
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="organkey">
+				C.ORGANKEY IN ($organkey$)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="objname">
+				C.OBJNAME LIKE #objname#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="pbcrule">
+				C.PBCKEY = #pbcrule#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alert_type_cd">
+				C.ALERT_TYPE_CD = #alert_type_cd#
+			</isNotEmpty>
+	
+			<isNotEmpty prepend="and" property="pbckey">
+				C.PBCKEY = #pbckey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="application_num">
+				C.APPLICATION_NUM = #application_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alert_dt_start">
+				<![CDATA[C.ALERT_DT >= #alert_dt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alert_dt_end">
+				<![CDATA[C.ALERT_DT <= #alert_dt_end:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="beginDate">
+				<![CDATA[C.ALERT_DT >= #beginDate:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="endDate">
+				<![CDATA[C.ALERT_DT <= #endDate:DATE#]]>
+			</isNotEmpty>
+
+			<isNotEmpty prepend="and" property="curr_cd">
+			  C.CURR_CD = #curr_cd#
+			</isNotEmpty>
+		
+	</statement>
+	
+	<statement id="getT07_alertDispByHistoryCase" parameterClass="com.ist.aml.report.dto.T07_alert"
+		resultClass="com.ist.aml.report.dto.T07_alert">
+		SELECT * FROM 
+		<isNotEmpty prepend="" property="alertsearchtime"> 
+			  	<isEqual property="alertsearchtime" compareValue ="0">
+			  		<isEqual property="alert_type_cd" compareValue ="1">
+			  		T07_ALERT_DE A 
+			  		</isEqual>
+			  		<isEqual property="alert_type_cd" compareValue ="2">
+			  		T07_ALERT_KY A 
+			  		</isEqual>
+			  	</isEqual>
+			  	<isEqual property="alertsearchtime" compareValue ="1">
+			  		<isEqual property="alert_type_cd" compareValue ="1">
+			  		T07_ALERT_DE_UH A 
+			  		</isEqual>
+			  		<isEqual property="alert_type_cd" compareValue ="2">
+			  		T07_ALERT_KY_UH A 
+			  		</isEqual>
+			  	</isEqual>
+			</isNotEmpty>
+		WHERE A.ALERTKEY=#alertkey#
+	</statement>
+	
+	<statement id="getT07_alert_indicList"
+		parameterClass="com.ist.aml.report.dto.T07_alert"
+		resultClass="com.ist.aml.report.dto.T07_alert">
+		SELECT
+		A.INDICNAME,A.UNIT,B.UPPER_LIMIT,B.LOW_LIMIT,B.INDIC_VAL,B.INDIC_SORCE
+		FROM 
+		
+		<isNotEmpty prepend="" property="alertsearchtime">
+			<isEqual property="alertsearchtime" compareValue ="0">
+				<isEqual property="alert_type_cd" compareValue ="1">
+			  		V07_INDIC A, T07_ALERT_INDIC_DE B  WHERE
+			  	</isEqual>
+			  	  	<isEqual property="alert_type_cd" compareValue ="2">
+			  		V07_INDIC A, T07_ALERT_INDIC_KY B  WHERE
+			  	</isEqual>
+				
+			</isEqual>
+			<isEqual property="alertsearchtime" compareValue ="1">	
+				<isEqual property="alert_type_cd" compareValue ="1">
+			  		V07_INDIC A, T07_ALERT_INDIC_DE_UH B  WHERE
+			  	</isEqual>
+			  	  	<isEqual property="alert_type_cd" compareValue ="2">
+			  		V07_INDIC A, T07_ALERT_INDIC_KY_UH B  WHERE
+			  	</isEqual>
+			</isEqual>
+		</isNotEmpty>
+		<isEmpty prepend="" property="alertsearchtime">
+				V07_INDIC A, T07_ALERT_INDIC_KY B  WHERE
+		</isEmpty>
+		
+		A.INDICKEY = B.INDICKEY 
+		<dynamic>
+			<isNotEmpty prepend="and" property="alertkey">
+				B.ALERTKEY = #alertkey#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT07_alert_transList3"
+		parameterClass="com.ist.aml.report.dto.T07_alert"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT
+		B.ALERTKEY,B.STATUS_CD,A.TRANSACTIONKEY,A.TX_NO,A.PARTY_ID,A.PARTY_CHN_NAME,A.TX_DT,A.ORGANKEY,A.ACCT_NUM,A.OPP_NAME,A.CURRENCY_CD,A.AMT,A.USE_DES,A.DEBIT_CREDIT,A.TX_TYPE_CD,A.CASH_TRANS_FLAG,A.VALIDATE_IND,A.VALIDATE_IND2 
+		FROM 
+		
+			<isNotEmpty prepend="" property="alertsearchtime"> 
+			  	<isEqual property="alertsearchtime" compareValue ="0">
+			  	<isEqual property="alert_type_cd" compareValue ="1">
+			  		T47_TRANSACTION_UC A, T07_ALERT_TRANS_DE B, T07_ALERT_DE C WHERE
+			  	</isEqual>
+			  	  	<isEqual property="alert_type_cd" compareValue ="2">
+			  		T47_TRANSACTION_UC A, T07_ALERT_TRANS_KY B, T07_ALERT_KY C WHERE
+			  	</isEqual>
+			  	</isEqual>
+			  	<isEqual property="alertsearchtime" compareValue ="1">
+			  			  	<isEqual property="alert_type_cd" compareValue ="1">
+			  		V47_TRANSACTION A, T07_ALERT_TRANS_DE_UH B, T07_ALERT_DE_UH C WHERE
+			  	</isEqual>
+			  	  	<isEqual property="alert_type_cd" compareValue ="2">
+			  		V47_TRANSACTION A, T07_ALERT_TRANS_KY_UH B, T07_ALERT_KY_UH C WHERE
+			  	</isEqual>
+			  	</isEqual>
+			</isNotEmpty>
+			<isEmpty prepend="" property="alertsearchtime"> 
+				T47_TRANSACTION_UC A, T07_ALERT_TRANS_KY B, T07_ALERT_KY C WHERE
+			</isEmpty>
+	
+		C.ALERTKEY = B.ALERTKEY AND B.TRANSACTIONKEY = A.TRANSACTIONKEY 
+		
+			<isNotEmpty prepend="and" property="alertkey">
+				C.ALERTKEY = #alertkey#
+			</isNotEmpty>
+		ORDER BY A.TX_DT
+		
+	</statement> 
+	
+	<statement id="getT07_alert_transListCount1"
+		parameterClass="com.ist.aml.report.dto.T07_alert"
+		resultClass="int">
+		SELECT COUNT(A.TRANSACTIONKEY) FROM 
+		<dynamic>
+			<isNotEmpty prepend="" property="alertsearchtime"> 
+			  	<isEqual property="alertsearchtime" compareValue ="0">
+			  	<isEqual property="alert_type_cd" compareValue ="1">
+			  		T47_TRANSACTION_UC A, T07_ALERT_TRANS_DE B, T07_ALERT_DE C WHERE
+			  	</isEqual>
+			  	  	<isEqual property="alert_type_cd" compareValue ="2">
+			  		T47_TRANSACTION_UC A, T07_ALERT_TRANS_KY B, T07_ALERT_KY C WHERE
+			  	</isEqual>
+			  	</isEqual>
+			  	<isEqual property="alertsearchtime" compareValue ="1">
+			  			  	<isEqual property="alert_type_cd" compareValue ="1">
+			  		V47_TRANSACTION A, T07_ALERT_TRANS_DE_UH B, T07_ALERT_DE_UH C WHERE
+			  	</isEqual>
+			  	  	<isEqual property="alert_type_cd" compareValue ="2">
+			  		V47_TRANSACTION A, T07_ALERT_TRANS_KY_UH B, T07_ALERT_KY_UH C WHERE
+			  	</isEqual>
+			  	</isEqual>
+			</isNotEmpty>
+			<isEmpty prepend="" property="alertsearchtime"> 
+			  	T47_TRANSACTION_UC A, T07_ALERT_TRANS B, T07_ALERT C WHERE
+			</isEmpty>
+		</dynamic>
+		C.ALERTKEY = B.ALERTKEY AND B.TRANSACTIONKEY = A.TRANSACTIONKEY 
+		<dynamic>
+			<isNotEmpty prepend="and" property="alertkey">
+				C.ALERTKEY = #alertkey#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+</sqlMap>

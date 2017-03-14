@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T03_param_org"> 
+  <statement id="getT03_param_orgList" parameterClass="com.ist.aml.rule.dto.T03_param_org" resultClass="com.ist.aml.rule.dto.T03_param_org"> 
+  select parmvalkey,tplakey,parmname,des,samevalue,parmtype from t03_param_org 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="parmvalkey"> 
+    parmvalkey = #parmvalkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT03_param_orgListCount" parameterClass="com.ist.aml.rule.dto.T03_param_org" resultClass="int"> 
+  select count(*) from t03_param_org 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="parmvalkey"> 
+    parmvalkey = #parmvalkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT03_param_org" parameterClass="com.ist.aml.rule.dto.T03_param_org" resultClass="int"> 
+  insert into T03_param_org(
+  parmvalkey,tplakey,parmname,des,samevalue,parmtype
+  ) values(
+  #parmvalkey#,#tplakey#,#parmname#,#des#,#samevalue#,#parmtype#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT03_param_org" parameterClass="com.ist.aml.rule.dto.T03_param_org" resultClass="int"> 
+  update T03_param_org set 
+  parmvalkey=#parmvalkey#,tplakey=#tplakey#,parmname=#parmname#,samevalue=#samevalue#,parmtype=#parmtype#
+  where parmvalkey=#parmvalkey_old# and tplakey=#tplakey#
+  </statement> 
+ 
+  <statement id="deleteT03_param_org" parameterClass="com.ist.aml.rule.dto.T03_param_org" resultClass="int">
+  delete from T03_param_org where parmvalkey=#parmvalkey# and tplakey=#tplakey#
+  </statement> 
+ 
+  <statement id="getT03_param_orgDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.rule.dto.T03_param_org"> 
+  select * from T03_param_org where parmvalkey=#value# 
+  </statement> 
+ 
+ <statement id="getT03_param_orgListByTplakey" parameterClass="java.lang.String" resultClass="com.ist.aml.rule.dto.T03_param_org"> 
+  select t1.PARMVALKEY,t1.TPLAKEY,t1.PARMNAME,t1.DES,t1.SAMEVALUE,t1.parmtype
+   from T03_param_org t1 where  t1.tplakey = #value#
+  </statement> 
+   <statement id="getT03_param_orgDispByObj" parameterClass="com.ist.aml.rule.dto.T03_param_org" resultClass="com.ist.aml.rule.dto.T03_param_org"> 
+  select * from T03_param_org where parmvalkey=#parmvalkey# and  tplakey = #tplakey#
+  </statement> 
+   <statement id="getT03_param_List" parameterClass="com.ist.aml.rule.dto.T03_param_list" resultClass="com.ist.aml.rule.dto.T03_param_list"> 
+  	select * from T03_param_list where parmvalkey=#parmvalkey# and  tplakey = #tplakey# and parmvalkey like 'p%'
+  </statement>   
+   <statement id="insertT03_param_list2" parameterClass="com.ist.aml.rule.dto.T03_param_list" resultClass="int"> 
+  	insert into t03_param_list (parmvalkey,tplakey,subitemkey,subitemname,param,param2) values (
+  		#parmvalkey#,#tplakey#,#subitemkey#,#subitemname#,#param#,#param2#
+  	)
+  </statement> 
+   <statement id="deleteT03_param_list2" parameterClass="com.ist.aml.rule.dto.T03_param_list" resultClass="int"> 
+  	delete from T03_param_list where parmvalkey = #parmvalkey# and tplakey = #tplakey# and parmvalkey like 'p%'
+  </statement> 
+   <statement id="checkParamvalkey" parameterClass="com.ist.aml.rule.dto.T03_param_org" resultClass="int"> 
+  	 select count(*) from t03_param_org where parmvalkey = #parmvalkey# and tplakey = #tplakey#
+  </statement>
+  
+  <statement id="getT03_param_List1" parameterClass="com.ist.aml.rule.dto.T03_param_org" resultClass="com.ist.aml.rule.dto.T03_param_list"> 
+  	select * from T03_param_list where 1=1  
+    <isNotEmpty prepend="and" property="parmvalkey"> 
+     parmvalkey = #parmvalkey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="tplakey"> 
+     tplakey = #tplakey#
+    </isNotEmpty> 
+  </statement>
+  
+  <statement id="deleteT03_param_orgWithTplakey" parameterClass="java.lang.String"
+		resultClass="int">
+		delete from T03_PARAM_ORG where TPLAKEY=#value#
+	</statement>
+	
+	<statement id="insertT03_param_orgWithTplakey" parameterClass="java.lang.String"
+		resultClass="int">
+		insert into T03_PARAM_ORG (PARMVALKEY, TPLAKEY, PARMNAME, DES, SAMEVALUE)
+		select * from V_PARAM_ORG where TPLAKEY=#value#
+	</statement>
+
+</sqlMap> 
+

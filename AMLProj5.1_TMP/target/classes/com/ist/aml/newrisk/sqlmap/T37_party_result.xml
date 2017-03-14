@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T37_party_result"> 
+  <statement id="getT37_party_resultList" parameterClass="com.ist.aml.newrisk.dto.T37_party_result" resultClass="com.ist.aml.newrisk.dto.T37_party_result"> 
+  SELECT  R.RESULEKEY,R.TEMPLATEKEY,R.PARTY_ID,
+        R.PARTY_CHN_NAME, R.LEVELKEY,R.FRISTAPPRALEVEL, R.EMENDATIONLEVEL,
+        R.STATISTIC_DT,R.MODIFYDATE, R.ORGANKEY,R.PARTY_CLASS_CD,R.TEMPTYPE,R.CURR_POST,R.CREATE_DT,R.MODIFY_CD,LASTLEVELKEY,LASTCHECKFLAG,R.TEMPCATEGORY,R.DEALMAX_DT
+        FROM T37_PARTY_RESULT R
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="organStr">
+			R.ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="status_cd">
+			R.status_cd=#status_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="post_id">
+			R.CURR_POST =#post_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="tempcategory_c">
+			R.TEMPCATEGORY IN ($tempcategory_c$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="tempcategory_s">
+			R.TEMPCATEGORY =#tempcategory_s#
+		</isNotEmpty>
+	    <isNotEmpty prepend="AND" property="statistic_dt">
+			<![CDATA[STATISTIC_DT >= #statistic_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="statistic_dt_end">
+			<![CDATA[STATISTIC_DT <= #statistic_dt_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="modifydate">
+			<![CDATA[MODIFYDATE >= #modifydate#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="modifydate_end">
+			<![CDATA[MODIFYDATE <= #modifydate_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt">
+			<![CDATA[CREATE_DT >= #create_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt_end">
+			<![CDATA[CREATE_DT <= #create_dt_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			R.PARTY_ID =#party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			R.PARTY_CLASS_CD = #party_class_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			R.ORGANKEY = #organkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="fristappralevel">
+			R.FRISTAPPRALEVEL = #fristappralevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="emendationlevel">
+			R.emendationlevel=#emendationlevel#
+			and R.MODIFY_CD='1'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="temptype">
+			R.TEMPTYPE = #temptype#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="marked">
+			<isEqual property="marked" compareValue="0">
+				R.status_cd IN ('6','7')
+			</isEqual>
+			<isEqual property="marked" compareValue="1">
+				R.status_cd='7'
+			</isEqual>
+		</isNotEmpty>
+		<isNotEmpty property="orderby">
+			<isEqual property="orderby" compareValue="1">
+				ORDER BY R.PARTY_CLASS_CD
+			</isEqual>
+			<isEqual property="orderby" compareValue="2">
+				ORDER BY R.ORGANKEY
+			</isEqual>
+			<isEqual property="orderby" compareValue="3">
+				ORDER BY R.PARTY_CHN_NAME
+			</isEqual>
+			<isEqual property="orderby" compareValue="4">
+				ORDER BY R.PARTY_ID
+			</isEqual>
+		</isNotEmpty>
+		<isNotEmpty property="orderby">
+			<isNotEmpty property="order">
+				<isEqual property="order" compareValue="1"></isEqual>
+				<isEqual property="order" compareValue="2">
+					DESC
+				</isEqual>
+			</isNotEmpty>
+		</isNotEmpty>
+	    </dynamic>
+  </statement> 
+ 
+  <statement id="getT37_party_resultListCount" parameterClass="com.ist.aml.newrisk.dto.T37_party_result" resultClass="int"> 
+  SELECT COUNT(*) FROM T37_PARTY_RESULT R
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="organStr">
+			R.ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="status_cd">
+			R.status_cd=#status_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="post_id">
+			R.CURR_POST =#post_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="tempcategory_c">
+			R.TEMPCATEGORY IN ($tempcategory_c$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="tempcategory_s">
+			R.TEMPCATEGORY =#tempcategory_s#
+		</isNotEmpty>
+	    <isNotEmpty prepend="AND" property="statistic_dt">
+			<![CDATA[STATISTIC_DT >= #statistic_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="statistic_dt_end">
+			<![CDATA[STATISTIC_DT <= #statistic_dt_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="modifydate">
+			<![CDATA[MODIFYDATE >= #modifydate#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="modifydate_end">
+			<![CDATA[MODIFYDATE <= #modifydate_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt">
+			<![CDATA[CREATE_DT >= #create_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt_end">
+			<![CDATA[CREATE_DT <= #create_dt_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			R.PARTY_ID =#party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			R.PARTY_CLASS_CD = #party_class_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			R.ORGANKEY = #organkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="fristappralevel">
+			R.FRISTAPPRALEVEL = #fristappralevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="emendationlevel">
+			R.emendationlevel=#emendationlevel#
+			and R.MODIFY_CD='1'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="temptype">
+			R.TEMPTYPE = #temptype#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="marked">
+			<isEqual property="marked" compareValue="0">
+				R.status_cd IN ('6','7')
+			</isEqual>
+			<isEqual property="marked" compareValue="1">
+				R.status_cd='7'
+			</isEqual>
+		</isNotEmpty>
+		</dynamic>
+  </statement> 
+  <statement id="getT37_party_result_uhList" parameterClass="com.ist.aml.newrisk.dto.T37_party_result" resultClass="com.ist.aml.newrisk.dto.T37_party_result"> 
+  SELECT  R.RESULEKEY,R.TEMPLATEKEY,R.PARTY_ID,
+        R.PARTY_CHN_NAME, R.LEVELKEY,R.FRISTAPPRALEVEL, R.EMENDATIONLEVEL,
+        R.STATISTIC_DT,R.MODIFYDATE, R.ORGANKEY,R.PARTY_CLASS_CD,R.TEMPTYPE,R.CURR_POST,R.CREATE_DT,R.MODIFY_CD,LASTLEVELKEY,LASTCHECKFLAG
+        FROM T37_PARTY_RESULT_UH R
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="organStr">
+			R.ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			R.PARTY_ID =#party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			R.ORGANKEY = #organkey#
+		</isNotEmpty>
+	    </dynamic>
+  </statement> 
+  <statement id="getT37_party_result_uhListCount" parameterClass="com.ist.aml.newrisk.dto.T37_party_result" resultClass="int"> 
+  SELECT COUNT(*) FROM T37_PARTY_RESULT_UH R
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="organStr">
+			R.ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			R.PARTY_ID =#party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			R.ORGANKEY = #organkey#
+		</isNotEmpty>
+		</dynamic>
+  </statement>	
+  <statement id="getT37_level_auditList"
+		parameterClass="com.ist.aml.newrisk.dto.T37_party_result"
+		resultClass="com.ist.aml.newrisk.dto.T37_level_audit">
+		SELECT
+		A.AUDIT_NO,A.LAST_UPD_DT,A.LAST_UPD_USER,A.LEVEL_BEFORE_ADJUST,A.LEVEL_AFTER_ADJUST, A.RES_POST_ID,
+		A.ADJUST_REASON,A.POST_ID FROM T37_LEVEL_AUDIT A WHERE
+		A.RSLTKEY=#resulekey# 
+		<isNotEmpty prepend="AND" property="organkey">
+			A.ORGANKEY=#organkey#
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="statistic_dt">
+			<![CDATA[A.STATISTIC_DT = #statistic_dt#]]>
+		 </isNotEmpty>
+  </statement>
+  <statement id="getT37_level_audit_uhList"
+		parameterClass="com.ist.aml.newrisk.dto.T37_party_result"
+		resultClass="com.ist.aml.newrisk.dto.T37_level_audit">
+		SELECT
+		A.AUDIT_NO,A.LAST_UPD_DT,A.LAST_UPD_USER,A.LEVEL_BEFORE_ADJUST,A.LEVEL_AFTER_ADJUST, A.RES_POST_ID,
+		A.ADJUST_REASON,A.POST_ID FROM T37_LEVEL_AUDIT_UH A WHERE
+		A.RSLTKEY=#resulekey#
+		<isNotEmpty prepend="AND" property="organkey">
+			A.ORGANKEY=#organkey#
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="statistic_dt">
+			<![CDATA[A.STATISTIC_DT = #statistic_dt#]]>
+		 </isNotEmpty>
+  </statement>
+  <statement id="getT37_appr_bas_rsltList"
+		parameterClass="com.ist.aml.newrisk.dto.T37_appr_bas_rslt"
+		resultClass="com.ist.aml.newrisk.dto.T37_appr_bas_rslt">
+		SELECT
+		A.RESULEKEY,T.ELEMENTKEY,T.BASE_OCC, A.SCORE,
+		A.OLD_SCORE,T.UPELEMENTKEY,A.BASIC_VAL,A.BASE_SCORE,T.ELEMENTNAME 
+		FROM T37_APPR_BAS_RSLT A,T31_DEF_ELEMENT T 
+		WHERE A.ELEMENTKEY=T.ELEMENTKEY 
+		 <isNotEmpty prepend="AND" property="resulekey">
+			A.RESULEKEY=#resulekey#
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="organkey">
+			A.ORGANKEY=#organkey#
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="statistic_dt">
+			<![CDATA[A.STATISTIC_DT = #statistic_dt#]]>
+		 </isNotEmpty>
+  </statement>
+  <statement id="getT37_appr_bas_rslt_uhList"
+		parameterClass="com.ist.aml.newrisk.dto.T37_appr_bas_rslt"
+		resultClass="com.ist.aml.newrisk.dto.T37_appr_bas_rslt">
+		SELECT
+		A.RESULEKEY,T.ELEMENTKEY,T.BASE_OCC, A.SCORE,
+		A.OLD_SCORE,T.UPELEMENTKEY,A.BASIC_VAL,A.BASE_SCORE,T.ELEMENTNAME 
+		FROM T37_APPR_BAS_RSLT_UH A,T31_DEF_ELEMENT T 
+		WHERE A.ELEMENTKEY=T.ELEMENTKEY 
+		 <isNotEmpty prepend="AND" property="resulekey">
+			A.RESULEKEY=#resulekey#
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="organkey">
+			A.ORGANKEY=#organkey#
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="statistic_dt">
+			<![CDATA[A.STATISTIC_DT = #statistic_dt#]]>
+		 </isNotEmpty>
+  </statement>
+  <statement id="getT37_appr_elem_rsltList1"
+		parameterClass="com.ist.aml.newrisk.dto.T37_appr_bas_rslt"
+		resultClass="com.ist.aml.newrisk.dto.T37_appr_bas_rslt">
+		SELECT
+		T.ELEMENTKEY,T.BASE_OCC,T.UPELEMENTKEY,T.TEMPLATEKEY,T.ELEMENTNAME,T.JS_TYPE 
+		  FROM T31_DEF_ELEMENT T
+		 WHERE T.IS_LAST='0'
+		 <isNotEmpty prepend="AND" property="templatekey">
+			T.TEMPLATEKEY=#templatekey#
+		 </isNotEmpty>
+
+  </statement>
+
+ <statement id="getMaxTreeLaye"
+		parameterClass="com.ist.aml.newrisk.dto.T37_appr_bas_rslt"
+		resultClass="int">
+		SELECT
+		max(T.TREELAYE)
+		  FROM T31_DEF_ELEMENT T
+		 <dynamic prepend="WHERE">
+		 <isNotEmpty prepend="AND" property="templatekey">
+			T.TEMPLATEKEY=#templatekey#
+		 </isNotEmpty>
+		 </dynamic>
+  </statement>
+  
+  <statement id="getT37_appr_elem_rsltList"
+		parameterClass="com.ist.aml.newrisk.dto.T37_appr_bas_rslt"
+		resultClass="com.ist.aml.newrisk.dto.T37_appr_bas_rslt">
+		SELECT
+		A.RESULEKEY,A.ELEMENT_SCORE,A.STATISTIC_DT,A.ORGANKEY,T.ELEMENTKEY,T.BASE_OCC,T.UPELEMENTKEY,T.ELEMENTNAME,T.TEMPLATEKEY 
+		  FROM T37_APPR_ELEM_RSLT A,T31_DEF_ELEMENT T WHERE A.ELEMENTKEY=T.ELEMENTKEY 
+		  AND A.UPELEMENTKEY IN (SELECT ELEMENTKEY FROM T31_DEF_ELEMENT WHERE TEMPLATEKEY=#templatekey# AND UPELEMENTKEY='-1' )
+		<isNotEmpty prepend="AND" property="resulekey">
+			A.RESULEKEY=#resulekey#
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="organkey">
+			A.ORGANKEY=#organkey#
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="statistic_dt">
+			<![CDATA[A.STATISTIC_DT = #statistic_dt#]]>
+		 </isNotEmpty>
+  </statement>
+  <statement id="getT37_appr_elem_rslt_dispList"
+		parameterClass="com.ist.aml.newrisk.dto.T37_appr_bas_rslt"
+		resultClass="com.ist.aml.newrisk.dto.T37_appr_bas_rslt">
+		SELECT
+		A.RESULEKEY,A.ELEMENTKEY,A.PARTY_ID,A.STATISTIC_DT,A.BASE_OCC,A.ELEMENT_SCORE,A.UPELEMENTKEY,GRANULARITY
+		  FROM T37_APPR_ELEM_RSLT A   
+		 <dynamic prepend="WHERE">
+		 <isNotEmpty prepend="AND" property="elementkey">
+			A.UPELEMENTKEY=#elementkey#
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="resulekey">
+			A.RESULEKEY=#resulekey#
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="organkey">
+			A.ORGANKEY=#organkey#
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="statistic_dt">
+			<![CDATA[A.STATISTIC_DT = #statistic_dt#]]>
+		 </isNotEmpty>
+		 </dynamic>
+  </statement>
+  <statement id="getT37_appr_bas_rslt_dispList"
+		parameterClass="com.ist.aml.newrisk.dto.T37_appr_bas_rslt"
+		resultClass="com.ist.aml.newrisk.dto.T37_appr_bas_rslt">
+		SELECT
+		A.RESULEKEY,A.ELEMENTKEY,A.PARTY_ID,A.STATISTIC_DT,A.BASE_OCC,A.SCORE,A.UPELEMENTKEY,GRANULARITY
+		  FROM T37_APPR_BAS_RSLT A 
+		 <dynamic prepend="WHERE">
+		 <isNotEmpty prepend="AND" property="elementkey">
+			A.UPELEMENTKEY=#elementkey#
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="resulekey">
+			A.RESULEKEY=#resulekey#
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="organkey">
+			A.ORGANKEY=#organkey#
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="statistic_dt">
+			<![CDATA[A.STATISTIC_DT = #statistic_dt#]]>
+		 </isNotEmpty>
+		 </dynamic>
+  </statement>
+  <statement id="modifyT37_party_resultStatusForReport" parameterClass="com.ist.aml.newrisk.dto.T37_party_result" resultClass="int"> 
+  UPDATE T37_PARTY_RESULT T SET T.STATUS_CD=#status_cd#,T.CURR_POST=#curr_post#
+		<isNotEmpty prepend="," property="emendationlevel">
+			emendationlevel = #emendationlevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="levelkey">
+			levelkey = #emendationlevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="modify_cd">
+			modify_cd = #modify_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="modifier">
+			modifier = #modifier#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="modifydate">
+			modifydate = #modifydate#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="lastscore">
+			lastscore = #lastscore#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="audit_user">
+			audit_user = #audit_user#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="audit_dt">
+			audit_dt = #audit_dt#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="check_user">
+			check_user = #check_user#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="check_dt">
+			check_dt = #check_dt#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="rcheck_user">
+			rcheck_user = #rcheck_user#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="rcheck_dt">
+			rcheck_dt = #rcheck_dt#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="nextstatistic_dt">
+			nextstatistic_dt = #nextstatistic_dt#
+		</isNotEmpty>
+	 WHERE T.RESULEKEY IN ($resulekey$) 
+	 <isNotEmpty prepend="AND" property="organkey">
+			T.ORGANKEY=#organkey#
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="statistic_dt">
+			<![CDATA[T.STATISTIC_DT = #statistic_dt#]]>
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="organkey_s">
+			T.ORGANKEY IN ($organkey_s$)
+		 </isNotEmpty>
+  </statement>
+  <statement id="modifyT37_party_resultLastScore" parameterClass="com.ist.aml.newrisk.dto.T37_party_result" resultClass="int"> 
+     UPDATE T37_PARTY_RESULT T SET 
+		<isNotEmpty  property="lastscore">
+			T.LASTSCORE = #lastscore#
+		</isNotEmpty>
+	 WHERE T.RESULEKEY =#resulekey# 
+	 <isNotEmpty prepend="AND" property="organkey">
+			T.ORGANKEY=#organkey#
+	 </isNotEmpty>
+  </statement>  
+  <statement id="modifyT37_appr_bas_rslt" parameterClass="java.lang.String" resultClass="int">
+      $sql$ 
+   </statement>
+
+  <statement id="getT37_party_result_Disp" parameterClass="com.ist.aml.newrisk.dto.T37_party_result" resultClass="com.ist.aml.newrisk.dto.T37_party_result"> 
+  SELECT R.RESULEKEY,R.PARTY_ID,R.ORGANKEY,
+        R.PARTY_CHN_NAME, R.LEVELKEY,R.FRISTAPPRALEVEL, R.EMENDATIONLEVEL,R.TEMPTYPE,R.GRANULARITY,R.TEMPLATEKEY,
+        R.STATISTIC_DT,R.PARTY_CLASS_CD,R.CURR_POST,R.GSKEY,R.SCORE,R.LASTSCORE,R.RETURN_REASON,R.ORGANKEY
+    FROM T37_PARTY_RESULT R WHERE 
+    R.RESULEKEY =#resulekey# 
+    <isNotEmpty prepend="AND" property="organkey">
+			R.ORGANKEY=#organkey#
+		 </isNotEmpty>
+		 <isNotEmpty prepend="AND" property="statistic_dt">
+			<![CDATA[R.STATISTIC_DT = #statistic_dt#]]>
+		 </isNotEmpty>
+  </statement> 
+  
+  <statement id="getT37_party_result_uhDisp1" parameterClass="com.ist.aml.newrisk.dto.T37_party_result" resultClass="com.ist.aml.newrisk.dto.T37_party_result"> 
+  SELECT R.RESULEKEY,R.PARTY_ID,R.TEMPLATEKEY,
+        R.PARTY_CHN_NAME, R.LEVELKEY,R.FRISTAPPRALEVEL, R.EMENDATIONLEVEL,R.TEMPTYPE,R.GRANULARITY,
+        R.STATISTIC_DT,R.PARTY_CLASS_CD,R.CURR_POST,R.ORGANKEY
+    FROM T37_PARTY_RESULT_UH R WHERE 
+    R.RESULEKEY =#resulekey# 
+    <isNotEmpty prepend="AND" property="organkey">
+			R.ORGANKEY=#organkey#
+	 </isNotEmpty>
+  </statement> 
+  
+  <statement id="getT37_gs_indicValList" parameterClass="com.ist.aml.newrisk.dto.T37_party_result" resultClass="com.ist.aml.newrisk.dto.T37_party_result"> 
+  SELECT R.RESULEKEY,R.PARTY_ID,R.GSKEY,R.STATISTIC_DT,R.INDICKEY,R.TEMPLATEKEY,R.GRANULARITY,R.INDICVAL
+    FROM T37_GS_INDIC_VAL R WHERE R.RESULEKEY =#resulekey# 
+    <isNotEmpty prepend="AND" property="organkey">
+			R.ORGANKEY=#organkey#
+	 </isNotEmpty>
+	 <isNotEmpty prepend="AND" property="statistic_dt">
+		<![CDATA[R.STATISTIC_DT = #statistic_dt#]]>
+	 </isNotEmpty>
+  </statement> 
+  
+  <statement id="getT37_gs_indicVal_uhList" parameterClass="com.ist.aml.newrisk.dto.T37_party_result" resultClass="com.ist.aml.newrisk.dto.T37_party_result"> 
+  SELECT R.RESULEKEY,R.PARTY_ID,R.GSKEY,R.STATISTIC_DT,R.INDICKEY,R.TEMPLATEKEY,R.GRANULARITY,R.INDICVAL
+    FROM T37_GS_INDIC_VAL_UH R WHERE R.RESULEKEY =#resulekey# 
+    <isNotEmpty prepend="AND" property="organkey">
+			R.ORGANKEY=#organkey#
+	 </isNotEmpty>
+	 <isNotEmpty prepend="AND" property="statistic_dt">
+		<![CDATA[R.STATISTIC_DT = #statistic_dt#]]>
+	 </isNotEmpty>
+  </statement> 
+  
+  <statement id="insertT37_level_audit"
+		parameterClass="com.ist.aml.newrisk.dto.T37_level_audit"
+		resultClass="int">
+		INSERT INTO T37_LEVEL_AUDIT(
+		AUDIT_NO,PARTY_ID,STATISTIC_DT,RSLTKEY,LEVEL_BEFORE_ADJUST,
+		LEVEL_AFTER_ADJUST,ADJUST_REASON,RES_POST_ID,POST_ID,LAST_UPD_DT,LAST_UPD_USER,GRANULARITY,ORGANKEY)
+		values(
+		#audit_no#,#party_id#,#statistic_dt#,#rsltkey#,#level_before_adjust#,
+		#level_after_adjust#,#adjust_reason#,#res_post_id#,#post_id#,#last_upd_dt#,#last_upd_user#,#granularity#,#organkey#
+		)
+  </statement>
+  
+  <statement id="modifyT37_party_resultStatus"
+	parameterClass="com.ist.aml.newrisk.dto.T37_party_result" resultClass="int">
+	UPDATE T37_PARTY_RESULT T SET T.STATUS_CD=#status_cd#,T.CURR_POST=#curr_post#,T.LEVELKEY='',T.RETURN_REASON=#return_reason#,T.TEMPCATEGORY='3' 
+	WHERE T.RESULEKEY IN ($resulekey$)
+	<isNotEmpty prepend="AND" property="organkey_s">
+	  T.ORGANKEY IN ($organkey_s$)
+    </isNotEmpty>
+  </statement>
+  
+  <statement id="getReCalList"  parameterClass="com.ist.aml.newrisk.dto.T37_party_result"
+  		resultClass="com.ist.aml.newrisk.dto.T37_appr_bas_rslt"	 >
+  	
+		select a.elementkey,a.upelementkey,a.base_occ as base_occ_d,a.score as score_d,'1' as js_type,b.is_last  from t37_appr_bas_rslt a,T31_DEF_ELEMENT b
+		where a.elementkey=b.elementkey and resulekey=#resulekey# 
+		<isNotEmpty prepend="AND" property="organkey">
+			a.ORGANKEY=#organkey#
+	    </isNotEmpty>
+		union		
+		select elementkey,upelementkey,base_occ as base_occ_d,0 as score_d,js_type,is_last from T31_DEF_ELEMENT
+		where is_last='0' and  templatekey=#templatekey# 
+  </statement>
+  <statement id="getT37_party_result_DispBy_party_id" parameterClass="com.ist.aml.newrisk.dto.T37_party_result" resultClass="com.ist.aml.newrisk.dto.T37_party_result"> 
+  SELECT R.RESULEKEY,R.PARTY_ID,
+        R.PARTY_CHN_NAME, R.LEVELKEY,R.FRISTAPPRALEVEL, R.EMENDATIONLEVEL,R.TEMPTYPE,R.GRANULARITY,R.TEMPLATEKEY,
+        R.STATISTIC_DT,R.PARTY_CLASS_CD,R.CURR_POST,R.GSKEY,R.SCORE,R.LASTSCORE,R.RETURN_REASON
+    FROM T37_PARTY_RESULT R WHERE 
+    R.PARTY_ID =#party_id# 
+  </statement>
+ 
+</sqlMap> 
+

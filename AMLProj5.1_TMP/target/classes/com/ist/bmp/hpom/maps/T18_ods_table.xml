@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T18_ods_table">
+	<statement id="getT18_ods_tableList" parameterClass="com.ist.bmp.hpom.dto.T18_ods_table"
+		resultClass="com.ist.bmp.hpom.dto.T18_ods_table">
+		select t.tableename,t.tablecname,d.dsname,t.dskey,t.des,t.creator,t.createdate,t.modifier,t.modifydate,t.granularity
+		from t18_ods_table t,t18_datasource d
+		where t.dskey = d.dskey and d.flag = '1'
+		<dynamic >
+			<isNotEmpty prepend="and" property="tableename"> 
+   			 t.tableename like  '%'||#tableename#||'%'
+    		</isNotEmpty>
+			<isNotEmpty prepend="and" property="tablecname">
+				t.tablecname like '%'||#tablecname#||'%'
+   			</isNotEmpty>
+			<isNotEmpty prepend="and" property="dskey">
+				t.dskey = #dskey# 
+    		</isNotEmpty>
+		</dynamic>
+		<dynamic prepend="">
+		 <isNotEmpty prepend="" property="sort">
+	    <isNotEmpty prepend="" property="sort_type">
+		 ORDER BY $sort$ $sort_type$
+		</isNotEmpty>
+		</isNotEmpty>
+		</dynamic> 
+	</statement>
+
+	<statement id="getT18_ods_tableListCount" parameterClass="com.ist.bmp.hpom.dto.T18_ods_table"
+		resultClass="int">
+		select count(*) 
+		from t18_ods_table t,t18_datasource d
+		where t.dskey = d.dskey and d.flag = '1'
+		<dynamic>
+			<isNotEmpty prepend="and" property="tableename"> 
+   			 tableename like  '%'||#tableename#||'%'
+    		</isNotEmpty>
+			<isNotEmpty prepend="and" property="tablecname">
+				tablecname like '%'||#tablecname#||'%'
+   			</isNotEmpty>
+			<isNotEmpty prepend="and" property="dskey">
+				dskey = #dskey# 
+    		</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="insertT18_ods_table" parameterClass="com.ist.bmp.hpom.dto.T18_ods_table"
+		resultClass="int">
+		insert into T18_ods_table(
+		tableename,tablecname,dskey,des,creator,createdate,modifier,modifydate,granularity
+		) values(
+		#tableename#,#tablecname#,#dskey#,#des#,#creator#,#createdate#,#modifier#,#modifydate#,#granularity#
+		) 
+  </statement>
+
+	<statement id="modifyT18_ods_table" parameterClass="com.ist.bmp.hpom.dto.T18_ods_table"
+		resultClass="int">
+		update T18_ods_table set
+		tablecname=#tablecname#,des=#des#,dskey=#dskey#,modifier=#modifier#,modifydate=#modifydate#,granularity=#granularity#
+		where tableename=#tableename# 
+  </statement>
+	<statement id="modifyT18_ods_tableByObj" parameterClass="com.ist.bmp.hpom.dto.T18_ods_table"
+		resultClass="int">
+		update T18_ods_table set
+		tablecname=#tablecname#,des=#des#,modifier=#modifier#,modifydate=#modifydate#,granularity=#granularity#
+		where tableename=#tableename# 
+  </statement>
+
+	<statement id="deleteT18_ods_table" parameterClass="java.lang.String"
+		resultClass="int">
+		delete from T18_ods_table where tableename=#value# 
+  </statement>
+
+	<statement id="getT18_ods_tableDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.bmp.hpom.dto.T18_ods_table">
+		select * from T18_ods_table where tableename=#value# 
+  </statement>
+
+	<statement id="getT18_ods_tableCountByTableename"
+		parameterClass="java.lang.String" resultClass="int">
+		select count(*) from T18_ods_table where tableename=#value# 
+  </statement>
+
+</sqlMap> 
+

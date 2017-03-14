@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T01_attach_map">
+	<statement id="getT01_attach_mapList"
+		parameterClass="com.ist.common.attachment.dto.T01_attach_map"
+		resultClass="com.ist.common.attachment.dto.T01_attach_map">
+		select attachkey,attachtype,businesskey,systemkey from
+		t01_attach_map
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="attachkey">
+				attachkey = #attachkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="businesskey">
+				businesskey = #businesskey#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="getT01_attach_mapListCount"
+		parameterClass="com.ist.common.attachment.dto.T01_attach_map"
+		resultClass="int">
+		select count(*) from t01_attach_map
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="attachkey">
+				attachkey = #attachkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="businesskey">
+				businesskey = #businesskey#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="insertT01_attach_map"
+		parameterClass="com.ist.common.attachment.dto.T01_attach_map"
+		resultClass="int">
+		insert into T01_attach_map(
+		attachkey,attachtype,businesskey,systemkey ) values(
+		#attachkey#,#attachtype#,#businesskey#,#systemkey# )
+	</statement>
+
+	<statement id="modifyT01_attach_mapByAttachkey"
+		parameterClass="com.ist.common.attachment.dto.T01_attach_map"
+		resultClass="int">
+		update T01_attach_map set businesskey=#businesskey# where
+		attachkey = #attachkey#
+	</statement>
+	
+	<statement id="modifyT01_attach_map_bkEmpty_ByAttachkey"
+		parameterClass="com.ist.common.attachment.dto.T01_attach_map"
+		resultClass="int">
+		update T01_attach_map set businesskey='' where
+		attachkey = #attachkey#
+	</statement>
+
+	<statement id="modifyT01_attach_mapByBusinesskey"
+		parameterClass="com.ist.common.attachment.dto.T01_attach_map"
+		resultClass="int">
+		update T01_attach_map set businesskey='' where businesskey = #businesskey#
+	</statement>
+
+	<statement id="deleteT01_attach_map"
+		parameterClass="java.lang.String" resultClass="int">
+		delete from T01_attach_map where attachkey = #value#
+	</statement>
+
+	<statement id="getT01_attach_mapDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.common.attachment.dto.T01_attach_map">
+		select attachkey,attachtype,businesskey,systemkey from
+		T01_attach_map where attachkey = #attachkey#
+	</statement>
+	
+	<statement id="getT01_attach_mapCountByAttachType"
+		parameterClass="java.lang.String" resultClass="int">
+		SELECT count(*) FROM T01_attach_map t1,T01_attachment t2
+        WHERE 1 > 0
+        AND t1.ATTACHKEY = t2.ATTACHKEY
+        AND t1.ATTACHTYPE = #value#
+	</statement>
+	
+	<statement id="getT01_attach_mapCountByAttachType1"
+		parameterClass="java.util.HashMap" resultClass="int">
+		SELECT count(*) FROM T01_attach_map t1,T01_attachment t2, t12_article t3
+        WHERE 1 > 0
+        AND t1.ATTACHKEY = t2.ATTACHKEY and t1.BUSINESSKEY = t3.ARTICLEKEY
+        and t3.PROGRAMAKEY = #programakey#
+        AND t1.ATTACHTYPE = #attachtype# 
+        and t3.flag='1'
+	</statement>
+
+</sqlMap>
+

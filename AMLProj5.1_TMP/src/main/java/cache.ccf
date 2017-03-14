@@ -1,0 +1,64 @@
+# 为awpCommonCache设置的配置
+jcs.region.awpCommonCache=DC,LTCP
+jcs.region.awpCommonCache.cacheattributes=org.apache.jcs.engine.CompositeCacheAttributes
+jcs.region.awpCommonCache.cacheattributes.MaxObjects=10000
+jcs.region.awpCommonCache.cacheattributes.MemoryCacheName=org.apache.jcs.engine.memory.lru.LRUMemoryCache
+# 仅系统压力测试时，为提高测试性能，将此项为true，正常使用设置为false
+jcs.region.awpCommonCache.elementattributes.IsEternal=true
+jcs.region.awpCommonCache.elementattributes.MaxLifeSeconds=7200
+jcs.region.awpCommonCache.elementattributes.IsSpool=true
+jcs.region.awpCommonCache.elementattributes.IsRemote=true
+jcs.region.awpCommonCache.elementattributes.IsLateral=true
+
+# 为avpCache设置的配置
+jcs.region.avpCache=DC,LTCP
+jcs.region.avpCache.cacheattributes=org.apache.jcs.engine.CompositeCacheAttributes
+jcs.region.avpCache.cacheattributes.MaxObjects=10000
+jcs.region.avpCache.cacheattributes.MemoryCacheName=org.apache.jcs.engine.memory.lru.LRUMemoryCache
+# 仅系统压力测试时，为提高测试性能，将此项为true，正常使用设置为false
+jcs.region.avpCache.elementattributes.IsEternal=true
+jcs.region.avpCache.elementattributes.MaxLifeSeconds=7200
+jcs.region.avpCache.elementattributes.IsSpool=true
+jcs.region.avpCache.elementattributes.IsRemote=true
+jcs.region.avpCache.elementattributes.IsLateral=true
+
+# 为reportCache设置的配置
+jcs.region.reportCache=DC,LTCP
+jcs.region.reportCache.cacheattributes=org.apache.jcs.engine.CompositeCacheAttributes
+jcs.region.reportCache.cacheattributes.MaxObjects=10000
+jcs.region.reportCache.cacheattributes.MemoryCacheName=org.apache.jcs.engine.memory.lru.LRUMemoryCache
+# 仅系统压力测试时，为提高测试性能，将此项为true，正常使用设置为false
+jcs.region.reportCache.elementattributes.IsEternal=true
+jcs.region.reportCache.elementattributes.MaxLifeSeconds=7200
+jcs.region.reportCache.elementattributes.IsSpool=true
+jcs.region.reportCache.elementattributes.IsRemote=true
+jcs.region.reportCache.elementattributes.IsLateral=true
+
+# 默认配置，未特别配置的缓存区都使用此配置
+jcs.default=DC,LTCP
+jcs.default.cacheattributes=org.apache.jcs.engine.CompositeCacheAttributes
+jcs.default.cacheattributes.MaxObjects=10000
+jcs.default.cacheattributes.MemoryCacheName=org.apache.jcs.engine.memory.lru.LRUMemoryCache
+# 仅系统压力测试时，为提高测试性能，将此项为true，正常使用设置为false
+jcs.default.elementattributes.IsEternal=true
+jcs.default.elementattributes.MaxLifeSeconds=3600
+jcs.default.elementattributes.IsSpool=true
+jcs.default.elementattributes.IsRemote=true
+jcs.default.elementattributes.IsLateral=true
+
+# 磁盘缓存配置
+jcs.auxiliary.DC=org.apache.jcs.auxiliary.disk.indexed.IndexedDiskCacheFactory 
+jcs.auxiliary.DC.attributes=org.apache.jcs.auxiliary.disk.indexed.IndexedDiskCacheAttributes 
+# 缓存文件在磁盘中的目录，交付现场需修改为实际目录，且必须有该目录的读写权限
+jcs.auxiliary.DC.attributes.DiskPath=/awpfs
+
+# 以下为集群环境配置，非集群环境请删除
+  #jcs.auxiliary.LTCP=org.apache.commons.jcs.auxiliary.lateral.socket.tcp.LateralTCPCacheFactory
+  #jcs.auxiliary.LTCP.attributes=org.apache.commons.jcs.auxiliary.lateral.socket.tcp.TCPLateralCacheAttributes
+# 其他节点的地址及所用端口，请控制节点数不超过4个
+jcs.auxiliary.LTCP.attributes.TcpServers=11.0.4.19:1121,11.0.4.20:1121,11.0.4.21:1121
+# 本节点为并行分布缓存所用的端口
+jcs.auxiliary.LTCP.attributes.TcpListenerPort=1121 
+jcs.auxiliary.LTCP.attributes.AllowGet=false 
+
+

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation=" http://www.springframework.org/schema/beans
+						 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+						 
+	<!-- Dao -->	  		
+    <bean id="t13_mfaDAO" parent="baseDAO" class="com.ist.mfa.dao.T13_mfaDAO"></bean>
+    <bean id="t23_rule_moduleDAO" parent="baseDAO" class="com.ist.mfa.dao.T23_rule_moduleDAO" ></bean>
+	<bean id="t23_module_stcrDAO" parent="baseDAO" class="com.ist.mfa.dao.T23_module_stcrDAO" ></bean>
+    <bean id="t23_net_paraDAO" parent="baseDAO" class="com.ist.mfa.dao.T23_net_paraDAO" ></bean>
+    <bean id="t13_relation_netDAO" parent="baseDAO" class="com.ist.mfa.dao.T13_relation_netDAO" ></bean>
+    <bean id="t13_mfa_infoDAO" parent="baseDAO" class="com.ist.mfa.dao.T13_mfa_infoDAO" ></bean>
+     <bean id="t13_mfa_dealDao" parent="baseDAO" class="com.ist.mfa.dao.T13_mfa_dealDAO" ></bean>
+    
+	<!-- service -->
+	<bean id="baseService"  class="com.ist.mfa.services.BaseService">	
+		<property name="t13_mfaDAO" ref="t13_mfaDAO"></property>
+		<property name="sqlMap" ref="sqlMapClient"></property>
+		<property name="cm" ref="catchManager"></property>
+		
+	</bean>	
+	<bean id="initializeDataImpl" parent="baseService" class="com.ist.mfa.services.InitializeMFADataImpl"></bean>
+	
+	<bean id="saveDataImpl" parent="baseService" class="com.ist.mfa.services.SaveMFADataServiceImpl"></bean>
+	
+	<bean id="exportDataImpl" parent="baseService" class="com.ist.mfa.services.ExportDataServiceImpl">
+			<property name="sysConfig" ref="sysConfig"></property>
+	</bean>
+
+</beans>

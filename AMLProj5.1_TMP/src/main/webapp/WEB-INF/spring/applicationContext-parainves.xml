@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 基础管理平台模块配置 -->
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<bean id="t47_Opp_infoDAO" parent="baseDAO" class="com.ist.aml.information.dao.T47_Opp_infoDAO" ></bean>
+	<bean id="t47_opp_bankDAO" parent="baseDAO" class="com.ist.aml.information.dao.T47_OPP_bankDAO" ></bean>
+	<bean id="t00_noticeDAO" parent="baseDAO" class="com.ist.aml.information.dao.T00_NOTICEDAO" ></bean>
+	<bean id="t47_id_depositDAO" parent="baseDAO" class="com.ist.aml.inves.dao.T47_id_depositDAO" ></bean>
+	<bean id="t47_cp_depositDAO" parent="baseDAO" class="com.ist.aml.inves.dao.T47_cp_depositDAO" ></bean>
+	<bean id="t07_user_identityDAO" parent="baseDAO" class="com.ist.aml.offs_report.dao.T07_user_identityDAO" ></bean>
+	<bean id="t07_user_identityUrgeDAO" parent="baseDAO" class="com.ist.aml.offs_report.dao.T07_user_identityUrgeDAO" ></bean>
+	<bean id="t07_amlpostDAO" parent="baseDAO" class="com.ist.aml.offs_report.dao.T07_amlpostDAO" ></bean>
+	<bean id="t07_recordDAO" parent="baseDAO" class="com.ist.aml.offs_report.dao.T07_recordDAO" ></bean>
+	<bean id="t07_obj_ruleDAO" parent="baseDAO" class="com.ist.aml.report.dao.T07_OBJ_RULEDAO" ></bean>
+	<bean id="t07_blacklistDAO" parent="baseDAO" class="com.ist.aml.report.dao.T07_BlacklistDAO" ></bean>
+	<bean id="t07_tpbcruleDAO" parent="baseDAO" class="com.ist.aml.report.dao.T07_pbcruleDAO" ></bean>
+	<bean id="t10_survey_custDAO" parent="baseDAO" class="com.ist.aml.report.dao.T10_survey_custDAO" ></bean>
+	<bean id="t47_corporationDAO" parent="baseDAO" class="com.ist.aml.inves.dao.T47_corporationDAO"></bean>
+	<bean id="t47_individualDAO" parent="baseDAO" class="com.ist.aml.inves.dao.T47_individualDAO"></bean>
+	
+	
+	<bean id="t07_ReportSearchDAO" parent="baseDAO" class="com.ist.aml.inves.dao.T07_reportSearchDAO" ></bean>
+	<bean id="t07_alertDAO" parent="baseDAO" class="com.ist.aml.report.dao.T07_alertDAO" ></bean>
+	<bean id="t07_ReportSearch_msDAO" parent="baseDAO" class="com.ist.aml.inves.dao.T07_ReportSearch_msDAO" ></bean>
+	
+
+	<bean id="t10_pr_auditDAO" parent="baseDAO" class="com.ist.aml.lip.dao.T07_lipDAO" ></bean>
+	
+	<bean id="t07_inrep_bh_msgDAO" parent="baseDAO" class="com.ist.aml.inves.dao.T07_INREP_BH_msgDAO" ></bean>
+	<bean id="t07_inrep_bs_levelDAO" parent="baseDAO" class="com.ist.aml.inves.dao.T07_INREP_BS_levelDAO" ></bean>
+	<bean id="t07_inrep_bs_msgDAO" parent="baseDAO" class="com.ist.aml.inves.dao.T07_INREP_BS_msgDAO" ></bean>
+	<bean id="t07_inrep_frDAO" parent="baseDAO" class="com.ist.aml.inves.dao.T07_INREP_FRDAO" ></bean>
+	<bean id="t07_inrep_bh_cny_repDAO" parent="baseDAO" class="com.ist.aml.inves.dao.T07_INREP_BH_cny_repDAO" ></bean>
+	<bean id="t07_inrep_bh_cny_staDAO" parent="baseDAO" class="com.ist.aml.inves.dao.T07_INREP_BH_cny_staDAO" ></bean>
+	<bean id="t07_inrep_bh_usd_repDAO" parent="baseDAO" class="com.ist.aml.inves.dao.T07_INREP_BH_usd_repDAO" ></bean>
+	<bean id="t07_inrep_bh_usd_staDAO" parent="baseDAO" class="com.ist.aml.inves.dao.T07_INREP_BH_usd_staDAO" ></bean>
+	<bean id="t07_inrep_bh_sum_repDAO" parent="baseDAO" class="com.ist.aml.inves.dao.T07_INREP_BH_sum_repDAO" ></bean>
+	<bean id="t07_inrep_bh_sum_staDAO" parent="baseDAO" class="com.ist.aml.inves.dao.T07_INREP_BH_sum_staDAO" ></bean>
+</beans>

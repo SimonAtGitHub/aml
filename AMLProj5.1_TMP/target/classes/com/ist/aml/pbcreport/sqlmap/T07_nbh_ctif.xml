@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T07_nbh_ctif">
+<statement id="getT07_nbh_ctifListBynbs" parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_ctif" resultClass="com.ist.aml.pbcreport.dto.T07_nbh_ctif"> 
+  SELECT REPORTKEY,CATI_SEQNO,CTNM,CITP,CTID,CSNM,CTNT,HTDT,VALIDATE_IND FROM T07_NBH_CTIF
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="reportkey"> 
+    REPORTKEY = #reportkey# 
+    </isNotEmpty> 
+       <isNotEmpty prepend="AND" property="validate_ind"> 
+      VALIDATE_IND = #validate_ind# 
+    </isNotEmpty>
+  </dynamic> 
+  </statement>
+  
+  <statement id="getT07_nbh_ctifList"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbh_ctif"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbh_ctif">
+		SELECT
+		REPORTKEY,CATI_SEQNO,CTNM,CITP,CTID,CSNM,CTNT,HTDT,VALIDATE_IND
+		FROM 
+		
+			<isNotEmpty prepend="" property="reported">
+  	   <isEqual property="reported" compareValue="0">
+  	    T07_NBH_CTIF
+  	   </isEqual>
+  	    <isEqual property="reported" compareValue="1">
+  	    T07_NBH_CTIF_UH
+  	   </isEqual>
+  	</isNotEmpty>
+  	<isEmpty prepend="" property="reported">
+  	    T07_NBH_CTIF
+  	</isEmpty>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="reportkey">
+				REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cati_seqno_disp">
+			
+				CATI_SEQNO = $cati_seqno$
+			
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY REPORTKEY,CATI_SEQNO
+	</statement>
+	<statement id="getT07_nbh_ctif_validateList"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbh_ctif"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbh_ctif">
+		<isEqual prepend="" property="casetype" compareValue="1">
+		SELECT 	A.REPORTKEY,A.CATI_SEQNO,A.CSNM,CTNM,A.CTID,A.CITP,A.CTNT,A.VALIDATE_IND,'1' AS CASETYPE, A.Pbc_Crt_Dt FROM T07_NBH_CTIF A , T07_REPORT B
+         WHERE A.REPORTKEY = B.REPORTKEY 
+         <isNotEmpty prepend="AND" property="org_ids">
+			B.CREATE_ORG IN ($org_ids$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_start">
+				<![CDATA[A.pbc_crt_dt >= #pbc_crt_dt_start_s#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_end">
+				<![CDATA[A.pbc_crt_dt <= #pbc_crt_dt_end_s#]]>
+			</isNotEmpty>
+         </isEqual>  
+		<isEqual prepend="" property="casetype" compareValue="2">
+        SELECT A.REPORTKEY, A.CTIF_SEQNO AS CATI_SEQNO,A.CSNM,A.CTNM,A.CTID,A.CITP,A.CTNT,A.VALIDATE_IND,'2' AS CASETYPE, A.Pbc_Crt_Dt FROM T07_NBS_CTIF A , T07_REPORT B
+        WHERE A.REPORTKEY = B.REPORTKEY 
+         <isNotEmpty prepend="AND" property="org_ids">
+			B.CREATE_ORG IN ($org_ids$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_start">
+				<![CDATA[A.pbc_crt_dt >= #pbc_crt_dt_start_s#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_end">
+				<![CDATA[A.pbc_crt_dt <= #pbc_crt_dt_end_s#]]>
+			</isNotEmpty>
+		</isEqual>
+		<isEmpty   property="casetype">
+		SELECT REPORTKEY,CATI_SEQNO,CSNM,CTNM,CTID,A.CITP,CTNT,CREATE_ORG,VALIDATE_IND,CASETYPE,Pbc_Crt_Dt FROM (
+		SELECT 	A.REPORTKEY,A.CATI_SEQNO,A.CSNM,CTNM,A.CTID,A.CITP,A.CTNT,B.CREATE_ORG,A.VALIDATE_IND,'1' AS CASETYPE, A.Pbc_Crt_Dt FROM T07_NBH_CTIF A , T07_REPORT B
+        WHERE A.REPORTKEY = B.REPORTKEY 
+        UNION ALL
+        SELECT A.REPORTKEY, A.CTIF_SEQNO AS CATI_SEQNO,A.CSNM,A.CTNM,A.CTID,A.CITP,A.CTNT,B.CREATE_ORG,A.VALIDATE_IND,'2' AS CASETYPE, A.Pbc_Crt_Dt FROM T07_NBS_CTIF A , T07_REPORT B
+        WHERE A.REPORTKEY = B.REPORTKEY 
+        ) A WHERE 1>0
+         <isNotEmpty prepend="AND" property="org_ids">
+			A.CREATE_ORG IN ($org_ids$)
+			</isNotEmpty>
+		</isEmpty>
+		<dynamic>	
+			<isNotEmpty prepend="AND" property="ctnm">
+				A.CTNM like #ctnm#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="citp">
+				A.CITP = #citp#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ctid">
+				A.CTID = #ctid#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="csnm">
+				A.CSNM = #csnm#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				A.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_start">
+				<![CDATA[A.pbc_crt_dt >= #pbc_crt_dt_start_s#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_end">
+				<![CDATA[A.pbc_crt_dt <= #pbc_crt_dt_end_s#]]>
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY A.VALIDATE_IND
+	</statement>
+
+	<statement id="getT07_nbh_ctif_validateListCount"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbh_ctif"
+		resultClass="int">
+		<isEqual prepend="" property="casetype" compareValue="1">
+		SELECT 	COUNT(*) FROM T07_NBH_CTIF A , T07_REPORT B
+         WHERE A.REPORTKEY = B.REPORTKEY 
+         <isNotEmpty prepend="AND" property="org_ids">
+			B.CREATE_ORG IN ($org_ids$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_start">
+				<![CDATA[A.pbc_crt_dt >= #pbc_crt_dt_start_s#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_end">
+				<![CDATA[A.pbc_crt_dt <= #pbc_crt_dt_end_s#]]>
+			</isNotEmpty>
+         </isEqual>  
+		<isEqual prepend="" property="casetype" compareValue="2">
+        SELECT 	COUNT(*) FROM T07_NBS_CTIF A , T07_REPORT B
+        WHERE A.REPORTKEY = B.REPORTKEY 
+        <isNotEmpty prepend="AND" property="org_ids">
+			B.CREATE_ORG IN ($org_ids$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_start">
+				<![CDATA[A.pbc_crt_dt >= #pbc_crt_dt_start_s#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_end">
+				<![CDATA[A.pbc_crt_dt <= #pbc_crt_dt_end_s#]]>
+			</isNotEmpty>
+		</isEqual>
+		<isEmpty   property="casetype">
+		select 	COUNT(*) FROM (
+		SELECT 	A.REPORTKEY,A.CATI_SEQNO,A.CSNM,CTNM,A.CTID,A.CITP,A.CTNT,B.CREATE_ORG,A.VALIDATE_IND FROM T07_NBH_CTIF A , T07_REPORT B
+        WHERE A.REPORTKEY = B.REPORTKEY 
+        UNION ALL
+        SELECT A.REPORTKEY, A.CTIF_SEQNO AS CTIF_SEQNO,A.CSNM,A.CTNM,A.CTID,A.CITP,A.CTNT,B.CREATE_ORG,A.VALIDATE_IND FROM T07_NBS_CTIF A , T07_REPORT B
+        WHERE A.REPORTKEY = B.REPORTKEY 
+        ) A  WHERE 1>0
+        <isNotEmpty prepend="AND" property="org_ids">
+			A.CREATE_ORG IN ($org_ids$)
+			</isNotEmpty>
+		</isEmpty>
+		<dynamic>
+			
+			<isNotEmpty prepend="AND" property="ctnm">
+				A.CTNM like #ctnm#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="citp">
+				A.CITP = #citp#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ctid">
+				A.CTID = #ctid#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="csnm">
+				A.CSNM = #csnm#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				A.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_start">
+				<![CDATA[A.pbc_crt_dt >= #pbc_crt_dt_start_s#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_end">
+				<![CDATA[A.pbc_crt_dt <= #pbc_crt_dt_end_s#]]>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	  <statement id="getBHValidateCustDisp" parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_ctif" resultClass="com.ist.aml.pbcreport.dto.T07_nbh_ctif"> 
+  SELECT T1.* FROM T07_NBH_CTIF T1
+  WHERE T1.REPORTKEY=#reportkey# AND T1.CATI_SEQNO=$cati_seqno$
+  </statement>
+  
+   <statement id="modifyValidateT07_nbh_ctif_20091212"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbh_ctif"
+		resultClass="int">
+  	UPDATE T07_NBH_CTIF SET VALIDATE_IND=#validate_ind#
+  	<dynamic>
+  		<isNotEqual prepend="," property="csnm" compareValue="#">
+  			CSNM=#csnm#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="ctnm" compareValue="#">
+  			CTNM=#ctnm#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="citp" compareValue="#">
+  			CITP=#citp#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="ctid" compareValue="#">
+  			CTID=#ctid#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="ctnt" compareValue="#">
+  			CTNT=#ctnt#
+  		</isNotEqual>
+  	</dynamic>
+  	WHERE REPORTKEY=#reportkey# AND CATI_SEQNO=$cati_seqno$
+  </statement>
+   <statement id="getT07_nbh_htcrList" parameterClass="com.ist.aml.pbcreport.dto.T07_nbh_htcr" resultClass="com.ist.aml.pbcreport.dto.T07_nbh_htcr"> 
+  SELECT REPORTKEY,CATI_SEQNO,CSNM,HTCR_SEQNO,CRCD,TTNM,VALIDATE_IND 
+  FROM
+	<isNotEmpty prepend="" property="reported">
+  	   <isEqual property="reported" compareValue="0">
+  	    T07_NBH_HTCR
+  	   </isEqual>
+  	    <isEqual property="reported" compareValue="1">
+  	    T07_NBH_HTCR_UH
+  	   </isEqual>
+  	</isNotEmpty>
+  	<isEmpty prepend="" property="reported">
+  	    T07_NBH_HTCR
+  	</isEmpty>
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="reportkey"> 
+    REPORTKEY = #reportkey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="cati_seqno"> 
+    CATI_SEQNO = $cati_seqno$ 
+    </isNotEmpty>
+      <isNotEmpty prepend="AND" property="validate_ind"> 
+      VALIDATE_IND = #validate_ind# 
+    </isNotEmpty>
+    ORDER BY  REPORTKEY,CATI_SEQNO,HTCR_SEQNO
+  </dynamic> 
+  </statement> 
+</sqlMap>
+

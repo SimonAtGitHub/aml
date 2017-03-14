@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T18_task_fact">
+	<statement id="getT18_task_factList" parameterClass="com.ist.bmp.hpom.dto.T18_task_fact"
+		resultClass="com.ist.bmp.hpom.dto.T18_task_fact">
+		SELECT t4.taskkey,t4.tasktype,t4.typename,t4.businesskey,t4.statisticdate,t4.dskey,t4.granularity,t4.organkey,t4.begintime,t4.endtime,t4.usetime,t4.calstatus,
+		t4.iserror,t5.taskkey AS iscall FROM 
+			(SELECT t3.*,t2.taskkey AS iserror FROM 
+				(SELECT t.*,t1.TYPENAME from t18_task_fact t,t18_task_type t1
+					where  t.tasktype = t1.tasktype 
+			    	<isNotEmpty prepend="and" property="statisticdate_begin">
+							t.statisticdate >= #statisticdate_begin# 
+			    	</isNotEmpty>
+			    	<isNotEmpty prepend="and" property="statisticdate_end">
+							 #statisticdate_end# >=t.statisticdate
+			    	</isNotEmpty>				 
+					) t3		
+					LEFT JOIN 		
+				(SELECT DISTINCT TASKKEY FROM T18_errorlog) t2		
+					ON t3.TASKKEY = t2.taskkey) t4 		
+			  LEFT JOIN		
+			(SELECT  DISTINCT TASKKEY FROM T18_callog) t5		
+				ON t4.TASKKEY = t5.TASKKEY
+		<dynamic prepend="where">
+		<isNotEmpty prepend="and" property="taskkey">
+			t4.taskkey = #taskkey# 
+   		</isNotEmpty>
+   		<isNotEmpty prepend="and" property="tasktype">
+			t4.tasktype = #tasktype# 
+   		</isNotEmpty>
+   		<isNotEmpty prepend="and" property="businesskey">
+			t4.businesskey = #businesskey# 
+   		</isNotEmpty>
+   		<isNotEmpty prepend="and" property="dskey">
+			t4.dskey = #dskey# 
+   		</isNotEmpty>
+   		<isNotEmpty prepend="and" property="granularity">
+			t4.granularity = #granularity# 
+   		</isNotEmpty>
+   		<isNotEmpty prepend="and" property="calstatus">
+			t4.calstatus = #calstatus# 
+   		</isNotEmpty>
+    	<isNotEmpty prepend="and" property="statisticdate_begin">
+				t4.statisticdate >= #statisticdate_begin# 
+    	</isNotEmpty>
+    	<isNotEmpty prepend="and" property="statisticdate_end">
+				 #statisticdate_end# >=t4.statisticdate
+    	</isNotEmpty>
+    	</dynamic>
+    	order by t4.statisticdate desc,t4.granularity,t4.calstatus,t4.businesskey
+	</statement>
+
+	<statement id="getT18_task_factListCount" parameterClass="com.ist.bmp.hpom.dto.T18_task_fact"
+		resultClass="int">
+		select count(*) from t18_task_fact
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="taskkey">
+				taskkey = #taskkey# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="tasktype">
+			tasktype = #tasktype# 
+   		</isNotEmpty>
+   		<isNotEmpty prepend="and" property="businesskey">
+			businesskey = #businesskey# 
+   		</isNotEmpty>
+   		<isNotEmpty prepend="and" property="dskey">
+			dskey = #dskey# 
+   		</isNotEmpty>
+   		<isNotEmpty prepend="and" property="granularity">
+			granularity = #granularity# 
+   		</isNotEmpty>
+   		<isNotEmpty prepend="and" property="calstatus">
+			calstatus = #calstatus# 
+   		</isNotEmpty>
+   		<isNotEmpty prepend="and" property="statisticdate_begin">
+				statisticdate >= #statisticdate_begin# 
+    	</isNotEmpty>
+    	<isNotEmpty prepend="and" property="statisticdate_end">
+				 #statisticdate_end# >= statisticdate
+    	</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="insertT18_task_fact" parameterClass="com.ist.bmp.hpom.dto.T18_task_fact"
+		resultClass="int">
+		insert into T18_task_fact(
+		taskkey,tasktype,businesskey,statisticdate,dskey,granularity,organkey,begintime,endtime,usetime,calstatus
+		) values(
+		#taskkey#,#tasktype#,#businesskey#,#statisticdate#,#dskey#,#granularity#,#organkey#,#begintime#,#endtime#,#usetime#,#calstatus#
+		) 
+  </statement>
+
+	<statement id="modifyT18_task_fact" parameterClass="com.ist.bmp.hpom.dto.T18_task_fact"
+		resultClass="int">
+		update T18_task_fact set
+		taskkey=#taskkey#,tasktype=#tasktype#,businesskey=#businesskey#,statisticdate=#statisticdate#,dskey=#dskey#,granularity=#granularity#,organkey=#organkey#,begintime=#begintime#,endtime=#endtime#,usetime=#usetime#,calstatus=#calstatus#
+		where taskkey=#taskkey# 
+  </statement>
+
+	<statement id="deleteT18_task_fact" parameterClass="java.lang.String"
+		resultClass="int">
+		delete from T18_task_fact where taskkey=#value# 
+  </statement>
+
+	<statement id="getT18_task_factDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.bmp.hpom.dto.T18_task_fact">
+		select t.taskkey,t1.typename,t.businesskey,t.statisticdate,d.dsname,t.granularity,t.organkey,t.begintime,t.endtime,t.usetime,t.calstatus 
+		from T18_task_fact t,t18_datasource d ,t18_task_type t1 where taskkey=#value#  and  t.dskey = d.dskey and t.tasktype = t1.tasktype
+  </statement>
+	<statement id="getT18_task_factListByTaskkey" parameterClass="com.ist.bmp.hpom.dto.T18_callog"
+		resultClass="com.ist.bmp.hpom.dto.T18_callog">
+		select t.taskkey,t.statisticdate,t.usetime
+		from T18_task_fact t where businesskey=#businesskey# and tasktype=#tasktype# 
+		and #statisticdate# > statisticdate 
+		 order by t.statisticdate desc
+  </statement>
+  <statement id="modifyT18_task_factByTaskkey" parameterClass="java.lang.String"
+		resultClass="int">
+		update T18_task_fact c set c.calstatus='5'
+    	where exists (select 'x' from T18_task_fact b 
+     where b.o_businesskey=c.o_businesskey and b.statisticdate=c.statisticdate and  b.taskkey = #taskkey#)
+
+  </statement>
+</sqlMap> 
+

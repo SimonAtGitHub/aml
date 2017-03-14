@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T18_ods2dmetl"> 
+  <statement id="getT18_ods2dmetlList" parameterClass="com.ist.bmp.hpom.dto.T18_ods2dmetl" resultClass="com.ist.bmp.hpom.dto.T18_ods2dmetl"> 
+  	select m.tableename,m.shfilename,m.isedit,m.isdeploy,m.deploytime,m.islock,m.modifydate,m.modifier,m.createdate,m.creator,m.creatmethod,d.granularity
+	from t18_ods2dmetl m,T18_DM_TABLE d
+	WHERE m.TABLEENAME = d.TABLEENAME
+    <isNotEmpty prepend="and" property="tableename"> 
+    m.tableename like  '%'||#tableename#||'%'
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="shfilename"> 
+    m.shfilename like  '%'||#shfilename#||'%'
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="isedit"> 
+    m.isedit = #isedit#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="isdeploy"> 
+    m.isdeploy = #isdeploy#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="createdate"> 
+    m.createdate like  '%'||#createdate#||'%'
+    </isNotEmpty>   
+     <isNotEmpty prepend="and" property="creatmethod"> 
+    m.creatmethod = #creatmethod#
+    </isNotEmpty>
+     <isNotEmpty prepend="" property="sort">
+    <isNotEmpty prepend="" property="sort_type">
+	 ORDER BY $sort$ $sort_type$
+	</isNotEmpty>
+	</isNotEmpty>
+  </statement> 
+ 
+ <statement id="getT18_dmtablelist" parameterClass="com.ist.bmp.hpom.dto.T18_ods2dmetl" resultClass="com.ist.bmp.hpom.dto.T18_ods2dmetl"> 
+  	select tableename,tablecname from t18_dm_table 
+  </statement>
+
+  <statement id="getT18_ods2dmetlListCount" parameterClass="com.ist.bmp.hpom.dto.T18_ods2dmetl" resultClass="int"> 
+  select count(*) from t18_ods2dmetl 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="tableename"> 
+    tableename like  '%'||#tableename#||'%'
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="shfilename"> 
+    shfilename like  '%'||#shfilename#||'%'
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="isedit"> 
+    isedit = #isedit#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="isdeploy"> 
+    isdeploy = #isdeploy#
+    </isNotEmpty>
+   <isNotEmpty prepend="and" property="createdate"> 
+    createdate like  '%'||#createdate#||'%'
+    </isNotEmpty>   
+     <isNotEmpty prepend="and" property="creatmethod"> 
+    creatmethod = #creatmethod#
+    </isNotEmpty>  
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT18_odstableListCount" parameterClass="com.ist.bmp.hpom.dto.T18_ods2dmetl" resultClass="int"> 
+  select count(*) from t18_ods_table 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="tableename"> 
+    tableename like  '%'||#tableename#||'%'
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT18_ods2dmetl" parameterClass="com.ist.bmp.hpom.dto.T18_ods2dmetl" resultClass="int"> 
+  insert into T18_ods2dmetl(
+  tableename,shfilename,isedit,isdeploy,islock,createdate,creator,creatmethod
+  ) values(
+  #tableename#,#shfilename#,#isedit#,#isdeploy#,#islock#,#createdate#,#creator#,#creatmethod#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT18_ods2dmetl" parameterClass="com.ist.bmp.hpom.dto.T18_ods2dmetl" resultClass="int"> 
+  update T18_ods2dmetl set 
+  tableename=#tableename#,shfilename=#shfilename#,modifydate=#modifydate#,modifier=#modifier#,isedit=#isedit#
+  where tableename=#tableename# 
+  </statement> 
+ 
+  <statement id="deleteT18_ods2dmetl" parameterClass="java.lang.String" resultClass="int">
+  delete from T18_ods2dmetl where tableename=#value# 
+  </statement> 
+ 
+  <statement id="getT18_ods2dmetlDisp" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_ods2dmetl"> 
+  select * from T18_ods2dmetl where tableename=#value# 
+  </statement> 
+ 
+  <statement id="lockT18_ods2dm" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_ods2dmetl"> 
+  	update T18_ods2dmetl set islock ='1' where tableename=#value# 
+  </statement> 
+  
+  <statement id="unlockT18_ods2dm" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_ods2dmetl"> 
+  	update T18_ods2dmetl set islock ='0' where tableename=#value# 
+  </statement> 
+  
+   <statement id="deployT18_ods2dm" parameterClass="com.ist.bmp.hpom.dto.T18_ods2dmetl" resultClass="com.ist.bmp.hpom.dto.T18_ods2dmetl"> 
+  	update T18_ods2dmetl set isdeploy =#isdeploy# , deploytime=#deploytime#  where tableename=#tableename# 
+  	
+  </statement> 
+   <statement id="getT18_ods2dmtablelistByodsAnddm" parameterClass="com.ist.bmp.hpom.dto.T18_ods2dmetl" resultClass="com.ist.bmp.hpom.dto.T18_ods2dmetl"> 
+  		SELECT tableename,tablecname,dskey  FROM T18_ODS_TABLE WHERE tableename IN (SELECT ODSTABLEENAME FROM T18_DM_TABLE WHERE CREATMETHOD = '1')
+  </statement>
+  
+  <statement id="getT18_ods2dmtableDisp" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_ods2dmetl"> 
+  		select t2.* from T18_DM_TABLE t1 ,T18_ODS2DMETL t2 where  t1.tableename = t2.tableename  and odstableename =#value#
+  </statement>
+ 
+</sqlMap> 
+

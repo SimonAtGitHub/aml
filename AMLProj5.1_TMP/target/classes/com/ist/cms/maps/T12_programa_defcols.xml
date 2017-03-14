@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_programa_defcols"> 
+  <statement id="getT12_programa_defcolsList" parameterClass="com.ist.cms.dto.T12_programa_defcols" resultClass="com.ist.cms.dto.T12_programa_defcols"> 
+  select colkey,expression,colname,collength,iscond,isshow,issort,isapply,isdefaultfield,fieldtype,flag from t12_programa_defcols 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="colkey"> 
+    colkey = #colkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT12_programa_defcolsListCount" parameterClass="com.ist.cms.dto.T12_programa_defcols" resultClass="int"> 
+  select count(*) from t12_programa_defcols 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="colkey"> 
+    colkey = #colkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_programa_defcols" parameterClass="com.ist.cms.dto.T12_programa_defcols" resultClass="int"> 
+  insert into T12_programa_defcols(
+  colkey,expression,colname,collength,iscond,isshow,issort,isapply,isdefaultfield,fieldtype,flag
+  ) values(
+  #colkey#,#expression#,#colname#,#collength#,#iscond#,#isshow#,#issort#,#isapply#,#isdefaultfield#,#fieldtype#,#flag#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_programa_defcols" parameterClass="com.ist.cms.dto.T12_programa_defcols" resultClass="int"> 
+  update T12_programa_defcols set 
+  colkey=#colkey#,expression=#expression#,colname=#colname#,collength=#collength#,iscond=#iscond#,isshow=#isshow#,issort=#issort#,isapply=#isapply#,isdefaultfield=#isdefaultfield#,fieldtype=#fieldtype#,flag=#flag#
+  where colkey=#colkey# 
+  </statement> 
+ 
+  <statement id="deleteT12_programa_defcols" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_programa_defcols where colkey=#value# 
+  </statement> 
+ 
+  <statement id="getT12_programa_defcolsDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_programa_defcols"> 
+  select * from T12_programa_defcols where colkey=#value# 
+  </statement> 
+  
+  <!-- 取得状态为正常的所有默认列 -->
+  <statement id="getT12_programa_defcolsListByFlag" parameterClass="com.ist.cms.dto.T12_programa_defcols" resultClass="com.ist.cms.dto.T12_programa_defcols"> 
+  select colkey,expression,colname,collength,iscond,isshow,issort,isapply,isdefaultfield,fieldtype,flag,dispseq,applytype from t12_programa_defcols 
+  where flag = '1'
+  and applytype = #applytype#
+  order by dispseq
+  </statement>
+  
+  
+  <statement id="getT12_programa_defcolsMap" remapResults="true" parameterClass="com.ist.cms.dto.T12_programa_defcols" resultClass="java.util.LinkedHashMap"> 
+  select colkey as key,colname as value from t12_programa_defcols 
+  </statement>
+ 
+</sqlMap> 
+

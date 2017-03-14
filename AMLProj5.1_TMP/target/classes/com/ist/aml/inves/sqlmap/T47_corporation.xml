@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T47_corporation"> 
+  <statement id="getT47_corporationList" parameterClass="com.ist.aml.inves.dto.T47_corporation" resultClass="com.ist.aml.inves.dto.T47_corporation"> 
+  SELECT PARTY_ID PARTY_ID,COMPANY_TYPE_CD COMPANY_TYPE_CD,INDUSTRYKEY INDUSTRYKEY,ISSUE_LICENSE_DT ISSUE_LICENSE_DT,BUSINESS_LICENCE BUSINESS_LICENCE,LICENSE_YEAR_CHECK_DT LICENSE_YEAR_CHECK_DT,MAIN_MANAGE_SCOPE MAIN_MANAGE_SCOPE,ENROL_FUND_AMT ENROL_FUND_AMT,ENROL_FUND_CURRENCY_CD ENROL_FUND_CURRENCY_CD,FORG_INVEST_CERT_NUM FORG_INVEST_CERT_NUM,BASE_ACCT_NUM BASE_ACCT_NUM,BASE_BANK_ID BASE_BANK_ID,BASE_BANK_ORG BASE_BANK_ORG,COMPANY_SCOPE COMPANY_SCOPE,HAVING_SYS_FORM HAVING_SYS_FORM,SPEC_INDUS_ALLOW_CERT_ID SPEC_INDUS_ALLOW_CERT_ID,LOAN_CARD_NUM LOAN_CARD_NUM,GROUP_CUST_IND GROUP_CUST_IND FROM T47_CORPORATION 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="party_id"> 
+    PARTY_ID = #party_id# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT47_corporationListCount" parameterClass="com.ist.aml.inves.dto.T47_corporation" resultClass="int"> 
+  SELECT COUNT(*) FROM T00_GROUP 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="party_id"> 
+    PARTY_ID = #party_id# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT47_corporation" parameterClass="com.ist.aml.inves.dto.T47_corporation" resultClass="int"> 
+  INSERT INTO T47_CORPORATION(
+  PARTY_ID,COMPANY_TYPE_CD,INDUSTRYKEY,ISSUE_LICENSE_DT,BUSINESS_LICENCE,LICENSE_YEAR_CHECK_DT,MAIN_MANAGE_SCOPE,ENROL_FUND_AMT,ENROL_FUND_CURRENCY_CD,FORG_INVEST_CERT_NUM,BASE_ACCT_NUM,BASE_BANK_ID,BASE_BANK_ORG,COMPANY_SCOPE,HAVING_SYS_FORM,SPEC_INDUS_ALLOW_CERT_ID,LOAN_CARD_NUM,GROUP_CUST_IND,ORG_CREDIT_NO ,ORG_CREDIT_VT, LEGAL_OBJ,LEGAL_CARD_TYPE, LEGAL_CARD_NO) 
+  VALUES(
+  #party_id#,#company_type_cd#,#industrykey#,#issue_license_dt:DATE#,#business_licence#,#license_year_check_dt:DATE#,#main_manage_scope#,$enrol_fund_amt$,#enrol_fund_currency_cd#,#forg_invest_cert_num#,#base_acct_num#,#base_bank_id#,#base_bank_org#,#company_scope#,#having_sys_form#,#spec_indus_allow_cert_id#,#loan_card_num#,#group_cust_ind#,#org_credit_no#,#org_credit_vt:DATE#, #legal_obj#,#legal_card_type#, #legal_card_no#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT47_corporation" parameterClass="com.ist.aml.inves.dto.T47_corporation" resultClass="int"> 
+  UPDATE T47_CORPORATION SET 
+  PARTY_ID=#party_id#,COMPANY_TYPE_CD=#company_type_cd#,INDUSTRYKEY=#industrykey#,ISSUE_LICENSE_DT=#issue_license_dt#,BUSINESS_LICENCE=#business_licence#,LICENSE_YEAR_CHECK_DT=#license_year_check_dt#,MAIN_MANAGE_SCOPE=#main_manage_scope#,ENROL_FUND_AMT=#enrol_fund_amt#,ENROL_FUND_CURRENCY_CD=#enrol_fund_currency_cd#,FORG_INVEST_CERT_NUM=#forg_invest_cert_num#,BASE_ACCT_NUM=#base_acct_num#,BASE_BANK_ID=#base_bank_id#,BASE_BANK_ORG=#base_bank_org#,COMPANY_SCOPE=#company_scope#,HAVING_SYS_FORM=#having_sys_form#,SPEC_INDUS_ALLOW_CERT_ID=#spec_indus_allow_cert_id#,LOAN_CARD_NUM=#loan_card_num#,GROUP_CUST_IND=#group_cust_ind#
+  WHERE PARTY_ID=#party_id# 
+  </statement> 
+ 
+  <statement id="deleteT47_corporation" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T47_CORPORATION WHERE PARTY_ID=#value# 
+  </statement> 
+ 
+  <statement id="getT47_corporationDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.inves.dto.T47_corporation"> 
+  SELECT       CASE WHEN A.CARD_TYPE='21' THEN A.CARD_NO ELSE '' END AS ORGAN_CODE, B.FLAG,  B.NATION_AFFAIR_NO,
+       		   B.LOCAL_AFFAIR_NO, B.MANAGER_NO, B.MANAGER_NAME,  B.OTHER_INFO, B.ENROL_FUND_AMT,
+       		   B.ENROL_FUND_CURRENCY_CD, B.BASE_ACCT_NUM,  B.BASE_BANK_ID,  B.BASE_BANK_ORG,
+               B.COMPANY_SCOPE, B.INDUSTRYKEY, B.COMPANY_TYPE_CD, B.MAIN_MANAGE_SCOPE, B.LEGAL_OBJ,
+               B.LEGAL_CARD_TYPE, B.LEGAL_CARD_NO, B.LEGAL_ADDR,  B.LEGAL_TEL,  B.BUSINESS_LICENCE, B.LICENCE_END_DT,
+               B.LEGAL_CARD_NO_END_DT,B.LOCAL_AFFAIR_END_DT,B.NATION_AFFAIR_END_DT,B.ORGAN_CODE_END_DT,
+               B.REGISTER_ADDR,B.REGISTER_DT,B.SUBJECT_OFFICER,B.SUPERIOR_LEGAL,B.ACUT_PROF,B.STOCK_HOLDER,
+               B.LICENSE_NAME,B.PERMIT_NO,B.DEPOSITER_TY,B.STOCK_HOLDER_CARD_TYPE,B.STOCK_HOLDER_CARD_NO,
+               B.STOCK_HOLDER_CARD_NO_END_DT
+      FROM  T47_CORPORATION B ,T47_PARTY A
+ 		WHERE B.PARTY_ID = #value#
+ 		AND A.PARTY_ID = B.PARTY_ID
+  </statement> 
+ <statement id="modifyValidatedT47_corporation" parameterClass="com.ist.aml.report.dto.T47_party" resultClass="int"> 
+  UPDATE T47_CORPORATION SET PARTY_ID=#party_id#
+  <dynamic>
+  	,INDUSTRYKEY=#industrykey#
+  	<isNotEmpty prepend="," property="enrol_fund_amt">
+  		ENROL_FUND_AMT=$enrol_fund_amt$
+  	</isNotEmpty>
+  	,LEGAL_OBJ=#legal_obj#
+  	,LEGAL_CARD_TYPE=#legal_card_type#
+  	,LEGAL_CARD_NO=#legal_card_no#
+  	
+  </dynamic>  
+  WHERE PARTY_ID=#party_id# 
+  </statement> 
+</sqlMap> 
+

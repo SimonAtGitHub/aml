@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T47_Opp_info">
+	<!-- -add by dingke -->
+	<statement id="getT47_Opp_infoList"
+		parameterClass="com.ist.aml.information.dto.T47_Opp_info"
+		resultClass="com.ist.aml.information.dto.T47_Opp_info">
+		SELECT
+		OPP_SYS_ID,OPP_NAME,OPP_ACCT_NUM,OPP_ACCT_TYPE_CD,OPP_CARD_TYPE,OPP_CARD_NO, OPP_PBC_PARTY_CLASS_CD FROM T47_OPP_INFO
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="opp_name_s">
+				OPP_NAME LIKE #opp_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_acct_num_s">
+				OPP_ACCT_NUM = #opp_acct_num_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_pbc_party_class_cd_s">
+				OPP_PBC_PARTY_CLASS_CD=#opp_pbc_party_class_cd_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_acct_type_cd_s">
+				OPP_ACCT_TYPE_CD =#opp_acct_type_cd_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_card_type_s">
+				OPP_CARD_TYPE  LIKE '%$opp_card_type_s$%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_card_no_s">
+				OPP_CARD_NO=#opp_card_no_s#
+			</isNotEmpty>
+		</dynamic>
+		<isNotEmpty property="orderby">
+			<isEqual property="orderby" compareValue="1">
+				ORDER BY OPP_NAME
+			</isEqual>
+			<isEqual property="orderby" compareValue="2">
+				ORDER BY OPP_PBC_PARTY_CLASS_CD
+			</isEqual>
+			<isEqual property="orderby" compareValue="3">
+				ORDER BY OPP_ACCT_TYPE_CD
+			</isEqual>
+			<isEqual property="orderby" compareValue="4">
+				ORDER BY OPP_ACCT_NUM
+			</isEqual>
+			<isEqual property="orderby" compareValue="5">
+				ORDER BY OPP_CARD_TYPE
+			</isEqual>
+			<isEqual property="orderby" compareValue="6">
+				ORDER BY OPP_CARD_NO
+			</isEqual>
+		</isNotEmpty>
+		<isNotEmpty property="orderby">
+		<isNotEmpty property="order">
+			<isEqual property="order" compareValue="1"></isEqual>
+			<isEqual property="order" compareValue="2">desc</isEqual>
+		</isNotEmpty>
+	</isNotEmpty>
+	</statement>
+	<statement id="getT47_Opp_infoListCount"
+		parameterClass="com.ist.aml.information.dto.T47_Opp_info"
+		resultClass="int">
+		SELECT COUNT(*) FROM T47_OPP_INFO
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="opp_name_s">
+				OPP_NAME LIKE #opp_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_acct_num_s">
+				OPP_ACCT_NUM = #opp_acct_num_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_pbc_party_class_cd_s">
+				OPP_PBC_PARTY_CLASS_CD = #opp_pbc_party_class_cd_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_acct_type_cd_s">
+				OPP_ACCT_TYPE_CD = #opp_acct_type_cd_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_card_type_s">
+				OPP_CARD_TYPE LIKE '%$opp_card_type_s$%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_card_no_s">
+				OPP_CARD_NO LIKE #opp_card_no_s#
+			</isNotEmpty>
+
+		</dynamic>
+	</statement>
+	<statement id="insertT47_Opp_info"
+		parameterClass="com.ist.aml.information.dto.T47_Opp_info"
+		resultClass="int">
+		INSERT INTO T47_OPP_INFO(
+		OPP_SYS_ID,OPP_NAME,OPP_ACCT_NUM,OPP_ACCT_TYPE_CD,OPP_CARD_TYPE,OPP_CARD_NO,OPP_PBC_PARTY_CLASS_CD
+		) VALUES(
+		#opp_sys_id#,#opp_name#,#opp_acct_num#,#opp_acct_type_cd#,#opp_card_type#,#opp_card_no#,#opp_pbc_party_class_cd#
+		)
+	</statement>
+
+	<statement id="modifyT47_Opp_info"
+		parameterClass="com.ist.aml.information.dto.T47_Opp_info"
+		resultClass="int">
+		UPDATE T47_OPP_INFO SET
+		OPP_NAME=#opp_name#,OPP_ACCT_NUM=#opp_acct_num#,OPP_ACCT_TYPE_CD=#opp_acct_type_cd#,OPP_CARD_TYPE=#opp_card_type#,OPP_CARD_NO=#opp_card_no#,OPP_PBC_PARTY_CLASS_CD=#opp_pbc_party_class_cd#
+		WHERE OPP_SYS_ID=#opp_sys_id#
+	</statement>
+	
+	<statement id="modifyT47_Opp_info1"
+		parameterClass="com.ist.aml.information.dto.T47_Opp_info"
+		resultClass="int">
+		UPDATE T47_OPP_INFO SET
+		OPP_NAME=#opp_name#,OPP_ACCT_NUM=#opp_acct_num#,OPP_ACCT_TYPE_CD=#opp_acct_type_cd#,OPP_CARD_TYPE=#opp_card_type#,OPP_CARD_NO=#opp_card_no#
+		WHERE OPP_SYS_ID=#opp_sys_id#
+	</statement>
+	<statement id="modifyT47_Opp_info2"
+		parameterClass="com.ist.aml.information.dto.T47_Opp_info"
+		resultClass="int">
+		UPDATE T47_OPP_INFO SET
+		OPP_SYS_ID=#opp_sys_id#,OPP_ORGANKEY=#opp_organkey#,OPP_ORGANNAME=#opp_organname#,OPP_NAME=#opp_name#,OPP_CARD_TYPE=#opp_card_type#,OPP_CARD_NO=#opp_card_no#
+		WHERE OPP_SYS_ID=#opp_sys_id#
+	</statement>
+
+	<statement id="deleteT47_Opp_info" parameterClass="java.lang.String"
+		resultClass="int">
+		DELETE FROM T47_OPP_INFO WHERE OPP_SYS_ID=#value#
+	</statement>
+	<!-- -end by dingke -->
+
+	<statement id="getT47_Opp_infoDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.information.dto.T47_Opp_info">
+		SELECT * FROM T47_OPP_INFO WHERE OPP_SYS_ID=#value#
+	</statement>
+	
+</sqlMap>

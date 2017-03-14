@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T07_INREP_BS_level">
+	<statement id="getT07_INREP_BS_levelList" parameterClass="com.ist.aml.inves.dto.T07_INREP_BS_level"
+		resultClass="com.ist.aml.inves.dto.T07_INREP_BS_level">
+		SELECT T.ORGANKEY,
+			   SUM(T.SUM_MOUNT) AS SUM_MOUNT,
+			   SUM(T.CASE_02) AS CASE_02,
+		       SUM(T.TRANS_DC_02) AS TRANS_DC_02,
+		       SUM(T.AMT_DC_02) AS AMT_DC_02,
+			   SUM(T.TRANS_FC_02) AS TRANS_FC_02,
+			   SUM(T.AMT_FC_02) AS AMT_FC_02,
+			   SUM(T.CASE_03) AS CASE_03,
+			   SUM(T.TRANS_DC_03) AS TRANS_DC_03,
+			   SUM(T.AMT_DC_03) AS AMT_DC_03,
+			   SUM(T.TRANS_FC_03) AS TRANS_FC_03,
+			   SUM(T.AMT_FC_03) AS AMT_FC_03,
+			   SUM(T.CASE_04) AS CASE_04,
+			   SUM(T.TRANS_DC_04) AS TRANS_DC_04,
+			   SUM(T.AMT_DC_04) AS AMT_DC_04,
+			   SUM(T.TRANS_FC_04) AS TRANS_FC_04,
+			   SUM(T.AMT_FC_04) AS AMT_FC_04,
+			   SUM(T.CASE_05) AS CASE_05,
+			   SUM(T.TRANS_DC_05) AS TRANS_DC_05,
+			   SUM(T.AMT_DC_05) AS AMT_DC_05,
+			   SUM(T.TRANS_FC_05) AS TRANS_FC_05,
+			   SUM(T.AMT_FC_05) AMT_FC_05
+		  FROM T07_INREP_BS_LEVEL T
+		 WHERE 1 = 1
+		<isNotEmpty prepend="AND" property="organStr">
+			T.ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			T.ORGANKEY = #organkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="statistic_dt_start">
+			<![CDATA[T.STATISTIC_DT >= #statistic_dt_start#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="statistic_dt_end">
+			<![CDATA[T.STATISTIC_DT <= #statistic_dt_end#]]>
+		</isNotEmpty>
+		 GROUP BY T.ORGANKEY
+		 order by T.ORGANKEY
+	</statement>
+
+	<statement id="getT07_INREP_BS_levelListCount"
+		parameterClass="com.ist.aml.inves.dto.T07_INREP_BS_level" resultClass="int">
+		SELECT COUNT(distinct T.ORGANKEY)
+		  FROM T07_INREP_BS_LEVEL T
+		 WHERE 1 = 1
+		<isNotEmpty prepend="and" property="organkey">
+			T.ORGANKEY in $organkey$  
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			T.ORGANKEY = #organkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="statistic_dt_start">
+			<![CDATA[T.STATISTIC_DT >= #statistic_dt_start#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="statistic_dt_end">
+			<![CDATA[T.STATISTIC_DT <= #statistic_dt_end#]]>
+		</isNotEmpty>
+	</statement>
+	
+	<statement id="getT07_INREP_BS_levelList_msbh" parameterClass="com.ist.aml.inves.dto.T07_INREP_BS_level"
+		resultClass="com.ist.aml.inves.dto.T07_INREP_BS_level">
+		SELECT 
+			   SUM(T.SUM_MOUNT) AS SUM_MOUNT,
+			   SUM(T.CASE_02) AS CASE_02,
+		       SUM(T.TRANS_DC_02) AS TRANS_DC_02,
+		       SUM(T.AMT_DC_02) AS AMT_DC_02,
+			   SUM(T.TRANS_FC_02) AS TRANS_FC_02,
+			   SUM(T.AMT_FC_02) AS AMT_FC_02,
+			   SUM(T.CASE_03) AS CASE_03,
+			   SUM(T.TRANS_DC_03) AS TRANS_DC_03,
+			   SUM(T.AMT_DC_03) AS AMT_DC_03,
+			   SUM(T.TRANS_FC_03) AS TRANS_FC_03,
+			   SUM(T.AMT_FC_03) AS AMT_FC_03,
+			   SUM(T.CASE_04) AS CASE_04,
+			   SUM(T.TRANS_DC_04) AS TRANS_DC_04,
+			   SUM(T.AMT_DC_04) AS AMT_DC_04,
+			   SUM(T.TRANS_FC_04) AS TRANS_FC_04,
+			   SUM(T.AMT_FC_04) AS AMT_FC_04,
+			   SUM(T.CASE_05) AS CASE_05,
+			   SUM(T.TRANS_DC_05) AS TRANS_DC_05,
+			   SUM(T.AMT_DC_05) AS AMT_DC_05,
+			   SUM(T.TRANS_FC_05) AS TRANS_FC_05,
+			   SUM(T.AMT_FC_05) AMT_FC_05
+		  FROM T07_INREP_BS_LEVEL T
+		 WHERE 1 = 1
+		<isNotEmpty prepend="and" property="organkey">
+			T.ORGANKEY in $organkey$ 
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			T.ORGANKEY = #organkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="statistic_dt_start">
+			<![CDATA[T.STATISTIC_DT >= #statistic_dt_start#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="statistic_dt_end">
+			<![CDATA[T.STATISTIC_DT <= #statistic_dt_end#]]>
+		</isNotEmpty>
+		 
+	</statement>
+
+</sqlMap> 
+

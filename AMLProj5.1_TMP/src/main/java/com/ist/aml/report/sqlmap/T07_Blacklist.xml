@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T07_Blacklist">
+	<statement id="getT07_BlacklistList" parameterClass="com.ist.aml.report.dto.T07_Blacklist"
+		resultClass="com.ist.aml.report.dto.T07_Blacklist">
+		select
+		party_id,obj_name,organkey,isuse,party_class_cd,list_type,reason_create,
+		reason_cancel,validate_dt,invalidate_dt,create_user,create_dt,modify_user,modify_dt,ischeck,name_type,objkey
+		from t07_blacklist a
+		<dynamic prepend=" WHERE">
+			<isNotEmpty prepend="and" property="list_type">
+				list_type = #list_type#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="ischeck">
+				ischeck =#ischeck#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="party_id">
+				party_id = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				party_class_cd =
+				#party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				organkey = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="m_list_type">
+				m_list_type =
+				#m_list_type#
+			</isNotEmpty>
+			<isEmpty prepend="AND" property="m_list_type">
+				<isNotEmpty prepend="AND" property="card_type">
+					m_list_type !=
+					#card_type#
+			   </isNotEmpty>
+			</isEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				ORGANKEY IN
+				($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organname">
+				exists(select '1' from
+				t00_organ b where a.organkey = b.organkey and b.organname like
+				'%$organname$%')
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="obj_name">
+				obj_name LIKE '%'||#obj_name#||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt">
+				<![CDATA[create_dt >= #create_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create1_dt">
+				<![CDATA[create_dt < #create1_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty property="listsearch_type">
+				<isEqual property="listsearch_type" compareValue="1">
+					ORDER BY
+					create_dt
+				</isEqual>
+				<isEqual property="listsearch_type" compareValue="2">
+					ORDER BY
+					organkey
+				</isEqual>
+				<isEqual property="listsearch_type" compareValue="3">
+					ORDER BY
+					party_class_cd
+				</isEqual>
+				<isEqual property="listsearch_type" compareValue="4">
+					ORDER BY
+					obj_name
+				</isEqual>
+				<isEqual property="listsearch_type" compareValue="5">
+					ORDER BY
+					party_id
+				</isEqual>
+				<isEqual property="listsearch_type" compareValue="6">
+					ORDER BY
+					m_list_type
+				</isEqual>
+
+				<isNotEmpty property="fashion">
+					<isEqual property="fashion" compareValue="asc"></isEqual>
+					<isEqual property="fashion" compareValue="desc">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="getT07_BlacklistListCount" parameterClass="com.ist.aml.report.dto.T07_Blacklist"
+		resultClass="int">
+		select count(*) from t07_blacklist a
+		<dynamic prepend=" WHERE">
+			<isNotEmpty prepend="and" property="list_type">
+				list_type = #list_type#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="ischeck">
+				ischeck =#ischeck#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="party_id">
+				party_id = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				party_class_cd =
+				#party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				organkey = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="m_list_type">
+				m_list_type =
+				#m_list_type#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				ORGANKEY IN
+				($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organname">
+				exists(select '1' from
+				t00_organ b where a.organkey = b.organkey and b.organname like
+				'%$organname$%')
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="obj_name">
+				obj_name LIKE '%'||#obj_name#||'%'
+				
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt">
+				<![CDATA[create_dt >= #create_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create1_dt">
+				<![CDATA[create_dt < #create1_dt:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="getT07_BlacklistDisp" parameterClass="com.ist.aml.report.dto.T07_Blacklist"
+		resultClass="com.ist.aml.report.dto.T07_Blacklist">
+		SELECT PARTY_ID,OBJ_NAME,ORGANKEY,ISUSE,PARTY_CLASS_CD,LIST_TYPE,
+		REASON_CREATE,CARD_NO,CARD_TYPE,VALIDATE_DT,INVALIDATE_DT,CREATE_USER,CREATE_DT,MODIFY_USER,MODIFY_DT,ISUSE_NEW,REASON_CREATE_NEW,VALIDATE_DT_NEW,INVALIDATE_DT_NEW,ISCHECK,EXTERNAL_ID,CATEGORY,TITLE,PROGRAMS,BIRTH_DATE,LAST_OCCUPATION,RESIDENCE_COUNTRY,BIRTH_COUNTRY,NATIONALITY,GENDER,REMARKS,M_LIST_TYPE
+		FROM T07_BLACKLIST WHERE PARTY_ID=#party_id#
+		<isNotEmpty prepend="and" property="obj_name">
+			OBJ_NAME = #obj_name#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="objkey">
+			objkey = #objkey#
+		</isNotEmpty>
+	</statement>
+
+	<statement id="getT07_Blacklist_addrDisp" parameterClass="com.ist.aml.report.dto.T07_blacklist_addr"
+		resultClass="com.ist.aml.report.dto.T07_blacklist_addr">
+		select * from t07_blacklist_addr where party_id=#party_id#
+	</statement>
+	<statement id="deleteT07_Blacklist" parameterClass="com.ist.aml.report.dto.T07_Blacklist"
+		resultClass="int">
+		delete from T07_Blacklist where party_id=#party_id#
+		<isNotEmpty prepend="and" property="obj_name">
+			obj_name = #obj_name#
+		</isNotEmpty>
+	</statement>
+
+	<statement id="insertT07_Blacklist" parameterClass="com.ist.aml.report.dto.T07_Blacklist"
+	resultClass="int">
+	insert into T07_Blacklist(
+	party_id,obj_name,organkey,isuse,party_class_cd,list_type,reason_create,
+	create_user,create_dt,ischeck,REMARKS,name_type,objkey,m_list_type,card_type,card_no,is_party_id,MODIFY_DT,MODIFY_USER
+	)
+	values(
+	#party_id#,#obj_name#,#organkey#,#isuse#,#party_class_cd#,#list_type#,#reason_create#,
+	#create_user#,#create_dt#,#ischeck#,#remarks#,#name_type#,#objkey#,#m_list_type#
+	,#card_type#,#card_no#,#is_party_id#,#modify_dt#,#modify_user#)
+	</statement>
+
+	<statement id="getT07_Blacklistrealy" parameterClass="java.lang.String"
+		resultClass="int">
+		select count(*) from V07_LIST where
+		party_id=#party_id#
+	</statement>
+
+	<statement id="modifyT07_Blacklist" parameterClass="com.ist.aml.report.dto.T07_Blacklist"
+		resultClass="int">
+		update T07_Blacklist set
+		isuse=#isuse#,reason_create=#reason_create#,card_type=#card_type#,card_no=#card_no#,
+		validate_dt=#validate_dt#,invalidate_dt=#invalidate_dt#,ischeck=#ischeck#,
+		modify_user=#modify_user#,modify_dt=#modify_dt#,m_list_type=#m_list_type#
+		where
+		party_id=#party_id#
+		<isNotEmpty prepend="and" property="obj_name">
+			obj_name = #obj_name#
+		</isNotEmpty>
+	</statement>
+	
+	<statement id="getT07_BlacklistB"
+		parameterClass="com.ist.aml.report.dto.T07_Blacklist"
+		resultClass="int">
+		select count(*) from T07_Blacklist WHERE party_id = #party_id#
+		 
+		<isNotEmpty prepend="and" property="obj_name">
+			obj_name = #obj_name#
+		</isNotEmpty>
+	</statement>
+	
+</sqlMap>
+

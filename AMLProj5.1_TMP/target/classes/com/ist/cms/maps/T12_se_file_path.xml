@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_se_file_path"> 
+  <statement id="getT12_se_file_pathList" parameterClass="com.ist.cms.dto.T12_se_file_path" resultClass="com.ist.cms.dto.T12_se_file_path"> 
+  select t.id,t.des,t.flag,t.isprocess,t.pathlevel,t.path,t.filter,t.indexdate,t.url,t.createdate,t.creator,
+  CASE WHEN s.PROCESSDATE IS NULL THEN '' ELSE  s.PROCESSDATE END processdate
+  from t12_se_file_path t LEFT JOIN T12_SE_DB_STATUS s ON t.id = s.ID
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="id"> 
+     t.id = #id# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT12_se_file_pathListCount" parameterClass="com.ist.cms.dto.T12_se_file_path" resultClass="int"> 
+   select count(*) from t12_se_file_path t LEFT JOIN T12_SE_DB_STATUS s ON t.id = s.ID
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="id"> 
+    t.id = #id# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_se_file_path" parameterClass="com.ist.cms.dto.T12_se_file_path" resultClass="int"> 
+  insert into T12_se_file_path(
+  id,des,flag,block,isprocess,pathlevel,path,filter,url,createdate,creator,indexdate
+  ) values(
+  #id#,#des#,#flag#,#block#,#isprocess#,#pathlevel#,#path#,#filter#,#url#,#createdate#,#creator#,#indexdate#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_se_file_path" parameterClass="com.ist.cms.dto.T12_se_file_path" resultClass="int"> 
+  update T12_se_file_path set 
+  id=#id#,des=#des#,block=#block#,isprocess=#isprocess#,pathlevel=#pathlevel#,path=#path#,filter=#filter#,url=#url#,createdate=#createdate#,creator=#creator#,indexdate=#indexdate#
+  where id=#id# 
+  </statement> 
+ 
+  <statement id="deleteT12_se_file_path" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_se_file_path where id=#value# 
+  </statement> 
+ 
+  <statement id="getT12_se_file_pathDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_se_file_path"> 
+  select * from T12_se_file_path where id=#value# 
+  </statement> 
+ 
+</sqlMap> 
+

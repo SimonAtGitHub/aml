@@ -1,0 +1,886 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T07_nbs_rbif">
+<statement id="getT07_nbs_rbifDisp"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif">
+		SELECT * FROM 
+		<isNotEmpty prepend="" property="reported">
+  	   <isEqual property="reported" compareValue="0">
+  	    T07_NBS_RBIF
+  	   </isEqual>
+  	    <isEqual property="reported" compareValue="1">
+  	    T07_NBS_RBIF_UH
+  	   </isEqual>
+  	</isNotEmpty>
+  	<isEmpty prepend="" property="reported">
+  	    T07_NBS_RBIF
+  	</isEmpty>
+		 WHERE REPORTKEY=#reportkey#
+	</statement>
+<statement id="getT07_nbs_rbifCaseList1"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif">
+		SELECT
+		A.REPORTKEY,A.FINM,A.FIRC,A.FICD,A.STCR,A.SSDG,A.TKMS,A.SSDS,A.CTTN,A.TTNM,A.RPNM,A.RPDT,B.VALIDATE_IND,B.INVALID_DT,B.REPORT_STATUS_CD,B.CREATE_ORG
+		,B.APPLICATION_NUM FROM 
+		<isNotEmpty prepend=" " property="report_time_cd">
+			<isEqual property="report_time_cd" compareValue="0">
+				T07_NBS_RBIF A ,T07_REPORT B  
+			</isEqual>
+			<isNotEqual property="report_time_cd" compareValue="0">
+			    T07_NBS_RBIF_UH A ,T07_REPORT_UH B  
+			</isNotEqual>
+		</isNotEmpty>
+		<isEmpty prepend=" " property="report_time_cd">
+		     T07_NBS_RBIF A ,T07_REPORT B  
+		</isEmpty>
+        WHERE
+		A.REPORTKEY=B.REPORTKEY 
+		<dynamic>
+			<isNotEmpty prepend="AND" property="reportkey">
+				A.REPORTKEY =#reportkey#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="modifyT07_nbs_rbif_ssdg"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif"
+		resultClass="int">
+		UPDATE T07_NBS_RBIF SET SSDG=#ssdg#,TKMS=#tkms#,SSDS=#ssds#
+		WHERE REPORTKEY=#reportkey#
+	</statement>
+	<statement id="getT07_nbs_rbifDisp1"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif">
+		SELECT * FROM T07_NBS_RBIF_UH WHERE REPORTKEY=#value#
+	</statement>
+	
+	<statement id="insertT07_nbs_rbif"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif"
+		resultClass="int">
+		INSERT INTO T07_NBS_RBIF(
+		REPORTKEY,FINM,FIRC,FICD,STCR,SSDG,TKMS,SSDS,CTTN,TTNM,RPNM,RPDT,VALIDATE_IND
+		) VALUES(
+		#reportkey#,#finm#,#firc#,#ficd#,#stcr#,#ssdg#,#tkms#,#ssds#,#cttn#,#ttnm#,#rpnm#,#rpdt:DATE#,#validate_ind#
+		)
+	</statement>
+	
+	<statement id="getT07_abs_rbifList"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif">
+		SELECT
+		A.REPORTKEY,A.FINM,A.FIRC,A.FICD,A.STCR,A.SSDG,A.TKMS,A.SSDS,A.CTTN,A.TTNM,A.RPNM,A.RPDT,B.VALIDATE_IND,B.INVALID_DT,B.REPORT_STATUS_CD,B.CREATE_ORG
+		,B.APPLICATION_NUM FROM T07_NBS_RBIF A ,T07_REPORT B ,T07_REPORT_ORGAN_MAP C WHERE
+		B.CREATE_ORG=C.ORGANKEY AND A.REPORTKEY=B.REPORTKEY AND (B.RESEND_IND!='1' OR B.RESEND_IND
+		IS NULL) AND B.PBC_MSG_TYPE_CD IN('N','A')
+		<dynamic>
+			<isNotEmpty prepend="AND" property="reportkey">
+				A.REPORTKEY =#reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_org">
+				B.CREATE_ORG=#create_org#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey"> 
+		      C.REPORT_ORGANKEY IN (SELECT REPORT_ORGANKEY FROM T07_REPORT_ORGAN_MAP WHERE ORGANKEY=#organkey# )
+		    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="resend_ind">
+				B.RESEND_IND=#resend_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				B.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="time">
+				<![CDATA[B.INVALID_DT < #time:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="report_status_cd">
+					B.REPORT_STATUS_CD = #report_status_cd#
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="org_ids">
+					B.CREATE_ORG in $org_ids$
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="start_time">
+					<![CDATA[A.RPDT >= #rpdt_start:DATE#]]>
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="end_time">
+					<![CDATA[A.RPDT <= #rpdt_end:DATE#]]>
+				</isNotEmpty>
+
+				<isNotEmpty property="orderby">
+					<isEqual property="orderby" compareValue="1">
+						ORDER BY A.REPORTKEY
+					</isEqual>
+					<isEqual property="orderby" compareValue="2">
+						ORDER BY A.RPDT
+					</isEqual>
+					<isEqual property="orderby" compareValue="3">
+						ORDER BY B.CREATE_ORG
+					</isEqual>
+				</isNotEmpty>
+				<isNotEmpty property="orderby">
+					<isNotEmpty property="order">
+						<isEqual property="order" compareValue="1"></isEqual>
+						<isEqual property="order" compareValue="2">
+							DESC
+						</isEqual>
+					</isNotEmpty>
+				</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT07_nbs_rbifList2"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif">
+		SELECT 
+		A.REPORTKEY,A.FINM,A.FIRC,A.FICD,A.STCR,A.SSDG,A.TKMS,A.SSDS,A.CTTN,A.TTNM,A.RPNM,A.RPDT,B.VALIDATE_IND,B.INVALID_DT,B.REPORT_STATUS_CD,B.CREATE_ORG
+		,B.APPLICATION_NUM FROM T07_NBS_RBIF A ,T07_REPORT B,T07_REPORT_ORGAN_MAP C WHERE
+		B.CREATE_ORG=C.ORGANKEY AND A.REPORTKEY=B.REPORTKEY
+   		AND (B.RESEND_IND != '1' OR B.RESEND_IND IS NULL)
+		
+		<dynamic>
+	
+			<isNotEmpty prepend="AND" property="reportkey">
+				A.REPORTKEY =#reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ssdg">
+				A.SSDG =#ssdg#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_org">
+				B.CREATE_ORG=#create_org#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey"> 
+		      C.REPORT_ORGANKEY IN (SELECT REPORT_ORGANKEY FROM T07_REPORT_ORGAN_MAP WHERE ORGANKEY=#organkey# )
+		    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="resend_ind">
+				B.RESEND_IND=#resend_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				B.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="time">
+				<![CDATA[B.INVALID_DT >= #time:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_msg_type_cd">
+				B.PBC_MSG_TYPE_CD = #pbc_msg_type_cd#
+			</isNotEmpty>
+		
+				<isNotEmpty prepend="AND" property="report_status_cd">
+					B.REPORT_STATUS_CD = #report_status_cd#
+				</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="org_ids">
+				B.CREATE_ORG in $org_ids$
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_time">
+				<![CDATA[A.RPDT >= #rpdt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_time">
+				<![CDATA[A.RPDT <= #rpdt_end:DATE#]]>
+			</isNotEmpty>
+
+			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY A.REPORTKEY
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY A.RPDT
+				</isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY B.CREATE_ORG
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty property="orderby">
+				<isNotEmpty property="order">
+					<isEqual property="order" compareValue="1"></isEqual>
+					<isEqual property="order" compareValue="2">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT07_nbs_rbifListCount2"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif"
+		resultClass="int">
+		SELECT COUNT( A.REPORTKEY) FROM T07_NBS_RBIF A,T07_REPORT   B,T07_REPORT_ORGAN_MAP C WHERE
+		B.CREATE_ORG=C.ORGANKEY AND A.REPORTKEY=B.REPORTKEY
+   AND (B.RESEND_IND != '1' OR B.RESEND_IND IS NULL)
+		<dynamic>
+		
+			<isNotEmpty prepend="AND" property="ssdg">
+				A.SSDG =#ssdg#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="reportkey">
+				A.REPORTKEY LIKE #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_org">
+				B.CREATE_ORG=#create_org#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey"> 
+		      C.REPORT_ORGANKEY IN (SELECT REPORT_ORGANKEY FROM T07_REPORT_ORGAN_MAP WHERE ORGANKEY=#organkey# )
+		    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="resend_ind">
+				B.RESEND_IND=#resend_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				B.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="time">
+				<![CDATA[B.INVALID_DT >= #time:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_msg_type_cd">
+				B.PBC_MSG_TYPE_CD = #pbc_msg_type_cd#
+			</isNotEmpty>
+			
+				<isNotEmpty prepend="AND" property="report_status_cd">
+					B.REPORT_STATUS_CD = #report_status_cd#
+				</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="org_ids">
+				B.CREATE_ORG IN $org_ids$
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_time">
+				<![CDATA[A.RPDT >= #rpdt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_time">
+				<![CDATA[A.RPDT <= #rpdt_end:DATE#]]>
+			</isNotEmpty>
+			
+		</dynamic>
+	</statement>
+	
+	<statement id="getT07_abs_rbifListCount"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif"
+		resultClass="int">
+		SELECT COUNT(A.REPORTKEY) FROM T07_NBS_RBIF A ,T07_REPORT B
+		,T07_REPORT_ORGAN_MAP C WHERE B.CREATE_ORG=C.ORGANKEY AND A.REPORTKEY=B.REPORTKEY AND (B.RESEND_IND!='1' OR
+		B.RESEND_IND IS NULL) AND B.PBC_MSG_TYPE_CD IN('N','A')
+		<dynamic>
+			<isNotEmpty prepend="AND" property="reportkey">
+				A.REPORTKEY LIKE #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_org">
+				B.CREATE_ORG=#create_org#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey"> 
+		      C.REPORT_ORGANKEY IN (SELECT REPORT_ORGANKEY FROM T07_REPORT_ORGAN_MAP WHERE ORGANKEY=#organkey# )
+		    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="resend_ind">
+				B.RESEND_IND=#resend_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				B.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="time">
+				<![CDATA[B.INVALID_DT < #time:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="report_status_cd">
+					B.REPORT_STATUS_CD = #report_status_cd#
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="org_ids">
+					B.CREATE_ORG IN $org_ids$
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="start_time">
+					<![CDATA[A.RPDT >= #rpdt_start:DATE#]]>
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="end_time">
+					<![CDATA[A.RPDT <= #rpdt_end:DATE#]]>
+				</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT08_nbs_resendRbifList"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif">
+		SELECT
+		A.REPORTKEY,A.FINM,A.FIRC,A.FICD,A.STCR,A.SSDG,A.TKMS,A.SSDS,A.CTTN,A.TTNM,A.RPNM,A.RPDT,B.VALIDATE_IND,B.INVALID_DT,B.REPORT_STATUS_CD,B.CREATE_ORG
+		,B.ORIG_APPLICATION_NUM AS APPLICATION_NUM FROM T07_NBS_RBIF A ,T07_REPORT B ,T07_REPORT_ORGAN_MAP C WHERE
+		B.CREATE_ORG=C.ORGANKEY AND A.REPORTKEY=B.REPORTKEY AND B.RESEND_IND='1' 
+		<dynamic>
+			<isNotEmpty prepend="AND" property="reportkey">
+				A.REPORTKEY =#reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_org">
+				B.CREATE_ORG=#create_org#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey"> 
+		      C.REPORT_ORGANKEY IN (SELECT REPORT_ORGANKEY FROM T07_REPORT_ORGAN_MAP WHERE ORGANKEY=#organkey# )
+		    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="resend_ind">
+				B.RESEND_IND=#resend_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				B.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="pbc_msg_type_cd">
+				B.PBC_MSG_TYPE_CD = #pbc_msg_type_cd#
+			</isNotEmpty>
+			
+				<isNotEmpty prepend="AND" property="report_status_cd">
+					B.REPORT_STATUS_CD = #report_status_cd#
+				</isNotEmpty>
+		
+		
+			<isNotEmpty prepend="AND" property="org_ids">
+				B.CREATE_ORG in $org_ids$
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_time">
+				<![CDATA[A.RPDT >= #rpdt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_time">
+				<![CDATA[A.RPDT <= #rpdt_end:DATE#]]>
+			</isNotEmpty>
+
+			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY A.REPORTKEY
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY A.RPDT
+				</isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY B.CREATE_ORG
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty property="orderby">
+				<isNotEmpty property="order">
+					<isEqual property="order" compareValue="1"></isEqual>
+					<isEqual property="order" compareValue="2">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT08_nbs_resendRbifListCount"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif"
+		resultClass="int">
+		SELECT COUNT(A.REPORTKEY) FROM T07_NBS_RBIF A ,T07_REPORT B,T07_REPORT_ORGAN_MAP C 
+		WHERE B.CREATE_ORG=C.ORGANKEY AND A.REPORTKEY=B.REPORTKEY AND B.RESEND_IND='1' 
+		<dynamic>
+			<isNotEmpty prepend="AND" property="reportkey">
+				A.REPORTKEY LIKE #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_org">
+				B.CREATE_ORG=#create_org#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey"> 
+		      C.REPORT_ORGANKEY IN (SELECT REPORT_ORGANKEY FROM T07_REPORT_ORGAN_MAP WHERE ORGANKEY=#organkey# )
+		    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="resend_ind">
+				B.RESEND_IND=#resend_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				B.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="pbc_msg_type_cd">
+				B.PBC_MSG_TYPE_CD = #pbc_msg_type_cd#
+			</isNotEmpty>
+			
+				<isNotEmpty prepend="AND" property="report_status_cd">
+					B.REPORT_STATUS_CD = #report_status_cd#
+				</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="org_ids">
+				B.CREATE_ORG IN $org_ids$
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_time">
+				<![CDATA[A.RPDT >= #rpdt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_time">
+				<![CDATA[A.RPDT <= #rpdt_end:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	
+  
+  <statement id="getT08_nbs_reviseRbifList"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif">
+		SELECT
+		A.REPORTKEY,A.FINM,A.FIRC,A.FICD,A.STCR,A.SSDG,A.TKMS,A.SSDS,A.CTTN,A.TTNM,A.RPNM,A.RPDT,B.VALIDATE_IND,B.INVALID_DT,B.REPORT_STATUS_CD,B.CREATE_ORG
+		,B.ORIG_APPLICATION_NUM AS ORIG_APPLICATION_NUM, B.APPLICATION_NUM AS APPLICATION_NUM FROM T07_NBS_RBIF A ,T07_REPORT B ,T07_REPORT_ORGAN_MAP C WHERE
+		B.CREATE_ORG=C.ORGANKEY AND A.REPORTKEY=B.REPORTKEY 
+		<dynamic>
+			<isNotEmpty prepend="AND" property="reportkey">
+				A.REPORTKEY =#reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_org">
+				B.CREATE_ORG=#create_org#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey"> 
+		      C.REPORT_ORGANKEY IN (SELECT REPORT_ORGANKEY FROM T07_REPORT_ORGAN_MAP WHERE ORGANKEY=#organkey# )
+		    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="resend_ind">
+				B.RESEND_IND=#resend_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				B.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="pbc_msg_type_cd">
+				B.PBC_MSG_TYPE_CD = #pbc_msg_type_cd#
+			</isNotEmpty>
+			
+				<isNotEmpty prepend="AND" property="report_status_cd">
+					B.REPORT_STATUS_CD = #report_status_cd#
+				</isNotEmpty>
+		
+		
+			<isNotEmpty prepend="AND" property="org_ids">
+				B.CREATE_ORG in $org_ids$
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_time">
+				<![CDATA[A.RPDT >= #rpdt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_time">
+				<![CDATA[A.RPDT <= #rpdt_end:DATE#]]>
+			</isNotEmpty>
+
+			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY A.REPORTKEY
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY A.RPDT
+				</isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY B.CREATE_ORG
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty property="orderby">
+				<isNotEmpty property="order">
+					<isEqual property="order" compareValue="1"></isEqual>
+					<isEqual property="order" compareValue="2">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT08_nbs_reviseRbifListCount"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif"
+		resultClass="int">
+		SELECT COUNT(A.REPORTKEY) FROM T07_NBS_RBIF A ,T07_REPORT B,T07_REPORT_ORGAN_MAP C 
+		WHERE B.CREATE_ORG=C.ORGANKEY AND A.REPORTKEY=B.REPORTKEY
+		<dynamic>
+			<isNotEmpty prepend="AND" property="reportkey">
+				A.REPORTKEY LIKE #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_org">
+				B.CREATE_ORG=#create_org#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey"> 
+		      C.REPORT_ORGANKEY IN (SELECT REPORT_ORGANKEY FROM T07_REPORT_ORGAN_MAP WHERE ORGANKEY=#organkey# )
+		    </isNotEmpty>
+			<isNotEmpty prepend="AND" property="resend_ind">
+				B.RESEND_IND=#resend_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				B.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="pbc_msg_type_cd">
+				B.PBC_MSG_TYPE_CD = #pbc_msg_type_cd#
+			</isNotEmpty>
+			
+				<isNotEmpty prepend="AND" property="report_status_cd">
+					B.REPORT_STATUS_CD = #report_status_cd#
+				</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="org_ids">
+				B.CREATE_ORG IN $org_ids$
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_time">
+				<![CDATA[A.RPDT >= #rpdt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_time">
+				<![CDATA[A.RPDT <= #rpdt_end:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT07_nbs_rbifList_new"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif">
+	select * from(
+		SELECT  C.CSNM,'0' as report_time_cd,
+		A.REPORTKEY,A.FINM,A.FIRC,A.FICD,A.STCR,A.SSDG,A.TKMS,A.SSDS,A.CTTN,A.TTNM,A.RPNM,A.RPDT,B.VALIDATE_IND,B.INVALID_DT,B.REPORT_STATUS_CD,B.CREATE_ORG
+		,B.APPLICATION_NUM FROM T07_NBS_RBIF A ,T07_REPORT B,T07_NBS_CTIF C WHERE
+		A.REPORTKEY = B.REPORTKEY AND A.REPORTKEY = C.REPORTKEY 
+		
+		<dynamic>
+			<isNotEmpty prepend="AND" property="csnm">
+				C.CSNM =#csnm#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ctac"> 
+			EXISTS(SELECT 'X' FROM T07_NBS_ATIF D WHERE A.REPORTKEY = D.REPORTKEY  AND D.CTAC =#ctac#)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="crtp">
+				E.CRTP =#crtp#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="reportkey">
+				A.REPORTKEY =#reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ssdg">
+				A.SSDG =#ssdg#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_org">
+				B.CREATE_ORG=#create_org#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="resend_ind">
+				B.RESEND_IND=#resend_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				B.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="time">
+				<![CDATA[B.INVALID_DT >= #time:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_msg_type_cd">
+				B.PBC_MSG_TYPE_CD = #pbc_msg_type_cd#
+			</isNotEmpty>
+			<isNotEqual property="report_status_cd" compareValue="00">
+				<isNotEmpty prepend="AND" property="report_status_cd">
+					B.REPORT_STATUS_CD = #report_status_cd#
+				</isNotEmpty>
+			</isNotEqual>
+			<isEqual property="report_status_cd" compareValue="00">
+				AND B.REPORT_STATUS_CD IN('4','5','6')
+			</isEqual>
+			<isNotEmpty prepend="AND" property="org_ids">
+				B.CREATE_ORG in $org_ids$
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_time">
+				<![CDATA[A.RPDT >= #rpdt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_time">
+				<![CDATA[A.RPDT <= #rpdt_end:DATE#]]>
+			</isNotEmpty>
+
+		 UNION ALL 
+		SELECT  C.CSNM,'1' as report_time_cd,
+		A.REPORTKEY,A.FINM,A.FIRC,A.FICD,A.STCR,A.SSDG,A.TKMS,A.SSDS,A.CTTN,A.TTNM,A.RPNM,A.RPDT,B.VALIDATE_IND,B.INVALID_DT,B.REPORT_STATUS_CD,B.CREATE_ORG
+		,B.APPLICATION_NUM FROM T07_NBS_RBIF_UH A ,T07_REPORT_UH B,T07_NBS_CTIF_UH C WHERE
+		A.REPORTKEY = B.REPORTKEY AND A.REPORTKEY = C.REPORTKEY 
+   		
+	
+			<isNotEmpty prepend="AND" property="csnm">
+				C.CSNM =#csnm#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ctac"> 
+			EXISTS(SELECT 'X' FROM T07_NBS_ATIF_UH D WHERE A.REPORTKEY = D.REPORTKEY  AND D.CTAC =#ctac#)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="crtp">
+				E.CRTP =#crtp#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="reportkey">
+				A.REPORTKEY =#reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ssdg">
+				A.SSDG =#ssdg#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_org">
+				B.CREATE_ORG=#create_org#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="resend_ind">
+				B.RESEND_IND=#resend_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				B.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="time">
+				<![CDATA[B.INVALID_DT >= #time:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_msg_type_cd">
+				B.PBC_MSG_TYPE_CD = #pbc_msg_type_cd#
+			</isNotEmpty>
+			<isNotEqual property="report_status_cd" compareValue="00">
+				<isNotEmpty prepend="AND" property="report_status_cd">
+					B.REPORT_STATUS_CD = #report_status_cd#
+				</isNotEmpty>
+			</isNotEqual>
+			<isEqual property="report_status_cd" compareValue="00">
+				AND B.REPORT_STATUS_CD IN('4','5','6')
+			</isEqual>
+			<isNotEmpty prepend="AND" property="org_ids">
+				B.CREATE_ORG in $org_ids$
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_time">
+				<![CDATA[A.RPDT >= #rpdt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_time">
+				<![CDATA[A.RPDT <= #rpdt_end:DATE#]]>
+			</isNotEmpty>
+          )t
+			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY t.REPORTKEY
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY t.RPDT
+				</isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY t.CREATE_ORG
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty property="orderby">
+				<isNotEmpty property="order">
+					<isEqual property="order" compareValue="1"></isEqual>
+					<isEqual property="order" compareValue="2">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT07_nbs_rbifListCount_new"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif"
+		resultClass="int">
+		SELECT COUNT(REPORTKEY) FROM
+		((SELECT  A.REPORTKEY FROM T07_NBS_RBIF A,T07_REPORT   B,T07_NBS_CTIF C
+ WHERE A.REPORTKEY = B.REPORTKEY AND A.REPORTKEY = C.REPORTKEY 
+  
+		<dynamic>
+			<isNotEmpty prepend="AND" property="csnm">
+				C.CSNM =#csnm#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ctac"> 
+			EXISTS(SELECT 'X' FROM T07_NBS_ATIF D WHERE A.REPORTKEY = D.REPORTKEY  AND D.CTAC =#ctac#)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="crtp">
+				E.CRTP =#crtp#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ssdg">
+				A.SSDG =#ssdg#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="reportkey">
+				A.REPORTKEY LIKE #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_org">
+				B.CREATE_ORG=#create_org#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="resend_ind">
+				B.RESEND_IND=#resend_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				B.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="time">
+				<![CDATA[B.INVALID_DT >= #time:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_msg_type_cd">
+				B.PBC_MSG_TYPE_CD = #pbc_msg_type_cd#
+			</isNotEmpty>
+			<isNotEqual property="report_status_cd" compareValue="00">
+				<isNotEmpty prepend="AND" property="report_status_cd">
+					B.REPORT_STATUS_CD = #report_status_cd#
+				</isNotEmpty>
+			</isNotEqual>
+			<isEqual property="report_status_cd" compareValue="00">
+				AND B.REPORT_STATUS_CD IN('4','5','6')
+			</isEqual>
+			<isNotEmpty prepend="AND" property="org_ids">
+				B.CREATE_ORG IN $org_ids$
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_time">
+				<![CDATA[A.RPDT >= #rpdt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_time">
+				<![CDATA[A.RPDT <= #rpdt_end:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+		) UNION ALL
+	    (SELECT  A.REPORTKEY FROM T07_NBS_RBIF_UH A,T07_REPORT_UH B,T07_NBS_CTIF_UH C
+ WHERE A.REPORTKEY = B.REPORTKEY AND A.REPORTKEY = C.REPORTKEY 
+ 
+		<dynamic>
+			<isNotEmpty prepend="AND" property="csnm">
+				C.CSNM =#csnm#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ctac"> 
+			EXISTS(SELECT 'X' FROM T07_NBS_ATIF_UH D WHERE A.REPORTKEY = D.REPORTKEY  AND D.CTAC =#ctac#)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="crtp">
+				E.CRTP =#crtp#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ssdg">
+				A.SSDG =#ssdg#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="reportkey">
+				A.REPORTKEY LIKE #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_org">
+				B.CREATE_ORG=#create_org#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="resend_ind">
+				B.RESEND_IND=#resend_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				B.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="time">
+				<![CDATA[B.INVALID_DT >= #time:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_msg_type_cd">
+				B.PBC_MSG_TYPE_CD = #pbc_msg_type_cd#
+			</isNotEmpty>
+			<isNotEqual property="report_status_cd" compareValue="00">
+				<isNotEmpty prepend="AND" property="report_status_cd">
+					B.REPORT_STATUS_CD = #report_status_cd#
+				</isNotEmpty>
+			</isNotEqual>
+			<isEqual property="report_status_cd" compareValue="00">
+				AND B.REPORT_STATUS_CD IN('4','5','6')
+			</isEqual>
+			<isNotEmpty prepend="AND" property="org_ids">
+				B.CREATE_ORG IN $org_ids$
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_time">
+				<![CDATA[A.RPDT >= #rpdt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_time">
+				<![CDATA[A.RPDT <= #rpdt_end:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+	    ))T
+	</statement>
+	
+	
+	<statement id="getT07_nbs_rbifList1_new"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif">
+		(SELECT
+		A.REPORTKEY,A.FINM,A.FIRC,A.FICD,A.STCR,A.SSDG,A.TKMS,A.SSDS,A.CTTN,A.TTNM,A.RPNM,A.RPDT,B.VALIDATE_IND,B.INVALID_DT,B.REPORT_STATUS_CD,B.CREATE_ORG
+		,B.APPLICATION_NUM FROM T07_NBS_RBIF A ,T07_REPORT B WHERE
+		A.REPORTKEY=B.REPORTKEY 
+		<dynamic>
+			<isNotEmpty prepend="AND" property="reportkey">
+				A.REPORTKEY =#reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_org">
+				B.CREATE_ORG=#create_org#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="resend_ind">
+				B.RESEND_IND=#resend_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				B.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="time">
+				<![CDATA[B.INVALID_DT >= #time:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_msg_type_cd">
+				B.PBC_MSG_TYPE_CD = #pbc_msg_type_cd#
+			</isNotEmpty>
+			<isNotEqual property="report_status_cd" compareValue="00">
+				<isNotEmpty prepend="AND" property="report_status_cd">
+					B.REPORT_STATUS_CD = #report_status_cd#
+				</isNotEmpty>
+			</isNotEqual>
+			<isEqual property="report_status_cd" compareValue="00">
+				AND B.REPORT_STATUS_CD IN('4','5','6')
+			</isEqual>
+			<isNotEmpty prepend="AND" property="org_ids">
+				B.CREATE_ORG in $org_ids$
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_time">
+				<![CDATA[A.RPDT >= #rpdt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_time">
+				<![CDATA[A.RPDT <= #rpdt_end:DATE#]]>
+			</isNotEmpty>
+
+			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY A.REPORTKEY
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY A.RPDT
+				</isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY B.CREATE_ORG
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty property="orderby">
+				<isNotEmpty property="order">
+					<isEqual property="order" compareValue="1"></isEqual>
+					<isEqual property="order" compareValue="2">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+		) UNION ALL
+		(SELECT
+		A.REPORTKEY,A.FINM,A.FIRC,A.FICD,A.STCR,A.SSDG,A.TKMS,A.SSDS,A.CTTN,A.TTNM,A.RPNM,A.RPDT,B.VALIDATE_IND,B.INVALID_DT,B.REPORT_STATUS_CD,B.CREATE_ORG
+		,B.APPLICATION_NUM FROM T07_NBS_RBIF_UH A ,T07_REPORT_UH B WHERE
+		A.REPORTKEY=B.REPORTKEY 
+		<dynamic>
+			<isNotEmpty prepend="AND" property="reportkey">
+				A.REPORTKEY =#reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_org">
+				B.CREATE_ORG=#create_org#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="resend_ind">
+				B.RESEND_IND=#resend_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				B.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="time">
+				<![CDATA[B.INVALID_DT >= #time:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_msg_type_cd">
+				B.PBC_MSG_TYPE_CD = #pbc_msg_type_cd#
+			</isNotEmpty>
+			<isNotEqual property="report_status_cd" compareValue="00">
+				<isNotEmpty prepend="AND" property="report_status_cd">
+					B.REPORT_STATUS_CD = #report_status_cd#
+				</isNotEmpty>
+			</isNotEqual>
+			<isEqual property="report_status_cd" compareValue="00">
+				AND B.REPORT_STATUS_CD IN('4','5','6')
+			</isEqual>
+			<isNotEmpty prepend="AND" property="org_ids">
+				B.CREATE_ORG in $org_ids$
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_time">
+				<![CDATA[A.RPDT >= #rpdt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_time">
+				<![CDATA[A.RPDT <= #rpdt_end:DATE#]]>
+			</isNotEmpty>
+
+			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY A.REPORTKEY
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY A.RPDT
+				</isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY B.CREATE_ORG
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty property="orderby">
+				<isNotEmpty property="order">
+					<isEqual property="order" compareValue="1"></isEqual>
+					<isEqual property="order" compareValue="2">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+		)
+	</statement>
+	
+</sqlMap>

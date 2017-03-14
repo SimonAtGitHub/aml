@@ -1,0 +1,48 @@
+*           { font-size:14px; font-family:"宋体"; }
+body,a      { color:#00557D; }
+a           { text-decoration:none; }
+a:hover     { color:#00ADFF; }
+.rightlines { background:#D2E0F2; border-top:1px solid #ccc; border-bottom:1px solid #ccc; height:4px; width:98%; margin:4px auto;}
+.loading    { position:absolute; left:0; top:0; z-index:1000; background:#F8FAFC url(../../../images/loading.gif) no-repeat center center; height:100%; width:100%; }
+
+.topl,.topr { width:50%; background:#fff; overflow:auto; border:1px solid #99BBE8; }   
+.topl       { position:absolute; left:8px; top:35px; }
+.topr       { position:absolute; right:8px; top:35px; }
+.draghand   { background:#D2E0F2; width:4px; }
+
+.tabhome       { width:100%; height:100%; background: url(../images/right-bg-1.gif); overflow:auto; position:absolute; left:0; top:0; z-index:10; }
+.tabhome table { width:100%;height:200px; background:url(../images/stgl.gif) no-repeat top center; margin-top:6% }
+.tabhome td    { text-align:center; font-size:36px; font:"宋体"; font-weight:bold; color:#00557D; }
+
+/*设置所有的botton的样式*/
+.awp_button_hover{
+	border:1px solid #D5DBE0; 
+	padding:0 3px;
+	font-size: 12px; 
+	cursor:pointer; 
+	color: #00557D; height:24px;
+    background:#fff url(../images/awp_buttonbg.gif) repeat-x bottom;
+	background-position:center \9;
+	vertical-align:middle;
+	
+}
+.awp_button{
+	border:1px solid #7ED4F0; 
+	padding:0 3px;
+	font-size: 12px; 
+	cursor:pointer; 
+	color: #1F80A0; 
+    background:#fff url(../images/awp_buttonbg2.gif) repeat-x center;
+	background-position:center \9;
+	height:24px;
+	vertical-align:middle;
+}
+.awp_input{
+	border:1px solid #77ABCE;
+	padding-left: 3px; 	
+	font-size: 14px; 
+    background:#fff url(../images/awp_inputbg.gif) no-repeat top left;
+	height:18px; line-height:21px;
+}
+
+textarea { padding:4px; font-size: 14px; line-height:21px; border:1px solid #77ABCE;background:#fff url(../images/awp_textareabg.gif) repeat-x top; }

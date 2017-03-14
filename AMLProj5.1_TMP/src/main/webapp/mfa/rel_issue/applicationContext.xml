@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<objects xmlns="http://www.springactionscript.org/schema/objects" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springactionscript.org/schema/objects http://www.springactionscript.org/schema/objects/spring-actionscript-objects-1.0.xsd">
+	
+	<import file="applicationContext-service.xml"/>
+	<import file="applicationContext-delegate.xml"/>
+	<import file="applicationContext-command.xml"/>
+
+	<!--	服务器配置资源文件	-->
+	<property file="ServiceConfig.properties" />
+	
+	<object id="endPoint" class="String">
+		<constructor-arg value="http://${host}:${port}/${context-root}/spring/messagebroker/amf" />
+	</object>
+	
+	<object id="channelSet" class="mx.messaging.ChannelSet" scope="singleton">
+		 <method-invocation name="addChannel">
+            <arg>
+                <object id="amfChannel" class="mx.messaging.channels.AMFChannel">
+                    <property name="url" ref="endPoint"/>
+                </object>
+            </arg>
+        </method-invocation>
+	</object>
+	
+	<template id="remoteObject">
+		<object class="mx.rpc.remoting.mxml.RemoteObject" scope="singleton">
+			<property name="channelSet" ref="channelSet"/>
+			<property name="destination" value="${destination}"/>
+			<property name="showBusyCursor" value="true"/>
+  		</object>
+	</template>
+	
+	<object id="frontController" class="com.ist.mfa.control.MFAController"/>
+	
+	<object id="modelLocator" class="com.ist.mfa.model.MFAModelLocator" factory-method="getInstance" />
+	
+</objects>

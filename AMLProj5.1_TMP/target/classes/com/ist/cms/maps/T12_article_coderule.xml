@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_article_coderule"> 
+  <statement id="getT12_article_coderuleList" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_article_coderule"> 
+  select categorytype,"LEVEL",codecategorykey,separator,codedigit,flag,creator,createdate,modifier,modifydate from t12_article_coderule 
+  where categorytype = #value# order by "LEVEL" asc
+  </statement> 
+ 
+  <statement id="getT12_article_coderuleListCount" parameterClass="java.lang.String" resultClass="int"> 
+  select count(*) from t12_article_coderule where categorytype = #value# 
+  </statement> 
+ 
+  <statement id="insertT12_article_coderule" parameterClass="com.ist.cms.dto.T12_article_coderule" resultClass="int"> 
+  insert into T12_article_coderule(
+  categorytype,"LEVEL",codecategorykey,separator,codedigit,flag,creator,createdate,modifier,modifydate
+  ) values(
+  #categorytype#,#level#,#codecategorykey#,#separator#,#codedigit#,#flag#,#creator#,#createdate#,#modifier#,#modifydate#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_article_coderule" parameterClass="com.ist.cms.dto.T12_article_coderule" resultClass="int"> 
+  update T12_article_coderule set 
+  categorytype=#categorytype#,"LEVEL"=#level#,codecategorykey=#codecategorykey#,separator=#separator#,codedigit=#codedigit#,flag=#flag#,creator=#creator#,createdate=#createdate#,modifier=#modifier#,modifydate=#modifydate#
+  where categorytype=#categorytype# 
+  </statement> 
+ 
+  <statement id="deleteT12_article_coderule" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_article_coderule where categorytype=#value# 
+  </statement> 
+ 
+  <statement id="getT12_article_coderuleDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_article_coderule"> 
+  select * from T12_article_coderule where categorytype=#value# 
+  </statement> 
+  
+  <statement id="getT12_article_coderuleDispByObj" parameterClass="com.ist.cms.dto.T12_article_coderule" resultClass="com.ist.cms.dto.T12_article_coderule"> 
+  select * from T12_article_coderule where categorytype = #categorytype# and "LEVEL" = #level#
+  </statement> 
+  
+  <statement id="getT12_sequenceDisp" parameterClass="com.ist.cms.dto.T12_sequence" resultClass="com.ist.cms.dto.T12_sequence"> 
+  select * from T12_sequence where categorytype = #categorytype# and "LEVEL" = #level#
+  </statement> 
+  
+  <statement id="insertT12_sequence" parameterClass="com.ist.cms.dto.T12_sequence" resultClass="int"> 
+  insert into T12_sequence(categorytype,"LEVEL",seqvalue) values(#categorytype#,#level#,#seqvalue#) 
+  </statement>
+  
+  <statement id="modifyT12_sequence" parameterClass="com.ist.cms.dto.T12_sequence" resultClass="int"> 
+  update T12_sequence set seqvalue=#seqvalue# where categorytype=#categorytype# and "LEVEL"=#level#
+  </statement> 
+</sqlMap> 
+

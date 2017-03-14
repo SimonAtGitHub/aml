@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_keywords_library"> 
+  <statement id="getT12_keywords_libraryList" parameterClass="com.ist.cms.dto.T12_keywords_library" resultClass="com.ist.cms.dto.T12_keywords_library"> 
+  select keywordname,keywordtype from t12_keywords_library  where keywordtype in(
+  select distinct(keywordtype) from t12_keywords_library
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="keywordtype"> 
+    keywordtype = #keywordtype# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="keywordname"> 
+    keywordname in ($keywordname$)
+    </isNotEmpty>
+  </dynamic> 
+  ) order by keywordtype
+  </statement> 
+ 
+  <statement id="getT12_keywords_libraryListCount" parameterClass="com.ist.cms.dto.T12_keywords_library" resultClass="int"> 
+  select count(*) from t12_keywords_library
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="keywordtype"> 
+    keywordtype = #keywordtype# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="keywordname"> 
+    keywordname in ($keywordname$)
+    </isNotEmpty>
+  </dynamic>
+ 
+  </statement> 
+ 
+  <statement id="insertT12_keywords_library" parameterClass="com.ist.cms.dto.T12_keywords_library" resultClass="int"> 
+  insert into T12_keywords_library(
+  keywordkey,keywordname,keywordtype,flag,creator,createdate,modifier,modifydate
+  ) values(
+  #keywordkey#,#keywordname#,#keywordtype#,#flag#,#creator#,#createdate#,#modifier#,#modifydate#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_keywords_library" parameterClass="com.ist.cms.dto.T12_keywords_library" resultClass="int"> 
+  update T12_keywords_library(keywordname,keywordtype,modifier,modifydate) set 
+  keywordname=#keywordname#,keywordtype=#keywordtype#,modifier=#modifier#,modifydate=#modifydate#
+  where keywordkey=#keywordkey# 
+  </statement> 
+ 
+  <statement id="deleteT12_keywords_library" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_keywords_library where keywordtype in ($value$)  
+  </statement> 
+ 
+  <statement id="getT12_keywords_libraryDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_keywords_library"> 
+  select * from T12_keywords_library where keywordkey=#value#
+  </statement> 
+  <statement id="getT12_keywords_libraryDisp2" parameterClass="com.ist.cms.dto.T12_keywords_library" resultClass="com.ist.cms.dto.T12_keywords_library"> 
+  select * from T12_keywords_library 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="keywordtype"> 
+    keywordtype = #keywordtype# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="keywordname"> 
+    keywordname = #keywordname# 
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+  <statement id="getT12_keywords_library_keywordtypeList"  resultClass="java.lang.String"> 
+  select distinct(keywordtype)  from t12_keywords_library 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="keywordtype"> 
+    keywordtype = #keywordtype# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="keywordname"> 
+    keywordname in ($keywordname$)
+    </isNotEmpty>
+  </dynamic> 
+  order by keywordtype
+ </statement>
+</sqlMap> 
+

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_programa_table_rel"> 
+  <statement id="getT12_programa_table_relList" parameterClass="com.ist.cms.dto.T12_programa_table_rel" resultClass="com.ist.cms.dto.T12_programa_table_rel"> 
+  select programakey,tablecode from t12_programa_table_rel 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="programakey"> 
+    programakey = #programakey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT12_programa_table_relListCount" parameterClass="com.ist.cms.dto.T12_programa_table_rel" resultClass="int"> 
+  select count(*) from t12_programa_table_rel 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="programakey"> 
+    programakey = #programakey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_programa_table_rel" parameterClass="com.ist.cms.dto.T12_programa_table_rel" resultClass="int"> 
+  insert into T12_programa_table_rel(
+  programakey,tablecode
+  ) values(
+  #programakey#,#tablecode#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_programa_table_rel" parameterClass="com.ist.cms.dto.T12_programa_table_rel" resultClass="int"> 
+  update T12_programa_table_rel set 
+  programakey=#programakey#,tablecode=#tablecode#
+  where programakey=#programakey# 
+  </statement> 
+ 
+  <statement id="deleteT12_programa_table_rel" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_programa_table_rel where programakey=#value# 
+  </statement> 
+ 
+  <statement id="getT12_programa_table_relDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_programa_table_rel"> 
+  select * from T12_programa_table_rel where programakey=#value# 
+  </statement> 
+ 
+</sqlMap> 
+

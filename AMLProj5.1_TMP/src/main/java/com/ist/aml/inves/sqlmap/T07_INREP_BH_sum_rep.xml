@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T07_INREP_BH_sum_rep"> 
+  <statement id="getT07_INREP_BH_sum_repSumByOrgan" parameterClass="com.ist.aml.inves.dto.T07_INREP_BH_sum_rep" resultClass="com.ist.aml.inves.dto.T07_INREP_BH_sum_rep"> 
+  select organkey,
+  	case when sum(trans_dc_sys_c) is null then 0 else sum(trans_dc_sys_c) end  as trans_dc_sys_c,
+	case when sum(amt_dc_sys_c) is null then 0 else sum(amt_dc_sys_c) end  as amt_dc_sys_c,
+	case when sum(trans_fc_sys_c) is null then 0 else sum(trans_fc_sys_c) end  as trans_fc_sys_c,
+	case when sum(amt_fc_sys_c) is null then 0 else sum(amt_fc_sys_c) end  as amt_fc_sys_c,
+	case when sum(trans_dc_man_c) is null then 0 else sum(trans_dc_man_c) end  as trans_dc_man_c,
+	case when sum(amt_dc_man_c) is null then 0 else sum(amt_dc_man_c) end  as amt_dc_man_c,
+	case when sum(trans_fc_man_c) is null then 0 else sum(trans_fc_man_c) end  as trans_fc_man_c,
+	case when sum(amt_fc_man_c) is null then 0 else sum(amt_fc_man_c) end  as amt_fc_man_c,
+	case when sum(trans_dc_sys_i) is null then 0 else sum(trans_dc_sys_i) end  as trans_dc_sys_i,
+	case when sum(amt_dc_sys_i) is null then 0 else sum(amt_dc_sys_i) end  as amt_dc_sys_i,
+	case when sum(trans_fc_sys_i) is null then 0 else sum(trans_fc_sys_i) end  as trans_fc_sys_i,
+	case when sum(amt_fc_sys_i) is null then 0 else sum(amt_fc_sys_i) end  as amt_fc_sys_i,
+	case when sum(trans_dc_man_i) is null then 0 else sum(trans_dc_man_i) end  as trans_dc_man_i,
+	case when sum(amt_dc_man_i) is null then 0 else sum(amt_dc_man_i) end  as amt_dc_man_i,
+	case when sum(trans_fc_man_i) is null then 0 else sum(trans_fc_man_i) end  as trans_fc_man_i,
+	case when sum(amt_fc_man_i) is null then 0 else sum(amt_fc_man_i) end  as amt_fc_man_i
+	 from t07_inrep_bh_sum_rep 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="org_ids"> 
+    organkey in ($org_ids$) 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="start_time">
+    <![CDATA[report_dt >= #report_dt_start:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="end_time">
+    <![CDATA[report_dt <= #report_dt_end:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organkey">
+    	organkey=#organkey#
+    </isNotEmpty>
+  </dynamic> 
+  group by organkey
+  order by organkey
+  </statement> 
+ 
+ <statement id="getT07_INREP_BH_sum_repSum" parameterClass="com.ist.aml.inves.dto.T07_INREP_BH_sum_rep" resultClass="com.ist.aml.inves.dto.T07_INREP_BH_sum_rep"> 
+  select 
+  	case when sum(trans_dc_sys_c) is null then 0 else sum(trans_dc_sys_c) end  as trans_dc_sys_c,
+	case when sum(amt_dc_sys_c) is null then 0 else sum(amt_dc_sys_c) end  as amt_dc_sys_c,
+	case when sum(trans_fc_sys_c) is null then 0 else sum(trans_fc_sys_c) end  as trans_fc_sys_c,
+	case when sum(amt_fc_sys_c) is null then 0 else sum(amt_fc_sys_c) end  as amt_fc_sys_c,
+	case when sum(trans_dc_man_c) is null then 0 else sum(trans_dc_man_c) end  as trans_dc_man_c,
+	case when sum(amt_dc_man_c) is null then 0 else sum(amt_dc_man_c) end  as amt_dc_man_c,
+	case when sum(trans_fc_man_c) is null then 0 else sum(trans_fc_man_c) end  as trans_fc_man_c,
+	case when sum(amt_fc_man_c) is null then 0 else sum(amt_fc_man_c) end  as amt_fc_man_c,
+	case when sum(trans_dc_sys_i) is null then 0 else sum(trans_dc_sys_i) end  as trans_dc_sys_i,
+	case when sum(amt_dc_sys_i) is null then 0 else sum(amt_dc_sys_i) end  as amt_dc_sys_i,
+	case when sum(trans_fc_sys_i) is null then 0 else sum(trans_fc_sys_i) end  as trans_fc_sys_i,
+	case when sum(amt_fc_sys_i) is null then 0 else sum(amt_fc_sys_i) end  as amt_fc_sys_i,
+	case when sum(trans_dc_man_i) is null then 0 else sum(trans_dc_man_i) end  as trans_dc_man_i,
+	case when sum(amt_dc_man_i) is null then 0 else sum(amt_dc_man_i) end  as amt_dc_man_i,
+	case when sum(trans_fc_man_i) is null then 0 else sum(trans_fc_man_i) end  as trans_fc_man_i,
+	case when sum(amt_fc_man_i) is null then 0 else sum(amt_fc_man_i) end  as amt_fc_man_i
+	 from t07_inrep_bh_sum_rep 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="org_ids"> 
+    organkey in ($org_ids$) 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="start_time">
+    <![CDATA[report_dt >= #report_dt_start:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="end_time">
+    <![CDATA[report_dt <= #report_dt_end:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organkey">
+    	organkey=#organkey#
+    </isNotEmpty>
+  </dynamic> 
+  
+  </statement> 
+  
+  <statement id="getT07_INREP_BH_sum_repSumCountByOrgan" parameterClass="com.ist.aml.inves.dto.T07_INREP_BH_sum_rep" resultClass="int"> 
+  select count(distinct organkey) from t07_inrep_bh_sum_rep 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="org_ids"> 
+    organkey in ($org_ids$) 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="start_time">
+    <![CDATA[report_dt >= #report_dt_start:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="end_time">
+    <![CDATA[report_dt <= #report_dt_end:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organkey">
+    	organkey=#organkey#
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+ 
+</sqlMap> 
+

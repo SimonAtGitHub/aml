@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_ca_programa"> 
+  <statement id="getT12_ca_programaList" parameterClass="com.ist.cms.dto.T12_ca_programa" resultClass="com.ist.cms.dto.T12_ca_programa"> 
+  select categorykey,categoryname,flag,dispseq,creator,createdate,modifier,modifydate from t12_ca_programa 
+  	<![CDATA[where flag <> '2']]> 
+  <dynamic> 
+    <isNotEmpty prepend="and" property="categoryname"> 
+    	categoryname like '%'||#categoryname#||'%' 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="flag"> 
+    	flag = #flag#
+    </isNotEmpty>     
+  </dynamic>
+  order by dispseq
+  </statement>
+   
+  <statement id="getT12_ca_programaListCount" parameterClass="com.ist.cms.dto.T12_ca_programa" resultClass="int"> 
+  select count(*) from t12_ca_programa 
+  	<![CDATA[
+		where flag <> '2'
+	]]>
+  <dynamic > 
+    <isNotEmpty prepend="and" property="categoryname"> 
+    	categoryname like '%'||#categoryname#||'%' 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="flag"> 
+    	flag = #flag#
+    </isNotEmpty>     
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_ca_programa" parameterClass="com.ist.cms.dto.T12_ca_programa" resultClass="int">
+	insert into T12_ca_programa(
+	categorykey,categoryname,flag,dispseq,creator,createdate
+	) values(
+	#categorykey#,#categoryname#,#flag#,#dispseq#,#creator#,#createdate#
+	) 
+  </statement> 
+ 
+  <statement id="modifyT12_ca_programa" parameterClass="com.ist.cms.dto.T12_ca_programa" resultClass="int"> 
+  	update T12_ca_programa set 
+  		categoryname=#categoryname#,flag=#flag#,dispseq=#dispseq#,modifier=#modifier#,modifydate=#modifydate#
+  	where categorykey=#categorykey# 
+  </statement>
+  <!-- 获取有栏目的类别名称 -->
+  <statement id="getCategoryHasChildren" parameterClass="java.lang.String" 
+  		resultClass="com.ist.cms.dto.T12_ca_programa"> 		
+  		select t1.categorykey,t1.categoryname 
+  			from T12_ca_programa t1,T12_programa t2
+  		where t1.categorykey = t2.categorykey 
+			and t1.categorykey in ($value$)
+		<![CDATA[
+			and t2.flag <> '2'
+		]]>
+  			group by t1.categorykey,t1.categoryname  
+  		<![CDATA[
+  			having count(*)>0
+  		]]>
+  </statement> 
+ <!-- 逻辑删除栏目类别 -->
+ <statement id="deleteT12_ca_programa" parameterClass="com.ist.cms.dto.T12_ca_programa" resultClass="int"> 
+  update T12_ca_programa set 
+  	flag='2',modifier=#modifier#,modifydate=#modifydate#
+  	where categorykey in ($categorykeyString$) 
+  </statement> 
+ 
+  <!-- <statement id="deleteT12_ca_programa" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_ca_programa where categorykey=#value# 
+  </statement> 
+  -->
+  <statement id="getT12_ca_programaDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_ca_programa"> 
+  	select * from T12_ca_programa where categorykey=#value# 
+  </statement> 
+  
+  <statement id="getT12_programaByCategorykey" parameterClass="java.lang.String" resultClass="int"> 
+  	select count(*) from T12_programa where categorykey=#value# and auditstat = '1' 
+  </statement> 
+  
+  <statement id="getAuditCategorykey" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_ca_programa"> 
+  	select distinct t1.categorykey,t1.categoryname  from t12_ca_programa t1 
+  	left join t12_programa t2 on t1.categorykey = t2.categorykey 
+  	where t2.auditstat = '1' and t1.categorykey in ($value$)
+  </statement>
+ 
+</sqlMap> 
+

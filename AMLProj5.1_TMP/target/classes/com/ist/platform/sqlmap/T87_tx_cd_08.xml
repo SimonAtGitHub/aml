@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T87_tx_cd">
+	<statement id="getT87_pbc_countryDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.platform.dto.T87_tx_cd">
+		SELECT * FROM T87_PBC_COUNTRY WHERE COUNTRYEKEY=#value#
+	</statement>
+	<statement id="insertT87_pbc_country" parameterClass="com.ist.platform.dto.T87_tx_cd"
+		resultClass="int">
+		INSERT INTO T87_PBC_COUNTRY(
+		COUNTRYEKEY,COUNTRYDKEY,COUNTRYSKEY,COUNTRYCSNAME,COUNTRYESNAME,COUNTRYCFNAME,COUNTRYEFNAME,FLAG,CREATE_DT
+		) VALUES(
+		#countryekey#,#countrydkey#,#countryskey#,#countrycsname#,#countryesname#,#countrycfname#,#countryefname#,#flag#,#create_dt:DATE#
+		) 
+  </statement>
+	<statement id="modifyT87_pbc_country" parameterClass="com.ist.platform.dto.T87_tx_cd"
+		resultClass="int">
+		UPDATE T87_PBC_COUNTRY SET
+		COUNTRYEKEY=#countryekey#,COUNTRYDKEY=#countrydkey#,COUNTRYCSNAME=#countrycsname#,
+		COUNTRYESNAME=#countryesname#,COUNTRYCFNAME=#countrycfname#,COUNTRYEFNAME=#countryefname#,CREATE_DT=#create_dt:DATE#
+		WHERE COUNTRYEKEY=#countryekey# 
+  </statement>
+
+	<statement id="getT87_exchange_rateDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.platform.dto.T87_tx_cd">
+		SELECT * FROM T87_EXCHANGE_RATE WHERE
+		CURRENCY_SYMBOL=#value# 
+  </statement>
+	<statement id="insertT87_exchange_rate" parameterClass="com.ist.platform.dto.T87_tx_cd"
+		resultClass="int">
+		INSERT INTO T87_EXCHANGE_RATE(
+		CURRENCY_CD,CURRENCY_SYMBOL,CURRENCY_NAME,RMB_FX_RATE,USD_FX_RATE,CURRENCY_UNIT,CREATE_DT
+		) VALUES(
+		#currency_cd#,#currency_symbol#,#currency_name#,#rmb_fx_rate#,#usd_fx_rate#,#currency_unit#,#create_dt:DATE#
+		) 
+  </statement>
+	<statement id="modifyT87_exchange_rate" parameterClass="com.ist.platform.dto.T87_tx_cd"
+		resultClass="int">
+		UPDATE T87_EXCHANGE_RATE SET
+		CURRENCY_CD=#currency_cd#,USD_FX_RATE=#usd_fx_rate#,RMB_FX_RATE=#rmb_fx_rate#,CURRENCY_UNIT=#currency_unit#,CREATE_DT=#create_dt:DATE#
+		WHERE CURRENCY_SYMBOL=#currency_symbol# 
+  </statement>
+	<statement id="getT87_pbc_crtpDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.platform.dto.T87_tx_cd">
+		SELECT * FROM T87_PBC_CRTP WHERE CRTPKEY=#value#
+	</statement>
+	<statement id="insertT87_pbc_crtp" parameterClass="com.ist.platform.dto.T87_tx_cd"
+		resultClass="int">
+		INSERT INTO T87_PBC_CRTP(
+		CRTPKEY,CRTPDKEY,CRTPNAME
+		)
+		VALUES(
+		#crtpkey#,#crtpdkey#,#crtpname#
+		) 
+  </statement>
+	<statement id="modifyT87_pbc_crtp" parameterClass="com.ist.platform.dto.T87_tx_cd"
+		resultClass="int">
+		UPDATE T87_PBC_CRTP SET
+		CRTPKEY=#crtpkey#,CRTPDKEY=#crtpdkey#,CRTPNAME=#crtpname#
+		WHERE
+		CRTPKEY=#crtpkey# 
+  </statement>
+	<statement id="getT87_pbc_areaDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.platform.dto.T87_tx_cd">
+		SELECT * FROM T87_PBC_AREA WHERE PBC_AREAKEY=#value#
+	</statement>
+	<statement id="insertT87_pbc_area" parameterClass="com.ist.platform.dto.T87_tx_cd"
+		resultClass="int">
+		INSERT INTO T87_PBC_AREA(
+		pbc_areakey,pbc_arealayer,pbc_up_areakey,pbc_areaname
+		) VALUES(
+		#pbc_areakey#,#pbc_arealayer#,#pbc_up_areakey#,#pbc_areaname#
+		)
+	</statement>
+	<statement id="modifyT87_pbc_area" parameterClass="com.ist.platform.dto.T87_tx_cd"
+		resultClass="int">
+		UPDATE T87_PBC_AREA SET
+		PBC_AREAKEY=#pbc_areakey#,PBC_AREALAYER=#pbc_arealayer#,PBC_UP_AREAKEY=#pbc_up_areakey#,PBC_AREANAME=#pbc_areaname#
+		WHERE PBC_AREAKEY=#pbc_areakey# 
+  </statement>
+	<statement id="getT87_pbc_tsctDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.platform.dto.T87_tx_cd">
+		SELECT * FROM T87_PBC_TSCT WHERE TSCTKEY=#value#
+	</statement>
+	<statement id="insertT87_pbc_tsct" parameterClass="com.ist.platform.dto.T87_tx_cd"
+		resultClass="int">
+		INSERT INTO T87_PBC_TSCT(
+		TSCTKEY,TSCTNAME,UP_TSCTKEY,TSCT_LEVEL
+		) VALUES(
+		#tsctkey#,#tsctname#,#up_tsctkey#,#tsct_level#
+		) 
+  </statement>
+	<statement id="modifyT87_pbc_tsct" parameterClass="com.ist.platform.dto.T87_tx_cd"
+		resultClass="int">
+		UPDATE T87_PBC_TSCT SET
+		TSCTKEY=#tsctkey#,TSCTNAME=#tsctname#,UP_TSCTKEY=#up_tsctkey#,TSCT_LEVEL=#tsct_level#
+		WHERE TSCTKEY=#tsctkey#
+  </statement>
+
+	<!-- t87_tx_cd -->
+	<statement id="getT87_tx_cdList" parameterClass="com.ist.platform.dto.T87_tx_cd"
+		resultClass="com.ist.platform.dto.T87_tx_cd">
+		SELECT TX_CD,TX_NAME,TX_DES,FLAG,TX_FALG ,TX_TEAM FROM T87_TX_CD
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="tx_cd">
+				TX_CD = #tx_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_name_s">
+				TX_NAME LIKE #tx_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_des">
+				TX_DES = #tx_des#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="flag">
+				FLAG = #flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_falg">
+				TX_FALG = #tx_falg#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_team">
+				TX_TEAM = #tx_team#
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY TX_CD
+	</statement>
+
+	<statement id="getT87_tx_cdListCount" parameterClass="com.ist.platform.dto.T87_tx_cd"
+		resultClass="int">
+		SELECT COUNT(*) FROM T87_TX_CD
+		<dynamic prepend="where">
+			<isNotEmpty prepend="AND" property="tx_cd">
+				TX_CD = #tx_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_name_s">
+				TX_NAME LIKE #tx_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_des">
+				TX_DES = #tx_des#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="flag">
+				FLAG = #flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_falg">
+				TX_FALG = #tx_falg#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_team">
+				TX_TEAM = #tx_team#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="getT87_tx_cdDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.platform.dto.T87_tx_cd">
+		SELECT * FROM T87_TX_CD WHERE TX_CD=#value# 
+  	</statement>
+
+	<statement id="insertT87_tx_cd" parameterClass="com.ist.platform.dto.T87_tx_cd" resultClass="int">
+		INSERT INTO T87_TX_CD(
+		TX_CD,TX_NAME,TX_DES,FLAG,TX_FALG,TX_TEAM
+		) VALUES(
+		#tx_cd#,#tx_name#,#tx_name#,#flag#,#tx_falg#,#tx_team#
+		) 
+  	</statement>
+
+	<statement id="modifyT87_tx_cd" parameterClass="com.ist.platform.dto.T87_tx_cd" resultClass="int">
+		UPDATE T87_TX_CD SET
+		TX_CD=#tx_cd#,TX_NAME=#tx_name#,TX_DES=#tx_name#,FLAG=#flag#, TX_FALG
+		= #tx_falg# ,
+		TX_TEAM = #tx_team#
+		WHERE TX_CD=#tx_cd# 
+  	</statement>
+
+	<statement id="shiftT87_tx_cd" parameterClass="com.ist.platform.dto.T87_tx_cd" resultClass="int">
+		UPDATE T87_TX_CD SET
+		FLAG=#flag#
+		WHERE TX_CD=#tx_cd#
+	</statement>
+
+</sqlMap> 
+

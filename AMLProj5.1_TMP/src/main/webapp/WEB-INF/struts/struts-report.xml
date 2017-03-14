@@ -1,0 +1,1748 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!-- 基础管理平台模块配置 -->
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+	<data-sources />
+	<form-beans>
+		<form-bean name="t47_transactionActionForm"
+			type="com.ist.aml.report.controller.T47_transactionActionForm" />
+		<form-bean name="t47_partyActionForm"
+			type="com.ist.aml.report.controller.T47_partyActionForm" />
+		<form-bean name="t07_post_operatorActionForm"
+			type="com.ist.aml.report.controller.T07_post_operatorActionForm" />
+		<form-bean name="t07_case_applicationActionForm"
+			type="com.ist.aml.report.controller.T07_case_applicationActionForm" />
+		<form-bean name="t07_app_movefateActionForm"
+			type="com.ist.aml.report.controller.T07_app_movefateActionForm" />
+		<form-bean name="t07_alert_attachActionForm"
+			type="com.ist.aml.report.controller.T07_alert_attachActionForm" />
+		<form-bean name="t07_case_alert_adviActionForm"
+			type="com.ist.aml.report.controller.T07_case_alert_adviActionForm" />
+		<form-bean name="t07_case_AssistActionForm"
+			type="com.ist.aml.report.controller.T07_case_AssistActionForm" />
+		<form-bean name="t10_trans_analysisActinForm"
+			type="com.ist.aml.report.controller.T10_trans_analysisActinForm"></form-bean>
+		<form-bean name="t10_capital_chainActionForm"
+			type="com.ist.aml.report.controller.T10_capital_chainActionForm"></form-bean>
+		<form-bean name="t10_check_cust_cardForm"
+			type="com.ist.aml.report.controller.T10_check_cust_cardActionForm"></form-bean>
+		<form-bean name="t47_cp_depositActionForm"
+			type="com.ist.aml.inves.controller.T47_cp_depositActionForm" />
+		<form-bean name="t08_party_resultActionForm"
+			type="com.ist.aml.risk.controller.T08_party_resultActionForm" />
+		<form-bean name="T07_nbs_ctifActionForm"
+			type="com.ist.aml.report.controller.T07_nbs_ctifActionForm" />
+		<form-bean name="t07_nbh_tsdtActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_nbh_tsdtActionForm" />
+		<form-bean name="t07_reportActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_reportActionForm" />
+		<form-bean name="t07_obj_ruleActionForm"
+			type="com.ist.aml.report.controller.T07_OBJ_RULEActionForm" />
+		<form-bean name="t07_blacklistActionForm"
+			type="com.ist.aml.report.controller.T07_BlacklistActionForm" />
+		<form-bean name="t07_report_by_organActionForm"
+			type="com.ist.aml.report.controller.T07_report_by_organActionForm" />
+		<form-bean name="t10_check_cust_keForm" type="com.ist.aml.report.controller.T10_check_cust_keActionForm"></form-bean>
+        <form-bean name="t10_check_cust_resultActionForm" type="com.ist.aml.report.controller.T10_check_cust_resultActionForm"></form-bean>
+        <form-bean name="t47_OPP_bankActionForm" type="com.ist.aml.information.controller.T47_OPP_bankActionForm" />
+        <form-bean name="t10_checkpartyActionForm" type="com.ist.aml.cust_identify.controller.T10_checkpartyActionForm"></form-bean>
+        <form-bean name="t10_checkparty_funActionForm" type="com.ist.aml.cust_identify.controller.T10_checkparty_funActionForm"></form-bean>
+        <form-bean name="t10_party_cretalActionForm" type="com.ist.aml.cust_identify.controller.T10_party_cretalActionForm"></form-bean>
+        <form-bean name="t47_Opp_infoActionForm" type="com.ist.aml.information.controller.T47_Opp_infoActionForm"></form-bean>
+        <form-bean name="t07_report_organActionForm" type="com.ist.aml.report.controller.T07_report_organActionForm"/>
+        <form-bean name="t13_mfa_nbActionForm" type="com.ist.aml.nb.controller.T13_mfa_nbActionForm"></form-bean>
+        <form-bean name="t13_mfa_nbActionForm" type="com.ist.aml.nb.controller.T13_mfa_nbActionForm"></form-bean>
+
+        <form-bean name="t07_attention_libActionForm" type="com.ist.aml.report.controller.T07_ATTENTION_libActionForm"/>
+        <form-bean name="t07_attention_logActionForm" type="com.ist.aml.report.controller.T07_ATTENTION_logActionForm"/> 
+        
+
+        <form-bean name="t10_newClientCheckActionForm" type="com.ist.aml.cust_identify.controller.T10_newClientCheckActionForm"></form-bean>
+
+		<form-bean name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyActionForm"></form-bean>
+        <form-bean name="t07_bh_tsdt_pActinoForm" type="com.ist.aml.report.controller.T07_bh_tsdt_pActinoForm"></form-bean>
+        
+         	</form-beans>
+	<global-exceptions />
+	<global-forwards >	
+	 <forward name="failure" path="/common/errors.jsp"  contextRelative="true"/>
+	</global-forwards>
+	<action-mappings>
+		<!-- 一补 -->
+		<action path="/transaction/t47_alert_transaction_search"
+			parameter="searchT47_alert_transaction" name="t47_transactionActionForm"
+			type="com.ist.aml.report.controller.T47_transactionAction" validate="false"
+			scope="request">
+			<forward name="success" path="/transaction/t47_alert_transaction_search.jsp" />
+		</action>
+		<action path="/transaction/t47_alert_transaction_list"
+			parameter="getT47_alert_transactionList" name="t47_transactionActionForm"
+			type="com.ist.aml.report.controller.T47_transactionAction" validate="false"
+			scope="request">
+			<forward name="success" path="/transaction/t47_alert_transaction_search.jsp" />
+			<forward name="failure" path="/transaction/t47_alert_transaction_search.do" />
+		</action>
+		<action path="/case/t47_transaction_modify" parameter="modifyT47_transaction"
+			name="t47_transactionActionForm" type="com.ist.aml.report.controller.T47_transactionAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t47_transaction_modify.jsp" />
+		</action>
+		<action path="/case/t47_transaction_modify_do" parameter="modifyT47_transactionDo"
+			name="t47_transactionActionForm" type="com.ist.aml.report.controller.T47_transactionAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t47_transaction_modify.do?sucessflag=1" />
+			<forward name="failure" path="/transaction/t47_alert_transaction_list.do" />
+		</action>
+		<!-- 二补 -->
+		<action path="/case/t47_transaction_SE_List1" parameter="getT47_transaction_SE_List1"
+			name="t47_transactionActionForm" type="com.ist.aml.report.controller.T47_transactionAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t47_transaction_SE_List1.jsp" />
+		</action>
+		<action path="/case/t47_transaction_se_modify1" parameter="modifySeT47_transaction1"
+			name="t47_transactionActionForm" type="com.ist.aml.report.controller.T47_transactionAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t47_transaction_se_modify1.jsp" />
+			<forward name="finash" path="/case/finash.jsp" />
+			<forward name="failure" path="/case/t47_transaction_SE_List1.do" />
+		</action>
+		<action path="/case/t47_transaction_se_modify_do1" parameter="saveSecondTransDo1"
+			name="t47_transactionActionForm" type="com.ist.aml.report.controller.T47_transactionAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t47_transaction_se_modify1.do" />			
+		</action>
+		<action path="/case/t47_transaction_se_verify" parameter="modifySeT47_transaction1"
+			name="t47_transactionActionForm" type="com.ist.aml.report.controller.T47_transactionAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t47_transaction_se_verify.jsp" />
+		</action>
+		<action path="/case/t47_transaction_se_verify_do" parameter="saveSecondTransDo1"
+			name="t47_transactionActionForm" type="com.ist.aml.report.controller.T47_transactionAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_reload_parent.jsp" />			
+		</action>
+		<action path="/case/t47case_opp_info_list"
+			parameter="getT47case_Opp_infoList" name="t47_Opp_infoActionForm"
+			type="com.ist.aml.information.controller.T47_Opp_infoAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t47_opp_info_list.jsp" />
+		</action>
+		<action path="/case/t47case_opp_bank_list"
+			parameter="getT47case_Opp_bankList" name="t47_OPP_bankActionForm"
+			type="com.ist.aml.information.controller.T47_OPP_bankAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t47_opp_bank_list.jsp" />
+		</action>
+		<!-- 客户信息 补录-->
+		<action path="/case/t47_party_uc_list" parameter="getT47_party_uc_List"
+			name="t47_partyActionForm" type="com.ist.aml.report.controller.T47_partyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t47_party_uc_list.jsp" />
+		</action>
+		<action path="/case/t47_party_ucmodify" parameter="modifyT47_party_uc"
+			name="t47_partyActionForm" type="com.ist.aml.report.controller.T47_partyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t47_party_uc_validate.jsp" />
+		</action>
+		<action path="/case/savet47_party_ucmodify" parameter="saveT47_party_ucmodify"
+			name="t47_partyActionForm" type="com.ist.aml.report.controller.T47_partyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t47_party_uc_list.do" />
+		</action>
+		<!-- 案例处理 -->
+		<action path="/case/t07_flow_list" parameter="getT07_flowList"
+			name="t07_post_operatorActionForm" type="com.ist.aml.report.controller.T07_flowAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_flow_list.jsp" />
+			<forward name="failure" path="/case/t07_flow_list.jsp" />
+		</action>
+		<action path="/case/t07_flow_workbench" parameter="getT07_workbenchList"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_flowAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_flow_workbench.jsp" />
+		</action>
+		<action path="/case/validate_all_case" parameter="validate_all_case"
+			name="t07_post_operatorActionForm" type="com.ist.aml.report.controller.T07_flowAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_flow_list.do" />
+			<forward name="failure" path="/case/t07_flow_list.do" />
+		</action>
+		<action path="/case/case_disp2" parameter="getT07_caseDisp2"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_disp1.jsp" />
+		</action>
+		<action path="/case/envi_analysis" parameter="getT07_caseAnalysis"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/envi_analysis.jsp" />
+		</action>
+		<action path="/case/stcr_disp" parameter="getT07_stcrDisp"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_stcr_disp.jsp" />
+		</action>
+		<action path="/case/case_advice_more" parameter="getT07_case_adviceMoreDisp"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_advice_more.jsp" />
+			<forward name="failure" path="/case/caseinfo.do" />
+		</action>
+		<action path="/t07_alert_attach/t07_alert_attach_list"
+			parameter="getT07_alert_attachList" name="t07_alert_attachActionForm"
+			type="com.ist.aml.report.controller.T07_alert_attachAction" validate="false"
+			scope="request">
+			<forward name="success" path="/attach/attach_list.jsp" />
+		</action>
+
+		<action path="/case/t07_flow_workbench_task" parameter="searchT07_taskDo"
+			name="t07_post_operatorActionForm" type="com.ist.aml.report.controller.T07_flowAction"
+			validate="false" scope="request">
+		</action>
+		<action path="/case/case_advi_add" parameter="addCase_advi"
+			name="t07_app_movefateActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_advi_modify.jsp" />
+		</action>
+
+		<action path="/case/case_advi_add_do" parameter="addCase_adviDo"
+			name="t07_app_movefateActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_flow_workbench.do" />
+			<forward name="failure" path="/case/case_advi_add.do" />
+		</action>
+		<action path="/case/addT07_case_ky_msg" parameter="addT07_case_ky_msg"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_eidt_case_reason_add.jsp" />
+		</action>
+		<action path="/case/addT07_case_ky_msgDO" parameter="addT07_case_ky_msgDO"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_flow_workbench.do" />
+		</action>
+
+		<action path="/case/stcr_disp" parameter="getT07_stcrDisp"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_stcr_disp.jsp" />
+		</action>
+		<action path="/case/stcr_main_list" parameter="getT07_stcr_main_list"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_stcr_main_list.jsp" />
+		</action>
+		<action path="/case/stcr_party_list" parameter="getT07_stcr_party_list"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_stcr_party_list.jsp" />
+		</action>
+		<action path="/case/stcr_acct_list" parameter="getT07_stcr_acct_list"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_stcr_acct_list.jsp" />
+		</action>
+		<action path="/case/stcr_trans_list" parameter="getT07_stcr_trans_list"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_stcr_trans_list.jsp" />
+		</action>
+		<action path="/case/modifyT07_case_stcr" parameter="modifyT07_case_stcr"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_alert_stcrkey.jsp" />
+		</action>
+
+		<action path="/case/modifyT07_case_stcrDo" parameter="modifyT07_case_stcrDo"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+		</action>
+		<action path="/case/t07_case_stcr_advi_add" parameter="addT07_case_stcr_advi"
+			name="t07_case_alert_adviActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_alert_advi_add1.jsp" />
+		</action>
+
+		<action path="/case/t07_case_stcr_advi_add_do" parameter="addT07_case_stcr_adviDo"
+			name="t07_case_alert_adviActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+		</action>
+		<action path="/case/t07_case_stcr_advi" parameter="getT07_case_stcr_advi"
+			name="t07_case_alert_adviActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_alert_advi_list.jsp" />
+		</action>
+		<action path="/case/addt07_stcr_trans_advi" parameter="addT07_stcr_trans_advi"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_stcr_trans_advi_add.jsp" />
+		</action>
+		<action path="/case/t07_stcr_trans_advi" parameter="modifyT07_stcr_trans_advi"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_reload_parent.jsp" />
+		</action>
+		<action path="/t07_alert_attach/t07_alert_attach_add"
+			parameter="addT07_alert_attach" name="t07_alert_attachActionForm"
+			type="com.ist.aml.report.controller.T07_alert_attachAction" validate="false"
+			scope="request">
+			<forward name="success" path="/attach/attach_add.jsp" />
+			<forward name="failure" path="/t07_alert_attach/t07_alert_attach_list.do" />
+		</action>
+		<action path="/t07_alert_attach/t07_alert_attach_add_do"
+			parameter="addT07_alert_attachDo" name="t07_alert_attachActionForm"
+			type="com.ist.aml.report.controller.T07_alert_attachAction" validate="false"
+			scope="request">
+			<forward name="success" path="/t07_alert_attach/t07_alert_attach_list.do" />
+			<forward name="failure" path="/t07_alert_attach/t07_alert_attach_add.do" />
+		</action>
+		<action path="/t07_alert_attach/t07_alert_attach_delete_do"
+			parameter="deleteT07_alert_attachDo" name="t07_alert_attachActionForm"
+			type="com.ist.aml.report.controller.T07_alert_attachAction" validate="false"
+			scope="request">
+			<forward name="success" path="/t07_alert_attach/t07_alert_attach_list.do" />
+			<forward name="failure" path="/t07_alert_attach/t07_alert_attach_list.do" />
+		</action>
+		<!-- 案例协查 -->
+		<action path="/checkcase/checkcase_list" parameter="checkcase_list"
+			name="t07_case_AssistActionForm" type="com.ist.aml.report.controller.T07_case_AssistAction"
+			validate="false" scope="request">
+			<forward name="success" path="/checkcase/checkcase_list.jsp" />
+			<forward name="failure" path="/checkcase/checkcase_list.jsp" />
+		</action>
+		<action path="/checkcase/addT07_case_Assis" parameter="addT07_case_Assis"
+			name="t07_case_AssistActionForm" type="com.ist.aml.report.controller.T07_case_AssistAction"
+			validate="false" scope="request">
+			<forward name="success" path="/checkcase/checkcase_add.jsp" />
+
+		</action>
+		<action path="/checkcase/addT07_case_AssisDo" parameter="addT07_case_AssisDo"
+			name="t07_case_AssistActionForm" type="com.ist.aml.report.controller.T07_case_AssistAction"
+			validate="false" scope="request">
+			<forward name="success" path="/checkcase/checkcase_list.do" />
+
+		</action>
+		<action path="/checkcase/delT07_case_AssisDo" parameter="delT07_case_AssisDo"
+			name="t07_case_AssistActionForm" type="com.ist.aml.report.controller.T07_case_AssistAction"
+			validate="false" scope="request">
+			<forward name="success" path="/checkcase/checkcase_list.do" />
+
+		</action>
+		<action path="/case/trans_more" parameter="getT07_caseMoreDisp"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_trans_more.jsp" />
+			<forward name="failure" path="/case/caseinfo.do" />
+		</action>
+		<action path="/case/exportTrans_more" parameter="exportT07_caseMoreDisp"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t47_transaction_excel.jsp" />
+			<forward name="failure" path="/case/trans_more.do" />
+		</action>
+
+		<action path="/checkcase/checkcase_list1" parameter="checkcase_list1"
+			name="t07_case_AssistActionForm" type="com.ist.aml.report.controller.T07_case_AssistAction"
+			validate="false" scope="request">
+			<forward name="success" path="/checkcase/checkcase_list1.jsp" />
+			<forward name="failure" path="/checkcase/checkcase_list1.jsp" />
+		</action>
+		<action path="/checkcase/updateT07_case_Assis" parameter="updateT07_case_Assis"
+			name="t07_case_AssistActionForm" type="com.ist.aml.report.controller.T07_case_AssistAction"
+			validate="false" scope="request">
+			<forward name="success" path="/checkcase/t07_case_assis_modify.jsp" />
+
+		</action>
+		<action path="/checkcase/updateT07_case_AssisDo" parameter="updateT07_case_AssisDo"
+			name="t07_case_AssistActionForm" type="com.ist.aml.report.controller.T07_case_AssistAction"
+			validate="false" scope="request">
+			<forward name="success" path="/checkcase/checkcase_list1.do" />
+
+		</action>
+		<action path="/checkcase/delT07_case_AssisDo" parameter="delT07_case_AssisDo"
+			name="t07_case_AssistActionForm" type="com.ist.aml.report.controller.T07_case_AssistAction"
+			validate="false" scope="request">
+			<forward name="success" path="/checkcase/checkcase_list.do" />
+
+		</action>
+		<action path="/checkcase/case_transList1" parameter="getValidatedTrans"
+			name="t47_transactionActionForm" type="com.ist.aml.report.controller.T07_case_AssistAction"
+			validate="false" scope="request">
+			<forward name="success" path="/checkcase/t07_case_trans_list1.jsp" />
+		</action>
+		<!--start add案例交易分析-->
+		<action path="/custcheck/t10_trans_analysis_case" parameter="t10_trans_analysis_caselist"
+			name="t10_trans_analysisActinForm" type="com.ist.aml.report.controller.T10_trans_analysis_caseAction"
+			validate="false" scope="request">
+			<forward name="success" path="/custcheck/t10_trans_analysis_case.jsp" />
+		</action>
+		<action path="/custcheck/t10_trans_analysis_case_main" parameter="analysis_main"
+			name="t10_trans_analysisActinForm" type="com.ist.aml.report.controller.T10_trans_analysis_caseAction"
+			validate="false" scope="request">
+			<forward name="success" path="/custcheck/analysis_main.jsp" />
+		</action>
+		<!--end add案例交易分析-->
+		<!--交易分析-->
+		<action path="/custcheck/t10_cust_trans_analysis" parameter="t10_cust_trans_analysislist"
+			name="t10_trans_analysisActinForm" type="com.ist.aml.report.controller.T10_trans_analysisAction"
+			validate="false" scope="request">
+			<forward name="success" path="/custcheck/t10_trans_analysis.jsp" />
+		</action>
+		<action path="/custcheck/t10_cust_capital_chain" parameter="t10_cust_capital_chainlist"
+			name="t10_capital_chainActionForm" type="com.ist.aml.report.controller.T10_trans_analysisAction"
+			validate="false" scope="request">
+			<forward name="success" path="/custcheck/t10_capital_chain.jsp" />
+		</action>
+		<action path="/custcheck/t10_cust_capital_chain_out" parameter="t10_cust_capital_chain_outlist"
+			name="t10_capital_chainActionForm" type="com.ist.aml.report.controller.T10_trans_analysisAction"
+			validate="false" scope="request">
+			<forward name="success" path="/custcheck/t10_capital_chain_out.jsp" />
+			<forward name="failure" path="/custcheck/t10_capital_chain_out.jsp" />
+		</action>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<action path="/case/partyriskresult_list" parameter="getT08_partyriskresult_list"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/partyriskresult_list.jsp" />
+			
+		</action>
+		<action path="/case/result_disp1" parameter="getT08_party_resultDisp1"
+			name="t08_party_resultActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/result_disp3.jsp" />
+			<forward name="success2" path="/case/result_disp4.jsp" />
+		</action>
+		<action path="/case/verify_T07_oper" parameter="verify_T07_operDo"
+			name="t07_post_operatorActionForm" type="com.ist.aml.report.controller.T07_flowAction"
+			validate="false" scope="request">
+		</action>
+		<action path="/case/t07_flow_workbench_oper" parameter="ad_dT07_operDo"
+			name="t07_post_operatorActionForm" type="com.ist.aml.report.controller.T07_flowAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_flow_list.do?newsearchflag=2" />
+			<forward name="failure" path="/case/t07_flow_list.do?newsearchflag=2" />
+			<forward name="failure1" path="/case/t07_flow_workbench.do" />
+			<forward name="failure2" path="/case/getbath_case_list.do?post_id=P0103" />
+			<forward name="failure3" path="/case/getbath_case_list.do?post_id=P0104" />
+		</action>
+		<action path="/case/modifyT07_appsatus" parameter="modifyT07_appsatusDo"
+			name="t07_post_operatorActionForm" type="com.ist.aml.report.controller.T07_flowAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_flow_list.do?newsearchflag=2" />
+			<forward name="failure" path="/case/t07_flow_list.do?newsearchflag=2" />
+			<forward name="success1" path="/case/t07_flow_workbench.jsp" />
+		</action>
+		<action path="/case/modifyT07_reportStatusDo"
+			parameter="modifyT07_reportStatusDo" name="t07_reportActionForm"
+			type="com.ist.aml.pbcreport.controller.T07_reportAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/case/t07_flow_list.do?newsearchflag=2" />
+		</action>
+		
+		<!-- 批量审核审批 -->
+		<action path="/case/getbath_case_list" parameter="getT07_flowCheckList"
+			name="t07_post_operatorActionForm" type="com.ist.aml.report.controller.T07_flowAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_bathflow_list.jsp" />
+			<forward name="failure" path="/case/t07_bathflow_list.jsp" />
+		</action>
+		<action path="/case/bathMakeReportDo" parameter="bathMakeReportDo"
+			name="t07_post_operatorActionForm" type="com.ist.aml.report.controller.T07_flowAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/getbath_case_list.do" />
+		</action>
+		<action path="/case/bathmodifyT07_appsatusDo" parameter="bathmodifyT07_appsatusDo"
+			name="t07_post_operatorActionForm" type="com.ist.aml.report.controller.T07_flowAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/getbath_case_list.do" />
+		</action>
+		<!-- 可疑案例特殊处理 -->
+		<action path="/case/t07_case_app_ky_list" parameter="getT07_case_app_ky_list"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_app_ky_list.jsp" />
+
+		</action>
+		
+			<action path="/case/t07_case_huifu_commit" parameter="t07_case_huifu_commit"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_app_ky_list.do" />
+            <forward name="failure" path="/case/t07_case_app_ky_list.jsp" />
+		</action>
+
+		<action path="/case/t07_case_app_ky_paichu_or_huifu" parameter="t07_case_app_ky_paichu_or_huifu"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_app_ky_list.do" />
+
+		</action>
+		<!-- 新增交易 -->
+
+		<action path="/transaction/new_trans_list" parameter="getT47_transaction_newList"
+			name="t47_transactionActionForm" type="com.ist.aml.report.controller.T47_transactionAction"
+			validate="false" scope="request">
+			<forward name="success" path="/transaction/new_trans_list.jsp" />
+		</action>
+		<action path="/transaction/new_trans_new" parameter="case_new_trans_add"
+			name="t47_transactionActionForm" type="com.ist.aml.report.controller.T47_transactionAction"
+			validate="false" scope="request">
+			<forward name="success" path="/transaction/new_trans_new.jsp" />
+		</action>
+		<action path="/transaction/new_trans_new_do" parameter="case_new_trans_add_do"
+			name="t47_transactionActionForm" type="com.ist.aml.report.controller.T47_transactionAction"
+			validate="false" scope="request">
+			<forward name="success" path="/transaction/new_trans_list.do" />
+		</action>
+		<action path="/transaction/new_trans_delete" parameter="case_new_trans_delete_do"
+			name="t47_transactionActionForm" type="com.ist.aml.report.controller.T47_transactionAction"
+			validate="false" scope="request">
+			<forward name="success" path="/transaction/new_trans_list.do" />
+			<forward name="failure" path="/transaction/new_trans_list.do" />
+		</action>
+		<!--新增案例 -->
+		<action path="/case/t07_case_app_add_ky_n" parameter="getT07_case_app_add_ky_n"
+			name="T07_nbs_ctifActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_app_add_ky_n.jsp" />
+
+		</action>
+
+		<action path="/case/t07_case_app_add_ky_n_comp" parameter="getT07_case_app_add_ky_n_comp"
+			name="T07_nbs_ctifActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_app_add_ky_n.do" />
+			<forward name="failure" path="/case/t07_case_app_add_ky_n.do?refresh=false" />
+		</action>
+
+		<action path="/case/t07_case_app_add_ky_c" parameter="getT07_case_app_add_ky_c"
+			name="T07_nbs_ctifActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_app_add_ky_c.jsp" />
+
+		</action>
+		<action path="/case/t07_case_app_add_ky_c_page" parameter="getT07_nbsreportList"
+			name="t07_reportActionForm" type="com.ist.aml.pbcreport.controller.T07_reportAction"
+
+			validate="false" scope="request">
+
+			<forward name="success" path="/case/t07_case_app_add_ky_c_page.jsp" />
+
+		</action>
+		<action path="/case/t07_case_app_add_ky_c_comp" parameter="T07_caseErrorKy_add"
+			name="t07_reportActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+
+			validate="false" scope="request">
+
+			<forward name="success" path="/case/t07_case_app_add_ky_c.do" />
+
+		</action>
+
+		<action path="/case/t07_case_app_add_de_n" parameter="getT07_case_app_add_de_n"
+			name="T07_nbs_ctifActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_app_add_de_n.jsp" />
+
+		</action>
+
+		<action path="/case/t07_case_app_add_de_n_comp" parameter="getT07_case_app_add_de_n_comp"
+			name="T07_nbs_ctifActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_app_add_de_n.do" />
+			<forward name="failure" path="/case/t07_case_app_add_de_n.do?refresh=false" />
+		</action>
+
+		<action path="/case/t07_case_app_add_de_c" parameter="getT07_case_app_add_de_c"
+			name="T07_nbs_ctifActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_app_add_de_c.jsp" />
+
+		</action>
+		<action path="/case/t07_case_app_add_de_c_page" parameter="getT07_nbh_tsdtList_R"
+			name="t07_nbh_tsdtActionForm" type="com.ist.aml.pbcreport.controller.T07_nbh_tsdtAction"
+
+			validate="false" scope="request">
+
+			<forward name="success" path="/case/t07_case_app_add_de_c_page.jsp" />
+
+		</action>
+
+		<action path="/case/t07_case_app_add_de_c_comp" parameter="T07_caseErrorDeDo_add"
+			name="t07_nbh_tsdtActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_app_add_de_c.do" />
+		</action>
+
+		<action path="/case/t07_case_app_add_de_d" parameter="getT07_case_app_add_de_d"
+			name="T07_nbs_ctifActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_app_add_de_d.jsp" />
+
+		</action>
+
+		<action path="/case/t07_case_app_add_de_d_page" parameter="getT07_nbh_tsdtList_R"
+			name="t07_nbh_tsdtActionForm" type="com.ist.aml.pbcreport.controller.T07_nbh_tsdtAction"
+
+			validate="false" scope="request">
+
+			<forward name="success" path="/case/t07_case_app_add_de_d_page.jsp" />
+
+		</action>
+
+		<action path="/case/t07_case_app_add_de_d_comp" parameter="T07_caseDeleteDo_add"
+			name="t07_reportActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_app_add_de_d.do" />
+		</action>
+		<!-- add by lijie 2013-8-1 -->
+		<action path="/case/t07_case_app_add_party" parameter="getT07_case_app_add_partyList"
+			name="t47_partyActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_app_add_party.jsp" />
+		</action>
+		<action path="/case/t07_case_app_add_party_del" parameter="delT07_case_app_add_partyList"
+			name="t47_partyActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_app_add_party.do" />
+
+		</action>
+		<!-- 
+		<action path="/case/t07_case_app_add_party_page" parameter="getT47_partyComm"
+			name="t47_partyActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_app_add_party_page.jsp" />
+		</action>
+		
+		<action path="/case/t07_case_app_add_party_page_add" parameter="addT07_case_app_add_partyList"
+			name="t47_partyActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/case/result.jsp" />
+		</action>
+		 -->
+		
+		<action path="/case/t07_case_app_add_party_page_new" parameter="case_new_party_add"
+			name="t47_partyActionForm" type="com.ist.aml.report.controller.T47_partyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_app_add_party_new.jsp" />
+		</action>
+
+		<action path="/case/t07_case_app_add_party_page_new_do"  parameter="case_new_party_add_do"
+			name="t47_partyActionForm" type="com.ist.aml.report.controller.T47_partyAction" validate="false"
+			scope="request">
+			<forward name="success" path="/case/result.jsp" />
+		</action>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<action path="/case/t07_case_app_add_trans" parameter="getT07_case_app_add_transList"
+			name="t47_transactionActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_app_add_trans.jsp" />
+		</action>
+		<action path="/case/t07_case_app_add_trans_del" parameter="delT07_case_app_add_transList"
+			name="t47_transactionActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_app_add_trans.do" />
+
+		</action>
+		<action path="/case/t07_case_app_add_trans_page" parameter="searchT47_transaction"
+			name="t47_transactionActionForm" type="com.ist.aml.report.controller.T47_transactionAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_app_add_trans_page.jsp" />
+		</action>
+
+		<action path="/case/t07_case_app_add_trans_page_query"
+			parameter="getT47_transactionList2" name="t47_transactionActionForm"
+			type="com.ist.aml.report.controller.T47_transactionAction" validate="false"
+			scope="request">
+			<forward name="success" path="/case/t07_case_app_add_trans_page.jsp" />
+
+		</action>
+        <action path="/case/t07_case_app_add_trans_tpla"
+			parameter="getT47_transactionList_tpla" name="t47_transactionActionForm"
+			type="com.ist.aml.report.controller.T47_transactionAction" validate="false"
+			scope="request">
+			<forward name="success" path="/case/t07_case_app_add_trans_tpla.jsp" />
+		</action>
+		<action path="/case/t07_case_app_add_trans_tpla_addDo"
+			parameter="getT47_transactionList_tpla_addDo" name="t47_transactionActionForm"
+			type="com.ist.aml.report.controller.T47_transactionAction" validate="false"
+			scope="request">
+			<forward name="success" path="/case/t07_case_reload_tpla.jsp" />
+		</action>
+		<action path="/case/t07_case_app_add_trans_page_add" parameter="addT07_case_app_add_transList"
+			name="t47_transactionActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/case/t07_case_app_add_trans_page.do?searchtype=all" />
+
+		</action>
+		<action path="/case/t47_party_list_bs" parameter="getT47_partyComm"
+			name="t47_partyActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t47_party_search_bs.jsp" />
+		</action>
+
+		<action path="/case/t07_case_app_add_trans_page_new" parameter="case_new_trans_add"
+			name="t47_transactionActionForm" type="com.ist.aml.report.controller.T47_transactionAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/t07_case_app_add_trans_new.jsp" />
+		</action>
+
+		<action path="/case/t07_case_app_add_trans_page_new_do"
+			parameter="case_new_trans_add_do" name="t47_transactionActionForm"
+			type="com.ist.aml.report.controller.T47_transactionAction" validate="false"
+			scope="request">
+			<forward name="success" path="/case/reload_parent.jsp" />
+		</action>
+		<!-- mingdan start -->
+		<action path="/listmanager/t07_obj_rule_list_look" parameter="getT07_OBJ_RULEList"
+			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_obj_rule_list_look.jsp" />
+		</action>
+
+		<action path="/listmanager/t07_obj_rule_list" parameter="getT07_OBJ_RULEList"
+			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_obj_rule_list.jsp" />
+		</action>
+
+		<action path="/listmanager/t07_obj_rule_disp" parameter="getT07_OBJ_RULEDisp"
+			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_obj_rule_disp.jsp" />
+		</action>
+
+		<action path="/listmanager/t07_blacklist_list_look" parameter="getT07_BlacklistList"
+			name="t07_blacklistActionForm" type="com.ist.aml.report.controller.T07_BlacklistAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_blacklist_list_look.jsp" />
+		</action>
+
+		<action path="/listmanager/t07_blacklist_list" parameter="getT07_BlacklistList"
+			name="t07_blacklistActionForm" type="com.ist.aml.report.controller.T07_BlacklistAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_blacklist_list.jsp" />
+		</action>
+
+		<action path="/listmanager/t07_blacklist_disp" parameter="getT07_BlacklistDisp"
+			name="t07_blacklistActionForm" type="com.ist.aml.report.controller.T07_BlacklistAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_blacklist_disp.jsp" />
+		</action>
+
+		<action path="/listmanager/t07_obj_rule_add" parameter="addT07_OBJ_RULE"
+			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_obj_rule_add.jsp" />
+			<forward name="failure" path="/listmanager/t07_obj_rule_list.do" />
+		</action>
+
+		<action path="/listmanager/t07_obj_rule_add_do" parameter="addT07_OBJ_RULEDo"
+			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_obj_rule_list.do" />
+			<forward name="success1" path="/listmanager/t07_obj_rule_list_check.do" />
+			<forward name="failure" path="/listmanager/t07_obj_rule_add.do" />
+		</action>
+
+		<action path="/listmanager/t07_obj_rule_modify" parameter="modifyT07_OBJ_RULE"
+			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_obj_rule_modify.jsp" />
+			<forward name="failure" path="/listmanager/t07_obj_rule_list.do" />
+		</action>
+
+		<action path="/listmanager/t07_obj_rule_modify_do" parameter="modifyT07_OBJ_RULEDo"
+			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_obj_rule_list.do" />
+			<forward name="success1" path="/listmanager/t07_obj_rule_list_check.do" />
+			<forward name="failure" path="/listmanager/t07_obj_rule_modify.do" />
+		</action>
+		
+		<action path="/listmanager/t07_obj_rule_delete_do"
+			parameter="deleteT07_OBJ_RULEDo" name="t07_obj_ruleActionForm"
+			type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/listmanager/t07_obj_rule_list.do" />
+			<forward name="failure"
+				path="/listmanager/t07_obj_rule_list.do" />
+		</action>
+
+		<action path="/listmanager/t07_obj_rule_list_inport" parameter="inportT07_OBJ_RULEDo"
+			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_obj_rule_list.do" />
+			<forward name="failure" path="/listmanager/t07_obj_rule_list.do" />
+		</action>
+	
+		<action path="/listmanager/t07_obj_rule_update_disp" parameter="getT07_OBJ_RULEDisp"
+			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_obj_rule_update_disp.jsp" />
+		</action>
+
+		<action path="/listmanager/t07_blacklist_add" parameter="addT07_Blacklist"
+			name="t07_blacklistActionForm" type="com.ist.aml.report.controller.T07_BlacklistAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_blacklist_add.jsp" />
+			<forward name="failure" path="/listmanager/t07_blacklist_list.do" />
+		</action>
+
+		<action path="/listmanager/t07_blacklist_add_do" parameter="addT07_BlacklistDo"
+			name="t07_blacklistActionForm" type="com.ist.aml.report.controller.T07_BlacklistAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_blacklist_list.do" />
+			<forward name="success1" path="/listmanager/t07_blacklist_list_check.do" />
+			<forward name="failure" path="/listmanager/t07_blacklist_add.do" />
+		</action>
+
+		<action path="/listmanager/t07_blacklist_modify" parameter="modifyT07_Blacklist"
+			name="t07_blacklistActionForm" type="com.ist.aml.report.controller.T07_BlacklistAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_blacklist_modify.jsp" />
+			<forward name="failure" path="/listmanager/t07_blacklist_list.do" />
+		</action>
+
+		<action path="/listmanager/t07_blacklist_modify_do" parameter="modifyT07_BlacklistDo"
+			name="t07_blacklistActionForm" type="com.ist.aml.report.controller.T07_BlacklistAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_blacklist_list.do" />
+			<forward name="success1" path="/listmanager/t07_blacklist_list_check.do" />
+			<forward name="failure" path="/listmanager/t07_blacklist_modify.do" />
+		</action>
+
+		<action path="/listmanager/t07_grey_list" parameter="getT07_grey_list"
+			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_grey_list.jsp" />
+		</action>
+
+		<action path="/listmanager/t07_grey_add" parameter="addT07_grey"
+			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_grey_add.jsp" />
+			<forward name="failure" path="/listmanager/t07_grey_list.do" />
+		</action>
+
+		<action path="/listmanager/t07_grey_add_do" parameter="addT07_greyDo"
+			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_grey_list.do" />
+			<forward name="failure" path="/listmanager/t07_grey_add.do" />
+		</action>
+
+		<action path="/listmanager/t07_grey_modify" parameter="modifyT07_grey"
+			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_grey_modify.jsp" />
+			<forward name="failure" path="/listmanager/t07_grey_list.do" />
+		</action>
+		<action path="/listmanager/t07_grey_modify_do" parameter="modifyT07_greyDo"
+			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_grey_list.do" />
+			<forward name="failure" path="/listmanager/t07_grey_modify.do" />
+		</action>
+
+		<action path="/listmanager/t07_blacklist_delete_do" parameter="deleteT07_BlacklistDo"
+			name="t07_blacklistActionForm" type="com.ist.aml.report.controller.T07_BlacklistAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_blacklist_list.do" />
+			<forward name="failure" path="/listmanager/t07_blacklist_list.do" />
+		</action>
+
+		<action path="/listmanager/t07_blacklist_inport" parameter="inportT07_BlacklistDo"
+			name="t07_blacklistActionForm" type="com.ist.aml.report.controller.T07_BlacklistAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_blacklist_list.do" />
+			<forward name="failure" path="/listmanager/t07_blacklist_list.do" />
+		</action>
+		
+		<action path="/listmanager/t07_blacklist_export" parameter="exportT07_BlacklistDo"
+			name="t07_blacklistActionForm" type="com.ist.aml.report.controller.T07_BlacklistAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_blacklist_list_excel.jsp" />
+			<forward name="failure" path="/listmanager/t07_blacklist_list.do" />
+		</action>
+
+		<action path="/listmanager/t07_obj_rule_list_check0" parameter="getT07_OBJ_RULE_CHECKList"
+			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_obj_rule_check0.jsp" />
+		</action>
+
+		<action path="/listmanager/t07_obj_rule_modify_check0"
+			parameter="modifyT07_OBJ_RULEDo_check0" name="t07_obj_ruleActionForm"
+			type="com.ist.aml.report.controller.T07_OBJ_RULEAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/listmanager/t07_obj_rule_list_check0.do?checkflag=check0" />
+			<forward name="failure"
+				path="/listmanager/t07_obj_rule_list_check0.do?checkflag=check0" />
+		</action>
+
+		<action path="/listmanager/t07_obj_rule_list_check" parameter="getT07_OBJ_RULE_CHECKList"
+			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_obj_rule_check.jsp" />
+		</action>
+
+		<action path="/listmanager/t07_obj_rule_modify_check"
+			parameter="modifyT07_OBJ_RULEDo_check" name="t07_obj_ruleActionForm"
+			type="com.ist.aml.report.controller.T07_OBJ_RULEAction" validate="false"
+			scope="request">
+			<forward name="success" path="/listmanager/t07_obj_rule_list_check.do" />
+			<forward name="failure" path="/listmanager/t07_obj_rule_list_check.do" />
+		</action>
+		<!-- mingdan end -->
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<action path="/custcheck/t10_check_cust_show" parameter="get_survey_cust_info"
+			name="t10_check_cust_cardForm" type="com.ist.aml.report.controller.T10_check_custAction"
+			validate="false" scope="request">
+			<forward name="successI" path="/custcheck/t10_check_cust_showI.jsp" />
+			<forward name="successC" path="/custcheck/t10_check_cust_showC.jsp" />
+		</action>
+		<action path="/custcheck/t10_check_acctlist" parameter="get_check_acctlist"
+			name="t47_cp_depositActionForm" type="com.ist.aml.report.controller.T10_check_custAction"
+			validate="false" scope="request">
+			<forward name="success" path="/custcheck/t10_check_cust_acct.jsp" />
+		</action>
+		<!-- add by lijie -->
+		<action path="/custcheck/show_t10_check_cust_acct"
+			parameter="show_t10_check_cust_acct" name="t10_check_cust_cardForm"
+			type="com.ist.aml.report.controller.T10_check_custAction"
+			validate="false" scope="request">
+			<forward name="success" path="/custcheck/show_t10_check_cust_acct.jsp" />
+		</action>
+		
+		<action path="/custcheck/t10_check_cust_caselist" parameter="get_check_cust_caselist"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T10_check_custAction"
+			validate="false" scope="request">
+			<forward name="success" path="/custcheck/t10_check_cust_case.jsp" />
+		</action>
+			<action path="/custcheck/t10_check_cust_kelist"
+			parameter="t10_check_cust_kelist" name="t10_check_cust_keForm"
+			type="com.ist.aml.report.controller.T10_check_custAction"
+			validate="false" scope="request">
+			<forward name="success"	path="/custcheck/t10_check_cust_kelist.jsp" />
+		</action>
+		<action path="/custcheck/t10_cust_risk_main"
+			parameter="t10_cust_risk_main" name="t10_check_cust_cardForm"
+			type="com.ist.aml.report.controller.T10_check_custAction"
+			validate="false" scope="request">
+			<forward name="success"	path="/custcheck/t10_cust_risk_main.jsp" />
+		</action>
+		<action path="/custcheck/t10_cust_risk_main1"
+			parameter="t10_cust_risk_main" name="t10_check_cust_cardForm"
+			type="com.ist.aml.report.controller.T10_check_custAction"
+			validate="false" scope="request">
+			<forward name="success"	path="/custcheck/t10_cust_risk_main1.jsp" />
+		</action>
+		<action path="/custcheck/t10_survey_cust_risk"
+			parameter="get_check_cust_infolist" name="t10_check_cust_cardForm"
+			type="com.ist.aml.report.controller.T10_check_custAction"
+			validate="false" scope="request">
+			<forward name="successC"	path="/custcheck/t10_check_cust_info.jsp" />
+			<forward name="successI"	path="/custcheck/t10_check_cust_infoI.jsp" />
+		</action>
+			<action path="/custcheck/modifyT10_colu"
+			parameter="modifyT10_coluall" name="t10_check_cust_cardForm"
+			type="com.ist.aml.report.controller.T10_check_custAction"
+			validate="false" scope="request">
+			<forward name="success"	path="/custcheck/t10_check_cust_all.jsp" />
+		</action>
+		<action path="/custcheck/delT10_colu"
+			parameter="delT10_coluall" name="t10_check_cust_cardForm"
+			type="com.ist.aml.report.controller.T10_check_custAction"
+			validate="false" scope="request">
+		</action>
+		
+       <action path="/custcheck/t47_client_modify_do"
+			parameter="t47_client_modify_do" name="t10_check_cust_cardForm"
+			type="com.ist.aml.report.controller.T10_check_custAction"
+			validate="false" scope="request">
+			<forward name="success"	path="/custcheck/t10_survey_cust_risk.do" />
+			
+		</action>
+		<action path="/custcheck/t10_add_cust_do"
+			parameter="t10_add_cust_do" name="t10_check_cust_cardForm"
+			type="com.ist.aml.report.controller.T10_check_custAction"
+			validate="false" scope="request">
+			<forward name="success"	path="/custcheck/modifyT10_colu.do" />
+			
+		</action>
+		<action path="/custcheck/modifyT10_check_info_result"
+			parameter="modifyT10_check_info_result" name="t10_check_cust_cardForm"
+			type="com.ist.aml.report.controller.T10_check_custAction"
+			validate="false" scope="request">
+			<forward name="success"	path="/custcheck/t10_check_info_result.jsp" />
+			
+		</action>
+		<action path="/custcheck/modifyT10_colu_result"
+			parameter="modifyT10_colu_result" name="t10_check_cust_cardForm"
+			type="com.ist.aml.report.controller.T10_check_custAction"
+			validate="false" scope="request">
+			<forward name="white"	path="/custcheck/t10_check_info_whiteresult.jsp" />
+			<forward name="black"	path="/custcheck/t10_check_info_blackresult.jsp" />
+			<forward name="success"	path="/custcheck/modifyT10_check_info_result.do" />
+			
+		</action>
+		<action path="/custcheck/t47_client_blackorwhite_do"
+			parameter="t47_client_blackorwhite_do" name="t10_check_cust_cardForm"
+			type="com.ist.aml.report.controller.T10_check_custAction"
+			validate="false" scope="request">
+			<forward name="success"	path="/custcheck/modifyT10_check_info_result.do" />
+			<forward name="failure"
+				path="/custcheck/modifyT10_colu_result.do" />
+		</action>
+		<action path="/custcheck/t10_check_cust_cardlist"
+			parameter="t10_check_cust_cardlist" name="t10_check_cust_cardForm"
+			type="com.ist.aml.report.controller.T10_check_custAction"
+			validate="false" scope="request">
+			<forward name="success"	path="/custcheck/t10_check_cust_cardlist.jsp" />
+		</action>
+		<action path="/custcheck/t10_check_cust_resultlist"
+			parameter="get_check_cust_resultlist" name="t10_check_cust_resultActionForm"
+			type="com.ist.aml.report.controller.T10_check_custAction"
+			validate="false" scope="request">
+			<forward name="success"	path="/custcheck/t10_check_cust_result.jsp" />
+		</action>
+			<action path="/custcheck/t10_check_cust_detail"
+			parameter="t10_check_cust_detail" name="t10_check_cust_resultActionForm"
+			type="com.ist.aml.report.controller.T10_check_custAction"
+			validate="false" scope="request">
+			<forward name="success" path="/custcheck/t10_check_cust_detail.jsp" />
+	  </action>
+	 <action path="/custcheck/t10_check_cust_translist"
+			parameter="get_check_cust_translist" name="t47_transactionActionForm"
+			type="com.ist.aml.report.controller.T10_check_custAction"
+			validate="false" scope="request">
+			<forward name="success"	path="/custcheck/t10_check_cust_trans.jsp" />
+		</action>
+			<action path="/custcheck/t10_cust_survey_info"
+			parameter="modifyT10_coluall" name="t10_check_cust_cardForm"
+			type="com.ist.aml.report.controller.T10_check_custAction"
+			validate="false" scope="request">
+			<forward name="success" path="/custcheck/t10_cust_survey_info.jsp" />
+		</action>
+       <action path="/custcheck/t10_cust_survey_result"
+			parameter="get_cust_survey_result" name="t10_check_cust_resultActionForm"
+			type="com.ist.aml.report.controller.T10_check_custAction"
+			validate="false" scope="request">
+			<forward name="success" path="/custcheck/t10_cust_survey_result.jsp" />
+		</action>
+		<action path="/custcheck/show_t10_check_cust_resulinfo"
+			parameter="show_t10_check_cust_resulinfo" name="t10_check_cust_cardForm"
+			type="com.ist.aml.report.controller.T10_check_custAction"
+			validate="false" scope="request">
+			<forward name="success"	path="/custcheck/show_t10_check_info.jsp" />
+		</action>
+		 <action path="/custcheck/t10_check_cust_report"
+			parameter="t10_check_cust_report" name="t10_check_cust_cardForm"
+			type="com.ist.aml.report.controller.T10_check_custAction"
+			validate="false" scope="request">
+		</action>
+		
+		
+		<!-- 数据查询-客户视图 satrt added by shanbh -->
+		<action path="/insidereport/new_cust_view"
+			parameter="getT47_party_list"
+			name="t47_partyActionForm"
+			type="com.ist.aml.report.controller.T47_partyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/insidereport/t47_party_list.jsp" />
+		</action>
+		<!-- 数据查询-客户视图 end -->
+		
+		
+		
+		<!-- 账户统计 -->
+		<action path="/insidereport/t07_sz_trans_report"
+			parameter="getT07_sz_trans_report"
+			name="t07_report_by_organActionForm"
+			type="com.ist.aml.report.controller.T07_report_by_organAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/insidereport/t07_sz_trans_report_list.jsp" />
+		</action>
+		<action path="/insidereport/export_t07_detrans"
+			parameter="export_detrans_report"
+			name="t07_report_by_organActionForm"
+			type="com.ist.aml.report.controller.T07_report_by_organAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/listmanager/export_t07_detrans_report.jsp" />
+		</action>
+	    <action path="/insidereport/t07_detrans_report"
+			parameter="getT07_detrans_report"
+			name="t07_report_by_organActionForm"
+			type="com.ist.aml.report.controller.T07_report_by_organAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/listmanager/t07_detrans_report_list.jsp" />
+		</action>
+		<action path="/insidereport/export_sz_trans_report"
+			parameter="export_sz_trans_report"
+			name="t07_report_by_organActionForm"
+			type="com.ist.aml.report.controller.T07_report_by_organAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/insidereport/t07_sz_trans_report.do" />
+		</action>
+		
+		<!--  -->
+		<action path="/transaction/new_trans_modify"
+			parameter="modifyT47_transaction_new"
+			name="t47_transactionActionForm"
+			type="com.ist.aml.report.controller.T47_transactionAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/transaction/new_trans_modify.jsp" />
+		</action>
+		<action path="/transaction/new_trans_modify_do"
+			parameter="modifyT47_transaction_new_do"
+			name="t47_transactionActionForm"
+			type="com.ist.aml.report.controller.T47_transactionAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/transaction/new_trans_list.do" />
+			<forward name="false"
+				path="/transaction/new_trans_modify.jsp" />
+		</action>
+		
+		<!-- added by shanbh for new client check start-->
+			<action path="/cust_identify/new_client_investigation_view" parameter="modifyNewClientCheck"
+				name="t10_newClientCheckActionForm" type="com.ist.aml.cust_identify.controller.T10_newClientCheckAction"
+				validate="false" scope="request">
+				<forward name="success" path="/cust_identify/t10_newClientCheckModify.jsp" />
+				<forward name="success_already" path="/cust_identify/t10_newClientCheckModify_already.jsp" />
+				<forward name="failure" path="/cust_identify/t10_checkparty_rateRiskList.do?newsearchflag=1"></forward>
+			</action>
+			
+			<action path="/cust_identify/modifyNewClientCheck_do" parameter="modifyNewClientCheck_do"
+				name="t10_newClientCheckActionForm" type="com.ist.aml.cust_identify.controller.T10_newClientCheckAction"
+				validate="false" scope="request">
+				<forward name="success" path="/cust_identify/reltdisp_mod_result.jsp" />
+				<forward name="failure" path="/cust_identify/new_client_investigation_view.do"></forward>
+			</action>
+		<!-- added by shanbh for new client check end -->
+		<!-- added by shanbh for client check info export start -->
+			<action path="/cust_identify/exportClientCheckInfo" parameter="exportClientCheckInfo"
+				name="t10_newClientCheckActionForm" type="com.ist.aml.cust_identify.controller.T10_newClientCheckAction"
+				validate="false" scope="request">
+				<forward name="success" path="/cust_identify/t10_newClientCheck_export.jsp" />
+				<forward name="failure" path="/cust_identify/t10_checkparty_riskRateMain.do"></forward>
+			</action>
+		<!-- added by shanbh for client check info export end -->
+		<!-- customer_identify -->
+		<!-- add by lzb & lee -->
+		
+			
+		<action path="/cust_identify/t10_checkparty_newlist" parameter="getT10_checkparty_newlist"
+			name="t10_checkpartyActionForm" type="com.ist.aml.cust_identify.controller.T10_checkpartyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_checkparty_newlist.jsp" />
+		</action>
+		<action path="/cust_identify/t10_checkparty_rateRiskList" parameter="getT10_checkparty_newlist"
+			name="t10_checkpartyActionForm" type="com.ist.aml.cust_identify.controller.T10_checkpartyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_checkparty_rate_riskList.jsp" />
+		</action>
+		
+		<action path="/cust_identify/t10_checkparty_relist" parameter="getT10_checkparty_relist"
+			name="t10_checkpartyActionForm" type="com.ist.aml.cust_identify.controller.T10_checkpartyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_checkparty_relist.jsp" />
+		</action>
+		<action path="/cust_identify/t10_checkparty_alreadylist" parameter="getT10_checkparty_alreadylist"
+			name="t10_checkpartyActionForm" type="com.ist.aml.cust_identify.controller.T10_checkpartyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_checkparty_alreadylist.jsp" />
+		</action>
+		
+		<action path="/cust_identify/t10_checkparty_uhlist" parameter="getT10_checkparty_uhlist"
+			name="t10_checkpartyActionForm" type="com.ist.aml.cust_identify.controller.T10_checkpartyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_checkparty_uhlist.jsp" />
+		</action>
+		
+		
+		
+		<!-- 调查分析 客户调查lizb 20140122_start -->
+		<action path="/cust_identify/t10_survey_partyAdd" parameter="addT10_checkparty_arti"
+			name="t10_checkpartyActionForm" type="com.ist.aml.cust_identify.controller.T10_checkpartyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_survey_party_add.jsp" />
+		</action>
+		<action path="/cust_identify/t10_checkparty_deleteByList_do" parameter="deleteT10_checkparty_reByListDo"
+			name="t10_checkpartyActionForm" type="com.ist.aml.cust_identify.controller.T10_checkpartyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_checkparty_relist.do" />
+		</action>
+		<action path="/cust_identify/add_t10_survey_partyDo" parameter="add_t10_survey_partyDo"
+			name="t10_checkpartyActionForm" type="com.ist.aml.cust_identify.controller.T10_checkpartyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_survey_result_mid.jsp" />
+			<forward name="failure" path="/cust_identify/t10_survey_partyAdd.do" />
+		</action>
+		
+		<!-- 调查分析 客户调查lizb 20140122_end -->
+		
+		<!-- 从案例中增加 客户调查 qiuyun  2014-02-24 begin-->
+		<action path="/cust_identify/t10_checkparty_re_add_fromcase" 
+			    name="t10_checkpartyActionForm"  
+			    forward="/cust_identify/t10_checkparty_re_add_fromcase.jsp"
+			    validate="false" scope="request">		
+		</action>
+		<action path="/cust_identify/t10_checkparty_re_add_fromcase_do" parameter="insertT10_checkparty_re_fromcaseDo"
+			name="t10_checkpartyActionForm" type="com.ist.aml.cust_identify.controller.T10_checkpartyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_checkparty_re_add_fromcase.jsp" />
+			<forward name="failure" path="/cust_identify/t10_checkparty_re_add_fromcase.jsp" />
+		</action>
+		<!-- 从案例中增加 客户调查 qiuyun  2014-02-24 end -->
+		
+		<action path="/cust_identify/t10_checkparty_arti" parameter="addT10_checkparty_arti"
+			name="t10_checkpartyActionForm" type="com.ist.aml.cust_identify.controller.T10_checkpartyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_checkparty_arti_add.jsp" />
+		</action>
+		<action path="/cust_identify/addT10_checkparty_arti_do" parameter="addT10_checkparty_artiDo"
+			name="t10_checkpartyActionForm" type="com.ist.aml.cust_identify.controller.T10_checkpartyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_checkparty_main.do" />
+		</action>
+		
+		<!-- checkparty_funtion -->
+		<action path="/cust_identify/t10_checkparty_main" parameter="getT10_checkparty_main"
+			name="t10_checkparty_funActionForm" type="com.ist.aml.cust_identify.controller.T10_checkparty_funAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_checkparty_main.jsp" />
+		</action>
+		<action path="/cust_identify/t10_checkparty_riskRateMain" parameter="getT10_checkparty_main"
+			name="t10_checkparty_funActionForm" type="com.ist.aml.cust_identify.controller.T10_checkparty_funAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_checkparty_risk_rateMain.jsp" />
+		</action>
+		<action path="/cust_identify/t10_checkparty_rateStockMain" parameter="getT10_checkparty_main"
+			name="t10_checkparty_funActionForm" type="com.ist.aml.cust_identify.controller.T10_checkparty_funAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_checkparty_rate_stockMain.jsp" />
+		</action>
+		<action path="/cust_identify/t10_checkparty_uh_main" parameter="getT10_checkparty_uh_main"
+			name="t10_checkparty_funActionForm" type="com.ist.aml.cust_identify.controller.T10_checkparty_funAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_checkparty_uhdetail.jsp" />
+		</action> 
+		
+		<action path="/cust_identify/t10_party_risklist" parameter="getT10_party_risklist"
+			name="t10_checkparty_funActionForm" type="com.ist.aml.cust_identify.controller.T10_checkparty_funAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_party_risklist.jsp" />
+			<forward name="failure" path="/cust_identify/t10_checkparty_main.do" />
+		</action>
+		<action path="/cust_identify/t10_party_risklist_mod" parameter="getT10_party_risklist"
+			name="t10_checkparty_funActionForm" type="com.ist.aml.cust_identify.controller.T10_checkparty_funAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_party_risklist_mod.jsp" />
+		</action>
+		<action path="/cust_identify/t10_party_riskdisp" parameter="getT10_party_riskdisp"
+			name="t10_checkparty_funActionForm" type="com.ist.aml.cust_identify.controller.T10_checkparty_funAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_party_riskdisp.jsp" />
+		</action>
+		<action path="/cust_identify/t10_party_risk_add" parameter="addT10_party_risk"
+			name="t10_checkparty_funActionForm" type="com.ist.aml.cust_identify.controller.T10_checkparty_funAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_party_risk_add.jsp" />
+		</action>
+		<action path="/cust_identify/t10_party_risk_add_do" parameter="addT10_party_risk_do"
+			name="t10_checkparty_funActionForm" type="com.ist.aml.cust_identify.controller.T10_checkparty_funAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_party_risklist_mod.do" />
+		</action>
+		<action path="/cust_identify/t10_party_risk_modify" parameter="modifyT10_party_risk"
+			name="t10_checkparty_funActionForm" type="com.ist.aml.cust_identify.controller.T10_checkparty_funAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_party_risk_modify.jsp" />
+		</action>
+		<action path="/cust_identify/t10_party_risk_modify_do" parameter="modifyT10_party_risk_do"
+			name="t10_checkparty_funActionForm" type="com.ist.aml.cust_identify.controller.T10_checkparty_funAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_party_risklist_mod.do" />
+		</action>
+		<action path="/cust_identify/t10_party_risk_del" parameter="delT10_party_risk"
+			name="t10_checkparty_funActionForm" type="com.ist.aml.cust_identify.controller.T10_checkparty_funAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_party_risklist_mod.do" />
+			<forward name="failure" path="/cust_identify/t10_party_risklist_mod.do" />
+		</action>
+		
+		
+		<action path="/cust_identify/t10_checkparty_resultlist" parameter="getT10_checkparty_resultlist"
+			name="t10_checkparty_funActionForm" type="com.ist.aml.cust_identify.controller.T10_checkparty_funAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_checkparty_resultlist.jsp" />
+		</action>
+		<action path="/cust_identify/t10_checkparty_result_viewlist" parameter="getT10_checkparty_result_viewlist"
+			name="t10_checkparty_funActionForm" type="com.ist.aml.cust_identify.controller.T10_checkparty_funAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_checkparty_result_viewlist.jsp" />
+		</action>
+		<action path="/cust_identify/t10_checkparty_reltdisp" parameter="getT10_checkparty_reltdisp"
+			name="t10_checkparty_funActionForm" type="com.ist.aml.cust_identify.controller.T10_checkparty_funAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_checkparty_reltdisp.jsp" />
+		</action>
+		<action path="/cust_identify/t10_checkparty_reltdisp_mod" parameter="modT10_checkparty_reltdisp"
+			name="t10_checkparty_funActionForm" type="com.ist.aml.cust_identify.controller.T10_checkparty_funAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_checkparty_reltdisp_mod.jsp" />
+		</action>
+		<action path="/cust_identify/t10_checkparty_rate_mod" parameter="modT10_checkparty_reltdisp"
+			name="t10_checkparty_funActionForm" type="com.ist.aml.cust_identify.controller.T10_checkparty_funAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_checkparty_rate_mod.jsp" />
+		</action>
+		<action path="/cust_identify/t10_checkparty_reltdisp_mod_do" parameter="modT10_checkparty_reltdisp_do"
+			name="t10_checkparty_funActionForm" type="com.ist.aml.cust_identify.controller.T10_checkparty_funAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/reltdisp_mod_result.jsp" />
+		</action>
+		<action path="/cust_identify/check_reason_list" parameter="getcheck_reasonList"
+			name="t10_checkparty_funActionForm" type="com.ist.aml.cust_identify.controller.T10_checkparty_funAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/checkreason_search.jsp" />
+		</action>
+		<action path="/cust_identify/is_w_b" parameter="Deter_w_bList"
+			name="t10_checkparty_funActionForm" type="com.ist.aml.cust_identify.controller.T10_checkparty_funAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_checkparty_reltdisp_mod.do" />
+		</action>
+		
+		
+		
+		
+		
+		
+		<!-- party_cretal_funtion -->
+		<action path="/cust_identify/t10_party_cretallist" parameter="getT10_party_cretallist"
+			name="t10_party_cretalActionForm" type="com.ist.aml.cust_identify.controller.T10_party_cretalAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_party_cretallist.jsp" />
+		</action>
+		<action path="/cust_identify/export_t10_party_cretal" parameter="export_t10_party_cretal"
+			name="t10_party_cretalActionForm" type="com.ist.aml.cust_identify.controller.T10_party_cretalAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_party_cretal_export.jsp" />
+		</action>
+		
+		<action path="/cust_identify/t10_party_cretal_managelist" parameter="getT10_party_cretal_managelist"
+			name="t10_party_cretalActionForm" type="com.ist.aml.cust_identify.controller.T10_party_cretalAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_party_cretal_managelist.jsp" />
+		</action>
+		
+		<action path="/cust_identify/add_modifyT10_party_cretal" parameter="add_modifyT10_party_cretal"
+			name="t10_party_cretalActionForm" type="com.ist.aml.cust_identify.controller.T10_party_cretalAction"
+			validate="false" scope="request">
+			<forward name="successA" path="/cust_identify/t10_party_cretal_add.jsp" />
+			<forward name="successM" path="/cust_identify/t10_party_cretal_modify.jsp" />
+		</action>
+		<action path="/cust_identify/addT10_party_cretal" parameter="addT10_party_cretalDo"
+			name="t10_party_cretalActionForm" type="com.ist.aml.cust_identify.controller.T10_party_cretalAction"
+			validate="false" scope="request">
+			<forward name="failure" path="/cust_identify/t10_party_cretal_add.jsp" />
+			<forward name="success" path="/cust_identify/t10_party_cretal_managelist.do" />
+		</action>
+		<action path="/cust_identify/modifyT10_party_cretal" parameter="modifyT10_party_cretalDo"
+			name="t10_party_cretalActionForm" type="com.ist.aml.cust_identify.controller.T10_party_cretalAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_party_cretal_managelist.do" />
+		</action>
+		<action path="/cust_identify/deleteT10_party_cretal" parameter="deleteT10_party_cretalDo"
+			name="t10_party_cretalActionForm" type="com.ist.aml.cust_identify.controller.T10_party_cretalAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_party_cretal_managelist.do" />
+		</action>
+		<action path="/cust_identify/sub_retT10_party_cretal" parameter="sub_retT10_party_cretalDo"
+			name="t10_party_cretalActionForm" type="com.ist.aml.cust_identify.controller.T10_party_cretalAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_party_cretal_managelist.do" />
+		</action>
+		<action path="/cust_identify/retT10_party_cretal" parameter="sub_retT10_party_cretalDo"
+			name="t10_party_cretalActionForm" type="com.ist.aml.cust_identify.controller.T10_party_cretalAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_party_cretallist.do" />
+		</action>
+		<action path="/cust_identify/t10_party_cretal_statistics" parameter="t10_party_cretal_statistics"
+			name="t10_party_cretalActionForm" type="com.ist.aml.cust_identify.controller.T10_party_cretalAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_party_cretal_statistics.jsp" />
+		</action>
+		
+		<action path="/cust_identify/export_party_cretal_statistics" parameter="export_party_cretal_statistics"
+			name="t10_party_cretalActionForm" type="com.ist.aml.cust_identify.controller.T10_party_cretalAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_party_cretal_statistics_export.jsp" />
+		</action>
+		
+	
+	
+	<!-- t07_report_organ -->	
+    <action path="/t07_report_organ/t07_report_organ_list" parameter="getT07_report_organList" name="t07_report_organActionForm" type="com.ist.aml.report.controller.T07_report_organAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t07_report_organ/t07_report_organ_list.jsp"/> 
+    </action> 
+    <action path="/t07_report_organ/t07_report_organ_add" parameter="addT07_report_organ" name="t07_report_organActionForm" type="com.ist.aml.report.controller.T07_report_organAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t07_report_organ/t07_report_organ_add.jsp"/> 
+	    <forward name="failure" path="/t07_report_organ/t07_report_organ_list.do"/> 
+    </action> 
+    <action path="/t07_report_organ/t07_report_organ_add_do" parameter="addT07_report_organDo" name="t07_report_organActionForm" type="com.ist.aml.report.controller.T07_report_organAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t07_report_organ/t07_report_organ_list.do"/> 
+	    <forward name="failure" path="/t07_report_organ/t07_report_organ_add.do"/> 
+    </action> 
+    <action path="/t07_report_organ/t07_report_organ_modify" parameter="modifyT07_report_organ" name="t07_report_organActionForm" type="com.ist.aml.report.controller.T07_report_organAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t07_report_organ/t07_report_organ_modify.jsp"/> 
+	    <forward name="failure" path="/t07_report_organ/t07_report_organ_list.do"/> 
+    </action> 
+    <action path="/t07_report_organ/t07_report_organ_modify_do" parameter="modifyT07_report_organDo" name="t07_report_organActionForm" type="com.ist.aml.report.controller.T07_report_organAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t07_report_organ/t07_report_organ_list.do"/> 
+	    <forward name="failure" path="/t07_report_organ/t07_report_organ_modify.do"/> 
+    </action> 
+    <action path="/t07_report_organ/t07_report_organ_delete_do" parameter="deleteT07_report_organDo" name="t07_report_organActionForm" type="com.ist.aml.report.controller.T07_report_organAction" validate="false" scope="request"> 
+	<forward name="success" path="/t07_report_organ/t07_report_organ_list.do"/> 
+        <forward name="failure" path="/t07_report_organ/t07_report_organ_list.do"/> 
+    </action> 
+    
+    <action path="/t07_report_organ/t07_report_organ_delete_checkBox_do" parameter="deleteCheckBoxT07_report_organDo" name="t07_report_organActionForm" type="com.ist.aml.report.controller.T07_report_organAction" validate="false" scope="request"> 
+	<forward name="success" path="/t07_report_organ/t07_report_organ_list.do"/> 
+        <forward name="failure" path="/t07_report_organ/t07_report_organ_list.do"/> 
+    </action> 
+    
+    <action path="/t07_report_organ/t07_report_organ_disp" parameter="getT07_report_organDisp" name="t07_report_organActionForm" type="com.ist.aml.report.controller.T07_report_organAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t07_report_organ/t07_report_organ_disp.jsp"/> 
+    </action> 
+    
+    <!-- t07_report_organ_map -->
+    <action path="/t07_report_organ/t07_report_organ_map_add" parameter="addT07_report_organ_map" name="t07_report_organActionForm" type="com.ist.aml.report.controller.T07_report_organAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t07_report_organ/t07_report_organ_map_add.jsp"/> 
+	    <forward name="failure" path="/t07_report_organ/t07_report_organ_disp.do"/> 
+    </action> 
+    <action path="/t07_report_organ/t07_report_organ_map_add_do" parameter="addT07_report_organ_mapDo" name="t07_report_organActionForm" type="com.ist.aml.report.controller.T07_report_organAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t07_report_organ/t07_report_organ_disp.do"/> 
+	    <forward name="failure" path="/t07_report_organ/t07_report_organ_map_add.do"/> 
+    </action> 
+    <action path="/t07_report_organ/t07_report_organ_map_modify" parameter="modifyT07_report_organ_map" name="t07_report_organActionForm" type="com.ist.aml.report.controller.T07_report_organAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t07_report_organ/t07_report_organ_map_modify.jsp"/> 
+	    <forward name="failure" path="/t07_report_organ/t07_report_organ_disp.do"/> 
+    </action> 
+    <action path="/t07_report_organ/t07_report_organ_map_modify_do" parameter="modifyT07_report_organ_mapDo" name="t07_report_organActionForm" type="com.ist.aml.report.controller.T07_report_organAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t07_report_organ/t07_report_organ_disp.do"/> 
+	    <forward name="failure" path="/t07_report_organ/t07_report_organ_map_modify.do"/> 
+    </action> 
+    <action path="/t07_report_organ/t07_report_organ_map_delete_do" parameter="deleteT07_report_organ_mapDo" name="t07_report_organActionForm" type="com.ist.aml.report.controller.T07_report_organAction" validate="false" scope="request"> 
+	<forward name="success" path="/t07_report_organ/t07_report_organ_disp.do"/> 
+        <forward name="failure" path="/t07_report_organ/t07_report_organ_disp.do"/> 
+    </action> 
+   
+    <action path="/t07_report_organ/t07_report_organ_map_delete_checkBox_do" parameter="deleteCheckBoxT07_report_organ_mapDo" name="t07_report_organActionForm" type="com.ist.aml.report.controller.T07_report_organAction" validate="false" scope="request"> 
+	<forward name="success" path="/t07_report_organ/t07_report_organ_disp.do"/> 
+        <forward name="failure" path="/t07_report_organ/t07_report_organ_disp.do"/> 
+    </action> 
+    
+    <!-- custom mfa  start -->
+    <action path="/nb/t13_mfa_nb_search" parameter="getT13_mfa_nblist" name="t13_mfa_nbActionForm" type="com.ist.aml.nb.controller.T13_mfa_nbAction" validate="false">
+    	<forward name="failure" path="/nb/error.jsp"></forward>
+    	<forward name="success" path="/nb/t13_mfa_nb.jsp"></forward>
+    </action>
+    <action path="/nb/t13_mfa_nb_listDo" parameter="getT13_mfa_nblistDo" name="t13_mfa_nbActionForm" type="com.ist.aml.nb.controller.T13_mfa_nbAction" validate="false">
+    	<forward name="failure" path="/nb/error.jsp"></forward>
+    	<forward name="success" path="/nb/t13_mfa_nb.jsp"></forward>
+    </action>
+    <action path="/nb/t13_mfa_nbdisp" parameter="getT13_mfa_nbdisp" name="t13_mfa_nbActionForm" type="com.ist.aml.nb.controller.T13_mfa_nbAction" validate="false">
+    	<forward name="failure" path="/nb/error.jsp"></forward>
+    	<forward name="success" path="/nb/t13_mfa_nbdisp.jsp"></forward>
+    </action>
+     <action path="/nb/t13_mfa_nbadd" parameter="addT13_mfa_nb" name="t13_mfa_nbActionForm" type="com.ist.aml.nb.controller.T13_mfa_nbAction" validate="false">
+    	<forward name="failure" path="/nb/error.jsp"></forward>
+    	<forward name="success" path="/nb/t13_mfa_nbadd.jsp"></forward>
+    </action>
+     <action path="/nb/t13_mfa_nbadd_do" parameter="addT13_mfa_nbaddDo" name="t13_mfa_nbActionForm" type="com.ist.aml.nb.controller.T13_mfa_nbAction" validate="false">
+    	<forward name="failure" path="/nb/t13_mfa_nbadd.jsp"></forward>
+    	<forward name="success" path="/nb/t13_mfa_nb_search.do"></forward>
+    </action>
+     <action path="/nb/t13_mfa_nbmodify" parameter="modifyT13_mfa_nb" name="t13_mfa_nbActionForm" type="com.ist.aml.nb.controller.T13_mfa_nbAction" validate="false">
+    	<forward name="failure" path="/nb/error.jsp"></forward>
+    	<forward name="success" path="/nb/t13_mfa_nbmodify.jsp"></forward>
+    </action>
+     <action path="/nb/t13_mfa_nbmodify_do" parameter="modifyT13_mfa_nbDo" name="t13_mfa_nbActionForm" type="com.ist.aml.nb.controller.T13_mfa_nbAction" validate="false">
+    	<forward name="failure" path="/nb/t13_mfa_nbmodify.jsp"></forward>
+    	<forward name="success" path="/nb/t13_mfa_nb_search.do"></forward>
+    </action>
+     <action path="/nb/t13_mfa_nbdelete_do" parameter="deleteT13_mfa_nbDo" name="t13_mfa_nbActionForm" type="com.ist.aml.nb.controller.T13_mfa_nbAction" validate="false">
+    	<forward name="failure" path="/nb/t13_mfa_nb.jsp"></forward>
+    	<forward name="success" path="/nb/t13_mfa_nb_search.do"></forward>
+    </action>
+    <action path="/nb/t47_transaction_search"
+			parameter="searchT47_transaction" name="t47_transactionActionForm"
+			type="com.ist.aml.report.controller.T47_transactionAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/nb/t13_transaction_list.jsp" />
+			
+		</action>
+		<action path="/nb/t47_transaction_list"
+			parameter="getT47_transactionList" name="t47_transactionActionForm"
+			type="com.ist.aml.report.controller.T47_transactionAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/nb/t13_transaction_list.jsp" />
+	   </action>
+	  <action path="/nb/t13_mfa_nb_transinsert_do"
+			parameter="insertT47_transactionList" name="t47_transactionActionForm"
+			type="com.ist.aml.nb.controller.T13_mfa_nbAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/nb/t47_transaction_search.do" />
+	   </action> 
+	   
+	  <!-- custom mfa  end  -->
+	  <!-- attention lib begin -->
+
+    <action path="/attention/t07_attention_lib_list" parameter="getT07_ATTENTION_libList" name="t07_attention_libActionForm" type="com.ist.aml.report.controller.T07_ATTENTION_libAction" validate="false" scope="request"> 
+	    <forward name="success" path="/attention/t07_attention_lib_list.jsp"/> 
+	     <forward name="success2" path="/attention/t07_attention_lib_list_all.jsp"/> 
+    </action> 
+    
+     <action path="/attention/t07_attention_lib_modify_status" parameter="modify_status" name="t07_attention_logActionForm" type="com.ist.aml.report.controller.T07_ATTENTION_libAction" validate="false" scope="request"> 
+	    <forward name="success" path="/attention/t07_attention_add_reason.jsp"/> 
+	    <forward name="success2" path="/attention/t07_attention_lib_list.do"/>
+    </action> 
+    
+
+    
+    <action path="/attention/t07_attention_lib_add" parameter="addT07_ATTENTION_lib" name="t07_attention_libActionForm" type="com.ist.aml.report.controller.T07_ATTENTION_libAction" validate="false" scope="request"> 
+	    <forward name="success" path="/attention/t07_attention_lib_add.jsp"/> 
+	    <forward name="failure" path="/attention/t07_attention_lib_list.do"/> 
+    </action> 
+    <action path="/attention/t07_attention_lib_add_do" parameter="addT07_ATTENTION_libDo" name="t07_attention_libActionForm" type="com.ist.aml.report.controller.T07_ATTENTION_libAction" validate="false" scope="request"> 
+	    <forward name="success" path="/attention/t07_attention_lib_list.do"/> 
+	    <forward name="failure" path="/attention/t07_attention_lib_add.do"/> 
+    </action> 
+    
+    <action path="/attention/change_inValidDt" parameter="change_inValidDt" name="t07_attention_libActionForm" type="com.ist.aml.report.controller.T07_ATTENTION_libAction" validate="false" scope="request"> 	  
+    </action> 
+    
+    <action path="/attention/t07_attention_lib_modify" parameter="modifyT07_ATTENTION_lib" name="t07_attention_libActionForm" type="com.ist.aml.report.controller.T07_ATTENTION_libAction" validate="false" scope="request"> 
+	    <forward name="success" path="/attention/t07_attention_lib_modify.jsp"/> 
+	    <forward name="failure" path="/attention/t07_attention_lib_list.do"/> 
+    </action> 
+    <action path="/attention/t07_attention_lib_modify_do" parameter="modifyT07_ATTENTION_libDo" name="t07_attention_libActionForm" type="com.ist.aml.report.controller.T07_ATTENTION_libAction" validate="false" scope="request"> 
+	    <forward name="success" path="/attention/t07_attention_lib_list.do"/> 
+	    <forward name="failure" path="/attention/t07_attention_lib_modify.do"/> 
+    </action> 
+    <action path="/attention/t07_attention_lib_delete_do" parameter="deleteT07_ATTENTION_libDo" name="t07_attention_libActionForm" type="com.ist.aml.report.controller.T07_ATTENTION_libAction" validate="false" scope="request"> 
+	    <forward name="success" path="/attention/t07_attention_add_reason.jsp"/> 
+	    <forward name="success2" path="/attention/t07_attention_lib_list.do"/>
+    </action> 
+    <action path="/attention/t07_attention_lib_disp" parameter="getT07_ATTENTION_libDisp" name="t07_attention_libActionForm" type="com.ist.aml.report.controller.T07_ATTENTION_libAction" validate="false" scope="request"> 
+	    <forward name="success" path="/attention/t07_attention_lib_disp.jsp"/> 
+    </action> 
+    
+     <action path="/attention/t07_attention_lib_extend" parameter="extend" name="t07_attention_libActionForm" type="com.ist.aml.report.controller.T07_ATTENTION_libAction" validate="false" scope="request"> 
+	      <forward name="hasReason" path="/attention/t07_attention_add_reason.jsp"/> 
+	      <forward name="noReason" path="/attention/t07_attention_lib_list.do"/>
+	  
+    </action>
+    
+     <action path="/attention/t07_attention_lib_remove" parameter="remove" name="t07_attention_libActionForm" type="com.ist.aml.report.controller.T07_ATTENTION_libAction" validate="false" scope="request"> 
+	      <forward name="hasReason" path="/attention/t07_attention_add_reason.jsp"/> 
+	      <forward name="noReason" path="/attention/t07_attention_lib_list.do"/> 
+    </action>
+     <action path="/attention/add_attention_lib_form_case" parameter="add_attention_lib_form_case" name="t07_attention_libActionForm" type="com.ist.aml.report.controller.T07_ATTENTION_libAction" validate="false" scope="request"> 
+	      <forward name="success" path="/attention/t07_attention_add_reason_from_case.jsp"/> 
+	      <forward name="failure" path="/attention/t07_attention_add_reason_from_case.jsp"/> 
+    </action>
+     <action path="/attention/add_attention_lib_form_case_do" parameter="add_attention_lib_form_case_do" name="t07_attention_libActionForm" type="com.ist.aml.report.controller.T07_ATTENTION_libAction" validate="false" scope="request"> 
+	      <forward name="success" path="/attention/add_attention_lib_form_case.do"/> 
+	      <forward name="failure" path="/attention/add_attention_lib_form_case.do"/> 
+    </action>
+    
+    <!-- attention lib end  -->
+    <!-- 在案例中控制二补交易  start-->
+    <action path="/case/control_trans" parameter="control_trans"
+			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
+			validate="false" scope="request">
+			<forward name="success" path="/case/stcr_disp.do?intPage=1" />
+	</action>
+    <!-- 在案例中控制二补交易  end-->
+    
+    <!--  逾期管理-->
+    <action path="/apply/t07_cd_apply_list" parameter="getT07_cd_applyList" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_cd_apply_list.jsp" />
+		<forward name="failure" path="/apply/t07_cd_apply_list.jsp" />
+	</action>
+	<action path="/apply/t07_cd_apply_detail" parameter="getT07_cd_apply_detail" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_cd_apply_detail.jsp" />
+		<forward name="failure" path="/apply/t07_cd_apply_detail.do" />
+	</action>
+	<action path="/apply/exportT07_cd_apply" parameter="exportT07_cd_applyWord"
+		name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction"
+		validate="false" scope="request">
+		<forward name="success" path="/apply/t07_cd_apply_search_list.jsp" />
+		<forward name="failure" path="/apply/t07_cd_apply_search_list.jsp" />
+	</action>
+	<action path="/apply/t07_bh_tsdt_list" parameter="getT07_bh_tsdtList" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_bh_tsdt_list.jsp" />
+	</action>
+	<action path="/apply/t07_bs_report_list" parameter="getT07_bs_reportList" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_bs_report_list.jsp" />
+	</action>
+	<action path="/apply/tsdt_detail" parameter="getTsdt_detail" name="t07_bh_tsdt_pActinoForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/tsdt_detail.jsp" />
+		<forward name="failure" path="/apply/t07_cd_apply_detail.do" />
+	</action>
+	<action path="/apply/t07_cd_apply_add" parameter="addT07_cd_apply" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success1" path="/apply/t07_cd_apply_trans_list.jsp" />
+		<forward name="success2" path="/apply/t07_cd_apply_report_list.jsp" />
+		<forward name="success3" path="/apply/t07_cd_apply_trans_list1.jsp" />
+		<forward name="success4" path="/apply/t07_cd_apply_report_list1.jsp" />
+		<forward name="failure" path="/apply/t07_cd_apply_list.do" />
+	</action>
+	<action path="/apply/t07_cd_apply_report_list" parameter="getT07_cd_apply_reportList" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_cd_apply_report_list.jsp" />
+		<forward name="success1" path="/apply/t07_cd_apply_report_list1.jsp" />
+		<forward name="failure" path="/apply/t07_cd_apply_report_list.jsp" />
+	</action>
+	<action path="/apply/t07_cd_apply_report_add" parameter="addT07_cd_apply_report" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_cd_apply_report_list.do" />
+		<forward name="failure" path="/apply/t07_cd_apply_report_list.do" />
+	</action>
+	<action path="/apply/t07_cd_apply_report_result_list" parameter="getT07_cd_apply_report_resultList" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_cd_apply_report_result_list.jsp" />
+		<forward name="success1" path="/apply/t07_cd_apply_report_result_list1.jsp" />
+		<forward name="failure" path="/apply/t07_cd_apply_report_result_list.jsp" />
+	</action>
+	<action path="/apply/t07_cd_apply_reason" parameter="getT07_cd_apply_reason" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_cd_apply_reason.jsp" />
+		<forward name="failure" path="/apply/t07_cd_apply_reason.jsp" />
+	</action>
+	<action path="/apply/t07_cd_apply_reason_save" parameter="saveT07_cd_apply_reason" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_cd_apply_reason.jsp" />
+	</action>
+	<action path="/apply/t07_cd_apply_item_delete" parameter="deleteT07_cd_apply_item" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success1" path="/apply/t07_cd_apply_trans_result_list.do" />
+		<forward name="success2" path="/apply/t07_cd_apply_report_result_list.do" />
+	</action>
+	<action path="/apply/t07_cd_apply_report_add_do" parameter="addT07_cd_apply_reportXX" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_cd_apply_list.do" />
+		<forward name="failure" path="/apply/t07_cd_apply_list.do" />
+	</action>
+	<action path="/apply/t07_cd_apply_trans_list" parameter="getT07_cd_apply_transList" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_cd_apply_trans_list.jsp" />
+		<forward name="success1" path="/apply/t07_cd_apply_trans_list1.jsp" />
+		<forward name="failure" path="/apply/t07_cd_apply_trans_list.jsp" />
+	</action>
+	<action path="/apply/t07_cd_apply_trans_add" parameter="addT07_cd_apply_trans" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_cd_apply_trans_list.do" />
+		<forward name="failure" path="/apply/t07_cd_apply_trans_list.do" />
+	</action>
+	<action path="/apply/t07_cd_apply_trans_result_list" parameter="getT07_cd_apply_trans_resultList" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_cd_apply_trans_result_list.jsp" />
+		<forward name="success1" path="/apply/t07_cd_apply_trans_result_list1.jsp" />
+		<forward name="failure" path="/apply/t07_cd_apply_trans_result_list.jsp" />
+	</action>
+	<action path="/apply/t07_cd_apply_trans_add_do" parameter="addT07_cd_apply_transDo" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_cd_apply_list.do" />
+		<forward name="failure" path="/apply/t07_cd_apply_list.do" />
+	</action>
+	<action path="/apply/t07_cd_apply_modify" parameter="modifyT07_cd_apply" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success1" path="/apply/t07_cd_apply_trans_result_list1.jsp" />
+		<forward name="success2" path="/apply/t07_cd_apply_report_result_list1.jsp" />
+		<forward name="failure" path="/apply/t07_cd_apply_list.do" />
+	</action>
+	<action path="/apply/t07_report_detail" parameter="getT07_report_detail" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_report_detail.jsp" />
+	</action>
+	<action path="/apply/t07_cd_apply_check_detail" parameter="getT07_cd_apply_detail" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_cd_apply_check_detail.jsp" />
+		<forward name="failure" path="/apply/t07_cd_apply_check_detail.jsp" />
+	</action>
+	<action path="/apply/t07_report_party_list" parameter="getT07_report_partyList" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_report_party_list.jsp" />
+	</action>
+	<action path="/apply/t07_report_trans_list" parameter="getT07_report_transList" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_report_trans_list.jsp" />
+	</action>
+	<action path="/apply/t07_report_acct_list" parameter="getT07_report_acctList" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_report_acct_list.jsp" />
+	</action>
+	
+	<action path="/apply/t07_cd_apply_delete" parameter="delT07_cd_applyDo" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_cd_apply_list.do" />
+		<forward name="failure" path="/apply/t07_cd_apply_list.do" />
+	</action>
+	<action path="/apply/t07_cd_apply_submit" parameter="submitT07_cd_apply" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success1" path="/apply/t07_cd_apply_list.do" />
+		<forward name="success2" path="/apply/t07_cd_apply_check_list.do" />
+		<forward name="success3" path="/apply/t07_cd_apply_search_list.do" />
+		<forward name="failure" path="/apply/t07_cd_apply_list.do" />
+	</action>
+	<action path="/apply/t07_cd_apply_check_list" parameter="getT07_cd_applyList" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_cd_apply_check_list.jsp" />
+		<forward name="failure" path="/apply/t07_cd_apply_check_list.jsp" />
+	</action>
+	<action path="/apply/t07_cd_apply_search_list" parameter="getT07_cd_applyList" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_cd_apply_search_list.jsp" />
+		<forward name="failure" path="/apply/t07_cd_apply_search_list.jsp" />
+	</action>
+	<action path="/apply/t07_cd_apply_case_list" parameter="getT07_cd_applyList" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_cd_apply_case_list.jsp" />
+		<forward name="failure" path="/apply/t07_cd_apply_case_list.jsp" />
+	</action>
+	<action path="/apply/createT07_cd_apply_case" parameter="createT07_cd_apply_case" name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyAction" validate="false" scope="request">
+		<forward name="success" path="/apply/t07_cd_apply_case_list.do" />
+		<forward name="failure" path="/apply/t07_cd_apply_case_list.do" />
+	</action>
+	
+	</action-mappings>
+	<message-resources parameter="ApplicationResources_zh_CN" />
+</struts-config>

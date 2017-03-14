@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T00_organ">
+  <statement id="getT00_organList" parameterClass="com.ist.platform.dto.T00_organ" resultClass="com.ist.platform.dto.T00_organ">
+  SELECT *  FROM T00_ORGAN
+  <dynamic prepend="WHERE">
+    <isNotEmpty prepend="AND" property="uporgankey_s">
+    UPORGANKEY = #uporgankey_s#
+    </isNotEmpty>
+        <isNotEmpty prepend="AND" property="organkey_s">
+    ORGANKEY=#organkey_s#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organname_s">
+    ORGANNAME LIKE #organname_s#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organlevel_s">
+    ORGANLEVEL = #organlevel_s#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organstr">
+    ORGANKEY IN ( SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY=#organstr#)
+    </isNotEmpty>
+  </dynamic>
+  ORDER BY ORGANLEVEL,ORGANKEY
+  </statement>
+
+  <statement id="getT00_organList2" parameterClass="com.ist.platform.dto.T00_organ" resultClass="com.ist.platform.dto.T00_organ">
+  SELECT T.ORGANKEY,T.ORGANNO,T.ORGANNAME,T.ORGANSF,T.ORGANLEVEL,T.UPORGANKEY,T.ORGANADDRESS,T.POSTALCODE,T.TELEPHONE,
+  T.ORGANMANAGER,T.ORGANPAMOUNT,T.LINKMAN,T.BUILDDATE,T.ORGANDES,T.VALIDATEDATE,T.INVALIDATEDATE,T.CREATEDATE,T.CREATOR,T.MODIFYDATE,T.MODIFIER,
+  T.UNIONORGKEY,T.ORG_AREA,T.SETTLEORGKEY
+   FROM T00_ORGAN T  WHERE   1>0 
+  <dynamic>
+    <isNotEmpty prepend="AND" property="organkey1">
+    T.ORGANKEY IN ($organkey1$)
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organname">
+    T.ORGANNAME LIKE #organname#
+    </isNotEmpty>
+     <isNotEmpty prepend="AND" property="organkey">
+    T.ORGANKEY = #organkey#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organstr">
+    T.ORGANKEY IN ( $organstr$ )
+    </isNotEmpty>
+  </dynamic>
+  ORDER BY T.ORGANKEY
+  </statement>
+
+ <statement id="getT00_organList3" parameterClass="com.ist.platform.dto.T00_organ" resultClass="com.ist.platform.dto.T00_organ">
+  SELECT T.ORGANKEY,T.ORGANNO,T.ORGANNAME,T.ORGANSF,T.ORGANLEVEL,T.UPORGANKEY,T.ORGANADDRESS,T.POSTALCODE,T.TELEPHONE,T.ORGANMANAGER,T.ORGANPAMOUNT,T.LINKMAN,T.BUILDDATE,T.ORGANDES,T.VALIDATEDATE,T.INVALIDATEDATE,T.CREATEDATE,T.CREATOR,T.MODIFYDATE,T.MODIFIER,A.UNIONORGKEY,A.ORG_AREA,A.SETTLEORGKEY,A.OTHER_ORG
+   FROM T00_ORGAN T, T87_UNION_ORGAN A  WHERE   T.ORGANKEY=A.ORGANKEY  
+  <dynamic>
+    <isNotEmpty prepend="AND" property="organname">
+    T.ORGANNAME LIKE #organname#
+    </isNotEmpty>
+     <isNotEmpty prepend="AND" property="organkey">
+    T.ORGANKEY = #organkey#
+    </isNotEmpty>
+     <isNotEmpty prepend="AND" property="organstr">
+    T.ORGANKEY IN ( $organstr$ )
+    </isNotEmpty>
+  </dynamic>
+ 
+  ORDER BY T.ORGANKEY
+  </statement>
+
+<statement id="getT00_organListText" parameterClass="com.ist.platform.dto.T00_organ" resultClass="com.ist.platform.dto.T00_organ">
+  SELECT T.ORGANKEY,T.ORGANNO,T.ORGANNAME,T.ORGANSF,T.ORGANLEVEL,T.UPORGANKEY,T.ORGANADDRESS,T.POSTALCODE,T.TELEPHONE,T.ORGANMANAGER,T.ORGANPAMOUNT,T.LINKMAN,T.BUILDDATE,T.ORGANDES,T.VALIDATEDATE,T.INVALIDATEDATE,T.CREATEDATE,T.CREATOR,T.MODIFYDATE,T.MODIFIER,T.UNIONORGKEY,T.ORG_AREA,T.SETTLEORGKEY
+   FROM T00_ORGAN T  WHERE   T.FLAG = '1' AND T.ORGANADDRESS IS NOT NULL AND T.ORG_AREA IS NOT NULL 
+   
+    <isNotEmpty prepend="AND" property="organstr">
+    ORGANKEY in ($organstr$)
+    </isNotEmpty>
+   
+   ORDER BY T.ORGANKEY 
+</statement>
+<statement id="getT00_organListText1" parameterClass="com.ist.platform.dto.T00_organ" resultClass="com.ist.platform.dto.T00_organ">
+  SELECT T.ORGANKEY,T.ORGANNO,T.ORGANNAME,T.ORGANSF,T.ORGANLEVEL,T.UPORGANKEY,T.ORGANADDRESS,T.POSTALCODE,T.TELEPHONE,T.ORGANMANAGER,T.ORGANPAMOUNT,T.LINKMAN,T.BUILDDATE,T.ORGANDES,T.VALIDATEDATE,T.INVALIDATEDATE,T.CREATEDATE,T.CREATOR,T.MODIFYDATE,T.MODIFIER,T.UNIONORGKEY,T.ORG_AREA,T.SETTLEORGKEY
+   FROM T00_ORGAN T  WHERE   T.FLAG = '1' AND (T.ORGANADDRESS IS  NULL OR T.ORG_AREA IS  NULL)
+   
+   <isNotEmpty prepend="AND" property="organstr">
+    ORGANKEY in ($organstr$)
+    </isNotEmpty>
+</statement>
+  
+  <statement id="getT00_organListCount" parameterClass="com.ist.platform.dto.T00_organ" resultClass="int">
+  SELECT COUNT(*) FROM T00_ORGAN
+    <dynamic prepend="WHERE">
+    <isNotEmpty prepend="AND" property="uporgankey_s">
+    UPORGANKEY = #uporgankey_s#
+    </isNotEmpty>
+        <isNotEmpty prepend="AND" property="organkey_s">
+    ORGANKEY=#organkey_s#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organname_s">
+    ORGANNAME LIKE #organname_s#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organlevel_s">
+    ORGANLEVEL = #organlevel_s#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organstr">
+    ORGANKEY IN ( SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY=#organstr#)
+    </isNotEmpty>
+  </dynamic>
+  </statement>
+
+<statement id="getT00_organListCount2" parameterClass="com.ist.platform.dto.T00_organ" resultClass="int">
+ SELECT COUNT(T.ORGANKEY) FROM T00_ORGAN T, T87_UNION_ORGAN A  WHERE   T.ORGANKEY=A.ORGANKEY  
+  <dynamic>
+    <isNotEmpty prepend="AND" property="organname">
+    T.ORGANNAME LIKE #organname#
+    </isNotEmpty>
+     <isNotEmpty prepend="AND" property="organkey">
+    T.ORGANKEY = #organkey#
+    </isNotEmpty>
+     <isNotEmpty prepend="AND" property="organstr">
+    T.ORGANKEY IN ( $organstr$ )
+    </isNotEmpty>
+  </dynamic>
+  </statement>
+
+  <statement id="insertT00_organ" parameterClass="com.ist.platform.dto.T00_organ" resultClass="int">
+  INSERT INTO T00_ORGAN(
+  ORGANKEY,ORGANNO,ORGANNAME,ORGANSF,ORGANLEVEL,UPORGANKEY,ORGANADDRESS,POSTALCODE,TELEPHONE,ORGANMANAGER,ORGANPAMOUNT,LINKMAN,BUILDDATE,ORGANDES,VALIDATEDATE,INVALIDATEDATE,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER,FLAG,UNIONORGKEY,ORG_AREA,SETTLEORGKEY
+  ) VALUES(
+  #organkey#,#organno#,#organname#,#organsf#,#organlevel#,#uporgankey#,#organaddress#,#postalcode#,#telephone#,#organmanager#,#organpamount#,#linkman#,#builddate#,#organdes#,#validatedate#,#invalidatedate#,#createdate#,#creator#,#modifydate#,#modifier#,#flag#,#unionorgkey#,#org_area#,#settleorgkey#
+  )
+  </statement>
+   <statement id="insertT87_organ_map" parameterClass="com.ist.platform.dto.T00_organ" resultClass="int">
+	  INSERT INTO T87_organ_map(
+	  ORGANKEY,suborgankey,organlevel
+	  ) VALUES(
+	  #uporgankey#,#organkey#,#organlevel#
+	  )
+  </statement>
+  
+  <statement id="deleteT87_organ_map" parameterClass="String" resultClass="int">
+	 delete from T87_organ_map t where t.organkey=#organkey#
+  </statement>
+  
+  <statement id="insertT87_Union_organ" parameterClass="com.ist.platform.dto.T00_organ" resultClass="int">
+  INSERT INTO T87_UNION_ORGAN(
+  ORGANKEY,UNIONORGKEY,ORG_AREA,SETTLEORGKEY,OTHER_ORG
+  ) VALUES(
+  #organkey#,#unionorgkey#,#org_area#,#settleorgkey#,#other_org#
+  )
+  </statement>
+
+  <statement id="modifyT00_organ" parameterClass="com.ist.platform.dto.T00_organ" resultClass="int">
+  UPDATE T00_ORGAN SET
+  ORGANNAME=#organname#,ORGANSF=#organsf#,ORGANLEVEL=#organlevel#,UPORGANKEY=#uporgankey#,ORGANADDRESS=#organaddress#,POSTALCODE=#postalcode#,TELEPHONE=#telephone#,ORGANMANAGER=#organmanager#,ORGANPAMOUNT=#organpamount#,LINKMAN=#linkman#,BUILDDATE=#builddate#,ORGANDES=#organdes#,VALIDATEDATE=#validatedate#,INVALIDATEDATE=#invalidatedate#,MODIFYDATE=#modifydate#,MODIFIER=#modifier#
+  ,UNIONORGKEY=#unionorgkey#,ORG_AREA=#org_area#,SETTLEORGKEY=#settleorgkey# WHERE ORGANKEY=#organkey#
+  </statement>
+  
+   <statement id="modify2T00_organ" parameterClass="com.ist.platform.dto.T00_organ" resultClass="int">
+  UPDATE T00_ORGAN SET
+  ORGANADDRESS=#organaddress#
+  WHERE ORGANKEY=#organkey#
+  </statement>
+
+  <statement id="modify1T00_organ" parameterClass="com.ist.platform.dto.T00_organ" resultClass="int">
+  UPDATE T87_UNION_ORGAN SET
+  UNIONORGKEY=#unionorgkey#,ORG_AREA=#org_area#,SETTLEORGKEY=#settleorgkey#,OTHER_ORG=#other_org#
+  WHERE ORGANKEY=#organkey#
+  </statement>
+  
+  <statement id="deleteT00_organ" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T00_ORGAN WHERE ORGANKEY=#value#
+  </statement>
+  
+   <statement id="deleteT87_Uinon_organ" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T87_UNION_ORGAN WHERE ORGANKEY=#value#
+  </statement>
+
+  <statement id="getT00_organDisp" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_organ">
+  SELECT *  FROM T00_ORGAN T WHERE ORGANKEY=#value#
+  </statement>
+  <statement id="getT00_organDisp1" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_organ">
+  SELECT  T.ORGANKEY,T.ORGANNO,T.ORGANNAME,T.ORGANSF,T.ORGANLEVEL,T.UPORGANKEY,T.ORGANADDRESS,T.POSTALCODE,T.TELEPHONE,T.ORGANMANAGER,T.ORGANPAMOUNT,T.LINKMAN,T.BUILDDATE,T.ORGANDES,T.VALIDATEDATE,T.INVALIDATEDATE,T.CREATEDATE,T.CREATOR,T.MODIFYDATE,T.MODIFIER,A.UNIONORGKEY,A.ORG_AREA,A.SETTLEORGKEY,A.OTHER_ORG
+   FROM T00_ORGAN T, T87_UNION_ORGAN A  WHERE   T.ORGANKEY=A.ORGANKEY AND T.ORGANKEY=#value#
+  </statement>
+    <statement id="getT00_organListByGroupkey" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_organ">
+	SELECT DISTINCT T4.ORGANNO,T4.ORGANKEY,T4.ORGANNAME,T4.ORGANSF,T4.ORGANLEVEL,T4.UPORGANKEY,T4.ORGANADDRESS,T4.POSTALCODE,T4.TELEPHONE,T4.ORGANMANAGER,T4.ORGANPAMOUNT,T4.LINKMAN,T4.BUILDDATE,T4.ORGANDES,T4.VALIDATEDATE,T4.INVALIDATEDATE,T4.CREATEDATE,T4.CREATOR,T4.MODIFYDATE,T4.MODIFIER,T4.FLAG FROM T00_GROUP_AUTH T1,T00_DGROUP T2,T00_DGROUP_AUTH T3,T00_ORGAN T4
+	WHERE T1.DGROUPKEY=T2.DGROUPKEY
+	AND T2.DGROUPKEY=T3.DGROUPKEY
+	AND T3.ORGANKEY=T4.ORGANKEY
+	AND T1.GROUPKEY=#value#
+	ORDER BY T4.ORGANLEVEL
+  </statement>
+  <!-- start liujun -->
+  <statement id="getT00_organListByUserOrgankey0" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_organ">
+	SELECT T.ORGANNO,T.ORGANKEY,T.ORGANSF,T.ORGANNAME,T.ORGANLEVEL,T.ORGANADDRESS,T.UPORGANKEY,T.POSTALCODE,T.TELEPHONE,T.ORGANMANAGER,T.ORGANPAMOUNT,T.LINKMAN,T.BUILDDATE,T.ORGANDES,T.VALIDATEDATE,T.INVALIDATEDATE,T.CREATEDATE,T.CREATOR,T.MODIFYDATE,T.MODIFIER,T.FLAG 
+	FROM T00_ORGAN T 
+	WHERE  T.ORGANKEY IN (SELECT b.ORGANKEY FROM T00_COM_AUTH a,T00_GROUP_ORGAN b
+                             WHERE a.GROUPKEY=b.GROUPKEY
+                          AND a.USERNAME=#value#)
+	order by T.ORGANKEY
+  </statement>
+  <statement id="getT00_organListByUserOrgankey1" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_organ">
+	SELECT T.ORGANNO,T.ORGANKEY,T.ORGANSF,T.ORGANNAME,T.ORGANLEVEL,T.ORGANADDRESS,T.UPORGANKEY,T.POSTALCODE,T.TELEPHONE,T.ORGANMANAGER,T.ORGANPAMOUNT,T.LINKMAN,T.BUILDDATE,T.ORGANDES,T.VALIDATEDATE,T.INVALIDATEDATE,T.CREATEDATE,T.CREATOR,T.MODIFYDATE,T.MODIFIER,T.FLAG FROM T00_ORGAN T WHERE  T.ORGANKEY IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY=#value#)
+	order by T.ORGANKEY
+  </statement>
+  <!-- end liujun -->
+  <!-- written by liulb 2006.12.30 -->
+  <statement id="getT00_relateOrganByTrackId" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_organ">
+	SELECT DISTINCT T.ORGANNO,T.ORGANKEY,T.ORGANSF,T.ORGANNAME,T.ORGANLEVEL,T.ORGANADDRESS,T.UPORGANKEY,T.POSTALCODE,T.TELEPHONE,T.ORGANMANAGER,T.ORGANPAMOUNT,T.LINKMAN,T.BUILDDATE,T.ORGANDES,T.VALIDATEDATE,T.INVALIDATEDATE,T.CREATEDATE,T.CREATOR,T.MODIFYDATE,T.MODIFIER,T.FLAG FROM T00_ORGAN ORGAN
+	<dynamic prepend="WHERE">
+		ORGAN.ORGANKEY IN (
+			SELECT TX.ORGANKEY FROM T47_TRANSACTION TX					
+			WHERE TX.PARTY_ID IN (
+				SELECT INFO.TI_OBJECT_ID FROM T07_TRACKINFO INFO
+					WHERE INFO.TI_TRACKINFO_ID = #value#
+				)
+			)			
+	</dynamic>
+  </statement>
+  <!-- end written by liulb 2006.12.30 
+  <statement id="modifyValidatedT00_organ" parameterClass="com.ist.aml.report.dto.T47_transaction" resultClass="int">
+  UPDATE T00_ORGAN SET
+	ORGANNO=#organ_code#
+  WHERE ORGANNO=#organ_code#
+  </statement>-->
+  
+    <statement id="getT00_organMainList" parameterClass="com.ist.platform.dto.T00_organ" resultClass="com.ist.platform.dto.T00_organ">
+  select  '1' As oname,count(*) as okey from t00_organ t where t.createdate>=#createdate#
+union select '2' As oname ,count(*) as okey from t00_organ t where t.org_area is null
+  
+  </statement>
+  <statement id="getT00_organtreeList"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.common.menu.Menu">
+		select organkey as Id,uporgankey as parent_id,organname as
+		name,organlevel as levels from t00_organ where
+		ORGANKEY IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY=#value#)
+	</statement>
+	<statement id="getT00_organtreeListForLdrp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.common.menu.Menu">
+		select t.organkey as id,uporgankey as parent_id,t.organname as name,
+		t.organlevel as levels from t00_organ t,v00_group_organ v 
+		where t.organkey = v.organkey and v.groupkey=#groupkey#
+	</statement>
+	
+	
+	<statement id="getT00_organtreeListForTaskLdrp"
+		parameterClass="java.util.HashMap"
+		resultClass="com.ist.common.menu.Menu">
+		select distinct t2.organkey as id,t2.uporgankey as parent_id, t2.organname as name 
+		from t17_org_user_mapping t1, t00_organ t2 
+		where t1.organkey = t2.organkey and t1.organkey not in (
+		select t3.open_organkey from t17_check_subtask_organ_head t3  
+		where t3.taskid = #taskid#  
+		<dynamic prepend="">
+			<isNotEmpty prepend="and" property="staskid">
+				t3.staskid != #staskid#
+			</isNotEmpty>
+		</dynamic>
+		)
+	</statement>
+</sqlMap>
+

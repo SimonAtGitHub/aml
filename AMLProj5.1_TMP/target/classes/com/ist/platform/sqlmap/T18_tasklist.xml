@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T18_tasklist"> 
+  <statement id="getT18_tasklistList_pf" parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="com.ist.platform.dto.T18_tasklist"> 
+  	select t.businesskey,t.tasktype,t.depandontype,t.dskey,t.granularity,t.organkey,s.tasktype_d from t18_tasklist t
+  	left join t18_tasktype_depandon s on t.tasktype = s.tasktype
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="businesskey"> 
+    	t.businesskey like '%'||#businesskey#||'%' 
+    </isNotEmpty> 
+
+   <isNotEmpty prepend="and" property="selectedtasktypekey">
+	   t.tasktype in 
+	   <iterate property="selectedtasktypekey" conjunction="," open="(" close=")" > 
+	       #selectedtasktypekey[]# 
+	   </iterate>
+   </isNotEmpty>
+   
+   <isNotEmpty prepend="and" property="selectedgranularitykey">
+	   t.granularity in 
+	   <iterate property="selectedgranularitykey" conjunction="," open="(" close=")" > 
+	       #selectedgranularitykey[]# 
+	   </iterate>
+   </isNotEmpty>   
+   
+   <isNotEmpty prepend="and" property="currdskey"> 
+   		t.dskey = #currdskey# 
+   </isNotEmpty>
+   <isEmpty prepend="and" property="currdskey"> 
+   		(t.dskey = ' ' or t.dskey is null) 
+   </isEmpty>
+   <isNotEmpty prepend="and" property="ispilot"> 
+   		<isEqual property="ispilot" compareValue="0">
+   			t.tasktype not in ('M321', 'M322', 'M358', 'M362', 'M350','M351', 'M352', 'M353', 'M354', 'M355')
+   		</isEqual>
+   		<isEqual property="ispilot" compareValue="1">
+   			t.tasktype not in ('M300', 'M301', 'M302')
+   		</isEqual>
+   		<isEqual property="ispilot" compareValue="2">
+   			t.tasktype not in ('M300', 'M301', 'M302','M358', 'M362', 'M350','M351', 'M352', 'M353', 'M354', 'M355')
+   		</isEqual>
+   </isNotEmpty>
+  </dynamic> 
+  	order by t.tasktype,t.businesskey
+  </statement> 
+  
+  <statement id="getT18_tasklistListCount_pf" parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="int"> 
+  select count(t.businesskey) from t18_tasklist t left join t18_tasktype_depandon s on t.tasktype = s.tasktype
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="businesskey"> 
+    	t.businesskey like '%'||#businesskey#||'%' 
+    </isNotEmpty> 
+
+   <isNotEmpty prepend="and" property="selectedtasktypekey">
+	   t.tasktype in 
+	   <iterate property="selectedtasktypekey" conjunction="," open="(" close=")" > 
+	       #selectedtasktypekey[]# 
+	   </iterate>
+   </isNotEmpty>
+   
+   <isNotEmpty prepend="and" property="selectedgranularitykey">
+	   t.granularity in 
+	   <iterate property="selectedgranularitykey" conjunction="," open="(" close=")" > 
+	       #selectedgranularitykey[]# 
+	   </iterate>
+   </isNotEmpty>   
+   
+   <isNotEmpty prepend="and" property="currdskey"> 
+   		t.dskey = #currdskey# 
+   </isNotEmpty>
+   <isEmpty prepend="and" property="currdskey"> 
+   		(t.dskey = ' ' or t.dskey is null) 
+   </isEmpty>
+   <isNotEmpty prepend="and" property="ispilot"> 
+   		<isEqual property="ispilot" compareValue="0">
+   			t.tasktype not in ('M321', 'M322', 'M358', 'M362', 'M363', 'M351', 'M352', 'M353', 'M354', 'M355')
+   		</isEqual>
+   		<isEqual property="ispilot" compareValue="1">
+   			t.tasktype not in ('M300', 'M301', 'M302')
+   		</isEqual>
+   		<isEqual property="ispilot" compareValue="2">
+   			t.tasktype not in ('M300', 'M301', 'M302','M358', 'M362', 'M363', 'M350','M351', 'M352', 'M353', 'M354', 'M355')
+   		</isEqual>
+   </isNotEmpty>
+  </dynamic> 
+  </statement> 
+  
+  <statement id="getT18_tasklistAllList_pf" parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="com.ist.platform.dto.T18_tasklist"> 
+   	select businesskey,tasktype,depandontype,dskey,granularity,organkey from t18_tasklist  order by tasktype,businesskey
+  </statement> 
+  <statement id="getT18_tasklistByTypeList" parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="com.ist.platform.dto.T18_tasklist"> 
+   	select businesskey,tasktype,depandontype,dskey,granularity,organkey from t18_tasklist
+   <dynamic prepend="where">
+	   <isNotEmpty prepend="and" property="tasktype"> 
+	   		tasktype = #tasktype#
+	   </isNotEmpty>
+   </dynamic>
+  </statement> 
+  
+  <statement id="insertT18_tasklist_pf" parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="int"> 
+  insert into T18_tasklist(
+  businesskey,tasktype,depandontype,dskey,granularity,organkey,subtasknum) values(
+  #businesskey#,#tasktype#,#depandontype#,#dskey#,#granularity#,#organkey#,#subtasknum#
+  ) 
+  </statement> 
+ 
+  <statement id="deleteT18_tasklist_pf" parameterClass="java.lang.String" resultClass="int">
+  	delete from T18_tasklist where businesskey=#value# 
+  </statement> 
+  
+  <statement id="deleteT18_tasklistByType_pf" parameterClass="java.lang.String" resultClass="int">
+  	delete from T18_tasklist where tasktype=#value# 
+  </statement> 
+ 
+  <statement id="getT18_tasklistDisp_pf" parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="com.ist.platform.dto.T18_tasklist"> 
+  	select * from T18_tasklist where businesskey=#businesskey# and tasktype=#tasktype# and granularity=#granularity#
+  </statement> 
+ 
+  <statement id="deleteT18_time_depandon_pf" parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="int">
+  	delete from T18_time_depandon where businesskey=#businesskey# and tasktype=#tasktype# and granularity=#granularity#
+  </statement> 
+  
+  <statement id="deleteT18_time_depandonByType" parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="int">
+  	delete from T18_time_depandon where tasktype=#tasktype#
+  </statement>
+  
+  <statement id="insertT18_time_depandon_pf" parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="int"> 
+  	insert into T18_time_depandon(businesskey,tasktype,granularity) values(#businesskey#,#tasktype#,#granularity#) 
+  </statement> 
+  
+  <statement id="insertT18_time_depandonByType_pf" parameterClass="java.lang.String" resultClass="int"> 
+  	insert into T18_time_depandon(businesskey,tasktype,granularity) 
+	select businesskey, tasktype, granularity
+	from t18_tasklist t
+	where t.tasktype = #value#
+  </statement>
+  
+  <statement id="getT18_taskListByTasktype_pf" parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="com.ist.platform.dto.T18_tasklist"> 
+ 	select distinct(t.businesskey),t.depandontype,t.dskey,t.granularity,t.tasktype,y.typename as tasktype_disp,
+	case when t.businesskey in (select d.BUSINESSKEY_D from T18_TASK_DEPANDON d where d.businesskey=#selfbusinesskey# and d.tasktype=#selftasktype# and d.granularity=#selfgranularity# and t.tasktype=d.tasktype_d) then '1' else '0' end as depflag 
+	from T18_TASKLIST t,T18_TASK_TYPE y where t.tasktype=y.tasktype and t.businesskey ||'_'||t.tasktype||'_'||t.granularity != #selfbusinesskey#||'_' ||#selftasktype#||'_' ||#selfgranularity#
+	  <dynamic prepend=""> 
+	    <isNotEmpty prepend="and" property="businesskey"> 
+	    t.businesskey like '%'||#businesskey#||'%' 
+	    </isNotEmpty> 
+	   <isNotEmpty prepend="and" property="tasktype"> 
+	    t.tasktype = #tasktype# 
+	    </isNotEmpty> 
+	    <isNotEmpty prepend="and" property="depandontype"> 
+	    t.depandontype = #depandontype# 
+	    </isNotEmpty> 
+	    <isNotEmpty prepend="and" property="dskey"> 
+	    t.dskey = #dskey# 
+	    </isNotEmpty> 
+	    <isNotEmpty prepend="and" property="granularity"> 
+	    t.granularity = #granularity# 
+	    </isNotEmpty>
+	  </dynamic> 
+	 order by tasktype,depflag DESC,dskey ,businesskey 
+  </statement> 
+  
+  <statement id="getT18_taskListByTasktypeCount_pf" parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="int"> 
+   select count(businesskey) from ( 
+ 	select distinct(t.businesskey),t.depandontype,t.dskey,t.granularity,t.tasktype,y.typename as tasktype_disp,
+	case when t.businesskey in (select d.BUSINESSKEY_D from T18_TASK_DEPANDON d where d.businesskey=#selfbusinesskey# and d.tasktype=#selftasktype# and d.granularity=#selfgranularity# and t.tasktype=d.tasktype_d) then '1' else '0' end as depflag 
+	from T18_TASKLIST t,T18_TASK_TYPE y where t.tasktype=y.tasktype and t.businesskey ||'_'||t.tasktype||'_'||t.granularity != #selfbusinesskey#||'_' ||#selftasktype#||'_' ||#selfgranularity#
+	  <dynamic prepend=""> 
+	    <isNotEmpty prepend="and" property="businesskey"> 
+	    t.businesskey like '%'||#businesskey#||'%' 
+	    </isNotEmpty> 
+	   <isNotEmpty prepend="and" property="tasktype"> 
+	    t.tasktype = #tasktype# 
+	    </isNotEmpty> 
+	    <isNotEmpty prepend="and" property="depandontype"> 
+	    t.depandontype = #depandontype# 
+	    </isNotEmpty> 
+	    <isNotEmpty prepend="and" property="dskey"> 
+	    t.dskey = #dskey# 
+	    </isNotEmpty> 
+	    <isNotEmpty prepend="and" property="granularity"> 
+	    t.granularity = #granularity# 
+	    </isNotEmpty>
+	  </dynamic> 
+	 order by tasktype,depflag DESC,dskey ,businesskey )
+  </statement> 
+  
+   <statement id="insertT18_tasklistFromTable_pf" parameterClass="java.lang.String" resultClass="int">
+  		<![CDATA[$sql$]]>
+  </statement> 
+   <statement id="insertT18_tasklistFromTable" parameterClass="java.lang.String" resultClass="int">
+  		<![CDATA[$sql$]]>
+  </statement> 
+  <statement id="getT18_task_depRelationList_pf"
+		parameterClass="java.lang.String"	resultClass="com.ist.common.menu.Menu">
+		select tasktype||'-'||businesskey||'-'||granularity as id,tasktype_d ||'-'|| businesskey_d||'-'||granularity as parent_id from T18_TASK_DEPANDON
+	</statement>
+	<statement id="getTasklistCount" parameterClass="com.ist.bmp.hpom.dto.T18_tasklist" resultClass="int">
+  	 select count(*) from T18_TASK_DEPANDON  where BUSINESSKEY_D in ($keys$) and tasktype_d = #tasktype#
+  </statement>
+  <statement id="deleteT18_tasklistByKey_pf" parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="int">
+  delete from t18_tasklist where businesskey in ($keys$) 
+    <isNotEmpty prepend="and" property="tasktype"> 
+	    tasktype=#tasktype#
+	    </isNotEmpty>
+  </statement>
+   <statement id="deleteT18_time_depandonByKey_pf" parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="int">
+  delete from T18_time_depandon where businesskey in ($keys$) 
+   <isNotEmpty prepend="and" property="tasktype"> 
+	    tasktype=#tasktype#
+	    </isNotEmpty>
+  </statement> 
+   <statement id="deleteT18_task_depandonByKey_pf" parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="int">
+  delete from T18_TASK_DEPANDON where businesskey in ($keys$)  
+  <isNotEmpty prepend="and" property="tasktype"> 
+	    tasktype=#tasktype#
+	    </isNotEmpty>
+  </statement>
+  <statement id="getTasklistdepandonCount" parameterClass="com.ist.bmp.hpom.dto.T18_tasklist" resultClass="int">
+  	 select count(*) from T18_TASK_DEPANDON  where BUSINESSKEY in ($keys$) and tasktype = #tasktype#
+  </statement> 
+  <statement id="deleteT18_tasklistByKey" parameterClass="com.ist.bmp.hpom.dto.T18_tasklist" resultClass="int">
+  delete from t18_tasklist where businesskey in ($keys$) and tasktype=#tasktype#
+  </statement>
+  <statement id="deleteT18_time_depandonByKey" parameterClass="com.ist.bmp.hpom.dto.T18_tasklist" resultClass="int">
+  delete from T18_time_depandon where businesskey in ($keys$) and tasktype=#tasktype#
+  </statement> 
+   <statement id="deleteT18_task_depandonByKey" parameterClass="com.ist.bmp.hpom.dto.T18_tasklist" resultClass="int">
+  delete from T18_TASK_DEPANDON where businesskey in ($keys$)  and tasktype=#tasktype# 
+  </statement> 
+  <statement id="getT18_task_depRelationList"
+		parameterClass="java.lang.String"	resultClass="com.ist.common.menu.Menu">
+		select tasktype||'-'||businesskey||'-'||granularity as id,tasktype_d ||'-'|| businesskey_d||'-'||granularity as parent_id from T18_TASK_DEPANDON
+	</statement>
+	
+  <statement id="insertT18_taskListFor300"  parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="com.ist.platform.dto.T07_rule_indic">
+	  insert into T18_tasklist (businesskey,tasktype,depandontype,dskey,granularity,organkey,subtasknum,orderseq)
+	  select t.indic_table,
+	         'M300',
+	       	 '1',
+	       	 ' ',
+	       	 t.granularitys,
+	       	 '0',
+	       	 '',
+	       	 callayer
+	  from v07_indic t, t07_etl_base s, t07_etl_out_tab m
+	 where t.indickey = s.etl_code
+	   and s.etl_id = m.etl_id
+  </statement>
+  
+    
+  <statement id="insertT18_taskListFor321"  parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="com.ist.platform.dto.T07_rule_indic">
+  	insert into T18_tasklist (businesskey,tasktype,depandontype,dskey,granularity,organkey,subtasknum,orderseq)
+  	select t.indic_table,
+  		'M321',
+  		'1',
+  		' ',
+  		t.granularitys, 
+  		'0',
+  		'',
+	    callayer
+  	from T21_INDIC t, T21_INDIC_SQL s
+	where t.indickey = s.indickey and t.use_type_cd in ('1', '3') and t.flag='1'
+  </statement>
+     
+  <statement id="insertT18_taskListFor322" parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="com.ist.platform.dto.T07_rule_indic">
+  	insert into T18_tasklist (businesskey,tasktype,depandontype,dskey,granularity,organkey,subtasknum)
+  	select t.gstype||t.rulekey, 'M322', '', ' ', t.granulairty, '0', '' from t21_rule t, t21_pbcrule s
+	where t.pbckey = s.pbckey and t.deployflag = '3' and s.pbctype = '1'
+  </statement>
+  
+  <statement id="insertT18_taskListFor362" parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="com.ist.platform.dto.T07_rule_indic">
+  	insert into T18_tasklist (businesskey,tasktype,depandontype,dskey,granularity,organkey,subtasknum)
+  	select t.gstype||t.rulekey, 'M362', '', ' ', t.granulairty, '0', '' from t21_rule t, t21_pbcrule s
+	where t.pbckey = s.pbckey and t.deployflag = '3' and s.pbctype = '3'
+  </statement> 
+  
+  <statement id="insertT18_taskListFor703"  parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="com.ist.platform.dto.T07_rule_indic">
+  	insert into T18_tasklist (businesskey,tasktype,depandontype,dskey,granularity,organkey,subtasknum)
+  	select t.indic_table,
+  		'M703',
+  		'1', 
+  		' ',
+  		t.granularitys,
+  		'0',
+  		'' 
+  	from T21_INDIC t, T21_INDIC_SQL s
+	where t.indickey = s.indickey and t.use_type_cd = '2' and t.flag='1'
+  </statement>
+  
+  <statement id="getGranularityOf300" parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="com.ist.platform.dto.T18_tasklist">
+  	select distinct t.granularitys as granularity
+	  from v07_indic t, t07_etl_base s, t07_etl_out_tab m
+	 where t.indickey = s.etl_code
+	   and s.etl_id = m.etl_id
+	 order by t.granularitys desc
+  </statement>
+  
+  <statement id="getGranularityOf321" parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="com.ist.platform.dto.T18_tasklist">
+  	select distinct t.granularitys as granularity
+  	from T21_INDIC t, T21_INDIC_SQL s
+	where t.indickey = s.indickey and t.use_type_cd in ('1', '3') and t.flag='1'
+	order by t.granularitys desc
+  </statement>
+  
+  <statement id="getGranularityOf701" parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="com.ist.platform.dto.T18_tasklist">
+  	select distinct sqlgranularity as granularity
+	  from t31_def_temp_gran t order by t.sqlgranularity desc
+  </statement>
+  
+  <statement id="getGranularityOf703" parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="com.ist.platform.dto.T18_tasklist">
+  	select distinct t.granularitys as granularity
+  	from T21_INDIC t, T21_INDIC_SQL s
+	where t.indickey = s.indickey and t.use_type_cd = '2' and t.flag='1'
+	order by t.granularitys desc
+  </statement>
+  
+  <statement id="getGranularityOf705" parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="com.ist.platform.dto.T18_tasklist">
+  	select distinct t.granularity as granularity
+	  from t31_def_temp t
+	  where t.TEMPTYPE = '2'
+	  order by t.granularity desc
+  </statement>
+  
+  <statement id="getGranularityOf706" parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="com.ist.platform.dto.T18_tasklist">
+  	select distinct t.granularity as granularity
+	  from t31_def_temp t
+	  where t.TEMPTYPE = '1'
+	  order by t.granularity desc
+  </statement>
+  
+  <statement id="insertT18_taskListFor351" parameterClass="com.ist.platform.dto.T18_tasklist" resultClass="com.ist.platform.dto.T07_rule_indic">
+  	insert into T18_tasklist (businesskey,tasktype,depandontype,dskey,granularity,organkey,subtasknum)
+  	select t.gstype||t.rulekey, 'M351', '', ' ', t.granulairty, '0', '' from t21_rule t, t21_pbcrule s
+	where t.pbckey = s.pbckey and t.deployflag = '3' and s.pbctype = '2'
+  </statement>
+</sqlMap> 
+

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T00_dgroup"> 
+  <!-- modify by lixx 2009.7.9 -->
+  <!-- <statement id="getT00_dgroupList" parameterClass="com.ist.platform.dto.T00_dgroup" resultClass="com.ist.platform.dto.T00_dgroup"> 
+  SELECT DISTINCT(A.DGROUPKEY),A.* FROM T00_DGROUP A ,T00_DGROUP_AUTH B WHERE A.DGROUPKEY=B.DGROUPKEY AND B.ORGANKEY IN ($orgStr$)
+    <isNotEmpty prepend="AND" property="dgroupkey"> 
+    DGROUPKEY = #dgroupkey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="dgroupname">
+    A.DGROUPNAME LIKE #dgroupname#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="flag">
+    FLAG = #flag#
+    </isNotEmpty>     
+  </statement>
+ 
+  <statement id="getT00_dgroupListCount" parameterClass="com.ist.platform.dto.T00_dgroup" resultClass="int"> 
+   SELECT COUNT(DISTINCT A.DGROUPKEY) FROM T00_DGROUP A ,T00_DGROUP_AUTH B WHERE A.DGROUPKEY=B.DGROUPKEY AND B.ORGANKEY IN ($orgStr$) 
+    <isNotEmpty prepend="AND" property="dgroupkey"> 
+    DGROUPKEY = #dgroupkey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="dgroupname">
+    A.DGROUPNAME LIKE #dgroupname#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="flag">
+    FLAG = #flag#
+    </isNotEmpty>     
+  </statement>  -->
+ 
+   <statement id="getT00_dgroupList" parameterClass="com.ist.platform.dto.T00_dgroup" resultClass="com.ist.platform.dto.T00_dgroup"> 
+  SELECT DISTINCT(A.DGROUPKEY),A.* FROM T00_DGROUP A ,T00_DGROUP_AUTH B WHERE A.DGROUPKEY=B.DGROUPKEY AND B.DGROUPKEY IN ($dgroupStr$)
+    <isNotEmpty prepend="AND" property="dgroupkey"> 
+    DGROUPKEY = #dgroupkey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="dgroupname">
+    A.DGROUPNAME LIKE #dgroupname#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="flag">
+    FLAG = #flag#
+    </isNotEmpty>     
+  </statement>
+ 
+  <statement id="getT00_dgroupListCount" parameterClass="com.ist.platform.dto.T00_dgroup" resultClass="int"> 
+   SELECT COUNT(DISTINCT A.DGROUPKEY) FROM T00_DGROUP A ,T00_DGROUP_AUTH B WHERE A.DGROUPKEY=B.DGROUPKEY AND B.DGROUPKEY IN ($dgroupStr$)
+    <isNotEmpty prepend="AND" property="dgroupkey"> 
+    DGROUPKEY = #dgroupkey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="dgroupname">
+    A.DGROUPNAME LIKE #dgroupname#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="flag">
+    FLAG = #flag#
+    </isNotEmpty>     
+  </statement> 
+ <!-- end -->
+ 
+  <statement id="insertT00_dgroup" parameterClass="com.ist.platform.dto.T00_dgroup" resultClass="int"> 
+  INSERT INTO T00_DGROUP(
+  DGROUPKEY,DGROUPNAME,FLAG,ISBUILDIN,ISTEMP,DES,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER
+  ) VALUES(
+  #dgroupkey#,#dgroupname#,#flag#,#isbuildin#,#istemp#,#des#,#createdate#,#creator#,#modifydate#,#modifier#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT00_dgroup" parameterClass="com.ist.platform.dto.T00_dgroup" resultClass="int"> 
+  UPDATE T00_DGROUP SET 
+  DGROUPNAME=#dgroupname#,FLAG=#flag#,DES=#des#,MODIFYDATE=#modifydate#,MODIFIER=#modifier#
+  WHERE DGROUPKEY=#dgroupkey# 
+  </statement> 
+ 
+  <statement id="deleteT00_dgroup" parameterClass="java.lang.String" resultClass="int">
+  <![CDATA[ DELETE FROM T00_DGROUP WHERE DGROUPKEY=#value# AND ISBUILDIN<>'1' ]]>
+  </statement> 
+ 
+  <statement id="getT00_dgroupDisp" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_dgroup"> 
+  SELECT * FROM T00_DGROUP WHERE DGROUPKEY=#value# 
+  </statement> 
+ 
+  <statement id="getT00_dgroupListByGroupkey" parameterClass="com.ist.platform.dto.T00_dgroup" resultClass="com.ist.platform.dto.T00_dgroup"> 
+  SELECT D.DGROUPKEY,D.DGROUPNAME,D.FLAG,D.ISBUILDIN,D.ISTEMP,D.DES,D.CREATEDATE,D.CREATOR,D.MODIFYDATE,D.MODIFIER FROM T00_DGROUP D,T00_GROUP_AUTH G
+  WHERE D.DGROUPKEY=G.DGROUPKEY AND G.GROUPKEY=#groupkey#
+  <dynamic prepend=""> 
+    <isNotEmpty prepend="AND" property="flag">
+    FLAG = #flag#
+    </isNotEmpty>     
+  </dynamic> 
+  </statement>  
+ 
+  <statement id="getT00_dgroupListByGroupkeyNotIN" parameterClass="com.ist.platform.dto.T00_dgroup" resultClass="com.ist.platform.dto.T00_dgroup"> 
+  SELECT DGROUPKEY,DGROUPNAME,FLAG,ISBUILDIN,ISTEMP,DES,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER FROM T00_DGROUP 
+  WHERE DGROUPKEY NOT IN (SELECT DGROUPKEY FROM T00_GROUP_AUTH WHERE GROUPKEY=#groupkey#) 
+  AND DGROUPKEY IN (SELECT DISTINCT(DGROUPKEY) FROM T00_DGROUP_AUTH WHERE DGROUPKEY in ($orgStr$)) 
+  <dynamic prepend=""> 
+    <isNotEmpty prepend="AND" property="flag">
+    FLAG = #flag#
+    </isNotEmpty>     
+  </dynamic> 
+  </statement> 
+ 
+</sqlMap> 
+

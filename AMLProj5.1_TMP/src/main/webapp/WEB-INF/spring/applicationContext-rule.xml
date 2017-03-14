@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 知识管理平台模块配置 -->
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	
+	<bean id="t21_defparaDAO" parent="baseDAO" class="com.ist.aml.rule.dao.T21_defparaDAO" ></bean>
+	<bean id="t27_alertDAO" parent="baseDAO" class="com.ist.aml.rule.dao.T27_alertDAO" ></bean>
+	<bean id="t21_indicDAO" parent="baseDAO" class="com.ist.aml.rule.dao.T21_indicDAO" ></bean>
+	<bean id="t21_pbcruleDAO" parent="baseDAO" class="com.ist.aml.rule.dao.T21_pbcruleDAO" ></bean>
+	<bean id="t21_ruleDAO" parent="baseDAO" class="com.ist.aml.rule.dao.T21_ruleDAO" ></bean>
+	<bean id="t03_page_in_parmDAO" parent="baseDAO" class="com.ist.aml.rule.dao.T03_page_in_parmDAO" ></bean>
+	<bean id="t03_page_in_valDAO" parent="baseDAO" class="com.ist.aml.rule.dao.T03_page_in_valDAO" ></bean>
+	<bean id="t03_tp_exec_qryDAO" parent="baseDAO" class="com.ist.aml.rule.dao.T03_tp_exec_qryDAO" ></bean>
+	<bean id="t03_rule_entity_rDAO" parent="baseDAO" class="com.ist.aml.rule.dao.T03_rule_entity_rDAO" ></bean>
+	<bean id="t03_entity_kindDAO" parent="baseDAO" class="com.ist.aml.rule.dao.T03_entity_kindDAO" ></bean>
+	<bean id="t03_entity_kind_manDAO" parent="baseDAO" class="com.ist.aml.rule.dao.T03_entity_kind_manDAO" ></bean>
+	<bean id="t03_param_orgDAO" parent="baseDAO" class="com.ist.aml.rule.dao.T03_param_orgDAO" ></bean>
+	<bean id="t03_param_org_valDAO" parent="baseDAO" class="com.ist.aml.rule.dao.T03_param_org_valDAO" ></bean>
+	<bean id="t01_function_paramDAO" parent="baseDAO" class="com.ist.aml.rule.dao.T01_function_paramDAO"></bean>
+</beans>

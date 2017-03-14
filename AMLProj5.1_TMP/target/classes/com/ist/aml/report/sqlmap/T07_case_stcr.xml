@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T07_case_stcr"> 
+ 
+  <statement id="insertT07_case_stcr_ky" parameterClass="com.ist.aml.report.dto.T07_case_stcr" resultClass="int"> 
+	INSERT INTO T07_CASE_STCR_KY (APPLICATION_NUM, PARTY_ID, STCR, STATUS, TFRANS_COUNT,CASE_DATE,ACCT_NUM,PARTY_CLASS_CD,PARTY_STATUS,ACCT_STATUS)
+	values( #application_num#, #party_id#,#stcr#, #status#, #tfrans_count#,#case_date#,'',#party_class_cd#,'1','1')
+  </statement> 
+   <statement id="insertT07_case_stcr_ky1" parameterClass="com.ist.aml.report.dto.T07_case_stcr" resultClass="int"> 
+	INSERT INTO T07_CASE_STCR_KY (APPLICATION_NUM, PARTY_ID, STCR, STATUS, TFRANS_COUNT,CASE_DATE,ACCT_NUM,PARTY_CLASS_CD,PARTY_STATUS,ACCT_STATUS)
+	SELECT DISTINCT #application_num#, party_id,A.stcr, #status#, #tfrans_count#,#case_date#,A.ACCT_NUM,#party_class_cd#,'1','1'
+	FROM T07_CASE_TRANSACTION_KY A 
+	WHERE A.APPLICATION_NUM=#application_num#
+  </statement> 
+  
+  
+    <statement id="insertT07_case_stcr_de" parameterClass="com.ist.aml.report.dto.T07_case_stcr" resultClass="int"> 
+	INSERT INTO T07_CASE_STCR_DE (APPLICATION_NUM, PARTY_ID, STCR, STATUS, TFRANS_COUNT,CASE_DATE,ACCT_NUM,PARTY_CLASS_CD,PARTY_STATUS,ACCT_STATUS)
+	SELECT DISTINCT #application_num#, party_id,#stcr#, #status#, #tfrans_count#,#case_date#,A.ACCT_NUM,#party_class_cd#,'1','1'
+	FROM T07_CASE_TRANSACTION_DE A 
+	WHERE A.APPLICATION_NUM=#application_num#
+  </statement>
+</sqlMap> 
+

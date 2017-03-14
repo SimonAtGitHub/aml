@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T07_nbs_ctif">
+	<statement id="getT07_nbs_ctifList1"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_ctif"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbs_ctif">
+		SELECT
+		REPORTKEY,CTIF_SEQNO,CTNM,CITP,CTID,CSNM,CTTP,CCTL,CTAR,CCEI,CTNT,CTVC,RGCP,CRNM,CRIT,CRID,ATNM,VALIDATE_IND
+		FROM	
+  	     T07_NBS_CTIF
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="reportkey">
+				REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ctif_seqno">
+				$ctif_seqno$ = #ctif_seqno#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY REPORTKEY,CTIF_SEQNO
+	</statement>
+	<statement id="getT07_nbs_ctif_validateList"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_ctif"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbs_ctif">
+		SELECT
+		A.REPORTKEY,A.CTIF_SEQNO,A.CTNM,A.CITP,A.CTID,A.CSNM,A.CTTP,A.CCTL,A.CTAR,A.CCEI,A.CTNT,A.CTVC,A.RGCP,A.CRNM,A.CRIT,A.CRID,A.ATNM,A.VALIDATE_IND,B.PBC_MSG_TYPE_CD
+		FROM T07_NBS_CTIF A,T07_REPORT B WHERE A.REPORTKEY=B.REPORTKEY
+		
+		<isNotEmpty prepend="AND" property="org_ids">
+			B.CREATE_ORG in ($org_ids$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="ctnm">
+			A.CTNM = #ctnm#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="citp">
+			A.CITP = #citp#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="ctid">
+			A.CTID = #ctid#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="csnm">
+			A.CSNM = #csnm#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="cttp">
+			A.CTTP = #cttp#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="validate_ind">
+			A.VALIDATE_IND = #validate_ind#
+		</isNotEmpty>
+		ORDER BY A.VALIDATE_IND
+	</statement>
+	<statement id="getT07_nbs_ctif_validateListCount"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_ctif"
+		resultClass="int">
+		SELECT
+		COUNT(*)
+		FROM T07_NBS_CTIF A,T07_REPORT B WHERE A.REPORTKEY=B.REPORTKEY
+		
+		<isNotEmpty prepend="AND" property="org_ids">
+			B.CREATE_ORG in ($org_ids$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="ctnm">
+			A.CTNM = #ctnm#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="citp">
+			A.CITP = #citp#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="ctid">
+			A.CTID = #ctid#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="csnm">
+			A.CSNM = #csnm#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="cttp">
+			A.CTTP = #cttp#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="validate_ind">
+			A.VALIDATE_IND = #validate_ind#
+		</isNotEmpty>
+	</statement>
+	 <statement id="getBSValidateCustDisp" parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_ctif" resultClass="com.ist.aml.pbcreport.dto.T07_nbs_ctif"> 
+  SELECT T1.* FROM T07_NBS_CTIF T1
+  WHERE T1.REPORTKEY=#reportkey# AND T1.CTIF_SEQNO=$ctif_seqno$
+  </statement>
+  
+  <statement id="modifyValidateT07_nbs_ctif_20091212"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_ctif"
+		resultClass="int">
+
+  	UPDATE T07_NBS_CTIF SET VALIDATE_IND=#validate_ind#
+  	<dynamic>
+  		<isNotEqual prepend="," property="ctnm" compareValue="#">
+  			CTNM=#ctnm#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="citp" compareValue="#">
+  			CITP=#citp#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="ctid" compareValue="#">
+  			CTID=#ctid#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="cctl" compareValue="#">
+  			CCTL=#cctl#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="ctar" compareValue="#">
+  			CTAR=#ctar#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="ccei" compareValue="#">
+  			CCEI=#ccei#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="ctnt" compareValue="#">
+  			CTNT=#ctnt#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="ctvc" compareValue="#">
+  			CTVC=#ctvc#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="rgcp" compareValue="#">
+  			RGCP=#rgcp#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="crnm" compareValue="#">
+  			CRNM=#crnm#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="crit" compareValue="#">
+  			CRIT=#crit#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="crid" compareValue="#">
+  			CRID=#crid#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="cttp" compareValue="#">
+  			CTTP=#cttp#
+  		</isNotEqual>
+  	</dynamic>
+  	WHERE REPORTKEY=#reportkey# AND CTIF_SEQNO=$ctif_seqno$
+  </statement>
+  <statement id="getT07_nbs_ctifList2"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif">
+		SELECT
+		REPORTKEY,CTIF_SEQNO,CTNM,CITP,CTID,CSNM,CTTP,CCTL,CTAR,CCEI,CTNT,CTVC,RGCP,CRNM,CRIT,CRID,ATNM,VALIDATE_IND
+		FROM 
+		<isNotEmpty prepend=" " property="report_time_cd">
+			<isEqual property="report_time_cd" compareValue="0">
+				T07_NBS_CTIF 
+			</isEqual>
+			<isNotEqual property="report_time_cd" compareValue="0">
+			    T07_NBS_CTIF_UH 
+			</isNotEqual>
+		</isNotEmpty>
+		<isEmpty prepend=" " property="report_time_cd">
+		     T07_NBS_CTIF 
+		</isEmpty>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="reportkey">
+				REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			 ORDER BY VALIDATE_IND
+		</dynamic>
+	</statement>
+	<statement id="getT07_nbs_ctifList3"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_ctif"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbs_ctif">
+		SELECT
+		REPORTKEY,CTIF_SEQNO,CTNM,CITP,CTID,CSNM,CTTP,CCTL,CTAR,CCEI,CTNT,CTVC,RGCP,CRNM,CRIT,CRID,ATNM,VALIDATE_IND
+		FROM 
+		<isNotEmpty prepend=" " property="report_time_cd">
+			<isEqual property="report_time_cd" compareValue="0">
+				T07_NBS_CTIF 
+			</isEqual>
+			<isNotEqual property="report_time_cd" compareValue="0">
+			    T07_NBS_CTIF_UH 
+			</isNotEqual>
+		</isNotEmpty>
+		<isEmpty prepend=" " property="report_time_cd">
+		     T07_NBS_CTIF 
+		</isEmpty>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="reportkey">
+				REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ctif_seqno">
+				$ctif_seqno$ = #ctif_seqno#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY REPORTKEY,CTIF_SEQNO
+	</statement>
+	<statement id="insertT07_nbs_ctif"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_ctif"
+		resultClass="int">
+		INSERT INTO T07_NBS_CTIF(
+		REPORTKEY,CTIF_SEQNO,CTNM,CITP,CTID,CSNM,CTTP,CCTL,CTAR,CCEI,CTNT,CTVC,RGCP,CRNM,CRIT,CRID,ATNM,VALIDATE_IND
+		) VALUES(
+ #reportkey#,$ctif_seqno$,#ctnm#,#citp#,#ctid#,#csnm#,#cttp#,#cctl#,#ctar#,#ccei#,#ctnt#,#ctvc#,#rgcp#,#crnm#,#crit#,#crid#,$atnm$,#validate_ind#
+		)
+	</statement>
+	
+	<statement id="getT07_nbs_ctifList_new"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_ctif"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbs_ctif">
+		(SELECT
+		REPORTKEY,CTIF_SEQNO,CTNM,CITP,CTID,CSNM,CTTP,CCTL,CTAR,CCEI,CTNT,CTVC,RGCP,CRNM,CRIT,CRID,ATNM,VALIDATE_IND
+		FROM T07_NBS_CTIF
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="reportkey">
+				REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ctif_seqno">
+				$ctif_seqno$ = #ctif_seqno#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+		</dynamic>
+		) UNION ALL
+		(SELECT
+		REPORTKEY,CTIF_SEQNO,CTNM,CITP,CTID,CSNM,CTTP,CCTL,CTAR,CCEI,CTNT,CTVC,RGCP,CRNM,CRIT,CRID,ATNM,VALIDATE_IND
+		FROM T07_NBS_CTIF_UH
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="reportkey">
+				REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ctif_seqno">
+				$ctif_seqno$ = #ctif_seqno#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+		</dynamic>
+		)
+	</statement>
+	
+</sqlMap>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T07_nbs_templet"> 
+  <statement id="getT07_nbs_templetList" parameterClass="com.ist.platform.dto.T07_nbs_templet" resultClass="com.ist.platform.dto.T07_nbs_templet"> 
+  SELECT TEMPLET_NUM,TEMPLET_TYPE,TEMPLET_TITLE,TEMPLET_CONSTANT,TEMPLET_TEMP1,TEMPLET_TEMP2 FROM T07_NBS_TEMPLET 
+  <dynamic prepend="WHERE"> 
+   <isNotEmpty prepend="AND" property="templet_num"> 
+    TEMPLET_NUM = #templet_num# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="templet_type_s"> 
+    TEMPLET_TYPE = #templet_type_s# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="templet_title_s"> 
+       TEMPLET_TITLE like #templet_title_s#
+    </isNotEmpty> 
+   
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT07_nbs_templetListCount" parameterClass="com.ist.platform.dto.T07_nbs_templet" resultClass="int"> 
+  SELECT COUNT(*) FROM T07_nbs_templet
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="templet_num"> 
+    TEMPLET_NUM = #templet_num# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="templet_type_s"> 
+    TEMPLET_TYPE = #templet_type_s# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="templet_title_s"> 
+       TEMPLET_TITLE like #templet_title_s#
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT07_nbs_templet" parameterClass="com.ist.platform.dto.T07_nbs_templet" resultClass="int"> 
+  INSERT INTO T07_NBS_TEMPLET(
+  TEMPLET_NUM,TEMPLET_TYPE,TEMPLET_TITLE,TEMPLET_CONSTANT,TEMPLET_TEMP1,TEMPLET_TEMP2
+  ) values(
+  #templet_num#,#templet_type#,#templet_title#,#templet_constant#,#templet_temp1#,#templet_temp2#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT07_nbs_templet" parameterClass="com.ist.platform.dto.T07_nbs_templet" resultClass="int"> 
+  UPDATE T07_NBS_TEMPLET SET 
+  TEMPLET_NUM=#templet_num#,TEMPLET_TYPE=#templet_type#,TEMPLET_TITLE=#templet_title#,TEMPLET_CONSTANT=#templet_constant#,TEMPLET_TEMP1=#templet_temp1#,TEMPLET_TEMP2=#templet_temp2#
+  WHERE TEMPLET_NUM=#templet_num# 
+  </statement> 
+ 
+  <statement id="deleteT07_nbs_templet" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T07_NBS_TEMPLET WHERE TEMPLET_NUM=#value# 
+  </statement> 
+ 
+  <statement id="getT07_nbs_templetDisp" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T07_nbs_templet"> 
+  SELECT * FROM T07_NBS_TEMPLET WHERE TEMPLET_NUM=#value# 
+  </statement> 
+ <statement id="getT07_nbs_templetCountByNumAndName" parameterClass="com.ist.platform.dto.T07_nbs_templet" resultClass="java.lang.Integer"> 
+  SELECT COUNT(TEMPLET_NUM) FROM T07_NBS_TEMPLET WHERE TEMPLET_TYPE=#templet_type# AND TEMPLET_TITLE =#templet_title# 
+  </statement> 
+</sqlMap> 
+

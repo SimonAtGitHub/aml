@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 基础管理平台模块配置 -->
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	<bean id="t01_attachmentDAO" parent="baseDAO" class="com.ist.common.attachment.dao.T01_attachmentDAO" ></bean>
+	<bean id="t01_attach_mapDAO" parent="baseDAO" class="com.ist.common.attachment.dao.T01_attach_mapDAO"></bean>
+	<bean id="t01_attachment_pmpDAO" parent="sqlMapClientTemplate" class="com.ist.common.attachment.dao.T01_attachment_pmpDAO"></bean>
+	<bean id="t01_attach_map_pmpDAO" parent="sqlMapClientTemplate" class="com.ist.common.attachment.dao.T01_attach_map_pmpDAO"></bean>
+    <bean id="t01_db_linkDAO" parent="baseDAO" class="com.ist.common.metadata.dao.T01_db_linkDAO" ></bean>
+	<bean id="attachmentManage" parent="baseBO" class="com.ist.common.attachment.bo.AttachmentManage" >
+		<property name="t01_attachmentDAO" ref="t01_attachmentDAO" />
+		<property name="t01_attach_mapDAO" ref="t01_attach_mapDAO" />
+		<property name="t01_attachment_pmpDAO" ref="t01_attachment_pmpDAO" />
+		<property name="t01_attach_map_pmpDAO" ref="t01_attach_map_pmpDAO" />
+	</bean>
+	<bean id="t01_smsDAO" parent="baseDAO" class="com.ist.common.message.dao.T01_smsDAO" ></bean>
+	
+	<!-- 数据脱敏对象 -->
+	<bean id="desensitize" class="com.ist.common.db.common.DefaultDesensitize"/>
+	<!-- 加密导出文件 -->
+	<bean id="encryptFile" class="com.ist.common.encrypt.DefaultEncryptFile" />
+	
+	<!-- 下载管理   begin-->
+	<bean id="t18_downloadDAO" parent="baseDAO" class="com.ist.common.download.dao.T18_downloadDAO" ></bean>
+	<bean id="t18_onlinetask_factDAO" parent="baseDAO" class="com.ist.common.download.dao.T18_onlinetask_factDAO" ></bean>
+	<bean id="t18_online_task_paraDAO" parent="baseDAO" class="com.ist.common.download.dao.T18_online_task_paraDAO" ></bean>
+	
+	<bean id="dlbaseService" abstract="true" class="com.ist.common.download.services.BaseService"></bean>
+	<bean id="avpDownloadService" class="com.ist.common.download.services.impl.AvpDownloadService"></bean>
+	
+	<!-- 下载管理  end-->
+
+	<bean id="fetchFile" class="com.ist.common.download.services.impl.LocalFetchDataService" />
+	
+</beans>

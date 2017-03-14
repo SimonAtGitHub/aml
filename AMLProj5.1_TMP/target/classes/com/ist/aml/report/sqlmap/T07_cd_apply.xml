@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T07_cd_apply"> 
+  <statement id="getT07_cd_applyList" parameterClass="com.ist.aml.report.dto.T07_cd_apply" resultClass="com.ist.aml.report.dto.T07_cd_apply">
+		SELECT * FROM t07_cd_apply
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="organkeyStr">
+			create_org in ($organkeyStr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="msg_type">
+			msg_type=#msg_type#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="apply_type">
+			apply_type = #apply_type#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="start_dt_disp">
+			create_dt >= #start_dt#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="end_dt_disp">
+			<![CDATA[create_dt <= #end_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="status_cd1">
+			status_cd in ($status_cd1$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="apply_no">
+			apply_no= #apply_no#
+		</isNotEmpty>
+		</dynamic>
+		order by status_cd,create_dt
+	</statement>
+	
+	<statement id="getT07_cd_applyListCount" parameterClass="com.ist.aml.report.dto.T07_cd_apply" resultClass="int">
+	SELECT count(0) FROM t07_cd_apply
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="organkeyStr">
+			create_org in ($organkeyStr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="msg_type">
+			msg_type=#msg_type#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="apply_type">
+			apply_type = #apply_type#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="start_dt_disp">
+			create_dt >= #start_dt#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="end_dt_disp">
+			<![CDATA[create_dt <= #end_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="status_cd1">
+			status_cd in ($status_cd1$)
+		</isNotEmpty>
+		</dynamic>
+	
+	</statement>
+	
+	<statement id="getT07_cd_apply_reportList" parameterClass="com.ist.aml.report.dto.T07_cd_apply" 
+	resultClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif">
+	select distinct A.REPORTKEY,
+       A.FINM,
+       A.FIRC,
+       A.RPDT,
+       A.TTNM      
+ 	from T07_NBS_RBIF_UH A, T07_REPORT_UH B,T07_MSG_UH C
+       where a.reportkey=b.reportkey and b.reportkey=c.reportkey 
+       and B.REPORT_STATUS_CD='5' 
+       <isNotEmpty prepend="AND" property="create_dt">
+			<![CDATA[c.senddate_dt<=#create_dt#]]>
+		</isNotEmpty>
+       <isNotEmpty prepend="AND" property="organkeyStr">
+			A.FICD in ($organkeyStr$)
+		</isNotEmpty>
+       <isNotEmpty prepend="AND" property="reportkey">
+			A.REPORTKEY=#reportkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="ricd">
+			A.FICD =#ricd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="start_dt_disp">
+			<![CDATA[a.rpdt >= #start_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="end_dt_disp">
+			<![CDATA[a.rpdt <= #end_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="reportkeyStr">
+			a.reportkey in ($reportkeyStr$)
+		</isNotEmpty>
+		order by a.reportkey
+	</statement>
+	
+	<statement id="getT07_cd_apply_reportListCount" parameterClass="com.ist.aml.report.dto.T07_cd_apply" 
+	resultClass="int">
+	select count(distinct a.reportkey)     
+ 	from T07_NBS_RBIF_UH A, T07_REPORT_UH B,T07_MSG_UH C
+       where a.reportkey=b.reportkey and b.reportkey=c.reportkey 
+       and B.REPORT_STATUS_CD='5' 
+		 <isNotEmpty prepend="AND" property="create_dt">
+			<![CDATA[c.senddate_dt<=#create_dt#]]>
+		</isNotEmpty>
+       <isNotEmpty prepend="AND" property="organkeyStr">
+			A.FICD in ($organkeyStr$)
+		</isNotEmpty>
+       <isNotEmpty prepend="AND" property="reportkey">
+			A.REPORTKEY=#reportkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="ricd">
+			A.FICD =#ricd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="start_dt_disp">
+			<![CDATA[a.rpdt >= #start_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="end_dt_disp">
+			<![CDATA[a.rpdt <= #end_dt#]]>
+		</isNotEmpty>
+		order by a.reportkey
+	</statement>
+	
+	<statement id="insertT07_cd_apply" parameterClass="com.ist.aml.report.dto.T07_cd_apply" >
+		insert into T07_CD_APPLY
+		(APPLY_NO,RINM,RICD,MSG_TYPE,APPLY_TYPE,TRANS_NUM,STATUS_CD,CREATE_USER,CREATE_DT,CREATE_ORG) values
+		(#apply_no#,#rinm#,#ricd#,#msg_type#,#apply_type#,#trans_num#,#status_cd#,#create_user#,#create_dt#,#create_org#)
+	</statement>
+	
+	<statement id="insertT07_bs_report_p" parameterClass="com.ist.aml.report.dto.T07_bs_report_p">
+		insert into T07_BS_REPORT_P
+		(APPLY_NO,REPORTKEY,MSG_KEY,APPLY_TYPE,TRANS_NUM,APPLY_REASON) values 
+		(#apply_no#,#reportkey#,#msg_key#,#apply_type#,#trans_num#,#apply_reason#)
+	</statement>
+	
+	<statement id="insertT07_bh_tsdt_p" parameterClass="com.ist.aml.report.dto.T07_bh_tsdt_p">
+		insert into	T07_BH_TSDT_P
+		(APPLY_NO ,REPORTKEY,TSDT_SEQNO ,PARTY_ID ,TX_DT,STCRKEY,TICD ,APPLY_TYPE ,APPLY_REASON ) values
+		(#apply_no#,#reportkey#,#tsdt_seqno#,#party_id#,#tx_dt#,#stcrkey#,#ticd#,#apply_type#,#apply_reason#) 
+	</statement>
+	
+	<statement id="deleteT07_cd_apply" parameterClass="com.ist.aml.report.dto.T07_cd_apply" >
+		delete from T07_CD_APPLY 
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="apply_no">
+			apply_no=#apply_no#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="apply_noStr">
+			apply_no in ($apply_noStr$)
+		</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="deleteT07_bs_report_p" parameterClass="com.ist.aml.report.dto.T07_cd_apply" >
+		delete from T07_BS_REPORT_P 
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="apply_no">
+			apply_no=#apply_no#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="apply_noStr">
+			apply_no in ($apply_noStr$)
+		</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="deleteT07_bh_tsdt_p" parameterClass="com.ist.aml.report.dto.T07_cd_apply" >
+		delete from T07_BH_TSDT_P 
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="apply_no">
+			apply_no=#apply_no#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="apply_noStr">
+			apply_no in ($apply_noStr$)
+		</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="updateT07_cd_apply" parameterClass="com.ist.aml.report.dto.T07_cd_apply">
+		update t07_cd_apply set apply_no=apply_no
+		<isNotEmpty prepend="," property="apply_type">
+			apply_type =#apply_type#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="trans_num">
+			trans_num =#trans_num#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="status_cd">
+			status_cd =#status_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="check_dt">
+			check_dt =#check_dt#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="check_user">
+			check_user =#check_user#
+		</isNotEmpty>
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="apply_no">
+			apply_no=#apply_no#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="apply_noStr">
+			apply_no in ($apply_noStr$)
+		</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="updateT07_reportStatus" parameterClass="com.ist.aml.report.dto.T07_cd_apply">
+		update t07_report_uh a set report_status_cd = #status_cd#
+		where a.reportkey in (
+		select b.reportkey from t07_bs_report_p b where b.apply_no in ($apply_noStr$) and b.apply_type=#apply_type#
+		)
+	</statement>
+	
+	<statement id="getT07_cd_apply_transList" parameterClass="com.ist.aml.report.dto.T07_cd_apply" resultClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt">
+		SELECT A.REPORTKEY,
+       	A.CRCD,
+       	A.CATI_SEQNO,
+       	A.TSDT_SEQNO,
+       	A.TICD,
+       	B.CSNM AS PARTY_ID,
+       	A.TSTM
+	  	FROM T07_NBH_TSDT_UH A, T07_NBH_CTIF_UH B, T07_REPORT_UH C
+	 	WHERE A.REPORTKEY = B.REPORTKEY AND A.CATI_SEQNO = B.CATI_SEQNO 
+	 	AND C.REPORTKEY = A.REPORTKEY AND C.REPORT_STATUS_CD = '5' 
+		AND EXISTS(SELECT 'A' FROM T07_MSG_UH T2 WHERE T2.REPORTKEY=A.REPORTKEY
+		<isNotEmpty prepend="AND" property="create_dt">
+			<![CDATA[T2.senddate_dt<=#create_dt#]]>
+		</isNotEmpty>
+		) 
+       <isNotEmpty prepend="AND" property="organkeyStr">
+			C.CREATE_ORG in ($organkeyStr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="ricd">
+			C.CREATE_ORG =#ricd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="start_dt_disp">
+			<![CDATA[A.TSTM >= #start_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="end_dt_disp">
+			<![CDATA[A.TSTM <= #end_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="curr_cd">
+			A.curr_cd = #curr_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			B.CSNM = #party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="ticd">
+			A.TICD = #ticd#
+		</isNotEmpty>
+		order by A.TSTM desc
+	</statement>
+	
+	<statement id="getT07_cd_apply_transListCount" parameterClass="com.ist.aml.report.dto.T07_cd_apply" resultClass="int">
+		SELECT count(0)
+	  	FROM T07_NBH_TSDT_UH A, T07_NBH_CTIF_UH B, T07_REPORT_UH C
+	 	WHERE A.REPORTKEY = B.REPORTKEY AND A.CATI_SEQNO = B.CATI_SEQNO 
+	 	AND C.REPORTKEY = A.REPORTKEY AND C.REPORT_STATUS_CD = '5' 
+		AND EXISTS(SELECT 'A' FROM T07_MSG_UH T2 WHERE T2.REPORTKEY=A.REPORTKEY
+		<isNotEmpty prepend="AND" property="create_dt">
+			<![CDATA[T2.senddate_dt<=#create_dt#]]>
+		</isNotEmpty>
+		) 
+       <isNotEmpty prepend="AND" property="organkeyStr">
+			C.CREATE_ORG in ($organkeyStr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="ricd">
+			C.CREATE_ORG =#ricd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="start_dt_disp">
+			<![CDATA[A.TSTM >= #start_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="end_dt_disp">
+			<![CDATA[A.TSTM <= #end_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="curr_cd">
+			A.curr_cd = #curr_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			B.CSNM = #party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="ticd">
+			A.TICD = #ticd#
+		</isNotEmpty>
+	</statement>
+	
+	<statement id="getT07_cd_apply_reportListByApply_no" parameterClass="java.lang.String" 
+	resultClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif">
+select A.REPORTKEY,
+       A.FINM,
+       A.FIRC,
+       A.RPDT,
+       A.TTNM,
+       B.APPLY_REASON AS SSDS,
+       B.APPLY_TYPE AS VALIDATE_IND     
+ 	from T07_NBS_RBIF_UH A,T07_BS_REPORT_P B
+  WHERE A.REPORTKEY=B.REPORTKEY AND B.APPLY_NO=#value#
+</statement>
+
+<statement id="getT07_cd_apply_transListByApply_no" parameterClass="java.lang.String" resultClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt">
+SELECT A.REPORTKEY,
+       	A.CRCD,
+       	A.CATI_SEQNO,
+       	A.TSDT_SEQNO,
+       	A.TICD,
+       	C.PARTY_ID AS PARTY_ID,
+       	A.TSTM,
+       	C.APPLY_REASON AS AREA,
+       	C.APPLY_TYPE AS VALIDATE_IND  
+	  	FROM T07_NBH_TSDT_UH A,T07_BH_TSDT_P C 
+WHERE A.REPORTKEY=C.REPORTKEY AND A.CRCD=C.STCRKEY AND A.TSDT_SEQNO=C.TSDT_SEQNO 
+AND C.APPLY_NO=#value# 
+</statement>
+
+<statement id="getT07_cd_apply_transListByApply" parameterClass="com.ist.aml.report.dto.T07_cd_apply" resultClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt">
+	SELECT
+		A.REPORTKEY,A.CATI_SEQNO,A.CRCD,A.TSDT_SEQNO,A.FINN,A.FIRC,A.RLTP,A.FICT,A.FINC,A.CATP,A.CTAC,
+		A.TBNM,A.TBIT,A.TBID,A.TBNT,A.TSTM,A.TICD,A.TSTP,A.TSCT,A.TSDR,A.TDRC,B.PARTY_ID
+		AS PARTY_ID,
+		A.TRCD,A.CRPP,A.CRTP,A.CRAT,A.CFIN,A.CFCT,A.CFIC,TCNM,A.TCIT,A.TCID,A.TCAT,A.TCAC,A.VALIDATE_IND,
+		A.ORGANKEY,A.CURR_CD,A.PARTY_CLASS_CD
+		FROM T07_NBH_TSDT_UH A,T07_BH_TSDT_P B 
+		WHERE A.REPORTKEY=B.REPORTKEY AND A.CRCD=B.STCRKEY AND A.TSDT_SEQNO=B.TSDT_SEQNO 
+		<isNotEmpty prepend="AND" property="apply_no">
+			B.APPLY_NO=#apply_no#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="apply_type">
+			B.APPLY_TYPE=#apply_type#
+		</isNotEmpty>
+</statement>
+	
+	<statement id="getT07_reportDetail" parameterClass="com.ist.aml.report.dto.T07_cd_apply" resultClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif">
+		SELECT A.REPORTKEY,A.FINM,A.FIRC,A.FICD,A.STCR,A.SSDG,A.TKMS,A.SSDS,A.CTTN,A.TTNM,A.RPNM,A.RPDT,B.VALIDATE_IND,B.INVALID_DT,B.PBC_MSG_TYPE_CD,B.CREATE_ORG
+		,B.APPLICATION_NUM FROM
+		<isNotEmpty prepend="" property="casesearchtime">
+			<isEqual property="casesearchtime" compareValue="0">
+				T07_NBS_RBIF A, T07_REPORT B
+			</isEqual>
+			<isEqual property="casesearchtime" compareValue="1">
+				T07_NBS_RBIF_UH A, T07_REPORT_UH B
+			</isEqual>
+		</isNotEmpty>
+		<isEmpty prepend="" property="casesearchtime">
+			T07_NBS_RBIF A, T07_REPORT B
+		</isEmpty>
+		 WHERE A.REPORTKEY=B.REPORTKEY AND B.REPORTKEY=#reportkey#
+	</statement>
+	
+	<statement id="getT07_report_partyList" parameterClass="com.ist.aml.report.dto.T07_cd_apply" resultClass="com.ist.aml.pbcreport.dto.T07_nbs_ctif">
+		SELECT A.REPORTKEY,A.CTIF_SEQNO,A.CTNM,A.CITP,A.CTID,A.CSNM,A.CTTP,A.CCTL,A.CTAR,A.CCEI,A.CTNT,A.CTVC,A.RGCP,A.CRNM,A.CRIT,A.CRID,A.ATNM,A.VALIDATE_IND,B.PBC_MSG_TYPE_CD FROM
+		<isNotEmpty prepend="" property="casesearchtime">
+			<isEqual property="casesearchtime" compareValue="0">
+				T07_NBS_CTIF A , T07_REPORT B
+			</isEqual>
+			<isEqual property="casesearchtime" compareValue="1">
+				T07_NBS_CTIF_UH A , T07_REPORT_UH B
+			</isEqual>
+		</isNotEmpty>
+		<isEmpty prepend="" property="casesearchtime">
+			T07_NBS_CTIF A , T07_REPORT B
+		</isEmpty>
+		WHERE A.REPORTKEY = B.REPORTKEY AND B.REPORTKEY=#reportkey#
+	</statement>
+	
+	<statement id="getT07_report_partyListCount" parameterClass="com.ist.aml.report.dto.T07_cd_apply" resultClass="int">
+		SELECT COUNT(A.REPORTKEY) FROM
+		<isNotEmpty prepend="" property="casesearchtime">
+			<isEqual property="casesearchtime" compareValue="0">
+				T07_NBS_CTIF A , T07_REPORT B
+			</isEqual>
+			<isEqual property="casesearchtime" compareValue="1">
+				T07_NBS_CTIF_UH A , T07_REPORT_UH B
+			</isEqual>
+		</isNotEmpty>
+		<isEmpty prepend="" property="casesearchtime">
+			T07_NBS_CTIF A , T07_REPORT B
+		</isEmpty>
+		WHERE A.REPORTKEY = B.REPORTKEY AND B.REPORTKEY=#reportkey#
+	</statement>
+	
+	<statement id="getT07_report_transList" parameterClass="com.ist.aml.report.dto.T07_cd_apply" resultClass="com.ist.aml.pbcreport.dto.T07_nbs_rpdi">
+		SELECT A.REPORTKEY,A.RPDI_SEQNO,A.BKNM,A.BITP,A.BKID,A.BKNT,A.TSTM,A.TRCD,A.TICD,A.TSTP,A.TSCT,A.TSDR,A.CRSP,A.CRTP,A.CRAT,A.CFIN,A.CFCT,A.CFNC,A.CFRC,A.TCNM,A.TCIT,A.TCID,A.TCAT,A.TCAC,A.VALIDATE_IND FROM
+		<isNotEmpty prepend="" property="casesearchtime">
+			<isEqual property="casesearchtime" compareValue="0">
+				T07_NBS_RPDI A , T07_REPORT B
+			</isEqual>
+			<isEqual property="casesearchtime" compareValue="1">
+				T07_NBS_RPDI_UH A , T07_REPORT_UH B
+			</isEqual>
+		</isNotEmpty>
+		<isEmpty prepend="" property="casesearchtime">
+			T07_NBS_RPDI A , T07_REPORT B
+		</isEmpty>
+		WHERE A.REPORTKEY = B.REPORTKEY AND B.REPORTKEY=#reportkey#
+	</statement>
+	
+	<statement id="getT07_report_transListCount" parameterClass="com.ist.aml.report.dto.T07_cd_apply" resultClass="int">
+		SELECT COUNT(A.REPORTKEY) FROM
+		<isNotEmpty prepend="" property="casesearchtime">
+			<isEqual property="casesearchtime" compareValue="0">
+				T07_NBS_RPDI A , T07_REPORT B
+			</isEqual>
+			<isEqual property="casesearchtime" compareValue="1">
+				T07_NBS_RPDI_UH A , T07_REPORT_UH B
+			</isEqual>
+		</isNotEmpty>
+		<isEmpty prepend="" property="casesearchtime">
+			T07_NBS_RPDI A , T07_REPORT B
+		</isEmpty>
+		WHERE A.REPORTKEY = B.REPORTKEY AND B.REPORTKEY=#reportkey#
+	</statement>
+	
+	<statement id="getT07_report_acctList" parameterClass="com.ist.aml.report.dto.T07_cd_apply" resultClass="com.ist.aml.pbcreport.dto.T07_nbs_atif">
+		SELECT A.REPORTKEY,A.CTIF_SEQNO,A.ATIF_SEQNO,A.CATP,A.CTAC,A.OATM,A.CATM,A.VALIDATE_IND,A.pbc_crt_dt FROM
+		<isNotEmpty prepend="" property="casesearchtime">
+			<isEqual property="casesearchtime" compareValue="0">
+				T07_NBS_ATIF A , T07_REPORT B
+			</isEqual>
+			<isEqual property="casesearchtime" compareValue="1">
+				T07_NBS_ATIF_UH A , T07_REPORT_UH B
+			</isEqual>
+		</isNotEmpty>
+		<isEmpty prepend="" property="casesearchtime">
+			T07_NBS_ATIF A , T07_REPORT B
+		</isEmpty>
+		WHERE A.REPORTKEY = B.REPORTKEY AND B.REPORTKEY=#reportkey#
+	</statement>
+	
+	<statement id="getT07_report_acctListCount" parameterClass="com.ist.aml.report.dto.T07_cd_apply" resultClass="int">
+		SELECT COUNT(A.REPORTKEY) FROM
+		<isNotEmpty prepend="" property="casesearchtime">
+			<isEqual property="casesearchtime" compareValue="0">
+				T07_NBS_ATIF A , T07_REPORT B
+			</isEqual>
+			<isEqual property="casesearchtime" compareValue="1">
+				T07_NBS_ATIF_UH A , T07_REPORT_UH B
+			</isEqual>
+		</isNotEmpty>
+		<isEmpty prepend="" property="casesearchtime">
+			T07_NBS_ATIF A , T07_REPORT B
+		</isEmpty>
+		WHERE A.REPORTKEY = B.REPORTKEY AND B.REPORTKEY=#reportkey#
+	</statement>
+	
+	<statement id="getT07_cd_applypDetail" parameterClass="java.lang.String" resultClass="com.ist.aml.report.dto.T07_cd_apply">
+		SELECT * FROM T07_CD_APPLY	WHERE APPLY_NO=#value#
+	</statement>
+	
+	<statement id="getT07_bs_reportList" parameterClass="com.ist.aml.report.dto.T07_cd_apply" resultClass="com.ist.aml.report.dto.T07_bs_report_p">
+		SELECT * FROM T07_BS_REPORT_P
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="apply_no">
+			APPLY_NO=#apply_no#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="apply_type">
+			APPLY_TYPE=#apply_type#
+		</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT07_bs_reportListCount" parameterClass="com.ist.aml.report.dto.T07_cd_apply" resultClass="int">
+		SELECT COUNT(*) FROM T07_BS_REPORT_P
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="apply_no">
+			APPLY_NO=#apply_no#
+		</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT07_bh_tsdtList" parameterClass="com.ist.aml.report.dto.T07_cd_apply" resultClass="com.ist.aml.report.dto.T07_bh_tsdt_p">
+		SELECT * FROM T07_BH_TSDT_P
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="apply_no">
+			APPLY_NO=#apply_no#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="apply_type">
+			APPLY_TYPE=#apply_type#
+		</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT07_bh_tsdtListCount" parameterClass="com.ist.aml.report.dto.T07_cd_apply" resultClass="int">
+		SELECT COUNT(*) FROM T07_BH_TSDT_P
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="apply_no">
+			APPLY_NO=#apply_no#
+		</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT07_nbh_tsdtDetail" parameterClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt" resultClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt">
+		SELECT * FROM
+		<isNotEmpty prepend="" property="reported">
+			<isEqual property="reported" compareValue="0">
+				T07_NBH_TSDT
+			</isEqual>
+			<isEqual property="reported" compareValue="1">
+				T07_NBH_TSDT_UH
+			</isEqual>
+		</isNotEmpty>
+		<isEmpty prepend="" property="reported">
+			T07_NBH_TSDT
+		</isEmpty>
+		<dynamic prepend="where">
+			<isNotEmpty prepend="AND" property="reportkey">
+				REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ticd">
+				TICD = #ticd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tsdt_seqno">
+				TSDT_SEQNO = $tsdt_seqno$
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT07_nbh_tsdtCount" parameterClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt" resultClass="int">
+		SELECT COUNT(*) FROM T07_NBH_TSDT
+		<dynamic prepend="where">
+			<isNotEmpty prepend="AND" property="reportkey">
+				REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ticd">
+				TICD = #ticd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tsdt_seqno">
+				TSDT_SEQNO = $tsdt_seqno$
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT07_reportCountForApply" parameterClass="java.lang.String" resultClass="int">
+		SELECT COUNT(*) FROM T07_REPORT WHERE REPORTKEY=#value#
+	</statement>
+	
+</sqlMap> 
+

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+	<!-- modified by chenhao date:2010-05 start-->
+<sqlMap namespace="T37_risk_attach">
+	<statement id="getT37_risk_attach_rateList"
+		parameterClass="com.ist.aml.risk_rate.dto.T37_risk_attach"
+		resultClass="com.ist.aml.risk_rate.dto.T37_risk_attach">
+		SELECT
+		RESULEKEY,ATTACHKEY,ATTACH_NAME,ATTACH_REALNAME,LOAD_DATE,LOAD_USER
+		FROM T37_RISK_ATTACH WHERE RESULEKEY = #resulekey#
+	</statement>
+
+	<statement id="getT37_risk_attach_rateListCount"
+		parameterClass="com.ist.aml.risk_rate.dto.T37_risk_attach"
+		resultClass="int">
+		SELECT COUNT(*) FROM T37_RISK_ATTACH WHERE RESULEKEY = #resulekey#
+		
+	</statement>
+
+	<statement id="insertT37_risk_rate_attach"
+		parameterClass="com.ist.aml.risk_rate.dto.T37_risk_attach"
+		resultClass="int">
+		INSERT INTO T37_RISK_ATTACH(
+		RESULEKEY,ATTACHKEY,ATTACH_NAME,ATTACH_REALNAME,LOAD_DATE,LOAD_USER
+		) VALUES(
+		#resulekey#,#attachkey#,#attach_name#,#attach_realname#,#load_date#,#load_user#
+		)
+	</statement>
+
+	
+	<statement id="deleteT37_risk_rateAttach"
+		parameterClass="java.lang.String" resultClass="int">
+		DELETE FROM T37_RISK_ATTACH WHERE ATTACHKEY=#value#
+	</statement>
+
+	<statement id="getT37_risk_attach_rateDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.risk_rate.dto.T37_risk_attach">
+		SELECT * FROM T37_RISK_ATTACH WHERE RESULEKEY=#value#
+	</statement>
+	<statement id="getT37_risk_attach_rateDispByAttachkey"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.risk_rate.dto.T37_risk_attach">
+		SELECT * FROM T37_RISK_ATTACH WHERE ATTACHKEY=#value#
+	</statement>
+	<!-- end -->
+
+</sqlMap>
+

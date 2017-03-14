@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T18_server">
+  <statement id="getT18_serverName" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T18_server">
+  select d.domainkey,d.domainname ,s.serverkey,s.servername
+  from t18_server s,t18_domain d
+  where s.domainkey=d.domainkey and s.serverkey=#value#
+  </statement>
+  <statement id="getT18_serverList" parameterClass="com.ist.platform.dto.T18_server" resultClass="com.ist.platform.dto.T18_server">
+  select serverkey,servername,execsheel,flag,des,taskclass,domainkey,exetype from t18_server
+  <dynamic prepend="where">
+    <isNotEmpty prepend="and" property="serverkey">
+    serverkey = #serverkey#
+    </isNotEmpty>
+  </dynamic>
+  </statement>
+
+  <statement id="getT18_serverListCount" parameterClass="com.ist.platform.dto.T18_server" resultClass="int">
+  select count(*) from t00_group
+  <dynamic prepend="where">
+    <isNotEmpty prepend="and" property="serverkey">
+    serverkey = #serverkey#
+    </isNotEmpty>
+  </dynamic>
+  </statement>
+
+  <statement id="insertT18_server" parameterClass="com.ist.platform.dto.T18_server" resultClass="int">
+  insert into T18_server(
+  serverkey,servername,execsheel,flag,des,taskclass,domainkey,exetype
+  ) values(
+  #serverkey#,#servername#,#execsheel#,#flag#,#des#,#taskclass#,#domainkey#,#exetype#
+  )
+  </statement>
+
+  <statement id="modifyT18_server" parameterClass="com.ist.platform.dto.T18_server" resultClass="int">
+  update T18_server set
+  serverkey=#serverkey#,servername=#servername#,execsheel=#execsheel#,flag=#flag#,des=#des#,taskclass=#taskclass#,domainkey=#domainkey#,exetype=#exetype#
+  where serverkey=#serverkey#
+  </statement>
+
+  <statement id="deleteT18_server" parameterClass="java.lang.String" resultClass="int">
+  delete from T18_server where serverkey=#value#
+  </statement>
+
+  <statement id="getT18_serverDisp" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T18_server">
+  select * from T18_server where serverkey=#value#
+  </statement>
+
+</sqlMap>
+

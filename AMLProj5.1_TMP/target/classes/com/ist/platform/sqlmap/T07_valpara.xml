@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T07_valpara">
+<!--  add by dingke --> 
+  <statement id="getT07_valparaList" parameterClass="com.ist.platform.dto.T07_valpara" resultClass="com.ist.platform.dto.T07_valpara"> 
+  SELECT VALPARAKEY,PARATYPE,CURR_CD,PARTY_CD,PARTY_ACCT_CD,COMPARE_TYPE_CD,COMPARE_SYMBOL,UPPER_LIMIT,LOW_LIMIT,PARA_DES,FLAG,VALIDATE_DT,INVALIDATE_DT FROM T07_VALPARA 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="valparakey"> 
+    VALPARAKEY = #valparakey# 
+    </isNotEmpty> 
+      <isNotEmpty prepend="AND" property="paratype"> 
+    PARATYPE = #paratype# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="curr_cd"> 
+    CURR_CD = #curr_cd# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="party_cd"> 
+    PARTY_CD = #party_cd# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="party_acct_cd"> 
+    PARTY_ACCT_CD = #party_acct_cd# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="flag"> 
+    FLAG = #flag# 
+    </isNotEmpty> 
+  </dynamic>
+  ORDER BY  VALIDATE_DT
+  </statement> 
+ <statement id="getT07_valparaListCount" parameterClass="com.ist.platform.dto.T07_valpara" resultClass="int"> 
+  SELECT COUNT(*) FROM T07_VALPARA 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="valparakey"> 
+    VALPARAKEY = #valparakey# 
+    </isNotEmpty> 
+      <isNotEmpty prepend="AND" property="paratype"> 
+    PARATYPE = #paratype# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="curr_cd"> 
+    CURR_CD = #curr_cd# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="party_cd"> 
+    PARTY_CD = #party_cd# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="party_acct_cd"> 
+    PARTY_ACCT_CD = #party_acct_cd# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="flag"> 
+    FLAG = #flag# 
+    </isNotEmpty> 
+  </dynamic>
+  </statement> 
+   <statement id="modifyT07_valpara1" parameterClass="com.ist.platform.dto.T07_valpara" resultClass="int"> 
+  UPDATE T07_VALPARA SET 
+  UPPER_LIMIT=#upper_limit#,LOW_LIMIT=#low_limit#
+ 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="" property="valparakey"> 
+    VALPARAKEY = #valparakey# 
+    </isNotEmpty> 
+    </dynamic>
+  </statement> 
+  <!-- end -->
+ <statement id="getT07_indic_valparaList" parameterClass="com.ist.platform.dto.T07_valpara" resultClass="com.ist.platform.dto.T07_valpara"> 
+   SELECT * FROM V07_INDIC A, T07_INDIC_VALPARA B  WHERE A.INDICKEY = B.INDICKEY
+  <dynamic> 
+    <isNotEmpty prepend="and" property="valparakey"> 
+    B.VALPARAKEY = #valparakey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT07_valpara" parameterClass="com.ist.platform.dto.T07_valpara" resultClass="int"> 
+  INSERT INTO T07_VALPARA(
+  VALPARAKEY,PARATYPE,CURR_CD,PARTY_CD,PARTY_ACCT_CD,COMPARE_TYPE_CD,COMPARE_SYMBOL,UPPER_LIMIT,LOW_LIMIT,PARA_DES,FLAG,VALIDATE_DT,INVALIDATE_DT
+  ) VALUES(
+  #valparakey#,#paratype#,#curr_cd#,#party_cd#,#party_acct_cd#,#compare_type_cd#,#compare_symbol#,#upper_limit#,#low_limit#,#para_des#,#flag#,#validate_dt#,#invalidate_dt#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT07_valpara" parameterClass="com.ist.platform.dto.T07_valpara" resultClass="int"> 
+  UPDATE T07_VALPARA SET 
+  VALPARAKEY=#valparakey#,PARATYPE=#paratype#,CURR_CD=#curr_cd#,PARTY_CD=#party_cd#,PARTY_ACCT_CD=#party_acct_cd#,COMPARE_TYPE_CD=#compare_type_cd#,COMPARE_SYMBOL=#compare_symbol#,UPPER_LIMIT=#upper_limit#,LOW_LIMIT=#low_limit#,PARA_DES=#para_des#,FLAG=#flag#,VALIDATE_DT=#validate_dt#,INVALIDATE_DT=#invalidate_dt#
+  WHERE VALPARAKEY=#valparakey# 
+  </statement> 
+ 
+  <statement id="deleteT07_valpara" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T07_VALPARA WHERE VALPARAKEY=#value# 
+  </statement> 
+ 
+  <statement id="getT07_valparaDisp" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T07_valpara"> 
+  SELECT * FROM T07_VALPARA WHERE VALPARAKEY=#value# 
+  </statement> 
+ 
+</sqlMap> 
+

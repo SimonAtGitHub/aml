@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    
+	<!-- 文章索引处理 -->
+	<bean id="sectionIndexContext" class="com.ist.common.lucene.context.SectionIndexContext">
+		<property name="properties" ref="sysConfig" />
+	</bean>
+	<bean id="sectionIndexDao" class="com.ist.common.lucene.dao.SectionIndexDao">
+		<property name="dataSource" ref="DataSource" />
+		<property name="cm" ref="catchManager" />
+		<property name="sqlMapClient" ref="sqlMapClient" />
+	</bean>
+	<bean id="sectionIndexHandle" class="com.ist.common.lucene.handle.imp.SectionIndexHandle">
+		<property name="context" ref="sectionIndexContext" />
+		<property name="indexDao" ref="sectionIndexDao" />
+		<property name="dbixDao" ref="dbIndexDao" />
+	</bean>
+	<!-- 数据库定义索处理 -->
+	<bean id="dbIndexContext" class="com.ist.common.lucene.context.DbIndexContext">
+        <property name="properties" ref="sysConfig" />
+    </bean>
+	   <bean id="dbIndexDao" class="com.ist.common.lucene.dao.DbIndexDao">
+        <property name="dataSource" ref="DataSource" />
+        <property name="cm" ref="catchManager" />
+        <property name="sqlMapClient" ref="sqlMapClient" />
+    </bean>
+    <bean id="dbIndexHandle" class="com.ist.common.lucene.handle.imp.DbIndexHandle">
+        <property name="context" ref="dbIndexContext" />
+        <property name="indexDao" ref="dbIndexDao" />
+    </bean>
+        <!-- 文件定义索处理 -->
+    <bean id="fileIndexContext" class="com.ist.common.lucene.context.FileIndexContext">
+        <property name="properties" ref="sysConfig" />
+    </bean>
+       <bean id="fileIndexDao" class="com.ist.common.lucene.dao.FileIndexDao">
+        <property name="dataSource" ref="DataSource" />
+        <property name="cm" ref="catchManager" />
+        <property name="sqlMapClient" ref="sqlMapClient" />
+    </bean>
+    <bean id="fileIndexHandle" class="com.ist.common.lucene.handle.imp.FileIndexHandle">
+        <property name="context" ref="fileIndexContext" />
+        <property name="indexDao" ref="fileIndexDao" />
+    </bean>
+</beans>

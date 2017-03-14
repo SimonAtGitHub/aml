@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 基础管理平台模块配置 -->
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	
+	<bean id="t18_ods2dmetlDAO" parent="baseDAO" class="com.ist.bmp.hpom.dao.T18_ods2dmetlDAO" ></bean>
+	<bean id="t18_ods_tableDAO" parent="baseDAO" class="com.ist.bmp.hpom.dao.T18_ods_tableDAO" ></bean>     
+     <bean id="t18_ods_ftpDAO" parent="baseDAO" class="com.ist.bmp.hpom.dao.T18_ods_ftpDAO" ></bean>
+     <bean id="t18_ods_loadDAO" parent="baseDAO" class="com.ist.bmp.hpom.dao.T18_ods_loadDAO" ></bean>
+     <bean id="t18_dm_tableDAO" parent="baseDAO" class="com.ist.bmp.hpom.dao.T18_dm_tableDAO" ></bean>
+     <bean id="t18_errorlogDAO" parent="baseDAO" class="com.ist.bmp.hpom.dao.T18_errorlogDAO" ></bean>
+     <bean id="t18_ods_fetchDAO" parent="baseDAO" class="com.ist.bmp.hpom.dao.T18_ods_fetchDAO" ></bean>
+     <bean id="t18_ods_dblinkDAO" parent="baseDAO" class="com.ist.bmp.hpom.dao.T18_ods_dblinkDAO" ></bean>
+     <bean id="t18_datasourceDAO" parent="baseDAO" class="com.ist.bmp.hpom.dao.T18_datasourceDAO" ></bean>
+     <bean id="t18_tasklistDAO" parent="baseDAO" class="com.ist.bmp.hpom.dao.T18_tasklistDAO" ></bean>
+     <bean id="t18_task_factDAO" parent="baseDAO" class="com.ist.bmp.hpom.dao.T18_task_factDAO" ></bean>
+     <bean id="t18_task_typeDAO" parent="baseDAO" class="com.ist.bmp.hpom.dao.T18_task_typeDAO" ></bean>
+     <bean id="t18_shcontentDAO" parent="baseDAO" class="com.ist.bmp.hpom.dao.T18_shcontentDAO"></bean>
+     <bean id="t00_category_impfileDAO" parent="baseDAO" class="com.ist.impfile.bmp.platform.dao.T00_categoryDAO" ></bean>
+     
+</beans>

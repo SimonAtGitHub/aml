@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_publish_user"> 
+  <statement id="getT12_publish_userList" parameterClass="com.ist.cms.dto.T12_publish_user" resultClass="com.ist.cms.dto.T12_publish_user"> 
+  select a.username,b.realname,a.publishkey,a.usertype from t12_publish_user a inner join t00_user b on a.username=b.username
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="username"> 
+    a.username = #username# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="publishkey"> 
+    a.publishkey = #publishkey# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="usertype"> 
+    a.usertype = #usertype# 
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT12_publish_userListCount" parameterClass="com.ist.cms.dto.T12_publish_user" resultClass="int"> 
+  select count(*) from t12_publish_user a inner join t00_user b on a.username=b.username
+  <dynamic prepend="where">  
+    <isNotEmpty prepend="and" property="username"> 
+    a.username = #username# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="publishkey"> 
+    a.publishkey = #publishkey# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="usertype"> 
+    a.usertype = #usertype# 
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_publish_user" parameterClass="com.ist.cms.dto.T12_publish_user" resultClass="int"> 
+  insert into T12_publish_user(
+  username,publishkey,usertype
+  ) values(
+  #username#,#publishkey#,#usertype#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_publish_user" parameterClass="com.ist.cms.dto.T12_publish_user" resultClass="int"> 
+  update T12_publish_user set 
+  username=#username#,publishkey=#publishkey#,usertype=#usertype#
+  where username=#username# 
+  </statement> 
+ 
+  <statement id="deleteT12_publish_user" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_publish_user where username=#value# 
+  </statement> 
+  <statement id="deleteT12_publish_userByPublishID" parameterClass="java.lang.String" resultClass="int">
+  	delete from T12_publish_user where publishkey=#value# 
+  </statement>
+  <statement id="getT12_publish_userDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_publish_user"> 
+  select * from T12_publish_user where username=#value# 
+  </statement> 
+</sqlMap> 
+

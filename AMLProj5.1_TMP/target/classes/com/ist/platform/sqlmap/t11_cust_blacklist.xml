@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="t11_cust_blacklist">
+	<statement id="getCustBlackList"
+		parameterClass="com.ist.platform.dto.T11_BlackList_Cust"
+		resultClass="com.ist.platform.dto.T11_BlackList_Cust">
+		SELECT PARTY_ID ,OBJ_NAME PARTY_NAME,CARD_NO,ORGANKEY, CREATE_DT,TYPE_CD FROM    V07_BLACKLIST 
+		where ischeck='1' and isuse='1'
+		
+			<isNotEmpty prepend="AND" property="party_id">
+				PARTY_ID=#party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_name">
+				OBJ_NAME LIKE #party_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="card_no">
+				CARD_NO LIKE #card_no#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_start">
+				<![CDATA[CREATE_DT >= #create_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_end">
+				<![CDATA[CREATE_DT <= #create_end#]]>
+			</isNotEmpty>
+		
+		<dynamic>
+			<isNotEmpty property="orders">
+				<isEqual property="orders" compareValue="0">
+					ORDER BY CREATE_DT
+				</isEqual>
+				<isEqual property="orders" compareValue="1">
+					ORDER BY PARTY_ID
+				</isEqual>
+				<isEqual property="orders" compareValue="2">
+					ORDER BY OBJ_NAME
+				</isEqual>
+				<isEqual property="orders" compareValue="3">
+					ORDER BY CARD_NO
+				</isEqual>
+				<isNotEmpty property="fashion">
+					<isEqual property="fashion" compareValue="asc"></isEqual>
+					<isEqual property="fashion" compareValue="desc">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="getCustBlackListCount"
+		parameterClass="com.ist.platform.dto.T11_BlackList_Cust"
+		resultClass="int">
+		SELECT COUNT(*) FROM V07_BLACKLIST
+		where ischeck='1' and isuse='1'
+	
+			<isNotEmpty prepend="AND" property="party_id">
+				PARTY_ID=#party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_name">
+				OBJ_NAME LIKE #party_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="card_no">
+				CARD_NO LIKE #card_no#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_start">
+				<![CDATA[CREATE_DT >= #create_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_end">
+				<![CDATA[CREATE_DT <= #create_end#]]>
+			</isNotEmpty>
+	
+	</statement>
+
+	<statement id="remCustFromBListByid"
+		parameterClass="com.ist.platform.dto.T11_BlackList_Cust"
+		resultClass="int">
+		DELETE FROM T11_CUST_BLACKLIST_FACT WHERE PARTY_ID IN
+		<iterate prepend="" property="selectedKeys" open="(" close=")"
+			conjunction=",">
+			#selectedKeys[]#
+		</iterate>
+	</statement>
+
+	<statement id="remCustBlackListRel"
+		parameterClass="com.ist.platform.dto.T11_BlackList_Cust"
+		resultClass="int">
+		DELETE FROM T11_CUST_BLACKLIST_REL WHERE PARTY_ID IN
+		<iterate prepend="" property="selectedKeys" open="(" close=")"
+			conjunction=",">
+			#selectedKeys[]#
+		</iterate>
+	</statement>
+
+	<statement id="insCustWhiteListFact"
+		parameterClass="com.ist.platform.dto.T11_BlackList_Cust"
+		resultClass="int">
+		INSERT INTO T11_CUST_WHITELIST_FACT(PARTY_ID, PARTY_NAME, CARD_NO, IS_ONCE, CREATE_DT,IS_PARTY)
+		(SELECT PARTY_ID, PARTY_NAME,CARD_NO, '1', SYSDATE,IS_PARTY FROM T11_CUST_BLACKLIST_FACT
+		WHERE PARTY_ID IN
+		<iterate prepend="" property="selectedKeys" open="(" close=")"
+			conjunction=",">
+			#selectedKeys[]#
+		</iterate>
+		)
+	</statement>
+
+	<statement id="getBlackListCustById"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.platform.dto.T11_BlackList_Cust">
+		SELECT PARTY_ID,OBJ_NAME PARTY_NAME, CARD_NO, CREATE_DT,IS_PARTY FROM
+		V07_BLACKLIST WHERE ischeck='1' and isuse='1' and PARTY_ID = #value#
+	</statement>
+
+	<statement id="getMatchedBlackList"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.platform.dto.T11_Cust_BlackList">
+		SELECT DISTINCT
+		T1.CUST_ID,T1.CUST_NAME_S,T1.CUST_NAME_C,T1.CUST_NAME_E,T1.CUST_NAME_SO,T1.CUST_NAME_O,T1.CARD_NO,T1.LIST_SOURCE,T1.LIST_SOURCE_DES,T1.CREATE_DT
+		FROM T11_CUST_BLACKLIST T1,T11_CUST_BLACKLIST_REL T2 WHERE
+		T1.CUST_ID = T2.CUST_ID AND T2.PARTY_ID = #value#
+	</statement>
+</sqlMap>

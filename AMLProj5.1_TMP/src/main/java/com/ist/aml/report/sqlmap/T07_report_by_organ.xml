@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T07_report_by_organ">
+	<statement id="getT07_sz_trans_report_List2" parameterClass="com.ist.aml.report.dto.T07_report_by_organ"
+		resultClass="com.ist.aml.report.dto.T07_report_by_organ">
+		SELECT t.cast_type,t.currency_cd,
+		SUM(TOTAL_NUM) AS TOTAL_NUM,
+		SUM(TOTAL_VAL) AS TOTAL_VAL,
+		SUM(t.alert_num) AS alert_num,
+		SUM(t.success_num) AS success_num,
+		SUM(t.handout_num) AS handout_num,
+		SUM(t.alertnvl) AS alertnvl
+		from t07_inrep_by_acct t
+		where 1>0
+
+		<isNotEmpty prepend="AND" property="dt_start"> 
+     <![CDATA[T.REPORT_DT >= #dt_start#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dt_end"> 
+      <![CDATA[T.REPORT_DT <= #dt_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organstrs">
+			T.ORGANKEY
+			in($organstrs$)
+    </isNotEmpty>
+		<iterate prepend="AND" property="selectList" open="(" close=")"
+			conjunction="OR">
+			t.organkey in (select m.suborgankey from t87_organ_map M
+			where M.ORGANKEY =
+			#selectList[]#)
+     </iterate>
+		group by t.cast_type,t.currency_cd
+	</statement>
+
+	<statement id="getT07_sz_trans_report_List" parameterClass="com.ist.aml.report.dto.T07_report_by_organ"
+		resultClass="com.ist.aml.report.dto.T07_report_by_organ">
+		SELECT t.cast_type,t.currency_cd,
+		SUM(TOTAL_NUM) AS TOTAL_NUM,
+		SUM(TOTAL_VAL) AS TOTAL_VAL,
+		SUM(t.alert_num) AS alert_num,
+		SUM(t.success_num) AS success_num,
+		SUM(t.handout_num) AS handout_num,
+		SUM(t.alertnvl) AS alertnvl
+		from t07_inrep_by_acct t where 1>0
+
+		<isNotEmpty prepend="AND" property="dt_start"> 
+     <![CDATA[T.REPORT_DT >= #dt_start#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="dt_end"> 
+      <![CDATA[T.REPORT_DT <= #dt_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organstrs">
+			T.ORGANKEY in($organstrs$)
+    </isNotEmpty>
+		<iterate prepend="AND" property="selectList" open="(" close=")"
+			conjunction="OR">
+			T.ORGANKEY = #selectList[]#
+     </iterate>
+		group by t.cast_type,t.currency_cd
+	</statement>
+	
+	<statement id="getT07_sz_detrans_report_List1" parameterClass="com.ist.aml.report.dto.T07_report_by_organ" resultClass="com.ist.aml.report.dto.T07_report_by_organ"> 
+    SELECT t.cast_type,t.currency_cd,
+		SUM(TOTAL_NUM) AS TOTAL_NUM,
+		SUM(TOTAL_VAL) AS TOTAL_VAL,
+		SUM(t.alert_num) AS alert_num,
+		SUM(t.success_num) AS success_num,
+		SUM(t.handout_num) AS handout_num,
+		SUM(t.alertnvl) AS alertnvl
+		from t07_inrep_by_acct t where t.cast_type = '1'
+    <isNotEmpty prepend="AND" property="dt_start"> 
+     <![CDATA[T.CREATE_DT >= #dt_start#]]> 
+    </isNotEmpty> 
+      <isNotEmpty prepend="AND" property="dt_end"> 
+      <![CDATA[T.CREATE_DT <= #dt_end#]]> 
+     </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="type"> 
+      T.CURRENCY_CD=#type#
+    </isNotEmpty>
+    
+    <isNotEmpty prepend="AND" property="organstrs"> 
+      T.ORGANKEY in($organstrs$)
+    </isNotEmpty> 
+      <iterate prepend="AND" property="selectList" open="(" close=")" conjunction="OR">
+      T.ORGANKEY = #selectList[]#
+     </iterate>  
+     group by t.cast_type,t.currency_cd
+  	</statement>
+  	
+  	<statement id="getT07_sz_kytrans_report_List1" parameterClass="com.ist.aml.report.dto.T07_report_by_organ" resultClass="com.ist.aml.report.dto.T07_report_by_organ"> 
+    SELECT t.cast_type,t.currency_cd,
+		SUM(TOTAL_NUM) AS TOTAL_NUM,
+		SUM(TOTAL_VAL) AS TOTAL_VAL,
+		SUM(t.alert_num) AS alert_num,
+		SUM(t.success_num) AS success_num,
+		SUM(t.handout_num) AS handout_num,
+		SUM(t.alertnvl) AS alertnvl
+		from t07_inrep_by_acct t where t.cast_type = '2'
+    
+    <isNotEmpty prepend="AND" property="dt_start"> 
+     <![CDATA[T.CREATE_DT >= #dt_start#]]> 
+    </isNotEmpty> 
+      <isNotEmpty prepend="AND" property="dt_end"> 
+      <![CDATA[T.CREATE_DT <= #dt_end#]]> 
+     </isNotEmpty>
+     <isNotEmpty prepend="AND" property="type"> 
+      T.CURRENCY_CD=#type#
+    </isNotEmpty>
+     <!-- <isNotEqual property="type" compareValue ="CNY">
+          AND T.CURRENCY_CD!='CNY'
+    </isNotEqual>
+     <isEqual property="type" compareValue ="CNY">
+          AND T.CURRENCY_CD=#type#
+    </isEqual> -->
+    <isNotEmpty prepend="AND" property="organstrs"> 
+      T.ORGANKEY in($organstrs$)
+    </isNotEmpty> 
+      <iterate prepend="AND" property="selectList" open="(" close=")" conjunction="OR">
+      T.ORGANKEY = #selectList[]#
+     </iterate>  
+     group by t.cast_type,t.currency_cd
+  </statement>
+  <!--  上报交易信息查询	-->
+  <statement id="getT07_detrans_Ireport_List" parameterClass="com.ist.aml.report.dto.T07_report_by_organ" 
+  resultClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt"> 
+   select a.ticd,a.TSTM,a.CTAC,a.FINN,a.finc,a.firc,a.CRPP,a.TBID,a.CRTP,a.CRAT,a.TSTP,a.TCAC,a.organkey as organKey,
+   a.tsdr,a.crpp,a.TCNM,a.TCAT,a.TCIT,a.TCID,a.TBNM,a.TBNT,a.TBIT,c.msg_type_cd,c.report_type_cd,c.senddate_ch,b.csnm,b.ctnm,a.party_class_cd,a.reportkey,a.tsdt_seqno	
+   <isEqual property="casesearchtime" compareValue ="0">  
+        from  T07_IBH_TSDT a ,t07_nbh_ctif b,t07_msg c 
+  	</isEqual>
+  	<isEqual property="casesearchtime" compareValue ="1">
+         from  T07_IBH_TSDT a ,t07_nbh_ctif_UH b,t07_msg_UH c
+          
+  	</isEqual>
+    where a.reportkey=b.reportkey
+     and a.reportkey=c.reportkey
+   
+      <isNotEmpty prepend="AND" property="msg_type_cd"> 
+           c.msg_type_cd =#msg_type_cd#
+     </isNotEmpty>
+     <isNotEmpty prepend="AND" property="finc"> 
+           a.finc =#finc#
+     </isNotEmpty>
+    <isNotEmpty prepend="AND" property="dt_start"> 
+     <![CDATA[a.TSTM >= #dt_start#]]> 
+    </isNotEmpty> 
+      <isNotEmpty prepend="AND" property="dt_end"> 
+      <![CDATA[a.TSTM <= #dt_end#]]> 
+     </isNotEmpty>
+      <isNotEmpty   prepend="AND" property="organstrs">  
+        a.finc in($organstrs$)
+      </isNotEmpty>
+       <isNotEmpty   prepend="AND" property="senddate_ch_s">  
+        <![CDATA[c.senddate_ch >= #senddate_ch_s#]]> 
+      </isNotEmpty>
+           <isNotEmpty   prepend="AND" property="senddate_ch_e">  
+        <![CDATA[c.senddate_ch <= #senddate_ch_e#]]> 
+      </isNotEmpty>
+    <isNotEmpty prepend="AND" property="curr_cd"> 
+           a.CURR_CD = #curr_cd#
+     </isNotEmpty>
+         <isNotEmpty prepend="AND" property="reportkey"> 
+           a.reportkey = #reportkey#
+     </isNotEmpty>
+      <isNotEmpty prepend="AND" property="csnm"> 
+           b.csnm = #csnm#
+     </isNotEmpty>
+          <isNotEmpty prepend="AND" property="party_class_cd"> 
+           a.party_class_cd = #party_class_cd#
+     </isNotEmpty>
+     <!--  <isNotEmpty  prepend="AND" property="finc">  
+       d.create_org IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY = #finc#)
+      </isNotEmpty>-->
+      <isNotEmpty  prepend="AND" property="organkey">  
+       a.organkey IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE 
+    ORGANKEY = #organkey#)
+    </isNotEmpty>
+  </statement>
+  
+  <statement id="getT07_detrans_Ireport_ListCount" parameterClass="com.ist.aml.report.dto.T07_report_by_organ" 
+  resultClass="int"> 
+   select count(a.TICD)
+   <isEqual property="casesearchtime" compareValue ="0">  
+        from  T07_IBH_TSDT a ,t07_nbh_ctif b,t07_msg c 
+  	</isEqual>
+  	<isEqual property="casesearchtime" compareValue ="1">
+         from  T07_IBH_TSDT a ,t07_nbh_ctif_UH b,t07_msg_UH c
+          
+  	</isEqual>
+    where a.reportkey=b.reportkey
+     and a.reportkey=c.reportkey
+   
+      <isNotEmpty prepend="AND" property="msg_type_cd"> 
+           c.msg_type_cd =#msg_type_cd#
+     </isNotEmpty>
+     <isNotEmpty prepend="AND" property="finc"> 
+           a.finc =#finc#
+     </isNotEmpty>
+    <isNotEmpty prepend="AND" property="dt_start"> 
+     <![CDATA[a.TSTM >= #dt_start#]]> 
+    </isNotEmpty> 
+      <isNotEmpty prepend="AND" property="dt_end"> 
+      <![CDATA[a.TSTM <= #dt_end#]]> 
+     </isNotEmpty>
+      <isNotEmpty   prepend="AND" property="organstrs">  
+        a.finc in($organstrs$)
+      </isNotEmpty>
+       <isNotEmpty   prepend="AND" property="senddate_ch_s">  
+        <![CDATA[c.senddate_ch >= #senddate_ch_s#]]> 
+      </isNotEmpty>
+           <isNotEmpty   prepend="AND" property="senddate_ch_e">  
+        <![CDATA[c.senddate_ch <= #senddate_ch_e#]]> 
+      </isNotEmpty>
+    <isNotEmpty prepend="AND" property="curr_cd"> 
+           a.CURR_CD = #curr_cd#
+     </isNotEmpty>
+         <isNotEmpty prepend="AND" property="reportkey"> 
+           a.reportkey = #reportkey#
+     </isNotEmpty>
+      <isNotEmpty prepend="AND" property="csnm"> 
+           b.csnm = #csnm#
+     </isNotEmpty>
+          <isNotEmpty prepend="AND" property="party_class_cd"> 
+           a.party_class_cd = #party_class_cd#
+     </isNotEmpty>
+     <!--  <isNotEmpty  prepend="AND" property="finc">  
+       d.create_org IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY = #finc#)
+      </isNotEmpty>-->
+      <isNotEmpty  prepend="AND" property="organkey">  
+       a.organkey IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE 
+    ORGANKEY = #organkey#)
+    </isNotEmpty>
+  </statement>
+  
+  <statement id="getT07_detrans_Creport_List" parameterClass="com.ist.aml.report.dto.T07_report_by_organ" 
+  resultClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt"> 
+   select a.ticd,a.TSTM,a.CTAC,a.FINN,a.finc,a.firc,a.CRPP,a.TBID,a.CRTP,a.CRAT,a.TSTP,a.TCAC,a.organkey as organKey,
+   a.tsdr,a.crpp,a.TCNM,a.TCAT,a.TCIT,a.TCID,a.TBNM,a.TBNT,a.TBIT,c.msg_type_cd,c.senddate_ch,b.csnm,b.ctnm,a.reportkey,a.tsdt_seqno	
+   <isEqual property="casesearchtime" compareValue ="0">  
+        from  T07_CBH_TSDT a,t07_nbh_ctif b,t07_msg c 
+  	</isEqual>
+  	<isEqual property="casesearchtime" compareValue ="1">
+         from  T07_CBH_TSDT a ,t07_nbh_ctif_UH b,t07_msg_UH c     
+  	</isEqual>
+    where a.reportkey=b.reportkey
+     and a.reportkey=c.reportkey
+
+      <isNotEmpty prepend="AND" property="msg_type_cd"> 
+           c.msg_type_cd =#msg_type_cd#
+     </isNotEmpty>
+      <isNotEmpty prepend="AND" property="finc"> 
+           a.finc =#finc#
+     </isNotEmpty>
+    <isNotEmpty prepend="AND" property="dt_start"> 
+     <![CDATA[a.TSTM >= #dt_start#]]> 
+    </isNotEmpty> 
+      <isNotEmpty prepend="AND" property="dt_end"> 
+      <![CDATA[a.TSTM <= #dt_end#]]> 
+     </isNotEmpty>
+      <isNotEmpty   prepend="AND" property="organstrs">  
+        a.finc in($organstrs$)
+      </isNotEmpty>
+       <isNotEmpty   prepend="AND" property="senddate_ch_s">  
+        <![CDATA[c.senddate_ch >= #senddate_ch_s#]]> 
+      </isNotEmpty>
+           <isNotEmpty   prepend="AND" property="senddate_ch_e">  
+        <![CDATA[c.senddate_ch <= #senddate_ch_e#]]> 
+      </isNotEmpty>
+         <isNotEmpty prepend="AND" property="reportkey"> 
+           a.reportkey = #reportkey#
+     </isNotEmpty>
+     <isNotEmpty prepend="AND" property="curr_cd"> 
+           a.CURR_CD = #curr_cd#
+     </isNotEmpty>
+     <isNotEmpty prepend="AND" property="party_class_cd"> 
+           a.party_class_cd = #party_class_cd#
+     </isNotEmpty>
+      <isNotEmpty prepend="AND" property="csnm"> 
+           b.csnm = #csnm#
+     </isNotEmpty> 
+     <isNotEmpty  prepend="AND" property="organkey">  
+       a.organkey IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE 
+    ORGANKEY = #organkey#)
+    </isNotEmpty>
+   </statement>
+  
+   <statement id="getT07_detrans_Creport_ListCount" parameterClass="com.ist.aml.report.dto.T07_report_by_organ" 
+  resultClass="int"> 
+    SELECT COUNT(a.TICD)
+    <isEqual property="casesearchtime" compareValue ="0">  
+        from  T07_CBH_TSDT a ,t07_nbh_ctif b,t07_msg c 
+  	</isEqual>
+  	<isEqual property="casesearchtime" compareValue ="1">
+         from  T07_CBH_TSDT a ,t07_nbh_ctif_UH b,t07_msg_UH c     
+  	</isEqual>
+    where a.reportkey=b.reportkey
+     and a.reportkey=c.reportkey
+   
+      <isNotEmpty prepend="AND" property="msg_type_cd"> 
+           c.msg_type_cd =#msg_type_cd#
+     </isNotEmpty>
+      <isNotEmpty prepend="AND" property="finc"> 
+           a.finc =#finc#
+     </isNotEmpty>
+    <isNotEmpty prepend="AND" property="dt_start"> 
+     <![CDATA[a.TSTM >= #dt_start#]]> 
+    </isNotEmpty> 
+      <isNotEmpty prepend="AND" property="dt_end"> 
+      <![CDATA[a.TSTM <= #dt_end#]]> 
+     </isNotEmpty>
+      <isNotEmpty   prepend="AND" property="organstrs">  
+        a.finc in($organstrs$)
+      </isNotEmpty>
+       <isNotEmpty   prepend="AND" property="senddate_ch_s">  
+        <![CDATA[c.senddate_ch >= #senddate_ch_s#]]> 
+      </isNotEmpty>
+           <isNotEmpty   prepend="AND" property="senddate_ch_e">  
+        <![CDATA[c.senddate_ch <= #senddate_ch_e#]]> 
+      </isNotEmpty>
+         <isNotEmpty prepend="AND" property="reportkey"> 
+           a.reportkey = #reportkey#
+     </isNotEmpty>
+     <isNotEmpty prepend="AND" property="curr_cd"> 
+           a.CURR_CD = #curr_cd#
+     </isNotEmpty>
+     <isNotEmpty prepend="AND" property="party_class_cd"> 
+           a.party_class_cd = #party_class_cd#
+     </isNotEmpty>
+      <isNotEmpty prepend="AND" property="csnm"> 
+           b.csnm = #csnm#
+     </isNotEmpty>
+     <isNotEmpty  prepend="AND" property="organkey">  
+       a.organkey IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE 
+    ORGANKEY = #organkey#)
+    </isNotEmpty>
+  </statement>
+  
+   <statement id="getT07_detrans_Dreport_List" parameterClass="com.ist.aml.report.dto.T07_report_by_organ" 
+  resultClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt"> 
+   select a.ticd,a.TSTM,a.CTAC,a.FINN,a.finc,a.firc,a.CRPP,a.TBID,a.CRTP,a.CRAT,a.TSTP,a.TCAC,a.organkey as organKey,
+   a.tsdr,a.crpp,a.TCNM,a.TCAT,a.TCIT,a.TCID,a.TBNM,a.TBNT,a.TBIT,c.msg_type_cd,c.senddate_ch,b.csnm,b.ctnm,a.party_class_cd,a.reportkey,a.tsdt_seqno	
+   <isEqual property="casesearchtime" compareValue ="0">  
+        from  T07_NBH_TSDT a ,t07_nbh_ctif b,t07_msg c 
+  	</isEqual>
+  	<isEqual property="casesearchtime" compareValue ="1">
+         from  T07_NBH_TSDT_UH a ,t07_nbh_ctif_UH b,t07_msg_UH c
+          
+  	</isEqual>
+    where a.reportkey=b.reportkey
+     and a.reportkey=c.reportkey
+     and a.cati_seqno=b.cati_seqno
+   
+      <isNotEmpty prepend="AND" property="msg_type_cd"> 
+           c.msg_type_cd =#msg_type_cd#
+     </isNotEmpty>
+      <isNotEmpty prepend="AND" property="finc"> 
+           a.finc =#finc#
+     </isNotEmpty>
+    <isNotEmpty prepend="AND" property="dt_start"> 
+     <![CDATA[a.TSTM >= #dt_start#]]> 
+    </isNotEmpty> 
+      <isNotEmpty prepend="AND" property="dt_end"> 
+      <![CDATA[a.TSTM <= #dt_end#]]> 
+     </isNotEmpty>
+      <isNotEmpty   prepend="AND" property="organstrs">  
+        a.finc in($organstrs$)
+      </isNotEmpty>
+       <isNotEmpty   prepend="AND" property="senddate_ch_s">  
+        <![CDATA[c.senddate_ch >= #senddate_ch_s#]]> 
+      </isNotEmpty>
+           <isNotEmpty   prepend="AND" property="senddate_ch_e">  
+        <![CDATA[c.senddate_ch <= #senddate_ch_e#]]> 
+      </isNotEmpty>
+    <isNotEmpty prepend="AND" property="curr_cd"> 
+           a.CURR_CD = #curr_cd#
+     </isNotEmpty>
+         <isNotEmpty prepend="AND" property="reportkey"> 
+           a.reportkey = #reportkey#
+     </isNotEmpty>
+      <isNotEmpty prepend="AND" property="csnm"> 
+           b.csnm = #csnm#
+     </isNotEmpty>
+          <isNotEmpty prepend="AND" property="party_class_cd"> 
+           a.party_class_cd = #party_class_cd#
+     </isNotEmpty>
+   
+      <isNotEmpty  prepend="AND" property="organkey">  
+       a.organkey = #organkey#
+    </isNotEmpty>
+  </statement>
+  
+   <statement id="getT07_detrans_Dreport_ListCount" parameterClass="com.ist.aml.report.dto.T07_report_by_organ" 
+  resultClass="int"> 
+    SELECT COUNT(a.TICD)
+    <isEqual property="casesearchtime" compareValue ="0">  
+        from  T07_NBH_TSDT a ,t07_nbh_ctif b,t07_msg c 
+  	</isEqual>
+  	<isEqual property="casesearchtime" compareValue ="1">
+         from  T07_NBH_TSDT_UH a ,t07_nbh_ctif_UH b,t07_msg_UH c
+          
+  	</isEqual>
+    where a.reportkey=b.reportkey
+     and a.reportkey=c.reportkey
+     and a.cati_seqno=b.cati_seqno
+   
+      <isNotEmpty prepend="AND" property="msg_type_cd"> 
+           c.msg_type_cd =#msg_type_cd#
+     </isNotEmpty>
+      <isNotEmpty prepend="AND" property="finc"> 
+           a.finc =#finc#
+     </isNotEmpty>
+    <isNotEmpty prepend="AND" property="dt_start"> 
+     <![CDATA[a.TSTM >= #dt_start#]]> 
+    </isNotEmpty> 
+      <isNotEmpty prepend="AND" property="dt_end"> 
+      <![CDATA[a.TSTM <= #dt_end#]]> 
+     </isNotEmpty>
+      <isNotEmpty   prepend="AND" property="organstrs">  
+        a.finc in($organstrs$)
+      </isNotEmpty>
+       <isNotEmpty   prepend="AND" property="senddate_ch_s">  
+        <![CDATA[c.senddate_ch >= #senddate_ch_s#]]> 
+      </isNotEmpty>
+           <isNotEmpty   prepend="AND" property="senddate_ch_e">  
+        <![CDATA[c.senddate_ch <= #senddate_ch_e#]]> 
+      </isNotEmpty>
+    <isNotEmpty prepend="AND" property="curr_cd"> 
+           a.CURR_CD = #curr_cd#
+     </isNotEmpty>
+         <isNotEmpty prepend="AND" property="reportkey"> 
+           a.reportkey = #reportkey#
+     </isNotEmpty>
+      <isNotEmpty prepend="AND" property="csnm"> 
+           b.csnm = #csnm#
+     </isNotEmpty>
+          <isNotEmpty prepend="AND" property="party_class_cd"> 
+           a.party_class_cd = #party_class_cd#
+     </isNotEmpty>
+   
+      <isNotEmpty  prepend="AND" property="organkey">  
+       a.organkey IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE 
+    ORGANKEY = #organkey#)
+    </isNotEmpty>
+  </statement>
+  
+   <statement id="getT07_detrans_report_List" parameterClass="com.ist.aml.report.dto.T07_report_by_organ" 
+  resultClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt"> 
+   select a.ticd,a.TSTM,a.CTAC,a.FINN,a.finc,a.firc,a.CRPP,a.TBID,a.CRTP,a.CRAT,a.TSTP,a.TCAC,a.organkey as organKey,
+   a.tsdr,a.crpp,a.TCNM,a.TCAT,a.TCIT,a.TCID,a.TBNM,a.TBNT,a.TBIT,c.msg_type_cd,c.senddate_ch,b.csnm,b.ctnm,a.party_class_cd,a.reportkey,a.tsdt_seqno
+   
+        ,a.crcd,a.cati_seqno
+
+   <isEqual property="casesearchtime" compareValue ="0">
+      
+        from  T07_NBH_TSDT a ,t07_nbh_ctif b,t07_msg c
+  	</isEqual>
+  	<isEqual property="casesearchtime" compareValue ="1">        
+        from  T07_NBH_TSDT_UH a ,t07_nbh_ctif_UH b,t07_msg_UH c
+   	  
+  	</isEqual>
+    where a.reportkey=b.reportkey
+     and a.reportkey=c.reportkey 
+       and a.cati_seqno=b.cati_seqno
+
+      <isNotEmpty prepend="AND" property="msg_type_cd"> 
+           c.msg_type_cd =#msg_type_cd#
+     </isNotEmpty>
+      <isNotEmpty prepend="AND" property="finc"> 
+           a.finc =#finc#
+     </isNotEmpty>
+    <isNotEmpty prepend="AND" property="dt_start"> 
+     <![CDATA[a.TSTM >= #dt_start#]]> 
+    </isNotEmpty> 
+      <isNotEmpty prepend="AND" property="dt_end"> 
+      <![CDATA[a.TSTM <= #dt_end#]]> 
+     </isNotEmpty>
+      <isNotEmpty   prepend="AND" property="organstrs">  
+        a.finc in($organstrs$)
+      </isNotEmpty>
+       <isNotEmpty   prepend="AND" property="senddate_ch_s">  
+        <![CDATA[c.senddate_ch >= #senddate_ch_s#]]> 
+      </isNotEmpty>
+           <isNotEmpty   prepend="AND" property="senddate_ch_e">  
+        <![CDATA[c.senddate_ch <= #senddate_ch_e#]]> 
+      </isNotEmpty>
+    <isNotEmpty prepend="AND" property="curr_cd"> 
+           a.CURR_CD = #curr_cd#
+     </isNotEmpty>
+         <isNotEmpty prepend="AND" property="reportkey"> 
+           a.reportkey = #reportkey#
+     </isNotEmpty>
+       <isNotEmpty prepend="AND" property="csnm"> 
+           b.csnm = #csnm#
+     </isNotEmpty>
+          <isNotEmpty prepend="AND" property="party_class_cd"> 
+           a.party_class_cd = #party_class_cd#
+     </isNotEmpty>
+      <!-- <isNotEmpty  prepend="AND" property="finc">  
+       d.create_org IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY = #finc#)
+      </isNotEmpty> --> 
+      <isNotEmpty  prepend="AND" property="organkey">  
+       a.organkey IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY = #organkey#)
+    </isNotEmpty>
+  </statement>
+  
+  <statement id="getT07_detrans_report_ListCount" parameterClass="com.ist.aml.report.dto.T07_report_by_organ" 
+  resultClass="int"> 
+    SELECT COUNT(a.TICD)
+    <isEqual property="casesearchtime" compareValue ="0">
+      
+        from  T07_NBH_TSDT a ,t07_nbh_ctif b,t07_msg c
+  	</isEqual>
+  	<isEqual property="casesearchtime" compareValue ="1">        
+        from  T07_NBH_TSDT_UH a ,t07_nbh_ctif_UH b,t07_msg_UH c
+   	  
+  	</isEqual>
+    where a.reportkey=b.reportkey
+     and a.reportkey=c.reportkey
+     and a.cati_seqno=b.cati_seqno
+   
+      <isNotEmpty prepend="AND" property="msg_type_cd"> 
+           c.msg_type_cd =#msg_type_cd#
+     </isNotEmpty>
+      <isNotEmpty prepend="AND" property="finc"> 
+           a.finc =#finc#
+     </isNotEmpty>
+    <isNotEmpty prepend="AND" property="dt_start"> 
+     <![CDATA[a.TSTM >= #dt_start#]]> 
+    </isNotEmpty> 
+      <isNotEmpty prepend="AND" property="dt_end"> 
+      <![CDATA[a.TSTM <= #dt_end#]]> 
+     </isNotEmpty>
+      <isNotEmpty   prepend="AND" property="organstrs">  
+        a.finc in($organstrs$)
+      </isNotEmpty>
+       <isNotEmpty   prepend="AND" property="senddate_ch_s">  
+        <![CDATA[c.senddate_ch >= #senddate_ch_s#]]> 
+      </isNotEmpty>
+           <isNotEmpty   prepend="AND" property="senddate_ch_e">  
+        <![CDATA[c.senddate_ch <= #senddate_ch_e#]]> 
+      </isNotEmpty>
+    <isNotEmpty prepend="AND" property="curr_cd"> 
+           a.CURR_CD = #curr_cd#
+     </isNotEmpty>
+      <isNotEmpty prepend="AND" property="reportkey"> 
+           a.reportkey = #reportkey#
+     </isNotEmpty>
+      <isNotEmpty prepend="AND" property="csnm"> 
+           b.csnm = #csnm#
+     </isNotEmpty>
+          <isNotEmpty prepend="AND" property="party_class_cd"> 
+           a.party_class_cd = #party_class_cd#
+     </isNotEmpty>
+    <!--  <isNotEmpty  prepend="AND" property="finc">  
+       d.create_org IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY = #finc#)
+      </isNotEmpty>-->
+      <isNotEmpty  prepend="AND" property="organkey">  
+       a.organkey = #organkey#
+   </isNotEmpty> 
+  </statement>
+  
+   <statement id="getT07_kytrans_report_List" parameterClass="com.ist.aml.report.dto.T07_report_by_organ" 
+  resultClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt"> 
+  select a.ticd,a.TSTM,a.TSDR,a.CRSP as crpp,a.BKNM as tbnm,a.BITP as tbit,a.BKID as tbid,a.BKNT as tbnt,d.finm as finn,d.firc,d.ficd as finc,a.CRTP,a.CRAT,a.TSTP,a.TCAC,a.TCNM,a.TCIT,a.TCID,a.TCAT,c.msg_type_cd,c.senddate_ch,a.organkey as organKey,
+b.csnm,b.ctnm,a.party_class_cd,a.rpdi_seqno  as tsdt_seqno,a.reportkey
+  <isEqual property="casesearchtime" compareValue ="0">
+  		   from  T07_NBs_rpdi a ,t07_nbs_rbif d,t07_nbs_ctif b,t07_msg c
+  	</isEqual>
+  	<isEqual property="casesearchtime" compareValue ="1">
+  		  from  T07_NBs_rpdi_UH a ,t07_nbs_rbif_UH d,t07_nbs_ctif_UH b,t07_msg_UH c
+  	</isEqual>
+
+where a.reportkey=b.reportkey
+and a.reportkey=c.reportkey
+and a.reportkey=d.reportkey
+and a.rpdi_seqno=b.ctif_seqno
+    <isNotEmpty prepend="AND" property="msg_type_cd"> 
+           c.msg_type_cd =#msg_type_cd#
+     </isNotEmpty>
+    <isNotEmpty prepend="AND" property="finc"> 
+           d.ficd =#finc#
+     </isNotEmpty>
+     <isNotEmpty prepend="AND" property="dt_start"> 
+     <![CDATA[a.TSTM >= #dt_start#]]> 
+    </isNotEmpty> 
+      <isNotEmpty prepend="AND" property="dt_end"> 
+      <![CDATA[a.TSTM <= #dt_end#]]> 
+     </isNotEmpty>
+      <isNotEmpty   prepend="AND" property="organstrs">  
+        d.ficd in($organstrs$)
+      </isNotEmpty>
+       <isNotEmpty   prepend="AND" property="senddate_ch_s">  
+        <![CDATA[c.senddate_ch >= #senddate_ch_s#]]> 
+      </isNotEmpty>
+           <isNotEmpty   prepend="AND" property="senddate_ch_e">  
+        <![CDATA[c.senddate_ch <= #senddate_ch_e#]]> 
+      </isNotEmpty>
+    <isNotEmpty prepend="AND" property="curr_cd"> 
+           a.CURR_CD = #curr_cd#
+     </isNotEmpty>
+        <isNotEmpty prepend="AND" property="reportkey"> 
+           a.reportkey = #reportkey#
+     </isNotEmpty>
+      <isNotEmpty prepend="AND" property="csnm"> 
+           b.csnm = #csnm#
+     </isNotEmpty>
+          <isNotEmpty prepend="AND" property="party_class_cd"> 
+           a.party_class_cd = #party_class_cd#
+     </isNotEmpty>
+        <!--  <isNotEmpty  prepend="AND" property="finc">  
+       d.finm IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY = #finc#)
+      </isNotEmpty> -->
+      <isNotEmpty  prepend="AND" property="organkey">  
+       a.organkey  = #organkey#
+   </isNotEmpty> 
+  </statement>
+  
+   <statement id="getT07_kytrans_report_ListCount" parameterClass="com.ist.aml.report.dto.T07_report_by_organ" 
+  resultClass="int"> 
+   select  count(a.TICD)
+<isEqual property="casesearchtime" compareValue ="0">
+  		   from  T07_NBs_rpdi a ,t07_nbs_rbif d,t07_nbs_ctif b,t07_msg c
+  	</isEqual>
+  	<isEqual property="casesearchtime" compareValue ="1">
+  		  from  T07_NBs_rpdi_UH a ,t07_nbs_rbif_UH d,t07_nbs_ctif_UH b,t07_msg_UH c
+  	</isEqual>
+
+where a.reportkey=b.reportkey
+    and a.reportkey=c.reportkey
+    and a.reportkey=d.reportkey
+    and a.ctif_seqno=b.ctif_seqno
+    <isNotEmpty prepend="AND" property="msg_type_cd"> 
+           c.msg_type_cd =#msg_type_cd#
+     </isNotEmpty>
+    <isNotEmpty prepend="AND" property="finc"> 
+           d.ficd =#finc#
+     </isNotEmpty>
+     <isNotEmpty prepend="AND" property="dt_start"> 
+     <![CDATA[a.TSTM >= #dt_start#]]> 
+    </isNotEmpty> 
+      <isNotEmpty prepend="AND" property="dt_end"> 
+      <![CDATA[a.TSTM <= #dt_end#]]> 
+     </isNotEmpty>
+      <isNotEmpty   prepend="AND" property="organstrs">  
+        d.ficd in($organstrs$)
+      </isNotEmpty>
+       <isNotEmpty   prepend="AND" property="senddate_ch_s">  
+        <![CDATA[c.senddate_ch >= #senddate_ch_s#]]> 
+      </isNotEmpty>
+           <isNotEmpty   prepend="AND" property="senddate_ch_e">  
+        <![CDATA[c.senddate_ch <= #senddate_ch_e#]]> 
+      </isNotEmpty>
+    <isNotEmpty prepend="AND" property="curr_cd"> 
+           a.CURR_CD = #curr_cd#
+     </isNotEmpty>
+        <isNotEmpty prepend="AND" property="reportkey"> 
+           a.reportkey = #reportkey#
+     </isNotEmpty>
+      <isNotEmpty prepend="AND" property="csnm"> 
+           b.csnm = #csnm#
+     </isNotEmpty>
+          <isNotEmpty prepend="AND" property="party_class_cd"> 
+           a.party_class_cd = #party_class_cd#
+     </isNotEmpty>
+     <!--  <isNotEmpty  prepend="AND" property="finc">  
+       d.finm IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY = #finc#)
+      </isNotEmpty>-->
+      <isNotEmpty  prepend="AND" property="organkey">  
+       a.organkey  = #organkey#
+   </isNotEmpty> 
+  </statement>
+</sqlMap>

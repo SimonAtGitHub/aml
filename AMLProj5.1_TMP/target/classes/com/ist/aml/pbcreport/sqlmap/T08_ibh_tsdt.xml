@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T08_ibh_tsdt"> 
+ <statement id="getValidateIBHTransDisp"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_ibh_tsdt"
+		resultClass="com.ist.aml.pbcreport.dto.T07_ibh_tsdt">
+		SELECT
+		REPORTKEY,OTDT,OTIC AS TICD,FINN,FIRC,RLTP,FICT,FINC,CATP,CTAC,TBNM,TBIT,TBID,TBNT,TSTM,TICD,
+		TSTP,TSCT,TSDR,TDRC,TRCD,CRPP,CRTP,CRAT,CFIN,CFCT,CFIC,TCNM,TCIT,TCID,TCAT,TCAC,VALIDATE_IND,OTCD
+		FROM T07_IBH_TSDT
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="reportkey">
+				REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tsdt_seqno">
+				TSDT_SEQNO = #tsdt_seqno#
+			</isNotEmpty>
+			
+			
+		</dynamic>
+	</statement>
+
+</sqlMap> 
+

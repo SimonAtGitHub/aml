@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+<sqlMap namespace="T00_NOTICE"> 
+  <statement id="getT00_NOTICEList" parameterClass="com.ist.aml.information.dto.T00_NOTICE" resultClass="com.ist.aml.information.dto.T00_NOTICE"> 
+  select a.*,b.organname as organame from t00_notice a ,t00_organ b where a.createorgan=b.organkey
+  <dynamic prepend=""> 
+     <isNotEmpty prepend="and" property="title_s"> 
+    a.title like #title# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="and" property="flag"> 
+    a.flag = #flag# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="notice_gory_s"> 
+    a.notice_gory = #notice_gory_s# 
+    </isNotEmpty>
+   <isNotEmpty prepend="and" property="createorgan_s"> 
+    a.createorgan = #createorgan_s# 
+    </isNotEmpty> 
+  
+  </dynamic> 
+  </statement>  
+ 
+  <statement id="getT00_NOTICEListCount" parameterClass="com.ist.aml.information.dto.T00_NOTICE" resultClass="int"> 
+  select count(*) from t00_notice a ,t00_organ b where a.createorgan=b.organkey 
+  <dynamic prepend=""> 
+     <isNotEmpty prepend="and" property="title_s"> 
+    a.title like #title# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="and" property="flag"> 
+    a.flag = #flag# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="notice_gory_s"> 
+    a.notice_gory = #notice_gory_s# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="createorgan_s"> 
+    a.createorgan = #createorgan_s# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT00_NOTICE" parameterClass="com.ist.aml.information.dto.T00_NOTICE" resultClass="int"> 
+  insert into T00_NOTICE(
+  noteice_no,notice_type,notice_gory,title,content,filename,filepath,infactdate,flag,createdate,createorgan,creator
+  ) values(
+  #noteice_no#,#notice_type#,#notice_gory#,#title#,#content#,#filename#,#filepath#,#infactdate#,#flag#,#createdate#,#createorgan#,#creator#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT00_NOTICE" parameterClass="com.ist.aml.information.dto.T00_NOTICE" resultClass="int"> 
+  update T00_NOTICE set 
+   createorgan=#createorgan#,creator=#creator#,  notice_type=#notice_type#, notice_gory=#notice_gory#,    
+   title=#title#,   content=#content#,
+      <isNotEmpty property="filename"> 
+   		filename=#filename# ,	filepath=#filepath#,      
+    </isNotEmpty> 
+    infactdate=#infactdate#, createdate=#createdate#
+    where  noteice_no=#noteice_no#
+  </statement> 
+ 
+  <statement id="deleteT00_NOTICE" parameterClass="java.lang.String" resultClass="int">
+  delete from T00_NOTICE where noteice_no=#value# 
+  </statement> 
+   <statement id="updateT00_NOTICEFlag" parameterClass="com.ist.aml.information.dto.T00_NOTICE" resultClass="int">
+     update T00_NOTICE set flag=#flag# where  noteice_no=#noteice_no# 
+  </statement> 
+ 
+  <statement id="getT00_NOTICEDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.information.dto.T00_NOTICE"> 
+  select a.*,b.organname as organame from T00_NOTICE a,t00_organ b  where a.createorgan=b.organkey and  a.noteice_no=#value# 
+  </statement> 
+  
+ 
+</sqlMap> 
+

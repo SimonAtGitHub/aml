@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T07_cbh_tsdt"> 
+ <statement id="getT07_cbh_tsdtList" parameterClass="com.ist.aml.pbcreport.dto.T07_cbh_tsdt" resultClass="com.ist.aml.pbcreport.dto.T07_cbh_tsdt"> 
+  SELECT REPORTKEY,TSDT_SEQNO,OCNM,OTDT,OTCD,OTIC,FINN,FIRC,RLTP,FICT,FINC,CATP,CTAC,TBNM,TBIT,TBID,TBNT,TSTM,TICD,TSTP,TSCT,TSDR,TDRC,TRCD,CRPP,CRTP,CRAT,CFIN,CFCT,CFIC,TCNM,TCIT,TCID,TCAT,TCAC,VALIDATE_IND FROM T07_CBH_TSDT 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="reportkey"> 
+    REPORTKEY = #reportkey# 
+    </isNotEmpty> 
+   
+  </dynamic> 
+  </statement>
+  
+  <statement id="getT07_cbh_tsdtdetailList" parameterClass="com.ist.aml.pbcreport.dto.T07_cbh_tsdt" resultClass="com.ist.aml.pbcreport.dto.T07_cbh_tsdt"> 
+  SELECT REPORTKEY,TSDT_SEQNO,OCNM,OTDT,OTCD,OTIC,FINN,FIRC,RLTP,FICT,FINC,CATP,CTAC,TBNM,TBIT,TBID,TBNT,TSTM,TICD,TSTP,TSCT,TSDR,TDRC,TRCD,CRPP,CRTP,CRAT,CFIN,CFCT,CFIC,TCNM,TCIT,TCID,TCAT,TCAC,VALIDATE_IND FROM T07_CBH_TSDT 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="reportkey"> 
+    REPORTKEY = #reportkey# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="tsdt_seqno"> 
+    TSDT_SEQNO = $tsdt_seqno$ 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement>
+ 
+ <statement id="getT07_cbh_tsdtListCount" parameterClass="com.ist.aml.pbcreport.dto.T07_cbh_tsdt" resultClass="int"> 
+  SELECT COUNT(*) FROM T07_CBH_TSDT 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="reportkey"> 
+    REPORTKEY = #reportkey# 
+    </isNotEmpty> 
+    
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getValidateCorrectTransDisp" parameterClass="com.ist.aml.pbcreport.dto.T07_cbh_tsdt" resultClass="com.ist.aml.pbcreport.dto.T07_cbh_tsdt"> 
+  SELECT REPORTKEY,TSDT_SEQNO,OCNM,OTDT,OTCD,OTIC,FINN,FIRC,RLTP,FICT,FINC,CATP,CTAC,TBNM,TBIT,TBID,TBNT,TSTM,TICD,TSTP,TSCT,TSDR,TDRC,TRCD,CRPP,CRTP,CRAT,CFIN,CFCT,CFIC,TCNM,TCIT,TCID,TCAT,TCAC,VALIDATE_IND 
+  FROM T07_CBH_TSDT
+   WHERE REPORTKEY=#reportkey# 
+   AND TSDT_SEQNO=$tsdt_seqno$
+  </statement> 
+  
+  <statement id="modifyValidateT07_cbh_tsdt_20091215" parameterClass="com.ist.aml.pbcreport.dto.T07_cbh_tsdt" resultClass="int">
+  	UPDATE T07_CBH_TSDT SET VALIDATE_IND=#validate_ind#
+  	<dynamic>
+  		<isNotEqual prepend="," property="finn" compareValue="#">
+  			FINN=#finn#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="firc" compareValue="#">
+  			FIRC=#firc#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="rltp" compareValue="#">
+  			RLTP=#rltp#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="fict" compareValue="#">
+  			FICT=#fict#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="finc" compareValue="#">
+  			FINC=#finc#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="tdrc" compareValue="#">
+  			TDRC=#tdrc#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="catp" compareValue="#">
+  			CATP=#catp#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="ctac" compareValue="#">
+  			CTAC=#ctac#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="ticd" compareValue="#">
+  			TICD=#ticd#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="tsdr" compareValue="#">
+  			TSDR=#tsdr#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="crtp" compareValue="#">
+  			CRTP=#crtp#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="trcd" compareValue="#">
+  			TRCD=#trcd#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="tbnm" compareValue="#">
+  			TBNM=#tbnm#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="tbit" compareValue="#">
+  			TBIT=#tbit#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="tbid" compareValue="#">
+  			TBID=#tbid#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="tbnt" compareValue="#">
+  			TBNT=#tbnt#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="tstp" compareValue="#">
+  			TSTP=#tstp#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="tsct" compareValue="#">
+  			TSCT=#tsct#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="crpp" compareValue="#">
+  			CRPP=#crpp#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="cfin" compareValue="#">
+  			CFIN=#cfin#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="cfct" compareValue="#">
+  			CFCT=#cfct#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="cfic" compareValue="#">
+  			CFIC=#cfic#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="tcnm" compareValue="#">
+  			TCNM=#tcnm#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="tcit" compareValue="#">
+  			TCIT=#tcit#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="tcid" compareValue="#">
+  			TCID=#tcid#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="tcat" compareValue="#">
+  			TCAT=#tcat#
+  		</isNotEqual>
+  		<isNotEqual prepend="," property="tcac" compareValue="#">
+  			TCAC=#tcac#
+  		</isNotEqual>
+  	</dynamic>
+  	WHERE REPORTKEY=#reportkey# AND TSDT_SEQNO=$tsdt_seqno$ 
+  </statement>  
+  
+  <statement id="insertT07_cbh_rbif" parameterClass="com.ist.aml.pbcreport.dto.T07_cbh_rbif" resultClass="int"> 
+  INSERT INTO T07_CBH_RBIF(
+  REPORTKEY,RINM,RICD,CPDT,TSTN,VALIDATE_IND
+  ) VALUES(
+  #reportkey#,#rinm#,#ricd#,#cpdt:DATE#,$tstn$,#validate_ind#
+  ) 
+  </statement> 
+  
+  <statement id="insertT07_cbh_tsdt" parameterClass="com.ist.aml.pbcreport.dto.T07_cbh_tsdt" resultClass="int"> 
+  INSERT INTO T07_CBH_TSDT(
+  REPORTKEY,TSDT_SEQNO,OCNM,OTDT,OTCD,OTIC,FINN,FIRC,RLTP,FICT,FINC,CATP,CTAC,TBNM,TBIT,TBID,TBNT,TSTM,TICD,TSTP,TSCT,TSDR,TDRC,TRCD,CRPP,CRTP,CRAT,CFIN,CFCT,CFIC,TCNM,TCIT,TCID,TCAT,TCAC,VALIDATE_IND,organkey,curr_cd,party_class_cd
+  ) VALUES(
+  #reportkey#,$tsdt_seqno$,#ocnm#,#otdt:DATE#,#otcd#,#otic#,#finn#,#firc#,#rltp#,#fict#,#finc#,#catp#,#ctac#,#tbnm#,#tbit#,#tbid#,#tbnt#,#tstm:DATE#,#ticd#,#tstp#,#tsct#,#tsdr#,#tdrc#,#trcd#,#crpp#,#crtp#,$crat$,#cfin#,#cfct#,#cfic#,#tcnm#,#tcit#,#tcid#,#tcat#,#tcac#,#validate_ind#
+  ,#organkey#,#curr_cd#,#party_class_cd#
+  ) 
+  </statement> 
+  
+   <statement id="getT07_cbh_rbifDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.pbcreport.dto.T07_cbh_rbif"> 
+  SELECT * FROM T07_CBH_RBIF WHERE REPORTKEY=#value# 
+  </statement> 
+ 
+ 
+ 
+  
+ 
+ 
+</sqlMap> 
+

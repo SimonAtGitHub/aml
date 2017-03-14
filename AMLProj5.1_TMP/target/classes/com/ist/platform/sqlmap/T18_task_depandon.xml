@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T18_task_depandon"> 
+  <statement id="getT18_task_depandonListByTask_pf" parameterClass="com.ist.platform.dto.T18_task_depandon" resultClass="com.ist.platform.dto.T18_task_depandon"> 
+  select businesskey,tasktype,granularity,businesskey_d,tasktype_d,granularity_d from t18_task_depandon 
+  <dynamic prepend="where"> 
+   <isNotEmpty prepend="and" property="depkeys">
+	   tasktype||'-'||businesskey||'-'||granularity in 
+	   <iterate property="depkeys" conjunction="," open="(" close=")" > 
+	       #depkeys[]# 
+	   </iterate>
+   </isNotEmpty> 
+  </dynamic> 
+  </statement>
+
+  <statement id="getT18_task_depandonList" parameterClass="com.ist.platform.dto.T18_task_depandon" resultClass="com.ist.platform.dto.T18_task_depandon"> 
+  select businesskey,tasktype,granularity,businesskey_d,tasktype_d,granularity_d from t18_task_depandon 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="businesskey"> 
+    businesskey = #businesskey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement>
+ 
+  <statement id="getT18_task_depandonListCount" parameterClass="com.ist.platform.dto.T18_task_depandon" resultClass="int"> 
+  select count(*) from t18_task_depandon 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="businesskey"> 
+    businesskey = #businesskey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT18_task_depandon_pf" parameterClass="com.ist.platform.dto.T18_task_depandon" resultClass="int"> 
+  insert into T18_task_depandon(
+  businesskey,tasktype,granularity,businesskey_d,tasktype_d,granularity_d
+  ) values(
+  #businesskey#,#tasktype#,#granularity#,#businesskey_d#,#tasktype_d#,#granularity_d#
+  ) 
+  </statement> 
+  
+  <statement id="insertT18_task_type_depandon" parameterClass="com.ist.platform.dto.T18_task_depandon" resultClass="int"> 
+  insert into T18_tasktype_depandon(
+  tasktype,tasktype_d
+  ) values(
+  #tasktype#,#tasktype_d#
+  ) 
+  </statement>
+ 
+  <statement id="deleteT18_task_depandon_pf" parameterClass="com.ist.platform.dto.T18_task_depandon" resultClass="int">
+  delete from T18_task_depandon where businesskey=#businesskey# and tasktype=#tasktype# and granularity=#granularity# and businesskey_d=#businesskey_d# and tasktype_d=#tasktype_d# and granularity_d=#granularity_d#
+    
+  </statement>
+  
+  <statement id="deleteT18_task_type_depandon" parameterClass="com.ist.platform.dto.T18_task_depandon" resultClass="int">
+  delete from T18_tasktype_depandon where tasktype=#tasktype# 
+    
+  </statement>
+  
+  <statement id="deleteT18_task_type_depandonByType" parameterClass="com.ist.platform.dto.T18_task_depandon" resultClass="int">
+  delete from T18_tasktype_depandon where tasktype=#tasktype#
+    
+  </statement>
+ 	
+  <statement id="deleteT18_task_depandon_nd" parameterClass="com.ist.platform.dto.T18_task_depandon" resultClass="int">
+  delete from T18_task_depandon where businesskey=#businesskey# 
+  </statement> 
+  
+  <statement id="deleteT18_task_depandonByType" parameterClass="com.ist.platform.dto.T18_task_depandon" resultClass="int">
+  delete from T18_task_depandon where tasktype=#tasktype#
+  </statement> 
+ 
+</sqlMap> 
+

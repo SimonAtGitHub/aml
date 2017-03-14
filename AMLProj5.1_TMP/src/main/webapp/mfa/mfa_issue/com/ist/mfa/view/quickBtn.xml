@@ -1,0 +1,38 @@
+<root> 		
+		
+		<project label="保存" value="a10" />
+		<project label="另存为" value="a20" />	
+		<project label="分析结论" value="a30" />	
+		<project label="导出" value="a40" />
+		<project label="结项" value="a50" />	
+		<project label="刷新" value="a70" />				
+		
+		
+			
+		<project label="添加行内账户" value="c10" />		
+		<project label="添加行外账户" value="c20" />	
+		<project label="添加现金账户" value="c30" />	
+		<project label="添加未知账户" value="c40" />	
+		<project label="合并账户" value="c50" />	
+		<project label="取消合并账户" value="c60" />	
+		<project label="删除账户" value="c70" />													
+	
+		<project label="添加实际交易" value="d10" />	
+		<project label="添加虚拟交易" value="d20" />			
+
+		<project label="删除交易" value="d50" />	
+		<project label="根据条件删除交易" value="d60" />
+		<project label="交易统计" value="d70" />															
+	
+		<project label="查找账户" value="e10" />	
+		<project label="查找交易" value="e20" />			
+	
+	
+
+		<project label="项目属性" value="g10" />	
+		<project label="显示配置" value="g20" />
+							
+		<project label="帮助主题" value="h10" />	
+		<project label="关于ISTMFA" value="h20" />										
+</root>
+

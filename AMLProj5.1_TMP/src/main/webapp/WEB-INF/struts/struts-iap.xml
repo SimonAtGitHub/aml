@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 指标管理平台模块配置 -->
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+	<data-sources />
+	<form-beans>
+		<form-bean name="t09_indicatorActionForm" type="com.ist.iap.controller.T09_indicatorActionForm" />
+		<form-bean name="t09_page_in_parmActionForm" type="com.ist.iap.controller.T09_page_in_parmActionForm"/>
+	</form-beans>
+	<action-mappings>
+	 <action path="/indicator/indicator_list"
+      parameter="getT01_indicatorList" name="t09_indicatorActionForm"
+      type="com.ist.iap.controller.T09_indicatorAction"
+      validate="false" scope="request">
+      <forward name="success"
+        path="/indicator/t01_indicator_list.jsp" />
+    </action>
+    <!-- sql 编辑 -->
+	 <action path="/indicator/indicator_mulsql_edit"
+      parameter="mulsqlEditT01_indicator" name="t09_indicatorActionForm"
+      type="com.ist.iap.controller.T09_indicatorAction"
+      validate="false" scope="request">
+      <forward name="success"
+        path="/indicator/t01_indicator_mulsql_edit.jsp" />
+    </action>
+     <action path="/indicator/indicator_mulsql_edit_do"
+      parameter="mulsqlEditT01_indicatorDo" name="t09_indicatorActionForm"
+      type="com.ist.iap.controller.T09_indicatorAction"
+      validate="false" scope="request">
+      <forward name="success"
+        path="/indicator/indicator_colmap.do" />
+    </action>
+     <action path="/indicator/indicator_colmap"
+      parameter="colMapT01_indicator" name="t09_indicatorActionForm"
+      type="com.ist.iap.controller.T09_indicatorAction"
+      validate="false" scope="request">
+      <forward name="success"
+        path="/indicator/t01_indicator_colmap.jsp" />
+      <forward name="failure"
+        path="/indicator/indicator_mulsql_edit.do" />
+    </action>
+     <action path="/indicator/indicator_colmap_do"
+      parameter="colMapT01_indicatorDo" name="t09_indicatorActionForm"
+      type="com.ist.iap.controller.T09_indicatorAction"
+      validate="false" scope="request">
+      <forward name="success"
+        path="/indicator/indicator_list.do" />
+      <forward name="success1"
+        path="/indicator/t01_indicator_colmap_mid.jsp" />
+      <forward name="success1"
+        path="/indicator/t01_indicator_colmap_mid.jsp" />
+      <forward name="failure"
+        path="/indicator/indicator_colmap.do" />
+    </action>
+    <!-- end -->
+   	 <action path="/indicator/indicator_add_page"
+      parameter="addT01_indicator_page" name="t09_indicatorActionForm"
+      type="com.ist.iap.controller.T09_indicatorAction"
+      validate="false" scope="request">
+      <forward name="success"
+        path="/indicator/indicator_index.jsp" />
+    </action>
+	 <action path="/indicator/indicator_modify_page"
+      parameter="modifyT01_indicator_page" name="t09_indicatorActionForm"
+      type="com.ist.iap.controller.T09_indicatorAction"
+      validate="false" scope="request">
+      <forward name="success"
+        path="/indicator/indicator_index.jsp" />
+    </action>
+	 <action path="/indicator/indicator_add"
+      parameter="addT01_indicator" name="t09_indicatorActionForm"
+      type="com.ist.iap.controller.T09_indicatorAction"
+      validate="false" scope="request">
+      <forward name="success"
+        path="/indicator/t01_indicator_add.jsp" />
+    </action>
+    
+    <action path="/indicator/indicator_add_do"
+      parameter="addT01_indicatorDo" name="t09_indicatorActionForm"
+      type="com.ist.iap.controller.T09_indicatorAction"
+      validate="false" scope="request">
+      <forward name="success"
+        path="/indicator/indicator_modify.do" />
+      <forward name="failure"
+        path="/indicator/t01_indicator_add.jsp" />
+    </action>
+    <action path="/indicator/indicator_modify"
+      parameter="modifyT01_indicator" name="t09_indicatorActionForm"
+      type="com.ist.iap.controller.T09_indicatorAction"
+      validate="false" scope="request">
+      <forward name="success"
+        path="/indicator/t01_indicator_modify.jsp" />
+    </action>
+    <action path="/indicator/indicator_modify_do"
+      parameter="modifyT01_indicatorDo" name="t09_indicatorActionForm"
+      type="com.ist.iap.controller.T09_indicatorAction"
+      validate="false" scope="request">
+      <forward name="success"
+        path="/indicator/indicator_modify.do" />
+    </action>
+    <action path="/indicator/indicator_delete_do"
+      parameter="deleteT01_indicatorDo" name="t09_indicatorActionForm"
+      type="com.ist.iap.controller.T09_indicatorAction"
+      validate="false" scope="request">
+      <forward name="success"
+        path="/indicator/indicator_list.do" />
+    </action>
+    <action path="/indicator/indicator_disp"
+      parameter="getT01_indicatorDisp" name="t09_indicatorActionForm"
+      type="com.ist.iap.controller.T09_indicatorAction"
+      validate="false" scope="request">
+      <forward name="success"
+        path="/indicator/t01_indicator_disp.jsp" />
+    </action>
+
+    <action path="/indicator/indicator_depoly_do"
+      parameter="deployT01_indicatorDo" name="t09_indicatorActionForm"
+      type="com.ist.iap.controller.T09_indicatorAction"
+      validate="false" scope="request">
+      <forward name="success"
+        path="/indicator/indicator_list.do" />
+      <forward name="failure"
+        path="/indicator/indicator_list.do" />   
+    </action>
+
+    <action path="/indicator/indicator_depolylist"
+      parameter="getT01_indicatordepolyList" name="t09_indicatorActionForm"
+      type="com.ist.iap.controller.T09_indicatorAction"
+      validate="false" scope="request">
+      <forward name="success"
+        path="/indicator/t01_indicator_depolylist.jsp" />
+      <forward name="failure"
+        path="/indicator/t01_indicator_depolylist.jsp" />  
+    </action>    
+    
+     <action path="/indicator/indicator_depolylist_look"
+      parameter="getT01_indicatordepolyList" name="t09_indicatorActionForm"
+      type="com.ist.iap.controller.T09_indicatorAction"
+      validate="false" scope="request">
+      <forward name="success"
+        path="/indicator/t01_indicator_depolylist_look.jsp" />
+    </action>
+
+    <action path="/indicator/indicator_depolyDo"
+      parameter="depolyT01_indicatorDo" name="t09_indicatorActionForm"
+      type="com.ist.iap.controller.T09_indicatorAction"
+      validate="false" scope="request">
+      <forward name="success"
+        path="/indicator/indicator_depolylist.do" />
+      <forward name="failure"
+        path="/indicator/indicator_depolylist.do" />  
+    </action>
+     <action path="/indicator/t09_indicator_md_back"
+      parameter="setT09_indicator_md_backDo" name="t09_indicatorActionForm"
+      type="com.ist.iap.controller.T09_indicatorAction"
+      validate="false" scope="request">
+      <forward name="success"
+        path="/indicator/indicator_list.do" />
+      <forward name="failure"
+        path="/indicator/indicator_list.do" />  
+    </action>
+    <action path="/indicator/indicator_task_depolyDo"
+      parameter="getT01_indicator_taskDo" name="t09_indicatorActionForm"
+      type="com.ist.iap.controller.T09_indicatorAction"
+      validate="false" scope="request">
+      <forward name="success"
+        path="/indicator/indicator_task.jsp" />
+       <forward name="success3"
+        path="/indicator/indicator_depolyDo.do" />  
+      <forward name="failure"
+        path="/indicator/indicator_depolylist.do" />  
+    </action>
+    
+    <!-- 参数管理 start -->
+     <action path="/t09_page_in_parm/set_indic_param_value" parameter="setIndic_parm_value" name="t09_page_in_parmActionForm"	type="com.ist.iap.controller.T09_page_in_parmAction" validate="false"	scope="request">
+			<forward name="success"	path="/indicator/get_indic_param_list.jsp" />
+			<forward name="failure" path="/indicator/get_indic_param_list.jsp" />
+	 </action>
+	  <action path="/t09_page_in_parm/set_indic_param_value_do" parameter="setIndic_parm_valueDo" name="t09_page_in_parmActionForm"	type="com.ist.iap.controller.T09_page_in_parmAction" validate="false"	scope="request">
+			<forward name="success"	path="/t09_page_in_parm/set_indic_param_value.do" />
+			<forward name="failure" path="/t09_page_in_parm/set_indic_param_value.do" />
+	 </action>
+     <action path="/t09_page_in_parm/t09_page_in_parm_search" parameter="searchT09_page_in_parm" name="t09_page_in_parmActionForm" type="com.ist.iap.controller.T09_page_in_parmAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t09_page_in_parm/t09_page_in_parm_search.jsp"/> 
+        <forward name="failure" path="/t09_page_in_parm/t09_page_in_parm_list.do"/> 
+    </action> 
+    <action path="/t09_page_in_parm/t09_page_in_parm_list" parameter="getT09_page_in_parmList" name="t09_page_in_parmActionForm" type="com.ist.iap.controller.T09_page_in_parmAction" validate="false" scope="request"> 
+	    <forward name="success" path="/indicator/t09_page_in_parm_list.jsp"/> 
+    </action> 
+    <action path="/t09_page_in_parm/t09_page_in_parm_add" parameter="addT09_page_in_parm" name="t09_page_in_parmActionForm" type="com.ist.iap.controller.T09_page_in_parmAction" validate="false" scope="request"> 
+	    <forward name="success" path="/indicator/t09_page_in_parm_add.jsp"/> 
+	    <forward name="failure" path="/t09_page_in_parm/t09_page_in_parm_list.do"/> 
+    </action> 
+    <action path="/t09_page_in_parm/t09_page_in_parm_add_do" parameter="addT09_page_in_parmDo" name="t09_page_in_parmActionForm" type="com.ist.iap.controller.T09_page_in_parmAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t09_page_in_parm/t09_page_in_parm_list.do"/> 
+	    <forward name="failure" path="/t09_page_in_parm/t09_page_in_parm_add.do"/> 
+    </action> 
+    <action path="/t09_page_in_parm/t09_page_in_parm_modify" parameter="modifyT09_page_in_parm" name="t09_page_in_parmActionForm" type="com.ist.iap.controller.T09_page_in_parmAction" validate="false" scope="request"> 
+	    <forward name="success" path="/indicator/t09_page_in_parm_modify.jsp"/> 
+	    <forward name="failure" path="/t09_page_in_parm/t09_page_in_parm_list.do"/> 
+    </action> 
+    <action path="/t09_page_in_parm/t09_page_in_parm_modify_do" parameter="modifyT09_page_in_parmDo" name="t09_page_in_parmActionForm" type="com.ist.iap.controller.T09_page_in_parmAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t09_page_in_parm/t09_page_in_parm_list.do"/> 
+	    <forward name="failure" path="/t09_page_in_parm/t09_page_in_parm_modify.do"/> 
+    </action> 
+    <action path="/t09_page_in_parm/t09_page_in_parm_delete_do" parameter="deleteT09_page_in_parmDo" name="t09_page_in_parmActionForm" type="com.ist.iap.controller.T09_page_in_parmAction" validate="false" scope="request"> 
+	<forward name="success" path="/t09_page_in_parm/t09_page_in_parm_list.do"/> 
+        <forward name="failure" path="/t09_page_in_parm/t09_page_in_parm_list.do"/> 
+    </action> 
+    <action path="/t09_page_in_parm/t09_page_in_parm_disp" parameter="getT09_page_in_parmDisp" name="t09_page_in_parmActionForm" type="com.ist.iap.controller.T09_page_in_parmAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t09_page_in_parm/t09_page_in_parm_disp.jsp"/> 
+    </action>
+	</action-mappings>
+	<message-resources parameter="ApplicationResources_zh_CN" />
+</struts-config>

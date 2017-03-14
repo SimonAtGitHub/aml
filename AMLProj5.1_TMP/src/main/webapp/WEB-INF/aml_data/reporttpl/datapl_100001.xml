@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<report_des>用户信息列表</report_des>	
+	<page>
+	    <param type="nomark">p_modifier</param>
+	</page>
+	<table id="table1" classtype="awp_head">
+		<define name="table_width">8</define>
+		<define name="title_start">1</define>
+		<define name="title_end">1</define>
+	</table>
+	<table id="table2" classtype="awp_list">
+	    <define name="table_width">8</define>
+		<define name="head_start">2</define>
+		<define name="head_end">2</define>
+		<define name="body_start">3</define>
+		<define name="body_end">3</define>
+		<define name="total_start">4</define>
+		<define name="total_end">4</define>
+		<define name="list_maxrow">-1</define>
+		<data type="list" name="alert">
+	select username,realname, organkey, address,createdate creator,modifydate,modifier  from t00_user 
+			where 1>0  and modifier= '#p_modifier#'	  ORDER BY username
+
+		</data>
+	</table>
+	<table id="table3" classtype="awp_foot">
+	    <define name="table_width">8</define>
+		<define name="foot_start">5</define>
+		<define name="foot_end">5</define>
+		<data type="function" name="curr_realname"></data>
+		<data type="function" name="curr_date"></data>
+	</table>
+
+<chart groupnum="6" location="down">
+		<data type="chart" category="Line" x="USERNAME" xtitle="用户名" y="MODIFYDATE" ytitle="创建时间" width="300" height="250"></data>
+		<data type="chart" category="Column2D" series="MODIFYDATE" x="USERNAME" xtitle="用户名" y="MODIFYDATE" ytitle="创建时间" width="300" height="250"></data>
+		<data type="chart" category="Bar2D" series="MODIFYDATE" x="USERNAME" xtitle="用户名" y="MODIFYDATE" ytitle="创建时间" width="300" height="250"></data>
+		<data type="chart" category="Pie3D" series="MODIFYDATE" x="USERNAME" xtitle="用户名" y="MODIFYDATE" ytitle="创建时间" width="300" height="250"></data>
+	</chart>
+	</root>

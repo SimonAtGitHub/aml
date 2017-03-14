@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T31_def_temp"> 
+  <statement id="getT31_def_tempList" parameterClass="com.ist.aml.newrisk.dto.T31_def_temp" resultClass="com.ist.aml.newrisk.dto.T31_def_temp"> 
+  	SELECT TEMPLATEKEY, TEMPLATENAME, DES, TEMPTYPE, GRANULARITY, PARTY_CLASS_CD, FLAG, TAG, TEMPCATEGORY, CREATE_ORG, CREATE_DT, COVERFLAG 
+  	FROM T31_DEF_TEMP WHERE IS_BUILD != '1'
+		<dynamic>
+			<isNotEmpty prepend="AND" property="templatename">
+				TEMPLATENAME LIKE '%'||#templatename#||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				PARTY_CLASS_CD = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt_start">
+				<![CDATA[CREATE_DT >= #create_dt_start# ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt_end">
+				<![CDATA[CREATE_DT <= #create_dt_end# ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="temptype">
+				TEMPTYPE = #temptype#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="flag">
+				FLAG = #flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="granularity">
+				GRANULARITY = #granularity#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tempcategory">
+				TEMPCATEGORY = #tempcategory#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="coverflag">
+				COVERFLAG = #coverflag#
+			</isNotEmpty>
+			<!-- 
+			<isNotEmpty prepend="AND" property="organkeystr">
+				CREATE_ORG IN ($organkeystr$)
+			</isNotEmpty>
+			 -->
+		</dynamic>
+		order by CREATE_DT desc
+  </statement> 
+ 
+  <statement id="getT31_def_tempListCount" parameterClass="com.ist.aml.newrisk.dto.T31_def_temp" resultClass="int"> 
+  	SELECT COUNT(*) FROM T31_DEF_TEMP WHERE IS_BUILD != '1'
+		<dynamic>
+			<isNotEmpty prepend="AND" property="templatename">
+				TEMPLATENAME LIKE '%'||#templatename#||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				PARTY_CLASS_CD = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt_start">
+				<![CDATA[CREATE_DT >= #create_dt_start# ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt_end">
+				<![CDATA[CREATE_DT <= #create_dt_end# ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="temptype">
+				TEMPTYPE = #temptype#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="flag">
+				FLAG = #flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="granularity">
+				GRANULARITY = #granularity#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tempcategory">
+				TEMPCATEGORY = #tempcategory#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="coverflag">
+				COVERFLAG = #coverflag#
+			</isNotEmpty>
+			<!--
+			<isNotEmpty prepend="AND" property="organkeystr">
+				CREATE_ORG IN ($organkeystr$)
+			</isNotEmpty>
+			-->
+		</dynamic>
+  </statement> 
+ 
+  <statement id="insertT31_def_temp" parameterClass="com.ist.aml.newrisk.dto.T31_def_temp" resultClass="int"> 
+  INSERT INTO T31_DEF_TEMP (TEMPLATEKEY, TEMPLATENAME, DES, TEMPTYPE, GRANULARITY, PARTY_CLASS_CD, CALCULATESEQ, FLAG, TAG, 
+ 	MODIFY_USER, MODIFY_DT, CREATE_USER, CREATE_DT, CREATE_ORG, TEMPCATEGORY, IS_BUILD, COVERFLAG)
+  VALUES 
+  (#templatekey#, #templatename#, #des#, #temptype#, #granularity#, #party_class_cd#, #calculateseq:VARCHAR#, #flag#, #tag#, 
+     #modify_user#, #modify_dt:VARCHAR#, #create_user#, #create_dt#, #create_org#, #tempcategory#, #is_build:VARCHAR#, #coverflag#)
+
+  </statement> 
+ 
+  <statement id="modifyT31_def_temp" parameterClass="com.ist.aml.newrisk.dto.T31_def_temp" resultClass="int"> 
+  	update T31_def_temp set calculateseq=#calculateseq#,des=#des#,granularity=#granularity#,modify_dt=#modify_dt#,modify_user=#modify_user#,party_class_cd=#party_class_cd#,
+  		  tempcategory=#tempcategory#,templatename=#templatename#,coverflag=#coverflag#
+  	where TEMPLATEKEY=#templatekey# 
+  </statement> 
+ 
+  <statement id="modifyT31_def_temp_flag" parameterClass="com.ist.aml.newrisk.dto.T31_def_temp" resultClass="int"> 
+  update T31_def_temp set flag=#flag# where TEMPLATEKEY=#templatekey# 
+  </statement> 
+  
+  <statement id="deleteT31_def_temp" parameterClass="java.lang.String" resultClass="int">
+  	delete from T31_def_temp where TEMPLATEKEY=#value# 
+  </statement> 
+ 
+  <statement id="getT31_def_tempDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.newrisk.dto.T31_def_temp"> 
+  	select * from T31_def_temp where TEMPLATEKEY=#value# 
+  </statement> 
+  
+   <statement id="getT31_def_temp_granList" parameterClass="java.lang.String" resultClass="com.ist.aml.newrisk.dto.T31_def_temp"> 
+  	SELECT B.TEMPLATEKEY, B.SQLKEY, B.SQLGRANULARITY, B.RISK_TABLE, B.DATAGRANULARITY FROM T31_DEF_TEMP A, T31_DEF_TEMP_GRAN B
+ 	WHERE A.TEMPLATEKEY = B.TEMPLATEKEY
+ 	AND A.TEMPLATEKEY=#value# 
+   </statement>
+  
+   <statement id="insertT31_def_temp_gran" parameterClass="com.ist.aml.newrisk.dto.T31_def_temp" resultClass="int"> 
+  	INSERT INTO T31_DEF_TEMP_GRAN (TEMPLATEKEY,SQLKEY, SQLGRANULARITY, RISK_TABLE, DATAGRANULARITY)
+	VALUES (#templatekey#,#sqlkey#, #sqlgranularity#, #risk_table#, #datagranularity#)
+  </statement>
+  
+   <statement id="modifyT31_def_temp_gran" parameterClass="com.ist.aml.newrisk.dto.T31_def_temp" resultClass="int"> 
+  	UPDATE T31_DEF_TEMP_GRAN SET SQLGRANULARITY=#sqlgranularity#, RISK_TABLE=#risk_table#, DATAGRANULARITY=#datagranularity#
+	where SQLKEY=#sqlkey# 
+  </statement>
+  
+  <statement id="getT31_def_temp_granDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.newrisk.dto.T31_def_temp"> 
+  	select * from T31_DEF_TEMP_GRAN where SQLKEY=#value# 
+  </statement> 
+  
+   <statement id="deleteT31_def_temp_gran" parameterClass="java.lang.String" resultClass="int">
+  	delete from T31_DEF_TEMP_GRAN where SQLKEY=#value# 
+  </statement>
+  
+   <statement id="copyT31_def_temp_gran" parameterClass="com.ist.aml.newrisk.dto.T31_def_temp" resultClass="int"> 
+   	INSERT INTO T31_DEF_TEMP_GRAN
+	SELECT '$templatekey$' AS TEMPLATEKEY,'$templatekey$'||SQLKEY AS SQLKEY, SQLGRANULARITY, RISK_TABLE, DATAGRANULARITY
+	FROM T31_DEF_TEMP_GRAN WHERE TEMPLATEKEY = #templatekey_temp#
+  </statement>
+  
+  <statement id="getT31_def_temp_sqlList" parameterClass="java.lang.String" resultClass="com.ist.aml.newrisk.dto.T31_def_temp"> 
+  	select sqlkey ,calseq as calsql ,sql_str from T31_DEF_TEMP_SQL where SQLKEY=#value# 
+  </statement>
+  
+  <statement id="insertT31_def_temp_sql" parameterClass="com.ist.aml.newrisk.dto.T31_def_temp" resultClass="int"> 
+  	INSERT INTO T31_DEF_TEMP_SQL (TEMPLATEKEY,SQLKEY, CALSEQ, SQL_STR)
+	VALUES (#templatekey#,#sqlkey#, #calsql#, #sql_str#)
+  </statement>
+  
+  <statement id="delT31_def_temp_sql" parameterClass="java.lang.String" resultClass="int">
+  	delete from T31_def_temp_sql where SQLKEY=#value# 
+  </statement>
+  
+  <statement id="copyT31_def_temp_sql" parameterClass="com.ist.aml.newrisk.dto.T31_def_temp" resultClass="int"> 
+   	INSERT INTO T31_def_temp_sql(templatekey,sqlkey,calseq,sql_str)
+	SELECT #templatekey#,'$templatekey$'||SQLKEY AS SQLKEY, CALSEQ, SQL_STR FROM T31_def_temp_sql 
+	WHERE SQLKEY IN (SELECT SQLKEY FROM T31_DEF_TEMP_GRAN WHERE TEMPLATEKEY = #templatekey_temp#)
+  </statement>
+</sqlMap> 
+

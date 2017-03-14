@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T87_attention_area">
+	<!-- modify by zhangyang -->
+	<statement id="getT87_attention_areaList"
+		parameterClass="com.ist.platform.dto.T87_attention_area"
+		resultClass="com.ist.platform.dto.T87_attention_area">
+		SELECT
+		A.AREA_ID,A.AREA_DES,A.COUNTRY,A.AREA_TYPE_CD,B.COUNTRYCSNAME AS COUNTRY_DESC
+		FROM T87_ATTENTION_AREA A LEFT JOIN T87_PBC_COUNTRY B ON
+		B.COUNTRYEKEY = A.COUNTRY
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="country_search">
+				COUNTRY = #country_search#
+			</isNotEmpty>
+
+			<isNotEmpty prepend="AND" property="area_type_cd_search">
+				AREA_TYPE_CD LIKE #area_type_cd_search#
+			</isNotEmpty>
+
+			<isNotEmpty prepend="AND" property="area_id_search">
+				AREA_DES LIKE #area_id_search#
+			</isNotEmpty>
+			</dynamic>
+		<isNotEmpty property="orderby">
+			<isEqual property="orderby" compareValue="1">
+				ORDER BY AREA_DES
+			</isEqual>
+			<isEqual property="orderby" compareValue="2">
+				ORDER BY COUNTRY
+			</isEqual>
+			<isEqual property="orderby" compareValue="3">
+				ORDER BY AREA_TYPE_CD
+			</isEqual>
+         </isNotEmpty>
+		<isNotEmpty property="orderby">
+		<isNotEmpty property="order">
+             <isEqual property="order" compareValue="1"></isEqual>
+			<isEqual property="order" compareValue="2">DESC</isEqual>
+		</isNotEmpty>
+		</isNotEmpty>
+		
+	</statement>
+
+	<statement id="getT87_attention_areaListCount"
+		parameterClass="com.ist.platform.dto.T87_attention_area"
+		resultClass="int">
+		SELECT COUNT(*) FROM T87_ATTENTION_AREA A LEFT JOIN T87_PBC_COUNTRY
+		B ON B.COUNTRYEKEY = A.COUNTRY
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="country_search">
+				COUNTRY = #country_search#
+			</isNotEmpty>
+
+			<isNotEmpty prepend="and" property="area_type_cd_search">
+				AREA_TYPE_CD LIKE #area_type_cd_search#
+			</isNotEmpty>
+
+			<isNotEmpty prepend="and" property="area_id_search">
+				AREA_DES LIKE #area_id_search#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="insertT87_attention_area"
+		parameterClass="com.ist.platform.dto.T87_attention_area"
+		resultClass="int">
+		INSERT INTO T87_ATTENTION_AREA(
+		AREA_ID,AREA_DES,COUNTRY,AREA_TYPE_CD ) VALUES(
+		#area_id#,#area_des#,#country#,#area_type_cd# )
+	</statement>
+
+	<statement id="modifyT87_attention_area"
+		parameterClass="com.ist.platform.dto.T87_attention_area"
+		resultClass="int">
+		UPDATE T87_ATTENTION_AREA SET
+		AREA_ID=#area_id#,AREA_DES=#area_des#,COUNTRY=#country#,AREA_TYPE_CD=#area_type_cd#
+		WHERE AREA_ID=#area_id# AND COUNTRY=#country# 
+	</statement>
+
+	<statement id="deleteT87_attention_area"
+		parameterClass="com.ist.platform.dto.T87_attention_area" resultClass="int">
+		DELETE FROM T87_ATTENTION_AREA WHERE AREA_ID=#area_id# AND COUNTRY=#country#
+	</statement>
+
+	<statement id="getT87_attention_areaDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.platform.dto.T87_attention_area">
+		SELECT * FROM T87_ATTENTION_AREA WHERE AREA_ID=#value#
+	</statement>
+	<statement id="getT87_attention_areaDispByarea_des"
+		parameterClass="com.ist.platform.dto.T87_attention_area"
+		resultClass="com.ist.platform.dto.T87_attention_area">
+		SELECT * FROM T87_ATTENTION_AREA
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="country">
+				<![CDATA[COUNTRY = #country#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="area_id">
+				<![CDATA[AREA_ID = #area_id#]]>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<!-- end by zhangyang -->
+	<statement id="getT87_PBC_AREAallList"
+		parameterClass="com.ist.platform.dto.T87_PBC_AREA"
+		resultClass="com.ist.platform.dto.T87_PBC_AREA">
+		SELECT A.PBC_AREAKEY,A.PBC_UP_AREAKEY,A.PBC_AREANAME FROM
+		T87_PBC_AREA A WHERE A.PBC_AREALAYER!='0'
+	</statement>
+</sqlMap>
+

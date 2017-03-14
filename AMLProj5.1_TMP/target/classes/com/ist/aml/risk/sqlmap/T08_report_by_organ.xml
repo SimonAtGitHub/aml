@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T08_report_by_organ">
+
+	<statement id="getT08_risk_by_organList" parameterClass="com.ist.aml.risk.dto.T08_report_by_organ"
+		resultClass="com.ist.aml.risk.dto.T08_report_by_organ">
+		select b.organkey,c.organname,a.party_class_cd,
+		sum(case when
+		levelkey='1001' then cust_num else 0 end ) as veryhighRisk,
+		sum(case
+		when levelkey='1002' then cust_num else 0 end ) as highRisk,
+		sum(case
+		when levelkey='1022' then cust_num else 0 end ) as midRisk,
+		sum(case
+		when levelkey='1023' then cust_num else 0 end) as lowRisk
+		from
+		t09_pj_stat_analy a,t87_organ_map b,t00_organ c
+		where
+		a.oragnkey=b.suborgankey
+		and b.organkey=c.organkey
+		<dynamic prepend="">
+			<isNotEmpty prepend="AND" property="dt_start">
+				<![CDATA[a.statisticdate = #dt_start#]]>
+			</isNotEmpty>
+
+			<isNotEmpty prepend="AND" property="organname">
+				a.oragnkey in
+				($organname$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				a.PARTY_CLASS_CD =
+				#party_class_cd#
+			</isNotEmpty>
+			<isEmpty prepend="" property="organkey_s">
+				<isEqual prepend="AND" property="organlevel" compareValue="0">		
+				 <![CDATA[ c.organlevel<=1]]>
+				</isEqual>
+			</isEmpty>
+			<isNotEmpty prepend="AND" property="organkey_s">
+				b.organkey IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE
+				<iterate prepend="" property="selectList" open="(" close=")"
+					conjunction="OR">
+					ORGANKEY = #selectList[]#
+     </iterate>
+				)
+			</isNotEmpty>
+		</dynamic>
+		group by b.organkey,c.organname,a.party_class_cd,c.organlevel ORDER BY
+		c.organlevel
+	</statement>
+
+	<statement id="getT09_pj_new_open_List" parameterClass="com.ist.aml.risk.dto.T09_pj"
+		resultClass="com.ist.aml.risk.dto.T09_pj">
+		select
+		d.class_cd,
+		d.templatekey,
+		d.templatename,
+		d.levelkey,
+		sum(d.cust_count) as cust_count,
+		sum(d.cust_count_all) as
+		cust_count_all,
+		case
+		when sum(d.cust_count_all) > 0 then
+		round((sum(d.cust_count) / sum(d.cust_count_all)) * 100, 2)
+		else
+		0
+		end as
+		cust_ratio
+		from (select a.statisticdate,
+		a.class_cd,
+		a.templatekey,
+		a.templatename,
+		a.levelkey,
+		sum(a.cust_count) as cust_count,
+		max(
+		a.cust_count_all) as cust_count_all
+		from $tablename$ a
+		where 1 > 0
+		<dynamic>
+			<isNotEmpty prepend="AND" property="organstrs">
+				a.organkey
+				in($organstrs$)
+      </isNotEmpty>
+
+			<isNotEmpty prepend="AND" property="risklevel">
+				LEVELKEY = #risklevel#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="toSelect">
+				class_cd = #toSelect#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[a.statisticdate >= #start_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[a.statisticdate <= #end_dt:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+		group by
+		a.class_cd,a.templatekey,a.templatename,a.levelkey,a.statisticdate
+		)d
+		group by d.class_cd,
+		d.templatekey,
+		d.templatename,
+		d.levelkey
+
+
+	</statement>
+
+	<statement id="getT09_pj_new_open_List1" parameterClass="com.ist.aml.risk.dto.T09_pj"
+		resultClass="com.ist.aml.risk.dto.T09_pj">
+		select
+		d.class_cd,
+		d.templatekey,
+		d.templatename,
+		d.levelkey,
+		sum(d.cust_count) as cust_count,
+		sum(d.cust_count_all) as
+		cust_count_all,
+		case
+		when sum(d.cust_count_all) > 0 then
+		round((sum(d.cust_count) / sum(d.cust_count_all)) * 100, 2)
+		else
+		0
+		end as
+		cust_ratio
+		from (select a.statisticdate,
+		a.class_cd,
+		a.templatekey,
+		a.templatename,
+		a.levelkey,
+		sum(a.cust_count) as cust_count,
+		max(
+		a.cust_count_all) as cust_count_all
+		from $tablename$ a
+		where 1 > 0
+		<dynamic>
+			<isNotEmpty prepend="AND" property="organstrs">
+				a.organkey
+				in($organstrs$)
+      </isNotEmpty>
+
+			<isNotEmpty prepend="AND" property="risklevel">
+				LEVELKEY = #risklevel#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="toSelect">
+				class_cd = #toSelect#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[a.statisticdate >= #start_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[a.statisticdate <= #end_dt:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+		group by
+		a.class_cd,a.templatekey,a.templatename,a.levelkey,a.statisticdate
+		)d
+		group by d.class_cd,
+		d.templatekey,
+		d.templatename,
+		d.levelkey
+	</statement>
+
+	<statement id="getT09_pj_new_open_ListOrder" parameterClass="com.ist.aml.risk.dto.T09_pj"
+		resultClass="com.ist.aml.risk.dto.T09_pj">
+		select d.class_cd,d.levelkey,sum(d.cust_count) as
+		cust_count,sum(d.cust_count_all) as cust_count_all,
+		case when
+		sum(d.cust_count_all)>0 then
+		round((sum(d.cust_count)/sum(d.cust_count_all))*100,2) else 0 end as
+		cust_ratio
+		from (
+		select a.levelkey,a.class_cd,sum(a.cust_count) as
+		cust_count,max(a.cust_count_all) as cust_count_all
+		from $tablename$ a
+		where 1>0
+		<dynamic>
+			<isNotEmpty prepend="AND" property="organstrs">
+				a.organkey
+				in($organstrs$)
+      </isNotEmpty>
+
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[a.statisticdate >= #start_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[a.statisticdate <= #end_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="risklevel">
+				LEVELKEY = #risklevel#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="toSelect">
+				class_cd = #toSelect#
+			</isNotEmpty>
+			group by a.levelkey,a.class_cd,a.statisticdate
+			)d group by
+			d.class_cd,d.levelkey
+		</dynamic>
+	</statement>
+
+	<statement id="getT09_pj_inte_dist_List" parameterClass="com.ist.aml.risk.dto.T09_pj"
+		resultClass="com.ist.aml.risk.dto.T09_pj">
+		select d.class_cd,d.jfqjz,d.levelkey,d.cust_count,d.cust_count_all,
+		case when d.cust_count_all>0 then
+		round((d.cust_count/d.cust_count_all)*100,2) else 0 end as cust_ratio
+		from (
+		select a.jfqjz,a.class_cd,a.levelkey,sum(a.cust_count) as
+		cust_count,a.cust_count_all
+		from t09_pj_inte_dist_stat a
+		where 1>0
+		<dynamic>
+			<isNotEmpty prepend="AND" property="organstrs">
+				a.organkey in($organstrs$)
+      </isNotEmpty>
+
+			<isNotEmpty prepend="AND" property="risklevel">
+				LEVELKEY = #risklevel#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="toSelect">
+				class_cd = #toSelect#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="class_cd">
+				class_cd = #class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[a.statisticdate >= #start_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[a.statisticdate <= #end_dt:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+		group by a.jfqjz,a.class_cd,a.levelkey,a.cust_count_all
+		)d
+	</statement>
+
+	<statement id="getT09_pj_inte_dist_ListCount" parameterClass="com.ist.aml.risk.dto.T09_pj"
+		resultClass="int">
+		select count(0)
+		from (
+		select a.jfqjz,a.class_cd,a.levelkey,sum(a.cust_count) as
+		cust_count,a.cust_count_all
+		from t09_pj_inte_dist_stat a
+		where 1>0
+		<dynamic>
+			<isNotEmpty prepend="AND" property="organstrs">
+				a.organkey in($organstrs$)
+      </isNotEmpty>
+
+			<isNotEmpty prepend="AND" property="risklevel">
+				LEVELKEY = #risklevel#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="toSelect">
+				class_cd = #toSelect#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[a.statisticdate >= #start_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[a.statisticdate <= #end_dt:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+		group by a.jfqjz,a.class_cd,a.levelkey,a.cust_count_all
+		)d
+	</statement>
+
+	<statement id="getT09_pj_inte_dist_ListOrder" parameterClass="com.ist.aml.risk.dto.T09_pj"
+		resultClass="com.ist.aml.risk.dto.T09_pj">
+		select a.class_cd
+		from t09_pj_inte_dist_stat a
+		where 1>0
+		<dynamic>
+			<isNotEmpty prepend="AND" property="organstrs">
+				a.organkey in($organstrs$)
+      </isNotEmpty>
+			<isNotEmpty prepend="AND" property="start_dt">
+				<![CDATA[a.statisticdate >= #start_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="end_dt">
+				<![CDATA[a.statisticdate <= #end_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="risklevel">
+				LEVELKEY = #risklevel#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="toSelect">
+				class_cd = #toSelect#
+			</isNotEmpty>
+		</dynamic>
+		group by a.class_cd
+	</statement>
+
+
+
+</sqlMap>

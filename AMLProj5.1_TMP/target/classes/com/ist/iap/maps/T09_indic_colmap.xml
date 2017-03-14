@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T09_indic_colmap"> 
+  <statement id="getT09_indic_colmapList" parameterClass="java.lang.String" resultClass="com.ist.iap.dto.T09_indic_colmap"> 
+  select indickey,exeseq,scolkey,scolname,scolexpress,tcolkey,tcolename from t09_indic_colmap 
+  where indickey = #indickey# 
+  </statement> 
+ 
+  <statement id="insertT09_indic_colmap" parameterClass="com.ist.iap.dto.T09_indic_colmap" resultClass="int"> 
+  insert into T09_indic_colmap(
+  indickey,exeseq,scolkey,scolname,scolexpress,tcolkey,tcolename
+  ) values(
+  #indickey#,#exeseq#,#scolkey#,#scolname#,#scolexpress#,#tcolkey#,#tcolename#
+  ) 
+  </statement> 
+ 
+  <statement id="deleteT09_indic_colmap" parameterClass="java.lang.String" resultClass="int">
+  delete from T09_indic_colmap where indickey=#value# 
+  </statement> 
+</sqlMap> 
+

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_programa_power"> 
+  <statement id="getT12_programa_powerList" parameterClass="com.ist.cms.dto.T12_programa_power" resultClass="com.ist.cms.dto.T12_programa_power"> 
+  select programakey,isaudit,isreply,isshowhistory,isrelation,isdownload,isrepleyaudit,creator,createdate,modifier,modifydate from t12_programa_power 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="programakey"> 
+    programakey = #programakey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT12_programa_powerListCount" parameterClass="com.ist.cms.dto.T12_programa_power" resultClass="int"> 
+  select count(*) from t12_programa_power 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="programakey"> 
+    programakey = #programakey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_programa_power" parameterClass="com.ist.cms.dto.T12_programa_power" resultClass="int"> 
+  insert into T12_programa_power(
+  programakey,isaudit,isreply,isshowhistory,isrelation,isdownload,isrepleyaudit,creator,createdate,modifier,modifydate,secretlevel,isartcategory,artcategorytype
+  ) values(
+  #programakey#,#isaudit#,#isreply#,#isshowhistory#,#isrelation#,#isdownload#,#isrepleyaudit#,#creator#,#createdate#,#modifier#,#modifydate#,#secretlevel#,#isartcategory#,#artcategorytype#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_programa_power" parameterClass="com.ist.cms.dto.T12_programa_power" resultClass="int"> 
+  update T12_programa_power set 
+  isaudit=#isaudit#,isreply=#isreply#,isshowhistory=#isshowhistory#,isrelation=#isrelation#,isdownload=#isdownload#,isrepleyaudit=#isrepleyaudit#,modifier=#modifier#,modifydate=#modifydate#,secretlevel=#secretlevel#,isartcategory=#isartcategory#,artcategorytype=#artcategorytype# where programakey=#programakey# 
+  </statement> 
+ 
+  <statement id="deleteT12_programa_power" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_programa_power where programakey=#value# 
+  </statement> 
+ 
+  <statement id="getT12_programa_powerDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_programa_power"> 
+  select * from T12_programa_power where programakey=#value# 
+  </statement> 
+ 
+</sqlMap> 
+

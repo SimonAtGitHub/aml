@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+
+<sqlMap namespace="T12_pp_programa"> 
+
+  <!-- 查询表T12_pp_programa的列表记录 -->
+  
+  <statement id="getT12_pp_programaList" parameterClass="com.ist.cms.dto.T12_pp_programa" resultClass="com.ist.cms.dto.T12_pp_programa"> 
+      select des,iscontent,issearch,isstructure,programakey from T12_pp_programa 
+       where 1 > 0 
+       <dynamic > 
+
+        <isNotEmpty prepend="and" property="des"> 
+            des = like '%'||#des#||'%'
+        </isNotEmpty>
+    
+        <isNotEmpty prepend="and" property="iscontent"> 
+            iscontent in ($iscontent$)
+        </isNotEmpty>
+    
+        <isNotEmpty prepend="and" property="issearch"> 
+            issearch in ($issearch$)
+        </isNotEmpty>
+    
+        <isNotEmpty prepend="and" property="isstructure"> 
+            isstructure in ($isstructure$)
+        </isNotEmpty>
+    
+        <isNotEmpty prepend="and" property="programakey"> 
+            programakey = #programakey#
+        </isNotEmpty>
+    
+       </dynamic>     
+  </statement> 
+ 
+  <!-- 查询表T12_pp_programa的统计数 -->
+  
+  <statement id="getT12_pp_programaListCount" parameterClass="com.ist.cms.dto.T12_pp_programa" resultClass="int"> 
+      select count(*) from T12_pp_programa 
+       where 1 > 0 
+       <dynamic > 
+
+        <isNotEmpty prepend="and" property="des"> 
+            des = like '%'||#des#||'%'
+        </isNotEmpty>
+    
+        <isNotEmpty prepend="and" property="iscontent"> 
+            iscontent in ($iscontent$)
+        </isNotEmpty>
+    
+        <isNotEmpty prepend="and" property="issearch"> 
+            issearch in ($issearch$)
+        </isNotEmpty>
+    
+        <isNotEmpty prepend="and" property="isstructure"> 
+            isstructure in ($isstructure$)
+        </isNotEmpty>
+    
+        <isNotEmpty prepend="and" property="programakey"> 
+            programakey = #programakey#
+        </isNotEmpty>
+    
+       </dynamic>     
+  </statement> 
+  
+  <!-- 表T12_pp_programa添加一条记录 -->
+  
+  <statement id="insertT12_pp_programa" parameterClass="com.ist.cms.dto.T12_pp_programa" resultClass="int"> 
+      insert into T12_pp_programa(
+          des,iscontent,issearch,isstructure,programakey
+      ) values(
+        #des#,#iscontent#,#issearch#,#isstructure#,#programakey#
+      ) 
+  </statement> 
+  
+  <!-- 表T12_pp_programa根据主键修改一条记录 -->
+  
+  <statement id="modifyT12_pp_programa" parameterClass="com.ist.cms.dto.T12_pp_programa" resultClass="int"> 
+      update T12_pp_programa set 
+        des=#des#,iscontent=#iscontent#,issearch=#issearch#,isstructure=#isstructure#,programakey=#programakey#
+      where 
+        programakey = #programakey# 
+
+  </statement> 
+  
+  <!-- 表T12_pp_programa根据主键删除一条记录 -->
+    <statement id="deleteT12_pp_programa" parameterClass="java.lang.String" resultClass="int">
+      delete from T12_pp_programa 
+      where 
+        programakey = #value#
+  </statement> 
+   
+  <!-- 表T12_pp_programa根据主键取得一条记录 -->
+  
+   <statement id="getT12_pp_programaDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_pp_programa">
+      select * from T12_pp_programa 
+      where 
+        programakey = #value#
+  </statement> 
+  
+  <!-- 表T12_ap_programa根据主键取得一条记录 -->
+  <statement id="getT12_ap_programaDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_pp_programa">
+      select * from T12_ap_programa 
+      where 
+        applytype = #value#
+  </statement> 
+  
+ 
+</sqlMap> 
+

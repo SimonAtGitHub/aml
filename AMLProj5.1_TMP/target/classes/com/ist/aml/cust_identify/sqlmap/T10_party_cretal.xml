@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T10_party_cretal">
+	<statement id="getT10_party_cretallist" parameterClass="com.ist.aml.cust_identify.dto.T10_party_cretal"
+		resultClass="com.ist.aml.cust_identify.dto.T10_party_cretal">
+		SELECT STATISTIC_DT,ORGANKEY,QUERYCOUNT_N,ACCTCOUNT_N,PARTYCOUNT_N,KYCOUNT_N,QUERYCOUNT_R,PARTYCOUNT_R,ACCTCOUNT_R,KYCOUNT_R,STATUS_CD,CREATE_ORG FROM T10_PARTY_CRETAL
+	  <dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="organkey">
+			ORGANKEY IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY=#organkey#)
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="statistic_dt_start_disp">
+	     <![CDATA[statistic_dt >= #statistic_dt_start#]]> 
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="statistic_dt_end_disp">
+	     <![CDATA[statistic_dt <= #statistic_dt_end#]]>
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organStr">
+				ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="status_dist">
+				STATUS_CD IN ($status_dist$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="status_cd">
+				STATUS_CD = #status_cd#
+		</isNotEmpty>
+	  </dynamic>
+	</statement> 
+	<statement id="getT10_party_cretalcount" parameterClass="com.ist.aml.cust_identify.dto.T10_party_cretal"
+		resultClass="int">
+		SELECT count(*) FROM T10_PARTY_CRETAL
+	  <dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="organkey">
+			ORGANKEY IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY=#organkey#)
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="statistic_dt_start_disp">
+	     <![CDATA[statistic_dt >= #statistic_dt_start#]]> 
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="statistic_dt_end_disp">
+	     <![CDATA[statistic_dt <= #statistic_dt_end#]]>
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organStr">
+				ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="status_dist">
+				STATUS_CD IN ($status_dist$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="status_cd">
+				STATUS_CD = #status_cd#
+		</isNotEmpty>
+	  </dynamic>
+	</statement>
+	<statement id="add10_party_cretal" parameterClass="com.ist.aml.cust_identify.dto.T10_party_cretal"
+		resultClass="int">
+		INSERT INTO T10_PARTY_CRETAL
+		 (ORGANKEY,STATISTIC_DT,QUERYCOUNT_N,ACCTCOUNT_N,PARTYCOUNT_N,KYCOUNT_N,QUERYCOUNT_R,PARTYCOUNT_R,ACCTCOUNT_R,KYCOUNT_R,CREATE_USER,CREATE_ORG,CREATE_DT,STATUS_CD)
+		VALUES
+		 (#organkey#,#statistic_dt#,#querycount_n#,#acctcount_n#,#partycount_n#,#kycount_n#,#querycount_r#,#partycount_r#,#acctcount_r#,#kycount_r#,#create_user#,#create_org#,#create_dt#,#status_cd#)
+	</statement>
+	<statement id="modifyT10_party_cretal" parameterClass="com.ist.aml.cust_identify.dto.T10_party_cretal"
+		resultClass="int">
+		UPDATE T10_PARTY_CRETAL SET QUERYCOUNT_N=#querycount_n#,ACCTCOUNT_N=#acctcount_n#,PARTYCOUNT_N=#partycount_n#,KYCOUNT_N=#kycount_n#,QUERYCOUNT_R=#querycount_r#,ACCTCOUNT_R=#acctcount_r#,PARTYCOUNT_R=#partycount_r#,KYCOUNT_R=#kycount_r#,STATUS_CD=#status_cd#
+		  WHERE STATISTIC_DT = #statistic_dt# AND ORGANKEY = #organkey#
+	</statement>
+	<statement id="sub_retT10_party_cretal" parameterClass="com.ist.aml.cust_identify.dto.T10_party_cretal"
+		resultClass="int">
+		UPDATE T10_PARTY_CRETAL SET STATUS_CD=#status_cd#
+		  WHERE STATISTIC_DT = #statistic_dt# AND ORGANKEY = #organkey#
+	</statement>
+	<statement id="deleteT10_party_cretal" parameterClass="com.ist.aml.cust_identify.dto.T10_party_cretal"
+		resultClass="int">
+		DELETE FROM T10_PARTY_CRETAL WHERE STATISTIC_DT = #statistic_dt# AND ORGANKEY = #organkey#
+	</statement>
+	<statement id="getT10_party_cretal" parameterClass="com.ist.aml.cust_identify.dto.T10_party_cretal"
+		resultClass="com.ist.aml.cust_identify.dto.T10_party_cretal">
+		SELECT * FROM T10_PARTY_CRETAL WHERE STATISTIC_DT = #statistic_dt# AND ORGANKEY = #organkey#
+	</statement>
+	
+	<statement id="getT10_party_cretalstatistics" parameterClass="com.ist.aml.cust_identify.dto.T10_party_cretal"
+		resultClass="com.ist.aml.cust_identify.dto.T10_party_cretal">
+		SELECT SUM(QUERYCOUNT_N) as querycount_n,SUM(PARTYCOUNT_N) as partycount_n,SUM(ACCTCOUNT_N) as acctcount_n,SUM(KYCOUNT_N) as kycount_n,SUM(QUERYCOUNT_R) as querycount_r,SUM(PARTYCOUNT_R) as partycount_r,SUM(ACCTCOUNT_R) as acctcount_r,SUM(KYCOUNT_R) as kycount_r FROM T10_PARTY_CRETAL
+	  <dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="organkey">
+			ORGANKEY IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY=#organkey#)
+	    </isNotEmpty>
+	     <isNotEmpty prepend="AND" property="statistic_dt_start_disp">
+	     <![CDATA[statistic_dt >= #statistic_dt_start#]]> 
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="statistic_dt_end_disp">
+	     <![CDATA[statistic_dt <= #statistic_dt_end#]]>
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organStr">
+				ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="status_dist">
+				STATUS_CD IN ($status_dist$)
+		</isNotEmpty>
+	  </dynamic>
+	</statement>
+	
+	<statement id="getT10_party_cretal_statisticslist" parameterClass="com.ist.aml.cust_identify.dto.T10_party_cretal"
+		resultClass="com.ist.aml.cust_identify.dto.T10_party_cretal">
+		SELECT * FROM T10_PARTY_CRETAL
+	  <dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="organkey">
+			ORGANKEY IN (SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY=#organkey#)
+	    </isNotEmpty>
+	    
+	    <isNotEmpty prepend="AND" property="organStr">
+				ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="status_dist">
+				STATUS_CD IN ($status_dist$)
+		</isNotEmpty>
+	  </dynamic>
+	</statement>
+</sqlMap>

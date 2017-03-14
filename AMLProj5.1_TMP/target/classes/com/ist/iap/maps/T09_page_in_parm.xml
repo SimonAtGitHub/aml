@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T09_page_in_parm"> 
+  <statement id="getT09_page_in_parmList" parameterClass="com.ist.iap.dto.T09_page_in_parm" resultClass="com.ist.iap.dto.T09_page_in_parm"> 
+  select parmkey,indickey,sysinparmkey,dispname,sysinparmcd,parmtype,parmintype,targetcde,displen,isness,dispseq,des,defaultval,indatatype,maxlen,minlen,warning,keyvisible,systemflag from t09_page_in_parm 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="parmkey"> 
+    parmkey = #parmkey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="indickey"> 
+    indickey = #indickey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT09_page_in_parmListCount" parameterClass="com.ist.iap.dto.T09_page_in_parm" resultClass="int"> 
+  select count(*) from t09_page_in_parm 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="parmkey"> 
+    parmkey = #parmkey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="indickey"> 
+    indickey = #indickey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT09_page_in_parm" parameterClass="com.ist.iap.dto.T09_page_in_parm" resultClass="int"> 
+  insert into T09_page_in_parm(
+  parmkey,indickey,sysinparmkey,dispname,sysinparmcd,parmtype,parmintype,targetcde,displen,isness,dispseq,des,defaultval,indatatype,maxlen,minlen,warning,keyvisible,systemflag
+  ) values(
+  #parmkey#,#indickey#,#sysinparmkey#,#dispname#,#sysinparmcd#,#parmtype#,#parmintype#,#targetcde#,#displen#,#isness#,#dispseq#,#des#,#defaultval#,#indatatype#,#maxlen#,#minlen#,#warning#,#keyvisible#,#systemflag#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT09_page_in_parm" parameterClass="com.ist.iap.dto.T09_page_in_parm" resultClass="int"> 
+  update T09_page_in_parm set 
+  parmkey=#parmkey#,indickey=#indickey#,sysinparmkey=#sysinparmkey#,dispname=#dispname#,sysinparmcd=#sysinparmcd#,parmtype=#parmtype#,parmintype=#parmintype#,targetcde=#targetcde#,displen=#displen#,isness=#isness#,dispseq=#dispseq#,des=#des#,defaultval=#defaultval#,indatatype=#indatatype#,maxlen=#maxlen#,minlen=#minlen#,warning=#warning#,keyvisible=#keyvisible#,systemflag=#systemflag#
+  where parmkey=#parmkey# 
+  </statement> 
+ 
+  <statement id="deleteT09_page_in_parm" parameterClass="java.util.HashMap" resultClass="int">
+  delete from T09_page_in_parm where parmkey=#parmkey# and indickey=#indickey#
+  </statement> 
+  
+  <statement id="deleteT09_page_in_parm_inddickey" parameterClass="java.lang.String" resultClass="int">
+  delete from T09_page_in_parm where indickey=#indickey#
+  </statement> 
+ 
+  <statement id="getT09_page_in_parmDisp" parameterClass="java.lang.String" resultClass="com.ist.iap.dto.T09_page_in_parm"> 
+  select * from T09_page_in_parm where parmkey=#value# 
+  </statement> 
+ 
+  <statement id="getT09_page_in_parmMaxDispSeq" parameterClass="java.lang.String" resultClass="java.lang.String"> 
+	  select max(dispseq) as dispseq  from t09_page_in_parm  where indickey=#value# 
+  </statement> 
+  
+  <statement id="getT02_sys_in_valListByKey" parameterClass="java.lang.Integer" resultClass="com.ist.avp.template.dto.T02_sys_in_val"> 
+  select * from t05_sys_in_val where sysinparmkey=#sysinparmkey#
+  </statement> 
+  
+  <statement id="getT09_page_in_parmList2" parameterClass="java.lang.String" resultClass="com.ist.avp.common.Avp_in_parm"> 
+  select parmkey,dispname,sysinparmcd,parmtype,sysinparmkey,parmintype,targetcde,displen,isness,dispseq,des,displen,defaultval,indatatype,maxlen,minlen,warning,systemflag,keyvisible from t09_page_in_parm 
+  where  indickey = #value# 
+  order by dispseq
+  </statement> 
+</sqlMap> 
+

@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ <!-- add by cuihy -->
+<sqlMap namespace="T07_case_application"> 
+ 
+  
+  
+  <!-- make for lp -->
+  <statement id="getT07_transacionList_msbs" parameterClass="com.ist.aml.report.dto.T07_case_application" resultClass="com.ist.aml.inves.dto.T47_transaction_ms"> 
+  SELECT C.CASE_DATE,T.TRANSACTIONKEY,T.TX_DT,A.STCR,C.APP_ORG_ID,
+   T.PARTY_ID,T.PARTY_CHN_NAME,
+   T.ACCT_NUM,T.CURRENCY_CD,T.AMT,T.RECEIVE_PAY_CD,T.USE_DES,T.OPP_NAME,T.OPP_ACCT_NUM,
+   T.TX_NO,C.APP_STATE_CD,C.CASE_KIND,
+   C.DATE_STATUS_CD,A.STATUS_CD ,T.OPP_ORGANNAME,T.OPP_CARD_NO,
+   T.OVERAREA_IND,T.OPP_ACCT_TYPE_CD,T.CASH_TRANS_FLAG,C.APP_DT,F.STAFFKEY
+ FROM 
+ <isNotEmpty prepend="" property="casesearchtime"> 
+  	<isEqual property="casesearchtime" compareValue ="0">
+  		T07_CASE_APPLICATION C,T47_TRANSACTION_UC T LEFT JOIN T47_STAFF F ON F.PARTY_ID = T.PARTY_ID,T07_CASE_TRANSACTION_KY A
+  	</isEqual>
+  	<isEqual property="casesearchtime" compareValue ="1">
+  		T07_CASE_APPLICATION_UH C,v47_TRANSACTION T LEFT JOIN T47_STAFF F ON F.PARTY_ID = T.PARTY_ID,T07_CASE_TRANSACTION_KY_UH A
+  	</isEqual>
+  </isNotEmpty>
+  <isEmpty prepend="" property="casesearchtime"> 
+  	V07_CASE_APPLICATION C,T47_TRANSACTION T LEFT JOIN T47_STAFF F ON F.PARTY_ID = T.PARTY_ID,
+  	V07_CASE_TRANSACTION A
+  </isEmpty>  
+ WHERE C.APPLICATION_NUM=A.APPLICATION_NUM AND A.TRANSACTIONKEY=T.TRANSACTIONKEY 
+  AND C.CAST_TYPE='2' 
+ 
+    <isNotEmpty prepend="AND" property="organkey"> 
+    		C.APP_ORG_ID in $organkey$  
+    </isNotEmpty>
+
+    <isNotEmpty prepend="AND" property="app_org_id"> 
+    		C.APP_ORG_ID= #app_org_id#
+   </isNotEmpty>
+   		
+   <isNotEmpty prepend="AND" property="party_id"> 
+    T.PARTY_ID= #party_id#
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="acct_num"> 
+    T.ACCT_NUM= #acct_num#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="stcrkey"> 
+    A.STCR= #stcrkey#
+    </isNotEmpty>
+<!--    <isNotEmpty prepend="AND" property="app_org_id"> -->
+<!--    C.APP_ORG_ID= #app_org_id#-->
+<!--    </isNotEmpty>-->
+<!--    <isNotEmpty prepend="AND" property="organkey"> -->
+<!--    C.APP_ORG_ID in $organkey$  -->
+<!--    </isNotEmpty>-->
+    <isNotEmpty prepend="AND" property="party_chn_name"> 
+    T.PARTY_CHN_NAME LIKE '%' || #party_chn_name# || '%'
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="case_kind"> 
+    C.CASE_KIND= #case_kind#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="curr_cd"> 
+    T.CURR_CD= #curr_cd#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="app_dt_start"> 
+    <![CDATA[t.tx_dt >= #app_dt_start#]]> 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="app_dt_end"> 
+    <![CDATA[t.tx_dt <= #app_dt_end#]]>  
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="staff">
+       <isEqual property="staff" compareValue="1">
+           F.STAFFKEY IS NOT NULL
+       </isEqual>
+    </isNotEmpty>
+    <isNotEmpty  property="orderby">
+      <isEqual property="orderby" compareValue ="1">
+          ORDER BY C.CASE_DATE
+      </isEqual>
+      <isEqual property="orderby" compareValue ="2">
+          ORDER BY T.PARTY_ID
+      </isEqual>
+      <isEqual property="orderby" compareValue ="3">
+          ORDER BY T.PARTY_CHN_NAME
+      </isEqual>
+      <isEqual property="orderby" compareValue ="4">
+          ORDER BY C.APP_ORG_ID
+      </isEqual>  
+      <isNotEmpty  property="order">
+        <isEqual property="order" compareValue ="-1">
+        </isEqual>
+        <isEqual property="order" compareValue ="1">
+        </isEqual>
+        <isEqual property="order" compareValue ="2">
+             DESC
+        </isEqual>
+      </isNotEmpty>
+    </isNotEmpty>
+ 
+  </statement>
+  <!-- make for lp -->
+  <statement id="getT07_transacionListCount_msbs" parameterClass="com.ist.aml.report.dto.T07_case_application" resultClass="int"> 
+  SELECT COUNT(T.TRANSACTIONKEY)FROM 
+ <isNotEmpty prepend="" property="casesearchtime"> 
+  	<isEqual property="casesearchtime" compareValue ="0">
+  		T07_CASE_APPLICATION C,T47_TRANSACTION_UC T LEFT JOIN T47_STAFF F ON F.PARTY_ID = T.PARTY_ID,T07_CASE_TRANSACTION_KY A
+  	</isEqual>
+  	<isEqual property="casesearchtime" compareValue ="1">
+  		T07_CASE_APPLICATION_UH C,v47_TRANSACTION T LEFT JOIN T47_STAFF F ON F.PARTY_ID = T.PARTY_ID,T07_CASE_TRANSACTION_KY_UH A
+  	</isEqual>
+  </isNotEmpty>
+  <isEmpty prepend="" property="casesearchtime"> 
+  	V07_CASE_APPLICATION C,T47_TRANSACTION T LEFT JOIN T47_STAFF F ON F.PARTY_ID = T.PARTY_ID,
+  	V07_CASE_TRANSACTION A
+  </isEmpty>  
+ WHERE C.APPLICATION_NUM=A.APPLICATION_NUM AND A.TRANSACTIONKEY=T.TRANSACTIONKEY 
+  AND C.CAST_TYPE='2' 
+
+    <isNotEmpty prepend="AND" property="organkey"> 
+    		C.APP_ORG_ID in $organkey$  
+    </isNotEmpty>
+
+    <isNotEmpty prepend="AND" property="app_org_id"> 
+    			C.APP_ORG_ID= #app_org_id#
+    </isNotEmpty>
+  
+   <isNotEmpty prepend="AND" property="party_id"> 
+    T.PARTY_ID= #party_id#
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="acct_num"> 
+    T.ACCT_NUM= #acct_num#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="stcrkey"> 
+    A.STCR= #stcrkey#
+    </isNotEmpty>
+<!--    <isNotEmpty prepend="AND" property="app_org_id"> -->
+<!--    C.APP_ORG_ID= #app_org_id#-->
+<!--    </isNotEmpty>-->
+<!--    <isNotEmpty prepend="AND" property="organkey"> -->
+<!--    C.APP_ORG_ID in $organkey$  -->
+<!--    </isNotEmpty>-->
+    <isNotEmpty prepend="AND" property="party_chn_name"> 
+    T.PARTY_CHN_NAME LIKE '%' || #party_chn_name# || '%'
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="case_kind"> 
+    C.CASE_KIND= #case_kind#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="curr_cd"> 
+    T.CURR_CD= #curr_cd#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="app_dt_start"> 
+    <![CDATA[t.tx_dt >= #app_dt_start#]]> 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="app_dt_end"> 
+    <![CDATA[t.tx_dt <= #app_dt_end#]]>  
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="staff">
+       <isEqual property="staff" compareValue="1">
+           F.STAFFKEY IS NOT NULL
+       </isEqual>
+    </isNotEmpty>
+
+  </statement>
+  
+  <statement id="getT07_transacionList_msbh" parameterClass="com.ist.aml.report.dto.T07_case_application" resultClass="com.ist.aml.inves.dto.T47_transaction_ms"> 
+  SELECT C.CASE_DATE,T.TRANSACTIONKEY,T.TX_DT,A.STCR,C.APP_ORG_ID,
+   T.PARTY_ID,T.PARTY_CHN_NAME,
+   T.ACCT_NUM,T.CURRENCY_CD,T.AMT,T.RECEIVE_PAY_CD,T.USE_DES,T.OPP_NAME,T.OPP_ACCT_NUM,
+   T.TX_NO,C.APP_STATE_CD,C.CASE_KIND,
+   C.DATE_STATUS_CD,A.STATUS_CD ,T.OPP_ORGANNAME,T.OPP_CARD_NO,
+   T.OVERAREA_IND,T.OPP_ACCT_TYPE_CD,T.CASH_TRANS_FLAG  , F.STAFFKEY
+ FROM
+ <!-- modify by wwy --> 
+  <isNotEmpty prepend="" property="casesearchtime"> 
+  	<isEqual property="casesearchtime" compareValue ="0">
+  		T07_CASE_APPLICATION C,T47_TRANSACTION_UC T LEFT JOIN T47_STAFF F ON F.PARTY_ID = T.PARTY_ID,T07_CASE_TRANSACTION_DE A 
+  	</isEqual>
+  	<isEqual property="casesearchtime" compareValue ="1">
+  		T07_CASE_APPLICATION_UH C,V47_TRANSACTION T LEFT JOIN T47_STAFF F ON F.PARTY_ID = T.PARTY_ID,T07_CASE_TRANSACTION_DE_UH A 
+  	</isEqual>
+  </isNotEmpty>
+  <isEmpty prepend="" property="casesearchtime"> 
+  	T07_CASE_APPLICATION C,T47_TRANSACTION_UC T LEFT JOIN T47_STAFF F ON F.PARTY_ID = T.PARTY_ID,T07_CASE_TRANSACTION_DE A
+  </isEmpty>
+ WHERE C.APPLICATION_NUM=A.APPLICATION_NUM AND A.TRANSACTIONKEY=T.TRANSACTIONKEY  AND C.CAST_TYPE='1' 
+     
+   <isNotEmpty prepend="AND" property="organkey"> 
+    	C.APP_ORG_ID in $organkey$  
+   </isNotEmpty>
+   <isNotEmpty prepend="AND" property="app_org_id"> 
+  		C.APP_ORG_ID= #app_org_id#
+	</isNotEmpty>
+  
+   <isNotEmpty prepend="AND" property="party_id"> 
+    T.PARTY_ID= #party_id#
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="acct_num"> 
+    T.ACCT_NUM= #acct_num#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="stcrkey"> 
+    A.STCR= #stcrkey#
+    </isNotEmpty>  
+    <isNotEmpty prepend="AND" property="party_chn_name"> 
+    T.PARTY_CHN_NAME LIKE '%' || #party_chn_name# || '%'
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="case_kind"> 
+    C.CASE_KIND= #case_kind#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="curr_cd"> 
+    T.CURR_CD= #curr_cd#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="app_dt_start"> 
+    <![CDATA[T.TX_DT >= #app_dt_start#]]> 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="app_dt_end"> 
+    <![CDATA[T.TX_DT <= #app_dt_end#]]>  
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="is_staff">
+       <isEqual property="is_staff" compareValue="1">
+           F.STAFFKEY IS NOT NULL
+       </isEqual>
+    </isNotEmpty>
+    <isNotEmpty  property="orderby">
+      <isEqual property="orderby" compareValue ="1">
+          ORDER BY C.CASE_DATE
+      </isEqual>
+      <isEqual property="orderby" compareValue ="2">
+          ORDER BY T.PARTY_ID
+      </isEqual>
+      <isEqual property="orderby" compareValue ="3">
+          ORDER BY T.PARTY_CHN_NAME
+      </isEqual>
+      <isEqual property="orderby" compareValue ="4">
+          ORDER BY C.APP_ORG_ID
+      </isEqual>  
+      <isNotEmpty  property="order">
+        <isEqual property="order" compareValue ="-1">
+        </isEqual>
+        <isEqual property="order" compareValue ="1">
+        </isEqual>
+        <isEqual property="order" compareValue ="2">
+             DESC
+        </isEqual>
+      </isNotEmpty>
+    </isNotEmpty>
+
+  </statement>
+  
+   <statement id="getT07_transacionListCount_msbh" parameterClass="com.ist.aml.report.dto.T07_case_application" resultClass="int"> 
+  SELECT COUNT(T.TRANSACTIONKEY) FROM
+ <!-- modify by wwy --> 
+  <isNotEmpty prepend="" property="casesearchtime"> 
+  	<isEqual property="casesearchtime" compareValue ="0">
+  		T07_CASE_APPLICATION C,T47_TRANSACTION_UC T LEFT JOIN T47_STAFF F ON F.PARTY_ID = T.PARTY_ID,T07_CASE_TRANSACTION_DE A 
+  	</isEqual>
+  	<isEqual property="casesearchtime" compareValue ="1">
+  		T07_CASE_APPLICATION_UH C,V47_TRANSACTION T LEFT JOIN T47_STAFF F ON F.PARTY_ID = T.PARTY_ID,T07_CASE_TRANSACTION_DE_UH A 
+  	</isEqual>
+  </isNotEmpty>
+  <isEmpty prepend="" property="casesearchtime"> 
+  	V07_CASE_APPLICATION C,T47_TRANSACTION T LEFT JOIN T47_STAFF F ON F.PARTY_ID = T.PARTY_ID,
+  	V07_CASE_TRANSACTION  A
+  </isEmpty>
+ WHERE C.APPLICATION_NUM=A.APPLICATION_NUM AND A.TRANSACTIONKEY=T.TRANSACTIONKEY  AND C.CAST_TYPE='1' 
+
+    <isNotEmpty prepend="AND" property="organkey"> 
+		C.APP_ORG_ID in $organkey$  
+	</isNotEmpty>
+    		
+    <isNotEmpty prepend="AND" property="app_org_id"> 
+		C.APP_ORG_ID= #app_org_id#
+	</isNotEmpty>
+
+   <isNotEmpty prepend="AND" property="party_id"> 
+    T.PARTY_ID= #party_id#
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="acct_num"> 
+    T.ACCT_NUM= #acct_num#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="stcrkey"> 
+    A.STCR= #stcrkey#
+    </isNotEmpty>  
+    <isNotEmpty prepend="AND" property="party_chn_name"> 
+    T.PARTY_CHN_NAME LIKE '%' || #party_chn_name# || '%'
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="case_kind"> 
+    C.CASE_KIND= #case_kind#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="curr_cd"> 
+    T.CURR_CD= #curr_cd#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="app_dt_start"> 
+    <![CDATA[T.TX_DT >= #app_dt_start#]]> 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="app_dt_end"> 
+    <![CDATA[T.TX_DT <= #app_dt_end#]]>  
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="is_staff">
+       <isEqual property="is_staff" compareValue="1">
+           F.STAFFKEY IS NOT NULL
+       </isEqual>
+    </isNotEmpty>
+
+  </statement>
+  
+  <statement id="search_allbsT07_case_applicationList" parameterClass="com.ist.aml.report.dto.T07_case_application" resultClass="com.ist.aml.report.dto.T07_case_application"> 
+  SELECT APPLICATION_NUM,RECHECK_NUM,FLOW_ID,APP_DT,APP_ORG_ID,CASE_NAME,CAST_TYPE,CASE_KIND,CASE_LEVEL,CASE_DATE,PARTY_ID,PARTY_NAME,APP_STATE_CD,DATE_STATUS_CD,LAST_UPD_DT,LAST_UPD_USER,APP_CASE_REASON,CASE_TRAN_MINDATE,CASE_TRAN_MAXDATE,CASE_END_DATE,CURR_CD,PARTY_CLASS_CD,TAKE_ACTION,ACTION_DESCRIP,ALERT_LEVEL,VALIDATE_IND
+FROM 
+  <isNotEmpty prepend="" property="casesearchtime"> 
+  	<isEqual property="casesearchtime" compareValue ="0">
+  		T07_CASE_APPLICATION T1 
+  	</isEqual>
+  	<isEqual property="casesearchtime" compareValue ="1">
+  		T07_CASE_APPLICATION_UH T1
+  	</isEqual>
+  	WHERE 1>0 
+  	<isNotEmpty prepend="AND" property="cast_type"> 
+    CAST_TYPE = #cast_type# 
+    </isNotEmpty> 
+  	<isNotEmpty prepend="AND" property="app_org_id"> 
+    APP_ORG_ID = #app_org_id# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="party_id"> 
+    PARTY_ID = #party_id#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="party_name"> 
+    PARTY_NAME like '%' || #party_name# || '%'
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="kind"> 
+    CASE_KIND = #kind# 
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="curr_cd"> 
+    CURR_CD = #curr_cd#
+    </isNotEmpty>
+   <isNotEmpty prepend="AND" property="is_menu"> 
+    IS_MENU = #is_menu#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="deal_state"> 
+    APP_STATE_CD = #deal_state#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organkey"> 
+    APP_ORG_ID in $organkey$  
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="app_dt_start"> 
+    <![CDATA[CASE_DATE >= #app_dt_start#]]> 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="app_dt_end"> 
+    <![CDATA[CASE_DATE <= #app_dt_end#]]>  
+    </isNotEmpty> 
+    <isNotEmpty  property="orderby">
+      <isEqual property="orderby" compareValue ="1">
+          ORDER BY CASE_DATE
+      </isEqual>
+      <isEqual property="orderby" compareValue ="2">
+          ORDER BY PARTY_ID
+      </isEqual>
+      <isEqual property="orderby" compareValue ="3">
+          ORDER BY PARTY_NAME
+      </isEqual>
+      <isEqual property="orderby" compareValue ="4">
+          ORDER BY APP_ORG_ID
+      </isEqual>
+      <isEqual property="orderby" compareValue ="5">
+          ORDER BY APP_STATE_CD
+      </isEqual>  
+      <isNotEmpty  property="order">
+        <isEqual property="order" compareValue ="-1">
+        </isEqual>
+        <isEqual property="order" compareValue ="1">
+        </isEqual>
+        <isEqual property="order" compareValue ="2">
+             DESC
+        </isEqual>
+      </isNotEmpty>
+    </isNotEmpty>
+  </isNotEmpty>
+  <isEmpty prepend="" property="casesearchtime"> 
+  	(SELECT APPLICATION_NUM,RECHECK_NUM,FLOW_ID,APP_DT,APP_ORG_ID,CASE_NAME,CAST_TYPE,CASE_KIND,CASE_LEVEL,CASE_DATE,PARTY_ID,PARTY_NAME,APP_STATE_CD,DATE_STATUS_CD,LAST_UPD_DT,LAST_UPD_USER,APP_CASE_REASON,CASE_TRAN_MINDATE,CASE_TRAN_MAXDATE,CASE_END_DATE,CURR_CD,PARTY_CLASS_CD,TAKE_ACTION,ACTION_DESCRIP,ALERT_LEVEL,VALIDATE_IND 
+  FROM T07_CASE_APPLICATION  WHERE 1>0 
+  	<isNotEmpty prepend="AND" property="cast_type"> 
+    CAST_TYPE = #cast_type# 
+    </isNotEmpty> 
+  	 <isNotEmpty prepend="AND" property="app_org_id"> 
+    APP_ORG_ID = #app_org_id# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="party_id"> 
+    PARTY_ID = #party_id#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="party_name"> 
+    PARTY_NAME like '%' || #party_name# || '%'
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="kind"> 
+    CASE_KIND = #kind# 
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="curr_cd"> 
+    CURR_CD = #curr_cd#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organkey"> 
+    APP_ORG_ID in $organkey$  
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="app_dt_start"> 
+    <![CDATA[CASE_DATE >= #app_dt_start#]]> 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="app_dt_end"> 
+    <![CDATA[CASE_DATE <= #app_dt_end#]]>  
+    </isNotEmpty> 
+    ) UNION ALL 
+    (SELECT APPLICATION_NUM,RECHECK_NUM,FLOW_ID,APP_DT,APP_ORG_ID,CASE_NAME,CAST_TYPE,CASE_KIND,CASE_LEVEL,CASE_DATE,PARTY_ID,PARTY_NAME,APP_STATE_CD,DATE_STATUS_CD,LAST_UPD_DT,LAST_UPD_USER,APP_CASE_REASON,CASE_TRAN_MINDATE,CASE_TRAN_MAXDATE,CASE_END_DATE,CURR_CD,PARTY_CLASS_CD,TAKE_ACTION,ACTION_DESCRIP,ALERT_LEVEL,VALIDATE_IND 
+     FROM T07_CASE_APPLICATION_UH  WHERE 1>0 
+  	<isNotEmpty prepend="AND" property="cast_type"> 
+    CAST_TYPE = #cast_type# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="app_org_id"> 
+    APP_ORG_ID = #app_org_id# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="party_id"> 
+    PARTY_ID = #party_id#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="party_name"> 
+    PARTY_NAME like '%' || #party_name# || '%'
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="kind"> 
+    CASE_KIND = #kind# 
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="curr_cd"> 
+    CURR_CD = #curr_cd#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organkey"> 
+    APP_ORG_ID in $organkey$  
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="app_dt_start"> 
+    <![CDATA[CASE_DATE >= #app_dt_start#]]> 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="app_dt_end"> 
+    <![CDATA[CASE_DATE <= #app_dt_end#]]>  
+    </isNotEmpty>
+    )
+    <isNotEmpty  property="orderby">
+      <isEqual property="orderby" compareValue ="1">
+          ORDER BY CASE_DATE
+      </isEqual>
+      <isEqual property="orderby" compareValue ="2">
+          ORDER BY PARTY_ID
+      </isEqual>
+      <isEqual property="orderby" compareValue ="3">
+          ORDER BY PARTY_NAME
+      </isEqual>
+      <isEqual property="orderby" compareValue ="4">
+          ORDER BY APP_ORG_ID
+      </isEqual>
+      <isEqual property="orderby" compareValue ="5">
+          ORDER BY CASESEARCHTIME
+      </isEqual>  
+      <isNotEmpty  property="order">
+        <isEqual property="order" compareValue ="-1">
+        </isEqual>
+        <isEqual property="order" compareValue ="1">
+        </isEqual>
+        <isEqual property="order" compareValue ="2">
+             DESC
+        </isEqual>
+      </isNotEmpty>
+    </isNotEmpty>
+  </isEmpty>
+  <dynamic > 
+    
+  </dynamic> 
+  </statement>
+  <statement id="search_allbsT07_case_applicationListCount" parameterClass="com.ist.aml.report.dto.T07_case_application" resultClass="int"> 
+  SELECT COUNT(APPLICATION_NUM) FROM 
+  <isNotEmpty prepend="" property="casesearchtime"> 
+  	<isEqual property="casesearchtime" compareValue ="0">
+  		T07_CASE_APPLICATION T1  
+  	</isEqual>
+  	<isEqual property="casesearchtime" compareValue ="1">
+  		T07_CASE_APPLICATION_UH T1  
+  	</isEqual>
+  	WHERE 1>0 
+  	<isNotEmpty prepend="AND" property="cast_type"> 
+    CAST_TYPE = #cast_type# 
+    </isNotEmpty> 
+  	<isNotEmpty prepend="AND" property="app_org_id"> 
+    APP_ORG_ID = #app_org_id# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="party_id"> 
+    PARTY_ID = #party_id#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="party_name"> 
+    PARTY_NAME like '%' || #party_name# || '%'
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="kind"> 
+    CASE_KIND = #kind# 
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="curr_cd"> 
+    CURR_CD = #curr_cd#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="is_menu"> 
+    IS_MENU = #is_menu#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="deal_state"> 
+    APP_STATE_CD = #deal_state#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organkey"> 
+    APP_ORG_ID in $organkey$  
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="app_dt_start"> 
+    <![CDATA[CASE_DATE >= #app_dt_start#]]> 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="app_dt_end"> 
+    <![CDATA[CASE_DATE <= #app_dt_end#]]>  
+    </isNotEmpty>
+  </isNotEmpty>
+  <isEmpty prepend="" property="casesearchtime"> 
+  	((SELECT APPLICATION_NUM 
+  FROM T07_CASE_APPLICATION  WHERE CAST_TYPE='2' 
+  	 <isNotEmpty prepend="AND" property="app_org_id"> 
+    APP_ORG_ID = #app_org_id# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="party_id"> 
+    PARTY_ID = #party_id#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="party_name"> 
+    PARTY_NAME like '%' || #party_name# || '%'
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="kind"> 
+    CASE_KIND = #kind# 
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="curr_cd"> 
+    CURR_CD = #curr_cd#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organkey"> 
+    APP_ORG_ID in $organkey$  
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="app_dt_start"> 
+    <![CDATA[CASE_DATE >= #app_dt_start#]]> 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="app_dt_end"> 
+    <![CDATA[CASE_DATE <= #app_dt_end#]]>  
+    </isNotEmpty> 
+    ) UNION ALL 
+    (SELECT APPLICATION_NUM
+     FROM T07_CASE_APPLICATION_UH  WHERE 1>0 
+  	<isNotEmpty prepend="AND" property="cast_type"> 
+    CAST_TYPE = #cast_type# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="app_org_id"> 
+    APP_ORG_ID = #app_org_id# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="party_id"> 
+    PARTY_ID = #party_id#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="party_name"> 
+    PARTY_NAME like '%' || #party_name# || '%'
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="kind"> 
+    CASE_KIND = #kind# 
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="curr_cd"> 
+    CURR_CD = #curr_cd#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organkey"> 
+    APP_ORG_ID in $organkey$  
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="app_dt_start"> 
+    <![CDATA[CASE_DATE >= #app_dt_start#]]> 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="app_dt_end"> 
+    <![CDATA[CASE_DATE <= #app_dt_end#]]>  
+    </isNotEmpty>
+    ))
+  </isEmpty> 
+  <dynamic > 
+    
+  </dynamic> 
+  </statement> 
+</sqlMap> 

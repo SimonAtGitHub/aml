@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T47_individual"> 
+  <statement id="getT47_individualList" parameterClass="com.ist.aml.inves.dto.T47_individual" resultClass="com.ist.aml.inves.dto.T47_individual"> 
+  SELECT PARTY_ID PARTY_ID,PLACE_ORIG PLACE_ORIG,OCCUPATION OCCUPATION,MATRL_STS MATRL_STS,INDIV_INCOME INDIV_INCOME,STAFF_IND STAFF_IND FROM T47_INDIVIDUAL 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="party_id"> 
+    PARTY_ID = #party_id# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT47_individualListCount" parameterClass="com.ist.aml.inves.dto.T47_individual" resultClass="int"> 
+  SELECT COUNT(*) FROM T00_GROUP 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="party_id"> 
+    PARTY_ID = #party_id# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT47_individual" parameterClass="com.ist.aml.inves.dto.T47_individual" resultClass="int"> 
+  INSERT INTO T47_INDIVIDUAL(
+  PARTY_ID,PLACE_ORIG,OCCUPATION,MATRL_STS,INDIV_INCOME,STAFF_IND
+  ) VALUES(
+  #party_id#,#place_orig#,#occupation#,#matrl_sts#,$indiv_income$,#staff_ind#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT47_individual" parameterClass="com.ist.aml.inves.dto.T47_individual" resultClass="int"> 
+  UPDATE T47_INDIVIDUAL SET 
+   PARTY_ID=#party_id#
+   <isNotEmpty prepend="," property="place_orig">
+  PLACE_ORIG=#place_orig#
+  </isNotEmpty>
+  <isNotEmpty prepend="," property="occupation">
+  OCCUPATION=#occupation#
+  </isNotEmpty>
+  <isNotEmpty prepend="," property="matrl_sts">
+  MATRL_STS=#matrl_sts#
+  </isNotEmpty>
+  <isNotEmpty prepend="," property="indiv_income">
+  INDIV_INCOME=#indiv_income#
+  </isNotEmpty>
+  <isNotEmpty prepend="," property="staff_ind">
+  STAFF_IND=#staff_ind#
+  </isNotEmpty>
+  WHERE PARTY_ID=#party_id# 
+  </statement> 
+ 
+  <statement id="deleteT47_individual" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T47_INDIVIDUAL WHERE PARTY_ID=#value# 
+  </statement> 
+ 
+  <statement id="getT47_individualDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.inves.dto.T47_individual"> 
+  SELECT * FROM T47_INDIVIDUAL WHERE PARTY_ID=#value# 
+  </statement> 
+ 
+ <statement id="modifyValidatedT47_individual" parameterClass="com.ist.aml.report.dto.T47_party" resultClass="int"> 
+  UPDATE T47_INDIVIDUAL SET  PARTY_ID=#party_id#
+  <dynamic>
+  ,OCCUPATION=#occupation#
+  </dynamic>
+  WHERE PARTY_ID=#party_id# 
+  </statement> 
+</sqlMap> 
+

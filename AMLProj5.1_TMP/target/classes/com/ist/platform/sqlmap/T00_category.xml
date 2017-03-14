@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T00_category">
+	<statement id="getT00_categoryList"
+		parameterClass="com.ist.platform.dto.T00_category"
+		resultClass="com.ist.platform.dto.T00_category">
+		select
+		categorytype,categorykey,categoryname,upcategorykey,isbuildin,flag,dispseq,des,creator,createdate,modifier,modifydate
+		from t00_category where
+		<![CDATA[flag<>'2']]>
+		<isNotEmpty prepend="and" property="categorykey">
+			categorykey like '%'||#categorykey#||'%'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="categoryname">
+			categoryname like '%'||#categoryname#||'%'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="categorytype">
+			categorytype = #categorytype#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="upcategorykey">
+			upcategorykey = #upcategorykey#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="flag">
+			flag = #flag#
+		</isNotEmpty>
+		
+		<dynamic>
+			<isNotEmpty prepend="" property="sort_type">
+				ORDER BY $sort$ $sort_type$
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="getT00_categoryListCount"
+		parameterClass="com.ist.platform.dto.T00_category"
+		resultClass="int">
+		select count(*) from t00_category where flag !='2'
+		<dynamic > 
+		<isNotEmpty prepend="and" property="categorykey">
+			categorykey like '%'||#categorykey#||'%'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="categoryname">
+			categoryname like '%'||#categoryname#||'%'
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="categorytype">
+			categorytype = #categorytype#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="upcategorykey">
+			upcategorykey = #upcategorykey#
+		</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="insertT00_category"
+		parameterClass="com.ist.platform.dto.T00_category"
+		resultClass="int">
+		insert into T00_category(
+		categorytype,categorykey,categoryname,upcategorykey,isbuildin,flag,dispseq,des,creator,createdate,modifier,modifydate
+		) values(
+		#categorytype#,#categorykey#,#categoryname#,#upcategorykey#,#isbuildin#,#flag#,#dispseq#,#des#,#creator#,#createdate#,#modifier#,#modifydate#
+		)
+	</statement>
+
+	<statement id="modifyT00_category"
+		parameterClass="com.ist.platform.dto.T00_category"
+		resultClass="int">
+		update T00_category set
+		categorykey=#categorykeys#,categoryname=#categoryname#,flag=#flag#,des=#des#,modifier=#modifier#,modifydate=#modifydate#,dispseq=#dispseq#
+		where categorykey=#categorykey#
+	</statement>
+	
+	<statement id="modifyT00_categoryitem"
+		parameterClass="com.ist.platform.dto.T00_category"
+		resultClass="int">
+		update T00_category set
+		upcategorykey = #upcategorykey#
+		where categorykey=#categorykey#
+	</statement>
+
+	<statement id="deleteT00_category" parameterClass="java.lang.String"
+		resultClass="int">
+		delete from T00_category where categorykey=#value# and isbuildin != '1'
+	</statement>
+	
+	<statement id="deleteT00_category_item" parameterClass="com.ist.platform.dto.T00_category"
+		resultClass="int">
+		delete from T00_category where categorykey=#categorykey# and categorytype = #categorytype# and isbuildin != '1'
+	</statement>
+
+	<statement id="getT00_categoryDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.platform.dto.T00_category">
+		select * from T00_category where categorytype=#value#
+	</statement>
+
+	<statement id="getT00_upcategroyDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.platform.dto.T00_category">
+		select * from T00_category where categorykey=#value# or
+		upcategorykey=#value#
+	</statement>
+
+	<statement id="getT00_categoryTreeListByType"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.common.menu.Menu">
+		select categorykey as id,upcategorykey as parent_id,categoryname as
+		name from T00_category
+		where  flag!='2' and categorytype = #value#  order by dispseq
+	</statement>
+	
+	<statement id="getT00_categoryTreeList"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.common.menu.Menu">
+		select categorykey as id,upcategorykey as parent_id,categoryname as
+		name from T00_category
+		where  flag!='2'  and upcategorykey!= 'CA' order by dispseq
+	</statement>
+	
+	<statement id="getT00_categoryDisp1"
+		parameterClass="com.ist.platform.dto.T00_category"
+		resultClass="com.ist.platform.dto.T00_category">
+		select * from T00_category where categorykey=#categorykey# and categorytype = #categorytype#
+	</statement>
+	
+	<statement id="getT00_categoryDisp2"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.platform.dto.T00_category">
+		select * from T00_category where categorykey=#categorykey# 
+	</statement>
+	
+	<statement id="getT00_categoryMap"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.platform.dto.T00_category">
+		select categorykey,categoryname from t00_category where categorytype=#value#
+	</statement>
+	
+	<!-- used for avp check display tree , gaosen -->
+	<statement id="getAvpT00_categoryTreeTpla"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.common.menu.Menu">
+		select categorykey as id ,upcategorykey as parent_id,categoryname as name
+			from T00_category
+		where categorytype=#busstypecd# and flag!='2' 
+		order by dispseq
+	</statement>
+	<statement id="getAvpT00_categoryTreeSpec"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.common.menu.Menu">
+		select categorykey as id ,upcategorykey as parent_id,categoryname as name
+			from T00_category
+		where categorytype=#busstypecd# and flag!='2' 
+		order by dispseq
+	</statement>
+	
+	<statement id="getT00_upcategory"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.platform.dto.T00_category">
+		select * from T00_category where upcategorykey in ($value$)
+	</statement>
+	
+	<statement id="getT00_category_itemList"
+		parameterClass="com.ist.platform.dto.T00_category"
+		resultClass="com.ist.platform.dto.T00_category">
+		select * from T00_category where categorytype = #categorytype# and 
+		upcategorykey = 'CA'
+	</statement>
+	
+	
+	<statement id="getT01_mt_propertyCount"
+		parameterClass="java.lang.String"
+		resultClass="int">
+		select count(*) from T00_category where UPCATEGORYKEY =#categorykey#
+	</statement>
+		
+	<statement id="getListIsG00001"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.platform.dto.T00_category">
+		SELECT categorykey FROM	T00_category	WHERE	  flag!='2'	AND categorytype = 'G00001'
+	</statement>
+	
+</sqlMap>

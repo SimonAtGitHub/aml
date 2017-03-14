@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+	<form-beans>
+		<form-bean name="t47_transactionActionForm" type="com.ist.aml.report.controller.T47_transactionActionForm" />
+		<form-bean name="t07_reportSearchActionForm" type="com.ist.aml.inves.controller.T07_reportSearchActionForm"></form-bean>
+        <form-bean name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationActionForm" />
+	    <form-bean name="t07_ReportSearch_msActionForm" type="com.ist.aml.inves.controller.T07_ReportSearch_msActionForm"></form-bean>
+	    <form-bean name="t07_alertActionForm" type="com.ist.aml.report.controller.T07_alertActionForm" />
+	    <form-bean name="t07_party_ganzActionForm" type="com.ist.aml.inves.controller.T07_party_ganzActionForm"></form-bean>
+	    <form-bean name="t07_inrep_bh_msgActionForm" type="com.ist.aml.inves.controller.T07_INREP_BH_msgActionForm" />
+		<form-bean name="t07_inrep_bs_levelActionForm" type="com.ist.aml.inves.controller.T07_INREP_BS_levelActionForm" />
+		<form-bean name="t07_inrep_bs_msgActionForm" type="com.ist.aml.inves.controller.T07_INREP_BS_msgActionForm" />
+		<form-bean name="t07_inrep_frActionForm" type="com.ist.aml.inves.controller.T07_INREP_FRActionForm" />
+		<form-bean name="t07_inrep_bh_cny_repActionForm" type="com.ist.aml.inves.controller.T07_INREP_BH_cny_repActionForm"/>
+    	<form-bean name="t07_inrep_bh_cny_staActionForm" type="com.ist.aml.inves.controller.T07_INREP_BH_cny_staActionForm"/> 
+    	<form-bean name="t07_inrep_bh_usd_repActionForm" type="com.ist.aml.inves.controller.T07_INREP_BH_usd_repActionForm"/>
+    	<form-bean name="t07_inrep_bh_usd_staActionForm" type="com.ist.aml.inves.controller.T07_INREP_BH_usd_staActionForm"/>
+    	<form-bean name="t07_inrep_frActionForm" type="com.ist.aml.inves.controller.T07_INREP_FRActionForm"/> 
+    	<form-bean name="t07_inrep_bh_sum_repActionForm" type="com.ist.aml.inves.controller.T07_INREP_BH_sum_repActionForm"/>
+    	<form-bean name="t07_inrep_bh_sum_staActionForm" type="com.ist.aml.inves.controller.T07_INREP_BH_sum_staActionForm"/>
+	</form-beans>
+
+	<global-exceptions></global-exceptions>
+
+
+	<!-- global-forwards -->
+	<global-forwards type="org.apache.struts.action.ActionForward">
+		<forward name="failure" path="/../common/errors.jsp" />
+		<forward name="errors" path="/../common/errors.jsp" />
+		<forward name="nopower" path="/../common/nopower.jsp" />
+		<forward name="sessiontimeout"
+			path="/../common/sessiontimeout.jsp" />
+	</global-forwards>
+
+
+	<action-mappings>
+
+		<action path="/trade/t47_transaction_search"
+			parameter="searchT47_transaction" name="t47_transactionActionForm"
+			type="com.ist.aml.report.controller.T47_transactionAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/trade/t47_transaction_list.jsp" />
+			
+		</action>
+		
+		<action path="/trade/t47_transaction_list"
+			parameter="getT47_transactionList" name="t47_transactionActionForm"
+			type="com.ist.aml.report.controller.T47_transactionAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/trade/t47_transaction_list.jsp" />
+			
+		</action>
+		
+		<action path="/trade/t47_transaction_uc_list"
+			parameter="getT47_transaction_ucList" name="t47_transactionActionForm"
+			type="com.ist.aml.report.controller.T47_transactionAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/trade/t47_transaction_uc_list.jsp" />
+			
+		</action>
+		
+		<action path="/trade/t47_transaction_disp"
+			parameter="getT47_transactionDisp" name="t47_transactionActionForm"
+			type="com.ist.aml.report.controller.T47_transactionAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/trade/t47_transaction_detail.jsp" />
+		</action>
+		<!-- 导出excl -->
+		<action path="/trade/t47_transaction_excel_xls" parameter="getT47_transactionExcelList" name="t47_transactionActionForm"
+			type="com.ist.aml.report.controller.T47_transactionAction"
+			validate="false" scope="request">
+			<forward name="success" path="/trade/t47_transaction_excel.jsp" />
+			<forward name="failure" path="/trade/t47_transaction_list.do" />
+		</action>
+		
+	
+	
+	<action path="/case/caseDetailinfo"
+		parameter="getT07_case_applicationDetailDisp"
+		name="t07_reportSearchActionForm"
+		type="com.ist.aml.inves.controller.T07_reportSearchAction"
+		validate="false" scope="request">
+		<forward name="success" path="/reportsearch/t07_case_detailinfo.jsp" />
+		<forward name="success1" path="/reportsearch/t07_case_detailinfo_main.jsp" />
+		<forward name="success08"
+			path="/case/t07_flow_workbench08.do" />
+		<forward name="failure"
+			path="/reportsearch/t07_reportsearch.do" />
+	</action>
+	
+	<action path="/case/caseDetailinfo_main"
+		parameter="getT07_case_applicationDetailMain"
+		name="t07_reportSearchActionForm"
+		type="com.ist.aml.inves.controller.T07_reportSearchAction"
+		validate="false" scope="request">
+		<forward name="success" path="/reportsearch/t07_case_detailinfo_main.jsp" />
+		<forward name="failure" path="/reportsearch/t07_reportsearch.do" />
+	</action>
+	
+	<action path="/case/caseInfo"
+		parameter="getT07_case_info"
+		name="t07_reportSearchActionForm"
+		type="com.ist.aml.inves.controller.T07_reportSearchAction"
+		validate="false" scope="request">
+		<forward name="success" path="/reportsearch/t07_case_info.jsp" />
+		<forward name="failure" path="/reportsearch/t07_reportsearch.do" />
+	</action>
+	
+	<action path="/case/caseStcrInfo"
+		parameter="getT07_case_stcrInfo"
+		name="t07_reportSearchActionForm"
+		type="com.ist.aml.inves.controller.T07_reportSearchAction"
+		validate="false" scope="request">
+		<forward name="success" path="/reportsearch/t07_case_stcrInfo.jsp" />
+		<forward name="failure" path="/reportsearch/t07_reportsearch.do" />
+	</action>
+	
+	<action path="/case/caseReceiptInfo"
+		parameter="getT07_case_receipt_info"
+		name="t07_reportSearchActionForm"
+		type="com.ist.aml.inves.controller.T07_reportSearchAction"
+		validate="false" scope="request">
+		<forward name="success" path="/reportsearch/t07_case_receipt_info.jsp" />
+		<forward name="failure" path="/reportsearch/t07_reportsearch.do" />
+	</action>
+	
+	
+	
+	
+	<action path="/case/stcr_trans_list_search" parameter="getT07_stcr_trans_list_search"
+		name="t07_reportSearchActionForm"
+		type="com.ist.aml.inves.controller.T07_reportSearchAction"
+		validate="false" scope="request">
+		<forward name="success" path="/reportsearch/t07_stcr_trans_list_search.jsp" />
+	</action>
+	<action path="/case/t07_stcr_main" parameter="getT07_stcr_main"
+		name="t07_reportSearchActionForm"
+		type="com.ist.aml.inves.controller.T07_reportSearchAction"
+		validate="false" scope="request">
+		<forward name="success" path="/reportsearch/t07_stcr_main.jsp" />
+	</action>
+	<action path="/case/stcr_party_search" parameter="getT07_stcr_party_search"
+			name="t07_reportSearchActionForm" type="com.ist.aml.inves.controller.T07_reportSearchAction"
+			validate="false" scope="request">
+			<forward name="success" path="/reportsearch/t07_stcr_party_search.jsp" />
+	</action>
+	<action path="/case/stcr_acct_search" parameter="getT07_stcr_acct_search"
+		name="t07_reportSearchActionForm" type="com.ist.aml.inves.controller.T07_reportSearchAction"
+		validate="false" scope="request">
+		<forward name="success" path="/reportsearch/t07_stcr_acct_search.jsp" />
+	</action>
+	<action path="/case/t07_flow_workbench08"
+			parameter="getT07_workbenchList08"
+			name="t07_case_applicationActionForm"
+			type="com.ist.aml.inves.controller.T07_reportSearchAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/reportsearch/t07_flow_workbench08.jsp" />
+			<forward name="failure1"
+				path="/reportsearch/t07_reportsearch.do" />
+		</action>
+
+		<action path="/reportsearch_ms/t07_reportsearch_bs" parameter="searcht07_reporttrans_bs"
+			name="t07_ReportSearch_msActionForm"
+			type="com.ist.aml.inves.controller.T07_ReportSearch_msAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/reportsearch_ms/t07_reportsearch_bs.jsp" />
+			<forward name="failure"
+				path="/reportsearch_ms/t07_reportsearch_bs.jsp" />
+		</action>
+		<action path="/reportsearch_ms/export_trans_bs" parameter="exportTransBS"
+			name="t07_ReportSearch_msActionForm"
+			type="com.ist.aml.inves.controller.T07_ReportSearch_msAction"
+			validate="false" scope="request">
+			<forward name="success" path="/reportsearch_ms/t07_reportsearch_bs_excel.jsp" />
+		    <forward name="failure" path="/reportsearch_ms/t07_reportsearch_bs.do" />
+		</action>
+		
+		<action path="/reportsearch_ms/t07_reportsearch_bh" parameter="searcht07_reporttrans_bh"
+			name="t07_ReportSearch_msActionForm"
+			type="com.ist.aml.inves.controller.T07_ReportSearch_msAction"
+			validate="false" scope="request">
+			<forward name="success" path="/reportsearch_ms/t07_reportsearch_bh.jsp" />
+			<forward name="failure" path="/reportsearch_ms/t07_reportsearch_bh.jsp" />
+		</action>
+		<action path="/reportsearch_ms/export_trans_bh" parameter="exportTransBH"
+			name="t07_ReportSearch_msActionForm"
+			type="com.ist.aml.inves.controller.T07_ReportSearch_msAction"
+			validate="false" scope="request">
+			<forward name="success" path="/reportsearch_ms/t07_reportsearch_bh_excel.jsp" />
+		    <forward name="failure" path="/reportsearch_ms/t07_reportsearch_bh.do" />
+		</action>
+	<action path="/reportsearch/t07_reportbase_export" parameter="exportBaseCase"
+
+		name="t07_reportSearchActionForm"
+
+		type="com.ist.aml.inves.controller.T07_reportSearchAction"
+
+		validate="false" scope="request">
+
+		<forward name="success" path="/reportsearch/t07_report_baseky_export.jsp" />
+        <forward name="failure" path="/reportsearch/t07_reportsearch.do" />
+	</action>
+
+		<action path="/reportsearch/t07_reportbath_export" parameter="exportbathCase"
+
+		name="t07_reportSearchActionForm"
+
+		type="com.ist.aml.inves.controller.T07_reportSearchAction"
+
+		validate="false" scope="request">
+
+		<forward name="success" path="/reportsearch/t07_report_kybath_export.jsp" />
+		<forward name="failure" path="/reportsearch/t07_reportsearch.do" />
+
+	</action>
+	<!--alert-->
+	<action path="/alert_search/t07_alert_search"
+			parameter="searchT07_alert" name="t07_alertActionForm"
+			type="com.ist.aml.report.controller.T07_alertAction" validate="false"
+			scope="request">
+			<forward name="success" path="/alert_search/t07_alert_search.jsp" />
+			<forward name="failure" path="/alert_search/t07_alert_list.do" />
+    </action>
+	<action path="/alert_search/t07_alert_list"
+			parameter="getT07_alertList" name="t07_alertActionForm"
+			type="com.ist.aml.report.controller.T07_alertAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/alert_search/t07_alert_search.jsp" />
+	</action>
+	<action path="/alert_search/t07_alerttrans_export"
+			parameter="t07_alerttrans_export" name="t07_alertActionForm"
+			type="com.ist.aml.report.controller.T07_alertAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/alert_search/t07_alerttrans_export.jsp" />
+	</action>
+	
+		<!-- nsh -->
+		 <action path="/reportsearch/t07_case_report_list"
+		    parameter="getT07_case_report_list" name="t07_reportSearchActionForm"
+		    type="com.ist.aml.inves.controller.T07_reportSearchAction" validate="false" scope="request">
+		    <forward name="success"	path="/reportsearch/t07_case_report_list.jsp" />
+	     </action>
+	     <action path="/reportsearch/t07_reportsearch" parameter="searcht07_reportsearch"
+		    name="t07_reportSearchActionForm"
+		    type="com.ist.aml.inves.controller.T07_reportSearchAction"
+		    validate="false" scope="request">
+		    <forward name="success"
+			     path="/reportsearch/t07_reportsearch.jsp" />
+		    <forward name="failure"
+			   path="/reportsearch/t07_reportsearch.jsp" />
+	     </action>
+	     <action path="/alert_search/t07_alert_disp"
+			parameter="getT07_alertAllDisp" name="t07_alertActionForm"
+			type="com.ist.aml.report.controller.T07_alertAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/alert_search/t07_alert_disp.jsp" />
+		</action>
+		<action path="/partyganz/t07_party_ganz_list"
+			parameter="getT07_party_ganzList" name="t07_party_ganzActionForm"
+			type="com.ist.aml.inves.controller.T07_party_ganzAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/partyganz/t07_party_ganz_list.jsp" />
+		</action>
+		<action path="/partyganz/t07_party_ganz_add"
+			parameter="getT07_party_ganzAdd" name="t07_party_ganzActionForm"
+			type="com.ist.aml.inves.controller.T07_party_ganzAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/partyganz/t07_party_ganz_add.jsp" />
+			<forward name="failure"
+				path="/partyganz/t07_party_ganz_list.do" />
+		</action>
+		<action path="/partyganz/t07_party_ganz_add_do"
+			parameter="getT07_party_ganzAddDo" name="t07_party_ganzActionForm"
+			type="com.ist.aml.inves.controller.T07_party_ganzAction" validate="false"
+			scope="request">
+			<forward name="failure"
+				path="/partyganz/t07_party_ganz_add.do" />
+			<forward name="success"
+				path="/partyganz/t07_party_ganz_list.do" />
+		</action>
+		
+		<action path="/t07_inrep_bh_msg/t07_inrep_bh_msg_list"
+			parameter="getT07_INREP_BH_msgList" name="t07_inrep_bh_msgActionForm"
+			type="com.ist.aml.inves.controller.T07_INREP_BH_msgAction" validate="false"
+			scope="request">
+			<forward name="success" path="/inrep/t07_inrep_bh_msg.jsp" />
+		</action>
+
+		<action path="/t07_inrep_bh_msg/t07_inrep_bh_msg" parameter="export_T07_INREP_BH_msg"
+			name="t07_inrep_bh_msgActionForm" type="com.ist.aml.inves.controller.T07_INREP_BH_msgAction"
+			validate="false" scope="request">
+			<forward name="success" path="/inrep/t07_inrep_bh_msg_excel.jsp" />
+			<forward name="failure" path="/t07_inrep_bh_msg/t07_inrep_bh_msg_list.do" />
+		</action>
+
+		<action path="/t07_inrep_bs_level/t07_inrep_bs_level_list"
+			parameter="getT07_INREP_BS_levelList" name="t07_inrep_bs_levelActionForm"
+			type="com.ist.aml.inves.controller.T07_INREP_BS_levelAction"
+			validate="false" scope="request">
+			<forward name="success" path="/inrep/t07_inrep_bs_level.jsp" />
+		</action>
+
+		<action path="/t07_inrep_bs_level/t07_inrep_bs_level"
+			parameter="export_T07_INREP_BS_level" name="t07_inrep_bs_levelActionForm"
+			type="com.ist.aml.inves.controller.T07_INREP_BS_levelAction"
+			validate="false" scope="request">
+			<forward name="success" path="/inrep/t07_inrep_bs_level_excel.jsp" />
+			<forward name="failure"
+				path="/t07_inrep_bs_level/t07_inrep_bs_level_list.do" />
+		</action>
+
+		<action path="/t07_inrep_bs_msg/t07_inrep_bs_msg_list"
+			parameter="getT07_INREP_BS_msgList" name="t07_inrep_bs_msgActionForm"
+			type="com.ist.aml.inves.controller.T07_INREP_BS_msgAction" validate="false"
+			scope="request">
+			<forward name="success" path="/inrep/t07_inrep_bs_msg.jsp" />
+		</action>
+
+		<action path="/t07_inrep_bs_msg/t07_inrep_bs_msg" parameter="export_T07_INREP_BS_msg"
+			name="t07_inrep_bs_msgActionForm" type="com.ist.aml.inves.controller.T07_INREP_BS_msgAction"
+			validate="false" scope="request">
+			<forward name="success" path="/inrep/t07_inrep_bs_msg_excel.jsp" />
+			<forward name="failure" path="/t07_inrep_bs_msg/t07_inrep_bs_msg_list.do" />
+		</action>
+
+		<action path="/reportsum/t07_inrep_bh_cny_rep_list" parameter="getT07_INREP_BH_cny_repList" name="t07_inrep_bh_cny_repActionForm" type="com.ist.aml.inves.controller.T07_INREP_BH_cny_repAction" validate="false" scope="request"> 
+		    <forward name="success" path="/reportsum/t07_inrep_bh_cny_rep_list.jsp"/> 
+	        <forward name="failure" path="/reportsum/t07_inrep_bh_cny_rep_list.do"/> 
+	    </action>
+	    <action path="/reportsum/exportT07_inrep_bh_cny_rep" parameter="exportT07_inrep_bh_cny_rep" name="t07_inrep_bh_cny_repActionForm" type="com.ist.aml.inves.controller.T07_INREP_BH_cny_repAction" validate="false" scope="request"> 
+		    <forward name="success" path="/reportsum/t07_inrep_bh_cny_rep_excel.jsp"/> 
+	        <forward name="failure" path="/reportsum/t07_inrep_bh_cny_rep_list.do"/> 
+	    </action>
+	    <action path="/reportsum/t07_inrep_bh_cny_sta_list" parameter="getT07_INREP_BH_cny_staList" name="t07_inrep_bh_cny_staActionForm" type="com.ist.aml.inves.controller.T07_INREP_BH_cny_staAction" validate="false" scope="request"> 
+		    <forward name="success" path="/reportsum/t07_inrep_bh_cny_sta_list.jsp"/> 
+	        <forward name="failure" path="/reportsum/t07_inrep_bh_cny_sta_list.do"/> 
+	    </action>
+	    <action path="/reportsum/exportT07_inrep_bh_cny_sta" parameter="exportT07_inrep_bh_cny_sta" name="t07_inrep_bh_cny_staActionForm" type="com.ist.aml.inves.controller.T07_INREP_BH_cny_staAction" validate="false" scope="request"> 
+		    <forward name="success" path="/reportsum/t07_inrep_bh_cny_sta_excel.jsp"/> 
+	        <forward name="failure" path="/reportsum/t07_inrep_bh_cny_sta_list.do"/> 
+	    </action>
+	    <action path="/reportsum/t07_inrep_bh_usd_rep_list" parameter="getT07_INREP_BH_usd_repList" name="t07_inrep_bh_usd_repActionForm" type="com.ist.aml.inves.controller.T07_INREP_BH_usd_repAction" validate="false" scope="request"> 
+		    <forward name="success" path="/reportsum/t07_inrep_bh_usd_rep_list.jsp"/> 
+	        <forward name="failure" path="/reportsum/t07_inrep_bh_usd_rep_list.do"/> 
+	    </action>
+	    <action path="/reportsum/exportT07_inrep_bh_usd_rep" parameter="exportT07_inrep_bh_usd_rep" name="t07_inrep_bh_usd_repActionForm" type="com.ist.aml.inves.controller.T07_INREP_BH_usd_repAction" validate="false" scope="request"> 
+		    <forward name="success" path="/reportsum/t07_inrep_bh_usd_rep_excel.jsp"/> 
+	        <forward name="failure" path="/reportsum/t07_inrep_bh_usd_rep_list.do"/> 
+	    </action>
+	    <action path="/reportsum/t07_inrep_bh_usd_sta_list" parameter="getT07_INREP_BH_usd_staList" name="t07_inrep_bh_usd_staActionForm" type="com.ist.aml.inves.controller.T07_INREP_BH_usd_staAction" validate="false" scope="request"> 
+		    <forward name="success" path="/reportsum/t07_inrep_bh_usd_sta_list.jsp"/> 
+	        <forward name="failure" path="/reportsum/t07_inrep_bh_usd_sta_list.do"/> 
+	    </action>
+	    <action path="/reportsum/exportT07_inrep_bh_usd_sta" parameter="exportT07_INREP_BH_usd_sta" name="t07_inrep_bh_usd_staActionForm" type="com.ist.aml.inves.controller.T07_INREP_BH_usd_staAction" validate="false" scope="request"> 
+		    <forward name="success" path="/reportsum/t07_inrep_bh_usd_sta_excel.jsp"/> 
+	        <forward name="failure" path="/reportsum/t07_inrep_bh_usd_sta_list.do"/> 
+	    </action>
+	    <action path="/reportsum/t07_inrep_fr_de_list" parameter="getT07_INREP_FR_deList" name="t07_inrep_frActionForm" type="com.ist.aml.inves.controller.T07_INREP_FRAction" validate="false" scope="request"> 
+		    <forward name="success" path="/reportsum/t07_inrep_fr_de_list.jsp"/> 
+	        <forward name="failure" path="/reportsum/t07_inrep_fr_de_list.do"/> 
+	    </action>
+	    <action path="/reportsum/t07_inrep_fr_ky_list" parameter="getT07_INREP_FR_kyList" name="t07_inrep_frActionForm" type="com.ist.aml.inves.controller.T07_INREP_FRAction" validate="false" scope="request"> 
+		    <forward name="success" path="/reportsum/t07_inrep_fr_ky_list.jsp"/> 
+	        <forward name="failure" path="/reportsum/t07_inrep_fr_ky_list.do"/> 
+	    </action>
+	    <action path="/reportsum/exportT07_inrep_fr" parameter="exportT07_inrep_fr" name="t07_inrep_frActionForm" type="com.ist.aml.inves.controller.T07_INREP_FRAction" validate="false" scope="request"> 
+		    <forward name="success" path="/reportsum/t07_inrep_fr_excel.jsp"/> 
+	    </action>
+	    <action path="/reportsum/t07_inrep_bh_sum_rep_list" parameter="getT07_INREP_BH_sum_repList" name="t07_inrep_bh_sum_repActionForm" type="com.ist.aml.inves.controller.T07_INREP_BH_sum_repAction" validate="false" scope="request"> 
+		    <forward name="success" path="/reportsum/t07_inrep_bh_sum_rep_list.jsp"/> 
+	        <forward name="failure" path="/reportsum/t07_inrep_bh_sum_rep_list.do"/> 
+	    </action>
+	    <action path="/reportsum/exportT07_inrep_bh_sum_rep" parameter="exportT07_INREP_BH_sum_rep" name="t07_inrep_bh_sum_repActionForm" type="com.ist.aml.inves.controller.T07_INREP_BH_sum_repAction" validate="false" scope="request"> 
+		    <forward name="success" path="/reportsum/t07_inrep_bh_sum_rep_excel.jsp"/> 
+	        <forward name="failure" path="/reportsum/t07_inrep_bh_sum_rep_list.do"/> 
+	    </action>
+	    <action path="/reportsum/t07_inrep_bh_sum_sta_list" parameter="getT07_INREP_BH_sum_staList" name="t07_inrep_bh_sum_staActionForm" type="com.ist.aml.inves.controller.T07_INREP_BH_sum_staAction" validate="false" scope="request"> 
+		    <forward name="success" path="/reportsum/t07_inrep_bh_sum_sta_list.jsp"/> 
+	        <forward name="failure" path="/reportsum/t07_inrep_bh_sum_sta_list.do"/> 
+	    </action>
+	    <action path="/reportsum/exportT07_inrep_bh_sum_sta" parameter="exportT07_INREP_BH_sum_sta" name="t07_inrep_bh_sum_staActionForm" type="com.ist.aml.inves.controller.T07_INREP_BH_sum_staAction" validate="false" scope="request"> 
+		    <forward name="success" path="/reportsum/t07_inrep_bh_sum_sta_excel.jsp"/> 
+	        <forward name="failure" path="/reportsum/t07_inrep_bh_sum_sta_list.do"/> 
+	    </action>
+	</action-mappings>
+	<message-resources parameter="ApplicationResources_zh_CN" />
+
+</struts-config>

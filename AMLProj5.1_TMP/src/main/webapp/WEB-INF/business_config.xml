@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- root element,all element must in this element -->
+<root>
+	<reportXML>
+		<!--upload xml document's version-->
+		<version>0690</version>
+		<!--the path to store xml document-->
+		<storepath>upreportXML/</storepath>
+		<!--xmlns-->
+		<reportxmlns>http://fitech-report.com/smis</reportxmlns>
+		<reportxmlnsxsi>
+			http://www.w3.org/2001/XMLSchema
+		</reportxmlnsxsi>
+		<!--store path of upreort zip-->
+		<zipStorepath>upreportPacket/</zipStorepath>
+		<!--store path of feendback xml -->
+		<feedbackStorepath>feedbackXML/</feedbackStorepath>
+		<!-- temp path of temp path -->
+		<tempStorepath>temp/</tempStorepath>
+		<!--store path of previewing xml -->
+		<previwStorepath>c:/report/previw.xml</previwStorepath>
+		<!-- max size of packet-->
+		<zipCountMaxSize>3</zipCountMaxSize>
+		<zipMaxSize>5000000</zipMaxSize>
+		<!--max size of attach -->
+		<attachMaxSize>2000000</attachMaxSize>
+		<!-- max size of NOTICE -->
+		<NOTICEMaxSize>4000000</NOTICEMaxSize>
+		<!--add number of suspect packet sending invalid data  -->
+		<sPSend_dt_addnum>30</sPSend_dt_addnum>
+		<!-- invalid date -->
+		<invaliddateNum>5</invaliddateNum>
+		
+		<!-- xml create class  -->
+		<classNBH>com.ist.aml.pbcreport.bo.CreateNBH</classNBH>
+		<classNBS>com.ist.aml.pbcreport.bo.CreateNBS</classNBS>
+		<classABH>com.ist.aml.pbcreport.bo.CreateNBH</classABH>
+		<classABS>com.ist.aml.pbcreport.bo.CreateNBS</classABS>
+		<classCBH>com.ist.aml.pbcreport.bo.CreateCBH</classCBH>
+		<classCBS>com.ist.aml.pbcreport.bo.CreateNBS</classCBS>
+		<classDBH>com.ist.aml.pbcreport.bo.CreateDBH</classDBH>
+		<classDBS>com.ist.aml.pbcreport.bo.CreateNBS</classDBS>
+		
+		<classIBH>com.ist.aml.pbcreport.bo.CreateIBH</classIBH>
+		<classIBS>com.ist.aml.pbcreport.bo.CreateNBS</classIBS>
+		
+		<classRBH>com.ist.aml.pbcreport.bo.CreateNBH</classRBH>
+		<classRBS>com.ist.aml.pbcreport.bo.CreateNBS</classRBS>
+		<!-- feedback read class  -->
+
+		<classFDSC>com.ist.aml.pbcreport.bo.ReadFDSCbyXMLBean</classFDSC>
+		<classFDNF>com.ist.aml.pbcreport.bo.ReadFDNFbyXMLBean</classFDNF>
+		<classFDCF>com.ist.aml.pbcreport.bo.ReadFDCFbyXMLBean</classFDCF>
+		<classFDRCBH>com.ist.aml.pbcreport.bo.ReadFDRCBHbyXMLBean</classFDRCBH>
+		<classFDRCBS>com.ist.aml.pbcreport.bo.ReadFDRCBSbyXMLBean</classFDRCBS>
+		<classFDWN>com.ist.aml.pbcreport.bo.ReadFDSCbyXMLBean</classFDWN>
+	</reportXML>
+	<reportOrgan>
+		<!--Report Organ Area's key-->
+		<organAreakey>110000</organAreakey>
+		<!--Report Organ's type-->
+		<organtype>00</organtype>
+	</reportOrgan>
+	<reportBasic>
+		<!--XML Encoding formation-->
+		<encoding>gb2312</encoding>
+		<defaultCharacter1>@N</defaultCharacter1>
+		<defaultCharacter2>@I</defaultCharacter2>
+		<defaultCharacter3>@E</defaultCharacter3>
+		<timeComplement>t</timeComplement>
+		<batchDelete>@A</batchDelete>
+		<deletedTransSum>@N</deletedTransSum>
+		<innerOrganTextStorepath>
+			report/innerOrganText/
+		</innerOrganTextStorepath>
+		<innerOrganTextTitle>现代化支付系统行号,账户管理系统行号,内部代码,其它类型代码,网点名称,所在地区行政区划码,网点地址</innerOrganTextTitle>
+		<innerOrganTextname> innerorgcode.csv</innerOrganTextname>
+		<seperate>,</seperate>
+		<resendInv_dt>5</resendInv_dt>
+	</reportBasic>
+	<pbc_csvPath>pbc_code</pbc_csvPath>
+
+</root>

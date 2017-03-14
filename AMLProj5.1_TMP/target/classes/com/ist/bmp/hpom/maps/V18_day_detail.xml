@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="V18_day_detail"> 
+  <statement id="getV18_day_detailList" parameterClass="com.ist.bmp.hpom.dto.V18_day_detail" resultClass="com.ist.bmp.hpom.dto.V18_day_detail"> 
+  select statisticdate,tasktype,dskey,taskstatus,endtime,begintime,usetime,taskcount,finishtask from v18_day_detail 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="statisticdate"> 
+    statisticdate = #statisticdate# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getV18_day_detailListCount" parameterClass="com.ist.bmp.hpom.dto.V18_day_detail" resultClass="int"> 
+  select count(*) from v18_day_detail 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="statisticdate"> 
+    statisticdate = #statisticdate# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertV18_day_detail" parameterClass="com.ist.bmp.hpom.dto.V18_day_detail" resultClass="int"> 
+  insert into V18_day_detail(
+  statisticdate,tasktype,dskey,taskstatus,endtime,begintime,usetime,taskcount,finishtask
+  ) values(
+  #statisticdate#,#tasktype#,#dskey#,#taskstatus#,#endtime#,#begintime#,#usetime#,#taskcount#,#finishtask#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyV18_day_detail" parameterClass="com.ist.bmp.hpom.dto.V18_day_detail" resultClass="int"> 
+  update V18_day_detail set 
+  statisticdate=#statisticdate#,tasktype=#tasktype#,dskey=#dskey#,taskstatus=#taskstatus#,endtime=#endtime#,begintime=#begintime#,usetime=#usetime#,taskcount=#taskcount#,finishtask=#finishtask#
+  where statisticdate=#statisticdate# 
+  </statement> 
+ 
+  <statement id="deleteV18_day_detail" parameterClass="java.lang.String" resultClass="int">
+  delete from V18_day_detail where statisticdate=#value# 
+  </statement> 
+ 
+  <statement id="getV18_day_detailDisp" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.V18_day_detail"> 
+  select * from V18_day_detail where statisticdate=#value# 
+  </statement> 
+  
+   <statement id="getExtractproportion" parameterClass="com.ist.bmp.hpom.dto.V18_day_detail" resultClass="com.ist.bmp.hpom.dto.V18_day_detail"> 
+  SELECT sum(finishtask) AS finishtask,sum(taskcount) AS taskcount FROM V18_DAY_DETAIL WHERE STATISTICDATE =#statisticdate# AND DSKEY =#dskey# AND TASKTYPE IN (SELECT tasktype FROM T18_TASK_TYPE WHERE TYPEGROUP = '2') 
+  </statement>
+ <statement id="getLoadproportion" parameterClass="com.ist.bmp.hpom.dto.V18_day_detail" resultClass="com.ist.bmp.hpom.dto.V18_day_detail"> 
+  SELECT sum(finishtask) AS finishtask,sum(taskcount) AS taskcount FROM V18_DAY_DETAIL WHERE STATISTICDATE =#statisticdate# AND DSKEY =#dskey# AND TASKTYPE = '301'
+  </statement>  
+  
+  <statement id="getDatabatchInfoByStatisticdate" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.V18_day_detail"> 
+  SELECT t.finishtask,t.taskcount,t1.TYPENAME FROM V18_DAY_DETAIL t,T18_TASK_TYPE  t1 WHERE STATISTICDATE =#value#
+	AND t.TASKTYPE  = t1.TASKTYPE  and t.TASKTYPE >= '302' ORDER BY t1.TASKTYPE
+  </statement>
+</sqlMap> 
+

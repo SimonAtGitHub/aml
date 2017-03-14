@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+	<form-beans>
+	    <form-bean name="t00_list_tableActionForm"	type="com.ist.aml.lip.controller.T00_list_tableActionForm" />
+	    <form-bean name="t00_list_colsActionForm"	type="com.ist.aml.lip.controller.T00_list_colsActionForm" />
+	</form-beans>
+	<global-forwards type="org.apache.struts.action.ActionForward">
+		<forward name="failure" path="/../common/errors.jsp" />
+		<forward name="errors" path="/../common/errors.jsp" />
+		<forward name="nopower" path="/../common/nopower.jsp" />
+		<forward name="sessiontimeout" path="/../common/sessiontimeout.jsp" />
+	</global-forwards>
+	<action-mappings>
+	<action path="/lipmanager/addTableData" parameter="addTableData" name="t00_list_tableActionForm" type="com.ist.aml.lip.controller.T07_lipAction" validate="false" scope="request"> 
+		    <forward name="success" path="/lipmanager/addTableData.jsp"/> 
+		   <forward name="failure" path="/lipmanager/addTableData.jsp"/> 
+	</action>
+    <action path="/lipmanager/addTableDataDo" parameter="addTableDataDO" name="t00_list_tableActionForm" type="com.ist.aml.lip.controller.T07_lipAction" validate="false" scope="request"> 
+		    <forward name="success" path="/lipmanager/addTableData.do"/> 
+	        <forward name="failure" path="/lipmanager/addTableData.do"/> 
+	</action>
+	
+	<action path="/lipmanager/t20_list_search_all" parameter="searchT20_list_all" name="t00_list_colsActionForm" type="com.ist.aml.lip.controller.T07_lipAction" validate="false" scope="request"> 
+		    <forward name="success" path="/lipmanager/t20_list_search_all.jsp"/> 
+		    <forward name="success2" path="/lipmanager/t20_list_search_all_main.jsp"/> 
+    </action>
+    
+    <action path="/lipmanager/t20_list_search_type" parameter="searchT20_list_type" name="t00_list_colsActionForm" type="com.ist.aml.lip.controller.T07_lipAction" validate="false" scope="request"> 
+			    <forward name="success" path="/lipmanager/t20_list_search_type.jsp"/> 
+    </action>
+    
+    <action path="/lipmanager/t20_list_details" parameter="getT20_list_details" name="t00_list_colsActionForm" type="com.ist.aml.lip.controller.T07_lipAction" validate="false" scope="request"> 
+	    <forward name="success" path="/lipmanager/t20_list_details.jsp"/> 
+	    <forward name="failure" path="/lipmanager/t20_list_details.jsp"/>
+    </action>
+	</action-mappings>
+	<message-resources parameter="ApplicationResources_zh_CN" />
+</struts-config>

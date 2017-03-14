@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T07_nbs_rpdi"> 
+
+<statement id="getT07_nbs_rpdidetailList2" parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rpdi" resultClass="com.ist.aml.pbcreport.dto.T07_nbs_rpdi"> 
+  SELECT A.REPORTKEY,A.RPDI_SEQNO,A.BKNM,A.BITP,A.BKID,A.BKNT,A.TSTM,A.TRCD,A.TICD,A.TSTP,A.TSCT,A.TSDR,A.CRSP,A.CRTP,A.CRAT,A.CFIN,A.CFCT,A.CFNC,A.CFRC,A.TCNM,A.TCIT,A.TCID,A.TCAT,A.TCAC,A.VALIDATE_IND,B.CTIF_SEQNO,B.CTNM,B.CITP,B.CTID,C.CTAC,A.ATIF_SEQNO 
+  FROM 
+   	<isNotEmpty prepend=" " property="report_time_cd">
+		<isEqual property="report_time_cd" compareValue="0">
+			T07_NBS_RPDI A,T07_NBS_CTIF B,T07_NBS_ATIF C 
+		</isEqual>
+		<isNotEqual property="report_time_cd" compareValue="0">
+		    T07_NBS_RPDI_UH A,T07_NBS_CTIF_UH B,T07_NBS_ATIF_UH C 
+		</isNotEqual>
+	</isNotEmpty>
+	<isEmpty prepend=" " property="report_time_cd">
+	     T07_NBS_RPDI A,T07_NBS_CTIF B,T07_NBS_ATIF C 
+	</isEmpty>
+  WHERE A.REPORTKEY=B.REPORTKEY AND A.REPORTKEY=C.REPORTKEY AND A.CTIF_SEQNO=C.CTIF_SEQNO AND A.CTIF_SEQNO=B.CTIF_SEQNO AND A.ATIF_SEQNO=C.ATIF_SEQNO 
+  <dynamic> 
+    <isNotEmpty prepend="AND" property="reportkey"> 
+    A.REPORTKEY = #reportkey# 
+    </isNotEmpty> 
+      <isNotEmpty prepend="AND" property="rpdi_seqno"> 
+    A.RPDI_SEQNO = $rpdi_seqno$ 
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="validate_ind"> 
+      A.VALIDATE_IND = #validate_ind# 
+    </isNotEmpty>
+  </dynamic> 
+  ORDER BY A.REPORTKEY,A.RPDI_SEQNO
+  </statement>  
+
+ <statement id="modifyValidateT07_nbs_rpdi_20091211" parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rpdi" resultClass="int"> 
+  UPDATE T07_NBS_RPDI SET VALIDATE_IND=#validate_ind#
+  <dynamic>
+  <isNotEqual prepend="," property="tstm_disp" compareValue="#">
+  	TSTM=#tstm#
+  </isNotEqual>
+  <isNotEqual prepend="," property="ticd" compareValue="#">
+  	TICD=#ticd#
+  </isNotEqual>
+  <isNotEqual prepend="," property="trcd" compareValue="#">
+  	TRCD=#trcd#
+  </isNotEqual>
+  <isNotEqual prepend="," property="tsdr" compareValue="#">
+  	TSDR=#tsdr#
+  </isNotEqual>
+  <isNotEqual prepend="," property="crtp" compareValue="#">
+  	CRTP=#crtp#
+  </isNotEqual>
+  <!--  
+  <isNotEqual prepend="," property="crat" compareValue="#">
+  	CRAT=$crat$
+  </isNotEqual>
+  -->
+  <isNotEqual prepend="," property="tbnm" compareValue="#">
+  	BKNM=#tbnm#
+  </isNotEqual>
+  <isNotEqual prepend="," property="tbit" compareValue="#">
+  	BITP=#tbit#
+  </isNotEqual>
+  <isNotEqual prepend="," property="tbid" compareValue="#">
+  	BKID=#tbid#
+  </isNotEqual>
+  <isNotEqual prepend="," property="tbnt" compareValue="#">
+  	BKNT=#tbnt#
+  </isNotEqual>
+  <isNotEqual prepend="," property="tstp" compareValue="#">
+  	TSTP=#tstp#
+  </isNotEqual>
+  <isNotEqual prepend="," property="tsct" compareValue="#">
+  	TSCT=#tsct#
+  </isNotEqual>
+  <isNotEqual prepend="," property="crsp" compareValue="#">
+  	CRSP=#crsp#
+  </isNotEqual>
+  <isNotEqual prepend="," property="cfin" compareValue="#">
+  	CFIN=#cfin#
+  </isNotEqual>
+  <isNotEqual prepend="," property="cfct" compareValue="#">
+  	CFCT=#cfct#
+  </isNotEqual>
+  <isNotEqual prepend="," property="cfic" compareValue="#">
+  	CFNC=#cfic#
+  </isNotEqual>
+  <isNotEqual prepend="," property="cfrc" compareValue="#">
+  	CFRC=#cfrc#
+  </isNotEqual>
+  <isNotEqual prepend="," property="tcnm" compareValue="#">
+  	TCNM=#tcnm#
+  </isNotEqual>
+  <isNotEqual prepend="," property="tcit" compareValue="#">
+  	TCIT=#tcit#
+  </isNotEqual>
+  <isNotEqual prepend="," property="tcid" compareValue="#">
+  	TCID=#tcid#
+  </isNotEqual>
+  <isNotEqual prepend="," property="tcat" compareValue="#">
+  	TCAT=#tcat#
+  </isNotEqual>
+  <isNotEqual prepend="," property="tcac" compareValue="#">
+  	TCAC=#tcac#
+  </isNotEqual>
+  </dynamic>
+ WHERE REPORTKEY=#reportkey# AND RPDI_SEQNO=$rpdi_seqno$
+  </statement> 
+  
+   <statement id="getTsctMapList" parameterClass="java.lang.String" resultClass="com.ist.aml.pbcreport.bo.PairBean"> 
+  SELECT T.TSCTKEY AS KEY1,T.TSCTNAME AS VALUE1 
+  FROM T87_PBC_TSCT T 
+  WHERE T.TSCTKEY LIKE #value#
+  </statement> 
+  <statement id="getT07_nbs_rpdiListCount2" parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rpdi" resultClass="int"> 
+  SELECT COUNT(REPORTKEY) FROM 
+   	<isNotEmpty prepend=" " property="report_time_cd">
+		<isEqual property="report_time_cd" compareValue="0">
+			T07_NBS_RPDI A 
+		</isEqual>
+		<isNotEqual property="report_time_cd" compareValue="0">
+		    T07_NBS_RPDI_UH A 
+		</isNotEqual>
+	</isNotEmpty>
+	<isEmpty prepend=" " property="report_time_cd">
+	     T07_NBS_RPDI A  
+	</isEmpty>
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend=" " property="reportkey"> 
+    REPORTKEY = #reportkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+   <statement id="getT07_nbs_rpdiList2" parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif" resultClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif"> 
+  SELECT A.REPORTKEY,A.RPDI_SEQNO,A.BKNM,A.BITP,A.BKID,A.BKNT,A.TSTM,A.TRCD,A.TICD,A.TSTP,A.TSCT,A.TSDR,A.CRSP,A.CRTP,A.CRAT,A.CFIN,A.CFCT,A.CFNC,A.CFRC,A.TCNM,A.TCIT,A.TCID,A.TCAT,A.TCAC,A.VALIDATE_IND,B.CTIF_SEQNO,B.CTNM,B.CITP,B.CTID,C.CTAC,A.ATIF_SEQNO 
+  FROM 
+ 	<isNotEmpty prepend=" " property="report_time_cd">
+		<isEqual property="report_time_cd" compareValue="0">
+			T07_NBS_RPDI A,T07_NBS_CTIF B,T07_NBS_ATIF C 
+		</isEqual>
+		<isNotEqual property="report_time_cd" compareValue="0">
+		    T07_NBS_RPDI_UH A,T07_NBS_CTIF_UH B,T07_NBS_ATIF_UH C 
+		</isNotEqual>
+	</isNotEmpty>
+	<isEmpty prepend=" " property="report_time_cd">
+	     T07_NBS_RPDI A,T07_NBS_CTIF B,T07_NBS_ATIF C 
+	</isEmpty>
+  WHERE A.REPORTKEY=B.REPORTKEY AND A.REPORTKEY=C.REPORTKEY AND A.CTIF_SEQNO=C.CTIF_SEQNO AND A.CTIF_SEQNO=B.CTIF_SEQNO AND A.ATIF_SEQNO=C.ATIF_SEQNO 
+  <dynamic> 
+    <isNotEmpty prepend="AND" property="reportkey"> 
+    A.REPORTKEY = #reportkey# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="validate_ind"> 
+      A.VALIDATE_IND = #validate_ind# 
+    </isNotEmpty>
+     ORDER BY A.VALIDATE_IND
+  </dynamic> 
+  </statement>
+  
+  <statement id="insertT07_nbs_rpdi" parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rpdi" resultClass="int"> 
+  INSERT INTO T07_NBS_RPDI(CTIF_SEQNO,ATIF_SEQNO,
+  REPORTKEY,RPDI_SEQNO,BKNM,BITP,BKID,BKNT,TSTM,TRCD,TICD,TSTP,TSCT,TSDR,CRSP,CRTP,CRAT,CFIN,CFCT,CFNC,CFRC,TCNM,TCIT,TCID,TCAT,TCAC,VALIDATE_IND
+  ) VALUES(
+   $ctif_seqno$,$atif_seqno$,#reportkey#,$rpdi_seqno$,#bknm#,#bitp#,#bkid#,#bknt#,#tstm#,#trcd#,#ticd#,#tstp#,#tsct#,#tsdr#,#crsp#,#crtp#,$crat$,#cfin#,#cfct#,#cfnc#,#cfrc#,#tcnm#,#tcit#,#tcid#,#tcat#,#tcac#,#validate_ind#
+  ) 
+  </statement> 
+  
+  <statement id="getT07_nbs_attachList"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_attach"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbs_attach">
+		SELECT REPORTKEY,ATTACHKEY,ATTACH_NAME,ATTACH_REALNAME FROM
+		T07_NBS_ATTACH
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="reportkey">
+				REPORTKEY = #reportkey#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="insertT07_nbs_attach"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_attach"
+		resultClass="int">
+		INSERT INTO T07_NBS_ATTACH(
+		REPORTKEY,ATTACHKEY,ATTACH_NAME,ATTACH_REALNAME ) VALUES(
+		#reportkey#,#attachkey#,#attach_name#,#attach_realname# )
+	</statement>
+	
+	<statement id="getT07_nbs_rpdidetailList_new" parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rpdi" resultClass="com.ist.aml.pbcreport.dto.T07_nbs_rpdi"> 
+  (SELECT A.REPORTKEY,A.RPDI_SEQNO,A.BKNM,A.BITP,A.BKID,A.BKNT,A.TSTM,A.TRCD,A.TICD,A.TSTP,A.TSCT,A.TSDR,A.CRSP,A.CRTP,A.CRAT,A.CFIN,A.CFCT,A.CFNC,A.CFRC,A.TCNM,A.TCIT,A.TCID,A.TCAT,A.TCAC,A.VALIDATE_IND,B.CTIF_SEQNO,B.CTNM,B.CITP,B.CTID,C.CTAC,A.ATIF_SEQNO,A.ORGANKEY OP_ORG_NUM
+  FROM T07_NBS_RPDI A,T07_NBS_CTIF B,T07_NBS_ATIF C
+  WHERE A.REPORTKEY=B.REPORTKEY AND A.REPORTKEY=C.REPORTKEY AND A.CTIF_SEQNO=C.CTIF_SEQNO AND A.CTIF_SEQNO=B.CTIF_SEQNO AND A.ATIF_SEQNO=C.ATIF_SEQNO
+  <dynamic> 
+    <isNotEmpty prepend="AND" property="reportkey"> 
+    A.REPORTKEY = #reportkey# 
+    </isNotEmpty> 
+      <isNotEmpty prepend="AND" property="rpdi_seqno"> 
+    A.RPDI_SEQNO = $rpdi_seqno$ 
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="validate_ind"> 
+      A.VALIDATE_IND = #validate_ind# 
+    </isNotEmpty>
+  </dynamic> 
+   ) UNION ALL
+  (SELECT A.REPORTKEY,A.RPDI_SEQNO,A.BKNM,A.BITP,A.BKID,A.BKNT,A.TSTM,A.TRCD,A.TICD,A.TSTP,A.TSCT,A.TSDR,A.CRSP,A.CRTP,A.CRAT,A.CFIN,A.CFCT,A.CFNC,A.CFRC,A.TCNM,A.TCIT,A.TCID,A.TCAT,A.TCAC,A.VALIDATE_IND,B.CTIF_SEQNO,B.CTNM,B.CITP,B.CTID,C.CTAC,A.ATIF_SEQNO,A.ORGANKEY OP_ORG_NUM
+  FROM T07_NBS_RPDI_UH A,T07_NBS_CTIF_UH B,T07_NBS_ATIF_UH C
+  WHERE A.REPORTKEY=B.REPORTKEY AND A.REPORTKEY=C.REPORTKEY AND A.CTIF_SEQNO=C.CTIF_SEQNO AND A.CTIF_SEQNO=B.CTIF_SEQNO AND A.ATIF_SEQNO=C.ATIF_SEQNO  
+  <dynamic> 
+    <isNotEmpty prepend="AND" property="reportkey"> 
+    A.REPORTKEY = #reportkey# 
+    </isNotEmpty> 
+      <isNotEmpty prepend="AND" property="rpdi_seqno"> 
+    A.RPDI_SEQNO = $rpdi_seqno$ 
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="validate_ind"> 
+      A.VALIDATE_IND = #validate_ind# 
+    </isNotEmpty>
+  </dynamic> 
+   )
+  </statement>
+  
+  
+</sqlMap> 

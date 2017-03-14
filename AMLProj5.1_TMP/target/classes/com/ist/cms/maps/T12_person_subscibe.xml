@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_person_subscibe"> 
+  <statement id="getT12_person_subscibeList" parameterClass="com.ist.cms.dto.T12_person_subscibe" resultClass="com.ist.cms.dto.T12_person_subscibe"> 
+  select t1.subscibekey,t1.username,t2.realname from t12_person_subscibe t1, t00_user t2
+  where 1 >0 
+  <dynamic prepend=""> 
+    <isNotEmpty prepend="and" property="subscibekey"> 
+    subscibekey = #subscibekey# 
+    </isNotEmpty> 
+  </dynamic> 
+  and t1.username = t2.username
+  </statement> 
+ 
+  <statement id="getT12_person_subscibeListCount" parameterClass="com.ist.cms.dto.T12_person_subscibe" resultClass="int"> 
+  select count(*) from t12_person_subscibe 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="subscibekey"> 
+    subscibekey = #subscibekey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_person_subscibe" parameterClass="com.ist.cms.dto.T12_person_subscibe" resultClass="int"> 
+  insert into T12_person_subscibe(
+  subscibekey,username
+  ) values(
+  #subscibekey#,#username#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_person_subscibe" parameterClass="com.ist.cms.dto.T12_person_subscibe" resultClass="int"> 
+  update T12_person_subscibe set 
+  subscibekey=#subscibekey#,username=#username#
+  where subscibekey=#subscibekey# 
+  </statement> 
+ 
+  <statement id="deleteT12_person_subscibe" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_person_subscibe where subscibekey=#value# 
+  </statement> 
+ 
+  <statement id="getT12_person_subscibeDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_person_subscibe"> 
+  select * from T12_person_subscibe where subscibekey=#value# 
+  </statement> 
+ 
+</sqlMap> 
+

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<report_des>用户信息列表</report_des>	
+	<page>
+	    <param type="nomark">p_username</param>
+	    <param type="nomark">p_realname</param>
+
+	</page>
+	<table id="table1" classtype="awp_head">
+		<define name="table_width">8</define>
+		<define name="title_start">1</define>
+		<define name="title_end">1</define>
+	</table>
+	<table id="table2" classtype="awp_line_blue" type="dynamiclist" dynamic_cols="rulekey" dynamic_indic_cols="alertdt">
+		<define name="table_width">8</define>
+		<define name="head_start">2</define>
+		<define name="head_end">2</define>
+		<define name="body_start">3</define>
+		<define name="body_end">3</define>
+		<define name="dynamic_start_row">3</define>
+		<define name="dynamic_end_row">3</define>
+		<define name="dynamic_front_start_colum">1</define>
+		<define name="dynamic_front_end_colum">2</define>
+		<define name="dynamic_start_colum">3</define>
+		<define name="dynamic_end_colum">3</define>
+		<define name="dynamic_back_start_colum">4</define>
+		<define name="dynamic_back_end_colum">8</define>
+		<define name="list_maxrow">-1</define>
+		<data type="list" name="user">
+		  SELECT USERNAME,REALNAME,PASSWORD,CREATOR,CREATEDATE,ISADMIN FROM T00_USER 
+		   WHERE 1>0
+		<isNotEmpty property="p_username">
+				and USERNAME LIKE '%#p_username#%'
+		</isNotEmpty>		
+		<isNotEmpty property="p_realname">
+				and REALNAME LIKE '%#p_realname#%'
+		</isNotEmpty>
+		    ORDER BY CREATOR
+		</data>
+	</table>
+
+	</root>

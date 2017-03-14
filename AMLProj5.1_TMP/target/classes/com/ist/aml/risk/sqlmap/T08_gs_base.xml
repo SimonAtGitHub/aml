@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T08_gs_base">
+	<statement id="getT08_gs_baseList"
+		parameterClass="com.ist.aml.risk.dto.T08_gs_base"
+		resultClass="com.ist.aml.risk.dto.T08_gs_base">
+		SELECT GSKEY,LEVELKEY,GSNAME,REMARK,GSRM,CREATDATE,CREATOR,PRI,
+		FLAG,PARTY_TYPE,CURR_CD,GRANULARITY FROM T08_GS_BASE
+		<dynamic prepend="WHERE ">
+			<isNotEmpty prepend="AND" property="gsname">
+				GSNAME LIKE '%$gsname$%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="levelkey">
+				LEVELKEY = #levelkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="flag">
+				FLAG = #flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="curr_cd">
+				CURR_CD = #curr_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="granularity">
+				GRANULARITY = #granularity#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_type">
+				PARTY_TYPE = #party_type#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="startdate">
+				<![CDATA[CREATDATE >= #startdate# ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="enddate">
+				<![CDATA[CREATDATE <= #enddate# ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="" property="orderby">
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY GSNAME
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY LEVELKEY
+				</isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY CREATDATE
+				</isEqual>
+				<isEqual property="orderby" compareValue="4">
+					ORDER BY FLAG
+				</isEqual>
+				<isNotEmpty prepend="" property="order">
+					<isEqual property="order" compareValue="1"></isEqual>
+					<isEqual property="order" compareValue="2">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="getT08_gs_baseListCount"
+		parameterClass="com.ist.aml.risk.dto.T08_gs_base" resultClass="int">
+		SELECT COUNT(1) FROM T08_GS_BASE
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="gsname">
+				GSNAME LIKE '%$gsname$%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="levelkey">
+				LEVELKEY = #levelkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="flag">
+				FLAG = #flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="curr_cd">
+				CURR_CD = #curr_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="granularity">
+				GRANULARITY = #granularity#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_type">
+				PARTY_TYPE = #party_type#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="startdate">
+				<![CDATA[CREATDATE >= #startdate# ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="enddate">
+				<![CDATA[CREATDATE <= #enddate# ]]>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="getT08_gs_baseListbyTmpl"
+		parameterClass="com.ist.aml.risk.dto.T08_gs_base"
+		resultClass="com.ist.aml.risk.dto.T08_gs_base">
+		SELECT GSKEY,LEVELKEY,GSNAME,REMARK FROM T08_GS_BASE
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="party_type">
+				(PARTY_TYPE = #party_type# OR PARTY_TYPE IS NULL)
+			</isNotEmpty>
+			<!-- <isEmpty prepend="AND" property="party_type">
+				PARTY_TYPE IS NULL
+				</isEmpty>
+				<isNotEmpty prepend="AND" property="party_type">
+				PARTY_TYPE = #party_type#
+				</isNotEmpty>-->
+			<isNotEmpty prepend="AND" property="gsname">
+				GSNAME LIKE '%$gsname$%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="levelkey">
+				LEVELKEY = #levelkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="granularity">
+				GRANULARITY = #granularity#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="gsList">
+				<isEqual property="searchFlag" compareValue="1">
+					GSKEY IN
+					<iterate prepend="" property="gsList" open="("
+						close=")" conjunction=",">
+						#gsList[]#
+					</iterate>
+				</isEqual>
+				<isEqual property="searchFlag" compareValue="0">
+					GSKEY NOT IN
+					<iterate prepend="" property="gsList" open="("
+						close=")" conjunction=",">
+						#gsList[]#
+					</iterate>
+				</isEqual>
+			</isNotEmpty>
+			<isEmpty prepend="AND" property="gsList">
+				<isEqual property="searchFlag" compareValue="1">
+					GSKEY =''
+				</isEqual>
+			</isEmpty>
+		</dynamic>
+	</statement>
+
+
+
+	<statement id="deleteT08_gs_base" parameterClass="java.lang.String"
+		resultClass="int">
+		DELETE FROM T08_GS_BASE WHERE GSKEY=#value#
+	</statement>
+
+	<statement id="getT08_gs_baseDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.aml.risk.dto.T08_gs_base">
+		SELECT * FROM T08_GS_BASE WHERE GSKEY=#value#
+	</statement>
+	<statement id="getT08_gs_baseListbyTmplkey"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.risk.dto.T08_gs_base">
+		SELECT
+		T1.GSKEY,LEVELKEY,GSNAME,REMARK,GSRM,CREATDATE,CREATOR,PRI,FLAG,PARTY_TYPE
+		FROM T08_GS_BASE T1,T08_DEF_GS T2 WHERE T1.GSKEY=T2.GSKEY AND
+		T2.TEMPLATEKEY=#value#
+	</statement>
+
+
+</sqlMap>
+

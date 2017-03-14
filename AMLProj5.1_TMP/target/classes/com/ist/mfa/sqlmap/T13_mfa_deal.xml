@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T13_mfa_deal">
+	<statement id="getT13_mfa_stcrList" parameterClass="java.lang.String"
+		resultClass="com.ist.mfa.dto.T13_mfa_deal">
+		SELECT NET_ID,STCR FROM T13_MFA_STCR WHERE NET_ID = #net_id# 
+    </statement>
+    
+    <statement id="getT13_mfa_stcrCount" parameterClass="java.lang.String"
+		resultClass="int">
+		SELECT count(*) FROM T13_MFA_STCR WHERE NET_ID = #net_id# 
+    </statement>
+    
+    <statement id="getT13_mfa_stcrCountA" parameterClass="com.ist.mfa.dto.T13_mfa_deal"
+		resultClass="int">
+		SELECT count(*) FROM T13_MFA_STCR WHERE NET_ID = #net_id# AND STCR=#stcr#
+    </statement>
+    
+    <statement id="getT13_mfa_stcr_transList" parameterClass="com.ist.mfa.dto.T13_mfa_deal"
+		resultClass="com.ist.mfa.dto.T13_mfa_deal">
+		SELECT * FROM(
+		SELECT A.NET_ID,A.STCR,A.TRANSACTIONKEY,B.PARTY_ID,B.ACCT_NUM,B.AMT,B.ORGANKEY,B.PARTY_CHN_NAME,B.TX_DT,B.TX_NO,B.DEBIT_CREDIT,B.CASH_TRANS_FLAG,B.CURRENCY_CD,B.OPP_NAME,B.HANDLE_STATUS_CD as status_cd FROM T13_MFA_STCR_TRANS A ,T47_TRANSACTION B WHERE A.TRANSACTIONKEY=B.TRANSACTIONKEY
+		UNION
+		SELECT A.NET_ID,A.STCR,A.TRANSACTIONKEY,C.PARTY_ID,C.ACCT_NUM,C.AMT,C.ORGANKEY,C.PARTY_CHN_NAME,C.TX_DT,C.TX_NO,C.DEBIT_CREDIT,C.CASH_TRANS_FLAG,C.CURRENCY_CD,C.OPP_NAME,C.HANDLE_STATUS_CD as status_cd FROM T13_MFA_STCR_TRANS A ,T47_TRANSACTION_UH C WHERE A.TRANSACTIONKEY=C.TRANSACTIONKEY
+		) WHERE NET_ID = #net_id# AND STCR=#stcr#
+    </statement>
+    
+    <statement id="getT13_mfa_stcr_transList1" parameterClass="com.ist.mfa.dto.T13_mfa_deal"
+		resultClass="com.ist.mfa.dto.T13_mfa_deal">
+		SELECT TRANSACTIONKEY, PARTY_ID AS party_id_MA, PARTY_CLASS_CD AS party_class_cd_MA, CURR_CD AS curr_cd_MA, 
+		TRANS_AMT AS amt, TX_DT  FROM T13_MFA_STCR_TRANS WHERE NET_ID = #net_id#
+    </statement>
+    
+    <statement id="getT13_mfa_stcr_transCount" parameterClass="com.ist.mfa.dto.T13_mfa_deal"
+		resultClass="int">
+		SELECT count(*) FROM(
+		SELECT A.NET_ID,A.STCR,A.TRANSACTIONKEY,B.PARTY_ID,B.ACCT_NUM,B.AMT,B.ORGANKEY,B.PARTY_CHN_NAME,B.TX_DT,B.TX_NO,B.DEBIT_CREDIT,B.CASH_TRANS_FLAG,B.CURRENCY_CD,B.OPP_NAME,B.HANDLE_STATUS_CD as status_cd FROM T13_MFA_STCR_TRANS A ,T47_TRANSACTION B WHERE A.TRANSACTIONKEY=B.TRANSACTIONKEY
+		UNION
+		SELECT A.NET_ID,A.STCR,A.TRANSACTIONKEY,C.PARTY_ID,C.ACCT_NUM,C.AMT,C.ORGANKEY,C.PARTY_CHN_NAME,C.TX_DT,C.TX_NO,C.DEBIT_CREDIT,C.CASH_TRANS_FLAG,C.CURRENCY_CD,C.OPP_NAME,C.HANDLE_STATUS_CD as status_cd FROM T13_MFA_STCR_TRANS A ,T47_TRANSACTION_UH C WHERE A.TRANSACTIONKEY=C.TRANSACTIONKEY
+		) WHERE NET_ID = #net_id# AND STCR=#stcr#
+    </statement>
+    
+    <statement id="insertT13_mfs_stcr" parameterClass="com.ist.mfa.dto.T13_mfa_deal"
+		resultClass="int">
+		INSERT INTO T13_MFA_STCR (NET_ID, STCR) VALUES (#net_id#,#stcr#) 
+    </statement>
+    
+    <statement id="deleteT13_mfa_stcr" parameterClass="com.ist.mfa.dto.T13_mfa_deal"
+		resultClass="int">
+		DELETE FROM T13_MFA_STCR WHERE NET_ID=#net_id# AND STCR=#stcr# 
+    </statement>
+    
+    <statement id="getStcrList" parameterClass="com.ist.mfa.dto.T13_mfa_deal"
+		resultClass="com.ist.mfa.dto.T13_mfa_deal">
+		SELECT STCRKEY AS stcr, PBC_DES FROM T07_PBCRULE
+    </statement>
+    
+     <statement id="insertT13_mfs_stcr_trans" parameterClass="com.ist.mfa.dto.T13_mfa_deal"
+		resultClass="int">
+		INSERT INTO T13_MFA_STCR_TRANS (NET_ID,STCR,TRANSACTIONKEY,PARTY_ID,ACCT_NUM,CURR_CD,PARTY_CLASS_CD,TRANS_AMT,TX_DT) 
+		                        VALUES (#net_id#,#stcr#,#transactionkey#,#party_id#,#acct_num#,#curr_cd#,#party_class_cd#,#amt#,#tx_dt:DATE#) 
+    </statement>
+    
+    <statement id="deleteT13_mfa_stcr_trans" parameterClass="com.ist.mfa.dto.T13_mfa_deal"
+		resultClass="int">
+		DELETE FROM T13_MFA_STCR_TRANS WHERE NET_ID=#net_id# AND STCR=#stcr#
+		<dynamic>
+		<isNotEmpty prepend="AND" property="transactionkey">
+			TRANSACTIONKEY=#transactionkey#
+	    </isNotEmpty>
+		</dynamic>
+    </statement>
+    <statement id="getT13_mfa_stcr_transCountValue" parameterClass="com.ist.mfa.dto.T13_mfa_deal"
+		resultClass="int">
+		SELECT count(*) FROM T13_MFA_STCR_TRANS WHERE NET_ID = #net_id# AND STCR=#stcr# AND TRANSACTIONKEY=#transactionkey#
+    </statement>
+    <statement id="getTrans_relList" parameterClass="com.ist.mfa.dto.T13_mfa_deal"
+		resultClass="com.ist.mfa.dto.T13_mfa_deal">
+		SELECT * FROM(
+		SELECT A.NET_ID,A.STATUS,A.TRANSACTIONKEY,B.PARTY_ID,B.ACCT_NUM,B.AMT,B.ORGANKEY,B.PARTY_CHN_NAME,B.PARTY_CLASS_CD,B.TX_DT,B.TX_NO,B.DEBIT_CREDIT,B.CASH_TRANS_FLAG,B.CURRENCY_CD,B.CURR_CD,B.OPP_NAME,B.HANDLE_STATUS_CD as status_cd FROM T13_MFA_TRANS_REL A ,T47_TRANSACTION B WHERE A.TRANSACTIONKEY=B.TRANSACTIONKEY
+			UNION
+		SELECT A.NET_ID,A.STATUS,A.TRANSACTIONKEY,C.PARTY_ID,C.ACCT_NUM,C.AMT,C.ORGANKEY,C.PARTY_CHN_NAME,C.PARTY_CLASS_CD,C.TX_DT,C.TX_NO,C.DEBIT_CREDIT,C.CASH_TRANS_FLAG,C.CURRENCY_CD,C.CURR_CD,C.OPP_NAME,C.HANDLE_STATUS_CD as status_cd FROM T13_MFA_TRANS_REL A ,T47_TRANSACTION_UH C WHERE A.TRANSACTIONKEY=C.TRANSACTIONKEY
+		) WHERE NET_ID=#net_id# AND STATUS IN ('1','2')
+    </statement>
+    <statement id="getTrans_relCount" parameterClass="com.ist.mfa.dto.T13_mfa_deal"
+		resultClass="int">
+		SELECT COUNT(*) FROM(
+		SELECT A.NET_ID,A.STATUS,A.TRANSACTIONKEY,B.PARTY_ID,B.ACCT_NUM,B.AMT,B.ORGANKEY,B.PARTY_CHN_NAME,B.PARTY_CLASS_CD,B.TX_DT,B.TX_NO,B.DEBIT_CREDIT,B.CASH_TRANS_FLAG,B.CURRENCY_CD,B.CURR_CD,B.OPP_NAME,B.HANDLE_STATUS_CD as status_cd FROM T13_MFA_TRANS_REL A ,T47_TRANSACTION B WHERE A.TRANSACTIONKEY=B.TRANSACTIONKEY
+			UNION
+		SELECT A.NET_ID,A.STATUS,A.TRANSACTIONKEY,C.PARTY_ID,C.ACCT_NUM,C.AMT,C.ORGANKEY,C.PARTY_CHN_NAME,C.PARTY_CLASS_CD,C.TX_DT,C.TX_NO,C.DEBIT_CREDIT,C.CASH_TRANS_FLAG,C.CURRENCY_CD,C.CURR_CD,C.OPP_NAME,C.HANDLE_STATUS_CD as status_cd FROM T13_MFA_TRANS_REL A ,T47_TRANSACTION_UH C WHERE A.TRANSACTIONKEY=C.TRANSACTIONKEY
+		) WHERE NET_ID=#net_id# AND STATUS IN ('1','2')
+    </statement>
+    
+    <statement id="saveT13_mfa_info" parameterClass="com.ist.mfa.dto.T13_mfa_deal"
+		resultClass="int">
+		UPDATE T13_MFA_INFO SET CONCLUSION = #conclusion# ,NET_STATUS=#net_status#
+		<dynamic>
+		<isNotEmpty prepend="," property="flow_status">
+			FLOW_STATUS=#flow_status#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="," property="maxtrans_dt">
+			MAXTRANS_DT=#maxtrans_dt#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="," property="party_id_MA">
+			PARTY_ID=#party_id_MA#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="," property="party_class_cd_MA">
+			PARTY_CLASS_CD=#party_class_cd_MA#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="," property="curr_cd_MA">
+			CURR_CD=#curr_cd_MA#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="," property="application_num">
+			application_num=#application_num#
+	    </isNotEmpty>
+		</dynamic>
+		WHERE NET_ID=#net_id#
+    </statement>
+     <statement id="getT13_mfa_infoDisp" parameterClass="java.lang.String" resultClass="com.ist.mfa.dto.T13_mfa_info">
+        select application_num as net_id,view_mode,display_mode,is_new 
+		 from T07_case_application
+		 where application_num=#net_id#
+     </statement>
+</sqlMap>
+

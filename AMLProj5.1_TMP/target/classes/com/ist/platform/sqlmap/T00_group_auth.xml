@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T00_group_auth">
+  <statement id="insertT00_group_auth" parameterClass="com.ist.platform.dto.T00_group_auth" resultClass="int">
+  INSERT INTO T00_GROUP_AUTH(
+  GROUPKEY,DGROUPKEY,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER
+  ) VALUES(
+  #groupkey#,#dgroupkey#,#createdate#,#creator#,#modifydate#,#modifier#
+  )
+  </statement>
+
+  <statement id="getT00_groupListCountBydgroupkey" parameterClass="string" resultClass="int">
+  SELECT COUNT(*) FROM T00_GROUP_AUTH WHERE DGROUPKEY=#value#
+  </statement>
+
+  <statement id="deleteT00_group_auth" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T00_GROUP_AUTH WHERE GROUPKEY=#value#
+  </statement>
+
+  <statement id="getT00_group_authListByGroupkey" parameterClass="string" resultClass="com.ist.platform.dto.T00_group_auth">
+SELECT D.DGROUPNAME,GA.* FROM T00_GROUP_AUTH GA,T00_DGROUP D WHERE GA.DGROUPKEY=D.DGROUPKEY
+AND GA.GROUPKEY=#value# ORDER BY GA.DGROUPKEY
+  </statement>
+   <statement id="getDgroupkeyByGroupkey" parameterClass="string" resultClass="com.ist.platform.dto.T00_group_auth">
+SELECT * FROM T00_GROUP_AUTH  WHERE GROUPKEY=#value#
+  </statement>
+</sqlMap>
+

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+	<!-- modified by chenhao date:2010-05 start-->
+<sqlMap namespace="T08_risk_attach">
+	<statement id="getT08_risk_attachList"
+		parameterClass="com.ist.aml.risk.dto.T08_risk_attach"
+		resultClass="com.ist.aml.risk.dto.T08_risk_attach">
+		SELECT
+		APPLICATION_NUM,ATTACHKEY,ATTACH_NAME,ATTACH_REALNAME,LOAD_DATE,LOAD_USER
+		FROM T08_RISK_ATTACH
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="application_num">
+				APPLICATION_NUM = #application_num#
+			</isNotEmpty>
+			<!-- 
+			<isNotEmpty prepend="AND" property="alertkey">
+				ALERTKEY = #alertkey#
+			</isNotEmpty>
+			 -->
+		</dynamic>
+	</statement>
+
+	<statement id="getT08_risk_attachListCount"
+		parameterClass="com.ist.aml.risk.dto.T08_risk_attach"
+		resultClass="int">
+		SELECT COUNT(*) FROM T08_RISK_ATTACH
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="application_num">
+				APPLICATION_NUM = #application_num#
+			</isNotEmpty>
+			<!-- 
+			<isNotEmpty prepend="AND" property="alertkey">
+				ALERTKEY = #alertkey#
+			</isNotEmpty>
+			 -->
+		</dynamic>
+	</statement>
+
+	<statement id="insertT08_risk_attach"
+		parameterClass="com.ist.aml.risk.dto.T08_risk_attach"
+		resultClass="int">
+		<!-- APPLICATION_NUM,ALERTKEY,ATTACHKEY,ATTACH_NAME,ATTACH_REALNAME,LOAD_DATE,LOAD_USER -->
+		INSERT INTO T08_RISK_ATTACH(
+		APPLICATION_NUM,ATTACHKEY,ATTACH_NAME,ATTACH_REALNAME,LOAD_DATE,LOAD_USER
+		) VALUES(
+		#application_num#,#attachkey#,#attach_name#,#attach_realname#,#load_date#,#load_user#
+		)
+	</statement>
+
+	
+	<statement id="deleteT08_risk_attach"
+		parameterClass="java.lang.String" resultClass="int">
+		DELETE FROM T08_RISK_ATTACH WHERE ATTACHKEY=#value#
+	</statement>
+
+	<statement id="getT08_risk_attachDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.risk.dto.T08_risk_attach">
+		SELECT * FROM T08_RISK_ATTACH WHERE APPLICATION_NUM=#value#
+	</statement>
+	<!-- end -->
+
+</sqlMap>
+

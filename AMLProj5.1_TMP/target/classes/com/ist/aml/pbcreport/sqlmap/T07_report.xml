@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T07_report">
+<statement id="updateT07_reportValidate1"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_report"
+		resultClass="int">
+		UPDATE T07_REPORT SET VALIDATE_IND=#validate_ind#,REPORT_STATUS_CD=#report_status_cd# WHERE
+		REPORTKEY=#reportkey#
+	</statement>
+		<statement id="modifyT07_caseValidateStatus1" parameterClass="com.ist.aml.report.dto.T07_case_application" resultClass="int">
+		UPDATE T07_CASE_APPLICATION  SET VALIDATE_IND=#validate_ind#
+		<isNotEmpty prepend=" " property="app_state_cd">
+		  ,APP_STATE_CD=#app_state_cd#
+		</isNotEmpty>
+		 WHERE APPLICATION_NUM=#application_num#
+	</statement>
+	<statement id="getT07_reportDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.aml.pbcreport.dto.T07_report">
+		SELECT * FROM T07_REPORT WHERE REPORTKEY=#value#
+	</statement>
+		<statement id="updateT07_reportValidate"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_report"
+		resultClass="int">
+		UPDATE T07_REPORT SET VALIDATE_IND=#validate_ind# WHERE
+		REPORTKEY=#reportkey#
+	</statement>
+	<statement id="getReportByCasekey" parameterClass="java.lang.String"
+		resultClass="com.ist.aml.pbcreport.dto.T07_report">
+		SELECT A.REPORTKEY,A.PBC_MSG_TYPE_CD FROM T07_REPORT A,T07_REPORT_CASE B WHERE A.REPORTKEY=B.REPORTKEY AND
+		B.APPLICATION_NUM=#value#
+	</statement>
+	
+		<statement id="getReportByCasekey1" parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif"
+		resultClass="com.ist.aml.pbcreport.dto.T07_report">
+		SELECT A.REPORTKEY,A.PBC_MSG_TYPE_CD FROM 
+		<isNotEmpty prepend=" " property="report_time_cd">
+			<isEqual property="report_time_cd" compareValue="0">
+				T07_REPORT A,T07_REPORT_CASE B
+			</isEqual>
+			<isNotEqual property="report_time_cd" compareValue="0">
+			    T07_REPORT_UH A,T07_REPORT_CASE_UH B
+			</isNotEqual>
+		</isNotEmpty>
+		<isEmpty prepend=" " property="report_time_cd">
+		    T07_REPORT A,T07_REPORT_CASE B 
+		</isEmpty>
+	 WHERE A.REPORTKEY=B.REPORTKEY AND B.APPLICATION_NUM=#application_num#
+	   </statement>
+	
+	<statement id="getT07_nbsreportList"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_report"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbs_rbif">
+		SELECT
+		A.REPORTKEY,A.FINM,A.FIRC,A.FICD,A.STCR,A.SSDG,A.TKMS,A.SSDS,A.CTTN,A.TTNM,A.RPNM,A.RPDT,A.VALIDATE_IND
+		FROM T07_NBS_RBIF_UH A,T07_REPORT_UH B WHERE A.REPORTKEY=B.REPORTKEY
+		AND EXISTS(SELECT 'A' FROM T07_RECEIPT T1,T07_MSG_UH T2 WHERE T1.MSGKEY=T2.MSGKEY 
+			AND $sysdate$<![CDATA[<=]]>60
+			AND T2.REPORTKEY=B.REPORTKEY)
+		<isNotEmpty prepend="AND" property="reportkey">
+			B.REPORTKEY = #reportkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="report_status_cd">
+			B.REPORT_STATUS_CD= #report_status_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt">
+			<![CDATA[A.RPDT >= #create_dt:DATE#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt_end">
+			<![CDATA[A.RPDT <= #create_dt_end:DATE#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_org">
+			A.FICD = #create_org#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="stcr">
+			A.STCR = #stcr#
+		</isNotEmpty>
+		<isNotEmpty property="ordername">
+			ORDER BY $ordername$
+			<isNotEmpty property="ordertype">desc</isNotEmpty>
+		</isNotEmpty>
+	</statement>
+	<statement id="getT07_nbsreportListCount"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_report"
+		resultClass="int">
+		SELECT COUNT(A.REPORTKEY) FROM T07_NBS_RBIF_UH A,T07_REPORT_UH B WHERE
+		A.REPORTKEY=B.REPORTKEY
+		AND EXISTS(SELECT 'A' FROM T07_RECEIPT T1,T07_MSG_UH T2 WHERE T1.MSGKEY=T2.MSGKEY 
+			AND $sysdate$<![CDATA[<=]]>60
+			AND T2.REPORTKEY=B.REPORTKEY) 
+		<isNotEmpty prepend="AND" property="reportkey">
+			B.REPORTKEY = #reportkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="report_status_cd">
+			B.REPORT_STATUS_CD= #report_status_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt">
+			<![CDATA[A.RPDT >= #create_dt:DATE#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt_end">
+			<![CDATA[A.RPDT <= #create_dt_end:DATE#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_org">
+			A.FICD = #create_org#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="stcr">
+			A.STCR = #stcr#
+		</isNotEmpty>
+	</statement>
+	<statement id="getT07_reportDisp1" parameterClass="java.lang.String"
+		resultClass="com.ist.aml.pbcreport.dto.T07_report">
+		SELECT * FROM T07_REPORT_UH WHERE REPORTKEY=#value#
+	</statement>
+	<statement id="insertT07_report"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_report"
+		resultClass="int">
+		INSERT INTO T07_REPORT(
+		APPLICATION_NUM,REPORTKEY,DATA_DT,INTERFACEKEY,PBC_MSG_TYPE_CD,INVALID_DT,REPORT_STATUS_CD,VALIDATE_IND,ORIG_REPORTKEY,CREATE_ORG,CREATE_DT
+		) VALUES(
+		#application_num#,#reportkey#,#data_dt:DATE#,#interfacekey#,#pbc_msg_type_cd#,#invalid_dt:DATE#,#report_status_cd#,#validate_ind#,#orig_reportkey#,#create_org#,#create_dt:DATE#
+		)
+	</statement>
+	
+	<statement id="modifyT07_report"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_report"
+		resultClass="int">
+		UPDATE T07_REPORT SET
+		REPORTKEY=#reportkey#,DATA_DT=#data_dt#,INTERFACEKEY=#interfacekey#,PBC_MSG_TYPE_CD=#pbc_msg_type_cd#,INVALID_DT=#invalid_dt#,REPORT_STATUS_CD=#report_status_cd#,VALIDATE_IND=#validate_ind#
+		<isNotEmpty prepend="," property="orig_reportkey">
+				ORIG_REPORTKEY = #orig_reportkey#
+			</isNotEmpty>
+			,CREATE_ORG=#create_org#,CREATE_DT=#create_dt#
+		WHERE REPORTKEY=#reportkey#
+	</statement>
+	
+	<statement id="insertT07_packet"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_packet"
+		resultClass="int">
+		insert into T07_PACKET(
+		PACKETKEY,PACKET_TYPE_CD,REPORT_TYPE_CD,REPORTORGANKEY,SENDDATE_DT,BATCH_SEQ,PACKET_FILENAME,PACKET_FILEPATH,PACKET_STATUS_CD,ORIG_PACKETKEY,CREATE_DT,SENDDATE_CH
+		) VALUES(
+		#packetkey#,#packet_type_cd#,#report_type_cd#,#reportorgankey#,#senddate_dt#,#batch_seq#,#packet_filename#,#packet_filepath#,#packet_status_cd#,#orig_packetkey#,#create_dt#,#senddate_ch#
+		)
+	</statement>
+	
+	<statement id="modifyT07_report_status_all"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_msg"
+		resultClass="int">
+		 UPDATE T07_REPORT  SET 
+  			REPORT_STATUS_CD=#msg_status_cd#
+  			WHERE EXISTS
+  			(
+   				SELECT T2.REPORTKEY FROM T07_MSG T2 WHERE T07_REPORT.REPORTKEY=T2.REPORTKEY AND T2.PACKETKEY=#packetkey#
+ 		 	) 
+	</statement>
+	
+	<statement id="modifyT07_reportCase_status"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_report"
+		resultClass="int">
+		UPDATE T07_REPORT SET REPORT_STATUS_CD=#report_status_cd# WHERE
+		APPLICATION_NUM=#application_num# or orig_application_num = #application_num#
+	</statement>
+</sqlMap>

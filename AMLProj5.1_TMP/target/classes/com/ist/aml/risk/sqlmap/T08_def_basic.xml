@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T08_def_basic">
+	<statement id="getT08_def_basicList"
+		parameterClass="com.ist.aml.risk.dto.T08_def_basic"
+		resultClass="com.ist.aml.risk.dto.T08_def_basic">
+		SELECT
+		A.BASICKEY,A.BASICNAME,A.BOTYPE,A.CHECKUPPOINT,A.BASE_SCORE_TYPE,
+		A.DEFAULT_SCORE,A.SCORE_TYPE,A.CREATOR,A.CREATEDATE,A.MODIFIER,
+		A.MODIFYDATE,A.STATUS,B.BASICOCC,B.BASE_SCORE,B.TEMPLATEKEY,
+		B.CATEGORYKEY,A.CURR_CD,A.PARTY_CD,A.CASH_TRANS_FLAG,
+		A.RECEIVE_PAY,A.A_V_T,A.GRANULARITY,A.BASPCTYPE FROM
+		T08_DEF_BASIC A ,T08_DEF_CAT_BIA B WHERE A.BASICKEY=B.BASICKEY
+		<dynamic>
+			<isNotEmpty prepend="AND" property="basickey">
+				A.BASICKEY = #basickey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="basickey">
+				A.BASPCTYPE = #baspctype#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="categorykey">
+				B.CATEGORYKEY = #categorykey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="templatekey">
+				B.TEMPLATEKEY = #templatekey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cash_trans_flag">
+				A.CASH_TRANS_FLAG = #cash_trans_flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="receive_pay">
+				A.RECEIVE_PAY = #receive_pay#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="a_v_t">
+				A.A_V_T = #a_v_t#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="granularitys">
+				A.GRANULARITY = #granularity#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="getT08_def_basicList1"
+		parameterClass="com.ist.aml.risk.dto.T08_def_basic"
+		resultClass="com.ist.aml.risk.dto.T08_def_basic">
+		SELECT A.BASICKEY,A.BASICNAME,A.BOTYPE,A.CHECKUPPOINT,
+		A.BASE_SCORE_TYPE,BASE_SCORE,
+		A.DEFAULT_SCORE,A.SCORE_TYPE,A.CREATOR,A.CREATEDATE,A.MODIFIER,
+		A.MODIFYDATE,A.STATUS,A.CURR_CD,A.PARTY_CD,A.CASH_TRANS_FLAG,
+		A.RECEIVE_PAY,A.A_V_T,A.GRANULARITY,A.BASPCTYPE FROM
+		T08_DEF_BASIC A
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="basicname">
+				A.BASICNAME like #basicname#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="basickey">
+				A.BASPCTYPE = #baspctype#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_cd">
+				A.PARTY_CD = #party_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="curr_cd">
+				A.CURR_CD = #curr_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="botype">
+				A.BOTYPE = #botype#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cash_trans_flag">
+				A.CASH_TRANS_FLAG = #cash_trans_flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="receive_pay">
+				A.RECEIVE_PAY = #receive_pay#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="a_v_t">
+				A.A_V_T = #a_v_t#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="granularitys">
+				A.GRANULARITY = #granularity#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="status">
+				 STATUS = #status#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="getT08_def_basicListCount"
+		parameterClass="com.ist.aml.risk.dto.T08_def_basic"
+		resultClass="int">
+		SELECT COUNT(1) FROM T08_DEF_BASIC A
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="basickey">
+				BASICKEY = #basickey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="basickey">
+				BASPCTYPE = #baspctype#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="basicname">
+				BASICNAME like #basicname#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_cd">
+				PARTY_CD = #party_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="curr_cd">
+				CURR_CD = #curr_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="botype">
+				BOTYPE = #botype#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cash_trans_flag">
+				CASH_TRANS_FLAG = #cash_trans_flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="receive_pay">
+				RECEIVE_PAY = #receive_pay#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="a_v_t">
+				A_V_T = #a_v_t#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="granularitys">
+				GRANULARITY = #granularity#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="status">
+				 STATUS = #status#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+
+</sqlMap>
+

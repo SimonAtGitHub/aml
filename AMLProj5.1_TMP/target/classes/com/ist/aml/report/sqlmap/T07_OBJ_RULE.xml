@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T07_OBJ_RULE">
+	<statement id="getT07_OBJ_RULEList"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="com.ist.aml.report.dto.T07_OBJ_RULE">
+		select
+		party_id,obj_name,organkey,isuse,party_class_cd,reason_create,reason_cancel,rule_type,validate_dt,
+		invalidate_dt,create_user,create_dt,ischeck from T07_WHITELIST_INFO
+		where party_id = party_id
+		<dynamic>
+			<isNotEmpty prepend="and" property="party_id">
+				party_id = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="ischeck">
+				ischeck =#ischeck#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="checkflag">
+			    <isEqual property="checkflag" compareValue="0">
+					ischeck = '2'
+				</isEqual>
+				<isEqual property="checkflag" compareValue="1">
+					ischeck in('3','4','1')
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				party_class_cd = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				organkey = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="obj_name">
+				obj_name LIKE '%'||#obj_name#||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt">
+				<![CDATA[create_dt >= #create_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create1_dt">
+				<![CDATA[create_dt <= #create1_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty property="listsearch_type">
+				<isEqual property="listsearch_type" compareValue="1">
+					ORDER BY create_dt
+				</isEqual>
+				<isEqual property="listsearch_type" compareValue="2">
+					ORDER BY organkey
+				</isEqual>
+				<isEqual property="listsearch_type" compareValue="3">
+					ORDER BY party_class_cd
+				</isEqual>
+				<isEqual property="listsearch_type" compareValue="4">
+					ORDER BY obj_name
+				</isEqual>
+				<isEqual property="listsearch_type" compareValue="5">
+					ORDER BY party_id
+				</isEqual>
+
+				<isNotEmpty property="fashion">
+					<isEqual property="fashion" compareValue="asc"></isEqual>
+					<isEqual property="fashion" compareValue="desc">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="getT07_greyList"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="com.ist.aml.report.dto.T07_OBJ_RULE">
+		select *
+		  from T07_GREYLIST_INFO
+		where 1=1
+		<dynamic>
+			<isNotEmpty prepend="and" property="party_id">
+				party_id = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				party_class_cd = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				organkey = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="obj_name">
+				obj_name LIKE #obj_name#
+			</isNotEmpty>
+				<isNotEmpty prepend="and" property="ischeck">
+				ischeck =#ischeck#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt">
+				<![CDATA[create_dt >= #create_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create1_dt">
+				<![CDATA[create_dt <= #create1_dt#]]>
+			</isNotEmpty>
+		
+		</dynamic>
+	</statement>
+
+	<statement id="getT07_OBJ_RULEListCount"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="int">
+		select count(*) from T07_WHITELIST_INFO where 1>0
+		<dynamic>
+			<isNotEmpty prepend="and" property="party_id">
+				party_id = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="ischeck">
+				ischeck =#ischeck#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="checkflag">
+			   <isEqual property="checkflag" compareValue="0">
+					ischeck = '2'
+				</isEqual>
+				<isEqual property="checkflag" compareValue="1">
+					ischeck in('3','4','1')
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				party_class_cd = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				organkey = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="obj_name">
+				obj_name LIKE '%'||#obj_name#||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt">
+				<![CDATA[create_dt >= #create_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create1_dt">
+				<![CDATA[create_dt <= #create1_dt:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="getT07_greyListCount"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="int">
+		select count(*) from T07_GREYLIST_INFO where 1>0
+		<dynamic>
+			<isNotEmpty prepend="and" property="party_id">
+				party_id = #party_id#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				party_class_cd = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				organkey = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="obj_name">
+				obj_name LIKE #obj_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="ischeck">
+				ischeck =#ischeck#
+			</isNotEmpty>
+				<isNotEmpty prepend="AND" property="organkeystr">
+				ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt">
+				<![CDATA[create_dt >= #create_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create1_dt">
+				<![CDATA[create_dt <= #create1_dt:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="insertT07_OBJ_RULE" parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+	resultClass="int">
+	insert into
+	T07_WHITELIST_INFO(party_id,obj_name,organkey,isuse,party_class_cd,
+	reason_create,reason_cancel,rule_type,create_user,create_dt,modify_user,modify_dt,ischeck )
+	values(
+	#party_id#,#obj_name#,#organkey#,#isuse#,#party_class_cd#,#reason_create#,
+	#reason_cancel#,#rule_type#,
+	#create_user#,#create_dt#,#modify_user#,#modify_dt#,#ischeck# )
+	</statement>
+	<statement id="insertT07_grey"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="int">
+		insert into
+		T07_GREYLIST_INFO(party_id,obj_name,organkey,isuse,party_class_cd,
+		reason_create,create_user,create_dt,ischeck) values(
+		#party_id#,#obj_name#,#organkey#,#isuse#,#party_class_cd#,#reason_create#,	
+		#create_user#,#create_dt#,#ischeck#)
+	</statement>
+	<statement id="modifyT07_grey"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="int">
+		update T07_GREYLIST_INFO set
+		isuse=#isuse#,reason_create=#reason_create#,ischeck=#ischeck#,
+		modify_user=#modify_user#,modify_dt=#modify_dt#  where
+		party_id=#party_id#
+	</statement>
+	
+
+	<statement id="insertT07_OBJ_RULES"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="int">
+		INSERT INTO T07_OBJ_RULE (TL_OBJECTID, PBCKEY)
+  		(SELECT #party_id# AS TL_OBJECTID, PBCKEY
+     	FROM T07_PBCRULE
+   		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="pbc_type_cd">
+				PBC_TYPE_CD = #pbc_type_cd# 
+    	</isNotEmpty>
+			<isNotEmpty prepend="OR" property="pbc_cd">
+				PBC_TYPE_CD = #pbc_cd# 
+   		 </isNotEmpty>
+   		
+		</dynamic>
+		 )
+	</statement>
+
+	<statement id="modifyT07_OBJ_RULE"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="int">
+		update T07_WHITELIST_INFO set
+		isuse=#isuse#,reason_create=#reason_create#,rule_type=#rule_type#,
+		modify_user=#modify_user#,modify_dt=#modify_dt#,ischeck=#ischeck# where
+		party_id=#party_id#
+	</statement>
+	
+	<statement id="modifyT07_OBJ_RULE_ischeck"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="int">
+		update T07_WHITELIST_INFO set isuse=#isuse#,ischeck=#ischeck#,modify_user=#modify_user#,modify_dt=#modify_dt# where
+		party_id=#party_id#
+	</statement>
+	<statement id="modifyT07_OBJ_RULE_ischeckall"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="int">
+		update T07_WHITELIST_INFO set
+		isuse=isuse_new,reason_create=reason_create_new,rule_type=rule_type_new,
+		validate_dt=validate_dt_new,invalidate_dt=invalidate_dt_new,
+		modify_user=#modify_user#,modify_dt=#modify_dt#,ischeck=#ischeck# where
+		party_id=#party_id#
+	</statement>
+	<statement id="modifyT07_OBJ_RULE_ischeckaddno"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="int">
+		update T07_WHITELIST_INFO set
+		isuse=#isuse#,ischeck=#ischeck#,
+		modify_user=#modify_user#,modify_dt=#modify_dt# where
+		party_id=#party_id#
+	</statement>
+	<statement id="modifyT07_OBJ_RULE_ischeckupdateno"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="int">
+		update T07_WHITELIST_INFO set
+		ischeck=#ischeck#,
+		modify_user=#modify_user#,modify_dt=#modify_dt# where
+		party_id=#party_id#
+	</statement>
+	<statement id="modifyT07_OBJ_RULE_check"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="int">
+		update T07_WHITELIST_INFO set
+		isuse_new=#isuse#,reason_create_new=#reason_create#,rule_type_new=#rule_type#,
+		validate_dt_new=#validate_dt#,invalidate_dt_new=#invalidate_dt#,
+		modify_user=#modify_user#,modify_dt=#modify_dt#,ischeck=#ischeck# where
+		party_id=#party_id#
+	</statement>
+
+
+	<statement id="deleteT07_OBJ_RULE" parameterClass="java.lang.String"
+		resultClass="int">
+		delete from T07_WHITELIST_INFO where party_id=#value#
+	</statement>
+
+	<statement id="deleteT07_OBJ_RULES"
+		parameterClass="java.lang.String" resultClass="int">
+		delete from T07_OBJ_RULE where TL_OBJECTID=#value#
+	</statement>
+
+	<statement id="getT07_OBJ_RULEDisp"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="com.ist.aml.report.dto.T07_OBJ_RULE">
+		select
+		party_id,obj_name,organkey,isuse as isuse,party_class_cd,reason_create,reason_create_new,reason_cancel,rule_type as rule_type,validate_dt,
+		validate_dt_new,invalidate_dt,invalidate_dt_new,create_user,create_dt,modify_user,modify_dt,ischeck from
+		T07_WHITELIST_INFO where party_id=#party_id#
+		<isNotEmpty prepend="and" property="obj_name">
+			OBJ_NAME = #obj_name#
+		</isNotEmpty>
+	</statement>
+	
+	<statement id="getT07_OBJ_RULE_blackDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.report.dto.T07_OBJ_RULE">
+		select
+		party_id,obj_name,organkey,isuse,isuse_new,party_class_cd,reason_create,reason_create_new,reason_cancel,validate_dt,
+		validate_dt_new,invalidate_dt,invalidate_dt_new,create_user,create_dt,modify_user,modify_dt,ischeck from
+		t07_blacklist where party_id=#value#
+	</statement>
+		<statement id="getT07_greyDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.report.dto.T07_OBJ_RULE">
+		select *
+		from t07_greylist_info
+		 where party_id=#value#
+	</statement>
+	
+	
+	<statement id="getT07_OBJ_RULElist"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="int">
+		select count(*) from T07_WHITELIST_INFO where
+		party_id=#party_id#
+	</statement>
+	
+	<statement id="getT07_OBJ_RULE_blackList"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="com.ist.aml.report.dto.T07_OBJ_RULE">
+		select
+		party_id,obj_name,organkey,isuse,party_class_cd,reason_create,create_user,create_dt,ischeck
+		 from $tablename$
+		 
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="and" property="party_id">
+				party_id = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="ischeck">
+				ischeck =#ischeck#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="checkflag">
+			    <isEqual property="checkflag" compareValue="0">
+					ischeck = '2'
+				</isEqual>
+				<isEqual property="checkflag" compareValue="1">
+					ischeck in('3','4','1')
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				party_class_cd = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				organkey = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="obj_name">
+				obj_name LIKE #obj_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt">
+				<![CDATA[create_dt >= #create_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create1_dt">
+				<![CDATA[create_dt <= #create1_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty property="listsearch_type">
+				<isEqual property="listsearch_type" compareValue="1">
+					ORDER BY create_dt
+				</isEqual>
+				<isEqual property="listsearch_type" compareValue="2">
+					ORDER BY organkey
+				</isEqual>
+				<isEqual property="listsearch_type" compareValue="3">
+					ORDER BY party_class_cd
+				</isEqual>
+				<isEqual property="listsearch_type" compareValue="4">
+					ORDER BY obj_name
+				</isEqual>
+				<isEqual property="listsearch_type" compareValue="5">
+					ORDER BY party_id
+				</isEqual>
+
+				<isNotEmpty property="fashion">
+					<isEqual property="fashion" compareValue="asc"></isEqual>
+					<isEqual property="fashion" compareValue="desc">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="getT07_OBJ_RULEList_blackCount"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="int">
+		select count(*) from $tablename$ 
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="and" property="party_id">
+				party_id = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="ischeck">
+				ischeck =#ischeck#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="checkflag">
+			    <isEqual property="checkflag" compareValue="0">
+					ischeck = '2'
+				</isEqual>
+				<isEqual property="checkflag" compareValue="1">
+					ischeck in('3','4','1')
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				party_class_cd = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				organkey = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="obj_name">
+				obj_name LIKE #obj_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt">
+				<![CDATA[create_dt >= #create_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create1_dt">
+				<![CDATA[create_dt <= #create1_dt:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="modifyT07_OBJ_RULE_black_ischeck"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="int">
+		update $tablename$ set isuse=#isuse#,ischeck=#ischeck#,modify_user=#modify_user#,modify_dt=#modify_dt# where
+		party_id=#party_id#
+	</statement>
+	
+	<statement id="modifyT07_OBJ_RULE_black_ischeckall"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="int">
+		update t07_blacklist set
+		isuse=isuse_new,reason_create=reason_create_new,
+		validate_dt=validate_dt_new,invalidate_dt=invalidate_dt_new,
+		modify_user=#modify_user#,modify_dt=#modify_dt#,ischeck=#ischeck# where
+		party_id=#party_id#
+	</statement>
+	
+	<statement id="modifyT07_OBJ_RULE_black_ischeckupdateno"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="int">
+		update t07_blacklist set
+		ischeck=#ischeck#,
+		modify_user=#modify_user#,modify_dt=#modify_dt# where
+		party_id=#party_id#
+	</statement>
+	<!-- 本行客户管理 -->
+	<statement id="getT07_staffListCount"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="int">
+		select count(*) from t07_stafflist_info where 1>0
+		<dynamic>
+			<isNotEmpty prepend="and" property="party_id">
+				party_id = #party_id#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				party_class_cd = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				organkey = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="obj_name">
+				obj_name LIKE #obj_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="ischeck">
+				ischeck =#ischeck#
+			</isNotEmpty>
+				<isNotEmpty prepend="AND" property="organkeystr">
+				ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt">
+				<![CDATA[create_dt >= #create_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create1_dt">
+				<![CDATA[create_dt <= #create1_dt:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="getT07_staffList"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="com.ist.aml.report.dto.T07_OBJ_RULE">
+		select *
+		  from t07_stafflist_info
+		where 1=1
+		<dynamic>
+			<isNotEmpty prepend="and" property="party_id">
+				party_id = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				party_class_cd = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				organkey = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="obj_name">
+				obj_name LIKE #obj_name#
+			</isNotEmpty>
+				<isNotEmpty prepend="and" property="ischeck">
+				ischeck =#ischeck#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt">
+				<![CDATA[create_dt >= #create_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create1_dt">
+				<![CDATA[create_dt <= #create1_dt:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="insertT07_staff"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="int">
+		insert into
+		t07_stafflist_info(party_id,obj_name,organkey,isuse,party_class_cd,
+		reason_create,create_user,create_dt,ischeck) values(
+		#party_id#,#obj_name#,#organkey#,#isuse#,#party_class_cd#,#reason_create#,	
+		#create_user#,#create_dt#,#ischeck#)
+	</statement>
+	<statement id="getT07_staffDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.report.dto.T07_OBJ_RULE">
+		select *
+		from t07_stafflist_info
+		 where party_id=#value#
+	</statement>
+	<statement id="modifyT07_staff"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="int">
+		update t07_stafflist_info set
+		isuse=#isuse#,reason_create=#reason_create#,ischeck=#ischeck#,
+		modify_user=#modify_user#,modify_dt=#modify_dt#  where
+		party_id=#party_id#
+	</statement>
+	
+	<statement id="modifyT07_OBJ_RULE_ischeck0"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="int">
+		update T07_WHITELIST_INFO set ischeck=#ischeck#,modify_user=#modify_user#,modify_dt=#modify_dt# where
+		party_id=#party_id#
+	</statement>
+	
+	<statement id="modifyT07_OBJ_RULE_black_ischeck0"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="int">
+		update $tablename$ set ischeck=#ischeck#,modify_user=#modify_user#,modify_dt=#modify_dt# where
+		party_id=#party_id#
+	</statement>
+
+</sqlMap>
+

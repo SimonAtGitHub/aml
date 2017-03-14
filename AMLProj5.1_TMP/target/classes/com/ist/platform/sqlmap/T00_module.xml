@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T00_module">
+  <statement id="getT00_moduleList" parameterClass="com.ist.platform.dto.T00_module" resultClass="com.ist.platform.dto.T00_module">
+  SELECT MODULEKEY,SYSTEMKEY,MODULENAME,URL,UPMODULEKEY,DISPLAYSEQ,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER,IMGURL FROM T00_MODULE
+  <dynamic prepend="WHERE">
+    <isNotEmpty prepend="AND" property="systemkey">
+    SYSTEMKEY = #systemkey#
+    </isNotEmpty>
+  </dynamic>
+    ORDER BY SYSTEMKEY,DISPLAYSEQ
+  </statement>
+
+  <statement id="insertT00_module" parameterClass="com.ist.platform.dto.T00_module" resultClass="int">
+  INSERT INTO T00_MODULE(
+  MODULEKEY,SYSTEMKEY,MODULENAME,URL,UPMODULEKEY,DISPLAYSEQ,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER,IMGURL
+  ) VALUES(
+  #modulekey#,#systemkey#,#modulename#,#url#,#upmodulekey#,#displayseq#,to_date(#createdate#,'yyyy-mm-dd hh24:mi:ss'),#creator#,#modifydate#,#modifier#,#imgurl#
+  )
+  </statement>
+
+  <statement id="modifyT00_module" parameterClass="com.ist.platform.dto.T00_module" resultClass="int">
+  UPDATE T00_MODULE SET
+  MODULEKEY=#modulekey#,SYSTEMKEY=#systemkey#,MODULENAME=#modulename#,URL=#url#,UPMODULEKEY=#upmodulekey#,DISPLAYSEQ=#displayseq#,MODIFYDATE=#modifydate#,MODIFIER=#modifier#
+  WHERE MODULEKEY=#oldmodulekey#
+  </statement>
+
+  <statement id="deleteT00_module" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T00_MODULE WHERE MODULEKEY=#value#
+  </statement>
+
+  <statement id="getT00_moduleDisp" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_module">
+  SELECT * FROM T00_MODULE WHERE MODULEKEY=#value#
+  </statement>
+
+  <statement id="getT00_moduleListByUsernameGroupkey" parameterClass="com.ist.platform.dto.T00_com_auth" resultClass="com.ist.platform.dto.T00_module">
+	SELECT DISTINCT T4.*,T1.SYSTEMNAME 
+	FROM  T00_COM_AUTH T2,
+	T00_ROLE_AUTH T3,T00_MODULE T4,T00_SYSTEM T1
+	WHERE T2.ROLEKEY=T3.ROLEKEY
+  	AND T3.MODULEKEY=T4.MODULEKEY
+  	AND T4.SYSTEMKEY=T1.SYSTEMKEY
+	AND T2.USERNAME=#username#
+       ORDER BY DISPLAYSEQ
+  </statement>
+
+  <statement id="getT00_moduleListIncludePage" parameterClass="string" resultClass="com.ist.platform.dto.T00_module">
+	SELECT M.MODULEKEY,M.SYSTEMKEY,M.MODULENAME,M.URL,M.UPMODULEKEY,M.DISPLAYSEQ,M.CREATEDATE,M.CREATOR,M.MODIFYDATE,M.MODIFIER FROM T00_MODULE M ,T00_PMODULE_AUTH A
+	WHERE M.MODULEKEY=A.MODULEKEY AND A.PAGEKEY=#pagekey#
+    ORDER BY SYSTEMKEY,DISPLAYSEQ
+  </statement>
+<statement id="getChildCount" parameterClass="java.lang.String" resultClass="int">
+		select count(*) from T00_module where upmodulekey=#value#
+	</statement>
+</sqlMap>
+

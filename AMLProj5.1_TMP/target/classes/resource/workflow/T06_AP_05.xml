@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table tablename="T06_AP_05" desc="事实确认书">
+	<!--
+		id:顺序. 
+		name:字段名称，和表单页面上的字段必须一致，区分大小写 . 
+		desc:字段描叙 . 
+		type: 1:类 2:引用 3:意见4:表 5:SQL (1和3在表单保存的时候使用，2、4、5在数据加载的时候使用). 
+		step：默认值生效的流程步骤
+	-->
+	<column name="ID" desc="表单id" />
+	<column name="ENTRYID" desc="流程id" />
+	<column name="STEPID" desc="步骤id" />
+	<column name="PROJECTKEY" desc="项目编号" />
+	<column name="DOCUMENTID" desc="文档编号" type="1" 
+		source="com.ist.pmp.common.workflow.client.form.predefine.PredefineOfID05" 
+		step="-1" />
+	<column name="PROJECTNAME" desc="项目名称" type="5"
+		source=" SELECT PROJECTNAME FROM V06_PROJECT WHERE PROJECTKEY = ? "
+		ref="PROJECTKEY" />
+	<column name="ENTITYKEY" desc="被审计对象" step="10" />
+	<column name="ENTITYKEY_DISP" desc="被审计对象称" step="10" />
+	<column name="DESCR" desc="审计情况" step="10" />
+	<column name="QUESTION" type="4" source="T06_AP_05_QUESTION"
+		ref="ID">
+		<subcolumn>ID</subcolumn>
+		<subcolumn>ENTRYID</subcolumn>
+		<subcolumn>QUESTIONKEY</subcolumn>
+		<subcolumn>ENTRYKEY</subcolumn>
+		<subcolumn>RISK</subcolumn>
+		<subcolumn>AOBJECTIVES</subcolumn>
+		<subcolumn>BUSINESS</subcolumn>
+		<subcolumn>RTITLE</subcolumn>
+		<subcolumn>NOTION</subcolumn>
+		<subcolumn>FLAG</subcolumn>
+	</column>
+	<column name="QUACMOPTION" desc="质控经理意见" step="20" type="3" />
+	<column name="TOTALOPTION" desc="审计部负责人意见" step="30,60" type="3" />
+	<column name="BANKLEADEROPTION" desc="分管行领导意见" step="40" type="3" />
+	
+	<column name="DOCATTCHID" desc="附件编号" step="10,50" />
+	<column name="OPERATEDT" desc="拟稿日期" type="1"
+		source="com.ist.pmp.common.workflow.client.form.predefine.PredefineOfDate"
+		step="-1" />
+	<column name="OPERATOR" desc="拟稿人" type="1"
+		source="com.ist.pmp.common.workflow.client.form.predefine.PredefineOfUser"
+		step="-1" />
+</table>

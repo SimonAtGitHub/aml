@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T07_rule_indic">  
+  <statement id="getT18_depandonListFor300"  parameterClass="com.ist.platform.dto.T07_rule_indic" resultClass="com.ist.platform.dto.T07_rule_indic">
+  select t.indickey,
+       t.indic_attr,
+       t.granularitys,
+       t.indic_table,
+       m.select_sql
+  from v07_indic t, t07_etl_base s, t07_etl_out_tab m, t18_tasklist n
+ where t.indickey = s.etl_code
+   and s.etl_id = m.etl_id
+   and t.indic_attr != 'JC'
+   and t.Indic_table = n.businesskey
+   <dynamic prepend=""> 
+	    <isNotEmpty prepend="and" property="indic_table"> 
+	    t.indic_table = #indic_table#
+	    </isNotEmpty>
+	</dynamic>
+  </statement>
+  
+  <statement id="getT18_depandonListFor321"  parameterClass="com.ist.platform.dto.T07_rule_indic" resultClass="com.ist.platform.dto.T07_rule_indic">
+  	select t.indickey,
+  		t.indic_attr,
+  		t.granularitys, 
+  		t.indic_table, 
+  		s.indic_sel_sql as select_sql 
+  	from T21_INDIC t, T21_INDIC_SQL s, t18_tasklist m
+	where t.indickey = s.indickey and t.indic_table = m.businesskey and t.use_type_cd in ('1', '3')
+	and t.indic_attr != 'JC' and t.flag='1'
+	<dynamic prepend=""> 
+	    <isNotEmpty prepend="and" property="indic_table"> 
+	    t.indic_table = #indic_table#
+	    </isNotEmpty>
+	</dynamic>
+  </statement>
+  
+  <statement id="getT18_depandonListFor322" parameterClass="com.ist.platform.dto.T07_rule_indic" resultClass="com.ist.platform.dto.T07_rule_indic">
+  	select t.gstype||t.rulekey as indickey, m.indic_attr, m.granularitys, m.indic_table, '' as select_sql
+  from t21_rule t, t21_rule_indic s, t21_indic m, t18_tasklist n, t21_pbcrule l
+  where t.rulekey = s.rulekey and s.indickey = m.indickey
+	and t.gstype||t.rulekey = n.businesskey
+	and t.pbckey = l.pbckey and l.pbctype = '1' and m.flag='1'
+   <dynamic prepend=""> 
+	    <isNotEmpty prepend="and" property="indickey"> 
+	    t.gstype||t.rulekey = #indickey#
+	    </isNotEmpty>
+	</dynamic>
+  </statement>
+  
+  <statement id="getT18_depandonListFor362" parameterClass="com.ist.platform.dto.T07_rule_indic" resultClass="com.ist.platform.dto.T07_rule_indic">
+  	select t.gstype||t.rulekey as indickey, m.indic_attr, m.granularitys, m.indic_table, '' as select_sql
+  from t21_rule t, t21_rule_indic s, t21_indic m, t18_tasklist n, t21_pbcrule l
+  where t.rulekey = s.rulekey and s.indickey = m.indickey
+	and t.gstype||t.rulekey = n.businesskey
+	and t.pbckey = l.pbckey and l.pbctype = '3' and m.flag='1' 
+   <dynamic prepend=""> 
+	    <isNotEmpty prepend="and" property="indickey"> 
+	    t.gstype||t.rulekey = #indickey#
+	    </isNotEmpty>
+	</dynamic>
+  </statement>
+  
+  <statement id="getT18_depandonListFor323" parameterClass="com.ist.platform.dto.T07_rule_indic" resultClass="com.ist.platform.dto.T07_rule_indic">
+  	SELECT M.GSTYPE||M.RULEKEY AS INDICKEY, '' AS INDIC_ATTR ,N.GRANULARITY AS GRANULARITYS ,'' AS INDIC_TABLE, S.EXECSQL AS SELECT_SQL
+    FROM T03_TP_EXEC_QRY T, T03_TP_EXEC_QRY_SEQ S, T21_RULE M, T18_TASKLIST N 
+      WHERE T.TPLAKEY=M.TPLAKEY AND N.BUSINESSKEY=M.GSTYPE||M.RULEKEY AND T.EXECSQLKEY=S.EXECSQLKEY AND M.DEPLOYFLAG='3'
+      <dynamic prepend=""> 
+	    <isNotEmpty prepend="and" property="indickey"> 
+	    m.gstype||m.rulekey = #indickey#
+	    </isNotEmpty>
+	</dynamic>
+     ORDER BY M.RULEKEY, T.EXECSEQ, S.SEQ
+  </statement>
+  
+  <statement id="getT18_depandonListFor703"  parameterClass="com.ist.platform.dto.T07_rule_indic" resultClass="com.ist.platform.dto.T07_rule_indic">
+  	select t.indickey,
+  		t.indic_attr,
+  		t.granularitys, 
+  		t.indic_table, 
+  		s.indic_sel_sql as select_sql 
+  	from T21_INDIC t, T21_INDIC_SQL s, t18_tasklist m
+	where t.indickey = s.indickey and t.indic_table = m.businesskey and t.use_type_cd = '2' and t.indic_attr != 'JC'
+	and t.flag='1'
+	<dynamic prepend=""> 
+	    <isNotEmpty prepend="and" property="indic_table"> 
+	    indic_table = #indic_table#
+	    </isNotEmpty>
+	</dynamic>
+  </statement>
+  
+  <statement id="getT18_depandonListFor351" parameterClass="com.ist.platform.dto.T07_rule_indic" resultClass="com.ist.platform.dto.T07_rule_indic">
+  	SELECT M.GSTYPE||M.RULEKEY AS INDICKEY, '' AS INDIC_ATTR ,N.GRANULARITY AS GRANULARITYS ,'' AS INDIC_TABLE, S.EXECSQL AS SELECT_SQL
+    FROM T03_TP_EXEC_QRY T, T03_TP_EXEC_QRY_SEQ S, T21_RULE M, T18_TASKLIST N 
+      WHERE T.TPLAKEY=M.TPLAKEY AND N.BUSINESSKEY=M.GSTYPE||M.RULEKEY AND T.EXECSQLKEY=S.EXECSQLKEY AND M.DEPLOYFLAG='3'
+      <dynamic prepend=""> 
+	    <isNotEmpty prepend="and" property="indickey"> 
+	    m.gstype||m.rulekey = #indickey#
+	    </isNotEmpty>
+	</dynamic>
+     ORDER BY M.RULEKEY, T.EXECSEQ, S.SEQ
+  </statement>
+</sqlMap>

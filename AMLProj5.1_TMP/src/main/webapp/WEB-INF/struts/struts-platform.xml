@@ -1,0 +1,939 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!-- 基础管理平台模块配置 -->
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+	<data-sources />
+	<form-beans>
+	 <form-bean name="t00_categoryActionForm" type="com.ist.platform.controller.T00_categoryActionForm" />
+	<form-bean name="t00_dictActionForm" type="com.ist.platform.controller.T00_dictActionForm"/>
+	<form-bean name="local_windowActionForm" type="com.ist.platform.controller.Local_windowActionForm"/>
+		<form-bean name="t00_userActionForm"
+			type="com.ist.platform.controller.T00_userActionForm" />
+		<form-bean name="t00_roleActionForm"
+			type="com.ist.platform.controller.T00_roleActionForm" />
+		<form-bean name="t00_organActionForm"
+			type="com.ist.platform.controller.T00_organActionForm" />
+		<form-bean name="t00_system_logActionForm"
+			type="com.ist.platform.controller.T00_system_logActionForm" />
+		<form-bean name="CacheActionForm"
+			type="com.ist.platform.controller.CacheActionForm" />
+		<form-bean name="t18_task_factActionForm"
+			type="com.ist.platform.controller.T18_task_factActionForm" />
+		<form-bean name="t07_bj_list_type_cdActionForm"
+			type="com.ist.platform.controller.T07_BJ_list_type_cdActionForm" />
+		<form-bean name="t18_task_logActionForm"
+			type="com.ist.platform.controller.T18_task_logActionForm" />
+		<form-bean name="t18_server_logActionForm"
+			type="com.ist.platform.controller.T18_server_logActionForm" />
+		<form-bean name="t87_tx_cdActionForm"
+			type="com.ist.platform.controller.T87_tx_cdActionForm" />
+		<form-bean name="t87_attention_areaActionForm"
+			type="com.ist.platform.controller.T87_attention_areaActionForm" />
+		<form-bean name="t07_workdateActionForm"
+			type="com.ist.platform.controller.T07_WORKDATEActionForm" />
+		<form-bean name="t07_defparaActionForm"
+			type="com.ist.platform.controller.T07_defparaActionForm" />
+		<form-bean name="t07_valparaActionForm"
+			type="com.ist.platform.controller.T07_valparaActionForm" />
+		<form-bean name="t07_nbs_templetActionForm"
+			type="com.ist.platform.controller.T07_nbs_templetActionForm" />
+		<form-bean name="t18_config_subjectActionForm"
+			type="com.ist.platform.controller.T18_config_subjectActionForm" />
+		<form-bean name="para_exportActionForm"
+			type="com.ist.platform.controller.Para_exportActionForm" />
+		<form-bean name="t00_menuActionForm"
+			type="com.ist.platform.controller.T00_menuActionForm" />
+		
+		<form-bean name="t18_tasklistActionForm" 
+			type="com.ist.platform.controller.T18_tasklistActionForm"/>
+
+ 		<form-bean name="t00_groupActionForm" type="com.ist.platform.controller.T00_groupActionForm"/>
+    	<form-bean name="t00_group_organActionForm" type="com.ist.platform.controller.T00_group_organActionForm"/>
+    	<form-bean name="t00_system_paramActionForm" type="com.ist.platform.controller.T00_system_paramActionForm" />
+	</form-beans>
+	<global-exceptions />
+	<global-forwards />
+	<action-mappings>
+		<action path="/user/user_list" parameter="getT00_userList"
+			name="t00_userActionForm" type="com.ist.platform.controller.T00_userAction"
+			validate="false" scope="request">
+			<forward name="success" path="/user/user_list.jsp" />
+		</action>
+		<action path="/user/export_user_message" parameter="exportT00_userList"
+			name="t00_userActionForm" type="com.ist.platform.controller.T00_userAction"
+			validate="false" scope="request">
+			<forward name="success" path="/user/user_list.jsp" />
+		</action>
+		<action path="/user/user_add" parameter="addT00_user" name="t00_userActionForm"
+			type="com.ist.platform.controller.T00_userAction" validate="false"
+			scope="request">
+			<forward name="success" path="/user/user_add.jsp" />
+		</action>
+		<!-- start add by liujun 20080831 -->
+		<action path="/user/cmbc_user_add" parameter="addT00_user"
+			name="t00_userActionForm" type="com.ist.platform.controller.T00_userAction"
+			validate="false" scope="request">
+			<forward name="success" path="/user/cmbc_user_add.jsp" />
+		</action>
+		<action path="/user/cmbc_user_modify" parameter="modifyT00_user"
+			name="t00_userActionForm" type="com.ist.platform.controller.T00_userAction"
+			validate="false" scope="request">
+			<forward name="success" path="/user/cmbc_user_modify.jsp" />
+		</action>
+		<!-- end add by liujun 20080831 -->
+		<action path="/user/user_add_do" parameter="addT00_userDo"
+			name="t00_userActionForm" type="com.ist.platform.controller.T00_userAction"
+			validate="false" scope="request">
+			<forward name="success" path="/user/user_list.do" redirect="true" />
+			<forward name="failure" path="/user/cmbc_user_add.do" />
+		</action>
+		<action path="/user/user_modify" parameter="modifyT00_user"
+			name="t00_userActionForm" type="com.ist.platform.controller.T00_userAction"
+			validate="false" scope="request">
+			<forward name="success" path="/user/user_modify.jsp" />
+		</action>
+		<action path="/user/user_modify_do" parameter="modifyT00_userDo"
+			name="t00_userActionForm" type="com.ist.platform.controller.T00_userAction"
+			validate="false" scope="request">
+			<forward name="success" path="/user/user_list.do" redirect="true"/>
+			<forward name="failure" path="/user/cmbc_user_modify.do" />
+		</action>
+		<action path="/user/user_delete_do" parameter="deleteT00_userDo"
+			name="t00_userActionForm" type="com.ist.platform.controller.T00_userAction"
+			validate="false" scope="request">
+			<forward name="success" path="/user/user_list.do" />
+			<forward name="failure" path="/user/user_list.do" />
+		</action>
+		<action path="/user/user_disp" parameter="getT00_userDisp"
+			name="t00_userActionForm" type="com.ist.platform.controller.T00_userAction"
+			validate="false" scope="request">
+			<forward name="success" path="/user/user_disp.jsp" />
+		</action>
+		<action path="/user/user_modify_passwd" parameter="modifyUserPasswd"
+			name="t00_userActionForm" type="com.ist.platform.controller.T00_userAction"
+			validate="false" scope="request">
+			<forward name="success" path="/user/user_modify_pass.jsp" />
+		</action>
+		<action path="/user/user_modify_passwd_do" parameter="modifyUserPasswdDo"
+			name="t00_userActionForm" type="com.ist.platform.controller.T00_userAction"
+			validate="false" scope="request">
+			<forward name="success" path="/user/user_list.do" />
+			<forward name="failure" path="/user/user_modify_passwd.do" />
+		</action>
+		<action path="/person/person_selfinfo" parameter="getT00_personList"
+			name="t00_userActionForm" type="com.ist.platform.controller.T00_userAction"
+			validate="false" scope="request">
+			<forward name="success" path="/person/person_selfinfo.jsp" />
+		</action>
+		<!-- end -->
+
+		<!-- t00_role -->
+
+		<action path="/role/role_list" parameter="getT00_roleList"
+			name="t00_roleActionForm" type="com.ist.platform.controller.T00_roleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/role/role_list.jsp" />
+		</action>
+		<action path="/role/role_disp" parameter="getT00_roleDisp"
+			name="t00_roleActionForm" type="com.ist.platform.controller.T00_roleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/role/role_disp.jsp" />
+		</action>
+		<action path="/role/role_add" parameter="addT00_role" name="t00_roleActionForm"
+			type="com.ist.platform.controller.T00_roleAction" validate="false"
+			scope="request">
+			<forward name="success" path="/role/role_add.jsp" />
+		</action>
+		<action path="/role/role_add_do" parameter="addT00_roleDo"
+			name="t00_roleActionForm" type="com.ist.platform.controller.T00_roleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/role/role_list.do" />
+			<forward name="failure" path="/role/role_add.do" />
+		</action>
+		<action path="/role/role_modify" parameter="modifyT00_role"
+			name="t00_roleActionForm" type="com.ist.platform.controller.T00_roleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/role/role_modify.jsp" />
+		</action>
+		<action path="/role/role_modify_do" parameter="modifyT00_roleDo"
+			name="t00_roleActionForm" type="com.ist.platform.controller.T00_roleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/role/role_list.do" />
+			<forward name="failure" path="/role/role_modify.do" />
+		</action>
+		<action path="/role/role_delete_do" parameter="deleteT00_roleDo"
+			name="t00_roleActionForm" type="com.ist.platform.controller.T00_roleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/role/role_list.do" />
+			<forward name="failure" path="/role/role_list.do" />
+		</action>
+		<action path="/role/role_person_list" parameter="role_person_list"
+			name="t00_userActionForm" type="com.ist.platform.controller.T00_roleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/role/role_person_list.jsp" />
+			<forward name="failure" path="/role/role_person_list.jsp" />
+		</action>
+		<action path="/role/role_person_add" parameter="role_person_add"
+			name="t00_userActionForm" type="com.ist.platform.controller.T00_roleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/role/role_person_add.jsp" />
+			<forward name="failure" path="/role/role_person_add.jsp" />
+		</action>
+		<action path="/role/role_person_add_do" parameter="addT00_com_auth"
+			name="t00_userActionForm" type="com.ist.platform.controller.T00_roleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/role/role_person_list.do" />
+			<forward name="failure" path="/role/role_person_add.do" />
+		</action>
+		<action path="/role/role_person_del" parameter="deleteT00_com_authDo"
+			name="t00_userActionForm" type="com.ist.platform.controller.T00_roleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/role/role_person_list.do" />
+			<forward name="failure" path="/role/role_person_list.do" />
+		</action>
+		<action path="/role/role_power" parameter="modifyT00_rolePower"
+			name="t00_roleActionForm" type="com.ist.platform.controller.T00_roleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/role/role_power.jsp" />
+		</action>
+		<action path="/role/role_power_do" parameter="modifyT00_rolePowerDo"
+			name="t00_roleActionForm" type="com.ist.platform.controller.T00_roleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/role/role_list.do" />
+			<forward name="failure" path="/role/role_list.do" />
+		</action>
+		<!--  end t00_role -->
+
+		<!-- t00_organ -->
+
+		<action path="/organ/organ_list" parameter="getT00_organList"
+			name="t00_organActionForm" type="com.ist.platform.controller.T00_organAction"
+			validate="false" scope="request">
+			<forward name="success" path="/organ/organ_list.jsp" />
+		</action>
+		<action path="/organ/organ_disp" parameter="getT00_organDisp"
+			name="t00_organActionForm" type="com.ist.platform.controller.T00_organAction"
+			validate="false" scope="request">
+			<forward name="success" path="/organ/organ_disp.jsp" />
+		</action>
+		<action path="/organ/organ_add" parameter="addT00_organ" name="t00_organActionForm"
+			type="com.ist.platform.controller.T00_organAction" validate="false"
+			scope="request">
+			<forward name="success" path="/organ/organ_add.jsp" />
+		</action>
+		<action path="/organ/organ_add_do" parameter="addT00_organDo"
+			name="t00_organActionForm" type="com.ist.platform.controller.T00_organAction"
+			validate="false" scope="request">
+			<forward name="success" path="/organ/organ_list.do?newsearchflag=1" />
+			<forward name="failure" path="/organ/organ_add.do" />
+		</action>
+		<action path="/organ/organ_modify" parameter="modifyT00_organ"
+			name="t00_organActionForm" type="com.ist.platform.controller.T00_organAction"
+			validate="false" scope="request">
+			<forward name="success" path="/organ/organ_modify.jsp" />
+		</action>
+		<action path="/organ/organ_modify_do" parameter="modifyT00_organDo"
+			name="t00_organActionForm" type="com.ist.platform.controller.T00_organAction"
+			validate="false" scope="request">
+			<forward name="success" path="/organ/organ_list.do" />
+			<forward name="failure" path="/organ/organ_modify.do" />
+		</action>
+		<action path="/organ/organ_delete_do" parameter="deleteT00_organDo"
+			name="t00_organActionForm" type="com.ist.platform.controller.T00_organAction"
+			validate="false" scope="request">
+			<forward name="success" path="/organ/organ_list.do" />
+			<forward name="failure" path="/organ/organ_list.do" />
+		</action>
+		<action path="/organ/t00_organ_create" parameter="createTextT00_organDo"
+			name="T00_organActionForm" type="com.ist.platform.controller.T00_organAction"
+			validate="false" scope="request">
+			<forward name="success" path="/organ/organ_list.do" />
+			<forward name="failure" path="/organ/organ_list.do" />
+		</action>
+		<!-- end t00_organ -->
+		<!-- t00_systemlog -->
+		<action path="/log/system_log_list" parameter="getT00_system_logList"
+			name="t00_system_logActionForm" type="com.ist.platform.controller.T00_system_logAction"
+			validate="false" scope="request">
+			<forward name="success" path="/log/system_log_list.jsp" />
+		</action>
+		<action path="/log/system_log_delete_do" parameter="deleteT00_system_logDo"
+			name="t00_system_logActionForm" type="com.ist.platform.controller.T00_system_logAction"
+			validate="false" scope="request">
+			<forward name="success" path="/log/system_log_list.do" redirect="true"/>
+			<forward name="failure" path="/log/system_log_list.do" />
+		</action>
+		<!-- end  t00_systemlog-->
+
+		<!-- cache -->
+		<action path="/cache/cache_list" parameter="cache_manage_list"
+			name="CacheActionForm" type="com.ist.platform.controller.CacheAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cache/cache_list.jsp" />
+		</action>
+		<action path="/cache/cache_manage_refresh" parameter="cache_manage_refresh"
+			name="CacheActionForm" type="com.ist.platform.controller.CacheAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cache/cache_list.do" />
+		</action>
+		<action path="/cache/cache_manage_listdetail" parameter="cache_manage_listdetail"
+			name="CacheActionForm" type="com.ist.platform.controller.CacheAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cache/cache_listdetail.jsp" />
+		</action>
+
+		<!-- end cache -->
+
+		<!-- dm calinfo -->
+		<action path="/calinfo/dm_server_list" parameter="getDM_serverList"
+			name="t18_task_factActionForm" type="com.ist.platform.controller.T18_task_factAction"
+			validate="false" scope="request">
+			<forward name="success" path="/calinfo/dm_server_list.jsp" />
+		</action>
+		<action path="/calinfo/dm_task_add" parameter="addDM_task"
+			name="t18_task_factActionForm" type="com.ist.platform.controller.T18_task_factAction"
+			validate="false" scope="request">
+			<forward name="success" path="/calinfo/dm_task_add.jsp" />
+			<forward name="failure" path="/calinfo/dm_server_list.do" />
+		</action>
+		<action path="/calinfo/dm_task_add_do" parameter="addDM_taskDo"
+			name="t18_task_factActionForm" type="com.ist.platform.controller.T18_task_factAction"
+			validate="false" scope="request">
+			<forward name="success" path="/calinfo/dm_server_list.do" />
+			<forward name="failure" path="/calinfo/dm_task_add.do" />
+		</action>
+		<action path="/calinfo/dm_task_log_info" parameter="getT18_task_logList"
+			name="t18_task_logActionForm" type="com.ist.platform.controller.T18_task_logAction"
+			validate="false" scope="request">
+			<forward name="success" path="/calinfo/dm_task_log_info.jsp" />
+		</action>
+		<action path="/calinfo/dm_task_log_edit" parameter="modifyT18_task_log"
+			name="t18_task_logActionForm" type="com.ist.platform.controller.T18_task_logAction"
+			validate="false" scope="request">
+			<forward name="success" path="/calinfo/dm_task_log_edit.jsp" />
+		</action>
+		<action path="/calinfo/dm_task_log_edit_do" parameter="modifyT18_task_logDo"
+			name="t18_task_logActionForm" type="com.ist.platform.controller.T18_task_logAction"
+			validate="false" scope="request">
+			<forward name="success" path="/calinfo/dm_task_log_info.do" />
+		</action>
+		<action path="/calinfo/dm_server_log_edit" parameter="modifyT18_server_log"
+			name="t18_server_logActionForm" type="com.ist.platform.controller.T18_server_logAction"
+			validate="false" scope="request">
+			<forward name="success" path="/calinfo/dm_server_log_edit.jsp" />
+		</action>
+		<action path="/calinfo/dm_server_log_edit_do" parameter="modifyT18_server_logDo"
+			name="t18_server_logActionForm" type="com.ist.platform.controller.T18_server_logAction"
+			validate="false" scope="request">
+			<forward name="success" path="/calinfo/dm_server_list.do" />
+		</action>
+		<action path="/calinfo/dm_task_list" parameter="getDM_taskList"
+			name="t18_task_factActionForm" type="com.ist.platform.controller.T18_task_factAction"
+			validate="false" scope="request">
+			<forward name="success" path="/calinfo/dm_task_list.jsp" />
+		</action>
+		<action path="/calinfo/dm_havecal_do" parameter="modifyDMHavecalDo"
+			name="t18_task_factActionForm" type="com.ist.platform.controller.T18_task_factAction"
+			validate="false" scope="request">
+			<forward name="success" path="/calinfo/dm_task_list.do" />
+		</action>
+		<action path="/calinfo/dm_recal_do" parameter="modifyDMRecalDo"
+			name="t18_task_factActionForm" type="com.ist.platform.controller.T18_task_factAction"
+			validate="false" scope="request">
+			<forward name="success" path="/calinfo/dm_task_list.do" />
+		</action>
+		<action path="/calinfo/dm_tocontinue_byserverkey_do" parameter="modifyDMToContinueByserverkeyDo"
+			name="t18_task_factActionForm" type="com.ist.platform.controller.T18_task_factAction"
+			validate="false" scope="request">
+			<forward name="success" path="/calinfo/dm_server_list.do" />
+		</action>
+		<action path="/calinfo/dm_tocontinue_byschedulekey_do"
+			parameter="modifyDMToContinueByschedulekeyDo" name="t18_task_factActionForm"
+			type="com.ist.platform.controller.T18_task_factAction" validate="false"
+			scope="request">
+			<forward name="success" path="/calinfo/dm_task_list.do" />
+		</action>
+		<!--end dm calinfo -->
+
+		<!--  t00_operate_log  -->
+		<action path="/log/operate_log_list" parameter="getT00_operate_logList"
+			name="t07_bj_list_type_cdActionForm" type="com.ist.platform.controller.T07_BJ_list_type_cdAction"
+			validate="false" scope="request">
+			<forward name="success" path="/log/operate_log_list.jsp" />
+		</action>
+		<action path="/log/operate_log_delete_do" parameter="deleteT00_operate_logDo"
+			name="t07_bj_list_type_cdActionForm" type="com.ist.platform.controller.T07_BJ_list_type_cdAction"
+			validate="false" scope="request">
+			<forward name="success" path="/log/operate_log_list.do" redirect="true" />
+			<forward name="failure" path="/log/operate_log_list.do" />
+		</action>
+		<!-- end t00_operate_log  -->
+
+		<!-- pbc code maintain -->
+		<action path="/code/code_modify" parameter="getT87_pbcList"
+			name="t87_tx_cdActionForm" type="com.ist.platform.controller.T87_tx_cdAction"
+			validate="false" scope="request">
+			<forward name="success" path="/code/t87_pbc_list.jsp" />
+		</action>
+		<action path="/code/code_modify_do" parameter="modifyT87_pbcList"
+			name="t87_tx_cdActionForm" type="com.ist.platform.controller.T87_tx_cdAction"
+			validate="false" scope="request">
+			<forward name="success" path="/code/code_modify.do" />
+			<forward name="failure" path="/code/code_modify.do" />
+		</action>
+		<!--end  pbc code maintain -->
+
+		<!--  t87_attention_area-->
+		<action path="/parameter/t87_attention_area_list" parameter="getT87_attention_areaList"
+			name="t87_attention_areaActionForm" type="com.ist.platform.controller.T87_attention_areaAction"
+			validate="false" scope="request">
+			<forward name="success" path="/parameter/t87_attention_area_list.jsp" />
+		</action>
+		<action path="/parameter/t87_attention_area_add" parameter="addT87_attention_area"
+			name="t87_attention_areaActionForm" type="com.ist.platform.controller.T87_attention_areaAction"
+			validate="false" scope="request">
+			<forward name="success" path="/parameter/t87_attention_area_add.jsp" />
+			<forward name="failure" path="/parameter/t87_attention_area_list.do" />
+		</action>
+		<action path="/parameter/t87_attention_area_add_do" parameter="addT87_attention_areaDo"
+			name="t87_attention_areaActionForm" type="com.ist.platform.controller.T87_attention_areaAction"
+			validate="false" scope="request">
+			<forward name="success" path="/parameter/t87_attention_area_list.do" />
+			<forward name="failure" path="/parameter/t87_attention_area_add.do" />
+		</action>
+		<action path="/parameter/t87_attention_area_modify" parameter="modifyT87_attention_area"
+			name="t87_attention_areaActionForm" type="com.ist.platform.controller.T87_attention_areaAction"
+			validate="false" scope="request">
+			<forward name="success" path="/parameter/t87_attention_area_modify.jsp" />
+			<forward name="failure" path="/parameter/t87_attention_area_list.do" />
+		</action>
+		<action path="/parameter/t87_attention_area_modify_do"
+			parameter="modifyT87_attention_areaDo" name="t87_attention_areaActionForm"
+			type="com.ist.platform.controller.T87_attention_areaAction" validate="false"
+			scope="request">
+			<forward name="success" path="/parameter/t87_attention_area_list.do" />
+			<forward name="failure" path="/parameter/t87_attention_area_modify.do" />
+		</action>
+		<action path="/parameter/t87_attention_area_delete_do"
+			parameter="deleteT87_attention_areaDo" name="t87_attention_areaActionForm"
+			type="com.ist.platform.controller.T87_attention_areaAction" validate="false"
+			scope="request">
+			<forward name="success" path="/parameter/t87_attention_area_list.do" />
+			<forward name="failure" path="/parameter/t87_attention_area_list.do" />
+		</action>
+		<!-- end t87_attention_area-->
+
+		<!-- workday -->
+		<action path="/workdate/t07_workdate_list" parameter="getT07_WORKDATEList"
+			name="t07_workdateActionForm" type="com.ist.platform.controller.T07_WORKDATEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/workdate/holiday_calendar.jsp" />
+		</action>
+		<action path="/workdate/t07_workdate_modify_do" parameter="modifyT07_WORKDATEDo"
+			name="t07_workdateActionForm" type="com.ist.platform.controller.T07_WORKDATEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/workdate/t07_workdate_list.do" />
+			<forward name="failure" path="/workdate/t07_workdate_list.do" />
+		</action>
+		<!--end workday -->
+
+		<!-- define parameter -->
+		<action path="/defpara/t07_defpara_list" parameter="getT07_defparaList"
+			name="t07_defparaActionForm" type="com.ist.platform.controller.T07_defparaAction"
+			validate="false" scope="request">
+			<forward name="success" path="/defpara/t07_defpara_list.jsp" />
+		</action>
+		<action path="/defpara/t07_defpara_add" parameter="addT07_defpara"
+			name="t07_defparaActionForm" type="com.ist.platform.controller.T07_defparaAction"
+			validate="false" scope="request">
+			<forward name="success" path="/defpara/t07_defpara_add.jsp" />
+			<forward name="failure" path="/defpara/t07_defpara_list.do" />
+		</action>
+		<action path="/defpara/t07_defpara_add_do" parameter="addT07_defparaDo"
+			name="t07_defparaActionForm" type="com.ist.platform.controller.T07_defparaAction"
+			validate="false" scope="request">
+			<forward name="success" path="/defpara/t07_defpara_list.do" redirect="true"/>
+			<forward name="failure" path="/defpara/t07_defpara_add.do" />
+		</action>
+		<action path="/defpara/t07_defpara_modify" parameter="modifyT07_defpara"
+			name="t07_defparaActionForm" type="com.ist.platform.controller.T07_defparaAction"
+			validate="false" scope="request">
+			<forward name="success" path="/defpara/t07_defpara_modify.jsp" />
+			<forward name="failure" path="/defpara/t07_defpara_list.do" />
+		</action>
+		<action path="/defpara/t07_defpara_modify_do" parameter="modifyT07_defparaDo"
+			name="t07_defparaActionForm" type="com.ist.platform.controller.T07_defparaAction"
+			validate="false" scope="request">
+			<forward name="success" path="/defpara/t07_defpara_list.do" />
+			<forward name="failure" path="/defpara/t07_defpara_modify.do" />
+		</action>
+		<action path="/defpara/t07_defpara_delete_do" parameter="deleteT07_defparaDo"
+			name="t07_defparaActionForm" type="com.ist.platform.controller.T07_defparaAction"
+			validate="false" scope="request">
+			<forward name="success" path="/defpara/t07_defpara_list.do" />
+			<forward name="failure" path="/defpara/t07_defpara_list.do" />
+		</action>
+
+		<action path="/defpara/t07_defpara_disp" parameter="getT07_defparaDisp"
+			name="t07_defparaActionForm" type="com.ist.platform.controller.T07_defparaAction"
+			validate="false" scope="request">
+			<forward name="success" path="/defpara/t07_defpara_disp.jsp" />
+		</action>
+		<!--end define parameter -->
+		
+		<!-- Indic field value parameter -->
+		
+		<action path="/valpara/t07_valpara_list"
+			parameter="getT07_valparaList" name="t07_valparaActionForm"
+			type="com.ist.platform.controller.T07_valparaAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/valpara/t07_valpara_list.jsp" />
+		</action>
+		<action path="/valpara/t07_indic_valpara_list"
+			parameter="getT07_indic_valparaList" name="t07_valparaActionForm"
+			type="com.ist.platform.controller.T07_valparaAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/valpara/t07_indic_valpara_list.jsp" />
+		</action>
+		<action path="/valpara/t07_valpara_modify"
+			parameter="modifyT07_valpara" name="t07_valparaActionForm"
+			type="com.ist.platform.controller.T07_valparaAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/valpara/t07_valpara_modify.jsp" />
+			<forward name="failure" path="/valpara/t07_valpara_list.do" />
+		</action>
+		<action path="/valpara/t07_valpara_modify_do"
+			parameter="modifyT07_valparaDo" name="t07_valparaActionForm"
+			type="com.ist.platform.controller.T07_valparaAction" validate="false"
+			scope="request">
+			<forward name="success" path="/valpara/t07_valpara_list.do" />
+			<forward name="failure"
+				path="/valpara/t07_valpara_modify.jsp" />
+		</action>
+		<!--end Indic field value parameter -->
+		
+		
+		
+		<!-- ky template maintain -->
+		<action path="/templet/t07_nbs_templet_list"
+			parameter="getT07_nbs_templetList" name="t07_nbs_templetActionForm"
+			type="com.ist.platform.controller.T07_nbs_templetAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/templet/t07_nbs_templet_list.jsp" />
+		</action>
+		<action path="/templet/t07_nbs_templet_add"
+			parameter="addT07_nbs_templet" name="t07_nbs_templetActionForm"
+			type="com.ist.platform.controller.T07_nbs_templetAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/templet/t07_nbs_templet_add.jsp" />
+			<forward name="failure"
+				path="/templet/t07_nbs_templet_list.do" />
+		</action>
+		<action path="/templet/t07_nbs_templet_add_do"
+			parameter="addT07_nbs_templetDo" name="t07_nbs_templetActionForm"
+			type="com.ist.platform.controller.T07_nbs_templetAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/templet/t07_nbs_templet_list.do" redirect="true"/>
+			<forward name="failure" path="/templet/t07_nbs_templet_add.do" />
+		</action>
+		<action path="/templet/t07_nbs_templet_modify"
+			parameter="modifyT07_nbs_templet" name="t07_nbs_templetActionForm"
+			type="com.ist.platform.controller.T07_nbs_templetAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/templet/t07_nbs_templet_modify.jsp" />
+			<forward name="failure"
+				path="/templet/t07_nbs_templet_list.do" />
+		</action>
+		<action path="/templet/t07_nbs_templet_modify_do"
+			parameter="modifyT07_nbs_templetDo" name="t07_nbs_templetActionForm"
+			type="com.ist.platform.controller.T07_nbs_templetAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/templet/t07_nbs_templet_list.do" />
+			<forward name="failure"
+				path="/templet/t07_nbs_templet_modify.do" />
+		</action>
+		<action path="/templet/t07_nbs_templet_delete_do"
+			parameter="deleteT07_nbs_templetDo" name="t07_nbs_templetActionForm"
+			type="com.ist.platform.controller.T07_nbs_templetAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/templet/t07_nbs_templet_list.do" />
+			<forward name="failure"
+				path="/templet/t07_nbs_templet_list.do" />
+		</action>
+		<!--end  ky template maintain -->
+		
+		<!-- subject maintain -->
+		<action path="/subject/subject_list"
+			parameter="getT18_config_subjectList"
+			name="t18_config_subjectActionForm"
+			type="com.ist.platform.controller.T18_config_subjectAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/subject/t18_subject_list.jsp" />
+		</action>	
+			<action path="/subject/subject_type_modify"
+			parameter="getT87_subjectList" name="t18_config_subjectActionForm"
+			type="com.ist.platform.controller.T87_subjectAction" validate="false"
+			scope="request">
+			<forward name="success"
+				path="/subject/subject_type_modify.jsp" />
+		</action>
+		<action path="/subject/subject_keep"
+			parameter="modifyT18_config_subjectDo"
+			name="t18_config_subjectActionForm"
+			type="com.ist.platform.controller.T18_config_subjectAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/subject/subject_list.do?newsearchflag=1" />
+		</action>	
+		
+		<!--  t87_tx_cdAction-->
+		<action path="/t87_tx_cd/t87_tx_cd_list" 
+               parameter="getT87_tx_cdList" name="t87_tx_cdActionForm" 
+               type="com.ist.platform.controller.T87_tx_cdAction" 
+               validate="false" scope="request"> 
+	           <forward name="success" 
+	                 path="/t87_tx_cd/t87_tx_cd_list.jsp"/> 
+       </action> 
+       <action path="/t87_tx_cd/t87_tx_cd_add" 
+               parameter="addT87_tx_cd" name="t87_tx_cdActionForm" 
+               type="com.ist.platform.controller.T87_tx_cdAction" 
+               validate="false" scope="request"> 
+	           <forward name="success" 
+	                 path="/t87_tx_cd/t87_tx_cd_add.jsp"/> 
+	           <forward name="failure" 
+	                 path="/t87_tx_cd/t87_tx_cd_list.do"/> 
+       </action> 
+       <action path="/t87_tx_cd/t87_tx_cd_add_do" 
+               parameter="addT87_tx_cdDo" name="t87_tx_cdActionForm" 
+               type="com.ist.platform.controller.T87_tx_cdAction" 
+               validate="false" scope="request"> 
+	           <forward name="success" 
+	                 path="/t87_tx_cd/t87_tx_cd_list.do"/> 
+	           <forward name="failure" 
+	                 path="/t87_tx_cd/t87_tx_cd_add.do"/> 
+       </action> 
+       <action path="/t87_tx_cd/t87_tx_cd_modify" 
+               parameter="modifyT87_tx_cd" name="t87_tx_cdActionForm" 
+               type="com.ist.platform.controller.T87_tx_cdAction" 
+               validate="false" scope="request"> 
+	           <forward name="success" 
+	                 path="/t87_tx_cd/t87_tx_cd_modify.jsp"/> 
+	           <forward name="failure" 
+	                 path="/t87_tx_cd/t87_tx_cd_list.do"/> 
+       </action> 
+       <action path="/t87_tx_cd/t87_tx_cd_modify_do" 
+               parameter="modifyT87_tx_cdDo" name="t87_tx_cdActionForm" 
+               type="com.ist.platform.controller.T87_tx_cdAction" 
+               validate="false" scope="request"> 
+	           <forward name="success" 
+	                 path="/t87_tx_cd/t87_tx_cd_list.do"/> 
+	           <forward name="failure" 
+	                 path="/t87_tx_cd/t87_tx_cd_modify.do"/> 
+       </action> 
+       <action path="/t87_tx_cd/t87_tx_cd_shift_do" 
+               parameter="shiftT87_tx_cdDo" name="t87_tx_cdActionForm" 
+               type="com.ist.platform.controller.T87_tx_cdAction" 
+               validate="false" scope="request"> 
+	           <forward name="success" 
+	                 path="/t87_tx_cd/t87_tx_cd_list.do"/> 
+	           <forward name="failure" 
+	                 path="/t87_tx_cd/t87_tx_cd_list.do"/> 
+       </action> 
+       <action path="/t87_tx_cd/t87_tx_cd_disp" 
+               parameter="getT87_tx_cdDisp" name="t87_tx_cdActionForm" 
+               type="com.ist.platform.controller.T87_tx_cdAction" 
+               validate="false" scope="request"> 
+	           <forward name="success" 
+	                 path="/t87_tx_cd/t87_tx_cd_disp.jsp"/> 
+       </action>
+       
+       
+       <!-- end t87_tx_cd-->
+       
+       <action path="/person/person_selfinfo_color" parameter="modifyPersonColor" name="t00_userActionForm" type="com.ist.platform.controller.T00_userAction" validate="false" scope="request">
+	    	<forward name="success" path="/person/person_selfinfo_color.jsp"/>
+	    	<forward name="failure" path="/person/person_selfinfo_color.do"/>
+    	</action>
+    	<action path="/person/person_selfinfo_color_do" parameter="modifyPersonColorDo" name="t00_userActionForm" type="com.ist.platform.controller.T00_userAction" validate="false" scope="request">
+			<forward name="success" path="/../authgroup.do"/>
+			<forward name="failure" path="/person/person_selfinfo_color.do"/>
+    	</action>
+    	
+    	<action path="/person/person_selfinfo_pass" parameter="modifyPersonPasswd"
+			name="t00_userActionForm" type="com.ist.platform.controller.T00_userAction"
+			validate="false" scope="request">
+			<forward name="success" path="/person/person_selfinfo_pass.jsp" />
+			<forward name="failure" path="/person/person_selfinfo.do" />
+		</action>
+		<action path="/person/person_modify_passwd_do" parameter="modifyPersonPasswdDo"
+			name="t00_userActionForm" type="com.ist.platform.controller.T00_userAction"
+			validate="false" scope="request">
+			<forward name="success" path="/person/person_selfinfo_pass.do" />
+			<forward name="failure" path="/person/person_selfinfo_pass.do" />
+		</action>
+		<!-- end subject maintain -->
+		
+       <!-- 添加bmp下的目录 -->
+   <action path="/dict/location_window_dict"  parameter="location_window_dict" name="t00_dictActionForm"  scope="request" type="com.ist.platform.controller.T00_dictAction" validate="false">
+      <forward name="success" path="/dict/local_window_dict.jsp" />
+    </action>
+    <action name="local_windowActionForm"
+      parameter="location_window" path="/common/location_window"
+      scope="request"
+      type="com.ist.platform.controller.Local_windowAction"
+      validate="false">
+      <forward name="success" path="/common/local_window.jsp" />
+    </action>
+    <action name="local_windowActionForm" parameter="location_windowDo"
+			path="/common/location_window_result" scope="request"
+			type="com.ist.platform.controller.Local_windowAction" validate="false">
+			<forward name="success" path="/common/local_window_result.jsp" />
+		</action>
+       <action path="/t00_category/category" parameter="getT00_cat_dictDisp" name="t00_categoryActionForm" type="com.ist.platform.controller.T00_categoryAction" validate="false" scope="request">
+      <forward name="success" path="/common/local_window_disp.jsp"/>
+    </action>
+    <!--  t00_menu start -->
+      <action path="/pub/menu_left_tree"
+	      parameter="menuTree" name="t00_menuActionForm"
+	      type="com.ist.platform.controller.T00_menuAction"
+	      validate="false" scope="request">
+	      <forward name="success"
+	        path="/pub/menu_left.jsp" />
+      </action>
+    
+    <!--  t00_menu end -->
+    
+      <!--t00_dict-->
+    <action path="/t00_dict/t00_dict_search" parameter="searchT00_dict" name="t00_dictActionForm" type="com.ist.platform.controller.T00_dictAction" validate="false" scope="request"> 
+	    <forward name="success" path="/dict/t00_dict_search.jsp"/> 
+        <forward name="failure" path="/t00_dict/t00_dict_list.do"/> 
+    </action> 
+    <action path="/t00_dict/t00_dict_list" parameter="getT00_dictList" name="t00_dictActionForm" type="com.ist.platform.controller.T00_dictAction" validate="false" scope="request"> 
+	    <forward name="success" path="/dict/t00_dict_list.jsp"/> 
+    </action> 
+    <action path="/t00_dict/t00_dict_list_by_type" parameter="getT00_dictListByType" name="t00_dictActionForm" type="com.ist.platform.controller.T00_dictAction" validate="false" scope="request"> 
+	    <forward name="success" path="/dict/t00_dict_type_list.jsp"/> 
+    </action> 
+    <action path="/t00_dict/location_window_dict"  parameter="location_window_dict" name="t00_dictActionForm"  scope="request" type="com.ist.platform.controller.T00_dictAction" validate="false">
+      <forward name="success" path="/dict/local_window_dict.jsp" />
+    </action>
+    <action path="/t00_dict/t00_dict_list_business_type" parameter="getT00_dictBusinessListByType" name="t00_dictActionForm" type="com.ist.platform.controller.T00_dictAction" validate="false" scope="request"> 
+	    <forward name="success" path="/dict/t00_dict_bus_type_list.jsp"/> 
+    </action>
+    <action path="/t00_dict/t00_dict_add" parameter="addT00_dict" name="t00_dictActionForm" type="com.ist.platform.controller.T00_dictAction" validate="false" scope="request"> 
+	    <forward name="success" path="/dict/t00_dict_add.jsp"/> 
+	    <forward name="failure" path="/t00_dict/t00_dict_list.do"/> 
+    </action> 
+    <action path="/t00_dict/t00_dict_add_do" parameter="addT00_dictDo" name="t00_dictActionForm" type="com.ist.platform.controller.T00_dictAction" validate="false" scope="request"> 
+	    <forward name="sys_success" path="/t00_dict/t00_dict_list_by_type.do?newsearchflag=1"/> 
+	    <forward name="bus_success" path="/t00_dict/t00_dict_list_business_type.do?newsearchflag=1"/> 
+	    <forward name="failure" path="/t00_dict/t00_dict_add.do"/> 
+    </action> 
+    <action path="/t00_dict/t00_dict_modify" parameter="modifyT00_dict" name="t00_dictActionForm" type="com.ist.platform.controller.T00_dictAction" validate="false" scope="request"> 
+	    <forward name="success" path="/dict/t00_dict_modify.jsp"/> 
+	    <forward name="failure" path="/t00_dict/t00_dict_list.do"/> 
+    </action> 
+    <action path="/t00_dict/t00_dict_modify_do" parameter="modifyT00_dictDo" name="t00_dictActionForm" type="com.ist.platform.controller.T00_dictAction" validate="false" scope="request"> 
+	    <forward name="sys_success" path="/t00_dict/t00_dict_list_by_type.do?newsearchflag=1"/> 
+	    <forward name="bus_success" path="/t00_dict/t00_dict_list_business_type.do?newsearchflag=1"/> 
+	    <forward name="failure" path="/dict/t00_dict_modify.jsp"/> 
+    </action> 
+    <action path="/t00_dict/t00_dict_delete_do" parameter="deleteT00_dictDo" name="t00_dictActionForm" type="com.ist.platform.controller.T00_dictAction" validate="false" scope="request"> 
+	   <forward name="sys_success" path="/t00_dict/t00_dict_list_by_type.do?newsearchflag=1"/> 
+	    <forward name="bus_success" path="/t00_dict/t00_dict_list_business_type.do?newsearchflag=1"/> 
+        <forward name="failure" path="/t00_dict/t00_dict_list.do"/> 
+    </action> 
+    <action path="/t00_dict/t00_dict_disp" parameter="getT00_dictDisp" name="t00_dictActionForm" type="com.ist.platform.controller.T00_dictAction" validate="false" scope="request"> 
+	    <forward name="success" path="/dict/t00_dict_disp.jsp"/> 
+    </action>
+    
+    <!-- 2012.7.16:export T07_VALPARA,T08_GS_BASE,T08_DEF_TMPL modified by lijie
+-->
+    <!-- 
+    <action path="/workdate/cmbc_aml_xz"
+			parameter="cmbcaml_xz" name="t07_workdateActionForm"
+			type="com.ist.platform.controller.T07_WORKDATEAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/workdate/cmbc_aml_xz.jsp" />
+	</action>-->
+	<action path="/para_export/export" parameter="getPara_export" 
+			name="para_exportActionForm" type="com.ist.platform.controller.Para_exportAction"
+			validate="false" scope="request">
+		<forward name="success" path="/para_export/export.jsp" />
+	</action>
+	
+    <action path="/para_export/exportT07_valparaList" parameter="exportT07_valparaList"
+			name="para_exportActionForm" type="com.ist.platform.controller.Para_exportAction"
+			validate="false" scope="request">
+		<forward name="success" path="/para_export/exportT07_valparaList.jsp" />
+	</action>
+	<action path="/para_export/exportT08_gsList" parameter="exportT08_gsList"
+			name="para_exportActionForm" type="com.ist.platform.controller.Para_exportAction"
+			validate="false" scope="request">
+		<forward name="success" path="/para_export/exportT08_gsList.jsp" />
+	</action>
+	<action path="/para_export/exportT08_def_tmplList" parameter="exportT08_def_tmplList"
+			name="para_exportActionForm" type="com.ist.platform.controller.Para_exportAction"
+			validate="false" scope="request">
+		<forward name="success" path="/para_export/exportT08_def_tmplList.jsp" />
+	</action>
+    <!-- end -->
+    
+    <!-- task -->
+    <action path="/t18_tasklist/t18_tasklist_list" parameter="getT18_tasklistList" name="t18_tasklistActionForm" type="com.ist.platform.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/task/t18_tasklist_list.jsp"/> 
+    </action>
+    <action path="/t18_tasklist/t18_tasklist_autoset" parameter="autoSetDepandON" name="t18_tasklistActionForm" type="com.ist.platform.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_tasklist/t18_tasklist_list.do"/>
+	    <forward name="failure" path="/t18_tasklist/t18_tasklist_list.do"/>  
+    </action>
+    <action path="/t18_tasklist/t18_task_dep" parameter="setTaskDep" name="t18_tasklistActionForm" type="com.ist.platform.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/task/t18_task_dep.jsp"/> 
+        <forward name="failure" path="/t18_tasklist/t18_tasklist_list.do"/> 
+    </action>
+    <action path="/t18_tasklist/t18_task_dep_do" parameter="setTaskDepDo" name="t18_tasklistActionForm" type="com.ist.platform.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_tasklist/t18_tasklist_list.do"/> 
+        <forward name="failure" path="/t18_tasklist/t18_task_dep.do"/> 
+    </action>
+    <action path="/t18_tasklist/t18_task_dep_list" parameter="getTaskDepList" name="t18_tasklistActionForm" type="com.ist.platform.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/task/t18_task_dep_list.jsp"/> 
+        <forward name="failure" path="/t18_tasklist/t18_tasklist_list.do"/> 
+    </action>
+    <action path="/t18_tasklist/t18_task_dep_check" parameter="checkTaskDepRelation" name="t18_tasklistActionForm" type="com.ist.platform.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/task/t18_task_dep_check_list.jsp"/> 
+        <forward name="failure" path="/t18_tasklist/t18_tasklist_list.do"/> 
+    </action>
+    <action path="/t18_tasklist/t18_task_dep_open" parameter="setTaskDep" name="t18_tasklistActionForm" type="com.ist.platform.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/task/t18_task_dep_open.jsp"/> 
+        <forward name="failure" path="/t18_tasklist/t18_tasklist_list.do"/> 
+    </action>
+    <action path="/t18_tasklist/t18_task_dep_open_do" parameter="setTaskDepDo" name="t18_tasklistActionForm" type="com.ist.platform.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_tasklist/t18_task_dep_open.do"/> 
+        <forward name="failure" path="/t18_tasklist/t18_task_dep_open.do"/> 
+    </action>
+    <action path="/t18_tasklist/t18_tasklist_autodel" parameter="autoDelDepandON" name="t18_tasklistActionForm" type="com.ist.platform.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_tasklist/t18_tasklist_list.do"/>
+	    <forward name="failure" path="/t18_tasklist/t18_tasklist_list.do"/>  
+    </action>
+      <action path="/t18_tasklist/t18_task_dep_check_all" parameter="checkAllTaskDepRelation" name="t18_tasklistActionForm" type="com.ist.platform.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/task/t18_task_dep_check_list.jsp"/> 
+        <forward name="failure" path="/t18_tasklist/t18_tasklist_list.do"/> 
+    </action>
+    <action path="/t18_tasklist/t18_task_time_dep_do" parameter="setTaskTimeDepDo" name="t18_tasklistActionForm" type="com.ist.platform.controller.T18_tasklistAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t18_tasklist/t18_tasklist_list.do"/> 
+        <forward name="failure" path="/t18_tasklist/t18_tasklist_list.do"/> 
+    </action>
+    
+    <!-- task -->
+    
+    <!-- t00_group -->
+    <action path="/group/group_list" parameter="getT00_groupList" name="t00_groupActionForm" type="com.ist.platform.controller.T00_GroupAction" validate="false" scope="request">
+      <forward name="success" path="/group/group_list.jsp"/>
+    </action>
+    <action path="/group/group_add" parameter="addT00_group" name="t00_groupActionForm" type="com.ist.platform.controller.T00_GroupAction" validate="false" scope="request">
+      <forward name="success" path="/group/group_add.jsp"/>
+    </action>
+    <action path="/group/group_add_do" parameter="addT00_groupDo" name="t00_groupActionForm" type="com.ist.platform.controller.T00_GroupAction" validate="false" scope="request">
+     	<forward name="success" path="/group/group_list.do" redirect="true" />
+        <forward name="failure" path="/group/group_add.do"/>
+    </action>
+     <action path="/group/group_modify" parameter="modifyT00_group" name="t00_groupActionForm" type="com.ist.platform.controller.T00_GroupAction" validate="false" scope="request">
+      <forward name="success" path="/group/group_modify.jsp"/>
+    </action>
+    <action path="/group/group_modify_do" parameter="modifyT00_groupDo" name="t00_groupActionForm" type="com.ist.platform.controller.T00_GroupAction" validate="false" scope="request">
+      	<forward name="success" path="/group/group_list.do"  redirect="true" />
+        <forward name="failure" path="/group/group_modify.do"/>
+    </action>
+    <action path="/group/group_delete_do" parameter="deleteT00_groupDo" name="t00_groupActionForm" type="com.ist.platform.controller.T00_GroupAction" validate="false" scope="request">
+  		<forward name="success" path="/group/group_list.do?newsearchflag=1"  redirect="true" />
+        <forward name="failure" path="/group/group_list.do"/>
+    </action>
+    <action path="/group/group_func_list" parameter="getT00_group_funcList" name="t00_groupActionForm" type="com.ist.platform.controller.T00_GroupAction" validate="false" scope="request">
+   		<forward name="success" path="/group/group_func_list.jsp"/>
+    </action>
+    <action path="/group/group_func" parameter="addT00_groupFunc" name="t00_groupActionForm" type="com.ist.platform.controller.T00_GroupAction" validate="false" scope="request">
+      	<forward name="success" path="/group/group_func_add.jsp"/>
+        <forward name="failure" path="/group/group_func_list.do"/>
+    </action>
+    <action path="/group/group_func_do" parameter="addT00_groupFuncDo" name="t00_groupActionForm" type="com.ist.platform.controller.T00_GroupAction" validate="false" scope="request">
+      	<forward name="success" path="/group/group_func_list.do" />
+        <forward name="failure" path="/group/group_func_add.do"/>
+    </action>
+    <action path="/group/group_func_del" parameter="deleteT00_groupFuncDo" name="t00_groupActionForm" type="com.ist.platform.controller.T00_GroupAction" validate="false" scope="request">
+  		<forward name="success" path="/group/group_func_list.do" redirect="true" />
+        <forward name="failure" path="/group/group_func_list.do"/>
+    </action>
+     <action path="/group/group_func_modify" parameter="modifyT00_groupFunc" name="t00_groupActionForm" type="com.ist.platform.controller.T00_GroupAction" validate="false" scope="request">
+      	<forward name="success" path="/group/group_func_modify.jsp"/>
+        <forward name="failure" path="/group/group_list.do"/>
+    </action>
+    <action path="/group/group_func_modify_do" parameter="modifyT00_groupFuncDo" name="t00_groupActionForm" type="com.ist.platform.controller.T00_GroupAction" validate="false" scope="request">
+     	<forward name="success" path="/group/group_func_list.do" />
+        <forward name="failure" path="/group/group_func_modify.do"/>
+    </action>
+    <action path="/group/group_data" parameter="addT00_groupData" name="t00_groupActionForm" type="com.ist.platform.controller.T00_GroupAction" validate="false" scope="request">
+      <forward name="success" path="/group/group_data.jsp" />
+    </action>
+    <action path="/group/group_data_do" parameter="addT00_groupDataDo" name="t00_groupActionForm" type="com.ist.platform.controller.T00_GroupAction" validate="false" scope="request">
+      	<forward name="success" path="/group/group_list.do" />
+        <forward name="failure" path="/group/group_data.do"/>
+    </action>
+    <action path="/group/group_data_power_do" parameter="changeT00_groupDataPowerDo" name="t00_groupActionForm" type="com.ist.platform.controller.T00_GroupAction" validate="false" scope="request">
+      	<forward name="success" path="/group/group_data.do" />
+        <forward name="failure" path="/group/group_data.do"/>
+    </action>
+     <action path="/group/deleteT00_group_entity" parameter="deleteT00_group_organDo" name="t00_group_organActionForm" type="com.ist.platform.controller.T00_group_organAction" validate="false" scope="request">
+    	<forward name="success" path="/group/group_data.do"/>
+        <forward name="failure" path="/group/group_data.do"/>
+    </action>
+    <action path="/group/group_disp" parameter="getT00_groupDisp" name="t00_groupActionForm" type="com.ist.platform.controller.T00_GroupAction" validate="false" scope="request">
+      <forward name="success" path="/group/group_disp.jsp"/>
+    </action>
+	<!--    end-->
+<!--	add by zhanjin-->
+	<action path="/sysconfig/set_t00_system_param" parameter="set_t00_system_param" name="t00_system_paramActionForm" type="com.ist.platform.controller.T00_system_paramAction" validate="false" scope="request">
+      <forward name="success" path="/basicparam/t01_basic_param_modify.jsp"/>
+        <forward name="failure" path="/basicparam/t01_basic_param_modify.jsp"/>
+    </action>
+    <action path="/sysconfig/set_t00_system_param_do" parameter="set_t00_system_paramDo" name="t00_system_paramActionForm" type="com.ist.platform.controller.T00_system_paramAction" validate="false" scope="request">
+      <forward name="success" path="/basicparam/t01_basic_param_modify.jsp"/>
+        <forward name="failure" path="/basicparam/t01_basic_param_modify.jsp"/>
+    </action>
+     <action path="/sysconfig/safe_config_modify_do" parameter="modifyT00_system_param2Do" name="t00_system_paramActionForm" type="com.ist.platform.controller.T00_system_paramAction" validate="false" scope="request">
+      <forward name="success" path="/sysconfig/safe_config.jsp"/>
+        <forward name="failure" path="/sysconfig/safe_config.jsp"/>
+    </action>
+
+    <action path="/sysconfig/mode_config_modify" parameter="getT00_system_paramDisp" name="t00_system_paramActionForm" type="com.ist.platform.controller.T00_system_paramAction" validate="false" scope="request">
+      <forward name="success" path="/sysconfig/mode_config.jsp"/>
+        <forward name="failure" path="/sysconfig/mode_config.jsp"/>
+    </action>
+
+    <action path="/sysconfig/mode_config_modify_do" parameter="modifyT00_system_param3Do" name="t00_system_paramActionForm" type="com.ist.platform.controller.T00_system_paramAction" validate="false" scope="request">
+      <forward name="success" path="/sysconfig/runningmode.do"/>
+        <forward name="failure" path="/sysconfig/mode_config.jsp"/>
+    </action>
+
+    <action path="/sysconfig/runningmode" parameter="getT00_system_paramStatus" name="t00_system_paramActionForm" type="com.ist.platform.controller.T00_system_paramAction" validate="false" scope="request">
+      <forward name="success" path="/sysconfig/Mode_prompt.jsp"/>
+        <forward name="failure" path="/sysconfig/mode_config.jsp"/>
+    </action>
+<!--end-->
+<!--	dataSource start-->
+<!--	dataSource end-->
+
+	</action-mappings>
+	<message-resources parameter="ApplicationResources_zh_CN" />
+</struts-config>

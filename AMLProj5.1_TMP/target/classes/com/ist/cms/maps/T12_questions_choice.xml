@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_questions_choice"> 
+  <statement id="getT12_questions_choiceList" parameterClass="com.ist.cms.dto.T12_questions_choice" resultClass="com.ist.cms.dto.T12_questions_choice"> 
+  select choicekey,subjectkey,content,csequence from t12_questions_choice 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="choicekey"> 
+    choicekey = #choicekey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT12_questions_choiceListCount" parameterClass="com.ist.cms.dto.T12_questions_choice" resultClass="int"> 
+  select count(*) from t12_questions_choice 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="choicekey"> 
+    choicekey = #choicekey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_questions_choice" parameterClass="com.ist.cms.dto.T12_questions_choice" resultClass="int"> 
+  insert into T12_questions_choice(
+  choicekey,subjectkey,content,csequence,flag
+  ) values(
+  #choicekey#,#subjectkey#,#content#,#csequence#,#flag#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_questions_choice" parameterClass="com.ist.cms.dto.T12_questions_choice" resultClass="int"> 
+  update T12_questions_choice set 
+  content=#content#,csequence=#csequence#
+  where choicekey=#choicekey# AND subjectkey=#subjectkey#
+  </statement> 
+ 
+  <statement id="deleteT12_questions_choice" parameterClass="com.ist.cms.dto.T12_questions_choice" resultClass="int">
+  	UPDATE T12_QUESTIONS_CHOICE SET FLAG='2' WHERE CHOICEKEY=#choicekey# AND subjectkey=#subjectkey#
+  </statement> 
+ 
+  <statement id="getT12_questions_choiceDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_questions_choice"> 
+  select * from T12_questions_choice where choicekey=#value# 
+  </statement> 
+ 
+ <statement id="getT12_questions_choiceListBySubjectID" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_questions_choice"> 
+  SELECT * FROM T12_QUESTIONS_CHOICE WHERE SUBJECTKEY=#value# AND FLAG='1' ORDER BY CSEQUENCE
+ </statement>
+ 
+ <!-- add by zhangqiaojun 2010-09-28-->
+  <statement id="insertT12_choice_ins" parameterClass="com.ist.cms.dto.T12_questions_choice" resultClass="int"> 
+  INSERT INTO T12_CHOICE_INS( CHOICEINSKEY,CHOICEKEY,SUBJECTKEY,SUBJECTINSKEY,CONTENT,CSEQUENCE,FLAG)
+  VALUES(#choiceinskey#,#choicekey#,#subjectkey#,#subjectinskey#,#content#,#csequence#,#flag#) 
+  </statement> 
+  <statement id="getT12_choice_insListBySubjectInskey" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_questions_choice"> 
+  SELECT * FROM T12_CHOICE_INS WHERE SUBJECTINSKEY=#value# AND FLAG='1' ORDER BY CSEQUENCE
+ </statement>
+</sqlMap> 
+

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T23_net_para">
+	<statement id="getT23_net_paraByType" parameterClass="com.ist.mfa.dto.T23_net_para"
+		resultClass="com.ist.mfa.dto.T23_net_para">
+		SELECT * FROM T23_NET_PARA
+	  <dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="deftype">
+			DEFTYPE = #deftype#
+	    </isNotEmpty>
+	 </dynamic>
+	</statement>
+	<statement id="modifyT23_net_para" parameterClass="com.ist.mfa.dto.T23_net_para"
+		resultClass="int">
+		UPDATE T23_NET_PARA SET
+		DEFVALUE=#defvalue#
+		WHERE DEFKEY =#defkey#
+	</statement>
+	<statement id="updateT23_net_para" parameterClass="java.lang.String" resultClass="int">
+      $sql$ 
+   </statement>
+</sqlMap>
+

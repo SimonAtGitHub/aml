@@ -1,0 +1,651 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T37_party_result"> 
+  <statement id="getT37_curr_result_rateList" parameterClass="com.ist.aml.risk_rate.dto.T37_party_result" resultClass="com.ist.aml.risk_rate.dto.T37_party_result"> 
+  SELECT  R.RESULEKEY,R.TEMPLATEKEY,R.PARTY_ID,R.FLOW_ID,
+        R.PARTY_CHN_NAME,R.PARTY_CLASS_CD, R.LEVELKEY,R.FRISTAPPRALEVEL, R.EMENDATIONLEVEL,R.MODIFYDATE,R.STATUS_CD,R.HCHECK_STATUS,R.RCHECK_DT,
+        R.STATISTIC_DT, R.ORGANKEY,R.TEMPTYPE,R.CURR_POST,R.CREATE_DT,R.MODIFY_CD,R.LASTLEVELKEY,R.LASTCHECKFLAG,R.TEMPCATEGORY,R.NEXTSTATISTIC_DT
+        FROM T37_PARTY_RESULT_CURR R
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="organStr">
+			R.ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+	    <isNotEmpty prepend="AND" property="statistic_dt">
+			<![CDATA[STATISTIC_DT >= #statistic_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="statistic_dt_end">
+			<![CDATA[STATISTIC_DT <= #statistic_dt_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rcheck_dt">
+			<![CDATA[RCHECK_DT >= #rcheck_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rcheck_dt_end">
+			<![CDATA[RCHECK_DT <= #rcheck_dt_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt">
+			<![CDATA[CREATE_DT >= #create_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt_end">
+			<![CDATA[CREATE_DT <= #create_dt_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			R.PARTY_ID =#party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			R.PARTY_CLASS_CD =#party_class_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			R.ORGANKEY = #organkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="fristappralevel">
+			R.FRISTAPPRALEVEL = #fristappralevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="levelkey">
+			R.LEVELKEY = #levelkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="gskey">
+			R.GSKEY = #gskey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="temptype">
+			R.TEMPTYPE = #temptype#
+		</isNotEmpty>
+		<isNotEmpty property="orderby">
+			<isEqual property="orderby" compareValue="1">
+				ORDER BY R.STATUS_CD
+			</isEqual>
+			<isEqual property="orderby" compareValue="2">
+				ORDER BY R.ORGANKEY
+			</isEqual>
+			<isEqual property="orderby" compareValue="3">
+				ORDER BY R.PARTY_CHN_NAME
+			</isEqual>
+			<isEqual property="orderby" compareValue="4">
+				ORDER BY R.FRISTAPPRALEVEL
+			</isEqual>
+			<isEqual property="orderby" compareValue="5">
+				ORDER BY R.STATISTIC_DT
+			</isEqual>
+		</isNotEmpty>
+		<isNotEmpty property="orderby">
+			<isNotEmpty property="order">
+				<isEqual property="order" compareValue="1"></isEqual>
+				<isEqual property="order" compareValue="2">
+					DESC
+				</isEqual>
+			</isNotEmpty>
+		</isNotEmpty>
+	    </dynamic>
+  </statement>
+  <statement id="getT37_curr_result_rateListCount" parameterClass="com.ist.aml.risk_rate.dto.T37_party_result" resultClass="int">
+  	 SELECT  COUNT(*)
+        FROM T37_PARTY_RESULT_CURR R
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="organStr">
+			R.ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+	    <isNotEmpty prepend="AND" property="statistic_dt">
+			<![CDATA[STATISTIC_DT >= #statistic_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="statistic_dt_end">
+			<![CDATA[STATISTIC_DT <= #statistic_dt_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rcheck_dt">
+			<![CDATA[RCHECK_DT >= #rcheck_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="rcheck_dt_end">
+			<![CDATA[RCHECK_DT <= #rcheck_dt_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt">
+			<![CDATA[CREATE_DT >= #create_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt_end">
+			<![CDATA[CREATE_DT <= #create_dt_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			R.PARTY_ID =#party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			R.PARTY_CLASS_CD =#party_class_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			R.ORGANKEY = #organkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="fristappralevel">
+			R.FRISTAPPRALEVEL = #fristappralevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="levelkey">
+			R.LEVELKEY = #levelkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="gskey">
+			R.GSKEY = #gskey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="temptype">
+			R.TEMPTYPE = #temptype#
+		</isNotEmpty>
+	    </dynamic>
+  </statement>
+  <statement id="insertT37_party_result_currToAudit"
+		parameterClass="com.ist.aml.risk_rate.dto.T37_party_result"
+		resultClass="int">
+		INSERT INTO   
+		   T37_PRESULT_AUDIT
+			(
+			  RESULEKEY        ,
+			  TEMPLATEKEY      ,
+			  GSKEY            ,
+			  PARTY_ID         ,
+			  HOST_CUST_ID     ,
+			  PARTY_CHN_NAME   ,
+			  LEVELKEY         ,
+			  FRISTAPPRALEVEL  ,
+			  EMENDATIONLEVEL  ,
+			  STATISTIC_DT     ,
+			  PARTY_CLASS_CD   ,
+			  ORGANKEY         ,
+			  STATUS_CD        ,
+			  TEMPTYPE         ,
+			  GRANULARITY      ,
+			  CREATE_DT        ,
+			  CURR_POST        ,
+			  MODIFY_CD        ,
+			  MODIFIER         ,
+			  MODIFYDATE       ,
+			  LASTLEVELKEY     ,
+			  LASTCHECKFLAG    ,
+			  EXPORT_STATUS    ,
+			  REPORTDT         ,
+			  TEMPCATEGORY     ,
+			  SCORE            ,
+			  LASTSCORE        ,
+			  AUDIT_USER       ,
+			  AUDIT_DT         ,
+			  CHECK_USER       ,
+			  CHECK_DT         ,
+			  RCHECK_USER      ,
+			  RCHECK_DT        ,
+			  DEALMAX_DT       ,
+			  NEXTSTATISTIC_DT ,
+			  NEXTDEALMAX_DT   ,
+			  RETURN_REASON    ,
+			  OBJORGANKEY      ,
+			  DATAGRANULARITY  ,
+			  HCHECK_STATUS    ,
+			  RETURN_USER      ,
+			  RETURN_DT        ,
+			  FLOW_ID          ,
+			  SCOREMODI_FLAG  
+			) 
+		SELECT 
+		<!-- edit by helong 2015/4/13 add 'R' to resulekey -->
+			 'R' || RESULEKEY       ,
+			  TEMPLATEKEY      ,
+			  GSKEY            ,
+			  PARTY_ID         ,
+			  HOST_CUST_ID     ,
+			  PARTY_CHN_NAME   ,
+			  LEVELKEY         ,
+			  FRISTAPPRALEVEL  ,
+			  EMENDATIONLEVEL  ,
+			  STATISTIC_DT     ,
+			  PARTY_CLASS_CD   ,
+			  ORGANKEY         ,
+			  '1'        ,
+			  TEMPTYPE         ,
+			  GRANULARITY      ,
+			  CREATE_DT        ,
+			  'P2001'        ,
+			  MODIFY_CD        ,
+			  MODIFIER         ,
+			  MODIFYDATE       ,
+			  LASTLEVELKEY     ,
+			  LASTCHECKFLAG    ,
+			  EXPORT_STATUS    ,
+			  REPORTDT         ,
+			  TEMPCATEGORY     ,
+			  SCORE            ,
+			  LASTSCORE        ,
+			  AUDIT_USER       ,
+			  AUDIT_DT         ,
+			  CHECK_USER       ,
+			  CHECK_DT         ,
+			  RCHECK_USER      ,
+			  RCHECK_DT        ,
+			  DEALMAX_DT       ,
+			  NEXTSTATISTIC_DT ,
+			  NEXTDEALMAX_DT   ,
+			  RETURN_REASON    ,
+			  OBJORGANKEY      ,
+			  DATAGRANULARITY  ,
+			  '0'    ,
+			  RETURN_USER      ,
+			  RETURN_DT        ,
+			  <isEqual property="flow_id" compareValue="Y" >
+			 t.flow_id 
+			  </isEqual>
+			  <isNotEqual property="flow_id" compareValue="Y" >
+			  #flow_id#   ,
+			  </isNotEqual>
+			    
+			  SCOREMODI_FLAG  
+		FROM 
+			T37_PARTY_RESULT_CURR a
+				  <isEqual property="flow_id" compareValue="Y" >
+			      ,t31_flow t 
+			  </isEqual>
+		WHERE 
+			a.RESULEKEY=#resulekey#	
+			 <isEqual property="flow_id" compareValue="Y" >
+			    a.TEMPLATEKEY =t.module_id and t.flow_type='2'
+			  </isEqual>    
+	        <isNotEmpty prepend="AND" property="organkey">
+				a.ORGANKEY=#organkey#
+			</isNotEmpty>
+			
+  </statement>
+  <statement id="insertT37_appr_bas_rslt_currToAudit"
+		parameterClass="com.ist.aml.risk_rate.dto.T37_appr_bas_rslt"
+		resultClass="int">
+			INSERT  INTO  T37_APPR_BAS_RSLT_AUDIT
+	        (
+	          RESULEKEY    ,
+	          ELEMENTKEY   ,
+	          PARTY_ID     ,
+	          STATISTIC_DT ,
+	          BASE_OCC     ,
+	          SCORE        ,
+	          OLD_SCORE    ,
+	          UPELEMENTKEY ,
+	          GRANULARITY  ,
+	          BASIC_VAL    ,
+	          BASE_SCORE   ,
+	          ORGANKEY     
+	        )
+	     SELECT 
+	          'R'||RESULEKEY    ,  
+	          <!-- edit by helong 2015/4/13 remove 'R' -->               
+	          ELEMENTKEY   ,   
+	          PARTY_ID     ,   
+	          STATISTIC_DT ,   
+	          BASE_OCC     ,   
+	          SCORE        ,   
+	          OLD_SCORE    ,   
+	          UPELEMENTKEY ,   
+	          GRANULARITY  ,   
+	          BASIC_VAL    ,   
+	          BASE_SCORE   ,   
+	          ORGANKEY
+	      FROM  T37_APPR_BAS_RSLT_CURR   
+          WHERE 
+			RESULEKEY=#resulekey#	    
+	        <isNotEmpty prepend="AND" property="organkey">
+				ORGANKEY=#organkey#
+			</isNotEmpty>
+  </statement>
+  <statement id="insertT37_gs_indic_val_currToAudit"
+		parameterClass="com.ist.aml.risk_rate.dto.T37_appr_bas_rslt"
+		resultClass="int">
+		INSERT  INTO  T37_GS_INDIC_VAL_AUDIT
+	        (
+	          RESULEKEY    ,
+	          PARTY_ID     ,
+	          GSKEY        ,
+	          STATISTIC_DT ,
+	          INDICKEY     ,
+	          TEMPLATEKEY  ,
+	          GRANULARITY  ,
+	          INDICVAL     ,
+	          ORGANKEY
+	        )
+	     SELECT 
+	          'R'||RESULEKEY    ,
+	          PARTY_ID     ,
+	          GSKEY        ,
+	          STATISTIC_DT ,
+	          INDICKEY     ,
+	          TEMPLATEKEY  ,
+	          GRANULARITY  ,
+	          INDICVAL     ,
+	          ORGANKEY
+		  FROM  T37_GS_INDIC_VAL_CURR   
+          WHERE 
+			RESULEKEY=#resulekey#	    
+	        <isNotEmpty prepend="AND" property="organkey">
+				ORGANKEY=#organkey#
+			</isNotEmpty>
+  </statement>
+  <statement id="insertT37_level_audit_currToAudit"
+		parameterClass="com.ist.aml.risk_rate.dto.T37_appr_bas_rslt"
+		resultClass="int">
+		INSERT  INTO  T37_LEVEL_AUDIT_RE
+	        (
+	          AUDIT_NO            ,
+			  PARTY_ID            ,
+			  STATISTIC_DT        ,
+			  RSLTKEY             ,
+			  LEVEL_BEFORE_ADJUST ,
+			  LEVEL_AFTER_ADJUST  ,
+			  ADJUST_REASON       ,
+			  RES_POST_ID         ,
+			  POST_ID             ,
+			  LAST_UPD_DT         ,
+			  LAST_UPD_USER       ,
+			  GRANULARITY         ,
+			  ORGANKEY           
+	        )
+	     SELECT 
+	          AUDIT_NO            ,
+			  PARTY_ID            ,
+			  STATISTIC_DT        ,
+			  RSLTKEY             ,
+			  LEVEL_BEFORE_ADJUST ,
+			  LEVEL_AFTER_ADJUST  ,
+			  ADJUST_REASON       ,
+			  RES_POST_ID         ,
+			  POST_ID             ,
+			  LAST_UPD_DT         ,
+			  LAST_UPD_USER       ,
+			  GRANULARITY         ,
+			  ORGANKEY        
+		  FROM  T37_LEVEL_AUDIT_CURR   
+          WHERE 
+			RSLTKEY=#resulekey#	    
+	        <isNotEmpty prepend="AND" property="organkey">
+				ORGANKEY=#organkey#
+			</isNotEmpty>
+  </statement>
+  <statement id="deleteT37_party_result_audit" parameterClass="com.ist.aml.risk_rate.dto.T37_party_result" resultClass="int"> 
+  delete from $table_name$
+    <dynamic prepend="WHERE">
+		<isNotNull property="list">
+		    <iterate prepend="AND" property="list" open="("
+					close=")" conjunction="or">
+					RESULEKEY=#list[]#
+				</iterate>
+		</isNotNull>
+		<isNotEmpty prepend="AND" property="organkey">
+				ORGANKEY=#organkey#
+	    </isNotEmpty>
+    </dynamic> 
+  </statement>
+	<!-- 评级再调整删除时，根据RESULTKEY删除额外的三个表(t37_appr_bas_rslt_audit、t37_gs_indic_val_audit、t37_level_audit_re) start added by shanbh-->
+		<statement id="deleteT37_appr_bas_rslt_audit" parameterClass="com.ist.aml.risk_rate.dto.T37_party_result" resultClass="int">
+			delete from t37_appr_bas_rslt_audit
+			where 1=1
+			<isNotNull property="list">
+				<iterate prepend="AND" property="list" open="(" close=")" conjunction="or">
+					RESULEKEY=#list[]#
+				</iterate>
+			</isNotNull>
+			<isNotEmpty prepend="AND" property="organkey">
+				ORGANKEY=#organkey#
+			</isNotEmpty>
+		</statement>
+		<statement id="deleteT37_gs_indic_val_audit" parameterClass="com.ist.aml.risk_rate.dto.T37_party_result" resultClass="int">
+			delete from t37_gs_indic_val_audit
+			where 1=1
+			<isNotNull property="list">
+				<iterate prepend="AND" property="list" open="(" close=")" conjunction="or">
+					RESULEKEY=#list[]#
+				</iterate>
+			</isNotNull>
+			<isNotEmpty prepend="AND" property="organkey">
+				ORGANKEY=#organkey#
+			</isNotEmpty>
+		</statement>
+		<statement id="deleteT37_level_audit_re" parameterClass="com.ist.aml.risk_rate.dto.T37_party_result" resultClass="int">
+			delete from t37_level_audit_re
+			where 1=1
+			<isNotNull property="list">
+				<iterate prepend="AND" property="list" open="(" close=")" conjunction="or">
+					RSLTKEY=#list[]#
+				</iterate>
+			</isNotNull>
+			<isNotEmpty prepend="AND" property="organkey">
+				ORGANKEY=#organkey#
+			</isNotEmpty>
+		</statement>
+	<!-- 评级再调整删除时，根据RESULTKEY删除额外的三个表(t37_appr_bas_rslt_audit、t37_gs_indic_val_audit、t37_level_audit_re) end-->
+	<statement id="getT37_export_curr_rate_resultDisp" 
+		parameterClass="com.ist.aml.risk_rate.dto.T37_party_result" 
+		resultClass="com.ist.aml.risk_rate.dto.T37_party_result"> 
+		SELECT 
+  		R.RESULEKEY,R.PARTY_ID,R.ORGANKEY,R.PARTY_CHN_NAME,R.LEVELKEY,R.FRISTAPPRALEVEL,R.TEMPTYPE,R.MODIFY_CD,R.CREATE_DT,R.STATISTIC_DT,R.PARTY_CLASS_CD
+        FROM $table_name$ R
+        WHERE 1=1
+        <isEqual property="exportType" compareValue="select">
+			<isNotNull property="list">
+			    <iterate prepend="AND" property="list" open="(" close=")" conjunction="or">
+					RESULEKEY=#list[]#
+				</iterate>
+			</isNotNull>
+			<isNotNull property="organKeyList">
+				<iterate prepend="AND" property="organKeyList" open="(" close=")" conjunction="or">
+					ORGANKEY=#organKeyList[]#
+				</iterate>
+			</isNotNull>
+        </isEqual>
+        <isEqual property="exportType" compareValue="all">
+        	<isNotEmpty prepend="AND" property="organStr">
+				ORGANKEY IN ($organStr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="statistic_dt">
+				<![CDATA[STATISTIC_DT >= #statistic_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="statistic_dt_end">
+				<![CDATA[STATISTIC_DT <= #statistic_dt_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="modifydate">
+				<![CDATA[MODIFYDATE >= #modifydate#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="modifydate_end">
+				<![CDATA[MODIFYDATE <= #modifydate_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt">
+				<![CDATA[CREATE_DT >= #create_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt_end">
+				<![CDATA[CREATE_DT <= #create_dt_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				R.PARTY_ID =#party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				R.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="fristappralevel">
+				R.FRISTAPPRALEVEL = #fristappralevel#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="levelkey">
+				R.LEVELKEY = #levelkey#
+			</isNotEmpty>
+        </isEqual>
+  </statement>
+	<!-- 等级调查进度查询 start added by shanbh -->
+		<statement id="getT37_level_adjust_progressList"
+			parameterClass="com.ist.aml.risk_rate.dto.T37_party_result" 
+			resultClass="com.ist.aml.risk_rate.dto.T37_party_result">
+			SELECT 
+			RESULEKEY,TEMPLATEKEY,PARTY_ID,PARTY_CHN_NAME,PARTY_CLASS_CD,LEVELKEY,FRISTAPPRALEVEL,MODIFYDATE,HCHECK_STATUS,STATUS_CD,
+       		STATISTIC_DT,ORGANKEY,TEMPTYPE,CREATE_DT,PARTY_CLASS_CD,RCHECK_DT,NEXTSTATISTIC_DT
+       		<isEmpty prepend="" property="rate_source">
+				,RATE_SOURCE
+			</isEmpty>
+			<isNotEmpty prepend="" property="rate_source">
+				<isEqual property="rate_source" compareValue="1">
+					,'1' AS RATE_SOURCE
+				</isEqual>
+				<isEqual property="rate_source" compareValue="2">
+					,'2' AS RATE_SOURCE
+				</isEqual>
+			</isNotEmpty>
+       		FROM
+       		<isEmpty prepend="" property="rate_source">
+				V37_PARTY_RESULT
+			</isEmpty>
+			<isNotEmpty prepend="" property="rate_source">
+				<isEqual property="rate_source" compareValue="1">
+					T37_PARTY_RESULT
+				</isEqual>
+				<isEqual property="rate_source" compareValue="2">
+					T37_PRESULT_AUDIT
+				</isEqual>
+			</isNotEmpty>
+       		WHERE ORGANKEY IN ($organStr$)
+       		<isNotEmpty prepend="AND" property="organkey">
+				ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="statistic_dt">
+				<![CDATA[STATISTIC_DT >= #statistic_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="statistic_dt_end">
+				<![CDATA[STATISTIC_DT <= #statistic_dt_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="rcheck_dt">
+			<![CDATA[RCHECK_DT >= #rcheck_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="rcheck_dt_end">
+				<![CDATA[RCHECK_DT <= #rcheck_dt_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt">
+				<![CDATA[CREATE_DT >= #create_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt_end">
+				<![CDATA[CREATE_DT <= #create_dt_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				PARTY_ID =#party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="fristappralevel">
+				FRISTAPPRALEVEL = #fristappralevel#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="levelkey">
+				LEVELKEY = #levelkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="gskey">
+				GSKEY = #gskey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="templatekey">
+				TEMPLATEKEY = #templatekey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="status_cd">
+				STATUS_CD = #status_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="temptype">
+			    TEMPTYPE = #temptype#
+		    </isNotEmpty>
+			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY STATUS_CD
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY ORGANKEY
+				</isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY PARTY_CHN_NAME
+				</isEqual>
+				<isEqual property="orderby" compareValue="4">
+					ORDER BY FRISTAPPRALEVEL
+				</isEqual>
+				<isEqual property="orderby" compareValue="5">
+					ORDER BY STATISTIC_DT
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty property="orderby">
+				<isNotEmpty property="order">
+					<isEqual property="order" compareValue="1"></isEqual>
+					<isEqual property="order" compareValue="2">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</statement>
+		<!-- 查询列表条目数(while newsearchflag=0) start-->
+		<statement id="getT37_level_adjust_progressListCount"
+			parameterClass="com.ist.aml.risk_rate.dto.T37_party_result" 
+			resultClass="int">
+			SELECT COUNT(*)
+       		FROM
+       		<isEmpty prepend="" property="rate_source">
+				V37_PARTY_RESULT
+			</isEmpty>
+			<isNotEmpty prepend="" property="rate_source">
+				<isEqual property="rate_source" compareValue="1">
+					T37_PARTY_RESULT
+				</isEqual>
+				<isEqual property="rate_source" compareValue="2">
+					T37_PRESULT_AUDIT
+				</isEqual>
+			</isNotEmpty>
+       		WHERE ORGANKEY IN ($organStr$)
+       		<isNotEmpty prepend="AND" property="organkey">
+				ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="statistic_dt">
+				<![CDATA[STATISTIC_DT >= #statistic_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="statistic_dt_end">
+				<![CDATA[STATISTIC_DT <= #statistic_dt_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="rcheck_dt">
+			<![CDATA[RCHECK_DT >= #rcheck_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="rcheck_dt_end">
+				<![CDATA[RCHECK_DT <= #rcheck_dt_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt">
+				<![CDATA[CREATE_DT >= #create_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt_end">
+				<![CDATA[CREATE_DT <= #create_dt_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="status_cd">
+				STATUS_CD = #status_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				PARTY_ID =#party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="fristappralevel">
+				FRISTAPPRALEVEL = #fristappralevel#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="levelkey">
+				LEVELKEY = #levelkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="gskey">
+				GSKEY = #gskey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="templatekey">
+				TEMPLATEKEY = #templatekey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="temptype">
+			    TEMPTYPE = #temptype#
+		    </isNotEmpty>
+			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY STATUS_CD
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY ORGANKEY
+				</isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY PARTY_CHN_NAME
+				</isEqual>
+				<isEqual property="orderby" compareValue="4">
+					ORDER BY FRISTAPPRALEVEL
+				</isEqual>
+				<isEqual property="orderby" compareValue="5">
+					ORDER BY STATISTIC_DT
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty property="orderby">
+				<isNotEmpty property="order">
+					<isEqual property="order" compareValue="1"></isEqual>
+					<isEqual property="order" compareValue="2">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</statement>
+	<!-- 等级调查进度查询 end -->
+</sqlMap> 
+

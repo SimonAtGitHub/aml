@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!-- START SNIPPET: xfire -->
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="urlMap">
+			<map>
+				<entry key="/workflow.ws">
+					<ref bean="workflow" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="soapWorkflow" class="com.ist.common.workflow.server.soap.SOAPWorkflow">
+		<property name="configuration">
+			<ref bean="osworkflowConfiguration" />
+		</property>
+		<property name="workflowDao">
+			<ref bean="workflowDaoServer" />
+		</property>
+	</bean>
+
+	<!--
+		Declare a parent bean with all properties common to both services
+	-->
+	<bean id="workflow" class="org.codehaus.xfire.spring.remoting.XFireExporter">
+		<property name="serviceFactory">
+			<ref bean="xfire.serviceFactory" />
+		</property>
+		<property name="xfire">
+			<ref bean="xfire" />
+		</property>
+		<property name="serviceBean">
+			<ref bean="soapWorkflow" />
+		</property>
+		<property name="serviceClass">
+			<value>com.ist.common.workflow.ISTWorkflow</value>
+		</property>
+	</bean>
+	<!-- END SNIPPET: xfire -->
+</beans>

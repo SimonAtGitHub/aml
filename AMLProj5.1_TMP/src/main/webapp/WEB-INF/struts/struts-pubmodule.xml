@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+  <form-beans>
+    <form-bean name="authActionForm" type="com.ist.platform.controller.AuthActionForm" />
+    <form-bean name="t07_supervise_msgActionForm" type="com.ist.aml.information.controller.T07_Supervise_msgActionForm"/>
+  </form-beans>
+ 
+  <global-exceptions>
+  </global-exceptions>
+
+  <!-- global-forwards -->
+  <global-forwards type="org.apache.struts.action.ActionForward">
+    <forward name="failure" path="/../common/errors.jsp"/>
+    <forward name="errors" path="/../common/errors.jsp"/>
+    <forward name="nopower" path="/../common/nopower.jsp"/>
+    <forward name="sessiontimeout" path="/../common/sessiontimeout.jsp"/>
+  </global-forwards>
+
+  <action-mappings>
+    <action name="authActionForm" parameter="pubmoduleIndexPage" path="/index" type="com.ist.platform.controller.AuthAction" validate="false">
+      <forward name="success" path="/index.jsp" />
+    </action>
+       <action name="authActionForm" parameter="mainPage" path="/main" type="com.ist.platform.controller.AuthAction" validate="false">
+      <forward name="success" path="/main.jsp" />
+        <forward name="success1" path="/main1.jsp" />
+          <forward name="success0" path="/main0.jsp" />
+    </action>
+        <action name="t07_supervise_msgActionForm" parameter="detailPage" path="/detail_list" type="com.ist.platform.controller.AuthAction" validate="false">
+      <forward name="success" path="/detail_list.jsp" />
+    </action>
+    <!-- end -->
+  </action-mappings>
+  <message-resources parameter="ApplicationResources_zh_CN" />
+
+</struts-config>

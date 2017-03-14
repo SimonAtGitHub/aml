@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="T21_rule">
+	
+	<statement id="getT21_ruleList"
+		parameterClass="com.ist.aml.rule.dto.T21_rule"
+		resultClass="com.ist.aml.rule.dto.T21_rule">
+		SELECT 
+		   A.TPLAKEY,
+		   A.RULEKEY,
+	       A.PBCKEY,
+	       A.INTERFACEKEY,
+	       A.RULE_DES,
+	       A.RULE_CON,
+	       A.FLAG,
+	       A.CURR_CD,
+	       A.PARTY_ACCT_CD,
+	       A.TYPE_DES,
+	       A.GSTYPE AS gs_type,
+	       A.GRANULAIRTY,
+	       A.CREATE_DT,
+	       A.CREATE_ORG,
+	       A.DAY_FLAG,
+	       A.DEPLOYFLAG
+	  	   FROM T21_RULE A WHERE
+			1>0
+		<dynamic>
+			<isNotEmpty prepend="and" property="rulekey">
+				A.RULEKEY = #rulekey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="pbckey">
+				A.pbckey = #pbckey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="rule_des">
+			    A.RULE_DES like '%'||#rule_des#||'%'
+	        </isNotEmpty>
+			<isNotEmpty prepend="and" property="product_flag">
+				A.DEPLOYFLAG = #product_flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="gs_type">
+				A.GSTYPE = #gs_type#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="deployflag">
+			    <isNotEqual property="deployflag" compareValue="2">
+			        A.DEPLOYFLAG = #deployflag#
+			    </isNotEqual>
+				<isEqual property="deployflag" compareValue="2">
+				    A.DEPLOYFLAG IN ('2','3')
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="party_acct_cd">
+				A.PARTY_ACCT_CD = #party_acct_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="granulairty">
+				A.GRANULAIRTY = #granulairty#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="create_dt_start_disp">
+				<![CDATA[A.CREATE_DT >= #create_dt_start_disp:VARCHAR#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="create_dt_end_disp">
+				<![CDATA[A.CREATE_DT <= #create_dt_end_disp:VARCHAR#]]>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT21_ruleListCount"
+		parameterClass="com.ist.aml.rule.dto.T21_rule"
+		resultClass="int">
+		SELECT COUNT(*) FROM T21_RULE A WHERE 1>0
+		<dynamic>
+			<isNotEmpty prepend="and" property="rulekey">
+				A.RULEKEY = #rulekey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="pbckey">
+				A.pbckey = #pbckey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="rule_des">
+			    A.RULE_DES like '%'||#rule_des#||'%'
+	        </isNotEmpty>
+			<isNotEmpty prepend="and" property="product_flag">
+				A.DEPLOYFLAG = #product_flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="gs_type">
+				A.GSTYPE = #gs_type#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="deployflag">
+			    <isNotEqual property="deployflag" compareValue="2">
+			        A.DEPLOYFLAG = #deployflag#
+			    </isNotEqual>
+				<isEqual property="deployflag" compareValue="2">
+				    A.DEPLOYFLAG IN ('2','3')
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="party_acct_cd">
+				A.PARTY_ACCT_CD = #party_acct_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="granulairty">
+				A.GRANULAIRTY = #granulairty#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="create_dt_start_disp">
+				<![CDATA[A.CREATE_DT >= #create_dt_start_disp:VARCHAR#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="create_dt_end_disp">
+				<![CDATA[A.CREATE_DT <= #create_dt_end_disp:VARCHAR#]]>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	
+  	
+	<statement id="getT21_ruleDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.aml.rule.dto.T21_rule">
+		SELECT TPLAKEY,RULEKEY, PBCKEY, INTERFACEKEY, RULE_DES, RULE_CON, GSTYPE AS gs_type,
+       	FLAG, CURR_CD, GRANULAIRTY,PARTY_ACCT_CD, TYPE_DES,DAY_FLAG AS day_flag,DEPLOYFLAG
+  		FROM T21_RULE WHERE TPLAKEY = #value# 
+  	</statement>
+	
+	<statement id="modifyT21_rule_disp" parameterClass="com.ist.aml.rule.dto.T21_rule"
+		resultClass="com.ist.aml.rule.dto.T21_rule">
+	UPDATE T21_RULE SET 
+	INTERFACEKEY=#interfacekey#, RULE_DES=#rule_des#, RULE_CON=#rule_con#,
+	CURR_CD=#curr_cd#,PARTY_ACCT_CD=#party_acct_cd#,GRANULAIRTY=#granulairty#,
+	TYPE_DES=#type_des#,MODIFIER=#modifier#,MODIFYTIME=#modifytime#
+	WHERE TPLAKEY = #tplakey#
+  	</statement>
+  	
+	<statement id="deleteT21_rule" parameterClass="java.lang.String"
+		resultClass="int">
+		DELETE FROM T21_RULE WHERE RULEKEY = #value# 
+  	</statement>
+  	
+  	<statement id="deleteT21_rule_with_in" parameterClass="java.lang.String"
+		resultClass="int">
+		DELETE FROM T21_RULE WHERE TPLAKEY IN ($value$) 
+  	</statement>
+  	
+  	<statement id="modify_rule_flag" parameterClass="com.ist.aml.rule.dto.T21_rule"
+		resultClass="int">
+	UPDATE T21_RULE SET  FLAG=#flag#
+	WHERE RULEKEY = #rulekey#
+  	</statement>
+  	
+  	<statement id="update_rule_deployflag" parameterClass="com.ist.aml.rule.dto.T21_rule"
+		resultClass="int">
+	UPDATE T21_RULE SET  DEPLOYFLAG=#deployflag#
+	WHERE TPLAKEY = #tplakey#
+  	</statement>
+  	
+  	<statement id="update_rule_deployflagMore" parameterClass="com.ist.aml.rule.dto.T21_rule"
+		resultClass="int">
+	UPDATE T21_RULE SET  DEPLOYFLAG=#deployflag#
+	WHERE 1>0
+		<isNotNull property="list">
+		    <iterate prepend="AND" property="list" open="("
+					close=")" conjunction="or">
+					tplakey=#list[]#
+			</iterate>
+		</isNotNull>
+  	</statement>
+  	
+  	<statement id="getT21_rule_dictList" parameterClass="java.lang.String"
+		resultClass="com.ist.aml.rule.dto.T21_rule">
+	SELECT A.RULEKEY,
+	A.INDICKEY,
+	A.INDIC_ATTR,
+	A.VALPARAKEY,
+	A.VALTYPE,
+	A.VALPARAMAX,
+	A.VALPARAMIN,
+	A.VALNUM,
+	B.INDICNAME
+	FROM T21_RULE_INDIC A, T21_INDIC B
+	WHERE RULEKEY = #value# AND A.INDICKEY = B.INDICKEY
+  	</statement>
+  	
+  	<statement id="insertT21_rule_indic" parameterClass="com.ist.aml.rule.dto.T21_rule"
+		resultClass="int">
+	INSERT INTO T21_RULE_INDIC
+	(RULEKEY, INDICKEY, INDIC_ATTR,VALPARAKEY, VALTYPE, VALPARAMAX, VALPARAMIN, VALNUM)
+	VALUES
+	(#rulekey#, #indickey#,#indic_attr#, #valparakey#,#valtype#,$valparamax$,$valparamin$,#valnum#)
+  	</statement>
+  	
+  	<statement id="copyT21_rule_indic" parameterClass="com.ist.aml.rule.dto.T21_rule"
+		resultClass="int">
+	INSERT INTO T21_RULE_INDIC
+	(RULEKEY, INDICKEY, INDIC_ATTR,VALPARAKEY, VALTYPE, VALPARAMAX, VALPARAMIN, VALNUM)
+	SELECT #new_rulekey#, INDICKEY, INDIC_ATTR,VALPARAKEY, VALTYPE, VALPARAMAX, VALPARAMIN, VALNUM
+	   FROM　 T21_RULE_INDIC　WHERE RULEKEY=#rulekey#
+  	</statement>
+  	
+  	<statement id="deleteT21_rule_indic" parameterClass="java.lang.String"
+		resultClass="int">
+		DELETE FROM T21_RULE_INDIC WHERE RULEKEY = #rulekey# 
+  	</statement>
+  	
+  	<statement id="deleteT21_rule_indic_with_in" parameterClass="java.lang.String"
+		resultClass="int">
+		DELETE FROM T21_RULE_INDIC WHERE RULEKEY IN ($rulekey$) 
+  	</statement>
+  	
+  		<statement id="getT21_rule_gs_list" parameterClass="com.ist.aml.rule.dto.T21_rule"
+		resultClass="com.ist.aml.rule.dto.T21_rule">
+		SELECT  gs_key,  rulekey,  gs_des,  gs_val, gs_sql_num, gs_sql 
+		FROM T21_RULE_GS WHERE RULEKEY = #rulekey# 
+		<dynamic>
+			<isNotEmpty prepend="and" property="gs_sql_num">
+				GS_SQL_NUM = #gs_sql_num#
+			</isNotEmpty> 
+			<isNotEmpty prepend="and" property="gs_key">
+				GS_KEY = #gs_key#
+			</isNotEmpty>
+		</dynamic>
+  	</statement>
+  	
+  	<statement id="getT21_rule_gs_disp" parameterClass="com.ist.aml.rule.dto.T21_rule"
+		resultClass="com.ist.aml.rule.dto.T21_rule">
+		SELECT  gs_key,  rulekey,  gs_des,  gs_val, gs_sql_num, gs_sql 
+		FROM T21_RULE_GS WHERE RULEKEY = #rulekey# 
+		<dynamic>
+			<isNotEmpty prepend="and" property="gs_sql_num">
+				GS_SQL_NUM = #gs_sql_num#
+			</isNotEmpty> 
+			<isNotEmpty prepend="and" property="gs_key">
+				GS_KEY = #gs_key#
+			</isNotEmpty>
+		</dynamic>
+  	</statement>
+  	
+  	<statement id="modifyT21_rule_gs" parameterClass="com.ist.aml.rule.dto.T21_rule"
+		resultClass="com.ist.aml.rule.dto.T21_rule">
+		UPDATE T21_RULE_GS SET GS_DES = #gs_des#, GS_VAL = #gs_val#, GS_SQL_NUM = #gs_sql_num#, GS_SQL = #gs_sql#
+        WHERE RULEKEY = #rulekey#
+        <dynamic>
+			<isNotEmpty prepend="and" property="gs_sql_num">
+				GS_SQL_NUM = #gs_sql_num#
+			</isNotEmpty> 
+			<isNotEmpty prepend="and" property="gs_key">
+				GS_KEY = #gs_key#
+			</isNotEmpty>
+		</dynamic>
+  	</statement>
+  	
+  	<statement id="insertT21_rule_disp" parameterClass="com.ist.aml.rule.dto.T21_rule"
+		resultClass="com.ist.aml.rule.dto.T21_rule">
+	INSERT INTO T21_RULE
+	(TPLAKEY,RULEKEY, PBCKEY, INTERFACEKEY, RULE_DES, RULE_CON, FLAG, CURR_CD,GRANULAIRTY,
+	PARTY_ACCT_CD, TYPE_DES,GSTYPE, CREATE_DT, CREATE_USR,
+	CREATE_ORG,DEPLOYFLAG)
+	VALUES
+	(#tplakey#,#rulekey#, #pbckey#, #interfacekey#, #rule_des#, #rule_con#, #flag#, #curr_cd#,
+	 #granulairty#,#party_acct_cd#, #type_des#,
+	#gs_type#, #create_dt#, #create_user#,#create_org#,#deployflag#)
+  	</statement>
+  	
+  	<statement id="insertT21_rule_log" parameterClass="com.ist.aml.rule.dto.T21_rule_log"
+		resultClass="com.ist.aml.rule.dto.T21_rule_log">
+	INSERT INTO T21_RULE_LOG(
+						    PBCKEY       ,							
+							INTERFACEKEY ,							
+							STCRKEY      ,							
+							PBCKEYTYPE   ,							
+							ACTIONCODE   ,							
+							TPLAKEY      ,							
+							RULEKEY      ,							
+							RULE_DES     ,							
+							GRANULAIRTY  ,							
+							OPER_DES     ,							
+							INDICKEY     ,							
+							VALNUM       ,							
+							VALTYPE      ,							
+							VALPARAMAX   ,							
+							VALPARAMIN   ,							
+							PARMKEY      ,							
+							DISPNAME     ,							
+							GS_KEY       ,							
+							GS_DES       ,							
+							GS_VAL       ,							
+							PARMNAME     ,							
+							SUBITEMKEY   ,							
+							SUBITEMNAME  ,
+							PARMVALKEY	 ,						
+							PARAM        ,							
+							EXECSQLKEY   ,							
+							SEQ          ,							
+							EXECSQL      ,							
+							CREATE_DT    ,							
+							CREATE_USR   ,							
+							MODIFIER     ,							
+							MODIFY_DT    ,							
+							DEL_DT       ,							
+							DEL_USR,
+							RTETTYPEKEY,
+							RTETNAME,
+							RTETFACTTABLE,
+							RTETFACTKEY,
+							RTETFACTSCTABLE,
+							RTETFACTSCKEY,
+							ISCOPY,
+							ISNEWMKEY
+	     )
+	     VALUES
+	     (
+					  #pbckey#,	
+						#interfacekey#,	
+						#stcrkey#,	
+						#pbckeytype#,	
+						#actioncode:VARCHAR#,	
+						#tplakey#,	
+						#rulekey#,	
+						#rule_des#,	
+						#granulairty#,	
+						#oper_des#,	
+						#indickey#,	
+						#valnum#,	
+						#valtype#,	
+						#valparamax:FLOAT#,	
+						#valparamin:FLOAT#,	
+						#parmkey#,	
+						#dispname#,	
+						#gs_key#,	
+						#gs_des#,	
+						#gs_val#,	
+						#parmname#,	
+						#subitemkey#,	
+						#subitemname#,
+						#parmvalkey#,	
+						#param#,	
+						#execsqlkey#,	
+						#seq:INTEGER#,	
+						#execsql#,	
+						#create_dt#,	
+						#create_usr#,	
+						#modifier#,	
+						#modify_dt#,	
+						#del_dt#,	
+						#del_usr#,
+						#rtettypekey#,
+						#rtetname#,
+						#rtetfacttable#,
+						#rtetfactkey#,
+						#rtetfactsctable#,
+						#rtetfactsckey#,
+						#iscopy#,
+						#isnewmkey#
+							
+	     )
+  	</statement>
+  	
+  	<statement id="getT21_ruleparaList" parameterClass="java.lang.String"
+		resultClass="com.ist.aml.rule.dto.T21_rule">
+		SELECT RULEKEY, PARAKEY, PARATYPE, PARA_DES, PARAVALTYPE, 
+		PARA_MIN_VAL, PARA_MAX_VAL, FLAG AS para_flag FROM T21_RULEPARA WHERE RULEKEY = #value# 
+  	</statement>
+  	
+  	<statement id="getT21_ruleparaDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.aml.rule.dto.T21_rule">
+		SELECT RULEKEY, PARAKEY, PARATYPE, PARA_DES, PARAVALTYPE, 
+		PARA_MIN_VAL, PARA_MAX_VAL, FLAG AS para_flag FROM T21_RULEPARA WHERE PARAKEY = #value# 
+  	</statement>
+  	
+  	<statement id="insertT21_rulepara" parameterClass="com.ist.aml.rule.dto.T21_rule"
+		resultClass="int">
+	INSERT INTO T21_RULEPARA
+	(RULEKEY,PARAKEY,PARATYPE,PARA_DES,PARAVALTYPE,PARA_MIN_VAL,PARA_MAX_VAL,FLAG,CREATEUSER,CREATE_DT,CREATE_ORG)
+	VALUES 
+	(#rulekey#,#parakey#,#paratype#,#para_des#,#paravaltype#,#para_min_val#,#para_max_val#,#para_flag#,#para_create_user#,#para_create_dt#,#para_create_org#)
+  	</statement>
+  	
+  	<statement id="modifyT21_rulepara" parameterClass="com.ist.aml.rule.dto.T21_rule"
+		resultClass="int">
+	UPDATE T21_RULEPARA SET 
+	PARATYPE=#paratype#, PARA_DES=#para_des#, PARAVALTYPE=#paravaltype#, PARA_MIN_VAL=#para_min_val#, PARA_MAX_VAL=#para_max_val#, FLAG=#para_flag#
+	WHERE PARAKEY = #parakey# 
+  	</statement>
+  	
+  	<statement id="deleteT21_rulepara" parameterClass="java.lang.String"
+		resultClass="int">
+		DELETE FROM T21_RULEPARA WHERE PARAKEY = #value# 
+  	</statement>
+  		<statement id="delT21_rule_gs" parameterClass="java.lang.String"
+		resultClass="int">
+		delete from  T21_RULE_GS where rulekey=#rulekey#
+  	</statement>
+  	
+  	<statement id="delT21_rule_gs_with_in" parameterClass="java.lang.String"
+		resultClass="int">
+		delete from  T21_RULE_GS where rulekey IN ($value$)
+  	</statement>
+  	<statement id="insertT21_rule_gs" parameterClass="com.ist.aml.rule.dto.T21_rule"
+		resultClass="int">
+		insert into T21_RULE_GS(GS_KEY,RULEKEY,GS_DES,GS_VAL
+			<isNotEmpty prepend="," property="gs_sql_num">
+				GS_SQL_NUM 
+			</isNotEmpty> 
+			<isNotEmpty prepend="," property="gs_sql">
+				GS_SQL
+			</isNotEmpty>
+		)values(#gs_key#,#rulekey#,#gs_des#,#gs_val#
+		<isNotEmpty prepend="," property="gs_sql_num">
+				 #gs_sql_num#
+			</isNotEmpty> 
+			<isNotEmpty prepend="," property="gs_sql">
+				#gs_sql#
+			</isNotEmpty>
+		)
+		 
+  	</statement>
+  	
+  	<!-- 审计结合部分 -->
+  	<statement id="getrtetkeyList" parameterClass="com.ist.aml.rule.dto.T21_rule"
+		resultClass="com.ist.aml.rule.dto.T21_rule">
+	    select rtettypekey, rtetname as rtettypekey_disp from T03_ENTITY_KIND order by rtettypekey
+	</statement>
+	<!--  用于校验规则编码是否重复-->
+	<statement id="validateT03_rule" parameterClass="java.lang.String"
+		resultClass="int">
+		select count(rulekey) from T21_rule where rulekey like  ''||#value#||'%'
+	</statement>
+	
+	<statement id="getTableListByTplakey" parameterClass="java.lang.String"
+		resultClass="java.lang.String">
+	    SELECT tableename FROM V_DEPEND_TAB WHERE tplakey=#value#
+	</statement>
+	
+	<statement id="getT21_rule_indicByRulekey" parameterClass="com.ist.aml.rule.dto.T21_rule"
+		resultClass="com.ist.aml.rule.dto.T21_rule">
+	    SELECT b.INDIC_TABLE   FROM  T21_RULE_INDIC a , T21_INDIC b WHERE a.INDICKEY=b.INDICKEY AND a.RULEKEY=#rulekey#
+	</statement>
+	
+</sqlMap>

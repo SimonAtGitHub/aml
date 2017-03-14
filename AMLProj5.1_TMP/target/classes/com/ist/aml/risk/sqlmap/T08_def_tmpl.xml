@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T08_def_tmpl">
+	<statement id="getT08_def_tmplList"
+		parameterClass="com.ist.aml.risk.dto.T08_def_tmpl"
+		resultClass="com.ist.aml.risk.dto.T08_def_tmpl">
+		SELECT TEMPLATEKEY,TEMPLATENAME,DES,PARTY_CLASS_CD,GRANULARITY,
+		CREATOR,CREATEDATE,MODIFIER,MODIFYDATE,STATUS,TEMPTYPE,TEMPLEVEL,CALCULATESEQ FROM
+		T08_DEF_TMPL
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="templatename">
+				TEMPLATENAME LIKE '%$templatename$%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				PARTY_CLASS_CD = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="startdate">
+				<![CDATA[CREATEDATE >= #startdate# ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="enddate">
+				<![CDATA[CREATEDATE <= #enddate# ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="temptype">
+				TEMPTYPE = #temptype#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="status">
+				STATUS = #status#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="granularity">
+				GRANULARITY = #granularity#
+			</isNotEmpty>
+		    <isNotEmpty prepend="AND" property="templevel">
+                templevel = #templevel#
+            </isNotEmpty>
+		</dynamic>
+		<isNotEmpty prepend="" property="orderby">
+			<isEqual property="orderby" compareValue="1">
+				ORDER BY CREATEDATE
+			</isEqual>
+			<isEqual property="orderby" compareValue="2">
+				ORDER BY PARTY_CLASS_CD
+			</isEqual>
+			<isEqual property="orderby" compareValue="3">
+				ORDER BY STATUS
+			</isEqual>
+			<isEqual property="orderby" compareValue="4">
+				ORDER BY GRANULARITY
+			</isEqual>
+			<isEqual property="orderby" compareValue="5">
+				ORDER BY calculateseq
+			</isEqual>
+			<isNotEmpty prepend="" property="order">
+				<isEqual property="order" compareValue="1"></isEqual>
+				<isEqual property="order" compareValue="2">
+					DESC
+				</isEqual>
+			</isNotEmpty>
+		</isNotEmpty>
+	</statement>
+
+
+	<statement id="getT08_def_tmplListCount"
+		parameterClass="com.ist.aml.risk.dto.T08_def_tmpl"
+		resultClass="int">
+		SELECT COUNT(*) FROM T08_DEF_TMPL
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="templatename">
+				TEMPLATENAME LIKE '%$templatename$%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				PARTY_CLASS_CD = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="startdate">
+				<![CDATA[CREATEDATE >= #startdate# ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="enddate">
+				<![CDATA[CREATEDATE <= #enddate# ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="temptype">
+				TEMPTYPE = #temptype#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="status">
+				STATUS = #status#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="granularity">
+				GRANULARITY = #granularity#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="templevel">
+                templevel = #templevel#
+            </isNotEmpty>
+		</dynamic>
+	</statement>
+
+
+	<statement id="deleteT08_def_tmpl" parameterClass="java.lang.String"
+		resultClass="int">
+		UPDATE T08_DEF_TMPL SET STATUS='0' WHERE TEMPLATEKEY=#value#
+	</statement>
+	<statement id="saveT08_def_tmpl" parameterClass="java.lang.String"
+		resultClass="int">
+		UPDATE T08_DEF_TMPL SET STATUS='3' WHERE TEMPLATEKEY=#value#
+	</statement>
+	<statement id="commitT08_def_tmpl" parameterClass="java.lang.String"
+		resultClass="int">
+		UPDATE T08_DEF_TMPL SET STATUS='2' WHERE TEMPLATEKEY=#value#
+	</statement>
+	<statement id="getT08_def_tmplDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.risk.dto.T08_def_tmpl">
+		SELECT * FROM T08_DEF_TMPL WHERE TEMPLATEKEY=#value#
+	</statement>
+
+</sqlMap>
+

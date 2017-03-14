@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T21_defpara"> 
+  <statement id="getT21_defparaList" parameterClass="com.ist.aml.rule.dto.T21_defpara"
+	resultClass="com.ist.aml.rule.dto.T21_defpara">
+	SELECT * FROM
+	(SELECT
+	DEFPARAKEY,PARA_DES,FLAG,TAG,PARATYPE,PARA_VAL,DYNA_IND,CREATEUSER,CREATE_DT,CREATE_ORG
+	FROM T21_DEFPARA
+	UNION
+	SELECT
+	DEFPARAKEY,PARA_DES,FLAG,TAG,PARATYPE,PARA_VAL,DYNA_IND,CREATEUSER,CREATE_DT,CREATE_ORG
+	FROM T21_SYSPARA
+	) a
+
+	<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="defparakey">
+			DEFPARAKEY = #defparakey# 
+    </isNotEmpty>
+		<isNotEmpty prepend="AND" property="para_des">
+			PARA_DES like '%'||#para_des#||'%' 
+    </isNotEmpty>
+		<isNotEmpty prepend="AND" property="paratype">
+			PARATYPE =#paratype#
+    </isNotEmpty>
+		<isNotEmpty prepend="AND" property="dyna_ind">
+			DYNA_IND =#dyna_ind#
+    </isNotEmpty>
+		<isNotEmpty prepend="AND" property="flag">
+			FLAG =#flag#
+    </isNotEmpty>
+
+	</dynamic>
+</statement> 
+ 
+  <statement id="getT21_defparaListCount" parameterClass="com.ist.aml.rule.dto.T21_defpara"
+	resultClass="int">
+	SELECT COUNT(*) FROM
+	(SELECT
+	DEFPARAKEY,PARA_DES,FLAG,TAG,PARATYPE,PARA_VAL,DYNA_IND,CREATEUSER,CREATE_DT,CREATE_ORG
+	FROM T21_DEFPARA
+	UNION
+	SELECT
+	DEFPARAKEY,PARA_DES,FLAG,TAG,PARATYPE,PARA_VAL,DYNA_IND,CREATEUSER,CREATE_DT,CREATE_ORG
+	FROM T21_SYSPARA
+	) a
+	<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="defparakey">
+			DEFPARAKEY = #defparakey# 
+    </isNotEmpty>
+		<isNotEmpty prepend="AND" property="para_des">
+			PARA_DES like '%'||#para_des#||'%' 
+    </isNotEmpty>
+		<isNotEmpty prepend="AND" property="paratype">
+			PARATYPE =#paratype#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="dyna_ind">
+			DYNA_IND =#dyna_ind#
+    </isNotEmpty>
+		<isNotEmpty prepend="AND" property="flag">
+			FLAG =#flag#
+    </isNotEmpty>
+	</dynamic>
+	</statement> 
+	
+  <statement id="getT21_defparaListCount1" parameterClass="com.ist.aml.rule.dto.T21_defpara" resultClass="int"> 
+  	SELECT COUNT(*) FROM T21_defpara
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="defparakey"> 
+    DEFPARAKEY = #defparakey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+  <statement id="insertT21_defpara" parameterClass="com.ist.aml.rule.dto.T21_defpara" resultClass="int"> 
+  INSERT INTO T21_defpara(
+  DEFPARAKEY,PARATYPE,PARA_DES,PARA_VAL,TAG,DYNA_IND,FLAG,CREATEUSER,CREATE_DT,CREATE_ORG
+  ) values(
+  #defparakey#,#paratype#,#para_des#,#para_val#,#tag#,#dyna_ind#,#flag#,#createuser#,#create_dt#,#create_org#
+  ) 
+  </statement>
+  
+  <statement id="getT21_defparaDisp" parameterClass="com.ist.aml.rule.dto.T21_defpara" resultClass="com.ist.aml.rule.dto.T21_defpara"> 
+  SELECT * FROM $tablename$ WHERE DEFPARAKEY=#defparakey# 
+  </statement>
+  
+ <statement id="modifyT21_defpara" parameterClass="com.ist.aml.rule.dto.T21_defpara" resultClass="int"> 
+  UPDATE $tablename$ SET 
+   TAG=#tag#,PARA_DES=#para_des#,PARATYPE=#paratype#,PARA_VAL=#para_val#,FLAG=#flag#,DYNA_IND=#dyna_ind# 
+  WHERE DEFPARAKEY=#defparakey# 
+  </statement> 
+ 
+  <statement id="deleteT21_defpara" parameterClass="com.ist.aml.rule.dto.T21_defpara" resultClass="int">
+  DELETE FROM $tablename$ WHERE  DEFPARAKEY=#defparakey# 
+  </statement>
+  
+  <statement id="insertT21_param_log" parameterClass="com.ist.aml.rule.dto.T21_param_log"
+		resultClass="int">
+	INSERT INTO T21_PARAM_LOG(
+DEFPARAKEY, 
+PARATYPE, 
+PARA_DES, 
+PARA_VAL, 
+TAG, 
+DYNA_IND, 
+FLAG, 
+PARAMCD, 
+PARAMNAME, 
+RTNTYPE, 
+PARMTYPE, 
+BASEDT, 
+PARAMVAL, 
+DISPSEQ, 
+OPER_DES, 						
+CREATE_DT    ,							
+CREATE_USR   ,							
+MODIFIER     ,							
+MODIFY_DT    ,							
+DEL_DT       ,							
+DEL_USR
+	     )
+	     VALUES
+	     (
+					    #defparakey#,	
+						#paratype#,	
+						#para_des#,	
+						#para_val#,	
+						#tag#,	
+						#dyna_ind#,	
+						#flag#,	
+						#paramcd#,	
+						#paramname#,	
+						#ptntype#,	
+						#parmtype#,	
+						#basedt#,	
+						#paramval#,	
+						#dispseq#,	
+						#oper_des#,	
+						#create_dt#,	
+						#create_usr#,	
+						#modifier#,	
+						#modify_dt#,	
+						#del_dt#,	
+						#del_usr#
+	     )
+  	</statement>
+</sqlMap> 
+

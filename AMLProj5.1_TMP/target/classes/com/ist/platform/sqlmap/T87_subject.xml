@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+ 
+<sqlMap namespace="T87_subject"> 
+  <statement id="getT87_subjectList" parameterClass="com.ist.platform.dto.T87_subject" resultClass="com.ist.platform.dto.T87_subject"> 
+  SELECT * FROM T87_SUBJECT 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="subjecttype"> 
+    SUBJECTTYPE = #subjecttype# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+  <statement id="getT87_subjectListCount" parameterClass="com.ist.platform.dto.T87_subject" resultClass="int"> 
+  SELECT COUNT(*) FROM T87_SUBJECT
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="subjecttype"> 
+    SUBJECTTYPE = #subjecttype# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT87_subject" parameterClass="com.ist.platform.dto.T87_subject" resultClass="int"> 
+  INSERT INTO T87_SUBJECT(
+  SUBJECTKEY,SUBJECTNUM,SUBJECTNAME,SUBJECTLEVEL,BALANCEPROP,SUBJECTTYPE,HAPPENPROP,ISCHECK,FLAG,DES,VALIDATEDATE,INVALIDATEDATE,INPUT_DT
+  ) VALUES(
+  #subjectkey#,#subjectnum#,#subjectname#,#subjectlevel#,#balanceprop#,#subjecttype#,#happenprop#,#ischeck#,#flag#,#des#,#validatedate#,#invalidatedate#,#input_dt#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT87_subject" parameterClass="com.ist.platform.dto.T87_subject" resultClass="int"> 
+  UPDATE T87_SUBJECT SET 
+  SUBJECTKEY=#subjectkey#,SUBJECTNUM=#subjectnum#,SUBJECTNAME=#subjectname#,SUBJECTLEVEL=#subjectlevel#,BALANCEPROP=#balanceprop#,SUBJECTTYPE=#subjecttype#,HAPPENPROP=#happenprop#,ISCHECK=#ischeck#,FLAG=#flag#,DES=#des#,VALIDATEDATE=#validatedate#,INVALIDATEDATE=#invalidatedate#,INPUT_DT=#input_dt#
+  WHERE SUBJECTKEY=#subjectkey# 
+  </statement> 
+ 
+  <statement id="deleteT87_subject" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T87_SUBJECT WHERE SUBJECTKEY=#value# 
+  </statement> 
+ 
+  <statement id="getT87_subjectDisp" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T87_subject"> 
+  SELECT * FROM T87_SUBJECT WHERE SUBJECTKEY=#value# 
+  </statement> 
+ 
+ </sqlMap>
+
+
+
+
+

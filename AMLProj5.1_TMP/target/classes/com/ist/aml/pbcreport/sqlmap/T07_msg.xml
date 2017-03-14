@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T07_msg"> 
+  <statement id="getT07_msgList" parameterClass="com.ist.aml.pbcreport.dto.T07_msg" resultClass="com.ist.aml.pbcreport.dto.T07_msg"> 
+  SELECT M.MSGKEY,REPORTKEY,MSG_TYPE_CD,M.PACKETKEY,REPORT_TYPE_CD,REPORTORGANKEY,SENDDATE_DT,SENDDATE_CH,
+  BATCH_SEQ,MSG_SEQ,MSG_FILE,MSG_FILEPATH,MSG_ORIG_FILE,MSG_ORIG_FILEPATH,ORIG_MSGKEY,ATTACH_FILE,
+  ATTACH_FILEPAT,MSG_STATUS_CD,M.CREATE_DT,A.RECEIPT_TYPE_CD 
+  FROM 
+  <isNotEmpty prepend="" property="msg_time_cd"> 
+  	<isEqual property="msg_time_cd" compareValue ="0">
+  		T07_MSG M
+  	</isEqual>
+  	<isEqual property="msg_time_cd" compareValue ="1">
+  		T07_MSG_UH M
+  	</isEqual>
+  </isNotEmpty>
+  <isEmpty prepend="" property="msg_time_cd"> 
+  		T07_MSG M
+  </isEmpty>
+   LEFT outer JOIN T07_Receipt A ON M.Msgkey=A.Msgkey WHERE 1>0
+    <isNotEmpty prepend="AND" property="msgkey"> 
+    M.MSGKEY = #msgkey# 
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="reportkey"> 
+    M.REPORTKEY = #reportkey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="packetkey"> 
+    M.PACKETKEY = #packetkey# 
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="msg_type_cd"> 
+    M.MSG_TYPE_CD = #msg_type_cd# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="senddate_dt"> 
+    M.SENDDATE_DT = #senddate_dt# 
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="batch_seq"> 
+    M.BATCH_SEQ = #batch_seq# 
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="msg_seq"> 
+    M.MSG_SEQ = #msg_seq# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="msg_file"> 
+    M.MSG_FILE = #msg_file# 
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="msg_status_cd"> 
+    M.MSG_STATUS_CD = #msg_status_cd# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="create_dt"> 
+    M.CREATE_DT = #create_dt# 
+    </isNotEmpty>
+	<isNotEmpty prepend="AND" property="msg_orig_file">
+	M.MSG_ORIG_FILE = #msg_orig_file#
+	</isNotEmpty>        
+	<isNotEmpty prepend="AND" property="report_type_cd">
+				M.REPORT_TYPE_CD = #report_type_cd#
+	</isNotEmpty>
+	<isNotEmpty prepend="AND" property="searchReportorgankey">
+	M.REPORTORGANKEY = #searchReportorgankey#
+	</isNotEmpty>
+	<isNotEmpty prepend="AND" property="senddate_ch_disp">
+	M.SENDDATE_CH = #senddate_ch_disp#
+	</isNotEmpty>
+	<isNotEmpty prepend="AND" property="orig_msgkey">
+	M.ORIG_MSGKEY = #orig_msgkey#
+	</isNotEmpty> 					
+	<isNotEmpty property="reportorder">
+	<isEqual property="reportorder" compareValue="1">
+		ORDER BY M.MSG_ORIG_FILE
+	</isEqual>
+	<isEqual property="reportorder" compareValue="2">
+		ORDER BY M.MSG_TYPE_CD
+	</isEqual>
+	<isEqual property="reportorder" compareValue="3">
+		ORDER BY M.REPORT_TYPE_CD
+	</isEqual>
+	<isEqual property="reportorder" compareValue="4">
+		ORDER BY M.REPORTORGANKEY
+	</isEqual>
+	<isEqual property="reportorder" compareValue="5">
+		ORDER BY M.SENDDATE_CH
+	</isEqual>
+	<isEqual property="reportorder" compareValue="6">
+		ORDER BY M.BATCH_SEQ
+	</isEqual>
+	<isEqual property="reportorder" compareValue="7">
+		ORDER BY M.MSG_SEQ
+	</isEqual>
+	<isNotEmpty property="order">
+	<isEqual property="order" compareValue="0"></isEqual>
+	<isEqual property="order" compareValue="1">
+		DESC
+	</isEqual>
+	</isNotEmpty>
+	</isNotEmpty>
+  </statement> 
+ 
+  <statement id="getT07_msgListCount" parameterClass="com.ist.aml.pbcreport.dto.T07_msg" resultClass="int"> 
+  SELECT COUNT(*) FROM 
+    <isNotEmpty prepend="" property="msg_time_cd"> 
+  	<isEqual property="msg_time_cd" compareValue ="0">
+  		T07_MSG M
+  	</isEqual>
+  	<isEqual property="msg_time_cd" compareValue ="1">
+  		T07_MSG_UH M
+  	</isEqual>
+  </isNotEmpty>
+  <isEmpty prepend="" property="msg_time_cd">
+  		T07_MSG M
+  </isEmpty>
+  <dynamic prepend="where"> 
+	<isNotEmpty prepend="AND" property="msg_orig_file">
+	MSG_ORIG_FILE = #msg_orig_file#
+	</isNotEmpty> 
+	<isNotEmpty prepend="AND" property="searchReportorgankey">
+	REPORTORGANKEY = #searchReportorgankey#
+	</isNotEmpty>
+    <isNotEmpty prepend="AND" property="msgkey"> 
+    MSGKEY = #msgkey# 
+    </isNotEmpty>
+	<isNotEmpty prepend="AND" property="report_type_cd">
+				REPORT_TYPE_CD = #report_type_cd#
+	</isNotEmpty>
+    <isNotEmpty prepend="AND" property="reportkey"> 
+    REPORTKEY = #reportkey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="packetkey"> 
+    PACKETKEY = #packetkey# 
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="msg_type_cd"> 
+    MSG_TYPE_CD = #msg_type_cd# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="senddate_dt"> 
+    SENDDATE_DT = #senddate_dt# 
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="batch_seq"> 
+    BATCH_SEQ = #batch_seq# 
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="msg_seq"> 
+    MSG_SEQ = #msg_seq# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="msg_file"> 
+    MSG_FILE = #msg_file# 
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="msg_status_cd"> 
+    MSG_STATUS_CD = #msg_status_cd# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="create_dt"> 
+    CREATE_DT = #create_dt# 
+    </isNotEmpty>
+	<isNotEmpty prepend="AND" property="senddate_ch_disp">
+	SENDDATE_CH = #senddate_ch_disp#
+	</isNotEmpty>
+	<isNotEmpty prepend="AND" property="orig_msgkey">
+	ORIG_MSGKEY = #orig_msgkey#
+	</isNotEmpty>    
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT07_msg" parameterClass="com.ist.aml.pbcreport.dto.T07_msg" resultClass="int"> 
+  INSERT INTO T07_MSG(
+  MSGKEY,REPORTKEY,MSG_TYPE_CD,PACKETKEY,REPORT_TYPE_CD,REPORTORGANKEY,SENDDATE_DT,SENDDATE_CH,BATCH_SEQ,MSG_SEQ,MSG_FILE,MSG_FILEPATH,MSG_ORIG_FILE,MSG_ORIG_FILEPATH,ORIG_MSGKEY,ATTACH_FILE,ATTACH_FILEPAT,MSG_STATUS_CD,CREATE_DT
+  ) VALUES(
+  #msgkey#,#reportkey#,#msg_type_cd#,#packetkey#,#report_type_cd#,#reportorgankey#,#senddate_dt#,#senddate_ch#,#batch_seq#,#msg_seq#,#msg_file#,#msg_filepath#,#msg_orig_file#,#msg_orig_filepath#,#orig_msgkey#,#attach_file#,#attach_filepat#,#msg_status_cd#,#create_dt#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT07_msg" parameterClass="com.ist.aml.pbcreport.dto.T07_msg" resultClass="int"> 
+  UPDATE T07_MSG SET 
+  REPORTKEY=#reportkey#,MSG_TYPE_CD=#msg_type_cd#,PACKETKEY=#packetkey#,REPORT_TYPE_CD=#report_type_cd#,REPORTORGANKEY=#reportorgankey#,SENDDATE_DT=#senddate_dt#,SENDDATE_CH=#senddate_ch#,BATCH_SEQ=#batch_seq#,MSG_SEQ=#msg_seq#,MSG_FILE=#msg_file#,MSG_FILEPATH=#msg_filepath#,MSG_ORIG_FILE=#msg_orig_file#,MSG_ORIG_FILEPATH=#msg_orig_filepath#,ATTACH_FILE=#attach_file#,ATTACH_FILEPAT=#attach_filepat#,MSG_STATUS_CD=#msg_status_cd#,CREATE_DT=#create_dt#
+  WHERE MSGKEY=#msgkey# 
+  </statement> 
+ 
+ <statement id="modifyT07_msg_R" parameterClass="com.ist.aml.pbcreport.dto.T07_msg" resultClass="int"> 
+  UPDATE T07_MSG SET 
+  MSG_FILEPATH='',MSG_STATUS_CD='0',CREATE_DT=#create_dt:DATE#,
+  SENDDATE_DT=#senddate_dt:DATE#,SENDDATE_CH=#senddate_ch#
+  WHERE MSGKEY=#msgkey# 
+  </statement> 
+ 
+ <statement id="modifyT07_msg_status" parameterClass="com.ist.aml.pbcreport.dto.T07_msg" resultClass="int"> 
+  UPDATE T07_MSG SET 
+  MSG_STATUS_CD=#msg_status_cd#
+  WHERE MSGKEY=#msgkey# 
+  </statement> 
+  
+ <statement id="modifyT07_msg_status_all" parameterClass="com.ist.aml.pbcreport.dto.T07_msg" resultClass="int"> 
+  UPDATE T07_MSG SET 
+  MSG_STATUS_CD='5'
+  WHERE PACKETKEY=#packetkey# 
+  </statement>  
+  
+ 
+ 
+  <statement id="getT07_msgDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.pbcreport.dto.T07_msg"> 
+  SELECT * FROM T07_MSG WHERE MSGKEY=#value# 
+  </statement> 
+  
+  <statement id="deleteT07_msg" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T07_MSG WHERE MSGKEY=#value# 
+  </statement> 
+  
+  <statement id="getT07_msg_nameDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.pbcreport.dto.T07_msg">
+        SELECT A.REPORTKEY,C.MSG_FILE,C.MSG_SEQ,C.reportorgankey
+        FROM T07_REPORT A,T07_REPORT_CASE B,T07_MSG C
+        WHERE A.ORIG_APPLICATION_NUM=B.APPLICATION_NUM AND B.MSGKEY=C.MSGKEY AND A.REPORTKEY = #value#
+	</statement>
+ 
+ 
+</sqlMap> 
+

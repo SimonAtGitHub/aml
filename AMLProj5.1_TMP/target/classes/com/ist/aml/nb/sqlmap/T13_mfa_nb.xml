@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+<sqlMap namespace="T13_mfa_nb">
+	<statement id="getT13_mfa_nbList" parameterClass="com.ist.aml.nb.dto.T13_mfa_nb" resultClass="com.ist.aml.nb.dto.T13_mfa_nb">
+	SELECT NET_ID,NET_NAME,VIEW_MODE,DISPLAY_MODE,IS_NEW,ORGANKEY FROM T13_MFA_NB t where 1>0
+	<dynamic>
+		<isNotEmpty prepend="AND" property="net_id">
+		t.net_id=#net_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="net_name">
+		 t.net_name LIKE '%'||#net_name#||'%'
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+		t.organkey=#organkey#
+		</isNotEmpty>
+		<isEmpty prepend="AND" property="organkey">
+		 t.organkey in ( SELECT SUBORGANKEY FROM T87_ORGAN_MAP  WHERE ORGANKEY=#curr_org#  )   
+		</isEmpty>
+		
+		order by net_id desc
+	</dynamic>
+	</statement>
+	<statement id="getT13_mfa_nbListCount" parameterClass="com.ist.aml.nb.dto.T13_mfa_nb" resultClass="int">
+	select count(*) from T13_mfa_nb t
+	<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="net_id">
+		t.net_id=#net_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="net_name">
+		 t.net_name  LIKE '%'||#net_name#||'%'    
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+		t.organkey=#organkey#
+		</isNotEmpty>
+		<isEmpty prepend="AND" property="organkey">
+		 t.organkey in ( SELECT SUBORGANKEY FROM T87_ORGAN_MAP  WHERE ORGANKEY=#curr_org#)   
+		</isEmpty>
+	</dynamic>
+	</statement>
+	<statement id="getT13_mfa_nbDisp" parameterClass="com.ist.aml.nb.dto.T13_mfa_nb" resultClass="com.ist.aml.nb.dto.T13_mfa_nb">
+	SELECT NET_ID,NET_NAME,VIEW_MODE,DISPLAY_MODE,IS_NEW,ORGANKEY FROM T13_MFA_NB WHERE NET_ID=#net_id#
+	</statement>
+	<statement id="insetT13_mfa_nb" parameterClass="com.ist.aml.nb.dto.T13_mfa_nb" resultClass="int">
+	INSERT INTO T13_MFA_NB (NET_ID,NET_NAME,VIEW_MODE,DISPLAY_MODE,ORGANKEY)
+	VALUES (#net_id#,#net_name#,#view_mode#,#display_mode#,#organkey#)
+	</statement>
+	
+	<statement id="modifyT13_mfa_nb" parameterClass="com.ist.aml.nb.dto.T13_mfa_nb" resultClass="int">
+	UPDATE T13_MFA_NB SET NET_ID=#net_id#,NET_NAME=#net_name#,VIEW_MODE=#view_mode#,DISPLAY_MODE=#display_mode#,IS_NEW=#is_new#,ORGANKEY=#organkey# 
+	WHERE NET_ID=#net_id#
+	</statement>
+	<statement id="deleteT13_mfa_nb" parameterClass="java.lang.String" resultClass="int">
+	DELETE FROM T13_MFA_NB WHERE NET_ID=#net_id#
+	</statement>
+	
+	<statement id="deleteT13_mfa_nb_trans" parameterClass="java.lang.String" resultClass="int">
+	DELETE FROM T13_MFA_NB_trans WHERE NET_ID=#net_id#
+	</statement>
+	
+	<statement id="insertT13_mfa_nb_trans" parameterClass="com.ist.aml.report.dto.T47_transaction" resultClass="int">
+	merge into t13_mfa_nb_trans m 
+	using (select '$net_id$' as net_id,A.transactionkey, 
+	(CASE WHEN A.VALIDATE_IND IS NULL AND A.VALIDATE_IND2 IS NULL THEN '0' 
+		 WHEN A.VALIDATE_IND IS NOT NULL AND A.VALIDATE_IND2 IS NULL THEN '1' 
+		 WHEN A.VALIDATE_IND IS NULL AND A.VALIDATE_IND2 IS NOT NULL THEN '2' 
+		 WHEN A.VALIDATE_IND IS NOT NULL AND A.VALIDATE_IND2 IS NOT NULL THEN '3' END) AS VALIDATE_FLAG
+		FROM V47_TRANSACTION A 
+		<dynamic prepend="WHERE">
+		    <!-- add by lkl -->
+		    <isNotEmpty prepend="AND" property="tx_no">
+				A.tx_no = #tx_no#
+			</isNotEmpty>
+			<!-- end lkl -->
+			<isNotEmpty prepend="AND" property="transactionkey">
+				A.transactionkey = #transactionkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="amt_start_search">
+			 <![CDATA[A.CNY_AMT >= #amt_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="amt_end_search">
+				<![CDATA[A.CNY_AMT <= #amt_end#]]>
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="tx_dt">
+				<![CDATA[A.TX_DT >= #tx_dt:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_dtEnd">
+				<![CDATA[A.TX_DT <= #tx_dtEnd:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tx_today">
+				<![CDATA[A.TX_DT >= #tx_today:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				A.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				A.ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cal_ind">
+				CAL_IND = #cal_ind#
+			</isNotEmpty>
+
+			<isNotEmpty prepend="AND" property="bus_type_cd">
+
+				A.BUS_TYPE_CD LIKE #bus_type_cd#
+			</isNotEmpty>
+			
+			
+			<isNotNull property="list">
+				<iterate prepend="AND" property="list" open="("
+					close=")" conjunction="and">
+					A.TRANSACTIONKEY !=#list[]#
+				</iterate>
+			</isNotNull>
+			<isNotEmpty prepend="AND" property="acct_num">
+				A.ACCT_NUM = #acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cash_trans_flag">
+				A.CASH_TRANS_FLAG = #cash_trans_flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="channel">
+				A.CHANNEL = #channel#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="debit_credit">
+				A.DEBIT_CREDIT = #debit_credit#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="overarea_ind">
+				A.OVERAREA_IND = #overarea_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="re_ind">
+				A.RE_IND = #re_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="addtional">
+				A.ADDTIONAL = #addtional#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="validate_ind">
+				<isNotEmpty prepend="" property="alert_type_cd">
+					<isEqual prepend="" property="alert_type_cd"  compareValue="DE">
+						A.VALIDATE_IND = #validate_ind#
+					</isEqual>
+					<isEqual prepend="" property="alert_type_cd"  compareValue="KY">
+						A.VALIDATE_IND2 = #validate_ind#
+					</isEqual>
+				</isNotEmpty>
+				<isEmpty prepend="" property="alert_type_cd">
+					(A.VALIDATE_IND = #validate_ind# OR A.VALIDATE_IND2 = #validate_ind#)
+				</isEmpty>
+			</isNotEmpty>
+			
+			<!-- add by lkl -->
+				<isNotEmpty prepend="AND" property="party_class_cd">
+					A.PARTY_CLASS_CD = #party_class_cd#
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="curr_cd">
+					A.CURR_CD = #curr_cd#
+				</isNotEmpty>
+				    <isNotEmpty prepend="AND" property="teller">
+					A.TELLER = #teller#
+				</isNotEmpty>
+			<!-- end lkl -->
+			<isNotEmpty prepend="AND" property="opp_party_class_cd">
+				A.OPP_PARTY_CLASS_CD = #opp_party_class_cd#
+			</isNotEmpty>
+			<isEmpty  property="orderby">
+			ORDER BY  A.TX_DT DESC
+			</isEmpty>
+			
+			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="0">
+					ORDER BY A.TX_DT
+				</isEqual>
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY A.PARTY_ID
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY A.ACCT_NUM
+				</isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY A.ORGANKEY
+				</isEqual>
+				<isEqual property="orderby" compareValue="4">
+					ORDER BY A.TELLER
+				</isEqual>
+				<isEqual property="orderby" compareValue="5">
+					ORDER BY A.TX_CD
+				</isEqual>
+				<isEqual property="orderby" compareValue="6">
+					ORDER BY A.AMT
+				</isEqual>
+				<isEqual property="orderby" compareValue="7">
+					ORDER BY A.ADDTIONAL
+				</isEqual>
+				<isEqual property="orderby" compareValue="8">
+					ORDER BY A.CHANNEL
+				</isEqual>
+
+				<isNotEmpty property="order">
+					<isEqual property="order" compareValue="1">
+					   <isNotEqual property="orderby" compareValue="0">
+					     ,A.TX_DT DESC,A.TX_NO ASC
+					   </isNotEqual>
+					</isEqual>
+					<isEqual property="order" compareValue="2">
+					       DESC
+					        <isNotEqual property="orderby" compareValue="0">
+					      ,A.TX_DT DESC,A.TX_NO ASC
+					        </isNotEqual>
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+			
+		</dynamic> ) t
+	on (m.net_id=t.net_id and m.transactionkey=t.transactionkey)
+	when not matched then 
+	insert (net_id,transactionkey) values(t.net_id,t.transactionkey)
+	</statement>
+</sqlMap>

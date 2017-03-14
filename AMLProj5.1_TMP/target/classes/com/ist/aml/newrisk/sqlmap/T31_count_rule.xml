@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T31_count_rule"> 
+  <statement id="getT31_count_ruleList" parameterClass="com.ist.aml.newrisk.dto.T31_count_rule" resultClass="com.ist.aml.newrisk.dto.T31_count_rule"> 
+  select create_dt,create_org,create_user,ctrulekey,ctrulemax,ctrulemin,flag,maxisclosed,minisclosed,score,scoretype from t31_count_rule 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="create_dt"> 
+    create_dt = #create_dt# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT31_count_ruleListCount" parameterClass="com.ist.aml.newrisk.dto.T31_count_rule" resultClass="int"> 
+  select count(*) from t31_count_rule 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="create_dt"> 
+    create_dt = #create_dt# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT31_count_rule" parameterClass="com.ist.aml.newrisk.dto.T31_count_rule" resultClass="int"> 
+  insert into T31_count_rule(
+  create_dt,create_org,create_user,ctrulekey,ctrulemax,ctrulemin,flag,maxisclosed,minisclosed,score,scoretype
+  ) values(
+  #create_dt#,#create_org#,#create_user#,#ctrulekey#,#ctrulemax#,#ctrulemin#,#flag#,#maxisclosed#,#minisclosed#,#score#,#scoretype#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT31_count_rule" parameterClass="com.ist.aml.newrisk.dto.T31_count_rule" resultClass="int"> 
+  update T31_count_rule set 
+  create_dt=#create_dt#,create_org=#create_org#,create_user=#create_user#,ctrulekey=#ctrulekey#,ctrulemax=#ctrulemax#,ctrulemin=#ctrulemin#,flag=#flag#,maxisclosed=#maxisclosed#,minisclosed=#minisclosed#,score=#score#,scoretype=#scoretype#
+  where create_dt=#create_dt# 
+  </statement> 
+ 
+  <statement id="deleteT31_count_rule" parameterClass="java.lang.String" resultClass="int">
+  delete from T31_count_rule where create_dt=#value# 
+  </statement> 
+ 
+  <statement id="getT31_count_ruleDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.newrisk.dto.T31_count_rule"> 
+  select * from T31_count_rule where create_dt=#value# 
+  </statement> 
+ 
+</sqlMap> 
+

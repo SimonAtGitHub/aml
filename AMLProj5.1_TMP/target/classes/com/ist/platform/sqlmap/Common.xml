@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Common">
+  <statement id="getCodeTableListMap" parameterClass="java.lang.String" resultClass="java.util.HashMap">
+  $sql$
+  </statement>
+  <statement id="getCodeTableListLinkedHashMap" parameterClass="java.lang.String" resultClass="java.util.LinkedHashMap">
+  $sql$
+  </statement>
+  <statement id="getSequence" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.Sequence">
+  $sql$
+  </statement>
+
+  <statement id="updateSQL" parameterClass="java.lang.String" resultClass="int">
+  $sql$ 
+  </statement>
+
+  <statement id="getValueSQLInt" parameterClass="java.lang.String" resultClass="int">
+  $sql$
+  </statement>
+
+  <statement id="getValueSQL" parameterClass="java.lang.String" resultClass="double">
+  $sql$
+  </statement>
+
+  <statement id="getValueLong" parameterClass="java.lang.String" resultClass="long">
+  $sql$
+  </statement>
+
+  <statement id="getValueSQLStr" parameterClass="java.lang.String" resultClass="java.lang.String">
+  $sql$
+  </statement>
+  
+  <statement id="getCommonListMap" parameterClass="java.lang.String" resultClass="java.util.LinkedHashMap" remapResults="true">
+  $sql$
+  </statement>
+  <statement id="getIntValue" parameterClass="java.lang.String" resultClass="int" remapResults="true">
+  $sql$
+  </statement>
+   <statement id="getStringValue" parameterClass="java.lang.String" resultClass="java.lang.String">
+  $sql$
+  </statement>
+  <statement id="executeSql" parameterClass="java.lang.String" resultClass="int"> 
+    	<![CDATA[$sql$]]>
+  </statement>
+</sqlMap>

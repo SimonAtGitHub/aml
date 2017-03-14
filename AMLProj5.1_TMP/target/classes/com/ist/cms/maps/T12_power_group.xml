@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_power_group"> 
+  <statement id="getT12_power_groupList" parameterClass="com.ist.cms.dto.T12_power_group" resultClass="com.ist.cms.dto.T12_power_group"> 
+  select programakey,groupkey from t12_power_group 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="programakey"> 
+    programakey = #programakey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT12_power_groupListCount" parameterClass="com.ist.cms.dto.T12_power_group" resultClass="int"> 
+  select count(*) from t12_power_group 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="programakey"> 
+    programakey = #programakey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_power_group" parameterClass="com.ist.cms.dto.T12_power_group" resultClass="int"> 
+  insert into T12_power_group(
+  programakey,groupkey
+  ) values(
+  #programakey#,#groupkey#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_power_group" parameterClass="com.ist.cms.dto.T12_power_group" resultClass="int"> 
+  update T12_power_group set 
+  programakey=#programakey#,groupkey=#groupkey#
+  where programakey=#programakey# 
+  </statement> 
+ 
+  <statement id="deleteT12_power_group" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_power_group where programakey=#value# 
+  </statement> 
+ 
+  <statement id="getT12_power_groupDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_power_group"> 
+  select * from T12_power_group where programakey=#value# 
+  </statement> 
+ 
+</sqlMap> 
+

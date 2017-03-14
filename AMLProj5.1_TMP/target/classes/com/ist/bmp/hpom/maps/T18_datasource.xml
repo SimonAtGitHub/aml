@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T18_datasource"> 
+  <statement id="getT18_datasourceList" parameterClass="com.ist.bmp.hpom.dto.T18_datasource" resultClass="com.ist.bmp.hpom.dto.T18_datasource"> 
+  select dskey,dsname,des,flaglocation,flagtype,isget,putmode,getmode,dbtype,getmethod,totalcount,dspath,workpath,odsprefix ,fetchmethod,fetchcmdpath,loadcmdpath,serveralias,db2filetype,isdeploy,deploytime,loadparam from t18_datasource 
+  	<dynamic prepend="where"> 
+  	<![CDATA[flag<>'2']]>
+  	</dynamic> 
+    <isNotEmpty prepend="and" property="dskey"> 
+    dskey = #dskey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="dsname"> 
+    dsname like '%'||#dsname#||'%'
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="odsprefix"> 
+    odsprefix  like '%'||#odsprefix#||'%'
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="flaglocation"> 
+    flaglocation = #flaglocation#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="flagtype"> 
+    flagtype = #flagtype#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="isget"> 
+    isget = #isget#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="getmode"> 
+    getmode = #getmode#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="isdeploy"> 
+    isdeploy = #isdeploy#
+    </isNotEmpty>
+     <isNotEmpty prepend="and" property="deploytime"> 
+    deploytime = #deploytime#
+    </isNotEmpty>
+     
+    <dynamic prepend="">
+	    <isNotEmpty prepend="" property="sort">
+	    <isNotEmpty prepend="" property="sort_type">
+		 ORDER BY $sort$ $sort_type$
+		</isNotEmpty>
+		</isNotEmpty>
+  	</dynamic>  
+  </statement> 
+ 
+  <statement id="getT18_datasourceListCount" parameterClass="com.ist.bmp.hpom.dto.T18_datasource" resultClass="int"> 
+  select count(*) from t18_datasource 
+  where 
+  	<![CDATA[flag<>'2']]>
+    <isNotEmpty prepend="and" property="dskey"> 
+    dskey = #dskey# 
+    </isNotEmpty> 
+ 	 <isNotEmpty prepend="and" property="dsname"> 
+    dsname like '%'||#dsname#||'%'
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="odsprefix"> 
+    odsprefix  like '%'||#odsprefix#||'%'
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="flaglocation"> 
+    flaglocation = #flaglocation#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="flagtype"> 
+    flagtype = #flagtype#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="isget"> 
+    isget = #isget#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="getmode"> 
+    getmode = #getmode#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="putmode"> 
+    putmode = #putmode#
+    </isNotEmpty>
+  </statement> 
+ 
+  <statement id="insertT18_datasource" parameterClass="com.ist.bmp.hpom.dto.T18_datasource" resultClass="int"> 
+  insert into T18_datasource(
+  dskey,dsname,des,flaglocation,flagtype,isget,putmode,getmode,dbtype,getmethod,totalcount,dspath,workpath,odsprefix,flag,fetchmethod,fetchcmdpath,loadcmdpath,serveralias,db2filetype,loadparam
+  ) values(
+  #dskey#,#dsname#,#des#,#flaglocation#,#flagtype#,#isget#,#putmode#,#getmode#,#dbtype#,#getmethod#,#totalcount#,#dspath#,#workpath#,#odsprefix#,#flag#,#fetchmethod#,#fetchcmdpath#,#loadcmdpath#,
+  #serveralias#,#db2filetype#,#loadparam#
+  ) 
+  </statement> 
+  
+    <statement id="insertT18_flagfile" parameterClass="com.ist.bmp.hpom.dto.T18_datasource" resultClass="int"> 
+  insert into T18_flagfile(
+  dskey,filepre,fileend,filepath,remotefilepath
+  ) values(
+  #dskey#,#filepre#,#fileend#,#filepath#,#remotefilepath#
+  ) 
+  </statement> 
+  
+ 
+  <statement id="modifyT18_datasource" parameterClass="com.ist.bmp.hpom.dto.T18_datasource" resultClass="int"> 
+  update T18_datasource set 
+  dskey=#dskey#,dsname=#dsname#,des=#des#,flaglocation=#flaglocation#,flagtype=#flagtype#,isget=#isget#,putmode=#putmode#,getmode=#getmode#,
+  dbtype=#dbtype#,getmethod=#getmethod#,totalcount=#totalcount#,dspath=#dspath#,workpath=#workpath#,odsprefix=#odsprefix#,fetchmethod=#fetchmethod#,
+  fetchcmdpath=#fetchcmdpath#,loadcmdpath=#loadcmdpath#,serveralias=#serveralias#,db2filetype=#db2filetype#,loadparam=#loadparam#
+  where dskey=#dskey# 
+  </statement> 
+  
+  <statement id="modifyT18_flagfile" parameterClass="com.ist.bmp.hpom.dto.T18_datasource" resultClass="int"> 
+  update T18_flagfile set 
+  dskey=#dskey#,filepre=#filepre#,fileend=#fileend#,filepath=#filepath#,remotefilepath=#remotefilepath#
+  where dskey=#dskey# 
+  </statement> 
+ 
+  <statement id="deleteT18_datasource" parameterClass="java.lang.String" resultClass="int">
+  update  T18_datasource set flag ='2' where dskey=#value# 
+  </statement> 
+ 
+  <statement id="getT18_datasourceDisp" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_datasource"> 
+  select a.* ,b.* from T18_datasource  a left join T18_FLAGFILE b on a.dskey=b.dskey where a.dskey=#value#
+  </statement> 
+  
+  <statement id="getT18_datasource_dskey_exsit" parameterClass="java.lang.String" resultClass="int"> 
+  select count(*) from T18_datasource where flag='1' and dskey=#value#  
+  </statement> 
+  <statement id="getT18_flagfileByDskey" parameterClass="java.lang.String" resultClass="int"> 
+  select count(*) from T18_flagfile where dskey=#value# 
+  </statement>
+ <statement id="getT18_datasource_list" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_datasource"> 
+  	select 
+  		dskey,dsname,des,flaglocation,flagtype,isget,putmode,getmode,dbtype,getmethod,totalcount,dspath,workpath,odsprefix ,fetchmethod,fetchcmdpath,loadcmdpath,serveralias,db2filetype,isdeploy,deploytime,loadparam  
+  	from T18_datasource t where t.flag = '1'
+  </statement>
+  <statement id="getT18_datasource_dsname" parameterClass="java.lang.String" resultClass="java.lang.String"> 
+  select t.dsname from T18_datasource t where t.dskey=#value#
+  </statement>
+  <statement id="getOdsprefixByDskey" parameterClass="java.lang.String" resultClass="java.lang.String"> 
+  select t.odsprefix from T18_datasource t where t.dskey=#value#
+  </statement>
+  <statement id="getT18_datasourceByDskey" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_datasource"> 
+  select t.* from T18_datasource t where t.dskey=#value#
+  </statement>
+   <statement id="deployT18_datasource" parameterClass="com.ist.bmp.hpom.dto.T18_datasource" resultClass="int"> 
+  	update T18_datasource set isdeploy =#isdeploy# , deploytime=#deploytime#  where dskey=#dskey# 
+  </statement>  
+   <statement id="getT18_datasourceDispByTableename" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_datasource"> 
+  	SELECT t.* FROM T18_DATASOURCE  t,T18_ods_load t0 WHERE t.DSKEY = t0.DSKEY AND t0.TABLEENAME = #value#
+  </statement>
+  
+</sqlMap> 
+

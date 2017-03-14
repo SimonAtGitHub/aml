@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T07_nbs_atif">
+	<statement id="getT07_nbs_atifList3"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_atif"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbs_atif">
+		SELECT
+		REPORTKEY,CTIF_SEQNO,ATIF_SEQNO,CATP,CTAC,OATM,CATM,VALIDATE_IND
+		FROM 
+		<isNotEmpty prepend=" " property="report_time_cd">
+			<isEqual property="report_time_cd" compareValue="0">
+				T07_NBS_ATIF
+			</isEqual>
+			<isNotEqual property="report_time_cd" compareValue="0">
+			    T07_NBS_ATIF_UH
+			</isNotEqual>
+		</isNotEmpty>
+		<isEmpty prepend=" " property="report_time_cd">
+		     T07_NBS_ATIF 
+		</isEmpty>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="reportkey">
+				REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			
+				<isNotEmpty prepend="AND" property="ctif_seqno">
+				CTIF_SEQNO = $ctif_seqno$
+			  </isNotEmpty>
+			
+		</dynamic>
+		order by REPORTKEY,CTIF_SEQNO,ATIF_SEQNO
+	</statement>
+	<statement id="getT07_nbs_atif_validateList"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_atif"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbs_atif">
+		SELECT
+		A.REPORTKEY,A.CTIF_SEQNO,A.ATIF_SEQNO,A.CATP,A.CTAC,A.OATM,A.CATM,A.VALIDATE_IND,A.pbc_crt_dt
+		FROM T07_NBS_ATIF A,T07_REPORT B WHERE A.REPORTKEY=B.REPORTKEY 
+		<dynamic>
+			<isNotEmpty prepend="AND" property="org_ids">
+			B.CREATE_ORG IN ($org_ids$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ctac">
+				A.CTAC = #ctac#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				A.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_start">
+				<![CDATA[A.pbc_crt_dt >= #pbc_crt_dt_start_s#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_end">
+				<![CDATA[A.pbc_crt_dt <= #pbc_crt_dt_end_s#]]>
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY A.VALIDATE_IND 
+	</statement>
+	<statement id="getT07_nbs_atif_validateListCount"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_atif"
+		resultClass="int">
+		SELECT COUNT(*)
+		FROM T07_NBS_ATIF A,T07_REPORT B WHERE A.REPORTKEY=B.REPORTKEY 
+		<dynamic>
+			<isNotEmpty prepend="AND" property="org_ids">
+			B.CREATE_ORG IN ($org_ids$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ctac">
+				A.CTAC = #ctac#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				A.VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+				<isNotEmpty prepend="AND" property="pbc_crt_dt_start">
+				<![CDATA[A.pbc_crt_dt >= #pbc_crt_dt_start_s#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="pbc_crt_dt_end">
+				<![CDATA[A.pbc_crt_dt <= #pbc_crt_dt_end_s#]]>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="getT07_nbs_atifDisp"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_atif"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbs_atif">
+		SELECT * FROM T07_NBS_ATIF
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="reportkey">
+				REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ctif_seqno">
+				CTIF_SEQNO = $ctif_seqno$
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="atif_seqno">
+				ATIF_SEQNO = $atif_seqno$
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="modifyT07_nbs_atif"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_atif"
+		resultClass="int">
+		UPDATE T07_NBS_ATIF SET
+		CATP=#catp#,CTAC=#ctac#,VALIDATE_IND=#validate_ind#
+		WHERE REPORTKEY=#reportkey# and CTIF_SEQNO=$ctif_seqno$ and ATIF_SEQNO=$atif_seqno$ 
+	</statement>
+	<statement id="getT07_nbs_atifList4"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_ctif"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbs_ctif">
+		SELECT
+		REPORTKEY,CTIF_SEQNO,ATIF_SEQNO,CATP,CTAC,OATM,CATM,VALIDATE_IND
+		FROM 
+		<isNotEmpty prepend=" " property="report_time_cd">
+			<isEqual property="report_time_cd" compareValue="0">
+				T07_NBS_ATIF
+			</isEqual>
+			<isNotEqual property="report_time_cd" compareValue="0">
+			    T07_NBS_ATIF_UH
+			</isNotEqual>
+		</isNotEmpty>
+		<isEmpty prepend=" " property="report_time_cd">
+		     T07_NBS_ATIF 
+		</isEmpty>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="reportkey">
+				REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ctif_seqno">
+				CTIF_SEQNO = $ctif_seqno$
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="getT07_nbs_atifListCount1"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_atif"
+		resultClass="int">
+		SELECT COUNT(*) FROM 
+		<isNotEmpty prepend=" " property="fromcase">
+			<isEqual property="fromcase" compareValue="1">
+				T07_NBS_ATIF
+			</isEqual>
+			<isNotEqual property="fromcase" compareValue="1">
+			    T07_NBS_ATIF_UH
+			</isNotEqual>
+		</isNotEmpty>
+		<isEmpty prepend=" " property="fromcase">
+		     T07_NBS_ATIF 
+		</isEmpty>
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="reportkey">
+				REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				VALIDATE_IND = #validate_ind#
+			</isNotEmpty>			
+		</dynamic>
+	</statement>
+	
+	<statement id="insertT07_nbs_atif"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_atif"
+		resultClass="int">
+		INSERT INTO T07_NBS_ATIF(
+		REPORTKEY,CTIF_SEQNO,ATIF_SEQNO,CATP,CTAC,OATM,CATM,VALIDATE_IND
+		) VALUES(
+		#reportkey#,$ctif_seqno$,$atif_seqno$,#catp#,#ctac#,#oatm:DATE#,#catm:DATE#,#validate_ind#
+		)
+	</statement>
+
+</sqlMap>

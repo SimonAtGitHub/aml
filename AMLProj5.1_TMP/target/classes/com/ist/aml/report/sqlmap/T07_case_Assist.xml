@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="GB2312"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T07_case_Assist">
+<statement id="getT07_case_AssistList" 
+	           parameterClass="com.ist.aml.report.dto.T07_case_Assist" 
+	           resultClass="com.ist.aml.report.dto.T07_case_Assist">
+		 SELECT a.application_num,a.assitno,a.req_organkey,a.req_time,a.reasons,a.deal_organkey,a.handlereport,a.deal_time,a.status,a.deal_user,b.username as       req_username,c.username as deal_username FROM 
+      (T07_CASE_ASSIST a left join t00_user c on a.deal_user =c.username)  inner join  t00_user b on a.req_user=b.username   where 1>0
+	<isNotEmpty prepend="AND" property="application_num">
+    APPLICATION_NUM=#application_num#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="deal_organkeys">
+    deal_organkey in ($deal_organkeys$)
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="req_organkey">
+    req_organkey =#req_organkey#
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="status">
+    status =#status#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="req_time_disp">
+	 <![CDATA[req_time >= #req_time:DATE#]]>
+	 and  <![CDATA[req_time < #req_time_end:DATE#]]>
+	</isNotEmpty> 
+		  
+  </statement>
+  <statement id="getT07_case_AssistListCount" 
+	           parameterClass="com.ist.aml.report.dto.T07_case_Assist" 
+	           resultClass="int">
+		   SELECT count(a.application_num) FROM 
+      (T07_CASE_ASSIST a left join t00_user c on a.deal_user =c.username)  inner join  t00_user b on a.req_user=b.username   where 1>0
+		 
+   <isNotEmpty prepend="AND" property="application_num">
+    APPLICATION_NUM=#application_num#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="deal_organkeys">
+    deal_organkey in ($deal_organkeys$)
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="req_organkey">
+    req_organkey =#req_organkey#
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="status">
+    status =#status#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="req_time_disp">
+	 <![CDATA[req_time >= #req_time:DATE#]]>
+	 and  <![CDATA[req_time < #req_time_end:DATE#]]>
+	</isNotEmpty> 
+  </statement>
+  <statement id="getT07_case_tranOrganList" 
+	           parameterClass="com.ist.aml.report.dto.T07_case_Assist" 
+	           resultClass="com.ist.aml.report.dto.T47_transaction">
+		   select distinct organkey from t47_transaction_uc a
+           where exists (select 'X' from t07_case_transaction_ky b
+                                where b.transactionkey=a.transactionkey
+                                  and b.application_num=#application_num#)
+  </statement>
+  <statement id="getT07_case_acctOrganList" 
+	           parameterClass="java.lang.String" 
+	           resultClass="com.ist.platform.dto.T00_organ">
+   select  distinct c.op_org_num  as organkey
+    from t47_agreement c,t07_case_stcr_ky b
+        where b.acct_num=c.acct_num
+         and b.acct_num is not null and  b.application_num=#value#
+         
+  </statement>
+  <statement id="getT07_case_Assist_disp" 
+	           parameterClass="java.lang.String" 
+	           resultClass="com.ist.aml.report.dto.T07_case_Assist">
+        SELECT * FROM  T07_CASE_ASSIST where assitno=#value#
+  </statement>
+
+  <statement id="getMaxREQ_QUEUE" 
+	           parameterClass="com.ist.aml.report.dto.T07_case_Assist" 
+	           resultClass="int">
+		  SELECT  MAX(REQ_QUEUE)   FROM T07_CASE_ASSIST A
+		  WHERE  A.APPLICATION_NUM=#application_num#
+	<isNotEmpty prepend="AND" property="deal_organkey">
+    deal_organkey =#deal_organkey#
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="req_organkey">
+    req_organkey =#req_organkey#
+    </isNotEmpty>
+  </statement>
+  <statement id="insertT07_case_Assist" 
+	           parameterClass="com.ist.aml.report.dto.T07_case_Assist" 
+	           resultClass="int">
+		  INSERT INTO T07_CASE_ASSIST(ASSITNO,APPLICATION_NUM,REQ_ORGANKEY,DEAL_ORGANKEY,REASONS,REQ_TIME,REQ_QUEUE,REQ_USER,STATUS)
+		  VALUES(#assitno#,#application_num#,#req_organkey#,#deal_organkey#,#reasons#,#req_time#,#req_queue#,#req_user#,#status#)
+  </statement>
+  <statement id="updateT07_case_Assist" 
+	           parameterClass="com.ist.aml.report.dto.T07_case_Assist" 
+	           resultClass="int">
+	           UPDATE T07_CASE_ASSIST T
+	           SET T.HANDLEREPORT = #handlereport#,
+	               T.DEAL_USER = #deal_user#,
+	               T.DEAL_TIME = #deal_time#,
+	               T.STATUS=#status#
+	           WHERE ASSITNO = #assitno#
+  </statement> 
+   <statement id="delT07_case_Assist" 
+	           parameterClass="com.ist.aml.report.dto.T07_case_Assist" 
+	           resultClass="int">
+	           DELETE FROM T07_CASE_ASSIST T
+	           WHERE ASSITNO = #assitno#
+	         
+  </statement>
+  
+  
+  
+  
+  
+ <statement id="getT07_transacionkyList" 	parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		
+		
+  <isNotEmpty prepend="" property="trans_searchtime"> 
+	   <isEqual property="trans_searchtime" compareValue ="0">
+	 		SELECT A.TRANSACTIONKEY,A.HOST_CUST_ID,A.PARTY_ID,A.TX_DT,A.DT_TIME,A.AGENT_NAME,A.ORGANKEY,A.ACCT_NUM,A.CURRENCY_CD,A.AMT,
+	 		A.CNY_AMT,A.USD_AMT,A.CURR_CD,  A.CASH_IND,A.TX_TYPE_CD,A.DEBIT_CREDIT,A.RECEIVE_PAY_CD, A.CAL_IND,A.VALIDATE_IND2,A.VALIDATE_IND
+           FROM T47_TRANSACTION_UC A,(SELECT distinct D.TRANSACTIONKEY
+                            FROM T07_CASE_TRANSACTION_KY D
+                           WHERE D.APPLICATION_NUM = #application_num#)b
+           WHERE  a.transactionkey=b.TRANSACTIONKEY
+            <isNotEmpty prepend="AND" property="validate_ind">
+				 A.validate_ind2=$validate_ind$
+            </isNotEmpty> 
+           <isNotEmpty prepend="AND" property="organkey">
+				 ORGANKEY IN ($organkey$)
+           </isNotEmpty>  
+	   </isEqual>
+	   <isEqual property="trans_searchtime" compareValue ="1">
+	 		SELECT A.TRANSACTIONKEY,A.HOST_CUST_ID,A.PARTY_ID,A.TX_DT,A.DT_TIME,A.AGENT_NAME,A.ORGANKEY,A.ACCT_NUM,A.CURRENCY_CD,
+	 		       A.AMT,A.CNY_AMT,A.USD_AMT,A.CURR_CD,  A.CASH_IND,A.TX_TYPE_CD,A.DEBIT_CREDIT,A.RECEIVE_PAY_CD, A.CAL_IND,
+	 		       A.VALIDATE_IND2,A.VALIDATE_IND
+            FROM t47_TRANSACTION A,(SELECT distinct D.TRANSACTIONKEY
+                            FROM T07_CASE_TRANSACTION_KY_UH D
+                           WHERE D.APPLICATION_NUM = #application_num#)b
+            WHERE  a.transactionkey=b.TRANSACTIONKEY
+             <isNotEmpty prepend="AND" property="validate_ind">
+				 A.validate_ind2=$validate_ind$
+            </isNotEmpty> 
+           <isNotEmpty prepend="AND" property="organkey">
+				 ORGANKEY IN ($organkey$)
+           </isNotEmpty>  
+           union  all
+            SELECT A.TRANSACTIONKEY,A.HOST_CUST_ID,A.PARTY_ID,A.TX_DT,A.DT_TIME,A.AGENT_NAME,A.ORGANKEY,A.ACCT_NUM,A.CURRENCY_CD,
+            A.AMT,A.CNY_AMT,A.USD_AMT,A.CURR_CD,  A.CASH_IND,A.TX_TYPE_CD,A.DEBIT_CREDIT,A.RECEIVE_PAY_CD, A.CAL_IND,A.VALIDATE_IND2,A.VALIDATE_IND
+             FROM t47_TRANSACTION_UH A,(SELECT  distinct D.TRANSACTIONKEY
+                            FROM T07_CASE_TRANSACTION_KY_UH D
+                           WHERE D.APPLICATION_NUM = #application_num#)b
+           WHERE  a.transactionkey=b.TRANSACTIONKEY
+           <isNotEmpty prepend="AND" property="validate_ind">
+				 A.validate_ind2=$validate_ind$
+            </isNotEmpty> 
+           <isNotEmpty prepend="AND" property="organkey">
+				 ORGANKEY IN ($organkey$)
+           </isNotEmpty>  
+	 	</isEqual>
+	</isNotEmpty>		
+		
+		
+		
+		
+  </statement>
+  
+  
+  
+  
+  <statement id="getT07_transacionListkyCount" parameterClass="com.ist.aml.report.dto.T47_transaction"
+		resultClass="int">
+	
+	<isNotEmpty prepend="" property="trans_searchtime"> 
+	   SELECT count(C.TRANSACTIONKEY) FROM 
+	   <isEqual property="trans_searchtime" compareValue ="0">
+	 		(SELECT A.TRANSACTIONKEY
+           FROM T47_TRANSACTION_UC A,(SELECT distinct D.TRANSACTIONKEY
+                            FROM T07_CASE_TRANSACTION_KY D
+                           WHERE D.APPLICATION_NUM = #application_num#)b
+           WHERE  a.transactionkey=b.TRANSACTIONKEY
+            <isNotEmpty prepend="AND" property="validate_ind">
+				 A.validate_ind2=$validate_ind$
+            </isNotEmpty> 
+           <isNotEmpty prepend="AND" property="organkey">
+				 ORGANKEY IN ($organkey$)
+           </isNotEmpty> 
+           )C 
+	   </isEqual>
+	   <isEqual property="trans_searchtime" compareValue ="1">
+	 		(SELECT A.TRANSACTIONKEY
+            FROM t47_TRANSACTION A,(SELECT distinct D.TRANSACTIONKEY
+                            FROM T07_CASE_TRANSACTION_KY_UH D
+                           WHERE D.APPLICATION_NUM = #application_num#)b
+            WHERE  a.transactionkey=b.TRANSACTIONKEY
+             <isNotEmpty prepend="AND" property="validate_ind">
+				 A.validate_ind2=$validate_ind$
+            </isNotEmpty> 
+           <isNotEmpty prepend="AND" property="organkey">
+				 ORGANKEY IN ($organkey$)
+           </isNotEmpty>  
+           union  all
+            SELECT A.TRANSACTIONKEY
+             FROM t47_TRANSACTION_UH A,(SELECT distinct  D.TRANSACTIONKEY
+                            FROM T07_CASE_TRANSACTION_KY_UH D
+                           WHERE D.APPLICATION_NUM = #application_num#)b
+           WHERE  a.transactionkey=b.TRANSACTIONKEY
+           <isNotEmpty prepend="AND" property="validate_ind">
+				 A.validate_ind2=$validate_ind$
+            </isNotEmpty> 
+           <isNotEmpty prepend="AND" property="organkey">
+				 ORGANKEY IN ($organkey$)
+           </isNotEmpty> 
+           )C 
+	 	</isEqual>
+	</isNotEmpty>	
+  </statement>
+ 
+</sqlMap>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T07_pbc_sequence"> 
+
+ 
+  <statement id="insertT07_pbc_sequence" parameterClass="com.ist.aml.pbcreport.dto.T07_pbc_sequence" resultClass="int"> 
+  INSERT INTO T07_PBC_SEQUENCE(
+  SEQUENSENAME,SEQUENSEDATE,SEQUENSEVALUE,FLAG
+  ) VALUES(
+  #sequensename#,#sequensedate#,#sequensevalue#,#flag#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT07_pbc_sequence" parameterClass="com.ist.aml.pbcreport.dto.T07_pbc_sequence" resultClass="int"> 
+  UPDATE $tablename$ SET 
+  SEQUENSENAME=#sequensename#,SEQUENSEDATE=#sequensedate#,SEQUENSEVALUE=#sequensevalue#,FLAG=#flag#
+  WHERE SEQUENSENAME=#sequensename# 
+  </statement> 
+ 
+
+ 
+  <statement id="getT07_pbc_sequenceDisp" parameterClass="com.ist.aml.pbcreport.dto.T07_pbc_sequence"  resultClass="com.ist.aml.pbcreport.dto.T07_pbc_sequence"> 
+  SELECT * FROM $tablename$ WHERE SEQUENSENAME=#sequensename# 
+  </statement> 
+ 
+</sqlMap> 
+

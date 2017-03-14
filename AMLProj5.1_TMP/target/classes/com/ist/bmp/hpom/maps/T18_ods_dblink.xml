@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T18_ods_dblink"> 
+  <statement id="getT18_ods_dblinkList" parameterClass="com.ist.bmp.hpom.dto.T18_ods_dblink" resultClass="com.ist.bmp.hpom.dto.T18_ods_dblink"> 
+  	SELECT *
+	from t18_ods_dblink m
+	 <dynamic prepend="where">
+    <isNotEmpty prepend="and" property="tableename"> 
+    m.tableename like  '%'||#tableename#||'%'
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="shfilename"> 
+    m.shfilename like  '%'||#shfilename#||'%'
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="isedit"> 
+    m.isedit = #isedit#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="isdeploy"> 
+    m.isdeploy = #isdeploy#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="createdate"> 
+    m.createdate like  '%'||#createdate#||'%'
+    </isNotEmpty>   
+     <isNotEmpty prepend="and" property="creatmethod"> 
+    m.creatmethod = #creatmethod#
+    </isNotEmpty>
+    </dynamic>
+     <isNotEmpty prepend="" property="sort">
+    <isNotEmpty prepend="" property="sort_type">
+	 ORDER BY $sort$ $sort_type$
+	</isNotEmpty>
+	</isNotEmpty>	
+  </statement> 
+
+
+  <statement id="getT18_ods_dblinkListCount" parameterClass="com.ist.bmp.hpom.dto.T18_ods_dblink" resultClass="int"> 
+  select count(*) from t18_ods_dblink 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="tableename"> 
+    tableename like  '%'||#tableename#||'%'
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="shfilename"> 
+    shfilename like  '%'||#shfilename#||'%'
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="isedit"> 
+    isedit = #isedit#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="isdeploy"> 
+    isdeploy = #isdeploy#
+    </isNotEmpty>
+   <isNotEmpty prepend="and" property="createdate"> 
+    createdate like  '%'||#createdate#||'%'
+    </isNotEmpty>   
+     <isNotEmpty prepend="and" property="creatmethod"> 
+    creatmethod = #creatmethod#
+    </isNotEmpty>  
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT18_ods_dblink" parameterClass="com.ist.bmp.hpom.dto.T18_ods_dblink" resultClass="int"> 
+  INSERT INTO T18_ODS_DBLINK 
+	(TABLEENAME, DSKEY, SHFILENAME, ODSTABLEENAME, ISEDIT, ISDEPLOY, DEPLOYTIME, ISLOCK, CREATMETHOD, MODIFYDATE, MODIFIER, CREATEDATE, CREATOR,Granularity)
+	VALUES 
+	(#tableename#, #dskey#, #shfilename#, #odstableename#, #isedit#, #isdeploy#, #deploytime#, #islock#, #creatmethod#, #modifydate#, #modifier#, #createdate#, #creator#,#granularity#)
+  </statement> 
+ 
+  <statement id="modifyT18_ods_dblink" parameterClass="com.ist.bmp.hpom.dto.T18_ods_dblink" resultClass="int"> 
+  update T18_ods_dblink set 
+  tableename=#tableename#,shfilename=#shfilename#,modifydate=#modifydate#,modifier=#modifier#,isedit=#isedit#
+  where tableename=#tableename# 
+  </statement> 
+ 
+  <statement id="deleteT18_ods_dblink" parameterClass="java.lang.String" resultClass="int">
+  delete from T18_ods_dblink where tableename=#value# 
+  </statement> 
+ 
+  <statement id="getT18_ods_dblinkDisp" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_ods_dblink"> 
+  select * from T18_ods_dblink where tableename=#value# 
+  </statement> 
+ 
+  <statement id="lockT18_ods2dblink" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_ods_dblink"> 
+  	update T18_ods_dblink set islock ='1' where tableename=#value# 
+  </statement> 
+  
+  <statement id="unlockT18_ods2dblink" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_ods_dblink"> 
+  	update T18_ods_dblink set islock ='0' where tableename=#value# 
+  </statement> 
+  
+   <statement id="deployT18_ods_dblink" parameterClass="com.ist.bmp.hpom.dto.T18_ods_dblink" resultClass="com.ist.bmp.hpom.dto.T18_ods_dblink"> 
+  	update T18_ods_dblink set isdeploy =#isdeploy# , deploytime=#deploytime#  where tableename=#tableename# 
+  	
+  </statement> 
+  <statement id="modifyT18_ods2dblink_Shfilename" parameterClass="com.ist.bmp.hpom.dto.T18_ods_dblink" resultClass="int"> 
+  	update T18_ods_dblink set shfilename = #shfilename#  where tableename=#tableename#   	
+  </statement>
+  
+ 
+</sqlMap> 
+

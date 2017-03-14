@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T18_server_log">
+  <statement id="getT18_server_logList" parameterClass="com.ist.platform.dto.T18_server_log" resultClass="com.ist.platform.dto.T18_server_log">
+  select serverkey,servername,statisticdate,note,modifer,modifydate,domainkey from t18_server_log
+  <dynamic prepend="where">
+    <isNotEmpty prepend="and" property="serverkey">
+    serverkey = #serverkey#
+    </isNotEmpty>
+  </dynamic>
+  </statement>
+
+  <statement id="getT18_server_logListCount" parameterClass="com.ist.platform.dto.T18_server_log" resultClass="int">
+  select count(*) from t00_group
+  <dynamic prepend="where">
+    <isNotEmpty prepend="and" property="serverkey">
+    serverkey = #serverkey#
+    </isNotEmpty>
+  </dynamic>
+  </statement>
+
+  <statement id="insertT18_server_log" parameterClass="com.ist.platform.dto.T18_server_log" resultClass="int">
+  insert into T18_server_log(
+  serverkey,servername,statisticdate,note,modifer,modifydate,domainkey
+  ) values(
+  #serverkey#,#servername#,#statisticdate#,#note#,#modifer#,#modifydate#,#domainkey#
+  )
+  </statement>
+
+  <statement id="modifyT18_server_log" parameterClass="com.ist.platform.dto.T18_server_log" resultClass="int">
+  update T18_server_log set
+  note=#note#,modifer=#modifer#,modifydate=#modifydate#
+  where serverkey=#serverkey# and domainkey=#domainkey# and statisticdate=#statisticdate#
+  </statement>
+
+  <statement id="deleteT18_server_log" parameterClass="com.ist.platform.dto.T18_server_log" resultClass="int">
+  delete from T18_server_log where serverkey=#serverkey# and domainkey=#domainkey# and statisticdate=#statisticdate#
+  </statement>
+
+  <statement id="getT18_server_logDisp" parameterClass="com.ist.platform.dto.T18_server_log" resultClass="com.ist.platform.dto.T18_server_log">
+  select * from T18_server_log where serverkey=#serverkey# and domainkey=#domainkey# and statisticdate=#statisticdate#
+  </statement>
+
+</sqlMap>
+

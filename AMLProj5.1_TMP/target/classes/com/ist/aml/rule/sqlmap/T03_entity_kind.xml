@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="T03_entity_kind">
+	<statement id="getT03_entity_kind_List" parameterClass="com.ist.aml.rule.dto.T03_entity_kind" resultClass="com.ist.aml.rule.dto.T03_entity_kind">
+		select * from t03_entity_kind
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="rtettypekey_str">
+				rtettypekey IN ($rtettypekey_str$) 
+    		</isNotEmpty>
+			<isNotEmpty prepend="and" property="rtettypekey">
+				rtettypekey = #rtettypekey# 
+    		</isNotEmpty>
+			<isNotEmpty prepend="and" property="rtetname">
+				rtetname like
+				'%'||#rtetname#||'%' 
+    		</isNotEmpty>
+			<isNotEmpty prepend="and" property="rtetfacttable">
+				rtetfacttable like
+				'%'||#rtetfacttable#||'%' 
+    		</isNotEmpty>
+			<isNotEmpty prepend="and" property="rtetfactsctable">
+				rtetfactsctable like
+				'%'||#rtetfactsctable#||'%' 
+    		</isNotEmpty>
+			<isNotEmpty prepend="and" property="iscopy">
+				iscopy =#iscopy#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="isnewmkey">
+				ISNEWMKEY =#ISNEWMKEY#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="tplakey">
+				TPLAKEY =#TPLAKEY#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="paramname">
+				paramname like
+				'%'||#paramname#||'%'
+    		</isNotEmpty>
+			<isNotEmpty prepend="and" property="comments">
+				COMMENTS like
+				'%'||#COMMENTS#||'%'
+    		</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="insertT03_entity_kind" parameterClass="com.ist.aml.rule.dto.T03_entity_kind" resultClass="int">
+	insert into t03_entity_kind(
+		rtettypekey,rtetname,rtetfacttable,rtetfactkey,rtetfactsctable,rtetfactsckey,iscopy,isnewmkey,tplakey,paramname,comments
+		) values(
+		#rtettypekey#,#rtetname#,#rtetfacttable#,#rtetfactkey#,#rtetfactsctable#,#rtetfactsckey#,#iscopy#,#isnewmkey#,#tplakey#,#paramname#,#comments#
+		)
+	</statement>
+	
+	<statement id="isExistT03_entity_kind" parameterClass="com.ist.aml.rule.dto.T03_entity_kind" resultClass="int">
+		select count(*) from t03_entity_kind where rtettypekey=#rtettypekey#
+	</statement>
+	
+	<statement id="getT03_entity_kindDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.rule.dto.T03_entity_kind">
+		select * from t03_entity_kind where rtettypekey=#value#
+	</statement>
+	
+	<statement id="modifyT03_entity_kind" parameterClass="com.ist.aml.rule.dto.T03_entity_kind" resultClass="int">
+		update t03_entity_kind set
+		rtettypekey=#rtettypekey#,rtetname=#rtetname#,rtetfacttable=#rtetfacttable#,rtetfactkey=#rtetfactkey#,rtetfactsctable=#rtetfactsctable#
+		,rtetfactsckey=#rtetfactsckey#,iscopy=#iscopy#,isnewmkey=#isnewmkey#,tplakey=#tplakey#,paramname=#paramname#,comments=#comments#
+		where rtettypekey=#rtettypekey#
+	</statement>
+	
+	<statement id="deleteT03_entity_kind" parameterClass="java.lang.String"	resultClass="int">
+		delete from t03_entity_kind where rtettypekey=#value#
+	</statement>
+	
+	<statement id="deleteT03_object_copyconf" parameterClass="java.lang.String"	resultClass="int">
+		delete from t03_object_copyconf where rtettypekey=#value#
+	</statement>
+	
+	<statement id="insertT03_object_copyconf" parameterClass="com.ist.aml.rule.dto.T03_object_copyconf"
+		resultClass="int">
+		insert into t03_object_copyconf values(#rtettypekey#,#targetcol#,#sourcecol#)
+	</statement>
+	
+	<statement id="getT03_entity_kindList_byMan" parameterClass="java.lang.String" resultClass="com.ist.aml.rule.dto.T03_entity_kind"> 
+      select * from T03_ENTITY_KIND c where c.rtetfacttable in (
+    		select m.tableename from T03_Entity_Kind_Man m where m.tablekey  = #value#
+	  )
+  	</statement>
+  	
+  	<statement id="getRtettypekey_list" parameterClass="java.lang.String" resultClass="com.ist.aml.rule.dto.T03_entity_kind"> 
+      SELECT DISTINCT RTETTYPEKEY FROM T03_RULE_ENTITY_R WHERE TPLAKEY IN 
+      (SELECT B.TPLAKEY FROM T21_PBCRULE A, T21_RULE B WHERE A.PBCKEY = B.PBCKEY AND A.PBCKEY = #value#)
+  	</statement>
+  	
+  	<statement id="getT03_entity_kindList2" parameterClass="com.ist.aml.rule.dto.T03_entity_kind" resultClass="com.ist.aml.rule.dto.T03_entity_kind"> 
+      SELECT RTETTYPEKEY, rtetname ,TPLAKEY FROM T03_ENTITY_KIND
+      <dynamic prepend="where">
+		<isNotEmpty prepend="and" property="rtettypekey_str">
+			rtettypekey IN ($rtettypekey_str$) 
+    	</isNotEmpty>
+      </dynamic>
+      ORDER BY RTETTYPEKEY
+  	</statement>
+  	
+  	<statement id="getT02_page_in_parmList" parameterClass="java.lang.String" resultClass="com.ist.aml.rule.dto.T03_entity_kind"> 
+      SELECT SYSINPARMCD, DISPNAME FROM T02_PAGE_IN_PARM WHERE TPLAKEY=#value#
+  	</statement>
+  	
+  	 <statement id="getGstype" parameterClass="java.lang.String" resultClass="com.ist.aml.rule.dto.T03_entity_kind">
+		SELECT DISTINCT GSTYPE  FROM T21_RULE  WHERE PBCKEY=#value#
+ </statement>
+</sqlMap>

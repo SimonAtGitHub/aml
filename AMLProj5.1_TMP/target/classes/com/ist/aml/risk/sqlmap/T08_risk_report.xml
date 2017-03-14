@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T08_risk_report">
+
+	<statement id="getT08_cp_risk_otherinfo_forshow"
+		parameterClass="com.ist.aml.risk.dto.T08_cp_risk_otherinfo"
+		resultClass="com.ist.aml.risk.dto.T08_cp_risk_otherinfo">
+		SELECT IS_RESTRICT_CLIENT,IS_STOCKHOLDER_FORGNPOLITICS ,IS_TRADE_RISKAREA ,
+		IS_HIGHRISK_INDUSTRY ,IS_HRISK_OTHERINFO ,IS_PARTY_ORGAN ,
+		IS_FINANCE_ORGAN , IS_QUOTED_COMPANY , IS_UPPROVINCE_STATECOMPANY
+		,IS_LRISK_OTHERINFO FROM $table_nameT08_cp_risk_otherinfo$ WHERE
+		PARTY_ID=#party_id#      
+	</statement>
+	
+	<statement id="getT08_id_risk_otherinfo_forshow_i"
+	parameterClass="com.ist.aml.risk.dto.T08_id_risk_otherinfo"
+	resultClass="com.ist.aml.risk.dto.T08_id_risk_otherinfo">
+    SELECT PARTY_ID ,IS_CAPITAL_BUSINESS ,IS_ABNORMAL_FORGTRADE ,IS_GOVERNMENT_OFFICIAL ,
+    IS_TRADE_RISKAREA ,IS_HRISK_OTHERINFO,IS_COMMISSION_OPERATION  FROM   $tab_risk_otherinfo$   WHERE PARTY_ID=#party_id#      
+	</statement>
+	
+	<statement id="get_party_class_cd"
+		parameterClass="java.lang.String"
+		resultClass="java.lang.String" >
+	   select t.party_class_cd from t08_party_result t where t.resulekey=#resulekey#
+    </statement>
+    
+  	<statement id="getT47_party_risk_c_integListnew"
+		parameterClass="com.ist.aml.risk.dto.T47_risk_party_c_integ"
+		resultClass="com.ist.aml.risk.dto.T47_risk_party_c_integ">
+		SELECT
+		T.LAST_UPD_DT,T.LAST_UPD_USER,T.FLAG,P.CREATE_DT,T.INCOME_DT,T.PARTY_ID,
+		P.PARTY_STATUS_CD,P.PARTY_CHN_NAME,T.ORGAN_CODE,P.CARD_TYPE,P.CARD_NO,P.COUNTRY_CD,
+		T.NATION_AFFAIR_NO,T.LOCAL_AFFAIR_NO,P.ADDR1,P.TEL_NO,P.ORGANKEY,
+		T.MANAGER_NO,T.MANAGER_NAME,T.OTHER_INFO,T.ENROL_FUND_AMT,T.ENROL_FUND_CURRENCY_CD,T.BASE_ACCT_NUM,
+		T.BASE_BANK_ID,T.BASE_BANK_ORG,T.COMPANY_SCOPE,T.INDUSTRYKEY,T.COMPANY_TYPE_CD,T.MAIN_MANAGE_SCOPE,
+		T.LEGAL_OBJ,T.LEGAL_CARD_TYPE,T.LEGAL_CARD_NO,T.LEGAL_ADDR,T.LEGAL_TEL,T.BUSINESS_LICENCE,T.LICENCE_END_DT,T.CATPKEY FROM
+		$flag_tablename$ T  ,$table_namet47_party$ P  WHERE T.PARTY_ID=P.PARTY_ID
+		AND P.PARTY_ID = #party_id#  
+		ORDER BY T.LAST_UPD_DT DESC
+	</statement>
+	
+	<statement id="getT47_party_risk_agntListnew"
+		parameterClass="com.ist.aml.risk.controller.T47_risk_party_c_integActionForm"
+		resultClass="com.ist.aml.risk.dto.T47_risk_party_agnt">
+		SELECT
+		T.AGNT_NAME,T.AGNT_TEL_NO,T.AGNT_CARD_TYPE,T.AGNT_CARD_NO,T.AGNT_CARD_END_DT
+		FROM  $table_namemragnt$ T 		
+		WHERE T.PARTY_ID = #party_id#  ORDER BY T.LAST_UPD_DT DESC
+	</statement>
+	
+	<statement id="getT08_party_resultInfoList_new1"
+		parameterClass="com.ist.aml.risk.controller.T47_risk_party_c_integActionForm"
+		resultClass="com.ist.aml.risk.dto.T08_party_result">
+		SELECT T.RESULEKEY,T.APPRADATE,T.FRISTAPPRALEVEL,
+		T.LEVELKEY,T.EMENDATIONLEVEL,T.REASON,
+		D.TEMPLATENAME AS TEMPLATE_NAME FROM
+		$table_namepresult$ T,T08_DEF_TMPL D WHERE
+		T.TEMPLATEKEY=D.TEMPLATEKEY AND T.PARTY_ID = #party_id# ORDER BY
+		T.APPRADATE ASC
+	</statement>
+	<statement id="getT08_party_resultInfoList_new2"
+		parameterClass="com.ist.aml.risk.controller.T47_risk_party_c_integActionForm"
+		resultClass="com.ist.aml.risk.dto.T08_party_result">
+		SELECT T.RESULEKEY,T.APPRADATE,T.FRISTAPPRALEVEL,
+		T.LEVELKEY,T.EMENDATIONLEVEL,T.REASON,
+		D.TEMPLATENAME AS TEMPLATE_NAME FROM
+		$table_namepresult$ T,T08_DEF_TMPL D WHERE
+		T.TEMPLATEKEY=D.TEMPLATEKEY AND T.RESULEKEY= #resulekey# 
+	</statement>
+	
+	<statement id="getT47_risk_party_attenInfo"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.risk.dto.T47_risk_party_atten">
+		SELECT A.PARTY_ID,A.PARTY_CLASS_CD,A.PARTY_NAME,A.COUNTRY_NO,
+		A.CARD_TYPE,A.CARD_NO,A.PARTY_STATUS_CD,A.LAST_UPD_DT,A.FLAG
+		FROM T47_PARTY_RISK_ATTEN A WHERE 1>0 AND A.PARTY_ID =
+		#party_id#
+	</statement>
+	
+	<statement id="getT08_risk_cust_trans_moreCountnew"
+		parameterClass="com.ist.aml.risk.controller.T47_risk_party_c_integActionForm" resultClass="int">
+		SELECT COUNT(*) FROM $table_namepresult$ A WHERE A.PARTY_ID=#party_id#
+	</statement>
+	
+	<statement id="getT07_alert_transList2_excel"
+		parameterClass="com.ist.aml.report.dto.T07_alert"
+		resultClass="com.ist.aml.report.dto.T47_transaction">
+		SELECT DISTINCT 
+		A.TX_GO_COUNTRY,A.TX_GO_AREA,A.HOST_CUST_ID,A.CASH_IND,A.CURR_CD,A.TX_OCCUR_COUNTRY
+		,A.TX_OCCUR_AREA,A.OPP_COUNTRY,A.OPP_AREA,A.OPP_ORGANNAME,A.AGENT_NAME,A.AGENT_COUNTRY,A.ORG_TRANS_RELA,
+		A.AGENT_CARD_TYPE,A.AGENT_CARD_NO,
+		A.TRANSACTIONKEY,A.CB_PK,A.TX_NO,A.ORGANKEY,A.TX_DT,A.DT_TIME,A.ACCT_NUM,A.PARTY_ID,
+		A.PARTY_CLASS_CD,A.TX_CD,A.CB_TX_CD,A.BUS_TYPE_CD,A.TX_TYPE_CD,A.DEBIT_CREDIT,A.RECEIVE_PAY_CD,
+		A.SUBJECTNO,A.CURRENCY_CD,A.AMT,A.CNY_AMT,A.USD_AMT,A.CASH_TRANS_FLAG,A.REMIT_TYPE_CD,A.DES,
+		A.OVERAREA_IND,A.SETTLE_TYPE_CD,A.USE_DES,A.OPP_SYS_ID,A.OPP_AREA,A.OPP_ORGAN_TYPE,A.OPP_ORGANKEY,A.OPP_PBC_PARTY_CLASS_CD,
+		A.OPP_PARTY_ID,A.OPP_NAME,A.OPP_ACCT_NUM,A.OPP_TX_DT,A.OPP_ACCT_TYPE_CD,A.OPP_CARD_TYPE,A.OPP_CARD_NO,
+		A.OPP_PARTY_CLASS_CD,A.BATCH_IND,A.TELLER,A.RE_IND,A.HANDLE_STATUS_CD,A.PARTY_CHN_NAME,A.ADDTIONAL,
+		A.VOUCHER_NO,A.HOST_CUST_ID,A.OPP_OFF_SHORE_IND,A.CAL_IND,A.VALIDATE_IND2,A.VALIDATE_IND,A.TSCTKEY
+		FROM T47_TRANSACTION A where 1>0
+		<dynamic>
+			<isNotEmpty prepend="and" property="objkey">
+				A.PARTY_ID = #objkey#
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY A.AMT DESC
+	</statement>
+	
+	<statement id="getT08_risk_rslt_adjust_procListByTimeSort" 
+	parameterClass="com.ist.aml.risk.dto.T08_risk_rslt_adjust_proc" resultClass="com.ist.aml.risk.dto.T08_risk_rslt_adjust_proc"> 
+ 		 SELECT * FROM T08_RISK_RSLT_ADJUST_PROC  T
+ 		 WHERE 1>0
+ 		<isNotEmpty prepend="AND" property="rsltkey">
+			T.RSLTKEY = #rsltkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="last_upd_user">
+			T.LAST_UPD_USER=#last_upd_user# 
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="post_id">
+			T.POST_ID=#post_id# 
+		</isNotEmpty>
+		 <isNotEmpty prepend="AND" property="flag">
+			T.FLAG=#flag# 
+		</isNotEmpty>
+		order by t.last_upd_dt asc
+    </statement>
+    
+    <statement id="getT47_party_risk_reporti_integListnew"
+		parameterClass="com.ist.aml.risk.dto.T47_risk_party_i_integ"
+		resultClass="com.ist.aml.risk.dto.T47_risk_party_i_integ">
+		SELECT
+		P.PARTY_ID,P.PARTY_CHN_NAME,P.COUNTRY_CD,T.GENDER,P.CARD_TYPE,
+		P.CARD_NO,T.CARD_END_DT,P.ADDR1,P.TEL_NO,T.COMPANY,T.PROFESSION,
+		T.MANAGER_NAME,T.MANAGER_NO,T.OTHER_INFO,T.ACCT_NUM,P.ORGANKEY FROM
+		 $flag_table_namei$ T,$table_namet47_party$ P  		
+		WHERE P.PARTY_ID=T.PARTY_ID 
+		and P.PARTY_ID = #party_id# 
+	    ORDER BY T.LAST_UPD_DT DESC
+	</statement>
+	
+	<statement id="updateT08_risk_report_statusnew"
+		parameterClass="com.ist.aml.risk.dto.T08_risk_report"
+		resultClass="int">	
+	    UPDATE $table_namet08rreport$ SET EXPORT_STATUS='1'
+        WHERE  REPORTKEY = #reportkey# 
+	</statement>
+	
+	<statement id="getT08_party_result_his_list"
+		parameterClass="com.ist.aml.risk.dto.T08_party_result"
+		resultClass="com.ist.aml.risk.dto.T08_party_result">
+		select t.appradate, t.fristappralevel, t.emendationlevel, t.levelkey 
+		from t08_party_result_his t where 1>0 
+		<dynamic >
+			<isNotEmpty prepend="and" property="party_id">
+				T.PARTY_ID = #party_id#
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY t.appradate ASC
+	</statement>
+	
+	
+
+</sqlMap>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T03_entity_kind_man"> 
+  <statement id="getT03_entity_kind_manList" parameterClass="com.ist.aml.rule.dto.T03_entity_kind_man" resultClass="com.ist.aml.rule.dto.T03_entity_kind_man"> 
+  select tablekey,tableename,tablecname,flag,creator,createdate,modifier,modifydate,tabtype,memo from t03_entity_kind_man 
+  where  <![CDATA[ flag !='2']]> 
+    <isNotEmpty prepend="and" property="tablekey"> 
+    tablekey = #tablekey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="flag"> 
+    flag = #flag# 
+    </isNotEmpty> 
+  order by createdate desc  
+  </statement> 
+ 
+  <statement id="getT03_entity_kind_manListCount" parameterClass="com.ist.aml.rule.dto.T03_entity_kind_man" resultClass="int"> 
+  select count(*) from t03_entity_kind_man 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="tablekey"> 
+    tablekey = #tablekey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT03_entity_kind_man" parameterClass="com.ist.aml.rule.dto.T03_entity_kind_man" resultClass="int"> 
+  insert into T03_entity_kind_man(
+  tablekey,tableename,tablecname,flag,creator,createdate,modifier,modifydate,tabtype,memo
+  ) values(
+  #tablekey#,#tableename#,#tablecname#,#flag#,#creator#,#createdate#,#modifier#,#modifydate#,#tabtype#,#memo#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT03_entity_kind_man" parameterClass="com.ist.aml.rule.dto.T03_entity_kind_man" resultClass="int"> 
+  update T03_entity_kind_man set 
+  tableename=#tableename#,tablecname=#tablecname#,modifier=#modifier#,modifydate=#modifydate#,memo=#memo#
+  where tablekey=#tablekey# 
+  </statement> 
+ 
+  <statement id="deleteT03_entity_kind_man" parameterClass="java.lang.String" resultClass="int">
+  delete from T03_entity_kind_man where tablekey  in ($value$) 
+  </statement> 
+ 
+  <statement id="getT03_entity_kind_manDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.rule.dto.T03_entity_kind_man"> 
+  select * from T03_entity_kind_man where tablekey=#value# 
+  </statement> 
+  
+   <statement id="getT03_entity_kind_man_index_tree"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.common.menu.Menu"> 
+		 select tablekey as id, -1 as parent_id,tablecname as name from
+		t03_entity_kind_man  where <![CDATA[ flag !='2']]>   order by createdate desc
+	</statement>
+	
+  <statement id="isExistTableename" parameterClass="java.lang.String" resultClass="int"> 
+     select count(*) from t03_entity_kind_man x where x.tableename=#value#
+  </statement> 
+  
+  <statement id="delT03_entity_kind_manList" parameterClass="java.lang.String" resultClass="com.ist.aml.rule.dto.T03_entity_kind_man"> 
+      select  *  from T03_Entity_Kind_Man  where tablekey in ($value$)  and flag='1'
+  </statement> 
+  
+  
+   <statement id="getColT03_entity_kind_manList" parameterClass="com.ist.aml.rule.dto.T03_entity_kind_man" resultClass="com.ist.aml.rule.dto.T03_entity_kind_man"> 
+          select    A.column_name colename,
+			A.data_type COLTYPE,A.data_length collength,A.data_precision numinteger,   A.Data_Scale numpoint,B.comments colcname
+			from  user_tab_columns A,user_col_comments B
+			where a.COLUMN_NAME=b.column_name and    A.Table_Name = B.Table_Name 
+			and A.Table_Name = upper((select t.tableename from t03_entity_kind_man t where t.tablekey=#tablekey#))
+			 <isNotEmpty prepend="and" property="colename"> 
+		        A.column_name=upper(#colename#) 
+		    </isNotEmpty> 
+			order by colename
+  </statement> 
+  
+   <statement id="isExistT03_entity_kind_manCopy" parameterClass="com.ist.aml.rule.dto.T03_entity_kind_man" resultClass="int"> 
+      select count(b.rtettypekey) from t03_object_copyconf b, t03_entity_kind a,t03_entity_kind_man c
+		where c.tablekey=#tablekey#   and  upper(b.targetcol)=upper('$colename$')
+		 and c.tableename=a.rtetfacttable  and a.rtettypekey=b.rtettypekey
+  </statement> 
+  
+  
+   <statement id="getT03_entity_kind_manCopyByColumn" parameterClass="com.ist.aml.rule.dto.T03_entity_kind_man" resultClass="com.ist.aml.rule.dto.T03_entity_kind_man"> 
+       select distinct a.rtettypekey tablekey,a.rtetname tablecname,a.rtetfacttable tableename from t03_object_copyconf b, t03_entity_kind a,t03_entity_kind_man c
+         where c.tablekey=#tablekey#  and  upper(b.targetcol)=upper('$colename$')
+         and c.tableename=a.rtetfacttable  and a.rtettypekey=b.rtettypekey
+  </statement>
+  
+    <statement id="modifyT03_entity_kind_manByFlag" parameterClass="com.ist.aml.rule.dto.T03_entity_kind_man" resultClass="int"> 
+  update T03_entity_kind_man set 
+   modifier=#modifier#,modifydate=#modifydate#,flag=#flag#
+  where tablekey=#tablekey# 
+  </statement>
+ 
+</sqlMap> 
+

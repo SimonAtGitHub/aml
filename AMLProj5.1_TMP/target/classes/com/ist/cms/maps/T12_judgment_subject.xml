@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_judgment_subject"> 
+  <statement id="getT12_judgment_subjectList" parameterClass="com.ist.cms.dto.T12_judgment_subject" resultClass="com.ist.cms.dto.T12_judgment_subject"> 
+  select judgmentkey,subjectinskey,score from t12_judgment_subject 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="judgmentkey"> 
+    judgmentkey = #judgmentkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT12_judgment_subjectListCount" parameterClass="com.ist.cms.dto.T12_judgment_subject" resultClass="int"> 
+  select count(*) from t12_judgment_subject 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="judgmentkey"> 
+    judgmentkey = #judgmentkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_judgment_subject" parameterClass="com.ist.cms.dto.T12_judgment_subject" resultClass="int"> 
+	  INSERT INTO T12_JUDGMENT_SUBJECT(JUDGMENTKEY,SUBJECTINSKEY,SCORE)
+	  VALUES(#judgmentkey#,#subjectinskey#,#score#) 
+  </statement> 
+ 
+  <statement id="modifyT12_judgment_subject" parameterClass="com.ist.cms.dto.T12_judgment_subject" resultClass="int"> 
+  update T12_judgment_subject set 
+  subjectinskey=#subjectinskey#,score=#score#
+  where judgmentkey=#judgmentkey# 
+  </statement> 
+ 
+  <statement id="deleteT12_judgment_subject" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_judgment_subject where judgmentkey=#value# 
+  </statement> 
+ 
+  <statement id="getT12_judgment_subjectDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_judgment_subject"> 
+  select * from T12_judgment_subject where judgmentkey=#value# 
+  </statement> 
+  
+    <statement id="getT12_judgment_list2" parameterClass="com.ist.cms.dto.T12_judgment_subject" resultClass="com.ist.cms.dto.T12_judgment_subject"> 
+     select a.CONTENT as answer ,b.subjectinskey from T12_ANSWER_SUBJECT a  right join T12_SUBJECT_INS b on a.subjectinskey = b.subjectinskey
+     where a.answerkey = #answerkey# and b.subjecttype='4' and b.QUESTIONINSKEY=#questioninskey#
+  </statement>
+ 
+</sqlMap> 
+

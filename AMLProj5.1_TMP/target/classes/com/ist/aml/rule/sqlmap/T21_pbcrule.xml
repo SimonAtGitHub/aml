@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T21_pbcrule"> 
+  <statement id="getT21_pbcruleList" parameterClass="com.ist.aml.rule.dto.T21_pbcrule" resultClass="com.ist.aml.rule.dto.T21_pbcrule"> 
+  SELECT * FROM T21_pbcrule 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="pbckey"> 
+    PBCKEY = #pbckey# 
+    </isNotEmpty> 
+   <isNotEmpty prepend="AND" property="flag"> 
+       FLAG =#flag#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="interfacekey"> 
+       INTERFACEKEY =#interfacekey#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="gstype"> 
+       GSTYPE =#gstype#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="pbctype"> 
+       PBCTYPE =#pbctype#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="pbc_des"> 
+       PBC_DES like '%'||#pbc_des#||'%'
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT21_pbcruleListCount" parameterClass="com.ist.aml.rule.dto.T21_pbcrule" resultClass="int"> 
+  SELECT COUNT(*) FROM T21_pbcrule
+  <dynamic prepend="WHERE"> 
+   <isNotEmpty prepend="AND" property="pbckey"> 
+    PBCKEY = #pbckey# 
+    </isNotEmpty> 
+   <isNotEmpty prepend="AND" property="flag"> 
+       FLAG =#flag#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="interfacekey"> 
+       INTERFACEKEY =#interfacekey#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="gstype"> 
+       GSTYPE =#gstype#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="pbctype"> 
+       PBCTYPE =#pbctype#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="pbc_des"> 
+       PBC_DES like '%'||#pbc_des#||'%'
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+
+  <statement id="getT21_pbcruleListCount1" parameterClass="java.lang.String" resultClass="int"> 
+  SELECT COUNT(*) FROM T21_pbcrule WHERE PBCKEY = #pbckey#
+  </statement>
+
+  <statement id="insertT21_pbcrule" parameterClass="com.ist.aml.rule.dto.T21_pbcrule" resultClass="int"> 
+	INSERT INTO T21_pbcrule(PBCKEY,INTERFACEKEY,STCRKEY,PBCKEYTYPE,PBCTYPE,MODULEFLAG,SUXFLAG,ACTIONCODE,PBC_DES,PBC_CON,FLAG,CREATE_DT,CREATE_USR,CREATE_ORG,ISTRANS,GSTYPE) values(#pbckey#,#interfacekey#,#stcrkey#,#pbckeytype#,#pbctype#,#moduleflag#,#suxflag#,#actioncode#,#pbc_des#,#pbc_con#,#flag#,#create_dt#,#create_usr#,#create_org#,#istrans#,#gstype#) 
+
+  </statement> 
+  <statement id="getT21_pbcruleDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.rule.dto.T21_pbcrule"> 
+  SELECT * FROM T21_pbcrule WHERE PBCKEY=#value# 
+  </statement> 
+ <statement id="modifyT21_pbcrule" parameterClass="com.ist.aml.rule.dto.T21_pbcrule" resultClass="int"> 
+  UPDATE T21_pbcrule SET  INTERFACEKEY=#interfacekey#,STCRKEY=#stcrkey#,PBCKEYTYPE=#pbckeytype#,PBCTYPE=#pbctype#,MODULEFLAG=#moduleflag#,SUXFLAG=#suxflag#,ACTIONCODE=#actioncode#,PBC_DES=#pbc_des#,PBC_CON=#pbc_con#,FLAG=#flag#,ISTRANS=#istrans# WHERE PBCKEY=#pbckey# 
+  </statement> 
+ 
+  <statement id="deleteT21_pbcrule" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T21_pbcrule WHERE  PBCKEY=#value# 
+  </statement> 
+  
+  
+  <statement id="getT21_pbcrule_expList" parameterClass="com.ist.aml.rule.dto.T21_pbcrule" resultClass="com.ist.aml.rule.dto.T21_pbcrule"> 
+    SELECT t.pbckey,t.gstype,t.pbc_des FROM T21_pbcrule t where t.flag='1' 
+  </statement> 
+</sqlMap> 
+

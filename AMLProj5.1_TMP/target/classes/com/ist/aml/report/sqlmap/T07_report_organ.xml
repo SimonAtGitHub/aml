@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T07_report_organ"> 
+  <statement id="getT07_report_organList" parameterClass="com.ist.aml.report.dto.T07_report_organ" resultClass="com.ist.aml.report.dto.T07_report_organ"> 
+  select inner_organkey,organname,report_organkey,seq_tablename from t07_report_organ 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="inner_organkey"> 
+    inner_organkey IN ($inner_organkey$) 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="report_organkey"> 
+    report_organkey = #report_organkey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="organname"> 
+    organname like '%'||#organname#||'%' 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT07_report_organListCount" parameterClass="com.ist.aml.report.dto.T07_report_organ" resultClass="int"> 
+  select count(*) from t07_report_organ 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="inner_organkey"> 
+    inner_organkey IN ($inner_organkey$) 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="report_organkey"> 
+    report_organkey = #report_organkey# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organname"> 
+    organname like '%'||#organname#||'%' 
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+  <statement id="insertT07_report_organ" parameterClass="com.ist.aml.report.dto.T07_report_organ" resultClass="int"> 
+  insert into T07_report_organ(
+  inner_organkey,organname,report_organkey,seq_tablename
+  ) values(
+  #inner_organkey#,#organname#,#report_organkey#,#seq_tablename#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT07_report_organ" parameterClass="com.ist.aml.report.dto.T07_report_organ" resultClass="int"> 
+  update T07_report_organ set 
+  organname=#organname#,report_organkey=#report_organkey#,seq_tablename=#seq_tablename#
+  where report_organkey=#report_organkey# 
+  </statement> 
+ 
+  <statement id="deleteT07_report_organ" parameterClass="java.lang.String" resultClass="int">
+  delete from T07_report_organ where report_organkey=#value# 
+  </statement> 
+ 
+  <statement id="getT07_report_organDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.report.dto.T07_report_organ"> 
+  select * from T07_report_organ where report_organkey=#value# 
+  </statement> 
+ 
+  <statement id="getT07_report_organBySeq_tablename" parameterClass="java.lang.String" resultClass="com.ist.aml.report.dto.T07_report_organ"> 
+  select * from T07_report_organ where seq_tablename=#value# 
+  </statement> 
+  <statement id="getT07_report_organCount_BySeq_tablename" parameterClass="java.lang.String" resultClass="int"> 
+  select count(*) from T07_report_organ where seq_tablename=#value# 
+  </statement> 
+ 
+ 
+  <statement id="getT07_report_organ_mapList" parameterClass="com.ist.aml.report.dto.T07_report_organ"
+	resultClass="com.ist.aml.report.dto.T07_report_organ">
+	select organkey,report_organkey from t07_report_organ_map
+	<dynamic prepend="where">
+		<isNotEmpty prepend="and" property="report_organkey">
+			report_organkey = #report_organkey# 
+        </isNotEmpty>
+        <isNotEmpty prepend="and" property="organkey">
+			organkey = #organkey# 
+        </isNotEmpty>
+	</dynamic>
+</statement>
+
+	<statement id="getT07_report_organ_mapListCount"
+		parameterClass="com.ist.aml.report.dto.T07_report_organ"
+		resultClass="int">
+		select count(*) from t07_report_organ_map
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="report_organkey">
+				report_organkey = #report_organkey# 
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="organkey">
+			    organkey = #organkey# 
+            </isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="insertT07_report_organ_map" parameterClass="com.ist.aml.report.dto.T07_report_organ"
+		resultClass="int">
+		insert into T07_report_organ_map(
+		organkey,report_organkey
+		) values(
+		#organkey#,#report_organkey#
+		) 
+  </statement>
+
+	<statement id="modifyT07_report_organ_map" parameterClass="com.ist.aml.report.dto.T07_report_organ"
+		resultClass="int">
+		update T07_report_organ_map set
+		organkey=#organkey#
+		where organkey=#organ_mapkey# and report_organkey=#report_organkey#
+  </statement>
+
+	<statement id="deleteT07_report_organ_map" parameterClass="com.ist.aml.report.dto.T07_report_organ"
+		resultClass="int">
+		delete from T07_report_organ_map where report_organkey=#report_organkey# 
+		<isNotEmpty prepend="and" property="organkey">
+				organkey=#organkey# 
+        </isNotEmpty>
+  </statement>
+
+	<statement id="getT07_report_organ_mapDisp" parameterClass="com.ist.aml.report.dto.T07_report_organ"
+		resultClass="com.ist.aml.report.dto.T07_report_organ">
+		select * from T07_report_organ_map where organkey=#organkey# and report_organkey=#report_organkey#
+  </statement> 
+  
+  <statement id="getT07_report_organ_mapListCountValue" parameterClass="java.lang.String"
+		resultClass="int">
+		select count(*) from T07_report_organ_map where organkey=#value#
+  </statement>
+</sqlMap> 
+

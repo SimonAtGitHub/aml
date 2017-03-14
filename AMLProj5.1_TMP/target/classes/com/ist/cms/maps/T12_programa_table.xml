@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_programa_table"> 
+  <statement id="getT12_programa_tableList" parameterClass="com.ist.cms.dto.T12_programa_table" resultClass="com.ist.cms.dto.T12_programa_table"> 
+  select tablecode,tablename,flag,creator,createdate,modifier,modifydate from t12_programa_table 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="tablecode"> 
+    tablecode = #tablecode# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT12_programa_tableListCount" parameterClass="com.ist.cms.dto.T12_programa_table" resultClass="int"> 
+  select count(*) from t12_programa_table 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="tablecode"> 
+    tablecode = #tablecode# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_programa_table" parameterClass="com.ist.cms.dto.T12_programa_table" resultClass="int"> 
+  insert into T12_programa_table(
+  tablecode,tablename,flag,creator,createdate,modifier,modifydate
+  ) values(
+  #tablecode#,#tablename#,#flag#,#creator#,#createdate#,#modifier#,#modifydate#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_programa_table" parameterClass="com.ist.cms.dto.T12_programa_table" resultClass="int"> 
+  update T12_programa_table set 
+  tablecode=#tablecode#,tablename=#tablename#,flag=#flag#,creator=#creator#,createdate=#createdate#,modifier=#modifier#,modifydate=#modifydate#
+  where tablecode=#tablecode# 
+  </statement> 
+  
+  <statement id="modifyT12_programa_table_name" parameterClass="com.ist.cms.dto.T12_programa_table" resultClass="int"> 
+  update T12_programa_table set 
+  tablename=#tablename#,modifier=#modifier#,modifydate=#modifydate#
+  where tablecode=#tablecode# 
+  </statement>
+ 
+  <statement id="deleteT12_programa_table" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_programa_table where tablecode=#value# 
+  </statement>
+  <!-- 逻辑删除指定栏目下的数据表 -->
+  <statement id="deleteT12_programa_table_by_programakey" parameterClass="com.ist.cms.dto.T12_programa" resultClass="int">
+  	update t12_programa_table t1 
+  	set t1.flag = '2',t1.modifier=#modifier#,t1.modifydate=#modifydate#
+	where exists ( select 1 from t12_programa_table_rel t2 where t2.programakey = #programakey# and t2.tablecode = t1.tablecode )
+  </statement>
+  <!-- 查询指定栏目的数据表是否已经被其他栏目引用 -->
+  <statement id="countT12_programa_table_useByOthers" parameterClass="com.ist.cms.dto.T12_programa" resultClass="int">
+	select count(*) from t12_programa_table_rel t3,t12_programa t4
+	where exists (
+	select 1 from t12_programa_table t1, t12_programa_table_rel t2
+	where t1.tablecode = t2.tablecode and t2.tablecode = t3.tablecode and t2.programakey = #programakey# ) 
+	<![CDATA[and t3.programakey <> #programakey# and t4.programakey = t3.programakey and (t4.flag <> '2' or t4.flag is null)]]>
+  </statement> 
+ 
+  <statement id="getT12_programa_tableDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_programa_table"> 
+  select * from T12_programa_table where tablecode=#value# 
+  </statement> 
+  
+  <!-- 查询指定栏目编码的数据表 -->
+  <statement id="getT12_programa_tableByProgramakey" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_programa_table"> 
+  select t1.* 
+       from  T12_programa_table t1, t12_programa_table_rel t2
+       where t2.programakey = #value# 
+         and t1.tablecode = t2.tablecode
+  </statement> 
+  
+ 
+ 
+</sqlMap> 
+

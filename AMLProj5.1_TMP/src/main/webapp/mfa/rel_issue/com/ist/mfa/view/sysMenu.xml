@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root> 
+	<menuitem label="项目" value=" project">				
+		<menuitem label="保存" value="a10" />
+		<menuitem label="另存为" value="a20" />
+		<menuitem label="刷新" value="a70" />		
+		<menuitem label="分析结论" value="a30" />		
+		<menuitem label="" type="separator"/>
+		<menuitem label="导出" value="a40" />
+		 
+<!--		<menuitem label="结项" value="a50" />-->
+		<menuitem label="" type="separator"/>	
+		<menuitem label="退出" value="a60" />
+		
+	</menuitem>
+	
+	<menuitem label="账户" value=" account">
+		<menuitem label="添加行内账户" value="c10" />		
+		<menuitem label="添加行外账户" value="c20" />	
+		<menuitem label="添加现金账户" value="c30" />	
+		<menuitem label="添加未知账户" value="c40" />
+		<menuitem label="" type="separator"/>			
+		<menuitem label="合并账户" value="c50" />	
+		<menuitem label="取消合并账户" value="c60" />	
+		<menuitem label="删除账户" value="c70" />													
+	</menuitem>
+	
+	<menuitem label="交易" value="transaction">
+		<menuitem label="添加实际交易" value="d10" />	
+		<menuitem label="添加虚拟交易" value="d20" />
+		<menuitem label="" type="separator"/>	
+		 		
+		<menuitem label="合并交易" value="d30" />	
+		<menuitem label="取消合并交易" value="d40" />
+ 					
+		<menuitem label="删除交易" value="d50" />	
+		 		
+		<menuitem label="根据条件删除交易" value="d60" />
+ 						
+		<menuitem label="" type="separator"/>
+		<menuitem label="交易统计" value="d70" />															
+	</menuitem>	
+	
+	<menuitem label="查找" value="search">
+		<menuitem label="查找账户" value="e10" />	
+		<menuitem label="查找交易" value="e20" />		
+	</menuitem>	
+	
+	<menuitem label="视图" value="view">
+	   	
+	   
+		<menuitem label="自动布局" value="f50" />	
+		<menuitem label="实际大小" value="f10" />		
+		<menuitem label="放大" value="f20" />	
+		<menuitem label="缩小" value="f30" />
+		<menuitem label="切换视图" value="f60" >
+		    <menuitem label="账户视图" value="f61"  type="radio" groupName="qiehuan" toggled="true"/>	
+			<menuitem label="客户视图" value="f62"  type="radio" groupName="qiehuan"/>
+			<menuitem label="关系视图" value="f63" type="radio" groupName="qiehuan"/>
+	   
+	  	 </menuitem>
+		<menuitem label="显示比例" value="f40" >
+			<menuitem label="25%" value="f41"  type="radio" groupName="zoom"/>	
+			<menuitem label="50%" value="f42"  type="radio" groupName="zoom"/>	
+			<menuitem label="75%" value="f43"  type="radio" groupName="zoom"/>	
+			<menuitem label="100%" value="f44" type="radio" groupName="zoom" toggled="true"/>	
+			<menuitem label="125%" value="f45" type="radio" groupName="zoom"/>	
+			<menuitem label="150%" value="f46" type="radio" groupName="zoom"/>	
+			<menuitem label="175%" value="f47" type="radio" groupName="zoom"/>	
+		</menuitem>								
+	</menuitem>	
+
+	<menuitem label="配置" value="set">
+			<menuitem label="项目属性" value="g10" />	
+			<menuitem label="显示配置" value="g20" />
+			 
+<!--				<menuitem label="常规" value="g21" >-->
+<!--					<menuitem label="自动合并设置" value="g211" />-->
+<!--				</menuitem>-->
+<!--				<menuitem label="账户显示信息" value="g22" >-->
+<!--					<menuitem label="账户显示信息配置" value="g221" />				-->
+<!--					<menuitem label="账户显示类型配置" value="g222" />							-->
+<!--				</menuitem>				-->
+<!--				<menuitem label="交易显示信息" value="g23">-->
+<!--					<menuitem label="交易显示信息配置" value="g231" />				-->
+<!--					<menuitem label="交易显示样式配置" value="g232" />		-->
+<!--					<menuitem label="交易列表显示信息配置" value="g233" />									-->
+<!--				</menuitem>					-->
+	</menuitem>
+ 		   			
+				
+<!--	<menuitem label="帮助" value="help">-->
+<!--			<menuitem label="帮助主题" value="h10" />	-->
+<!--			<menuitem label="关于ISTMFA" value="h20" />	-->
+<!--	</menuitem>					-->
+</root>
+

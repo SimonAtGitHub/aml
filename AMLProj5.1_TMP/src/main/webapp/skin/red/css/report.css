@@ -1,0 +1,279 @@
+/*
+检索或设置对象四边的外补丁 默认0
+
+设置所有滚条样式*/
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "宋体";
+	border-collapse:collapse;
+    scrollbar-arrow-color:#C87D7D;
+	scrollbar-face-color:#FBE3E3;
+	scrollbar-darkshadow-color:#C87D7D;
+	scrollbar-highlight-color:#FBE3E3;
+	scrollbar-3dlight-color:#C87D7D;
+	scrollbar-shadow-color:#FBE3E3;
+	scrollbar-track-color:#FBE3E3; 
+} 
+
+BODY {
+	FONT-FAMILY:9pt Verdana, Arial, Helvetica, sans-serif;margin-top: 0px;
+	background:url(../images/right-bg-1.gif);
+	text-align: center;color:#4E1D00;
+}
+
+input,select,textarea { color:#612828; }
+/*系统总体框架，占页面宽度的98％*/
+#content{
+	width: 98%;
+    border: 0px; margin:auto;
+}
+
+table {
+	width: 100%;
+	border: none;
+	font-size: 14px
+}
+img { border:0; }
+a,img,input { hide-focus:expression(this.hideFocus=true); /* for ie 5+ */outline:none; /* for firefox 1.5 + */ }
+/*通用文字链接样式*/
+
+a {
+	cursor:pointer;
+	text-decoration:underline; 
+}
+a:link{
+	color:#4E1D00;
+}
+a:hover{
+	color:#FF0000;
+}
+a:active{
+	color:#4E1D00;
+}
+a:visited{
+	color:#4E1D00;
+}
+
+a.hh{
+	cursor:pointer;
+	text-decoration:none; 
+	color:#4E1D00;
+}
+a.hh:link { 
+	color:#4E1D00;
+}
+a.hh:visited{
+	color:#4E1D00;
+}
+a.hh:hover { 
+	color:#4E1D00;
+}
+
+/*设置所有的botton的样式*/
+.awp_btnmargin { font-size:0 }
+.awp_btnmargin input{ margin-right:4px; }
+
+.awp_button_hover{
+	border:1px solid #E0D5D5; 
+	padding:0 3px;
+	font-size: 12px; 
+	cursor:pointer; 
+	color: #4E1D00; height:24px;
+    background:#fff url(../images/awp_buttonbg.gif) repeat-x bottom;
+	background-position:center \9;
+	vertical-align:middle;
+	
+}
+.awp_button{
+	border:1px solid #D39BA5; 
+	padding:0 3px;
+	font-size: 12px; 
+	cursor:pointer; 
+	color: #A01F1F; 
+    background:#fff url(../images/awp_buttonbg2.gif) repeat-x center;
+	background-position:center \9;
+	height:24px;
+	vertical-align:middle;
+}
+.awp_input{
+	border:1px solid #C09D9D;
+	padding-left: 3px; 	
+	font-size: 14px; 
+    background:#fff url(../images/awp_inputbg.gif) no-repeat top left;
+	height:23px; line-height:21px;
+}
+.awp_input_hover{
+	border:1px solid #FF9000;color:#9D2900;
+	padding-left: 3px; 	
+	font-size: 14px; 
+    background:#fff url(../images/awp_inputbg2.gif) no-repeat top left;
+	height:23px; line-height:21px;
+}
+
+textarea { padding:4px; font-size: 14px; line-height:21px; border:1px solid #C09D9D;background:#fff url(../images/awp_textareabg.gif) repeat-x top; }
+textarea.awp_textarea_hover { color:#9D2900; border:1px solid #FF9000;background:#fff url(../images/awp_textareabg2.gif) repeat-x top; }
+/*************设置标题样式********************************/
+.awp_title{
+	text-align:center;
+	margin-top:6px;
+	width: 100%;
+}
+
+.awp_title table{
+	border:1px solid #C59383;
+	height:29px;line-height:26px;
+	background:#fff url(../images/awp_titlebg.gif) repeat-x bottom;border-collapse:collapse;
+}
+.awp_title td { width:auto; }
+.awp_title_td2{ float:left; clear:both;
+  background: transparent url(../images/biao.gif) no-repeat left center;
+  color:#4E1D00; margin-left:5px; padding:3px 0 0 20px;
+}
+.awp_title_td2 strong { font-weight:normal; }
+.title_img
+{   display:inline-block; height:16px; width:16px;
+    background: transparent url(../images/biao.gif) no-repeat;
+}
+/***********报表标题区样式************************************/
+.awp_head ,.awp_list,.awp_foot{ width:100%; margin:auto; }
+.awp_head font ,.awp_list font,.awp_foot font{ color:#890000; }
+.awp_title_tr{
+	font-size: 26px;
+}
+
+/***********报表列表表头区样式************************************/
+.awp_list { background:#FCF9F4;}
+.awp_head_tr td {
+	background:#FAEADA; border:1px solid #BC978C;
+	font-size: 14px;
+	height:30px; line-height:30px;
+}
+.awp_body_tr td { border:1px solid #BC978C;height:26px; line-height:26px; }
+/***********报表表尾区样式************************************/
+.awp_foot { margin-top:8px; border:none; }
+.awp_foot td{
+	font-size: 12px; height:26px; line-height:26px;
+}
+
+/***********有网格无背景色样式************************************/
+.awp_line_write{
+	margin-top:8px;
+	position: relative;
+	overflow-x: auto;
+	overflow-y: visible;   
+	border: 1px solid #000000;
+	padding: 2px;  
+}
+
+.awp_line_write table{
+	text-align:right;
+	padding:2px;
+	border-spacing:2px;
+	background-color:#ffffff;
+}
+
+.awp_line_write  td{
+	border: 1px solid #000000;
+	font-family: "宋体";
+	font-size: 12px
+}
+
+/***********无网格有背景色样式************************************/
+.awp_noline_blue{
+	border: 1px solid #000000;
+	margin-top:8px;
+	padding: 2px;  
+	position: relative;
+	background-color:#FEFBF8;
+}
+
+.awp_noline_blue table{
+	text-align:right;
+	padding:2px;
+	border-spacing:2px;
+	background-color:#ffffff;
+}
+.awp_noline_blue td{
+  border: 1px solid #ffffff;
+  font-family: "宋体";
+  font-size: 12px
+}
+
+/***********有网格有背景色样式************************************/
+.awp_line_blue{
+	border: 1px solid #000000;
+	margin-top:8px;
+	padding: 2px;  
+	position: relative;
+	background-color:#FEFBF8;
+}
+
+.awp_line_blue table{
+	text-align:right;
+	padding:2px;
+	border-spacing:2px;
+	background-color:#ffffff;
+}
+.awp_line_blue td{
+  border: 1px solid #000000;
+  font-family: "宋体";
+  font-size: 12px
+}
+
+/************详细页面***********************/
+.awp_detail{
+	margin-top:4px;
+	padding: 2px;  
+	position: relative;
+	overflow:auto;
+    width: 100%;
+}
+.awp_detail table{
+	text-align:right;
+}
+
+
+.awp_detail table td{
+  height:30px;padding:2px; border:1px solid #CECECE;
+}
+/**----深色背景*/
+.deep  { background-color : #F9F0E7}
+
+/**-----浅色背景*/
+.light    { background-color : #FFFFFF }
+
+/************报表管理菜单***********************/
+#report_menu { border-bottom:1px solid #F48989; font-size:14px; height:23px; padding-top:6px; margin:auto;background:url(../images/report_body_bg01.gif) top repeat-x; }
+#report_menu a { float:left; text-decoration:none; display:inline-block; zoom:1; *display:inline; height:23px; line-height:23px; width:111px; background:url(../images/report_menu_bg.gif) top no-repeat; text-align:center; margin-left:2px; }
+#report_menu a.bglink { background:url(../images/report_menu_bglink.gif) top no-repeat; }
+
+/************报表自定义模版***********************/
+.report_body_bg img { border:0; }
+.report_body_bg     { background:#FEF7F7 url(../images/report_body_bg.gif) top repeat-x; font-size:14px }
+#report_wrap        { width:98%; margin:auto; }
+/*公共属性*/
+.report_btn,.report_cond,.report_table,.report_footbtn { margin-bottom:4px; border:1px solid #C97E7E; }
+.report_cond td,.report_table td ,.report_table_t td{ line-height:30px; padding:2px; }
+/*大标题*/
+.report_title        { margin-bottom:4px; position:relative; background:url(../images/report_title_m.gif) repeat-x; height:31px; }
+.report_title strong { position:absolute; left:0; top:0; padding:0 0 0 12px; height:31px; line-height:31px; background:url(../images/report_title_l.gif) no-repeat left; }
+.report_title span   { position:absolute; right:0;_right:-1px; top:0; height:31px; padding:0 12px 0 0; background:url(../images/report_title_r.gif) no-repeat right; }
+#report_wrap .report_title span a { text-decoration:none; font-size:12px; color:#660505; padding:0 0 0 9px; background:url(../images/toolswindow/cont-t-slipt.gif) no-repeat left; display:inline-block; zoom:1; *display:inline; margin-top:5px; }
+#report_wrap .report_title span a:hover { color:#D40000; }
+.report_title span a img { vertical-align:-3px; margin-right:3px; }
+/*按钮*/
+.report_btn       { background:#FCEAEA; text-align:right; padding:5px 0; }
+.report_btn input { border:1px solid #D9A1A1; background:url(../images/report_btnbg.gif) repeat-x top; height:21px; line-height:21px; color:#6E8793; }
+/*表格*/
+.report_cond      { background:#FCEAEA url(../images/report_condbg.gif) repeat-x top; }
+.report_table     { background:#F9F0F0; }
+
+.report_table_t   { position:relative; background:url(../images/report_table_t.gif) repeat-x top; height:26px; line-height:26px; }
+.report_table_t span { position:absolute; left:5px; top:0;  background:url(../images/report_table_ticon.gif) no-repeat left; padding-left:8px; }
+.report_table_t div  { position:absolute; right:4px; top:0; height:25px; width:22px; cursor:pointer; }
+.report_table_t div.btnup { background:url(../images/uiimages/layout_button_up.gif) no-repeat center; }
+.report_table_t div.btndown { background:url(../images/uiimages/layout_button_down.gif) no-repeat center; }
+.report_table_t div.btndelete { background:url(../images/btndelete.gif) no-repeat center; }
+
+.report_footbtn  { background:url(../images/report_footbtn.gif) repeat-x; padding:5px 0; text-align:center; }

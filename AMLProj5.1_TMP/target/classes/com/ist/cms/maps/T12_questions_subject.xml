@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_questions_subject"> 
+  <statement id="getT12_questions_subjectList" parameterClass="com.ist.cms.dto.T12_questions_subject" resultClass="com.ist.cms.dto.T12_questions_subject"> 
+  select * from t12_questions_subject 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="subjectkey"> 
+    subjectkey = #subjectkey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="questionkey"> 
+    questionkey = #questionkey# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="flag"> 
+    flag = #flag# 
+    </isNotEmpty>
+  </dynamic> 
+  ORDER BY SUBJECTTYPE,SORDER,SUBJECTKEY
+  </statement> 
+ 
+  <statement id="getT12_questions_subjectListCount" parameterClass="com.ist.cms.dto.T12_questions_subject" resultClass="int"> 
+  select count(*) from t12_questions_subject 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="subjectkey"> 
+    subjectkey = #subjectkey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="questionkey"> 
+    questionkey = #questionkey# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="flag"> 
+    flag = #flag# 
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_questions_subject" parameterClass="com.ist.cms.dto.T12_questions_subject" resultClass="int"> 
+  insert into T12_questions_subject(
+  subjectkey,questionkey,content,score,sfile,solution,subjecttype,sorder,mustanswer,flag
+  ) values(
+  #subjectkey#,#questionkey#,#content#,#score#,#sfile#,#solution#,#subjecttype#,#sorder#,#mustanswer#,#flag#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_questions_subject" parameterClass="com.ist.cms.dto.T12_questions_subject" resultClass="int"> 
+  update T12_questions_subject set 
+  subjectkey=#subjectkey#,questionkey=#questionkey#,content=#content#,score=#score#,sfile=#sfile#,solution=#solution#,subjecttype=#subjecttype#,sorder=#sorder#,
+  mustanswer=#mustanswer# where subjectkey=#subjectkey# 
+  </statement> 
+ 
+  <statement id="deleteT12_questions_subject" parameterClass="java.lang.String" resultClass="int">
+  	UPDATE T12_QUESTIONS_SUBJECT SET FLAG='2' WHERE SUBJECTKEY=#value# 
+  </statement> 
+ 
+  <statement id="getT12_questions_subjectDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_questions_subject"> 
+  select * from T12_questions_subject where subjectkey=#value# 
+  </statement> 
+ 
+  <!--  -->
+  <statement id="getT12_questions_subjectListForAnswerQuestion" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_questions_subject"> 
+  SELECT SUBJECTINSKEY,SUBJECTKEY,QUESTIONKEY,QUESTIONINSKEY,CONTENT,SCORE,SFILE,SOLUTION,SUBJECTTYPE,SORDER,MUSTANSWER FROM T12_SUBJECT_INS WHERE  QUESTIONINSKEY = #questioninskey# ORDER BY SUBJECTTYPE,SORDER,SUBJECTKEY,SUBJECTINSKEY
+  </statement> 
+  
+  <!-- zhangqiaojun 2010-09-25 -->
+  <statement id="getT12_subjectTypeCount" parameterClass="com.ist.cms.dto.T12_questions_subject" resultClass="int"> 
+  	select count(*) from T12_questions_subject where questionkey=#questionkey# and subjecttype=#subjecttype# 
+  </statement> 
+  <!-- zhangqiaojun 2010-10-08 -->
+  <statement id="getT12_subject_insTypeCount" parameterClass="com.ist.cms.dto.T12_questions_subject" resultClass="int"> 
+  	SELECT COUNT(*) FROM T12_SUBJECT_INS WHERE QUESTIONINSKEY=#questioninskey# AND SUBJECTTYPE=#subjecttype# 
+  </statement> 
+  
+  <!-- add by zhangqiaojun 2010-09-28 -->
+  <statement id="insertT12_subject_ins" parameterClass="com.ist.cms.dto.T12_questions_subject" resultClass="int"> 
+	  INSERT INTO T12_SUBJECT_INS(SUBJECTINSKEY,SUBJECTKEY,QUESTIONKEY,QUESTIONINSKEY,CONTENT,SCORE,SFILE,SOLUTION,SUBJECTTYPE,SORDER,MUSTANSWER,FLAG ) 
+	  VALUES(#subjectinskey#,#subjectkey#,#questionkey#,#questioninskey#,#content#,#score#,#sfile#,#solution#,#subjecttype#,#sorder#,#mustanswer#,#flag#) 
+  </statement>
+  
+  <statement id="getT12_subject_insList" parameterClass="com.ist.cms.dto.T12_questions_subject" resultClass="com.ist.cms.dto.T12_questions_subject"> 
+  SELECT * FROM T12_SUBJECT_INS 
+  <dynamic prepend="where"> 
+  	<isNotEmpty prepend="and" property="subjectinskey"> 
+    SUBJECTINSKEY = #subjectinskey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="questioninskey"> 
+    QUESTIONINSKEY = #questioninskey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="subjectkey"> 
+    SUBJECTKEY = #subjectkey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="questionkey"> 
+    QUESTIONKEY = #questionkey# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="flag"> 
+    FLAG = #flag# 
+    </isNotEmpty>
+  </dynamic> 
+  ORDER BY SUBJECTTYPE,SORDER,SUBJECTKEY,SUBJECTINSKEY
+  </statement> 
+</sqlMap> 
+

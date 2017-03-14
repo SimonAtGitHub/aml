@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_ca_article"> 
+  <statement id="getT12_ca_articleList" parameterClass="com.ist.cms.dto.T12_ca_article" resultClass="com.ist.cms.dto.T12_ca_article"> 
+  select categorykey,categorytype,upcategorykey,categoryname,"LEVEL",flag,dispseq,"DESC",creator,createdate,modifier,modifydate from t12_ca_article 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="categorykey"> 
+    categorykey like '%'|| #categorykey# ||'%'
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="upcategorykey"> 
+    upcategorykey = #upcategorykey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="categorytype"> 
+    categorytype = #categorytype# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="level"> 
+    "LEVEL" = #level# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="categoryname"> 
+    categoryname like '%'|| #categoryname# ||'%'
+    </isNotEmpty> 
+     <isNotEmpty prepend="flag" property="flag"> 
+    flag = #flag# 
+    </isNotEmpty>
+  </dynamic> 
+   order by dispseq
+  </statement> 
+ 
+  <statement id="getT12_ca_articleListCount" parameterClass="com.ist.cms.dto.T12_ca_article" resultClass="int"> 
+  select count(*) from t12_ca_article 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="categorykey"> 
+    categorykey like '%'|| #categorykey# ||'%'
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="upcategorykey"> 
+    upcategorykey = #upcategorykey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="categorytype"> 
+    categorytype = #categorytype# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="level"> 
+    "LEVEL" = #level# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="categoryname"> 
+    categoryname like '%'|| #categoryname# ||'%'
+    </isNotEmpty> 
+    <isNotEmpty prepend="flag" property="flag"> 
+    flag = #flag# 
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_ca_article" parameterClass="com.ist.cms.dto.T12_ca_article" resultClass="int"> 
+  insert into T12_ca_article(
+  categorykey,categorytype,upcategorykey,categoryname,"LEVEL",flag,dispseq,"DESC",creator,createdate,modifier,modifydate
+  ) values(
+  #categorykey#,#categorytype#,#upcategorykey#,#categoryname#,#level#,#flag#,#dispseq#,#desc#,#creator#,#createdate#,#modifier#,#modifydate#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_ca_article" parameterClass="com.ist.cms.dto.T12_ca_article" resultClass="int"> 
+  update T12_ca_article set 
+  categorykey=#categorykey#,categoryname=#categoryname#,flag=#flag#,dispseq=#dispseq#,"DESC"=#desc#,modifier=#modifier#,modifydate=#modifydate#
+  where categorykey=#old_key# 
+  </statement> 
+ 
+  <statement id="deleteT12_ca_article" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_ca_article where categorykey=#value# 
+  </statement> 
+  
+  <statement id="deleteT12_ca_articleByObj" parameterClass="com.ist.cms.dto.T12_ca_article" resultClass="int">
+  delete from T12_ca_article where categorytype=#categorytype# and categorykey=#categorykey#
+  </statement> 
+ 
+  <statement id="getT12_ca_articleDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_ca_article"> 
+  select * from T12_ca_article where categorykey=#value# 
+  </statement> 
+ 
+   <statement id="getT12_ca_articleDispByObj" parameterClass="com.ist.cms.dto.T12_ca_article" resultClass="com.ist.cms.dto.T12_ca_article"> 
+  	select * from T12_ca_article 
+	  <dynamic prepend="where"> 
+	    <isNotEmpty prepend="and" property="categorykey"> 
+	    	categorykey = #categorykey# 
+	    </isNotEmpty> 
+	    <isNotEmpty prepend="and" property="upcategorykey"> 
+	    	upcategorykey = #upcategorykey# 
+	    </isNotEmpty> 
+	    <isNotEmpty prepend="and" property="categorytype"> 
+	    	categorytype = #categorytype# 
+	    </isNotEmpty> 
+	  </dynamic> 
+	  order by dispseq
+  </statement> 
+  
+  <statement id="getT12_ca_articleCountByUpkey" parameterClass="com.ist.cms.dto.T12_ca_article" resultClass="int"> 
+  select count(*) from T12_ca_article where upcategorykey=#categorykey# and categorytype=#categorytype#
+  </statement> 
+  
+  <statement id="getT00_organTreeListByType"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.common.menu.Menu">
+		select organkey as id,uporgankey as parent_id,organname as
+		name,organlevel as "level" from t00_organ  order by organkey
+	</statement>
+  
+</sqlMap> 
+

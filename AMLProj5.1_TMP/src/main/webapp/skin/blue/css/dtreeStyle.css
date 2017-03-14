@@ -1,0 +1,148 @@
+.body {
+        font: normal 11px auto "Trebuchet MS", Verdana, Arial,
+		Helvetica, sans-serif;     
+		background-image:url(../images/right-bg-1.gif);
+}
+.dtree {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #666;
+	white-space: nowrap;
+}
+.dtree img {
+	border: 0px;
+	vertical-align: middle;
+}
+.dtree a {
+	color: #333;
+	text-decoration: none;
+}
+.dtree a.node, .dtree a.nodeSel {
+	white-space: nowrap;
+	padding: 1px 2px 1px 2px;
+}
+.dtree a.node:hover, .dtree a.nodeSel:hover {
+	color: #333;
+	text-decoration: underline;
+}
+.dtree a.nodeSel {
+	background-color: #c0d2ec;
+}
+.dtree .clip {
+	overflow: hidden;
+}
+
+.input {
+		border-left: 1px solid #C1DAD7;
+        border-top: 0;
+        background: #fff no-repeat;
+        font: 12px "Trebuchet MS", Verdana, Arial, Helvetica,
+		sans-serif;
+		width:300px;
+}
+.input2 {
+		border-left: 1px solid #C1DAD7;
+        border-top: 0;
+        background: #fff no-repeat;
+        font: 12px "Trebuchet MS", Verdana, Arial, Helvetica,
+		sans-serif;
+		width:300px;		
+}
+.button{
+	width:65px;
+	height:20px;
+	border:0px;
+	
+	color:#FFFFFF;
+}
+.texttd{
+        padding: 0 0 5px 0;
+        width: 120px;
+        font: 12px, "Trebuchet MS", Verdana, Arial, Helvetica;		
+		sans-serif;
+        text-align: right;
+}
+.texttd2{
+        padding: 0 0 5px 0;
+        width: 200px;
+        font: 12px, "Trebuchet MS", Verdana, Arial, Helvetica;		
+		sans-serif;
+        text-align: right;
+}
+.check{
+	clip: rect(6 17 17 6);
+	border-color:#330000;
+	BORDER-RIGHT: #7EBF4F 1px solid; 
+	PADDING-RIGHT: 3px; 
+	BORDER-TOP: #7EBF4F 2px solid; 
+	PADDING-LEFT: 3px; 
+	FONT-SIZE: 12px; 
+	filter:progid:DXImageTransform.Microsoft.MotionBlur(strength=10);
+			progid:DXImageTransform.Microsoft.BasicImage(mirror=1); 
+	BORDER-LEFT: #7EBF4F 1px solid; 
+	CURSOR: black; 
+	COLOR: black; 
+	PADDING-TOP: 8px;
+	PADDING-BOTTOM: 8px; 
+	BORDER-BOTTOM: #7EBF4F 2px solid;
+}
+.check_2{
+	position:absolute;
+	clip: rect(5 16 16 5)
+}
+.check_3{
+	position:absolute;
+	clip: rect(2 50 30 2)
+}
+
+.btn3_mouseout {
+BORDER-RIGHT: #2C59AA 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #2C59AA 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#C3DAF5); BORDER-LEFT: #2C59AA 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #2C59AA 1px solid
+}
+.btn3_mouseover {
+BORDER-RIGHT: #2C59AA 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #2C59AA 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#D7E7FA); BORDER-LEFT: #2C59AA 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #2C59AA 1px solid
+}
+.btn3_mousedown
+{
+BORDER-RIGHT: #FFE400 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #FFE400 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#C3DAF5); BORDER-LEFT: #FFE400 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #FFE400 1px solid
+}
+.btn3_mouseup {
+BORDER-RIGHT: #2C59AA 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #2C59AA 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 12px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#C3DAF5); BORDER-LEFT: #2C59AA 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #2C59AA 1px solid
+}
+/*公共页面浮动按钮样式*/
+.flow_button_div{	
+ 	position: absolute; 
+ 	font-size:12px;
+ 	z-index:1000;
+ 	
+}
+.div_scroll{
+	width:95%;  
+  	height:400px;  
+ 	overflow-y:auto; 	
+}
+.botton{
+    border:1px solid #D5DBE0; 
+	padding:0 3px;
+	font-size: 12px; 
+	cursor:pointer; 
+	color: #00557D; 
+    background:#fff url(../images/awp_buttonbg.gif) repeat-x bottom;
+	background-position:center \9;
+	height:24px;
+}
+
+body,table,div{
+color:#000000;
+font-size:12px;
+text-align:left;
+margin:0px;
+padding:0px;
+
+ scrollbar-arrow-color:#98BAD2;
+	scrollbar-face-color:#E3F1FB;
+	scrollbar-darkshadow-color:#98BAD2;
+	scrollbar-highlight-color:#E3F1FB;
+	scrollbar-3dlight-color:#98BAD2;
+	scrollbar-shadow-color:#E3F1FB;
+	scrollbar-track-color:#E3F1FB;
+}

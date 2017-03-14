@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T07_flow"> 
+
+  <statement id="getT07_flowList" parameterClass="com.ist.aml.report.dto.T07_post_operator" resultClass="com.ist.aml.report.dto.CreditTask"> 
+  SELECT T3.APPLICATION_NUM,T3.CASE_NAME,T3.CAST_TYPE,T3.CASE_KIND,T3.PARTY_ID,T3.PARTY_NAME,T3.APP_STATE_CD,T3.CURR_CD,T3.APP_ORG_ID,T3.CASE_SOURCE,
+       T3.CASE_DATE,T3.CASE_END_DATE,T3.VALIDATE_IND,T3.APP_DT,T3.DATE_STATUS_CD,T3.IS_MENU ,T3.POST_ID AS CURR_POST,T3.alert_level,T3.ISSTAFF,T3.IS_GREY
+  FROM T07_CASE_APPLICATION T3 
+ 
+ 
+  WHERE  1>0     
+    <!-- AND T3.APP_STATE_CD IN ('1','3') -->
+    <isNotEmpty prepend="AND" property="post_flag"> 
+        <isEqual property="post_flag" compareValue ="1">
+            T3.APP_STATE_CD IN ('1','3','4')
+        </isEqual>
+        <isNotEqual property="post_flag" compareValue ="1">
+	        T3.APP_STATE_CD IN ('1','3')
+		</isNotEqual>
+    </isNotEmpty> 
+    <isEmpty prepend="AND" property="post_flag"> 
+	    T3.APP_STATE_CD IN ('1','3')
+    </isEmpty> 
+    <!-- AND T3.APP_STATE_CD IN ('1','3','4') -->
+    AND T3.APP_ORG_ID IN ( $app_org_id$ )
+    <isNotEmpty prepend="AND" property="post_des"> 
+        T3.POST_ID IN ( $post_des$ )
+    </isNotEmpty> 
+    <isEmpty prepend="AND" property="post_des"> 
+        T3.POST_ID IN ('')
+    </isEmpty> 
+    <isNotEmpty prepend="AND" property="post_id"> 
+        <isEqual property="post_id" compareValue ="P0104">
+           T3.POST_ID IN ('P0104','P0304')
+        </isEqual>
+        <isEqual property="post_id" compareValue ="P0103">
+           T3.POST_ID IN ('P0103','P0303')
+        </isEqual>
+        <isEqual property="post_id" compareValue ="P0304">
+           T3.POST_ID IN ('P0104','P0304')
+        </isEqual>
+        <isEqual property="post_id" compareValue ="P0303">
+           T3.POST_ID IN ('P0103','P0303')
+        </isEqual>
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="curr_post"> 
+        T3.POST_ID =#curr_post#
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="case_date_start_disp"> 
+    <![CDATA[T3.CASE_DATE >= #case_date_start#]]> 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="case_date_end_disp"> 
+    <![CDATA[T3.CASE_DATE <= #case_date_end#]]>  
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="curr_org"> 
+       <isNotEqual property="post_id" compareValue ="P0104">
+        T3.APP_ORG_ID= #curr_org# 
+        </isNotEqual>
+         <isEqual property="post_id" compareValue ="P0104">
+        T3.APP_ORG_ID in ( SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY=#curr_org#  )   
+        </isEqual>
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="curr_cd"> 
+    T3.CURR_CD= #curr_cd# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="is_menu"> 
+    T3.IS_MENU= #is_menu# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="validate_ind"> 
+    T3.validate_ind= #validate_ind# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="isstaff"> 
+    T3.isstaff= #isstaff# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="is_grey"> 
+       T3.is_grey= #is_grey#  
+   </isNotEmpty>
+    <isNotEmpty prepend="AND" property="case_kind"> 
+    	<isEqual property="case_kind" compareValue ="0">
+	        T3.CASE_KIND IN ('N','A','R','I','C','D')
+		</isEqual>
+		<isEqual property="case_kind" compareValue ="1">
+	
+	        T3.CASE_KIND IN ( 'N','A','C','D')
+		</isEqual>
+		<isEqual property="case_kind" compareValue ="11">
+	   
+	        T3.CASE_KIND IN ('C','D')
+		</isEqual>
+		<isEqual property="case_kind" compareValue ="01">
+	  
+	        T3.CASE_KIND IN ( 'R','I','C','D')
+		</isEqual>
+		<isNotEqual property="case_kind" compareValue ="0">
+		<isNotEqual property="case_kind" compareValue ="1">
+		<isNotEqual property="case_kind" compareValue ="11">
+		<isNotEqual property="case_kind" compareValue ="01">
+	        T3.CASE_KIND =#case_kind# 
+	          </isNotEqual>
+	          </isNotEqual>
+	        </isNotEqual>
+		</isNotEqual>
+    </isNotEmpty> 
+   	<isNotEmpty prepend="AND" property="cast_type"> 
+    T3.CAST_TYPE =#cast_type# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="party_id"> 
+    T3.PARTY_ID= #party_id# 
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="party_name"> 
+    T3.PARTY_NAME like '%' || #party_name# || '%'
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="flow_id"> 
+     ( T3.FLOW_ID IN ('01','02','03','04','05') ) 
+     AND ( T1.CURR_POST IN ('P0104','P0105','P0106', 'P0304'))
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="date_status_cd"> 
+    T3.DATE_STATUS_CD= #date_status_cd# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="app_state_cd"> 
+	    T3.APP_STATE_CD = #app_state_cd#
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="party_class_cd"> 
+	    T3.PARTY_CLASS_CD = #party_class_cd#
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="case_level"> 
+	    T3.alert_level = #case_level#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="case_source"> 
+	    T3.CASE_SOURCE = #case_source#
+    </isNotEmpty>
+    <isNotEmpty  property="order_name"> 
+    <isEqual property="order_name" compareValue ="1">
+          ORDER BY T3.APPLICATION_NUM
+    </isEqual>
+    <isEqual property="order_name" compareValue ="2">
+          ORDER BY T3.APP_DT
+    </isEqual>
+    <isEqual property="order_name" compareValue ="3">
+          ORDER BY T3.CASE_NAME
+    </isEqual>
+    
+    <isEqual property="order_name" compareValue ="4">
+          ORDER BY T3.CAST_TYPE
+    </isEqual>
+    <isEqual property="order_name" compareValue ="5">
+          ORDER BY T3.CASE_KIND
+    </isEqual>
+    <isEqual property="order_name" compareValue ="6">
+          ORDER BY T3.CASE_END_DATE,T3.Party_Id
+    </isEqual>
+    <isNotEmpty  property="order_type"> 
+      DESC
+    </isNotEmpty> 
+    </isNotEmpty> 
+    <isEmpty  property="order_name"> 
+        ORDER BY T3.CASE_DATE
+    </isEmpty>
+
+  </statement> 
+  
+  
+  
+ 
+  <statement id="getT07_flowListCount" parameterClass="com.ist.aml.report.dto.T07_post_operator" resultClass="int"> 
+  SELECT COUNT(T3.APPLICATION_NUM)  
+  FROM T07_CASE_APPLICATION T3
+  WHERE  1>0     
+      <isNotEmpty prepend="AND" property="post_flag"> 
+        <isEqual property="post_flag" compareValue ="1">
+            T3.APP_STATE_CD IN ('1','3','4')
+        </isEqual>
+        <isNotEqual property="post_flag" compareValue ="1">
+	        T3.APP_STATE_CD IN ('1','3')
+		</isNotEqual>
+    </isNotEmpty> 
+    <isEmpty prepend="AND" property="post_flag"> 
+	    T3.APP_STATE_CD IN ('1','3')
+    </isEmpty> 
+    <!-- AND T3.APP_STATE_CD IN ('1','3','4') -->
+    AND T3.APP_ORG_ID IN ( $app_org_id$ )
+    <isNotEmpty prepend="AND" property="post_des"> 
+        T3.POST_ID IN ( $post_des$ )
+    </isNotEmpty> 
+    <isEmpty prepend="AND" property="post_des"> 
+        T3.POST_ID IN ('')
+    </isEmpty> 
+     <isNotEmpty prepend="AND" property="post_id"> 
+        <isEqual property="post_id" compareValue ="P0104">
+           T3.POST_ID IN ('P0104','P0304')
+        </isEqual>
+        <isEqual property="post_id" compareValue ="P0103">
+           T3.POST_ID IN ('P0103','P0303')
+        </isEqual>
+        <isEqual property="post_id" compareValue ="P0304">
+           T3.POST_ID IN ('P0104','P0304')
+        </isEqual>
+        <isEqual property="post_id" compareValue ="P0303">
+           T3.POST_ID IN ('P0103','P0303')
+        </isEqual>
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="curr_post"> 
+        T3.POST_ID =#curr_post#
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="case_date_start_disp"> 
+    <![CDATA[T3.CASE_DATE >= #case_date_start#]]> 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="case_date_end_disp"> 
+    <![CDATA[T3.CASE_DATE <= #case_date_end#]]>  
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="curr_org"> 
+       <isNotEqual property="post_id" compareValue ="P0104">
+        T3.APP_ORG_ID= #curr_org# 
+        </isNotEqual>
+         <isEqual property="post_id" compareValue ="P0104">
+        T3.APP_ORG_ID in ( SELECT SUBORGANKEY FROM T87_ORGAN_MAP WHERE ORGANKEY=#curr_org#  )   
+        </isEqual>
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="curr_cd"> 
+    T3.CURR_CD= #curr_cd# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="is_menu"> 
+    T3.IS_MENU= #is_menu# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="validate_ind"> 
+    T3.validate_ind= #validate_ind# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="isstaff"> 
+    T3.isstaff= #isstaff# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="is_grey"> 
+       T3.is_grey= #is_grey#  
+   </isNotEmpty>
+    <isNotEmpty prepend="AND" property="case_kind"> 
+    	<isEqual property="case_kind" compareValue ="0">
+	        T3.CASE_KIND IN ('N','A','R','I','C','D')
+		</isEqual>
+		<isEqual property="case_kind" compareValue ="1">
+	
+	        T3.CASE_KIND IN ( 'N','A','C','D')
+		</isEqual>
+		<isEqual property="case_kind" compareValue ="11">
+	   
+	        T3.CASE_KIND IN ('C','D')
+		</isEqual>
+		<isEqual property="case_kind" compareValue ="01">
+	  
+	        T3.CASE_KIND IN ( 'R','I','C','D')
+		</isEqual>
+		<isNotEqual property="case_kind" compareValue ="0">
+		<isNotEqual property="case_kind" compareValue ="1">
+		<isNotEqual property="case_kind" compareValue ="11">
+		<isNotEqual property="case_kind" compareValue ="01">
+	        T3.CASE_KIND =#case_kind# 
+	          </isNotEqual>
+	          </isNotEqual>
+	        </isNotEqual>
+		</isNotEqual>
+    </isNotEmpty> 
+   	<isNotEmpty prepend="AND" property="cast_type"> 
+    T3.CAST_TYPE =#cast_type# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="party_id"> 
+    T3.PARTY_ID= #party_id# 
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="party_name"> 
+    T3.PARTY_NAME like '%' || #party_name# || '%'
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="flow_id"> 
+     ( T3.FLOW_ID IN ('01','02','03','04','05') ) 
+     AND ( T1.CURR_POST IN ('P0104','P0105','P0106', 'P0304'))
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="date_status_cd"> 
+    T3.DATE_STATUS_CD= #date_status_cd# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="app_state_cd"> 
+	    T3.APP_STATE_CD = #app_state_cd#
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="party_class_cd"> 
+	    T3.PARTY_CLASS_CD = #party_class_cd#
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="case_level"> 
+	    T3.alert_level = #case_level#
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="case_source"> 
+	    T3.CASE_SOURCE = #case_source#
+    </isNotEmpty>
+  </statement> 
+  
+  <statement id="getT07_flowCaseDisp" parameterClass="com.ist.aml.report.dto.T07_post_operator" resultClass="com.ist.aml.report.dto.CreditTask"> 
+  SELECT T3.ALERT_LEVEL,T3.TAKE_ACTION,T3.ACTION_DESCRIP,T3.ACTION_EXPLAIN,T3.APPLICATION_NUM,T3.FLOW_ID,T3.NODE_ID,T3.POST_ID,T3.TRAN_COUNT as TRANS_COUNT,T3.CASE_SOURCE,
+    T3.TRAN_AMT AS TRANS_AMT,T3.CASE_NAME,T3.APP_DT,T3.PARTY_ID,T3.PARTY_NAME,T3.PARTY_CLASS_CD,T3.APP_ORG_ID,T3.CAST_TYPE,T3.CURR_CD,
+    T3.CAST_TYPE,T3.CASE_KIND,T3.APP_STATE_CD,T3.DATE_STATUS_CD,T3.CASE_LEVEL,T3.CASE_DATE,T3.CASE_END_DATE,T3.PARTY_ID,
+    T3.VALIDATE_IND,T3.ISSTAFF,T3.IS_GREY 
+  FROM T07_CASE_APPLICATION T3
+  WHERE  
+    <isNotEmpty prepend="" property="application_num"> 
+    T3.APPLICATION_NUM= #application_num# 
+    </isNotEmpty>
+  </statement> 
+  
+    <statement id="getT07_flowcheckList" parameterClass="com.ist.aml.report.dto.T07_post_operator" resultClass="com.ist.aml.report.dto.CreditTask"> 
+  SELECT T3.APPLICATION_NUM,T3.CASE_NAME,T3.CAST_TYPE,T3.CASE_KIND,T3.PARTY_ID,T3.PARTY_NAME,T3.APP_STATE_CD,T3.CURR_CD,T3.APP_ORG_ID,
+       T3.CASE_DATE,T3.CASE_END_DATE,T3.VALIDATE_IND,T3.APP_DT,T3.DATE_STATUS_CD,T3.IS_MENU ,T3.POST_ID AS CURR_POST
+  FROM T07_CASE_APPLICATION T3 
+ 
+  WHERE  1>0     
+    AND T3.APP_ORG_ID IN ( $app_org_id$ )
+    <isNotEmpty prepend="AND" property="post_des"> 
+        T3.POST_ID IN ( $post_des$ )
+    </isNotEmpty> 
+
+    <isNotEmpty prepend="AND" property="post_id"> 
+        <isEqual property="post_id" compareValue ="P0104">
+           T3.POST_ID IN ('P0104','P0304')
+        </isEqual>
+        <isEqual property="post_id" compareValue ="P0103">
+           T3.POST_ID IN ('P0103','P0303')
+        </isEqual>
+        <isEqual property="post_id" compareValue ="P0304">
+           T3.POST_ID IN ('P0104','P0304')
+        </isEqual>
+        <isEqual property="post_id" compareValue ="P0303">
+           T3.POST_ID IN ('P0103','P0303')
+        </isEqual>
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="curr_post"> 
+        T3.POST_ID =#curr_post#
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="case_date_start_disp"> 
+    <![CDATA[T3.CASE_DATE >= #case_date_start#]]> 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="case_date_end_disp"> 
+    <![CDATA[T3.CASE_DATE <= #case_date_end#]]>  
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="curr_org"> 
+        T3.APP_ORG_ID= #curr_org# 
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="curr_cd"> 
+    T3.CURR_CD= #curr_cd# 
+    </isNotEmpty> 
+     <isNotEmpty prepend="AND" property="is_menu"> 
+    T3.IS_MENU= #is_menu# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="validate_ind"> 
+    T3.validate_ind= #validate_ind# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="isstaff"> 
+    T3.isstaff= #isstaff# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="is_grey"> 
+       T3.is_grey= #is_grey#  
+   </isNotEmpty>
+   	<isNotEmpty prepend="AND" property="cast_type"> 
+    T3.CAST_TYPE =#cast_type# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="party_id"> 
+    T3.PARTY_ID= #party_id# 
+    </isNotEmpty>
+      <isNotEmpty prepend="AND" property="case_level"> 
+	    T3.alert_level = #case_level#
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="party_name"> 
+    T3.PARTY_NAME like '%' || #party_name# || '%'
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="app_state_cd"> 
+	        T3.APP_STATE_CD =#app_state_cd#
+       
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="case_kind"> 	
+	        T3.CASE_KIND =#case_kind#   
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="case_source"> 
+	    T3.CASE_SOURCE = #case_source#
+    </isNotEmpty>
+   
+  </statement> 
+  
+  <statement id="getT07_post_operatorList1" parameterClass="com.ist.aml.report.dto.T07_post_operator" resultClass="com.ist.aml.report.dto.T07_post_operator"> 
+   SELECT A.POST_ID,B.USERNAME
+   FROM T00_ROLE_POST A,T00_COM_AUTH B WHERE A.POST_ID = #post_id# AND A.ROLEKEY=B.ROLEKEY AND B.USERNAME = #username#
+  </statement>
+  
+    <statement id="insertT07_app_achieve" parameterClass="com.ist.aml.report.dto.T07_app_achieve" resultClass="int"> 
+  INSERT INTO T07_APP_ACHIEVE(
+  FLOW_ID,APPLICATION_NUM,RECHECK_NUM,SEQ_NUM,NODE_ID,TASK_ID,TASK_STATUS_CD,CREATE_DT,LAST_UPD_DT,LAST_UPD_USER
+  ) VALUES(
+  #flow_id#,#application_num#,#recheck_num#,#seq_num#,#node_id#,#task_id#,#task_status_cd#,#create_dt#,#last_upd_dt#,#last_upd_user#
+  ) 
+  </statement> 
+  
+    <statement id="modifyT07_app_movefate" parameterClass="com.ist.aml.report.dto.T07_app_movefate" resultClass="int"> 
+  UPDATE T07_APP_MOVEFATE SET 
+  CURRENT_IND=#current_ind#,CURR_OPERATOR=#curr_operator#,CURR_OPER_ID=#curr_oper_id#,LAST_UPD_DT=#last_upd_dt#,
+  LAST_UPD_USER=#last_upd_user#,STATUS_CD=#status_cd#
+  WHERE APPLICATION_NUM=#application_num# AND CURRENT_IND='1'
+  </statement> 
+  
+   
+  
+   <statement id="getT07_app_moveftSeqNum" parameterClass="com.ist.aml.report.dto.CreditTask" resultClass="int"> 
+  SELECT  CASE WHEN (MAX(SEQ_NUM)+1) IS NULL THEN 0 ELSE (MAX(SEQ_NUM)+1) END FROM T07_APP_MOVEFATE 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="application_num"> 
+    APPLICATION_NUM = #application_num# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+  <statement id="getNode_id" parameterClass="com.ist.aml.report.dto.T07_node" resultClass="string"> 
+  SELECT T.NODE_ID FROM T07_NODE T
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="flow_id"> 
+    T.FLOW_ID = #flow_id# 
+    </isNotEmpty> 
+    
+    <isNotEmpty prepend="AND" property="post_id"> 
+    T.POST_ID = #post_id# 
+    </isNotEmpty> 
+    
+    <isNotEmpty prepend="AND" property="is_use"> 
+    T.IS_USE = #is_use# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+  
+   <statement id="getT07_n_moveDisp" parameterClass="com.ist.aml.report.dto.T07_n_move"  resultClass="com.ist.aml.report.dto.T07_n_move"> 
+  SELECT NODE_ID,OPER_ID,OPER_TYPE,OPER_CATEGORY,OPER_DESC,OPER_URL,OPER_SEQ,IS_USE FROM T07_N_MOVE 
+    <dynamic prepend="WHERE">
+   <isNotEmpty prepend="AND" property="node_id"> 
+    NODE_ID = #node_id#
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="oper_id"> 
+    OPER_ID = #oper_id#
+    </isNotEmpty> 
+   </dynamic> 
+  </statement>
+ 
+</sqlMap> 
+

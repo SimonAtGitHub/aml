@@ -1,0 +1,64 @@
+# ΪawpCommonCache���õ�����
+jcs.region.awpCommonCache=DC,LTCP
+jcs.region.awpCommonCache.cacheattributes=org.apache.jcs.engine.CompositeCacheAttributes
+jcs.region.awpCommonCache.cacheattributes.MaxObjects=10000
+jcs.region.awpCommonCache.cacheattributes.MemoryCacheName=org.apache.jcs.engine.memory.lru.LRUMemoryCache
+# ��ϵͳѹ������ʱ��Ϊ��߲������ܣ�������Ϊtrue����ʹ������Ϊfalse
+jcs.region.awpCommonCache.elementattributes.IsEternal=true
+jcs.region.awpCommonCache.elementattributes.MaxLifeSeconds=7200
+jcs.region.awpCommonCache.elementattributes.IsSpool=true
+jcs.region.awpCommonCache.elementattributes.IsRemote=true
+jcs.region.awpCommonCache.elementattributes.IsLateral=true
+
+# ΪavpCache���õ�����
+jcs.region.avpCache=DC,LTCP
+jcs.region.avpCache.cacheattributes=org.apache.jcs.engine.CompositeCacheAttributes
+jcs.region.avpCache.cacheattributes.MaxObjects=10000
+jcs.region.avpCache.cacheattributes.MemoryCacheName=org.apache.jcs.engine.memory.lru.LRUMemoryCache
+# ��ϵͳѹ������ʱ��Ϊ��߲������ܣ�������Ϊtrue����ʹ������Ϊfalse
+jcs.region.avpCache.elementattributes.IsEternal=true
+jcs.region.avpCache.elementattributes.MaxLifeSeconds=7200
+jcs.region.avpCache.elementattributes.IsSpool=true
+jcs.region.avpCache.elementattributes.IsRemote=true
+jcs.region.avpCache.elementattributes.IsLateral=true
+
+# ΪreportCache���õ�����
+jcs.region.reportCache=DC,LTCP
+jcs.region.reportCache.cacheattributes=org.apache.jcs.engine.CompositeCacheAttributes
+jcs.region.reportCache.cacheattributes.MaxObjects=10000
+jcs.region.reportCache.cacheattributes.MemoryCacheName=org.apache.jcs.engine.memory.lru.LRUMemoryCache
+# ��ϵͳѹ������ʱ��Ϊ��߲������ܣ�������Ϊtrue����ʹ������Ϊfalse
+jcs.region.reportCache.elementattributes.IsEternal=true
+jcs.region.reportCache.elementattributes.MaxLifeSeconds=7200
+jcs.region.reportCache.elementattributes.IsSpool=true
+jcs.region.reportCache.elementattributes.IsRemote=true
+jcs.region.reportCache.elementattributes.IsLateral=true
+
+# Ĭ�����ã�δ�ر����õĻ�����ʹ�ô�����
+jcs.default=DC,LTCP
+jcs.default.cacheattributes=org.apache.jcs.engine.CompositeCacheAttributes
+jcs.default.cacheattributes.MaxObjects=10000
+jcs.default.cacheattributes.MemoryCacheName=org.apache.jcs.engine.memory.lru.LRUMemoryCache
+# ��ϵͳѹ������ʱ��Ϊ��߲������ܣ�������Ϊtrue����ʹ������Ϊfalse
+jcs.default.elementattributes.IsEternal=true
+jcs.default.elementattributes.MaxLifeSeconds=3600
+jcs.default.elementattributes.IsSpool=true
+jcs.default.elementattributes.IsRemote=true
+jcs.default.elementattributes.IsLateral=true
+
+# ���̻�������
+jcs.auxiliary.DC=org.apache.jcs.auxiliary.disk.indexed.IndexedDiskCacheFactory 
+jcs.auxiliary.DC.attributes=org.apache.jcs.auxiliary.disk.indexed.IndexedDiskCacheAttributes 
+# �����ļ��ڴ����е�Ŀ¼�������ֳ����޸�Ϊʵ��Ŀ¼���ұ����и�Ŀ¼�Ķ�дȨ��
+jcs.auxiliary.DC.attributes.DiskPath=/awpfs
+
+# ����Ϊ��Ⱥ�������ã��Ǽ�Ⱥ������ɾ��
+  #jcs.auxiliary.LTCP=org.apache.commons.jcs.auxiliary.lateral.socket.tcp.LateralTCPCacheFactory
+  #jcs.auxiliary.LTCP.attributes=org.apache.commons.jcs.auxiliary.lateral.socket.tcp.TCPLateralCacheAttributes
+# ����ڵ�ĵ�ַ�����ö˿ڣ�����ƽڵ����4��
+jcs.auxiliary.LTCP.attributes.TcpServers=11.0.4.19:1121,11.0.4.20:1121,11.0.4.21:1121
+# ���ڵ�Ϊ���зֲ��������õĶ˿�
+jcs.auxiliary.LTCP.attributes.TcpListenerPort=1121 
+jcs.auxiliary.LTCP.attributes.AllowGet=false 
+
+

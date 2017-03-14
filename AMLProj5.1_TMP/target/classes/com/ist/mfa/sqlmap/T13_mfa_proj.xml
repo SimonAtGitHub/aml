@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T13_mfa_proj">
+	<statement id="getT13_mfa_projList" parameterClass="com.ist.mfa.dto.T13_mfa_proj"
+		resultClass="com.ist.mfa.dto.T13_mfa_proj">
+		select
+		proj_id,proj_name,proj_stat,proj_des,conclusion,creator,createdate,modifier,modifydate
+		from t13_mfa_proj
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="proj_stat_del">
+				proj_stat !=
+				#proj_stat_del# 
+    		</isNotEmpty>
+			<isNotEmpty prepend="and" property="proj_name">
+				proj_name like '%$proj_name$%' 
+    		</isNotEmpty>
+			<isNotEmpty prepend="and" property="proj_stat">
+				proj_stat = #proj_stat# 
+    		</isNotEmpty>
+			<isNotEmpty prepend="AND" property="createdate_min">
+				<![CDATA[ createdate >= #createdate_min#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="createdate_max">
+				<![CDATA[ createdate <= #createdate_max#]]>
+			</isNotEmpty>
+	    				
+		</dynamic>
+		<dynamic prepend="">
+			<isNotEmpty prepend="" property="sort">
+				ORDER BY $sort$
+				$sort_type$
+			</isNotEmpty>
+			<isEmpty prepend="" property="sort">
+				ORDER BY CREATEDATE DESC
+			</isEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="getT13_mfa_projListCount" parameterClass="com.ist.mfa.dto.T13_mfa_proj"
+		resultClass="int">
+		select count(*) from t13_mfa_proj
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="proj_stat_del">
+				proj_stat !=
+				#proj_stat_del# 
+    		</isNotEmpty>
+			<isNotEmpty prepend="and" property="proj_name">
+				proj_name like
+				'%$proj_name$%' 
+    		</isNotEmpty>
+			<isNotEmpty prepend="and" property="proj_stat">
+				proj_stat = #proj_stat# 
+    		</isNotEmpty>
+			<isNotEmpty prepend="AND" property="createdate_min">
+				<![CDATA[ createdate >= #createdate_min#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="createdate_max">
+				<![CDATA[ createdate <= #createdate_max#]]>
+			</isNotEmpty>
+								
+		</dynamic>
+	</statement>
+
+	<statement id="insertT13_mfa_proj" parameterClass="com.ist.mfa.dto.T13_mfa_proj"
+		resultClass="int">
+		insert into T13_mfa_proj(
+		proj_id,proj_name,proj_stat,proj_des,conclusion,creator,createdate,modifier,modifydate
+		) values(
+		#proj_id#,#proj_name#,#proj_stat#,#proj_des#,#conclusion#,#creator#,#createdate#,
+		#modifier#,#modifydate#		
+		)
+	</statement>
+
+	<statement id="createT13_mfa_proj_parms" parameterClass="java.lang.String"
+		resultClass="int">
+		insert into T13_PROJ_PARM (proj_id, parm_cd, parm_name,
+		parm_des, parm_val, disp_seq) select '$value$', parm_cd, parm_name,
+		parm_des,defa_val,disp_seq from T13_PARM order by disp_seq
+	</statement>
+
+	<statement id="createT13_mfa_proj_qry_vals" parameterClass="java.lang.String"
+		resultClass="int">
+		insert into T13_PROJ_QRY_VAL(proj_id, oper_cd, cond_cd,
+		input_val) select '$value$', oper_cd, cond_cd, '' from T13_QRY_COND
+	</statement>
+
+	<statement id="createT13_mfa_proj_oper_disps" parameterClass="java.lang.String"
+		resultClass="int">
+		insert into T13_PROJ_OPER_DISP(proj_id, oper_cd,
+		col_disp_cd, is_disp, disp_seq) select '$value$', oper_cd, col_disp_cd,
+		is_disp, disp_seq from t13_oper_disp
+	</statement>
+
+	<statement id="updateT13_proj_qry_val" parameterClass="com.ist.mfa.dto.T13_proj_qry_val"
+		resultClass="int">
+		update T13_PROJ_QRY_VAL set INPUT_VAL=#input_val# where
+		PROJ_ID=#proj_id# and COND_CD=#cond_cd#
+	</statement>
+
+	<statement id="modifyT13_mfa_proj" parameterClass="com.ist.mfa.dto.T13_mfa_proj"
+		resultClass="int">
+		update T13_mfa_proj set
+		proj_stat=#proj_stat#,proj_des=#proj_des#,conclusion=#conclusion#,creator=#creator#,
+		createdate=#createdate#,modifier=#modifier#,modifydate=#modifydate#
+		where proj_id=#proj_id#
+	</statement>
+
+	<statement id="modifyT13_proj_qry_val" parameterClass="com.ist.mfa.dto.T13_proj_qry_val"
+		resultClass="int">
+		update T13_PROJ_QRY_VAL set
+		INPUT_VAL=#input_val#
+		where
+		proj_id=#proj_id# and cond_cd=#cond_cd# and oper_cd=#oper_cd#
+	</statement>
+
+	<statement id="deleteT13_mfa_proj" parameterClass="com.ist.mfa.dto.T13_mfa_proj"
+		resultClass="int">
+		update T13_mfa_proj set proj_stat = #proj_stat_del# where
+		proj_id = #proj_id#
+	</statement>
+
+	<statement id="getT13_mfa_projDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.mfa.dto.T13_mfa_proj">
+		select * from T13_mfa_proj where proj_id=#value#
+	</statement>
+
+
+	<statement id="getT13_oper_infoDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.mfa.dto.T13_oper_info">
+		select * from T13_oper_info where oper_cd=#value#
+	</statement>
+
+
+
+	<statement id="getT13_sql_configList" parameterClass="com.ist.mfa.dto.T13_sql_config"
+		resultClass="com.ist.mfa.dto.T13_sql_config">
+		select config_id,oper_cd,exec_sql,exec_seq,is_main from
+		t13_sql_config
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="config_id">
+				config_id = #config_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="oper_cd">
+				oper_cd = #oper_cd#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+
+	<statement id="getT13_proj_oper_dispList" parameterClass="com.ist.mfa.dto.T13_proj_oper_disp"
+		resultClass="com.ist.mfa.dto.T13_proj_oper_disp">
+		select t1.PROJ_ID, t1.COL_DISP_CD, t1.OPER_CD, t1.IS_DISP,
+		t1.DISP_SEQ,
+		t2.COL_QRY_CD, t2.COL_DATA_TYPE, t2.DISP_NAME,
+		t2.DISP_STYLE,
+		t2.DISP_PARM, t2.ALIGN_TYPE, t2.IS_WARP, t2.IS_CHG,
+		t2.CHG_CD,
+		t2.IS_JUMP, t2.JUMP_URL, t2.DISP_WIDTH, t2.IS_NESS,
+		t2.COL_LENGTH, t2.EDIT_ABLE from t13_proj_oper_disp t1,
+		T13_OPER_DISP
+		t2 where t1.OPER_CD = t2.OPER_CD and
+		t1.COL_DISP_CD = t2.COL_DISP_CD
+		<isNotEmpty prepend="and" property="proj_id">
+			t1.proj_id = #proj_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="oper_cd">
+			t1.OPER_CD = #oper_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="col_disp_cd">
+			t1.COL_DISP_CD =
+			#col_disp_cd#
+		</isNotEmpty>
+	</statement>
+
+
+	<statement id="getT13_proj_qry_valList" parameterClass="java.lang.String"
+		resultClass="com.ist.mfa.dto.T13_proj_qry_val">
+		SELECT A.PROJ_ID, A.COND_CD, A.OPER_CD, A.INPUT_VAL,
+		B.DISP_NAME, B.PARM_TYPE, B.TARGET_CD,
+		B.DISP_LEN, B.IS_NESS,
+		B.DISP_SEQ, B.PARM_DES, B.WARNING FROM T13_PROJ_QRY_VAL A,
+		T13_QRY_COND B
+		WHERE A.COND_CD = B.COND_CD and A.OPER_CD = B.OPER_CD
+		and A.PROJ_ID = #value#
+		ORDER BY B.DISP_SEQ
+	</statement>
+
+	<statement id="getT13_proj_parmList" parameterClass="java.lang.String"
+		resultClass="com.ist.mfa.dto.T13_proj_parm">
+		SELECT A.PROJ_ID, A.PARM_CD, A.PARM_NAME, A.PARM_DES,
+		A.PARM_VAL, A.DISP_SEQ FROM T13_PROJ_PARM A		
+	</statement>
+
+	<statement id="getT13_oper_dispList" parameterClass="java.lang.String"
+		resultClass="com.ist.mfa.dto.T13_proj_oper_disp">
+		<!--  SELECT A.PROJ_ID, A.COL_DISP_CD, A.OPER_CD, A.IS_DISP,
+		A.DISP_SEQ, B.COL_QRY_CD, B.COL_DATA_TYPE,
+		B.DISP_NAME, B.DISP_STYLE,
+		B.DISP_PARM, B.ALIGN_TYPE, B.IS_WARP, B.IS_CHG, B.CHG_CD, B.IS_JUMP,
+		B.DISP_WIDTH,
+		B.IS_NESS, B.COL_LENGTH, B.EDIT_ABLE FROM
+		T13_PROJ_OPER_DISP A, T13_OPER_DISP B
+		WHERE A.COL_DISP_CD =
+		B.COL_DISP_CD AND A.OPER_CD = B.OPER_CD AND A.PROJ_ID = #value#
+		ORDER
+		BY A.DISP_SEQ
+		-->
+		SELECT T.COL_DISP_CD,       T.OPER_CD,       T.IS_DISP,
+		       T.DISP_SEQ,       T.COL_QRY_CD,       T.COL_DATA_TYPE,
+		       T.DISP_NAME,       T.DISP_STYLE,       T.DISP_PARM,
+		       T.ALIGN_TYPE,       T.IS_WARP,       T.IS_CHG,
+		       T.CHG_CD,       T.IS_JUMP,       T.DISP_WIDTH,
+		       T.IS_NESS,       T.COL_LENGTH,       T.EDIT_ABLE                  
+		  FROM T13_OPER_DISP T                  
+		 ORDER BY t.oper_cd,t.disp_seq  
+	</statement>
+
+	<statement id="getT13_create_transacton_configList"
+		parameterClass="java.lang.String" resultClass="com.ist.mfa.dto.T13_create_transacton_config">
+		SELECT CONFIG_ID,
+		CONFIG_DESC, IS_MAIN_BRANCH, BRANCH_PROPERTY, TRANSACTION_PROPERTY
+		FROM T13_CREATE_TRANSACTON_CONFIG 
+	</statement>
+
+	<statement id="getT13_stat_cdList" parameterClass="java.lang.String"
+		resultClass="com.ist.mfa.dto.T13_stat_cd">
+		SELECT CATE_CD, CD_CD, CD_VAL
+		FROM T13_STAT_CD
+	</statement>
+
+	<statement id="getStatCdByCateCd" parameterClass="java.lang.String"
+		resultClass="com.ist.mfa.dto.T13_stat_cd">
+		SELECT CD_CD, CD_VAL
+		FROM T13_STAT_CD
+		WHERE CATE_CD = #value#
+	</statement>
+
+	<statement id="getT13_nodeList" parameterClass="java.lang.String"
+		resultClass="com.ist.mfa.dto.T13_node">
+		SELECT NODE_ID, PROJ_ID, IS_MAIN, X_COORD, Y_COORD,
+		IS_MERGR, DISP_SEQ, LAST_DT, STAT_FLAG
+		FROM T13_NODE
+		WHERE PROJ_ID =
+		#value#
+	</statement>
+
+	<statement id="getT13_nd_acctList" parameterClass="java.lang.String"
+		resultClass="com.ist.mfa.dto.T13_nd_acct">
+		SELECT *
+		FROM T13_ND_ACCT
+		WHERE PROJ_ID = #value#
+	</statement>
+
+	<statement id="getT13_mergr_infoList" parameterClass="java.lang.String"
+		resultClass="com.ist.mfa.dto.T13_mergr_info">
+		SELECT *
+		FROM T13_MERGR_INFO
+		WHERE PROJ_ID = #value#
+	</statement>
+
+	<statement id="getT13_edgeList" parameterClass="java.lang.String"
+		resultClass="com.ist.mfa.dto.T13_edge">
+		SELECT *
+		FROM T13_EDGE
+		WHERE PROJ_ID = #value#
+	</statement>
+
+	<statement id="getT13_nd_transList" parameterClass="java.lang.String"
+		resultClass="java.util.HashMap">
+		SELECT * FROM T13_ND_TRANS WHERE PROJ_ID = #value#
+	</statement>
+
+	<statement id="getT13_proj_transList" parameterClass="java.lang.String"
+		resultClass="java.util.HashMap">
+		SELECT A.EDGE_ID, A.PROJ_ID, B.* FROM T13_TRANS_RELA A, T13_PROJ_TRANS
+		B
+		WHERE A.PROJ_ID=#value# AND A.TX_ID=B.TX_ID 
+	</statement>
+
+	<statement id="getT13_trans_relaList" parameterClass="java.lang.String"
+		resultClass="com.ist.mfa.dto.T13_trans_rela">
+		SELECT *
+		FROM T13_TRANS_RELA
+		WHERE PROJ_ID = #value#
+	</statement>
+
+	<statement id="insertT13_mergr_info" parameterClass="com.ist.mfa.dto.T13_mergr_info"
+		resultClass="int">
+		insert into T13_mergr_info(
+		old_entity_id,proj_id,new_entity_id,anal_type,disp_seq,creator,createdate,modifier,modifydate
+		) values(
+		#old_entity_id#,#proj_id#,#new_entity_id#,#anal_type#,#disp_seq#,#creator#,#createdate#,#modifier#,#modifydate#
+		) 
+  	</statement>
+
+	<statement id="deleteProjectT13_mergr_info" parameterClass="java.lang.String"
+		resultClass="int">
+		delete from T13_MERGR_INFO where PROJ_ID=#value#
+	</statement>
+
+	<statement id="modifyT13_proj_oper_disp" parameterClass="com.ist.mfa.dto.T13_proj_oper_disp"
+		resultClass="int">
+		update T13_proj_oper_disp set is_disp=#is_disp#,
+		disp_seq=#disp_seq#
+		where proj_id=#proj_id# and oper_cd=#oper_cd# and
+		col_disp_cd=#col_disp_cd# 
+  	</statement>
+
+	<statement id="modifyT13_proj_parm" parameterClass="com.ist.mfa.dto.T13_proj_parm"
+		resultClass="int">
+		update T13_proj_parm set
+		parm_name=#parm_name#,parm_des=#parm_des#,parm_val=#parm_val#,disp_seq=#disp_seq#
+		where proj_id=#proj_id# and parm_cd=#parm_cd#
+  	</statement>
+
+	<statement id="insertT13_node" parameterClass="com.ist.mfa.dto.T13_node"
+		resultClass="int">
+		insert into T13_node(
+		node_id,proj_id,is_main,x_coord,y_coord,is_mergr,disp_seq,last_dt,stat_flag
+		) values(
+		#node_id#,#proj_id#,#is_main#,#x_coord#,#y_coord#,#is_mergr#,#disp_seq#,#last_dt#,#stat_flag#
+		) 
+  	</statement>
+
+	<statement id="modifyT13_node" parameterClass="com.ist.mfa.dto.T13_node"
+		resultClass="int">
+		update T13_node set is_main=#is_main#,x_coord=#x_coord#,
+		y_coord=#y_coord#,is_mergr=#is_mergr#,disp_seq=#disp_seq#,last_dt=#last_dt#,stat_flag=#stat_flag#
+		where node_id=#node_id# 
+  	</statement>
+
+	<statement id="deleteT13_node" parameterClass="java.lang.String"
+		resultClass="int">
+		delete from T13_node where node_id=#value# 
+  	</statement>
+
+	<statement id="insertT13_nd_acct" parameterClass="com.ist.mfa.dto.T13_nd_acct"
+		resultClass="int">
+		insert into T13_nd_acct(
+		node_id,proj_id,acct_no,acct_name,acct_type,acct_cd,last_dt,descn,stat_flag
+		) values(
+		#node_id#,#proj_id#,#acct_no#,#acct_name#,#acct_type#,#acct_cd#,#last_dt#,#descn#,#stat_flag#
+		) 
+  	</statement>
+
+	<statement id="modifyT13_nd_acct" parameterClass="com.ist.mfa.dto.T13_nd_acct"
+		resultClass="int">
+		update T13_nd_acct set
+		acct_no=#acct_no#,acct_name=#acct_name#,acct_type=#acct_type#,acct_cd=#acct_cd#,
+		last_dt=#last_dt#,descn=#descn#,stat_flag=#stat_flag#
+		where
+		node_id=#node_id# 
+  	</statement>
+
+	<statement id="deleteT13_nd_acct" parameterClass="java.lang.String"
+		resultClass="int">
+		delete from T13_nd_acct where node_id=#value# 
+  	</statement>
+
+	<statement id="insertT13_edge" parameterClass="com.ist.mfa.dto.T13_edge"
+		resultClass="int">
+		insert into
+		T13_edge(edge_id,proj_id,edge_type,edge_style,edge_color,begin_nd_id,end_nd_id,original_begin_id,
+		original_end_id,last_dt,stat_flag
+		) values(
+		#edge_id#,#proj_id#,#edge_type#,#edge_style#,#edge_color#,#begin_nd_id#,#end_nd_id#,#original_begin_id#,
+		#original_end_id#,#last_dt#,#stat_flag#
+		) 
+  	</statement>
+
+	<statement id="modifyT13_edge" parameterClass="com.ist.mfa.dto.T13_edge"
+		resultClass="int">
+		update T13_edge set
+		edge_type=#edge_type#,edge_style=#edge_style#,edge_color=#edge_color#,begin_nd_id=#begin_nd_id#,
+		end_nd_id=#end_nd_id#,original_begin_id=#original_begin_id#,original_end_id=#original_end_id#,last_dt=#last_dt#,stat_flag=#stat_flag#
+		where edge_id=#edge_id#
+  	</statement>
+
+	<statement id="deleteT13_edge" parameterClass="java.lang.String"
+		resultClass="int">
+		delete from T13_EDGE where edge_id=#value# 
+  	</statement>
+
+	<statement id="deleteT13_nd_trans" parameterClass="java.lang.String"
+		resultClass="int">
+		delete from T13_ND_TRANS where edge_id=#value# 
+  	</statement>
+
+	<statement id="insertT13_trans_rela" parameterClass="com.ist.mfa.dto.T13_trans_rela"
+		resultClass="int">
+		insert into T13_trans_rela(
+		edge_id,tx_id,proj_id
+		) values(
+		#edge_id#,#tx_id#,#proj_id#
+		) 
+  	</statement>
+
+	<statement id="existT13_trans_rela" parameterClass="com.ist.mfa.dto.T13_trans_rela"
+		resultClass="int">
+		select count(*) from T13_TRANS_RELA
+		where PROJ_ID=#proj_id# and EDGE_ID=#edge_id# and TX_ID=#tx_id#
+	</statement>
+
+	<statement id="deleteT13_trans_rela" parameterClass="com.ist.mfa.dto.T13_trans_rela"
+		resultClass="int">
+		delete from T13_TRANS_RELA where PROJ_ID=#proj_id# and
+		TX_ID=#tx_id#
+	</statement>
+
+	<statement id="existT13_proj_trans" parameterClass="java.lang.String"
+		resultClass="int">
+		select count(*) from T13_PROJ_TRANS where TX_ID=#tx_id#
+	</statement>
+	
+	<statement id="getT13_var_cdList" parameterClass="java.lang.String" resultClass="com.ist.mfa.dto.T13_var_cd">
+		select cate_cd, exec_sql, conn_cd from T13_var_cd
+	</statement>
+	
+	<statement id="getDynamicCodes" parameterClass="java.lang.String" resultClass="com.ist.mfa.dto.T13_stat_cd">
+		$value$
+	</statement>
+
+ 	<statement id="getTransactionList_mfa" parameterClass="java.lang.String" resultClass="com.ist.aml.report.dto.T47_transaction">
+     select t.*
+	  from t47_transaction t, t13_proj_trans_rel p
+	 where t.transactionkey = p.transactionkey
+	   and p.is_add = '1'
+	   and p.proj_id = #proj_id#
+    </statement>
+</sqlMap>
+

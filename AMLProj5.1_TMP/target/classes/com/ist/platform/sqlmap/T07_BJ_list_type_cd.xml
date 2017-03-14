@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T07_BJ_list_type_cd"> 
+  <statement id="getT07_BJ_list_type_cdList" parameterClass="com.ist.platform.dto.T07_BJ_list_type_cd" resultClass="com.ist.platform.dto.T07_BJ_list_type_cd"> 
+  SELECT TT.LIST_TYPE_CD, TT.LIST_TYPE_DES, TT.IS_BUILDIN, TT.LAST_UPD_USER, TT.LAST_UPD_DT
+   FROM (SELECT * FROM T07_BJ_LIST_TYPE_CD T  ORDER BY T.IS_BUILDIN DESC) TT 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="list_class"> 
+    LIST_CLASS = #list_class# 
+    </isNotEmpty>    
+  </dynamic> 
+  ORDER BY TT.LIST_TYPE_CD 
+  </statement> 
+  
+  <statement id="getT07_BJ_list_type_cdListCount" parameterClass="com.ist.platform.dto.T07_BJ_list_type_cd" resultClass="int"> 
+  SELECT COUNT(*) FROM T07_BJ_list_type_cd
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="list_class"> 
+    LIST_CLASS = #list_class# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT07_BJ_list_type_cd" parameterClass="com.ist.platform.dto.T07_BJ_list_type_cd" resultClass="int"> 
+  INSERT INTO T07_BJ_LIST_TYPE_CD(
+  LIST_TYPE_CD,LIST_TYPE_DES, IS_BUILDIN, LAST_UPD_USER,LAST_UPD_DT,LIST_CLASS
+  ) values(
+  #list_type_cd#,#list_type_des#,#is_buildin#,#last_upd_user#,#last_upd_dt#,#list_class#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT07_BJ_list_type_cd" parameterClass="com.ist.platform.dto.T07_BJ_list_type_cd" resultClass="int"> 
+  UPDATE T07_BJ_LIST_TYPE_CD SET 
+  LIST_TYPE_CD=#list_type_cd#,LIST_TYPE_DES=#list_type_des#,IS_BUILDIN=#is_buildin#,LAST_UPD_USER=#last_upd_user#,LAST_UPD_DT=#last_upd_dt#,LIST_CLASS=#list_class#
+  WHERE LIST_TYPE_CD=#list_type_cd# 
+  </statement> 
+ 
+  <statement id="deleteT07_BJ_list_type_cd" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T07_BJ_LIST_TYPE_CD WHERE LIST_TYPE_CD=#value# 
+  </statement> 
+ 
+  <statement id="getT07_BJ_list_type_cdDisp" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T07_BJ_list_type_cd"> 
+  SELECT * FROM T07_BJ_LIST_TYPE_CD WHERE LIST_TYPE_CD=#value# 
+  </statement> 
+  
+ <!-- start 操作日志 sql --> 
+   <statement id="getT00_operate_logBobList" parameterClass="com.ist.platform.dto.T07_BJ_list_type_cd" resultClass="com.ist.platform.dto.T07_BJ_list_type_cd"> 
+   SELECT CREATEDATE, USERNAME, MODULE_KEY_SUB1	, OPERATE_TYPE, IS_SUCC,operate_obj1,operate_desc
+   FROM T00_OPERATE_LOG  
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="username"> 
+    USERNAME like #username# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="operate_type"> 
+    OPERATE_TYPE = #operate_type# 
+    </isNotEmpty>     
+    <isNotEmpty prepend="AND" property="dt_end"> 
+    <![CDATA[CREATEDATE <= #dt_end:DATE#]]>  
+    </isNotEmpty>       
+  </dynamic>    
+  </statement> 
+  
+  <statement id="getT00_operate_logBobListCount" parameterClass="com.ist.platform.dto.T07_BJ_list_type_cd" resultClass="int"> 
+   SELECT COUNT(*)
+   FROM T00_OPERATE_LOG  
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="username"> 
+    USERNAME like #username# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="operate_type"> 
+    OPERATE_TYPE = #operate_type# 
+    </isNotEmpty>     
+    <isNotEmpty prepend="AND" property="dt_end"> 
+    <![CDATA[CREATEDATE <= #dt_end:DATE#]]>  
+    </isNotEmpty>       
+  </dynamic>   
+  </statement> 
+  
+  <statement id="deleteT00_operate_logBob" parameterClass="com.ist.platform.dto.T07_BJ_list_type_cd" resultClass="int">
+   DELETE FROM T00_OPERATE_LOG 
+  <dynamic prepend="WHERE">    
+    <isNotEmpty prepend="AND" property="dt_end"> 
+    <![CDATA[CREATEDATE <= #dt_end:DATE#]]>  
+    </isNotEmpty>       
+  </dynamic>         
+  </statement> 
+  <!-- end  操作日志 sql --> 
+</sqlMap> 
+

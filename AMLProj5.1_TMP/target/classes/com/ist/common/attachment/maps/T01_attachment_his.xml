@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T01_attachment_his"> 
+  <statement id="getT01_attachment_hisList" parameterClass="com.ist.common.attachment.dto.T01_attachment_his" resultClass="com.ist.common.attachment.dto.T01_attachment_his"> 
+  select attachkey,filesize,operatedate,operatingps,sfilename,tfilename,tpath,versionum from t01_attachment_his 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="attachkey"> 
+    attachkey = #attachkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  ORDER BY VERSIONUM
+  </statement> 
+ 
+  <statement id="getT01_attachment_hisListCount" parameterClass="com.ist.common.attachment.dto.T01_attachment_his" resultClass="int"> 
+  select count(*) from t01_attachment_his 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="attachkey"> 
+    attachkey = #attachkey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT01_attachment_his" parameterClass="com.ist.common.attachment.dto.T01_attachment_his" resultClass="int"> 
+  insert into T01_attachment_his(
+  attachkey,filesize,operatedate,operatingps,sfilename,tfilename,tpath,versionum
+  ) values(
+  #attachkey#,#filesize#,#operatedate#,#operatingps#,#sfilename#,#tfilename#,#tpath#,#versionum#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT01_attachment_his" parameterClass="com.ist.common.attachment.dto.T01_attachment_his" resultClass="int"> 
+  update T01_attachment_his set 
+  attachkey=#attachkey#,filesize=#filesize#,operatedate=#operatedate#,operatingps=#operatingps#,sfilename=#sfilename#,tfilename=#tfilename#,tpath=#tpath#,versionum=#versionum#
+  where attachkey=#attachkey# 
+  </statement> 
+ 
+  <statement id="deleteT01_attachment_his" parameterClass="java.lang.String" resultClass="int">
+  delete from T01_attachment_his where attachkey=#value# 
+  </statement> 
+ 
+  <statement id="getT01_attachment_hisDisp" parameterClass="java.lang.String" resultClass="com.ist.common.attachment.dto.T01_attachment_his"> 
+  select * from T01_attachment_his where attachkey=#value# 
+  </statement> 
+   <statement id="getT01_attachment_hisMaxVnum" parameterClass="java.lang.String" resultClass="int"> 
+  select max(versionum) from T01_attachment_his where attachkey=#value# 
+  </statement>
+  <statement id="getT01_attachment_hisDispByObj" parameterClass="com.ist.common.attachment.dto.T01_attachment_his" resultClass="com.ist.common.attachment.dto.T01_attachment_his"> 
+  	select * from T01_attachment_his where attachkey=#attachkey#  and versionum = #versionum#
+  </statement> 
+  
+   <statement id="getT01_attachment_hisListByattachkey" parameterClass="java.lang.String" resultClass="com.ist.common.attachment.dto.T01_attachment_his"> 
+  select attachkey,filesize,operatedate,operatingps,sfilename,tfilename,tpath,versionum from t01_attachment_his
+  where attachkey=#value#   
+  ORDER BY VERSIONUM
+  </statement> 
+</sqlMap> 
+

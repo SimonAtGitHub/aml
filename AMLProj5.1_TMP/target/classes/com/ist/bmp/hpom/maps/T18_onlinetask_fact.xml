@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T18_task_fact">
+	
+
+	<statement id="insertT18_onlinetask_fact1" parameterClass="com.ist.bmp.hpom.dto.T18_onlinetask_fact"
+		resultClass="int">
+		insert into T18_ONLINE_TASK_FACT(
+		taskkey,tasktype,businesskey,statisticdate,calstatus,creatuser,creatdate,objkey,objdes
+		) values(
+		#taskkey#,#tasktype#,#businesskey#,#statisticdate#,#calstatus#,#creatuser#,#creatdate#,#objkey#,#objdes#
+		) 
+  </statement>
+<statement  id="insertT18_onlinetask_factpara1" parameterClass="com.ist.bmp.hpom.dto.T18_onlinetask_fact"
+		resultClass="int">
+		insert into T18_ONLINE_TASK_PARA(
+		taskkey,para_code,subnum,para_val
+		) values(
+		#taskkey#,#para_code#,#subnum#,#para_val#
+		) 
+  </statement>
+
+<statement id="getT18_onlinetask_factkey1" parameterClass="com.ist.bmp.hpom.dto.T18_onlinetask_fact"
+		resultClass="com.ist.bmp.hpom.dto.T18_onlinetask_fact">
+		select * from t18_online_task_fact where businesskey=#businesskey# and tasktype=#tasktype# and  calstatus in ('2','3')
+  </statement>
+	
+  
+</sqlMap> 
+

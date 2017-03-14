@@ -1,0 +1,938 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+<struts-config>
+	<data-sources />
+	<form-beans>
+		<form-bean name="t21_defparaActionForm"
+			type="com.ist.aml.rule.controller.T21_defparaActionForm" />
+		<form-bean name="t27_alertActionForm"
+			type="com.ist.aml.rule.controller.T27_alertActionForm" />
+		<form-bean name="t21_indicActionForm"
+			type="com.ist.aml.rule.controller.T21_indicActionForm" />
+		<form-bean name="t21_pbcruleActionForm"
+			type="com.ist.aml.rule.controller.T21_pbcruleActionForm" />
+		<form-bean name="t21_ruleActionForm"
+			type="com.ist.aml.rule.controller.T21_ruleActionForm" />	
+		<form-bean name="t03_page_in_parmActionForm" 
+		type="com.ist.aml.rule.controller.T03_page_in_parmActionForm"/>	
+		<form-bean name="t03_tp_exec_qryActionForm" 
+		type="com.ist.aml.rule.controller.T03_tp_exec_qryActionForm"/>
+		<form-bean name="t03_entity_kindActionForm" type="com.ist.aml.rule.controller.T03_entity_kindActionForm"/>
+		<form-bean name="t03_entity_kind_manActionForm" type="com.ist.aml.rule.controller.T03_entity_kind_manActionForm"/>
+		<form-bean name="t03_param_orgActionForm" type="com.ist.aml.rule.controller.T03_param_orgActionForm"/>
+		<form-bean name="t01_fun_paramActionForm" type="com.ist.aml.rule.controller.T01_fun_paramActionForm"/>
+	</form-beans>
+	
+	<global-exceptions />
+	<global-forwards />
+
+	<action-mappings>
+
+		<!-- add for t21_defpara start -->
+		<!-- list -->
+		<action path="/t21_defpara/t21_defpara_list" parameter="getT21_defparaList"
+			name="t21_defparaActionForm" type="com.ist.aml.rule.controller.T21_defparaAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_defpara/t21_defpara_list.jsp" />
+		</action>
+		<action path="/t21_defpara/defpara_search" parameter="searchT21_defparaList"
+			name="t21_defparaActionForm" type="com.ist.aml.rule.controller.T21_defparaAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_defpara/defpara_list.jsp" />
+		</action>
+		<!-- modify -->
+		<action path="/t21_defpara/t21_defpara_modify" parameter="modifyT21_defpara"
+			name="t21_defparaActionForm" type="com.ist.aml.rule.controller.T21_defparaAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_defpara/t21_defpara_modify.jsp" />
+		</action>
+		<action path="/t21_defpara/t21_defpara_modify_do" parameter="modifyT21_defparaDo"
+			name="t21_defparaActionForm" type="com.ist.aml.rule.controller.T21_defparaAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_defpara/t21_defpara_list.do" />
+		</action>
+
+		<!-- add -->
+
+		<action path="/t21_defpara/t21_defpara_add" parameter="addT21_defpara"
+			name="t21_defparaActionForm" type="com.ist.aml.rule.controller.T21_defparaAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_defpara/t21_defpara_add.jsp" />
+			<forward name="failure" path="/t21_defpara/t21_defpara_list.do" />
+		</action>
+		<action path="/t21_defpara/t21_defpara_add_do" parameter="addT21_defparaDo"
+			name="t21_defparaActionForm" type="com.ist.aml.rule.controller.T21_defparaAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_defpara/t21_defpara_list.do" />
+			<forward name="failure" path="/t21_defpara/t21_defpara_add.do" />
+		</action>
+		<!-- delete -->
+		<action path="/t21_defpara/t21_defpara_delete_do" parameter="deleteT21_defparaDo"
+			name="t21_defparaActionForm" type="com.ist.aml.rule.controller.T21_defparaAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_defpara/t21_defpara_list.do" />
+			<forward name="failure" path="/t21_defpara/t21_defpara_list.do" />
+		</action>
+		<!-- add for t21_defpara end -->
+
+
+
+		<!-- add for t21_indic start -->
+		<!-- list -->
+		<action path="/t21_indic/t21_indic_list" parameter="getT21_indicList"
+			name="t21_indicActionForm" type="com.ist.aml.rule.controller.T21_indicAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_indic/t21_indic_list.jsp" />
+		</action>
+		<action path="/t21_indic/indic_search" parameter="searchT21_indicList"
+			name="t21_indicActionForm" type="com.ist.aml.rule.controller.T21_indicAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_indic/indic_list.jsp" />
+			<forward name="success1" path="/t21_indic/indic_list1.jsp" />
+		</action>
+		<action path="/t21_indic/indic_search_result" parameter="searchT21_indicList_result"
+			name="t21_indicActionForm" type="com.ist.aml.rule.controller.T21_indicAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/add_t21_rule_indic.do" />
+		</action>
+		<action path="/t21_indic/indic_add" parameter="addT21_indic"
+			name="t21_indicActionForm" type="com.ist.aml.rule.controller.T21_indicAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_indic/indic_add.jsp" />
+		</action>
+		<action path="/t21_indic/indic_add_do" parameter="addT21_indicDo"
+			name="t21_indicActionForm" type="com.ist.aml.rule.controller.T21_indicAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_indic/indic_add1.jsp" />
+		</action>
+		
+
+		<action path="/t21_indic/t21_indic_disp" parameter="getT21_indicDisp"
+			name="t21_indicActionForm" type="com.ist.aml.rule.controller.T21_indicAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_indic/t21_indic_disp.jsp" />
+		</action>
+		<action path="/t21_indic/t21_indic_modify" parameter="modifyT21_indic"
+			name="t21_indicActionForm" type="com.ist.aml.rule.controller.T21_indicAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_indic/t21_indic_modify.jsp" />
+		</action>
+
+		<action path="/t21_indic/t21_indic_add" parameter="addT21_indic"
+			name="t21_indicActionForm" type="com.ist.aml.rule.controller.T21_indicAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_indic/t21_indic_add.jsp" />
+			<forward name="failure" path="/t21_indic/t21_indic_list.do" />
+		</action>
+		<action path="/t21_indic/t21_indic_add_do" parameter="addT21_indicDo"
+			name="t21_indicActionForm" type="com.ist.aml.rule.controller.T21_indicAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_indic/t21_indic_list.do" />
+			<forward name="failure" path="/t21_indic/t21_indic_add.do" />
+		</action>
+		<action path="/t21_indic/t21_indic_modify_do" parameter="modifyT21_indicDo"
+			name="t21_indicActionForm" type="com.ist.aml.rule.controller.T21_indicAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_indic/t21_indic_list.do" />
+			<forward name="failure" path="/t21_indic/t21_indic_modify.do" />
+		</action>
+		<action path="/t21_indic/t21_indic_delete_do" parameter="deleteT21_indicDo"
+			name="t21_indicActionForm" type="com.ist.aml.rule.controller.T21_indicAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_indic/t21_indic_list.do" />
+			<forward name="failure" path="/t21_indic/t21_indic_list.do" />
+		</action>
+		<action path="/t21_indic/t21_indic_trans_sqlAdd" parameter="getTrans_sql"
+			name="t21_indicActionForm" type="com.ist.aml.rule.controller.T21_indicAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_indic/t21_indic_add.do" />
+		</action>
+		<action path="/t21_indic/t21_indic_trans_sqlMod" parameter="getTrans_sql"
+			name="t21_indicActionForm" type="com.ist.aml.rule.controller.T21_indicAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_indic/t21_indic_modify.do" />
+		</action>
+		
+		<action path="/t21_indic/t21_indic_list_release" parameter="getT21_indicList"
+			name="t21_indicActionForm" type="com.ist.aml.rule.controller.T21_indicAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_indic/t21_indic_list_release.jsp" />
+		</action>
+		<action path="/t21_indic/t21_indic_release_do" parameter="releaseT21_indicDo"
+			name="t21_indicActionForm" type="com.ist.aml.rule.controller.T21_indicAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_indic/t21_indic_list_release.do" />
+		</action>
+		<action path="/t21_indic/t21_indic_release_undo" parameter="releaseT21_indicUndo"
+			name="t21_indicActionForm" type="com.ist.aml.rule.controller.T21_indicAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_indic/t21_indic_list_release.do" />
+		</action>
+		<!-- add for t21_indic end -->
+		<!-- add for T21_pbcrule start-->
+		<!-- list -->
+		<action path="/t21_pbcrule/t21_pbcrule_list" parameter="getT21_pbcruleList"
+			name="t21_pbcruleActionForm" type="com.ist.aml.rule.controller.T21_pbcruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_pbcrule/t21_pbcrule_list.jsp" />
+		</action>
+
+		<action path="/t21_pbcrule/t21_pbcrule_modify" parameter="modifyT21_pbcrule"
+			name="t21_pbcruleActionForm" type="com.ist.aml.rule.controller.T21_pbcruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_pbcrule/t21_pbcrule_modify.jsp" />
+		</action>
+
+		<action path="/t21_pbcrule/t21_pbcrule_add" parameter="addT21_pbcrule"
+			name="t21_pbcruleActionForm" type="com.ist.aml.rule.controller.T21_pbcruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_pbcrule/t21_pbcrule_add.jsp" />
+			<forward name="failure" path="/t21_pbcrule/t21_pbcrule_list.do" />
+		</action>
+		<action path="/t21_pbcrule/t21_pbcrule_add_do" parameter="addT21_pbcruleDo"
+			name="t21_pbcruleActionForm" type="com.ist.aml.rule.controller.T21_pbcruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_pbcrule/t21_pbcrule_list.do" />
+			<forward name="failure" path="/t21_pbcrule/t21_pbcrule_add.do" />
+		</action>
+		<action path="/t21_pbcrule/t21_pbcrule_modify_do" parameter="modifyT21_pbcruleDo"
+			name="t21_pbcruleActionForm" type="com.ist.aml.rule.controller.T21_pbcruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_pbcrule/t21_pbcrule_list.do" />
+			<forward name="failure" path="/t21_pbcrule/t21_pbcrule_modify.do" />
+		</action>
+		<action path="/t21_pbcrule/t21_pbcrule_delete_do" parameter="deleteT21_pbcruleDo"
+			name="t21_pbcruleActionForm" type="com.ist.aml.rule.controller.T21_pbcruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_pbcrule/t21_pbcrule_list.do" />
+			<forward name="failure" path="/t21_pbcrule/t21_pbcrule_list.do" />
+		</action>
+		<!-- end -->
+
+
+		
+		
+		
+		<!-- t21_rule -->
+		<action path="/t21_rule/t21_rule_list" parameter="getT21_ruleList"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rule_list.jsp" />
+		</action>
+		<action path="/t21_rule/t21_rule_verify_list" parameter="getT21_ruleList"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rule_verify_list.jsp" />
+		</action>
+		<action path="/t21_rule/t21_rule_product_list" parameter="getT21_ruleList"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rule_product_list.jsp" />
+		</action>
+		<action path="/t21_rule/t21_rule_delete" parameter="deleteT21_ruleDo"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rule_list.do" />
+		</action>
+		
+		<action path="/t21_rule/t21_rule_indic_delete" parameter="deleteT21_rule_indic"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rule_list.do" />
+		</action>
+		<action path="/t21_rule/t21_rulepara_list" parameter="getT21_ruleparaList"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rulepara_list.jsp" />
+		</action>
+		<action path="/t21_rule/t21_rulepara_add" parameter="addT21_rulepara"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rulepara_add.jsp" />
+		</action>
+		<action path="/t21_rule/t21_rulepara_add_do" parameter="addT21_ruleparaDo"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rulepara_add1.jsp" />
+		</action>
+		<action path="/t21_rule/t21_rulepara_modify" parameter="modifyT21_rulepara"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rulepara_modify.jsp" />
+		</action>
+		<action path="/t21_rule/t21_rulepara_modify_do" parameter="modifyT21_ruleparaDo"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rulepara_modify1.jsp" />
+		</action>
+		<action path="/t21_rule/t21_rulepara_delete" parameter="deleteT21_ruleparaDo"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rulepara_list.do" />
+		</action>
+		<!-- 1.add -->
+		<action path="/t21_rule/t21_rule_add" parameter="moddify_rule_disp"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rule_main_add.jsp" />
+			<forward name="failure" path="/t21_rule/t21_rule_list.do" />
+		</action>
+		<action path="/t21_rule/add_t21_rule_disp" parameter="add_rule_disp"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rule_disp_add.jsp" />
+			<forward name="failure" path="/t21_rule/t21_rule_add.do" />
+		</action>
+		<action path="/t21_rule/add_rule_disp_do" parameter="add_rule_disp_do"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rule_main_add.jsp" />
+			<forward name="failure" path="/t21_rule/add_t21_rule_disp.do" />
+		</action>
+		<action path="/t21_rule/add_t21_rule_indic" parameter="add_rule_indic"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rule_indic_add.jsp" />
+		</action>
+		<action path="/t21_rule/add_t21_rule_indic_do" parameter="add_rule_indic_do"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rule_indic_add.jsp" />
+		</action>
+		
+		
+		
+		<!-- 2.modify -->
+		
+		<action path="/t21_rule/t21_rule_main_modify" parameter="modify_rule_main"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rule_main_modify.jsp" />
+		</action>
+		<action path="/t21_rule/modify_rule_disp" parameter="modify_rule_disp"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rule_disp_modify.jsp" />
+		</action>
+		<action path="/t21_rule/modify_rule_disp_do" parameter="modify_rule_disp_do"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/modify_rule_disp.do" />
+		</action>
+		<action path="/t21_rule/modify_rule_indic" parameter="modify_rule_indic"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rule_indic_modify.jsp" />
+		</action>
+		<action path="/t21_rule/rule_indic_disp" parameter="rule_indic_disp"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rule_indic_disp.jsp" />
+		</action>
+		<action path="/t21_rule/modify_rule_indic_do" parameter="modify_rule_indic_do"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/modify_rule_indic.do" />
+		</action>
+		
+		<action path="/t21_rule/modify_rule_sql" parameter="modify_rule_sql"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rule_sql_modify.jsp" />
+		</action>
+		<action path="/t21_rule/modify_rule_sql_do" parameter="modify_rule_sql_do"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/modify_rule_sql.do" />
+		</action>
+		
+		
+		
+		
+		<!-- 3.release -->
+		<action path="/t21_rule/t21_rule_release_list" parameter="getT21_ruleList"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rule_release_list.jsp" />
+		</action>
+		<action path="/t21_rule/t21_rule_release" parameter="release_ruleDo"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rule_list.do" />
+		</action>
+		<action path="/t21_rule/modify_t21_rule_flag" parameter="modify_rule_flagDo"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T21_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t21_rule_release_list.do" />
+		</action>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<!-- T27_alert -->
+		<action path="/t27_alert/t27_alert_list" parameter="getT27_alertList"
+			name="t27_alertActionForm" type="com.ist.aml.rule.controller.T27_alertAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t27_alert/t27_alert_list.jsp" />
+		</action>
+		<action path="/t27_alert/t27_alert_all_list" parameter="getT27_alert_all_List"
+			name="t27_alertActionForm" type="com.ist.aml.rule.controller.T27_alertAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t27_alert/t27_alert_search_all_list.jsp" />
+		</action>
+		<!-- T27_alert 跟规则相关-->
+		<action path="/t27_alert/t27_alert_listByRulekey" parameter="getT27_alertListByRulekey"
+			name="t27_alertActionForm" type="com.ist.aml.rule.controller.T27_alertAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t27_alert/t27_alert_listByRulekey.jsp" />
+		</action>
+		<action path="/t27_alert/t27_alert_dispByRulekey" parameter="getT27_alert_dispByRulekey"
+			name="t27_alertActionForm" type="com.ist.aml.rule.controller.T27_alertAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t27_alert/tpla_chk_t27_alert_disp.jsp" />
+		</action>
+		<!-- T27_alert 跟踪客户相关  t27_alert_listByGenzNo-->
+		<action path="/t27_alert/t27_alert_listByGenzNo" parameter="getT27_alertListByGenzNo"
+			name="t27_alertActionForm" type="com.ist.aml.rule.controller.T27_alertAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t27_alert/t27_alert_list_genz_no.jsp" />
+		</action>
+		<action path="/t27_alert/t27_alert_dispByGenzNo" parameter="getT27_alertDispByGenzNo"
+			name="t27_alertActionForm" type="com.ist.aml.rule.controller.T27_alertAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t27_alert/tpla_chk_t27_alert_disp.jsp" />
+		</action>
+
+		<action path="/t27_alert/t27_alert_search" parameter="getT27_alertList"
+			name="t27_alertActionForm" type="com.ist.aml.rule.controller.T27_alertAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t27_alert/t27_alert_search.jsp" />
+		</action>
+
+		<action path="/t27_alert/t27_alert_disp" parameter="getT27_alert_disp"
+			name="t27_alertActionForm" type="com.ist.aml.rule.controller.T27_alertAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t27_alert/t27_alert_disp.jsp" />
+		</action>
+
+		<!-- delete -->
+		<action path="/t27_alert/alert_deleteAll" parameter="deleteT27_alertAll"
+			name="t27_alertActionForm" type="com.ist.aml.rule.controller.T27_alertAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t27_alert/t27_alert_list.do" />
+		</action>
+		<action path="/t27_alert/alert_delete" parameter="deleteT27_alert"
+			name="t27_alertActionForm" type="com.ist.aml.rule.controller.T27_alertAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t27_alert/t27_alert_delete.jsp" />
+		</action>
+		<action path="/t27_alert/party_status_modify" parameter="party_status_modify"
+			name="t27_alertActionForm" type="com.ist.aml.rule.controller.T27_alertAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t27_alert/alert_delete.do" />
+			<forward name="success1" path="/t27_alert/t27_alert_mod.do" />
+		</action>
+		<action path="/t27_alert/acct_status_modify" parameter="acct_status_modify"
+			name="t27_alertActionForm" type="com.ist.aml.rule.controller.T27_alertAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t27_alert/alert_delete.do" />
+			<forward name="success1" path="/t27_alert/t27_alert_mod.do" />
+		</action>
+		<action path="/t27_alert/trans_status_modify" parameter="trans_status_modify"
+			name="t27_alertActionForm" type="com.ist.aml.rule.controller.T27_alertAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t27_alert/alert_delete.do" />
+			<forward name="success1" path="/t27_alert/t27_alert_mod.do" />
+		</action>
+		<action path="/t27_alert/t27_alert_submit_do" parameter="submitT27_alertDo"
+			name="t27_alertActionForm" type="com.ist.aml.rule.controller.T27_alertAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t27_alert/t27_alert_list.do" />
+		</action>
+
+		<!--case_add -->
+		<action path="/t27_alert/t27_alert_mod" parameter="getT27_alert_mod"
+			name="t27_alertActionForm" type="com.ist.aml.rule.controller.T27_alertAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t27_alert/t27_alert_mod.jsp" />
+		</action>
+		
+		<!-- <action path="/t27_alert/case_application_add_do" parameter="case_application_addDo"
+			name="t27_alertActionForm" type="com.ist.aml.rule.controller.T27_alertAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t27_alert/t27_alert_list.do" />
+		</action> -->
+
+
+    <action path="/t21_rule/sql_rule_index" parameter="sql_rule_index"
+			name="t21_ruleActionForm" type="com.ist.aml.rule.controller.T03_ruleAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t03_rule_index.jsp" />
+	</action>
+	<!-- 规则copy -->
+	<action path="/t21_rule/t03_rule_copy_do" parameter="copyT03_rule"
+			name="t21_ruleActionForm"
+			type="com.ist.aml.rule.controller.T03_ruleAction" validate="false"
+			scope="request">
+			<forward name="success" path="/t21_rule/t21_rule_list.do" />
+	</action>
+	<!-- 提交验证界面 -->
+	<action path="/t21_rule/t03_rule_task"
+			parameter="getT03_rule_task" name="t21_ruleActionForm"
+			type="com.ist.aml.rule.controller.T03_ruleAction" validate="false"
+			scope="request">
+			<forward name="success" path="/t21_rule/t03_rules_task.jsp" />
+			<forward name="success1"	path="/t21_rule/t21_rule_list.do" />
+			<forward name="failure"	path="/t21_rule/t21_rule_list.do" />			
+	</action>	
+	<!-- 提交验证动作 -->
+	<action path="/t21_rule/t03_rule_apply_do"
+			parameter="applyT03_ruleDo" name="t21_ruleActionForm"
+			type="com.ist.aml.rule.controller.T03_ruleAction" validate="false"
+			scope="request">
+			<forward name="success" path="/t21_rule/t21_rule_list.do" />
+	</action>
+    <!-- 撤销验证 -->
+	<action path="/t21_rule/revokeRulesDo" parameter="revokeRulesDo" name="t21_ruleActionForm"
+		type="com.ist.aml.rule.controller.T03_ruleAction" validate="false" scope="request">
+		<forward name="success" path="/t21_rule/t21_rule_verify_list.do" />
+		<forward name="failure" path="/t21_rule/t21_rule_verify_list.do" />
+	</action>
+	<!-- 投产申请 -->
+	<action path="/t21_rule/applyProT03_rule" parameter="applyProT03_rule" name="t21_ruleActionForm"
+		type="com.ist.aml.rule.controller.T03_ruleAction" validate="false" scope="request">
+		<forward name="success" path="/t21_rule/t21_rule_verify_list.do" />
+		<forward name="failure" path="/t21_rule/t21_rule_verify_list.do" />
+	</action>
+	<!-- 规则投产 -->
+	<action path="/t21_rule/t03_rules_product" parameter="productT03_rule" name="t21_ruleActionForm"
+		type="com.ist.aml.rule.controller.T03_ruleAction" validate="false" scope="request">
+		<forward name="success" path="/t21_rule/t21_rule_product_list.do" />
+		<forward name="failure" path="/t21_rule/t21_rule_product_list.do" />
+	</action>
+	<!-- 撤销投产 -->
+	<action path="/t21_rule/revokeProT03_rule" parameter="revokeProT03_rule" name="t21_ruleActionForm"
+		type="com.ist.aml.rule.controller.T03_ruleAction" validate="false" scope="request">
+		<forward name="success" path="/t21_rule/t21_rule_product_list.do" />
+		<forward name="failure" path="/t21_rule/t21_rule_product_list.do" />
+	</action>
+	
+    <!-- 模型管理 - 参数列表  T02_page_in_parm-->
+		<action path="/t21_rule/t03_page_in_parm_list"
+			parameter="getT03_page_in_parmList" name="t03_page_in_parmActionForm"
+			type="com.ist.aml.rule.controller.T03_page_in_parmAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/t21_rule/tpla_query_parm.jsp" />
+		</action>
+		<!-- 模型管理 - 参数添加界面 -->
+		<action path="/t21_rule/t03_page_in_parm_add"
+			parameter="addT03_page_in_parm" name="t03_page_in_parmActionForm"
+			type="com.ist.aml.rule.controller.T03_page_in_parmAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/t21_rule/tpla_info_parm_add.jsp" />
+		</action>
+		<!-- 模型管理 - 参数添加动作 -->
+		<action path="/t21_rule/t03_page_in_parm_add_do"
+			parameter="addT03_page_in_parmDo" name="t03_page_in_parmActionForm"
+			type="com.ist.aml.rule.controller.T03_page_in_parmAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/t21_rule/t03_page_in_parm_list.do" />
+			<forward name="failure"
+				path="/t21_rule/t03_page_in_parm_add.do" />
+		</action>
+		<!-- 模型管理 - 参数修改界面 -->
+		<action path="/t21_rule/t03_page_in_parm_modify"
+			parameter="modifyT03_page_in_parm" name="t03_page_in_parmActionForm"
+			type="com.ist.aml.rule.controller.T03_page_in_parmAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/t21_rule/tpla_info_parm_modify.jsp" />
+			<forward name="failure"
+				path="/t21_rule/t03_page_in_parm_list.do" />
+		</action>
+		<!-- 模型管理 - 参数修改动作 -->
+		<action path="/t21_rule/t03_page_in_parm_modify_do"
+			parameter="modifyT03_page_in_parmDo" name="t03_page_in_parmActionForm"
+			type="com.ist.aml.rule.controller.T03_page_in_parmAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/t21_rule/t03_page_in_parm_list.do" />
+			<forward name="failure"
+				path="/t21_rule/t03_page_in_parm_modify.do" />
+		</action>
+		<!-- 模型管理 - 参数删除动作 -->
+		<action path="/t21_rule/t03_page_in_parm_delete_do"
+			parameter="deleteT03_page_in_parmDo" name="t03_page_in_parmActionForm"
+			type="com.ist.aml.rule.controller.T03_page_in_parmAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/t21_rule/t03_page_in_parm_list.do" />
+			<forward name="failure"
+				path="/t21_rule/t03_page_in_parm_list.do" />
+		</action>
+		
+		<!-- 参数编辑 -->
+		<action path="/t21_rule/get_rule_param_list"
+			parameter="getRule_parm_list" name="t21_ruleActionForm"
+			type="com.ist.aml.rule.controller.T03_ruleAction" validate="false"
+			scope="request">
+			<forward name="success"	path="/t21_rule/get_rule_param_list.jsp" />
+			<forward name="failure" path="/public_main.jsp" />
+			<forward name="clobpage" path="/template/tpla_clob_disp.jsp" />
+		</action>
+		<action path="/t21_rule/get_rule_param_list_in"
+			parameter="getRule_parm_list" name="t21_ruleActionForm"
+			type="com.ist.aml.rule.controller.T03_ruleAction" validate="false"
+			scope="request">
+			<forward name="success"	path="/t21_rule/get_rule_param_list_in.jsp" />
+			<forward name="failure" path="/public_main.jsp" />
+			<forward name="clobpage" path="/template/tpla_clob_disp.jsp" />
+		</action>
+		
+		<action path="/t21_rule/get_rule_param_list_in_do"
+			parameter="getRule_parm_listDo" name="t21_ruleActionForm"
+			type="com.ist.aml.rule.controller.T03_ruleAction" validate="false"
+			scope="request">
+			<forward name="success"	path="/t21_rule/get_rule_param_list_in.do" />
+			<forward name="failure" path="/rule/get_rule_param_list_in.do" />
+			<forward name="clobpage" path="/template/tpla_clob_disp.jsp" />
+		</action>
+		<!-- 模型管理 - 检查删除参数会影响其他模板 -->
+		<action path="/t21_rule/t03_page_in_parm_check_do"
+			parameter="checkT03_page_in_parmDo" name="t03_page_in_parmActionForm"
+			type="com.ist.aml.rule.controller.T03_page_in_parmAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/t21_rule/tpla_check_list.jsp" />
+			<forward name="failure"
+				path="/t21_rule/tpla_check_list.jsp" />
+		</action>
+        
+        <!-- 模版执行查询表 展现--> 
+		<action path="/t21_rule/t03_tp_exec_qry_list"
+			parameter="getT03_tp_exec_qryList" name="t03_tp_exec_qryActionForm"
+			type="com.ist.aml.rule.controller.T03_tp_exec_qryAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/tpla_query_sql.jsp" />
+		</action>
+			<!-- 模版执行查询表 展现--> 
+		<action path="/t21_rule/t03_tp_exec_qry_single"
+			parameter="getT03_tp_exec_qry_single" name="t03_tp_exec_qryActionForm"
+			type="com.ist.aml.rule.controller.T03_tp_exec_qryAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/tpla_query_sql_single.jsp" />
+		</action>
+		<action path="/t21_rule/t03_tp_exec_qry_add_single"
+			parameter="modifyT03_tp_exec_qryDo" name="t03_tp_exec_qryActionForm"
+			type="com.ist.aml.rule.controller.T03_tp_exec_qryAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t03_tp_exec_qry_single.do" />
+		</action>
+		<!-- 模版执行查询表 展现--> 
+		<action path="/t21_rule/t03_tp_exec_qry_list_add"
+			parameter="getT03_tp_exec_qry_singleDo" name="t03_tp_exec_qryActionForm"
+			type="com.ist.aml.rule.controller.T03_tp_exec_qryAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t03_tp_exec_qry_list.do" />
+		</action>
+		<action path="/t21_rule/t03_tp_exec_qry_single_do"
+			parameter="getT03_tp_exec_qry_singleDo" name="t03_tp_exec_qryActionForm"
+			type="com.ist.aml.rule.controller.T03_tp_exec_qryAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t21_rule/t03_tp_exec_qry_single.do" />
+		</action>
+        <!--模版执行  SQL插入 -->
+		<action path="/t21_rule/t03_tp_exec_qry_add_do"
+			parameter="modifyT03_tp_exec_qryDo" name="t03_tp_exec_qryActionForm"
+			type="com.ist.aml.rule.controller.T03_tp_exec_qryAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/t21_rule/t03_tp_exec_qry_list.do" />
+			<forward name="failure"
+				path="/t21_rule/t03_tp_exec_qry_add.do" />
+		</action>
+		<!-- 定义机构参数  begin-->
+		 <action path="/t21_rule/t03_param_org_search" parameter="searchT03_param_org" name="t03_param_orgActionForm" type="com.ist.aml.rule.controller.T03_param_orgAction" validate="false" scope="request"> 
+	    <forward name="success" path="/t21_rule/t03_param_org_search.jsp"/> 
+        <forward name="failure" path="/t21_rule/t03_param_org_list.do"/> 
+	    </action> 
+	    <action path="/t21_rule/t03_param_org_list" parameter="getT03_param_orgList" name="t03_param_orgActionForm" type="com.ist.aml.rule.controller.T03_param_orgAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t21_rule/t03_param_org_list.jsp"/> 
+	    </action> 
+	    <action path="/t21_rule/t03_param_org_list_out" parameter="getT03_param_orgList" name="t03_param_orgActionForm" type="com.ist.aml.rule.controller.T03_param_orgAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t21_rule/t03_param_org_list_out.jsp"/> 
+	    </action> 
+	    <action path="/t21_rule/t03_param_org_add" parameter="addT03_param_org" name="t03_param_orgActionForm" type="com.ist.aml.rule.controller.T03_param_orgAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t21_rule/t03_param_org_add.jsp"/> 
+		    <forward name="failure" path="/t21_rule/t03_param_org_list.do"/> 
+	    </action> 
+	    <action path="/t21_rule/t03_param_org_add_do" parameter="addT03_param_orgDo" name="t03_param_orgActionForm" type="com.ist.aml.rule.controller.T03_param_orgAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t21_rule/t03_param_org_list.do"/> 
+		    <forward name="failure" path="/t21_rule/t03_param_org_add.do"/> 
+	    </action> 
+	    <action path="/t21_rule/t03_param_org_modify" parameter="modifyT03_param_org" name="t03_param_orgActionForm" type="com.ist.aml.rule.controller.T03_param_orgAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t21_rule/t03_param_org_modify.jsp"/> 
+		    <forward name="failure" path="/t21_rule/t03_param_org_list.do"/> 
+	    </action> 
+	    <action path="/t21_rule/t03_param_org_modify_do" parameter="modifyT03_param_orgDo" name="t03_param_orgActionForm" type="com.ist.aml.rule.controller.T03_param_orgAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t21_rule/t03_param_org_list.do"/> 
+		    <forward name="failure" path="/t21_rule/t03_param_org_modify.do"/> 
+	    </action> 
+	    <action path="/t21_rule/t03_param_org_delete_do" parameter="deleteT03_param_orgDo" name="t03_param_orgActionForm" type="com.ist.aml.rule.controller.T03_param_orgAction" validate="false" scope="request"> 
+		<forward name="success" path="/t21_rule/t03_param_org_list.do"/> 
+	        <forward name="failure" path="/t21_rule/t03_param_org_list.do"/> 
+	    </action> 
+	    <action path="/t21_rule/t03_param_org_disp" parameter="getT03_param_orgDisp" name="t03_param_orgActionForm" type="com.ist.aml.rule.controller.T03_param_orgAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t21_rule/t03_param_org_disp.jsp"/> 
+	    </action> 
+	     <action path="/t21_rule/t03_param_org_argEdit" parameter="editT03_param_org_arg" name="t03_param_orgActionForm" type="com.ist.aml.rule.controller.T03_param_orgAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t21_rule/t03_param_org_arg_edit.jsp"/> 
+	    </action> 
+	     <action path="/t21_rule/t03_param_org_argSave" parameter="saveT03_param_org_arg" name="t03_param_orgActionForm" type="com.ist.aml.rule.controller.T03_param_orgAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t21_rule/t03_param_org_argEdit.do"/>
+		     <forward name="failure" path="/t21_rule/t03_param_org_list.do"/>
+	    </action> 
+	     <action path="/t21_rule/t03_param_bsn_argEdit" parameter="editT03_param_bsn_arg" name="t03_param_orgActionForm" type="com.ist.aml.rule.controller.T03_param_orgAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t21_rule/t03_param_bsn_arg_edit.jsp"/> 
+	    </action> 
+	     <action path="/t21_rule/t03_param_listSave" parameter="saveT03_param_list" name="t03_param_orgActionForm" type="com.ist.aml.rule.controller.T03_param_orgAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t21_rule/t03_param_bsn_argEdit.do"/> 
+		    <forward name="failure" path="/t21_rule/t03_param_org_list.do"/>
+	    </action>
+	    <action path="/t21_rule/t03_param_org3_val" parameter="getOrg3Val_list" name="t03_param_orgActionForm" type="com.ist.aml.rule.controller.T03_param_orgAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t21_rule/t03_param_org3_arg_edit.jsp"/> 
+		    <forward name="failure" path="/t21_rule/t03_param_org3_arg_edit.jsp"/>
+	    </action>
+	    <action path="/t21_rule/t03_param_org3_argSave" parameter="saveT03_param_org3_arg" name="t03_param_orgActionForm" type="com.ist.aml.rule.controller.T03_param_orgAction" validate="false" scope="request"> 
+		    <forward name="success" path="/t21_rule/t03_param_org3_val.do"/> 
+		    <forward name="failure" path="/t21_rule/t03_param_org3_arg_edit.jsp"/>
+	    </action>
+      <!-- 定义机构参数 end -->
+		<!--结果主体设置 -->
+		<action path="/t21_rule/t03_rule_rettype_set" parameter="setT03_rule_rettype"
+			name="t21_ruleActionForm"
+			type="com.ist.aml.rule.controller.T03_ruleAction" validate="false"
+			scope="request">
+			<forward name="success" path="/t21_rule/t03_rule_rettype_set.jsp" />
+		</action>
+		<action path="/t21_rule/t03_rule_rettype_set_do" parameter="setT03_rule_rettypeDo"
+			name="t21_ruleActionForm"
+			type="com.ist.aml.rule.controller.T03_ruleAction" validate="false"
+			scope="request">
+			<forward name="success" path="/t21_rule/t03_rule_rettype_set.do" />
+		</action>
+		<!-- 信息汇总 -->
+		<action path="/t21_rule/t03_rule_all_info_do" parameter="getT03_rule_all_infoDo"
+			name="t21_ruleActionForm"
+			type="com.ist.aml.rule.controller.T03_ruleAction" validate="false"
+			scope="request">
+			<forward name="success" path="/t21_rule/t03_rule_all_info.jsp" />
+		</action>
+		<!-- 手工sql详细信息 -->
+		<action path="/t21_rule/t03_rule_all_info_disp" parameter="getT03_rule_all_infoDisp"
+			name="t21_ruleActionForm"
+			type="com.ist.aml.rule.controller.T03_ruleAction" validate="false"
+			scope="request">
+			<forward name="success" path="/t21_rule/t03_rule_all_info_disp.jsp" />
+		</action>
+		
+		<!-- transplant by lijie for T03_ENTITY_KIND -->
+		<action path="/entity/t03_entity_kind_list" parameter="getT03_entity_kindList"
+			name="t03_entity_kindActionForm" type="com.ist.aml.rule.controller.T03_entity_kindAction"
+			validate="false" scope="request">
+			<forward name="success" path="/entity/t03_entity_kind_list.jsp" />
+		</action>
+		<action path="/entity/entity_kind_add" parameter="addT03_entity_kind"
+			name="t03_entity_kindActionForm" type="com.ist.aml.rule.controller.T03_entity_kindAction"
+			validate="false" scope="request">
+			<forward name="success" path="/entity/t03_entity_kind_add.jsp" />
+		</action>
+		<action path="/entity/entity_kind_add_do" parameter="addT03_entity_kindDo"
+			name="t03_entity_kindActionForm" type="com.ist.aml.rule.controller.T03_entity_kindAction"
+			validate="false" scope="request">
+			<forward name="success" path="/entity/t03_entity_kind_list.do" />
+			<forward name="failure" path="/entity/entity_kind_add.do"/>
+		</action>
+		<action path="/entity/entity_kind_modify" parameter="modifyT03_entity_kind"
+			name="t03_entity_kindActionForm" type="com.ist.aml.rule.controller.T03_entity_kindAction"
+			validate="false" scope="request">
+			<forward name="success" path="/entity/t03_entity_kind_modify.jsp" />
+		</action>
+		<action path="/entity/entity_kind_modify_do" parameter="modifyT03_entity_kindDo"
+			name="t03_entity_kindActionForm" type="com.ist.aml.rule.controller.T03_entity_kindAction"
+			validate="false" scope="request">
+			<forward name="success" path="/entity/t03_entity_kind_list.do" />
+		</action>
+		<action path="/entity/deleteT03_entity_kindDo" parameter="deleteT03_entity_kindDo"
+			name="t03_entity_kindActionForm" type="com.ist.aml.rule.controller.T03_entity_kindAction"
+			validate="false" scope="request">
+			<forward name="success" path="/entity/t03_entity_kind_list.do" />
+		</action>
+		<action path="/entity/result_colmap" parameter="result_colmap"
+			name="t03_entity_kindActionForm" type="com.ist.aml.rule.controller.T03_entity_kindAction"
+			validate="false" scope="request">
+			<forward name="success" path="/entity/t03_entity_kind_mapping.jsp"/>
+      		<forward name="failure" path="/entity/t03_entity_kind_list.do"/>
+		</action>
+		<action path="/entity/t03_entity_kind_mapping_do" parameter="t03_entity_kind_mappingDo"
+			name="t03_entity_kindActionForm" type="com.ist.aml.rule.controller.T03_entity_kindAction"
+			validate="false" scope="request">
+			<forward name="success" path="/entity/t03_entity_kind_list.do"/>
+      		<forward name="failure" path="/entity/t03_entity_kind_mapping.jsp"/>
+		</action>
+		
+		<!-- T03_ENTITY_KIND_MAN -->
+	    <action path="/entity/t03_entity_kind_man_index" parameter="getT03_entity_kind_man_index" 
+	    		name="t03_entity_kind_manActionForm" type="com.ist.aml.rule.controller.T03_entity_kind_manAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/t03_entity_kind_man/index.jsp"/>  
+    	</action>
+    	<action path="/entity/t03_entity_kind_man_list" parameter="getT03_entity_kind_manList" 
+    			name="t03_entity_kind_manActionForm" type="com.ist.aml.rule.controller.T03_entity_kind_manAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/t03_entity_kind_man/t03_entity_kind_man_list.jsp"/> 
+    	</action>
+    	<action path="/entity/t03_entity_kind_man_add" parameter="addT03_entity_kind_man" 
+    			name="t03_entity_kind_manActionForm" type="com.ist.aml.rule.controller.T03_entity_kind_manAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/t03_entity_kind_man/t03_entity_kind_man_add.jsp"/>  
+    	</action> 
+   		<action path="/entity/t03_entity_kind_man_add_do" parameter="addT03_entity_kind_manDo" 
+   				name="t03_entity_kind_manActionForm" type="com.ist.aml.rule.controller.T03_entity_kind_manAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/entity/t03_entity_kind_man_list.do"/> 
+	    	<forward name="failure" path="/entity/t03_entity_kind_man_add.do"/> 
+    	</action>
+    	<action path="/entity/t03_entity_kind_man_modify" parameter="modifyT03_entity_kind_man" 
+    			name="t03_entity_kind_manActionForm" type="com.ist.aml.rule.controller.T03_entity_kind_manAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/t03_entity_kind_man/t03_entity_kind_man_modify.jsp"/> 
+	    	<forward name="failure" path="/entity/t03_entity_kind_man_list.do"/> 
+    	</action>
+    	<action path="/entity/t03_entity_kind_man_modify_do" parameter="modifyT03_entity_kind_manDo" 
+    			name="t03_entity_kind_manActionForm" type="com.ist.aml.rule.controller.T03_entity_kind_manAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/entity/t03_entity_kind_man_list.do"/> 
+	    	<forward name="failure" path="/entity/t03_entity_kind_man_modify.do"/> 
+    	</action>
+    	<action path="/entity/t03_entity_kind_man_delete_do" parameter="deleteT03_entity_kind_manDo" 
+    			name="t03_entity_kind_manActionForm" type="com.ist.aml.rule.controller.T03_entity_kind_manAction" validate="false" scope="request"> 
+			<forward name="success" path="/entity/t03_entity_kind_man_list.do"/> 
+        	<forward name="failure" path="/entity/t03_entity_kind_man_list.do"/> 
+   		</action>
+    	<action path="/entity/t03_entity_kind_man_disp" parameter="getT03_entity_kind_manDisp" 
+    			name="t03_entity_kind_manActionForm" type="com.ist.aml.rule.controller.T03_entity_kind_manAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/t03_entity_kind_man/t03_entity_kind_man_disp.jsp"/> 
+    	</action>
+    	
+    	
+    	
+    	<action path="/entity/col_t03_entity_kind_man_list" parameter="getCol_T03_entity_kind_manList" 
+    			name="t03_entity_kind_manActionForm" type="com.ist.aml.rule.controller.T03_entity_kind_manAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/t03_entity_kind_man/col_t03_entity_kind_man_list.jsp"/> 
+    	</action>
+    	<action path="/entity/col_t03_entity_kind_man_add" parameter="addColT03_entity_kind_man" 
+    			name="t03_entity_kind_manActionForm" type="com.ist.aml.rule.controller.T03_entity_kind_manAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/t03_entity_kind_man/col_t03_entity_kind_man_add.jsp"/>  
+    	</action> 
+    	<action path="/entity/col_t03_entity_kind_man_add_do" parameter="addColT03_entity_kind_manDo" 
+    			name="t03_entity_kind_manActionForm" type="com.ist.aml.rule.controller.T03_entity_kind_manAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/entity/col_t03_entity_kind_man_list.do"/> 
+	    	<forward name="failure" path="/entity/col_t03_entity_kind_man_add.do"/> 
+    	</action> 
+    	<action path="/entity/col_t03_entity_kind_man_modify" parameter="modifyColT03_entity_kind_man" 
+    			name="t03_entity_kind_manActionForm" type="com.ist.aml.rule.controller.T03_entity_kind_manAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/t03_entity_kind_man/col_t03_entity_kind_man_modify.jsp"/> 
+	    	<forward name="failure" path="/entity/col_t03_entity_kind_man_list.do"/> 
+    	</action> 
+     	<action path="/entity/col_t03_entity_kind_man_modify_do" parameter="modifyColT03_entity_kind_manDo" 
+     			name="t03_entity_kind_manActionForm" type="com.ist.aml.rule.controller.T03_entity_kind_manAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/entity/col_t03_entity_kind_man_list.do"/> 
+	    	<forward name="failure" path="/entity/col_t03_entity_kind_man_modify.do"/> 
+    	</action> 
+    	<action path="/entity/col_t03_entity_kind_man_delete_do" parameter="deleteColT03_entity_kind_manDo" 
+    			name="t03_entity_kind_manActionForm" type="com.ist.aml.rule.controller.T03_entity_kind_manAction" validate="false" scope="request"> 
+	    	<forward name="success" path="/entity/col_t03_entity_kind_man_list.do"/> 
+        	<forward name="failure" path="/entity/col_t03_entity_kind_man_list.do"/> 
+    	</action> 
+    	
+    	<!-- end of  T03_ENTITY_KIND-->
+    	
+    	
+    	<!-- start of T01_FUNCTION_PARAM -->
+    	
+		<action path="/t01_fun_param/t01_fun_param_list" parameter="getT01_function_paramList"
+			name="t01_fun_paramActionForm" type="com.ist.aml.rule.controller.T01_fun_paramAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t01_function_param/t01_fun_param_list.jsp" />
+		</action>
+		<action path="/t01_fun_param/t01_fun_param_add" parameter="addT01_fun_param"
+			name="t01_fun_paramActionForm" type="com.ist.aml.rule.controller.T01_fun_paramAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t01_function_param/t01_fun_param_add.jsp" />
+		</action>
+		<action path="/t01_fun_param/t01_fun_param_modify" parameter="modifyT01_fun_param"
+			name="t01_fun_paramActionForm" type="com.ist.aml.rule.controller.T01_fun_paramAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t01_function_param/t01_fun_param_modify.jsp" />
+			<forward name="failure" path="/t01_fun_param/t01_fun_param_list.do" redirect="true" />
+		</action>
+		<action path="/t01_fun_param/t01_fun_param_add_do" parameter="addT01_fun_paramDo"
+			name="t01_fun_paramActionForm" type="com.ist.aml.rule.controller.T01_fun_paramAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t01_fun_param/t01_fun_param_list.do" redirect="true" />
+			<forward name="failure" path="/t01_fun_param/t01_fun_param_add.do" />
+		</action>
+		<action path="/t01_fun_param/t01_fun_param_modify_do" parameter="modifyT01_fun_paramDo"
+			name="t01_fun_paramActionForm" type="com.ist.aml.rule.controller.T01_fun_paramAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t01_fun_param/t01_fun_param_list.do" redirect="true" />
+			<forward name="failure" path="/t01_fun_param/t01_fun_param_modify.do" />
+		</action>
+		<action path="/t01_fun_param/t01_fun_param_delete_do" parameter="deleteT01_fun_paramDo"
+			name="t01_fun_paramActionForm" type="com.ist.aml.rule.controller.T01_fun_paramAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t01_fun_param/t01_fun_param_list.do" />
+			<forward name="failure" path="/t01_fun_param/t01_fun_param_list.do" />
+		</action>
+		<action path="/t01_fun_param/t01_fun_param_disp" parameter="getT01_fun_paramDisp"
+			name="t01_fun_paramActionForm" type="com.ist.aml.rule.controller.T01_fun_paramAction"
+			validate="false" scope="request">
+			<forward name="success" path="/t01_function_param/t01_fun_param_disp.jsp" />
+		</action>
+		
+		<!-- end of T01_FUNCTION_PARAM -->
+	</action-mappings>
+	<message-resources parameter="ApplicationResources_zh_CN" />
+
+</struts-config>

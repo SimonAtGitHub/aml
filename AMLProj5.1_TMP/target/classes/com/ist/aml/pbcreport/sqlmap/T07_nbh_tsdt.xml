@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T07_nbh_tsdt">
+	<statement id="getBHValidateTransDisp"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rpdi"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt">
+		SELECT REPORTKEY,CATI_SEQNO,CRCD,TSDT_SEQNO,FINN,FIRC,RLTP,FICT,FINC,CATP,CTAC,TBNM,TBIT,TBID,TBNT,TSTM,TICD,TSTP,TSCT,TSDR,TDRC,TRCD,CRPP,CRTP,CRAT,CFIN,CFCT,CFIC,TCNM,TCIT,TCID,TCAT,TCAC,VALIDATE_IND,HTCR_SEQNO
+		 FROM T07_NBH_TSDT
+		<dynamic prepend="where">
+			<isNotEmpty prepend="AND" property="reportkey">
+				REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cati_seqno">
+				CATI_SEQNO = $cati_seqno$
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="crcd">
+				CRCD = #crcd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="ticd">
+				TICD = #ticd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tsdt_seqno">
+				TSDT_SEQNO = $tsdt_seqno$
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT07_nbh_tsdtListBynbs"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbs_rpdi"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt">
+		SELECT
+		REPORTKEY,CATI_SEQNO,CRCD,TSDT_SEQNO,FINN,FIRC,RLTP,FICT,FINC,CATP,CTAC,TBNM,TBIT,TBID,TBNT,TSTM,TICD,TSTP,TSCT,TSDR,TDRC,TRCD,CRPP,CRTP,CRAT,CFIN,CFCT,CFIC,TCNM,TCIT,TCID,TCAT,TCAC,VALIDATE_IND
+		FROM T07_NBH_TSDT
+		<dynamic prepend="where">
+			<isNotEmpty prepend="AND" property="reportkey">
+				REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cati_seqno">
+				CATI_SEQNO = $cati_seqno$
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="crcd">
+				CRCD = #crcd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="getT07_nbh_tsdtList"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt">
+		SELECT
+		REPORTKEY,CATI_SEQNO,CRCD,TSDT_SEQNO,FINN,FIRC,RLTP,FICT,FINC,CATP,CTAC,TBNM,TBIT,TBID,TBNT,TSTM,TICD,TSTP,TSCT,TSDR,TDRC,TRCD,CRPP,CRTP,CRAT,CFIN,CFCT,CFIC,TCNM,TCIT,TCID,TCAT,TCAC,VALIDATE_IND
+		FROM 
+		<isNotEmpty prepend="" property="reported">
+  	   <isEqual property="reported" compareValue="0">
+  	    T07_NBH_TSDT
+  	   </isEqual>
+  	    <isEqual property="reported" compareValue="1">
+  	    T07_NBH_TSDT_UH
+  	   </isEqual>
+  	</isNotEmpty>
+  	<isEmpty prepend="" property="reported">
+  	    T07_NBH_TSDT
+  	</isEmpty>
+		
+		<dynamic prepend="where">
+			<isNotEmpty prepend="AND" property="reportkey">
+				REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cati_seqno">
+				CATI_SEQNO = $cati_seqno$
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="crcd">
+				CRCD = #crcd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY VALIDATE_IND,REPORTKEY,CATI_SEQNO,TSDT_SEQNO
+	</statement>
+	<statement id="getT07_nbh_tsdtListCount"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt"
+		resultClass="int">
+		SELECT COUNT(*) FROM T07_NBH_TSDT
+		<dynamic prepend="where">
+			<isNotEmpty prepend="AND" property="reportkey">
+				REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cati_seqno">
+				CATI_SEQNO = $cati_seqno$
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="crcd">
+				CRCD = #crcd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	 
+  
+    <statement id="modifyT07_nbh_htcrValidate" parameterClass="com.ist.aml.pbcreport.dto.T07_nbh_htcr" resultClass="int"> 
+  UPDATE T07_NBH_HTCR SET 
+  VALIDATE_IND=#validate_ind#
+  WHERE REPORTKEY=#reportkey# AND CATI_SEQNO = $cati_seqno$
+  </statement>
+  <statement id="modifyValidateT07_nbh_tsdt_20091212"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt"
+		resultClass="int">
+   UPDATE T07_NBH_TSDT SET VALIDATE_IND=#validate_ind#
+   	<dynamic>
+   		<isNotEqual prepend="," property="finn" compareValue="#">
+   			FINN=#finn#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="firc" compareValue="#">
+   			FIRC=#firc#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="rltp" compareValue="#">
+   			RLTP=#rltp#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="fict" compareValue="#">
+   			FICT=#fict#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="finc" compareValue="#">
+   			FINC=#finc#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="catp" compareValue="#">
+   			CATP=#catp#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="ctac" compareValue="#">
+   			CTAC=#ctac#
+   		</isNotEqual>
+   		<!-- 
+   		<isNotEqual prepend="," property="tstm_disp" compareValue="#">
+   			TSTM=#tstm#
+   		</isNotEqual>
+   		-->
+   		<isNotEqual prepend="," property="ticd" compareValue="#">
+   			TICD=#ticd#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="tsdr" compareValue="#">
+   			TSDR=#tsdr#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="crtp" compareValue="#">
+   			CRTP=#crtp#
+   		</isNotEqual>
+   		<!-- 
+   		<isNotEqual prepend="," property="crat" compareValue="#">
+   			CRAT=$crat$
+   		</isNotEqual>
+   		-->
+   		<isNotEqual prepend="," property="trcd" compareValue="#">
+   			TRCD=#trcd#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="tdrc" compareValue="#">
+   			TDRC=#tdrc#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="tbnm" compareValue="#">
+   			TBNM=#tbnm#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="tbit" compareValue="#">
+   			TBIT=#tbit#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="tbid" compareValue="#">
+   			TBID=#tbid#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="tbnt" compareValue="#">
+   			TBNT=#tbnt#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="tstp" compareValue="#">
+   			TSTP=#tstp#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="tsct" compareValue="#">
+   			TSCT=#tsct#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="crpp" compareValue="#">
+   			CRPP=#crpp#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="cfin" compareValue="#">
+   			CFIN=#cfin#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="cfct" compareValue="#">
+   			CFCT=#cfct#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="cfic" compareValue="#">
+   			CFIC=#cfic#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="tcnm" compareValue="#">
+   			TCNM=#tcnm#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="tcit" compareValue="#">
+   			TCIT=#tcit#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="tcid" compareValue="#">
+   			TCID=#tcid#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="tcat" compareValue="#">
+   			TCAT=#tcat#
+   		</isNotEqual>
+   		<isNotEqual prepend="," property="tcac" compareValue="#">
+   			TCAC=#tcac#
+   		</isNotEqual>
+   	</dynamic>
+   	WHERE REPORTKEY=#reportkey# AND CATI_SEQNO=$cati_seqno$ AND crcd=#crcd# AND TSDT_SEQNO=$tsdt_seqno$
+ </statement>
+ 
+ <statement id="getT07_nbh_tsdt_detailList"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt">
+		SELECT
+		REPORTKEY,CATI_SEQNO,CRCD,TSDT_SEQNO,FINN,FIRC,RLTP,FICT,FINC,CATP,CTAC,TBNM,TBIT,TBID,TBNT,TSTM,TICD,TSTP,TSCT,TSDR,TDRC,TRCD,CRPP,CRTP,CRAT,CFIN,CFCT,CFIC,TCNM,TCIT,TCID,TCAT,TCAC,VALIDATE_IND
+		FROM
+		<isNotEmpty prepend="" property="reported">
+  	   <isEqual property="reported" compareValue="0">
+  	    T07_NBH_TSDT
+  	   </isEqual>
+  	    <isEqual property="reported" compareValue="1">
+  	    T07_NBH_TSDT_UH
+  	   </isEqual>
+  	</isNotEmpty>
+  	<isEmpty prepend="" property="reported">
+  	    T07_NBH_TSDT
+  	</isEmpty>
+		 
+		<dynamic prepend="where">
+			<isNotEmpty prepend="AND" property="reportkey">
+				REPORTKEY = #reportkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cati_seqno">
+				CATI_SEQNO = $cati_seqno$
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="crcd">
+				CRCD = #crcd#
+			</isNotEmpty>
+				<isNotEmpty prepend="AND" property="ticd">
+				ticd = #ticd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tsdt_seqno">
+				TSDT_SEQNO = $tsdt_seqno$
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="validate_ind">
+				VALIDATE_IND = #validate_ind#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT07_nbh_tsdtList_R"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt"
+		resultClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt">
+		SELECT
+		A.REPORTKEY,A.CATI_SEQNO,A.CRCD,A.TSDT_SEQNO,A.FINN,A.FIRC,A.RLTP,A.FICT,A.FINC,A.CATP,A.CTAC,
+		A.TBNM,A.TBIT,A.TBID,A.TBNT,A.TSTM,A.TICD,A.TSTP,A.TSCT,A.TSDR,A.TDRC,B.CSNM
+		AS PARTY_ID,
+		A.TRCD,A.CRPP,A.CRTP,A.CRAT,A.CFIN,A.CFCT,A.CFIC,TCNM,A.TCIT,A.TCID,A.TCAT,A.TCAC,A.VALIDATE_IND,
+		A.ORGANKEY,A.CURR_CD,A.PARTY_CLASS_CD
+		FROM T07_NBH_TSDT_UH A,T07_NBH_CTIF_UH B,T07_REPORT_UH C WHERE
+		A.REPORTKEY=B.REPORTKEY AND A.CATI_SEQNO=B.CATI_SEQNO AND
+		C.REPORTKEY=A.REPORTKEY
+		AND EXISTS(SELECT 'A' FROM T07_RECEIPT T1,T07_MSG_UH T2 WHERE T1.MSGKEY=T2.MSGKEY 
+			AND $sysdate$<![CDATA[<=]]>50
+			AND T2.REPORTKEY=A.REPORTKEY)
+		<isNotEmpty prepend="AND" property="reportkey">
+			A.REPORTKEY = #reportkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="report_status_cd">
+			C.REPORT_STATUS_CD = #report_status_cd#
+		</isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organKey">
+			C.CREATE_ORG=#organKey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organStr">
+			C.CREATE_ORG IN ($organStr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="finc">
+			A.FINC = #finc#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="crcd">
+			A.CRCD = #crcd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="ticd">
+			A.TICD = #ticd#
+		</isNotEmpty>
+			<isNotEmpty prepend="AND" property="curr_cd">
+			A.curr_cd = #curr_cd#
+		</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+			A.party_class_cd = #party_class_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			B.CSNM = #party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="tstm">
+			<![CDATA[A.TSTM >= #tstm:DATE#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="tstm_end">
+			<![CDATA[A.TSTM < #tstm_end:DATE#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="" property="ordername">
+			ORDER BY $ordername$
+			<isNotEmpty prepend="" property="ordertype">
+				DESC
+			</isNotEmpty>
+		</isNotEmpty>
+	</statement>
+
+	<statement id="getT07_nbh_tsdtListCount_R"
+		parameterClass="com.ist.aml.pbcreport.dto.T07_nbh_tsdt"
+		resultClass="int">
+		SELECT COUNT(A.REPORTKEY) FROM T07_NBH_TSDT_UH A,T07_NBH_CTIF_UH
+		B,T07_REPORT_UH C WHERE A.REPORTKEY=B.REPORTKEY AND
+		A.CATI_SEQNO=B.CATI_SEQNO AND C.REPORTKEY=A.REPORTKEY
+		AND EXISTS(SELECT 'A' FROM T07_RECEIPT T1,T07_MSG_UH T2 WHERE T1.MSGKEY=T2.MSGKEY 
+			AND $sysdate$<![CDATA[<=]]>50
+			AND T2.REPORTKEY=A.REPORTKEY)
+		<isNotEmpty prepend="AND" property="reportkey">
+			A.REPORTKEY = #reportkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="report_status_cd">
+			C.REPORT_STATUS_CD = #report_status_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organKey">
+			C.CREATE_ORG=#organKey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organStr">
+			C.CREATE_ORG IN ($organStr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="finc">
+			A.FINC = #finc#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="ticd">
+			A.TICD = #ticd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="crcd">
+			A.CRCD = #crcd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			B.CSNM = #party_id#
+		</isNotEmpty>
+				<isNotEmpty prepend="AND" property="curr_cd">
+			A.curr_cd = #curr_cd#
+		</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+			A.party_class_cd = #party_class_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="tstm">
+			<![CDATA[A.TSTM >= #tstm:DATE#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="tstm_end">
+			<![CDATA[A.TSTM <= #tstm_end:DATE#]]>
+		</isNotEmpty>
+	</statement>
+
+	  
+</sqlMap>
+

@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="T27_alert">
+	
+	<statement id="getT27_alertList"
+		parameterClass="com.ist.aml.rule.dto.T27_alert"
+		resultClass="com.ist.aml.rule.dto.T27_alert">
+		SELECT
+		A.ALERTKEY,A.APPLICATION_NUM,A.RULEKEY,A.PBCKEY,A.ALERT_DT,A.ORGANKEY,A.ALERTTYPE,
+		A.OBJ_TYPE_CD,A.OBJKEY,A.OBJNAME,A.ALERT_STATUS_CD,A.TRANS_AMT,A.TRANS_NUM,A.party_num,
+		A.ACCT_NUM,A.INVALIDATE_DT,A.DEALADVISE,A.DEAL_USR,A.DEAL_DT,A.CREATE_DT,A.CURR_CD FROM T27_alert A WHERE
+		1>0
+		<dynamic>
+			<isNotEmpty prepend="and" property="alertkey">
+				A.ALERTKEY = #alertkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alerttype">
+				A.ALERTTYPE = #alerttype#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="objkey">
+				A.OBJKEY = #objkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="obj_type_cd">
+				A.OBJ_TYPE_CD = #obj_type_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="organkey">
+				A.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="organstr">
+				A.ORGANKEY IN ($organstr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="objname">
+				A.OBJNAME LIKE #objname#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="searchtype">
+				<isEqual property="searchtype" compareValue="1">
+					A.ALERT_STATUS_CD in('1','4')
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alert_status_cd">
+				A.ALERT_STATUS_CD = #alert_status_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="pbckey">
+				A.pbckey = #pbckey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="application_num">
+				A.APPLICATION_NUM = #application_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alert_dt_start">
+				<![CDATA[A.ALERT_DT >= #alert_dt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alert_dt_end">
+				<![CDATA[A.ALERT_DT <= #alert_dt_end:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="curr_cd">
+				A.CURR_CD = #curr_cd#
+			</isNotEmpty>
+
+			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY A.OBJ_TYPE_CD
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY A.ALERT_DT
+				</isEqual>
+				<isEqual property="orderby" compareValue="4">
+					ORDER BY A.TRANS_AMT
+				</isEqual>
+				<isEqual property="orderby" compareValue="5">
+					ORDER BY A.ORGANKEY
+				</isEqual>
+
+				<isNotEmpty property="order">
+					<isEqual property="order" compareValue="-1"></isEqual>
+					<isEqual property="order" compareValue="1"></isEqual>
+					<isEqual property="order" compareValue="2">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT27_alertListCount"
+		parameterClass="com.ist.aml.rule.dto.T27_alert"
+		resultClass="int">
+		SELECT COUNT(*) FROM t27_alert A WHERE 1>0
+		<dynamic>
+			<isNotEmpty prepend="and" property="alertkey">
+				A.ALERTKEY = #alertkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alerttype">
+				A.ALERTTYPE = #alerttype#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="objkey">
+				A.OBJKEY = #objkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="obj_type_cd">
+				A.OBJ_TYPE_CD = #obj_type_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="organkey">
+				A.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="organstr">
+				A.ORGANKEY IN ($organstr$)
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="objname">
+				A.OBJNAME LIKE #objname#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="searchtype">
+				<isEqual property="searchtype" compareValue="1">
+					A.ALERT_STATUS_CD in('1','4')
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alert_status_cd">
+				A.ALERT_STATUS_CD = #alert_status_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="pbckey">
+				A.pbckey = #pbckey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="application_num">
+				A.APPLICATION_NUM = #application_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alert_dt_start">
+				<![CDATA[A.ALERT_DT >= #alert_dt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alert_dt_end">
+				<![CDATA[A.ALERT_DT <= #alert_dt_end:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="curr_cd">
+				A.CURR_CD = #curr_cd#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	
+	<statement id="getT27_alertListByRulekey"
+		parameterClass="com.ist.aml.rule.dto.T27_alert"
+		resultClass="com.ist.aml.rule.dto.T27_alert">
+		SELECT
+		A.ALERTKEY,A.OBJNAME,A.CURR_CD,A.CURR_CD,A.ALERT_DT FROM T27_alert A WHERE
+		1>0
+		<dynamic>
+			<isNotEmpty prepend="and" property="rulekey">
+				A.RULEKEY = #rulekey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alert_dt_start">
+				<![CDATA[A.ALERT_DT >= #alert_dt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alert_dt_end">
+				<![CDATA[A.ALERT_DT <= #alert_dt_end:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="curr_cd">
+				A.CURR_CD = #curr_cd#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	
+	<statement id="getT27_alertListCountByRulekey"
+		parameterClass="com.ist.aml.rule.dto.T27_alert"
+		resultClass="int">
+		SELECT COUNT(*) FROM t27_alert A WHERE 1>0
+		<dynamic>
+			<isNotEmpty prepend="and" property="rulekey">
+				A.RULEKEY = #rulekey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alert_dt_start">
+				<![CDATA[A.ALERT_DT >= #alert_dt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alert_dt_end">
+				<![CDATA[A.ALERT_DT <= #alert_dt_end:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="curr_cd">
+				A.CURR_CD = #curr_cd#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT27_alertListByGenzNo"
+		parameterClass="com.ist.aml.rule.dto.T27_alert"
+		resultClass="com.ist.aml.rule.dto.T27_alert">
+		SELECT
+			A.ALERTKEY,A.OBJNAME,A.CURR_CD,A.CURR_CD,A.ALERT_DT 
+		FROM 
+			T07_PARTY_GANZ G LEFT JOIN T27_ALERT A
+		ON 
+			G.PARTY_ID = A.OBJKEY
+		WHERE 
+			G.PARTY_ID = A.OBJKEY
+		AND	
+			A.OBJ_TYPE_CD = '1'
+		AND
+			<![CDATA[A.ALERT_DT <= G.INFACT_DATE]]>		
+		AND
+			<![CDATA[A.ALERT_DT >= G.CREATE_DATE]]>	
+		<dynamic>
+			<isNotEmpty prepend="AND" property="genz_no">
+				G.GENZ_NO = #genz_no#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="alertkey">
+				A.ALERTKEY = #alertkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="alert_dt_start">
+				<![CDATA[A.ALERT_DT >= #alert_dt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="alert_dt_end">
+				<![CDATA[A.ALERT_DT <= #alert_dt_end:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="curr_cd">
+				A.CURR_CD = #curr_cd#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	
+	<statement id="getT27_alertListCountByGenzNo"
+		parameterClass="com.ist.aml.rule.dto.T27_alert"
+		resultClass="int">
+		SELECT COUNT(A.ALERTKEY) 
+		FROM 
+			T07_PARTY_GANZ G LEFT JOIN T27_ALERT A
+		ON 
+			G.PARTY_ID = A.OBJKEY
+		WHERE 
+			G.PARTY_ID = A.OBJKEY
+		AND	
+			A.OBJ_TYPE_CD = '1'
+		AND
+			<![CDATA[A.ALERT_DT <= G.INFACT_DATE]]>		
+		AND
+			<![CDATA[A.ALERT_DT >= G.CREATE_DATE]]>	
+		<dynamic>
+			<isNotEmpty prepend="and" property="genz_no">
+				G.GENZ_NO = #genz_no#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alertkey">
+				A.ALERTKEY = #alertkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alert_dt_start">
+				<![CDATA[A.ALERT_DT >= #alert_dt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alert_dt_end">
+				<![CDATA[A.ALERT_DT <= #alert_dt_end:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="curr_cd">
+				A.CURR_CD = #curr_cd#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT27_alertDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.aml.rule.dto.T27_alert">
+		SELECT a.*,b.PBC_DES FROM T27_ALERT a ,T21_PBCRULE b WHERE a.PBCKEY = b.PBCKEY AND ALERTKEY=#value#
+	</statement>
+	
+	<statement id="getT27_alertDispByRulekey" parameterClass="java.lang.String"
+		resultClass="com.ist.aml.rule.dto.T27_alert">
+		SELECT a.ALERTKEY,a.ALERT_DT,a.CURR_CD,a.OBJNAME FROM T27_ALERT a  where a.ALERTKEY=#value#
+	</statement>
+	
+	<statement id="getT27_alert_partyDisp"
+		parameterClass="com.ist.aml.rule.dto.T27_alert"
+		resultClass="com.ist.aml.rule.dto.T27_alert">
+		SELECT B.ALERTKEY AS ALERTKEY, A.PARTY_ID AS OBJKEY,
+		A.PARTY_CHN_NAME AS OBJNAME, A.PARTY_CLASS_CD AS OBJ_CLASS_CD,
+		B.STATUS AS ALERT_PARTY_STATUS_CD FROM T47_PARTY A,
+		T27_ALERT_PARTY B WHERE A.PARTY_ID = B.PARTY_ID
+		<dynamic>
+			<isNotEmpty prepend="and" property="alertkey">
+				B.ALERTKEY = #alertkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alert_party_status_cd">
+				B.STATUS = #alert_party_status_cd#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT27_alert_acctDisp"
+		parameterClass="com.ist.aml.rule.dto.T27_alert"
+		resultClass="com.ist.aml.rule.dto.T27_alert">
+		SELECT B.ALERTKEY AS ALERTKEY, B.ACCT_NUM, A.CUSTOMER_ID AS
+		OBJKEY, A.CUSTOMER_NAME AS OBJNAME, A.OP_ORG_NUM AS
+		ORGANKEY_ACCT, A.ACCT_TYPE_CD  AS ACCT_TYPE_CD, B.STATUS AS ALERT_ACCT_STATUS_CD FROM
+		T47_AGREEMENT A, T27_ALERT_ACCT B WHERE A.ACCT_NUM = B.ACCT_NUM
+		<dynamic>
+			<isNotEmpty prepend="and" property="alertkey">
+				B.ALERTKEY = #alertkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alert_acct_status_cd">
+				B.STATUS = #alert_acct_status_cd#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT27_alert_transDisp"
+		parameterClass="com.ist.aml.rule.dto.T27_alert"
+		resultClass="com.ist.aml.rule.dto.T27_alert">
+	SELECT B.ALERTKEY AS ALERTKEY, B.TRANSACTIONKEY,
+	A.PARTY_CHN_NAME AS objname,a.party_id   AS objkey, A.ORGANKEY AS organkey_trans,
+	A.TX_DT, A.ACCT_NUM, A.AMT AS AMOUNT_TRANS,b.status AS
+	alert_trans_status_cd ,a.currency_cd , A.DEBIT_CREDIT,
+       A.CASH_TRANS_FLAG FROM T47_TRANSACTION A, T27_ALERT_TRANS B
+	WHERE A.TRANSACTIONKEY = B.TRANSACTIONKEY
+		<dynamic>
+			<isNotEmpty prepend="and" property="alertkey">
+				B.ALERTKEY = #alertkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="alert_trans_status_cd">
+				B.STATUS = #alert_trans_status_cd#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="modifyT27_alertstatus"
+		parameterClass="com.ist.aml.rule.dto.T27_alert"
+		resultClass="int">
+		UPDATE t27_alert t SET t.ALERT_STATUS_CD =
+		#alert_status_cd# , t.dealadvise = #dealadvise# WHERE 1>0
+		<dynamic>
+			<isNotEmpty prepend="and" property="alertkey">
+				T.ALERTKEY = #alertkey#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="update_alert_status_cdMore" parameterClass="com.ist.aml.rule.dto.T27_alert"
+		resultClass="int">
+	UPDATE t27_alert SET  ALERT_STATUS_CD=#alert_status_cd#
+	WHERE 1>0 and ALERT_STATUS_CD='1'
+		<isNotNull property="list">
+		    <iterate prepend="AND" property="list" open="("
+					close=")" conjunction="or">
+					rulekey=#list[]#
+			</iterate>
+		</isNotNull>
+  	</statement>
+  	
+	<statement id="modifyT27_party_status"
+		parameterClass="com.ist.aml.rule.dto.T27_alert"
+		resultClass="int">
+		UPDATE t27_alert_party t SET t.status = #alert_party_status_cd#
+		WHERE 1>0
+		<dynamic>
+			<isNotEmpty prepend="and" property="alertkey">
+				T.ALERTKEY = #alertkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="objkey">
+				T.party_id = #objkey#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="modifyT27_acct_status"
+		parameterClass="com.ist.aml.rule.dto.T27_alert"
+		resultClass="int">
+		UPDATE t27_alert_acct t SET t.status = #alert_acct_status_cd#
+		WHERE 1>0
+		<dynamic>
+			<isNotEmpty prepend="and" property="alertkey">
+				T.ALERTKEY = #alertkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="objkey">
+				T.party_id = #objkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="acct_num">
+				T.acct_num = #acct_num#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="modifyT27_trans_status"
+		parameterClass="com.ist.aml.rule.dto.T27_alert"
+		resultClass="int">
+		UPDATE t27_alert_trans t SET t.status = #alert_trans_status_cd#
+		WHERE 1>0
+		<dynamic>
+			<isNotEmpty prepend="and" property="alertkey">
+				T.ALERTKEY = #alertkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="objkey">
+				T.party_id = #objkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="acct_num">
+				T.acct_num = #acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="transactionkey">
+				T.TRANSACTIONKEY = #transactionkey#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="existInT27_alert"
+		parameterClass="com.ist.aml.rule.dto.T27_alert"
+		resultClass="int">
+		SELECT COUNT(*) FROM $tablename$ WHERE status = #temp_status_cd#
+		<dynamic>
+			<isNotEmpty prepend="and" property="alertkey">
+				ALERTKEY = #alertkey#
+			</isNotEmpty>
+
+			<isNotEmpty prepend="" property="tablename">
+				<isEqual property="tablename" compareValue="t27_alert_acct">
+					<isNotEmpty prepend="and" property="objkey">
+						party_id = #objkey#
+					</isNotEmpty>
+				</isEqual>
+				<isEqual property="tablename" compareValue="t27_alert_trans">
+					<isNotEmpty prepend="and" property="objkey">
+						party_id = #objkey#
+					</isNotEmpty>
+					<isNotEmpty prepend="and" property="acct_num">
+						acct_num = #acct_num#
+					</isNotEmpty>
+				</isEqual>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</sqlMap>

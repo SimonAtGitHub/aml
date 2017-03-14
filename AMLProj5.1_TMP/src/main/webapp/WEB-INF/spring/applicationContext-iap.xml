@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 绩效考核平台模块配置 -->
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<bean id="t09_indicator_attrDAO" parent="baseDAO" class="com.ist.iap.dao.T09_indicator_attrDAO" ></bean>
+	<bean id="t09_indicatorDAO" parent="baseDAO" class="com.ist.iap.dao.T09_indicatorDAO" ></bean>
+	<bean id="t09_indic_subitem3DAO" parent="baseDAO" class="com.ist.iap.dao.T09_indic_subitem3DAO" ></bean>
+	<bean id="t09_indic_subitem1DAO" parent="baseDAO" class="com.ist.iap.dao.T09_indic_subitem1DAO" ></bean>
+	<bean id="t09_indic_inoutDAO" parent="baseDAO" class="com.ist.iap.dao.T09_indic_inoutDAO" ></bean>
+	<bean id="t09_indic_colmapDAO" parent="baseDAO" class="com.ist.iap.dao.T09_indic_colmapDAO" ></bean>
+	<bean id="t09_page_in_parmDAO" parent="baseDAO" class="com.ist.iap.dao.T09_page_in_parmDAO" ></bean>
+    <bean id="t09_page_in_valDAO" parent="baseDAO" class="com.ist.iap.dao.T09_page_in_valDAO" ></bean>
+    
+    <bean id="t09_param_listDAO" parent="baseDAO" class="com.ist.iap.dao.T09_param_listDAO" ></bean>
+    <bean id="t01_mt_col_proDAO" parent="baseDAO" class="com.ist.common.metadata.dao.T01_mt_col_proDAO" ></bean>
+    
+    
+    <!-- metadata dao -->
+    <bean id="t01_mt_propertyDAO" parent="baseDAO" class="com.ist.common.metadata.dao.T01_mt_propertyDAO" ></bean>
+    <bean id="t01_db_linkDAO" parent="baseDAO" class="com.ist.common.metadata.dao.T01_db_linkDAO" ></bean>
+   <!-- <bean id="t01_mt_functionDAO" parent="baseDAO" class="com.ist.common.metadata.dao.T01_mt_functionDAO" ></bean>-->
+    
+</beans>

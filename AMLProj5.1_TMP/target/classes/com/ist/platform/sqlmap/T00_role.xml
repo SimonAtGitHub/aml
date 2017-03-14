@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T00_role">
+  <statement id="getT00_roleList"  parameterClass="com.ist.platform.dto.T00_role" resultClass="com.ist.platform.dto.T00_role">
+  SELECT *
+  FROM T00_ROLE
+  <dynamic prepend="WHERE">
+    <isNotEmpty prepend="AND" property="rolelevel_s">
+    rolelevel = #rolelevel_s#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="flag_s">
+    FLAG = #flag_s#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="rolename">
+    ROLENAME LIKE #rolename#
+    </isNotEmpty>
+  </dynamic>
+  ORDER BY ROLELEVEL
+  </statement>
+   <statement id="getT00_rolePostList"  parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_role">
+  SELECT a.rolekey,b.post_id,b.post_des as post_disp
+  FROM T00_ROLE_POST a,t07_post b
+  where a.post_id=b.post_id and    a.rolekey= #value#
+  </statement>
+  
+
+  <statement id="getT00_roleListCount"  parameterClass="com.ist.platform.dto.T00_role" resultClass="int">
+  SELECT COUNT(*) FROM T00_ROLE
+  <dynamic prepend="WHERE">
+    <isNotEmpty prepend="AND" property="rolelevel_s">
+    rolelevel = #rolelevel_s#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="flag_s">
+    FLAG = #flag_s#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="rolename">
+    ROLENAME LIKE #rolename#
+    </isNotEmpty>
+  </dynamic>
+  </statement>
+
+
+  <statement id="insertT00_role"  parameterClass="com.ist.platform.dto.T00_role" resultClass="int">
+  INSERT INTO T00_ROLE(
+  ROLEKEY,ROLENAME,ISBUILDIN,FLAG,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER,rolelevel,ROLE_DES
+  ) VALUES(
+  #rolekey#,#rolename#,#isbuildin#,#flag#,#createdate#,#creator#,#modifydate#,#modifier#,#rolelevel#,#role_des#
+  )
+  </statement>
+    <statement id="insertT00_role_post"  parameterClass="com.ist.platform.dto.T00_role" resultClass="int">
+  INSERT INTO T00_ROLE_POST(
+  ROLEKEY,POST_ID,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER
+  ) VALUES(
+  #rolekey#,#post_id#,#createdate#,#creator#,#modifydate#,#modifier#
+  )
+  </statement>
+
+  <statement id="modifyT00_role"  parameterClass="com.ist.platform.dto.T00_role" resultClass="int">
+  UPDATE T00_ROLE SET
+  ROLELEVEL=#rolelevel#, ROLENAME=#rolename#,FLAG=#flag#,MODIFYDATE=#modifydate#,MODIFIER=#modifier#,ROLE_DES=#role_des#
+  WHERE ROLEKEY=#rolekey#
+  </statement>
+
+  <statement id="deleteT00_role"  parameterClass="java.lang.String" resultClass="int">
+  <![CDATA[ DELETE FROM T00_ROLE WHERE ROLEKEY=#value# AND ISBUILDIN<>'1' ]]>
+  </statement>
+    <statement id="deleteT00_role_post"  parameterClass="java.lang.String" resultClass="int">
+    DELETE FROM T00_ROLE_POST WHERE ROLEKEY=#value# 
+  </statement>
+
+  <statement id="getT00_roleDisp"  parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_role">
+  SELECT ROLEKEY,ROLENAME,ISBUILDIN,FLAG,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER,ROLELEVEL,ROLE_DES FROM T00_ROLE WHERE ROLEKEY=#value#
+  </statement>
+  
+
+ <statement id="getT00_roleuserList"  parameterClass="com.ist.platform.dto.T00_user" resultClass="com.ist.platform.dto.T00_user">
+  SELECT  a.*,b.organname
+   FROM t00_com_auth c,T00_USER a,t00_organ b
+   where a.organkey=b.organkey
+       and c.username=a.username
+       and a.flag='1'
+       and c.rolekey=#rolekey#
+  <dynamic>
+    <isNotEmpty prepend="AND" property="username">
+    a.USERNAME LIKE #username#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="realname">
+    a.REALNAME LIKE #realname#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organ">
+    a.ORGANKEY IN ($organ$)
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organkey">
+    a.ORGANKEY = #organkey#
+    </isNotEmpty>
+  </dynamic>
+  </statement>
+  <statement id="getT00_roleuserCount"  parameterClass="com.ist.platform.dto.T00_user" resultClass="int">
+  SELECT  count(*)
+   FROM t00_com_auth c,T00_USER a
+   where  c.username=a.username
+       and a.flag='1'
+          and c.rolekey=#rolekey#  
+  <dynamic>
+    <isNotEmpty prepend="AND" property="username">
+    a.USERNAME LIKE #username#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="realname">
+    a.REALNAME LIKE #realname#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organ">
+    a.ORGANKEY IN ($organ$)
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="organkey">
+    a.ORGANKEY = #organkey#
+    </isNotEmpty>
+  </dynamic>
+  </statement>
+  <statement id="getT00_roleListByUsernameGroupkey" parameterClass="com.ist.platform.dto.T00_com_auth" resultClass="com.ist.platform.dto.T00_role">
+	SELECT DISTINCT T1.* FROM T00_ROLE T1,T00_COM_AUTH T2
+	WHERE T1.ROLEKEY=T2.ROLEKEY AND T1.FLAG='1'
+	AND T2.USERNAME=#username#
+  </statement>
+   <statement id="getT00_PostStrByUsername" parameterClass="com.ist.platform.dto.T00_com_auth" resultClass="com.ist.platform.dto.T00_role_auth">
+	SELECT DISTINCT T3.* FROM T00_ROLE_POST T3,T00_ROLE T1,T00_COM_AUTH T2
+	WHERE T1.ROLEKEY=T2.ROLEKEY  AND T3.ROLEKEY=T1.ROLEKEY AND T1.FLAG='1'
+	AND T2.USERNAME=#username#
+  </statement>
+ <statement id="getT00_roleListByRolelevel" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_role">
+  SELECT *
+   FROM T00_ROLE
+  WHERE ROLELEVEL>=#value# AND FLAG='1' 
+  ORDER BY ROLELEVEL 
+  </statement>
+     <statement id="deleteRole_auth" parameterClass="com.ist.platform.dto.T00_role_auth" resultClass="int">
+  delete from T00_role_auth where modulekey=#modulekey# 
+  </statement>
+	<statement id="getT00_roleDispList"
+		parameterClass="java.lang.String"
+		resultClass="java.util.HashMap">
+		select r.rolekey rolekeys,r.rolename rolenames from t00_role r ,t00_role_auth ra where ra.modulekey=#modulekey# and ra.rolekey = r.rolekey 
+	</statement>
+</sqlMap>
+

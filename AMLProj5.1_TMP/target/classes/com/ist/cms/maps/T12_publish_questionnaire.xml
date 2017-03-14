@@ -1,0 +1,400 @@
+﻿<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_publish_questionnaire"> 
+<statement id="getT12_publish_questionnaireList1" parameterClass="com.ist.cms.dto.T12_publish_questionnaire" 
+  			resultClass="com.ist.cms.dto.T12_publish_questionnaire"> 
+  SELECT A.PUBLISHKEY,A.QUESTIONINSKEY,A.QUESTIONKEY,A.TITLE,A.CREATETIME,A.STARTTIME,A.ENDTIME,A.PASSSCORE,A.ANSWERTIME,A.QMODE,A.SHOWSOLUTION,A.STATE,A.ISPUBLIC,
+  A.CREATOR,A.PUBLISHMODE,A.ISPCSUBJECT,A.ARCHIVED,B.TITLE AS QUESTIONNAIRETITLE,B.QUESTIONTYPE FROM T12_PUBLISH_QUESTIONNAIRE A INNER JOIN T12_QUESTION_INS B ON A.QUESTIONINSKEY=B.QUESTIONINSKEY 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="publishkey"> 
+   	 A.PUBLISHKEY = #publishkey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="title"> 
+   	 A.TITLE LIKE '%'||#title#||'%'
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="questionnaireTitle"> 
+   	 B.TITLE LIKE '%'||#questionnaireTitle#||'%'
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="flag"> 
+   	 A.FLAG=#flag#
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="state"> 
+   	 A.STATE=#state#
+    </isNotEmpty>       
+    <isNotEmpty prepend="AND" property="createtime_begin"> 
+   	 A.CREATETIME >=#createtime_begin#
+    </isNotEmpty>      
+    <isNotEmpty prepend="AND" property="createtime_end"> 
+   	  <![CDATA[A.CREATETIME <=#createtime_end#]]>
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="questiontype"> 
+   	 B.QUESTIONTYPE=#questiontype#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="archived">
+    A.ARCHIVED = #archived#
+    </isNotEmpty>  
+  </dynamic> 
+   <isNotEmpty prepend="" property="sort_type"> 
+   	 ORDER BY $sort$ $sort_type$
+    </isNotEmpty> 
+  </statement> 
+ 
+  <statement id="getT12_publish_questionnaireListCount1" parameterClass="com.ist.cms.dto.T12_publish_questionnaire" resultClass="int"> 
+  SELECT COUNT(*) FROM T12_PUBLISH_QUESTIONNAIRE A INNER JOIN T12_QUESTION_INS B ON A.QUESTIONINSKEY=B.QUESTIONINSKEY
+  <dynamic prepend="WHERE">  
+    <isNotEmpty prepend="AND" property="publishkey"> 
+   	 A.PUBLISHKEY = #publishkey# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="title"> 
+   	 A.TITLE LIKE '%'||#title#||'%'
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="questionnaireTitle"> 
+   	 B.TITLE LIKE '%'||#questionnaireTitle#||'%'
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="flag"> 
+   	 A.FLAG=#flag#
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="state"> 
+   	 A.STATE=#state#
+    </isNotEmpty>       
+    <isNotEmpty prepend="AND" property="createtime_begin"> 
+   	 A.CREATETIME >=#createtime_begin#
+    </isNotEmpty>      
+    <isNotEmpty prepend="AND" property="createtime_end"> 
+   	  <![CDATA[A.CREATETIME <=#createtime_end#]]>
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="questiontype"> 
+   	 B.QUESTIONTYPE=#questiontype#
+    </isNotEmpty>  
+    <isNotEmpty prepend="AND" property="archived">
+    A.ARCHIVED = #archived#
+    </isNotEmpty>   
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT12_publish_questionnaireList" parameterClass="com.ist.cms.dto.T12_publish_questionnaire" resultClass="com.ist.cms.dto.T12_publish_questionnaire"> 
+  select a.realname as user_name,
+       b.organname as user_org,
+       f.score as user_score,
+       e.answerkey,
+       d.questionkey,
+       d.questioninskey
+	  from T00_USER a
+	  LEFT JOIN T00_USER_ATTR c ON A.USERNAME = C.USERNAME
+	  LEFT JOIN t00_organ b ON C.ORGANKEY = B.ORGANKEY,
+	  T12_publish_questionnaire d,
+	  T12_answer_questionnaire e,
+	  T12_JUDGMENT_QUESTIONNAIRE g,
+	  (SELECT JUDGMENTKEY, SUM(SCORE) AS SCORE
+                              FROM T12_JUDGMENT_SUBJECT
+                             GROUP BY JUDGMENTKEY) f
+ 	where a.username = e.username
+	   and e.publishkey = d.publishkey
+	   and e.STATE = '1'
+	   and g.judgmentkey = f.JUDGMENTKEY
+	   and g.answerkey = e.answerkey
+    <isNotEmpty prepend="and" property="publishkey"> 
+      d.publishkey = #publishkey# 
+    </isNotEmpty> 
+  </statement> 
+  <statement id="getT12_publish_questionnaireListCount" parameterClass="com.ist.cms.dto.T12_publish_questionnaire" resultClass="int"> 
+  select  count(*)
+	 from T00_USER a
+	  LEFT JOIN T00_USER_ATTR c ON A.USERNAME = C.USERNAME
+	  LEFT JOIN t00_organ b ON C.ORGANKEY = B.ORGANKEY,
+	  T12_publish_questionnaire d,
+	  T12_answer_questionnaire e,
+	  T12_JUDGMENT_QUESTIONNAIRE g,
+	  (SELECT JUDGMENTKEY, SUM(SCORE) AS SCORE
+                              FROM T12_JUDGMENT_SUBJECT
+                             GROUP BY JUDGMENTKEY) f
+ 	where a.username = e.username
+	   and e.publishkey = d.publishkey
+	   and e.STATE = '1'
+	   and g.judgmentkey = f.JUDGMENTKEY
+	   and g.answerkey = e.answerkey
+    <isNotEmpty prepend="and" property="publishkey"> 
+      d.publishkey = #publishkey# 
+    </isNotEmpty> 
+  </statement>
+ 
+  <statement id="getT12_publish_listCount" parameterClass="com.ist.cms.dto.T12_publish_questionnaire" resultClass="int"> 
+   select count(*)  from 
+          T00_USER                  a,
+          t00_organ                 b,
+          T00_USER_ATTR             c,
+          T12_publish_questionnaire d,
+          T12_answer_questionnaire  e
+    where a.username = c.username
+      and b.organkey = c.organkey
+      and a.username = e.username
+      and e.publishkey = d.publishkey
+      and e.STATE = '1'
+    <isNotEmpty prepend="and" property="publishkey"> 
+     d.publishkey = #publishkey# 
+    </isNotEmpty> 
+  </statement> 
+ 
+  <statement id="getT12_answer_list" parameterClass="com.ist.cms.dto.T12_publish_questionnaire" resultClass="com.ist.cms.dto.T12_publish_questionnaire"> 
+	 select w.*,w.title as question_name,case when f.state is null then '0'else f.state end as answer_state,J.totalscore
+	  from T12_PUBLISH_USER t right join t12_PUBLISH_QUESTIONNAIRE w on t.publishkey = w.publishkey  LEFT JOIN T12_ANSWER_QUESTIONNAIRE f on w.publishkey = f.publishkey
+	  AND F.USERNAME=T.USERNAME
+	  LEFT JOIN T12_JUDGMENT_QUESTIONNAIRE JQ ON JQ.ANSWERKEY=F.ANSWERKEY
+          LEFT JOIN (
+               SELECT SUM(A.SCORE) AS totalscore,A.JUDGMENTKEY FROM T12_JUDGMENT_SUBJECT A ,T12_JUDGMENT_QUESTIONNAIRE B 
+               WHERE A.JUDGMENTKEY=B.JUDGMENTKEY GROUP BY A.JUDGMENTKEY
+          )J ON J.JUDGMENTKEY=JQ.JUDGMENTKEY
+	 where t.USERNAME = #user_Id#
+	   and t.USERTYPE = '0'
+	   and t.PUBLISHKEY in
+	       (select a.PUBLISHKEY
+	          from t12_PUBLISH_QUESTIONNAIRE a, t12_QUESTIONNAIRE b
+	           WHERE a.QUESTIONKEY = b.QUESTIONKEY
+	           and b.FLAG = '1'
+	           <isNotEmpty prepend="AND" property="question_name">
+	           a.TITLE LIKE  '%'||#question_name#||'%'
+	           </isNotEmpty>
+	           and a.state = '2')
+	   and t.PUBLISHKEY = w.PUBLISHKEY  and (f.state != '1' or f.state is null) 
+	   AND W.FLAG='1' AND W.ARCHIVED='0' AND W.STATE='2' AND (W.PUBLISHMODE = '1' OR W.PUBLISHMODE='3') 
+	   <dynamic>
+		<isNotEmpty prepend="and" property="current_time">
+		<![CDATA[ #current_time# >= w.starttime]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="current_time">
+			<![CDATA[ #current_time# <= w.endtime]]>
+		</isNotEmpty>
+      </dynamic>
+    </statement> 
+ 
+  <statement id="getT12_answer_listCount" parameterClass="com.ist.cms.dto.T12_publish_questionnaire" resultClass="int"> 
+    select count(w.title)
+	  from T12_PUBLISH_USER t right join t12_PUBLISH_QUESTIONNAIRE w on t.publishkey = w.publishkey  LEFT JOIN T12_ANSWER_QUESTIONNAIRE f on w.publishkey = f.publishkey
+	  AND F.USERNAME=T.USERNAME
+	  LEFT JOIN T12_JUDGMENT_QUESTIONNAIRE JQ ON JQ.ANSWERKEY=F.ANSWERKEY
+          LEFT JOIN (
+               SELECT SUM(A.SCORE) AS totalscore,A.JUDGMENTKEY FROM T12_JUDGMENT_SUBJECT A ,T12_JUDGMENT_QUESTIONNAIRE B 
+               WHERE A.JUDGMENTKEY=B.JUDGMENTKEY GROUP BY A.JUDGMENTKEY
+          )J ON J.JUDGMENTKEY=JQ.JUDGMENTKEY
+	 where t.USERNAME = #user_Id#
+	   and t.USERTYPE = '0'
+	   and t.PUBLISHKEY in
+	       (select a.PUBLISHKEY
+	          from t12_PUBLISH_QUESTIONNAIRE a, t12_QUESTIONNAIRE b
+	           WHERE a.QUESTIONKEY = b.QUESTIONKEY
+	           and b.FLAG = '1'
+	           <isNotEmpty prepend="AND" property="question_name">
+	           a.TITLE LIKE  '%'||#question_name#||'%'
+	           </isNotEmpty>
+	           and a.state = '2')
+	   and t.PUBLISHKEY = w.PUBLISHKEY and (f.state != '1' or f.state is null) 
+	   AND W.FLAG='1' AND W.ARCHIVED='0' AND W.STATE='2' AND (W.PUBLISHMODE = '1' OR W.PUBLISHMODE='3') 
+	  <dynamic>
+		<isNotEmpty prepend="and" property="current_time">
+		<![CDATA[ #current_time# >= w.starttime]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="current_time">
+			<![CDATA[ #current_time# <= w.endtime]]>
+		</isNotEmpty>
+      </dynamic>
+  </statement> 
+ 
+   <statement id="getT12_answer_finish_list" parameterClass="com.ist.cms.dto.T12_publish_questionnaire" resultClass="com.ist.cms.dto.T12_publish_questionnaire"> 
+	 select w.*,w.title as question_name,case when f.state is null then '0'else f.state end as answer_state,J.totalscore
+	  from T12_PUBLISH_USER t right join t12_PUBLISH_QUESTIONNAIRE w on t.publishkey = w.publishkey  LEFT JOIN T12_ANSWER_QUESTIONNAIRE f on w.publishkey = f.publishkey
+	  AND F.USERNAME=T.USERNAME
+	  LEFT JOIN T12_JUDGMENT_QUESTIONNAIRE JQ ON JQ.ANSWERKEY=F.ANSWERKEY
+          LEFT JOIN (
+               SELECT SUM(A.SCORE) AS totalscore,A.JUDGMENTKEY FROM T12_JUDGMENT_SUBJECT A ,T12_JUDGMENT_QUESTIONNAIRE B 
+               WHERE A.JUDGMENTKEY=B.JUDGMENTKEY GROUP BY A.JUDGMENTKEY
+          )J ON J.JUDGMENTKEY=JQ.JUDGMENTKEY
+	 where t.USERNAME = #user_Id#
+	   and t.USERTYPE = '0'
+	   and t.PUBLISHKEY in
+	       (select a.PUBLISHKEY
+	          from t12_PUBLISH_QUESTIONNAIRE a, T12_QUESTION_INS b
+	           WHERE a.QUESTIONINSKEY = b.QUESTIONINSKEY
+	           and b.FLAG = '1'
+	           <isNotEmpty prepend="AND" property="question_name">
+	           a.TITLE LIKE  '%'||#question_name#||'%'
+	           </isNotEmpty>
+	           and a.state = '2')
+	   and t.PUBLISHKEY = w.PUBLISHKEY  and f.state = '1'
+	   AND W.FLAG='1' AND W.ARCHIVED='1' AND W.STATE='2' AND W.ISPUBLIC='1' AND (W.PUBLISHMODE = '1' OR W.PUBLISHMODE = '3')
+    </statement> 
+    
+      <statement id="getT12_answer_finish_listCount" parameterClass="com.ist.cms.dto.T12_publish_questionnaire" resultClass="int"> 
+    select count(w.title)
+	  from T12_PUBLISH_USER t right join t12_PUBLISH_QUESTIONNAIRE w on t.publishkey = w.publishkey  LEFT JOIN T12_ANSWER_QUESTIONNAIRE f on w.publishkey = f.publishkey
+	  AND F.USERNAME=T.USERNAME
+	  LEFT JOIN T12_JUDGMENT_QUESTIONNAIRE JQ ON JQ.ANSWERKEY=F.ANSWERKEY
+          LEFT JOIN (
+               SELECT SUM(A.SCORE) AS totalscore,A.JUDGMENTKEY FROM T12_JUDGMENT_SUBJECT A ,T12_JUDGMENT_QUESTIONNAIRE B 
+               WHERE A.JUDGMENTKEY=B.JUDGMENTKEY GROUP BY A.JUDGMENTKEY
+          )J ON J.JUDGMENTKEY=JQ.JUDGMENTKEY
+	 where t.USERNAME = #user_Id#
+	   and t.USERTYPE = '0'
+	   and t.PUBLISHKEY in
+	       (select a.PUBLISHKEY
+	          from t12_PUBLISH_QUESTIONNAIRE a, T12_QUESTION_INS b
+	           WHERE a.QUESTIONINSKEY = b.QUESTIONINSKEY
+	           and b.FLAG = '1'
+	           <isNotEmpty prepend="AND" property="question_name">
+	           a.TITLE LIKE  '%'||#question_name#||'%'
+	           </isNotEmpty>
+	           and a.state = '2')
+	   and t.PUBLISHKEY = w.PUBLISHKEY and f.state = '1'
+	   AND W.FLAG='1' AND W.ARCHIVED='1' AND W.STATE='2' AND W.ISPUBLIC='1' AND (W.PUBLISHMODE = '1' OR W.PUBLISHMODE = '3')
+  </statement> 
+  <statement id="insertT12_publish_questionnaire" parameterClass="com.ist.cms.dto.T12_publish_questionnaire" resultClass="int"> 
+  INSERT INTO T12_PUBLISH_QUESTIONNAIRE(PUBLISHKEY,QUESTIONINSKEY,QUESTIONKEY,TITLE,CREATETIME,STARTTIME,ENDTIME,PASSSCORE,ANSWERTIME,QMODE,SHOWSOLUTION,STATE,ISPUBLIC,CREATOR,MODIFYTIME,MODIFIER,PUBLISHMODE,ISPCSUBJECT,ARCHIVED,FLAG,STOPANSWER,QUESTIONTYPE) 
+  VALUES
+  (#publishkey#,#questioninskey#,#questionkey#,#title#,#createtime#,#starttime#,#endtime#,#passscore#,#answertime#,#qmode#,#showsolution#,#state#,#ispublic#,#creator#,#modifytime#,#modifier#,#publishmode#,#ispcsubject#,#archived#,#flag#,#stopanswer#,#questiontype#) 
+  </statement> 
+ 
+  <statement id="modifyT12_publish_questionnaire" parameterClass="com.ist.cms.dto.T12_publish_questionnaire" resultClass="int"> 
+  update T12_publish_questionnaire set
+  questionkey=#questionkey#,title=#title#,starttime=#starttime#,endtime=#endtime#,passscore=#passscore#,answertime=#answertime#,
+  	qmode=#qmode#,showsolution=#showsolution#,state=#state#,ispublic=#ispublic#,modifytime=#modifytime#,modifier=#modifier#,
+  	publishmode=#publishmode#
+  where publishkey=#publishkey# 
+  </statement> 
+ 
+  <statement id="deleteT12_publish_questionnaireLogic" parameterClass="java.lang.String" resultClass="int">
+  	UPDATE T12_PUBLISH_QUESTIONNAIRE SET FLAG='2' WHERE PUBLISHKEY=#value# 
+  </statement> 
+ 
+  <statement id="getT12_publish_questionnaireDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_publish_questionnaire"> 
+  SELECT * FROM T12_PUBLISH_QUESTIONNAIRE WHERE PUBLISHKEY=#value# 
+  </statement>
+   
+ <statement id="t12_publish_questionnaire_publish" parameterClass="java.lang.String" resultClass="int"> 
+  update T12_publish_questionnaire set state='2' where publishkey=#value# 
+  </statement> 
+  <statement id="stopT12_publish_questionnaire" parameterClass="com.ist.cms.dto.T12_publish_questionnaire" resultClass="int"> 
+  update T12_publish_questionnaire set stopanswer='1' where publishkey=#publishkey# 
+  </statement> 
+  
+  <statement id="getAnswer_user" parameterClass="com.ist.cms.dto.T12_publish_questionnaire" resultClass="int"> 
+   select count(*)  from T12_PUBLISH_USER t  where  t.USERTYPE = '0' and  t.publishkey = #publishkey# 
+  </statement> 
+  
+  <statement id="getReal_Answer_user" parameterClass="com.ist.cms.dto.T12_publish_questionnaire" resultClass="int"> 
+  select count(*)  from t12_answer_questionnaire t  where t.publishkey = #publishkey#  and t.state = '1'
+  </statement> 
+  <!-- add by zhangqiaojun -->
+  <statement id="getPass_user" parameterClass="com.ist.cms.dto.T12_publish_questionnaire" resultClass="int"> 
+  		SELECT COUNT(*)FROM (
+					 SELECT ANSWER_QU.USERNAME,ANSWER_QU.PUBLISHKEY
+					   FROM T12_JUDGMENT_QUESTIONNAIRE JUDGMENT_QU,
+					        T12_ANSWER_QUESTIONNAIRE   ANSWER_QU,
+					        T12_PUBLISH_QUESTIONNAIRE  PUBLISH_QU,
+					        (SELECT SUM(JUDEMENT_SUBJECT.SCORE) SCORE,
+					                     JUDEMENT_SUBJECT.JUDGMENTKEY
+					                FROM T12_JUDGMENT_SUBJECT JUDEMENT_SUBJECT
+					               GROUP BY JUDEMENT_SUBJECT.JUDGMENTKEY) TMPA
+					  WHERE ANSWER_QU.ANSWERKEY = JUDGMENT_QU.ANSWERKEY
+					    AND ANSWER_QU.PUBLISHKEY = PUBLISH_QU.PUBLISHKEY
+					    AND TMPA.JUDGMENTKEY =JUDGMENT_QU.JUDGMENTKEY
+					    AND TMPA.SCORE >= PUBLISH_QU.PASSSCORE
+					    AND ANSWER_QU.STATE = '1'
+					    AND ANSWER_QU.PUBLISHKEY=#publishkey#
+				) TMP
+  </statement>
+  <statement id="getMaxScore_MinScore_AvgeScore" parameterClass="com.ist.cms.dto.T12_publish_questionnaire" resultClass="java.util.HashMap"> 
+  		 SELECT COALESCE(MAX(TMPA.SCORE),0) AS  MAXSCORE,COALESCE(MIN(TMPA.SCORE),0) AS MINSCORE,AVG(FLOAT(COALESCE(TMPA.SCORE,0))) AS AVGESCORE
+				   FROM T12_JUDGMENT_QUESTIONNAIRE JUDGMENT_QU,
+				        T12_ANSWER_QUESTIONNAIRE ANSWER_QU,
+				        (SELECT SUM(JUDEMENT_SUBJECT.SCORE) SCORE,
+				                     JUDEMENT_SUBJECT.JUDGMENTKEY
+				                FROM T12_JUDGMENT_SUBJECT JUDEMENT_SUBJECT
+				               GROUP BY JUDEMENT_SUBJECT.JUDGMENTKEY) TMPA
+				  WHERE ANSWER_QU.ANSWERKEY= JUDGMENT_QU.ANSWERKEY
+				    AND TMPA.JUDGMENTKEY =JUDGMENT_QU.JUDGMENTKEY
+				     AND ANSWER_QU.STATE = '1'
+				    AND ANSWER_QU.PUBLISHKEY= #publishkey#   
+  </statement>  
+  <statement id="getT12_publish_holdList" parameterClass="com.ist.cms.dto.T12_publish_questionnaire" 
+  			resultClass="com.ist.cms.dto.T12_publish_questionnaire"> 
+  SELECT A.PUBLISHKEY,A.QUESTIONKEY,A.TITLE,A.CREATETIME,A.STARTTIME,A.ENDTIME,A.PASSSCORE,A.ANSWERTIME,A.QMODE,A.SHOWSOLUTION,A.STATE,A.ISPUBLIC,
+  A.CREATOR,A.PUBLISHMODE,B.TITLE AS QUESTIONNAIRETITLE,B.QUESTIONTYPE FROM T12_PUBLISH_QUESTIONNAIRE A INNER JOIN T12_QUESTION_INS B ON A.QUESTIONINSKEY=B.QUESTIONINSKEY 
+  and (A.publishmode='1' or A.publishmode='3') and A.state='2' and A.archived='0' AND A.FLAG='1'
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="creator"> 
+   	 A.creator=#creator#
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="question_name">
+	      A.TITLE LIKE  '%'||#question_name#||'%'
+	 </isNotEmpty> 
+    </dynamic> 
+  </statement> 
+  <statement id="getT12_publish_holdListCount" parameterClass="com.ist.cms.dto.T12_publish_questionnaire" 
+  			resultClass="int"> 
+  SELECT count(*) FROM T12_PUBLISH_QUESTIONNAIRE A INNER JOIN T12_QUESTION_INS B ON A.QUESTIONINSKEY=B.QUESTIONINSKEY 
+  and (A.publishmode='1' or A.publishmode='3') and A.state='2' and A.archived='0' AND A.FLAG='1'
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="creator"> 
+   	 A.creator=#creator#
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="question_name">
+	      A.TITLE LIKE  '%'||#question_name#||'%'
+	 </isNotEmpty> 
+    </dynamic> 
+  </statement> 
+  <statement id="holdT12_publish_questionnaire" parameterClass="com.ist.cms.dto.T12_publish_questionnaire" resultClass="int"> 
+  update T12_publish_questionnaire set ispublic=#ispublic#,archived=#archived#,ispcsubject=#ispcsubject# where publishkey=#publishkey# 
+  </statement> 
+  
+  <statement id="getT12_publish_finish_holdList" parameterClass="com.ist.cms.dto.T12_publish_questionnaire" 
+             resultClass="com.ist.cms.dto.T12_publish_questionnaire"> 
+	  select p.* from T12_PUBLISH_QUESTIONNAIRE p,T12_PUBLISH_USER u where u.publishkey = p.publishkey and u.usertype='2' and 
+	  p.archived='1' and (p.publishmode='1' or p.publishmode='3') and p.state='2' and u.username=#user_name#
+   <dynamic prepend=""> 
+     <isNotEmpty prepend="AND" property="question_name">
+	           p.TITLE LIKE  '%'||#question_name#||'%'
+	 </isNotEmpty> 
+   </dynamic> 
+ </statement> 
+ <statement id="getT12_publish_finish_holdListCount" parameterClass="com.ist.cms.dto.T12_publish_questionnaire" 
+             resultClass="int"> 
+	  select count(*) from T12_PUBLISH_QUESTIONNAIRE p,T12_PUBLISH_USER u where u.publishkey = p.publishkey and u.usertype='2' and 
+	  p.archived='1' and (p.publishmode='1' or p.publishmode='3') and p.state='2' and u.username=#user_name#
+   <dynamic prepend=""> 
+     <isNotEmpty prepend="AND" property="question_name">
+	           p.TITLE LIKE  '%'||#question_name#||'%'
+	 </isNotEmpty> 
+   </dynamic> 
+ </statement> 
+   <statement id="getT12_finish_holdListCount" parameterClass="com.ist.cms.dto.T12_publish_questionnaire" 
+             resultClass="int"> 
+	  select count(*) from T12_PUBLISH_QUESTIONNAIRE p,T12_PUBLISH_USER u where u.publishkey = p.publishkey and u.usertype='2' and 
+	  p.archived='1' and (p.publishmode='1' or p.publishmode='3') and p.state='2' and u.username=#user_name#
+	 <dynamic prepend=""> 
+	     <isNotEmpty prepend="AND" property="question_name">
+		           p.TITLE LIKE  '%'||#question_name#||'%'
+		 </isNotEmpty> 
+   </dynamic> 
+ </statement>
+ <!-- add by zhangqiaojun 2010-10-08 -->
+ <statement id="getGradeLevelAnswerNum" parameterClass="java.util.Map" resultClass="int"> 
+  		SELECT COALESCE(COUNT(ANSWER_QU.ANSWERKEY),0) AS  ANSWERNUM
+				   FROM T12_JUDGMENT_QUESTIONNAIRE JUDGMENT_QU,
+				        T12_ANSWER_QUESTIONNAIRE ANSWER_QU,
+				        (SELECT SUM(JUDEMENT_SUBJECT.SCORE) SCORE,
+				                     JUDEMENT_SUBJECT.JUDGMENTKEY
+				                FROM T12_JUDGMENT_SUBJECT JUDEMENT_SUBJECT
+				               GROUP BY JUDEMENT_SUBJECT.JUDGMENTKEY) TMPA
+				  WHERE ANSWER_QU.ANSWERKEY= JUDGMENT_QU.ANSWERKEY
+				    AND TMPA.JUDGMENTKEY =JUDGMENT_QU.JUDGMENTKEY
+				    AND ANSWER_QU.STATE = '1'
+				    AND ANSWER_QU.PUBLISHKEY= #publishkey#   
+            AND TMPA.SCORE BETWEEN #downlimit# AND #toplimit# 
+  </statement>
+  <statement id="getAnswerQuestionnaireManNum" parameterClass="com.ist.cms.dto.T12_publish_questionnaire" resultClass="int"> 
+  	SELECT COUNT(*) FROM T12_ANSWER_QUESTIONNAIRE AQ,T00_USER_ATTR UA,T12_PUBLISH_QUESTIONNAIRE PQ WHERE AQ.PUBLISHKEY= #publishkey# AND
+  	AQ.USERNAME=UA.USERNAME AND PQ.PUBLISHKEY=AQ.PUBLISHKEY AND PQ.QUESTIONTYPE='2' AND UA.SEX='1' 
+  </statement>
+</sqlMap> 
+
+

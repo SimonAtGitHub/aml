@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+	<form-beans>
+		<form-bean name="t07_user_identityActionForm"
+			type="com.ist.aml.offs_report.controller.T07_user_identityActionForm" />
+		<form-bean name="t07_user_identityUrgeActionForm"
+			type="com.ist.aml.offs_report.controller.T07_user_identityUrgeActionForm" />
+		<form-bean name="t07_recordActionForm"
+			type="com.ist.aml.offs_report.controller.T07_recordActionForm" />
+		<form-bean name="t07_report_by_organActionForm"
+			type="com.ist.aml.report.controller.T07_report_by_organActionForm" />
+		<form-bean name="t07_amlpostActionForm"
+			type="com.ist.aml.offs_report.controller.T07_amlpostActionForm" />
+	</form-beans>
+
+
+	<!-- global-forwards -->
+	<global-forwards type="org.apache.struts.action.ActionForward">
+		<forward name="failure" path="/../common/errors.jsp" />
+		<forward name="errors" path="/../common/errors.jsp" />
+		<forward name="nopower" path="/../common/nopower.jsp" />
+		<forward name="sessiontimeout" path="/../common/sessiontimeout.jsp" />
+	</global-forwards>
+
+	<action-mappings>
+		<action path="/identity/t07_user_identitySearch" parameter="getT07_user_identitylist"
+			name="t07_user_identityActionForm" type="com.ist.aml.offs_report.controller.T07_user_identityAction"
+			validate="false" scope="request">
+			<forward name="success" path="/identity/user_identitysearch.jsp" />
+		</action>
+
+		<action path="/identity/t07_user_identityDisp" parameter="getT07_user_identityDisp"
+			name="t07_user_identityActionForm" type="com.ist.aml.offs_report.controller.T07_user_identityAction"
+			validate="false" scope="request">
+			<forward name="success1" path="/identity/user_identity1.jsp" />
+			<forward name="success2" path="/identity/user_identity2.jsp" />
+			<forward name="success3" path="/identity/user_identity3.jsp" />
+			<forward name="success4" path="/identity/user_identity4.jsp" />
+		</action>
+
+		<action path="/identity/t07_user_identityToAdd" parameter="toaddT07_user_identity"
+			name="t07_user_identityActionForm" type="com.ist.aml.offs_report.controller.T07_user_identityAction"
+			validate="false" scope="request">
+			<forward name="success" path="/identity/user_identityadd.jsp" />
+		</action>
+		<action path="/identity/t07_user_identityAdd" parameter="addT07_user_identity"
+			name="t07_user_identityActionForm" type="com.ist.aml.offs_report.controller.T07_user_identityAction"
+			validate="false" scope="request">
+			<forward name="success1" path="/identity/user_identity1.jsp" />
+			<forward name="success2" path="/identity/user_identity2.jsp" />
+			<forward name="success3" path="/identity/user_identity3.jsp" />
+			<forward name="success4" path="/identity/user_identity4.jsp" />
+			<forward name="failure1" path="/identity/t07_user_identityToAdd.do" />
+			<forward name="success" path="/identity/t07_user_identitySearch.do" />
+		</action>
+
+		<action path="/identity/t07_user_identityAdd_do" parameter="addT07_user_identityDo"
+			name="t07_user_identityActionForm" type="com.ist.aml.offs_report.controller.T07_user_identityAction"
+			validate="false" scope="request">
+			<forward name="success" path="/identity/t07_user_identitySearch.do" />
+		</action>
+
+		<action path="/identity/t07_user_identityDel_do" parameter="delT07_user_identityDo"
+			name="t07_user_identityActionForm" type="com.ist.aml.offs_report.controller.T07_user_identityAction"
+			validate="false" scope="request">
+			<forward name="success" path="/identity/t07_user_identitySearch.do" />
+		</action>
+
+
+		<action path="/report_excel" parameter="get_report_list"
+			name="t07_report_by_organActionForm" type="com.ist.common.jasperreport.controller.jasper_reportAction"
+			validate="false" scope="request">
+			<forward name="success" path="/servlets/JRXlsServlet/a.action" />
+		</action>
+
+		<action path="/identity/t07_user_identityUpdateStatus"
+			parameter="t07_user_identityUpdateStatus" name="t07_user_identityActionForm"
+			type="com.ist.aml.offs_report.controller.T07_user_identityAction"
+			validate="false" scope="request">
+			<forward name="success" path="/identity/t07_user_identitySearch.do" />
+		</action>
+
+		<action path="/identity/t07_user_identityUrgeSearch" parameter="t07_user_identityUrgeList"
+			name="t07_user_identityUrgeActionForm" type="com.ist.aml.offs_report.controller.T07_user_identityUrgeAction"
+			validate="false" scope="request">
+			<forward name="success" path="/identity/user_identityUrgeSearch.jsp" />
+		</action>
+
+		<action path="/identity/urgeSearchOrgan" parameter="urgeSearchOrgan"
+			name="t07_user_identityUrgeActionForm" type="com.ist.aml.offs_report.controller.T07_user_identityUrgeAction"
+			validate="false" scope="request">
+			<forward name="success" path="/identity/user_identityOrgan.jsp" />
+		</action>
+
+		<action path="/amlpost/getT07_amlpost_list" parameter="getT07_amlpostList"
+			name="t07_amlpostActionForm" type="com.ist.aml.offs_report.controller.T07_amlpostAction"
+			validate="false" scope="request">
+			<forward name="success" path="/amlpost/amlpost_list.jsp" />
+		</action>
+
+		<action path="/amlpost/t07_amlpost_add" parameter="addT07_amlpost"
+			name="t07_amlpostActionForm" type="com.ist.aml.offs_report.controller.T07_amlpostAction"
+			validate="false" scope="request">
+			<forward name="success" path="/amlpost/amlpost_add.jsp" />
+		</action>
+
+		<action path="/amlpost/t07_amlpost_add_do" parameter="addT07_amlpostDo"
+			name="t07_amlpostActionForm" type="com.ist.aml.offs_report.controller.T07_amlpostAction"
+			validate="false" scope="request">
+			<forward name="success" path="/amlpost/getT07_amlpost_list.do" />
+		</action>
+
+		<action path="/amlpost/t07_amlpost_modify" parameter="modifyT07_amlpost"
+			name="t07_amlpostActionForm" type="com.ist.aml.offs_report.controller.T07_amlpostAction"
+			validate="false" scope="request">
+			<forward name="success" path="/amlpost/amlpost_modify.jsp" />
+		</action>
+
+		<action path="/amlpost/t07_amlpost_modify_do" parameter="modifyT07_amlpostDo"
+			name="t07_amlpostActionForm" type="com.ist.aml.offs_report.controller.T07_amlpostAction"
+			validate="false" scope="request">
+			<forward name="success" path="/amlpost/getT07_amlpost_list.do" />
+		</action>
+
+		<action path="/amlpost/t07_amlpost_delete_do" parameter="deleteT07_amlpostDo"
+			name="t07_amlpostActionForm" type="com.ist.aml.offs_report.controller.T07_amlpostAction"
+			validate="false" scope="request">
+			<forward name="success" path="/amlpost/getT07_amlpost_list.do" />
+		</action>
+		
+		<!-- from 2012.7.7 to 2012.7.11 modified by lijie -->
+		<!-- <action path="/amlpost/t07_amlpost_xls" parameter="getT07_amlpost_xls"
+			name="t07_amlpostActionForm" type="com.ist.aml.offs_report.controller.T07_amlpostAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report_excel.do" />
+		</action> -->
+		<!-- <action path="/record/t07_record_xls" parameter="getT07_record_xls"
+			name="t07_recordActionForm" type="com.ist.aml.offs_report.controller.T07_recordAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report_excel.do" />
+		</action> -->
+		<!-- <action path="/identity/gett07_user_identity_xls" parameter="getT07_user_identityExcel"
+			name="t07_user_identityActionForm" type="com.ist.aml.offs_report.controller.T07_user_identityAction"
+			validate="false" scope="request">
+			<forward name="success" path="/report_excel.do" />
+		</action -->
+		<action path="/amlpost/export_t07_amlpostList" parameter="export_t07_amlpostList"
+			name="t07_amlpostActionForm" type="com.ist.aml.offs_report.controller.T07_amlpostAction"
+			validate="false" scope="request">
+			<forward name="success" path="/amlpost/t07_amlpostList_export.jsp" />
+		</action>
+		<action path="/record/export_t07_recordList" parameter="export_t07_recordList"
+			name="t07_recordActionForm" type="com.ist.aml.offs_report.controller.T07_recordAction"
+			validate="false" scope="request">
+			<forward name="success1" path="/record/t07_recordList_export1.jsp" />
+			<forward name="success2" path="/record/t07_recordList_export2.jsp" />
+			<forward name="success3" path="/record/t07_recordList_export3.jsp" />
+			<forward name="success4" path="/record/t07_recordList_export4.jsp" />
+			<forward name="success5" path="/record/t07_recordList_export5.jsp" />
+		</action>
+		<action path="/identity/exportT07_user_identitylist" parameter="exportT07_user_identitylist"
+			name="t07_user_identityActionForm" type="com.ist.aml.offs_report.controller.T07_user_identityAction"
+			validate="false" scope="request">
+			<forward name="success1" path="/identity/t07_user_identityList_export1.jsp" />
+			<forward name="success2" path="/identity/t07_user_identityList_export2.jsp" />
+			<forward name="success3" path="/identity/t07_user_identityList_export3.jsp" />
+			<forward name="success4" path="/identity/t07_user_identityList_export4.jsp" />
+		</action>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<!-- end of modification -->
+		
+		<action path="/record/gett07_record_list" parameter="getT07_recordList"
+			name="t07_recordActionForm" type="com.ist.aml.offs_report.controller.T07_recordAction"
+			validate="false" scope="request">
+			<forward name="success" path="/record/record_list.jsp" />
+		</action>
+
+		<action path="/record/t07_record_search" parameter="searchT07_record"
+			name="t07_recordActionForm" type="com.ist.aml.offs_report.controller.T07_recordAction"
+			validate="false" scope="request">
+			<forward name="success" path="/record/record_search.jsp" />
+		</action>
+
+		<action path="/record/t07_record_add" parameter="addT07_record"
+			name="t07_recordActionForm" type="com.ist.aml.offs_report.controller.T07_recordAction"
+			validate="false" scope="request">
+			<forward name="success" path="/record/record_add.jsp" />
+		</action>
+
+		<action path="/record/t07_record_add_do" parameter="addT07_recordDo"
+			name="t07_recordActionForm" type="com.ist.aml.offs_report.controller.T07_recordAction"
+			validate="false" scope="request">
+			<forward name="success" path="/record/gett07_record_list.do" />
+		</action>
+
+		<action path="/record/t07_record_modify" parameter="modifyT07_record"
+			name="t07_recordActionForm" type="com.ist.aml.offs_report.controller.T07_recordAction"
+			validate="false" scope="request">
+			<forward name="success" path="/record/record_modify.jsp" />
+		</action>
+
+		<action path="/record/t07_record_modify_do" parameter="modifyT07_recordDo"
+			name="t07_recordActionForm" type="com.ist.aml.offs_report.controller.T07_recordAction"
+			validate="false" scope="request">
+			<forward name="success" path="/record/gett07_record_list.do" />
+		</action>
+
+		<action path="/record/t07_record_delete_do" parameter="deleteT07_recordDo"
+			name="t07_recordActionForm" type="com.ist.aml.offs_report.controller.T07_recordAction"
+			validate="false" scope="request">
+			<forward name="success" path="/record/gett07_record_list.do" />
+		</action>
+
+		
+	</action-mappings>
+	<message-resources parameter="ApplicationResources_zh_CN" />
+
+</struts-config>

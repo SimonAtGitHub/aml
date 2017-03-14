@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T09_indicator_attr"> 
+  <statement id="getT09_indicator_attrList" parameterClass="com.ist.iap.dto.T09_indicator_attr" resultClass="com.ist.iap.dto.T09_indicator_attr"> 
+  select indickey,indicname,flag,des,callevel,granularity,currency,isorgan,indictype,apptype,resultype,defmode,calmode,dispseq, creator,createdate,modifier,modifydate
+  from T09_indicator t
+ where t.indictype = '3'
+   and apptype not in (select categorykey
+                         from t00_category
+                        where isbuildin = '1'
+                          and categorytype = 'G00003')
+   and flag != '2'
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="indicname"> 
+    indicname = #indicname# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="indickey"> 
+    indickey = #indickey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT09_indicator_attrListCount" parameterClass="com.ist.iap.dto.T09_indicator_attr" resultClass="int"> 
+   select count(*)
+  from T09_indicator t
+ where t.indictype = '3'
+   and apptype not in (select categorykey
+                         from t00_category
+                        where isbuildin = '1'
+                          and categorytype = 'G00003')
+   and flag != '2'
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="indicname"> 
+    indicname = #indicname# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="indickey"> 
+    indickey = #indickey# 
+    </isNotEmpty> 
+     </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT09_indicator_attr" parameterClass="com.ist.iap.dto.T09_indicator" resultClass="int"> 
+  insert into T09_indicator_attr(
+  indickey,indicno,indicformula,innerindicformula,inneruseflag,repeatusenum,stdval1,stdval2,stdval3
+  ) values(
+  #indickey#,#indicno#,#indicformula#,#innerindicformula#,#inneruseflag#,#repeatusenum#,#stdval1#,#stdval2#,#stdval3#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT09_indicator_attr" parameterClass="com.ist.iap.dto.T09_indicator" resultClass="int"> 
+  update T09_indicator_attr set 
+  stdval1=#stdval1#,stdval2=#stdval2#,stdval3=#stdval3#
+  where indickey=#indickey# 
+  </statement> 
+ 
+  <statement id="deleteT09_indicator_attr" parameterClass="java.lang.String" resultClass="int">
+  delete from T09_indicator_attr where indickey=#value# 
+  </statement> 
+ 
+  <statement id="getT09_indicator_attrDisp" parameterClass="java.lang.String" resultClass="com.ist.iap.dto.T09_indicator_attr"> 
+  select * from T09_indicator_attr where indickey=#value# 
+  </statement> 
+ 
+</sqlMap> 
+

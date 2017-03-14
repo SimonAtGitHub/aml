@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="AMLProj5.1_TMP"
+  id="myeclipse.1306389189803"
+  context-root="/aml"
+  j2ee-spec="1.3"
+  archive="AMLProj5.1_TMP.war">
+  <attributes>
+    <attribute name="webrootdir" value="/src/main/webapp" />
+  </attributes>
+</project-module>
+

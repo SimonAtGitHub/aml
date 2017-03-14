@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T07_lip">
+	
+	<statement id="getT10_pr_auditVersion"
+		parameterClass="com.ist.aml.lip.dto.T10_pr_audit" resultClass="java.lang.String">
+		select max(version) as version from t10_pr_audit
+		<dynamic prepend="where">
+		    <isNotEmpty prepend="and" property="list_type">
+				list_type = #list_type#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="list_source">
+				list_source = #list_source#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+    
+	<statement id="insertT10_pr_audit"
+		parameterClass="com.ist.aml.lip.dto.T10_pr_audit" resultClass="int">
+		insert into T10_pr_audit(
+		list_type,list_source,version,up_flag,plots,ischeck,upload_user,upload_dt,app_user,app_dt,audit_user,audit_dt,re_reason,syn_dt,syn_user,syn_st,reserved_field1,reserved_field2
+		) values(
+		#list_type#,#list_source#,#version#,#up_flag#,#plots#,#ischeck#,#upload_user#,#upload_dt#,#app_user#,#app_dt#,#audit_user#,#audit_dt#,#re_reason#,#syn_dt#,#syn_user#,#syn_st#,#reserved_field1#,#reserved_field2#
+		)
+	</statement>
+	
+	<statement id="getT00_list_cols_resultList"
+		parameterClass="java.lang.String" remapResults="true"
+		resultClass="java.util.LinkedHashMap">
+		<![CDATA[$sql$]]>
+	</statement>
+</sqlMap>
+

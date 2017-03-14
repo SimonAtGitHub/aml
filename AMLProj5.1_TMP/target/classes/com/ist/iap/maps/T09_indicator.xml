@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T09_indicator">
+	<statement id="getT09_indicatorList"
+		parameterClass="com.ist.iap.dto.T09_indicator"
+		resultClass="com.ist.iap.dto.T09_indicator">
+		select
+		indickey,indicname,flag,des,callevel,granularity,currency,isorgan,indictype,apptype,resultype,defmode,calmode,dispseq,creator,createdate,modifier,modifydate,implway
+		from T09_indicator t where  flag != '2'
+		and not exists (select 'X' from T09_INDICATOR_DEPLOY d where d.indickey = t.indickey) 
+		<dynamic >
+			<isNotEmpty prepend="and" property="indickey">
+				indickey = #indickey#
+			</isNotEmpty>		
+			<isNotEmpty prepend="and" property="indicname">
+				indicname like '%'||#indicname#||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="apptype">
+				apptype = #apptype#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="granularity">
+				granularity like #granularity#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="flag">
+				flag = #flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="indictype">
+				indictype = #indictype#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="createdate_min">
+				<![CDATA[ createdate >= #createdate_min#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="createdate_max">
+				<![CDATA[ createdate <= #createdate_max#]]>
+			</isNotEmpty>
+			
+		</dynamic>
+		<isNotEmpty prepend="" property="sort_type">
+			ORDER BY $sort$ $sort_type$
+		</isNotEmpty>
+	</statement>
+
+	<statement id="getT09_indicatorListCount"
+		parameterClass="com.ist.iap.dto.T09_indicator"
+		resultClass="int">
+		select count(*) from T09_indicator t where  flag != '2'
+		and not exists (select 'X' from T09_INDICATOR_DEPLOY d where d.indickey = t.indickey) 
+		<dynamic >
+			<isNotEmpty prepend="and" property="indickey">
+				indickey = #indickey#
+			</isNotEmpty>		
+			<isNotEmpty prepend="and" property="indicname">
+				indicname like '%'||#indicname#||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="apptype">
+				apptype = #apptype#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="granularity">
+				granularity like #granularity#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="flag">
+				flag = #flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="indictype">
+				indictype = #indictype#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="createdate_min">
+				<![CDATA[ createdate >= #createdate_min#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="createdate_max">
+				<![CDATA[ createdate <= #createdate_max#]]>
+			</isNotEmpty>
+		</dynamic>
+		
+	</statement>
+
+	<statement id="insertT09_indicator"
+		parameterClass="com.ist.iap.dto.T09_indicator"
+		resultClass="int">
+		insert into T09_indicator(
+		indickey,indicname,flag,des,callevel,granularity,currency,isorgan,indictype,apptype,resultype,defmode,calmode,dispseq,creator,createdate,modifier,modifydate,implway
+		) values(
+		#indickey#,#indicname#,#flag#,#des#,#callevel#,#granularity#,#currency#,#isorgan#,#indictype#,#apptype#,#resultype#,#defmode#,#calmode#,#dispseq#,#creator#,#createdate#,#modifier#,#modifydate#,#implway#
+		)
+	</statement>
+
+	<statement id="modifyT09_indicator"
+		parameterClass="com.ist.iap.dto.T09_indicator"
+		resultClass="int">
+		update T09_indicator set
+		<isNotEmpty prepend="" property="indickey">
+				indickey=#indickey#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="indicname">
+				indicname=#indicname#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="flag">
+				flag=#flag#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="des">
+				des=#des#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="callevel">
+				callevel=#callevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="granularity">
+				granularity=#granularity#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="currency">
+				currency=#currency#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="isorgan">
+				isorgan=#isorgan#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="indictype">
+				indictype=#indictype#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="apptype">
+				apptype=#apptype#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="resultype">
+				resultype=#resultype#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="defmode">
+				defmode=#defmode#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="calmode">
+				calmode=#calmode#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="dispseq">
+				dispseq=#dispseq#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="modifier">
+				modifier=#modifier#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="modifydate">
+				modifydate=#modifydate#
+		</isNotEmpty>
+		where indickey=#indickey#
+	</statement>
+	<statement id="modifyT09_indicatorIsgran"
+		parameterClass="com.ist.iap.dto.T09_indicator"
+		resultClass="int">
+		update T09_indicator set
+		<isNotEmpty prepend="" property="indickey">
+				indickey=#indickey#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="indicname">
+				indicname=#indicname#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="flag">
+				flag=#flag#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="des">
+				des=#des#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="callevel">
+				callevel=#callevel#
+		</isNotEmpty>		
+		<isNotEmpty prepend="," property="currency">
+				currency=#currency#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="isorgan">
+				isorgan=#isorgan#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="indictype">
+				indictype=#indictype#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="apptype">
+				apptype=#apptype#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="resultype">
+				resultype=#resultype#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="defmode">
+				defmode=#defmode#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="calmode">
+				calmode=#calmode#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="dispseq">
+				dispseq=#dispseq#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="modifier">
+				modifier=#modifier#
+		</isNotEmpty>
+		<isNotEmpty prepend="," property="modifydate">
+				modifydate=#modifydate#
+		</isNotEmpty>
+		where indickey=#indickey#
+	</statement>
+	
+	
+	<statement id="modifyT09_indicator_gran"
+		parameterClass="com.ist.iap.dto.T09_indicator"
+		resultClass="int">
+		update T09_indicator set
+		granularity=#granularity#
+		where indickey=#indickey#
+	</statement>
+
+	<statement id="deleteT09_indicator"
+		parameterClass="java.lang.String" resultClass="int">
+		update T09_indicator set flag='2' where indickey=#value#
+	</statement>
+
+	<statement id="getT09_indicatorDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.iap.dto.T09_indicator">
+		select * from T09_indicator where indickey=#value#
+	</statement>
+
+	<statement id="getT03_rule_indicDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.iap.dto.T09_indicator">
+	    select * from T03_RULE_INDIC where rulekey = #value#
+	</statement>
+
+	<statement id="getT04_rule_indicDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.iap.dto.T09_indicator">
+	    select * from T04_RULE_INDIC where rulekey = #value#
+	</statement>
+
+	<statement id="insertT03_rule_indic"
+		parameterClass="com.ist.iap.dto.T09_indicator"
+		resultClass="int">
+		insert into T03_rule_indic(
+		indickey,rulekey
+		) values(
+		#indickey#,#rulekey#
+		)
+	</statement>
+	
+	<statement id="insertT04_rule_indic"
+		parameterClass="com.ist.iap.dto.T09_indicator"
+		resultClass="int">
+		insert into T04_rule_indic(
+		indickey,rulekey
+		) values(
+		#indickey#,#rulekey#
+		)
+	</statement>		
+	
+	<statement id="getT03_rule_indicDisps" parameterClass="java.lang.String"
+		resultClass="com.ist.iap.dto.T09_indicator">
+	    select * from T03_RULE_INDIC where rulekey in ($value$)
+	</statement>
+	<!-- 
+	<statement id="validateT09_indicator" parameterClass="com.ist.iap.dto.T09_indicator"
+		resultClass="int">
+		select count(indickey) from T09_indicator 
+		where indickey like  ''||#indickey#||'%' or indicname = #indicname#
+  	</statement>
+  	 -->
+	<statement id="validateT09_indicator"
+		parameterClass="com.ist.iap.dto.T09_indicator"
+		resultClass="com.ist.iap.dto.T09_indicator">
+		select indickey,indicname,flag from T09_indicator t 
+			where 1>0 and indickey = #indickey# or indicname=#indicname#
+	</statement>  	
+  	
+  	<statement id="deployT09_indicator"
+		parameterClass="com.ist.iap.dto.T09_indicator"
+		resultClass="int">
+		insert into T09_INDICATOR_DEPLOY(
+		indickey,deployflag,indictype) values(
+		#indickey#,#deployflag#,#indictype#
+		)
+	</statement>
+  
+  	<statement id="getT09_indicatordepolyList"
+		parameterClass="com.ist.iap.dto.T09_indicator"
+		resultClass="com.ist.iap.dto.T09_indicator">
+		select
+		t.indickey,indicname,flag,des,callevel,granularity,currency,isorgan,t.indictype,apptype,resultype,defmode,calmode,dispseq,creator,createdate,modifier,modifydate,t1.deployflag
+		from T09_indicator t,T09_INDICATOR_DEPLOY t1 where t.indickey = t1.indickey  and flag != '2'
+		<dynamic >
+			<isNotEmpty prepend="and" property="indickey">
+				t.indickey = #indickey#
+			</isNotEmpty>			
+			<isNotEmpty prepend="and" property="indicname">
+				indicname like '%'||#indicname#||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="apptype">
+				apptype = #apptype#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="granularity">
+				granularity like #granularity#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="flag">
+				flag = #flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="indictype">
+				t.indictype = #indictype#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="createdate_min">
+				<![CDATA[ createdate >= #createdate_min#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="createdate_max">
+				<![CDATA[ createdate <= #createdate_max#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="deployflag">
+				t1.deployflag = #deployflag#
+			</isNotEmpty>
+			
+		</dynamic>
+		<isNotEmpty prepend="" property="sort_type">
+			ORDER BY $sort$ $sort_type$
+		</isNotEmpty>
+	</statement>
+	
+	<statement id="getT09_indicatordepolyListCount"
+		parameterClass="com.ist.iap.dto.T09_indicator"
+		resultClass="int">
+		select count(*)
+		from T09_indicator t,T09_INDICATOR_DEPLOY t1 where t.indickey = t1.indickey and flag != '2'
+		<dynamic >
+			<isNotEmpty prepend="and" property="indickey">
+				t.indickey = #indickey#
+			</isNotEmpty>			
+			<isNotEmpty prepend="and" property="indicname">
+				indicname like '%'||#indicname#||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="apptype">
+				apptype = #apptype#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="granularity">
+				granularity like #granularity#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="flag">
+				flag = #flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="indictype">
+				t.indictype = #indictype#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="createdate_min">
+				<![CDATA[ createdate >= #createdate_min#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="createdate_max">
+				<![CDATA[ createdate <= #createdate_max#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="deployflag">
+				t1.deployflag = #deployflag#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="deployT09_indicatordo"
+		parameterClass="com.ist.iap.dto.T09_indicator"
+		resultClass="int">
+		update T09_INDICATOR_DEPLOY set deployflag = #deployflag# where indickey in ($indickey$)
+	</statement>
+	
+	<statement id="deleteT09_indicator_deploy"
+		parameterClass="com.ist.iap.dto.T09_indicator"
+		resultClass="int">
+		delete from T09_INDICATOR_DEPLOY where indickey in ($indickey$)
+	</statement>
+    
+	<statement id="getT09_indicator_deploy_status2"
+		parameterClass="com.ist.iap.dto.T09_indicator"
+		resultClass="int">
+		select count(*) from T09_INDICATOR_DEPLOY where indickey in ($indickey$) and deployflag = '2'
+	</statement>
+	
+  	<statement id="verifyT09_indicatorForDepoly"
+		parameterClass="com.ist.iap.dto.T09_indicator"
+		resultClass="com.ist.iap.dto.T09_indicator">
+		select distinct indickey from T09_INDIC_SUBITEM3 where indickey in ($indickey$)
+	</statement>	
+	
+	<statement id="modifyT09_indicator_attrformula"
+		parameterClass="com.ist.iap.dto.T09_indicator"
+		resultClass="int">
+		update T09_INDICATOR_ATTR set INDICFORMULA=#indicformula# where indickey = #indickey#
+	</statement>
+	
+	<statement id="getDeployflagByIndicakey"
+		parameterClass="java.lang.String"
+		resultClass="java.lang.String">
+		select deployflag from T09_INDICATOR_DEPLOY where indickey = #value#
+	</statement>
+	
+	<statement id="validateT09_indicatorIndicKey" parameterClass="java.lang.String"
+		resultClass="int">
+		select count(indickey) from T09_indicator where indickey like  ''||#value#||'%'
+	</statement>
+	<statement id="getT05_md_info_keyIsIndicator" parameterClass="java.lang.String"
+		resultClass="java.lang.String">
+		SELECT oldkey FROM T05_OBJ_REAL WHERE pubtype = '4' AND reltype = '1' AND NEWKEY = #value#
+	</statement>
+	<statement id="getTableListByTplakeyIsIndicator" parameterClass="java.lang.String"
+		resultClass="java.lang.String">
+		 SELECT tableename FROM V_DEPEND_TAB WHERE tplakey=#value#
+	</statement>
+</sqlMap>
+

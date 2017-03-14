@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T07_case_transaction"> 
+  <statement id="getT07_case_transactionList" parameterClass="com.ist.aml.report.dto.T07_case_transaction" resultClass="com.ist.aml.report.dto.T07_case_transaction"> 
+  SELECT APPLICATION_NUM,ALERTKEY,TRANSACTIONKEY,STATUS_CD FROM T07_CASE_TRANSACTION 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="application_num"> 
+    APPLICATION_NUM = #application_num# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+
+ 
+  <statement id="getT07_case_transactionListCount" parameterClass="com.ist.aml.report.dto.T07_case_transaction" resultClass="int"> 
+  SELECT COUNT(*) FROM T00_GROUP 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="application_num"> 
+    APPLICATION_NUM = #application_num# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT07_case_transaction" parameterClass="com.ist.aml.report.dto.T07_case_transaction" resultClass="int"> 
+  INSERT INTO T07_CASE_TRANSACTION(
+  APPLICATION_NUM,ALERTKEY,TRANSACTIONKEY,STATUS_CD
+  ) VALUES(
+  #application_num#,#alertkey#,#transactionkey#,#status_cd#
+  ) 
+  </statement> 
+  
+
+  
+  <statement id="insertT07_case_transaction_ky" parameterClass="com.ist.aml.report.dto.T07_case_transaction" resultClass="int"> 
+  INSERT INTO T07_CASE_TRANSACTION_KY(
+  APPLICATION_NUM,STCR,TRANSACTIONKEY,STATUS_CD,PARTY_ID,CASE_DATE,ACCT_NUM,TRANS_AMT
+  ) VALUES(
+  #application_num#,#stcr#,#transactionkey#,#status_cd#,#party_id#,#case_date#,#acct_num#,#amt#
+  ) 
+  </statement> 
+  
+    <statement id="insertT07_case_transaction_de" parameterClass="com.ist.aml.report.dto.T07_case_transaction" resultClass="int"> 
+  INSERT INTO T07_CASE_TRANSACTION_DE(
+  APPLICATION_NUM,STCR,TRANSACTIONKEY,STATUS_CD,PARTY_ID,CASE_DATE,ACCT_NUM,TRANS_AMT
+  ) VALUES(
+  #application_num#,#stcr#,#transactionkey#,#status_cd#,#party_id#,#case_date#,#acct_num#,#amt#
+  ) 
+  </statement>
+  
+   <statement id="insertT07_case_tran" parameterClass="com.ist.aml.report.dto.T07_case_transaction" resultClass="int"> 
+  INSERT INTO T07_CASE_TRANSACTION SELECT  A.APPLICATION_NUM,T.ALERTKEY,T.TRANSACTIONKEY,T.STATUS_CD
+   FROM T07_ALERT_TRANS T,T07_CASE_ALERT A WHERE A.ALERTKEY=T.ALERTKEY
+   AND A.APPLICATION_NUM=#application_num#
+  </statement> 
+  <statement id="modifyT07_case_transaction" parameterClass="com.ist.aml.report.dto.T07_case_transaction" resultClass="int"> 
+  UPDATE T07_CASE_TRANSACTION SET 
+  STATUS_CD=#status_cd#
+  WHERE APPLICATION_NUM=#application_num# 
+  </statement> 
+ 
+  <statement id="deleteT07_case_transaction" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T07_CASE_TRANSACTION WHERE APPLICATION_NUM=#value# 
+  </statement> 
+ 
+  <statement id="getT07_case_transactionDisp" parameterClass="com.ist.aml.report.dto.T07_case_transaction" resultClass="com.ist.aml.report.dto.T07_case_transaction"> 
+    SELECT APPLICATION_NUM,STCR,PARTY_ID,TRANSACTIONKEY,CASE_DATE,DEALADVISE,STATUS_CD FROM 
+     <dynamic>
+			<isNotEmpty prepend="" property="case_type"> 
+			  	<isEqual property="case_type" compareValue ="1">
+			  		T07_CASE_TRANSACTION_DE B 
+			  	</isEqual>
+			  	<isEqual property="case_type" compareValue ="2">
+			  		T07_CASE_TRANSACTION_KY B
+			  	</isEqual>
+			</isNotEmpty>
+		</dynamic>
+   
+  WHERE APPLICATION_NUM=#application_num# 
+   and stcr=#stcr#
+   and transactionkey=#transactionkey#
+  </statement> 
+ 
+</sqlMap> 
+

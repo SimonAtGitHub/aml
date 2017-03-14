@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 审计查证平台模块配置 -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<!-- 模版使用bean -->
+	<bean id="t02_tp_bas_infDAO" parent="baseDAO"
+		class="com.ist.avp.template.dao.T02_tp_bas_infDAO">
+
+	</bean>
+	<bean id="t02_tp_in_parmDAO" parent="baseDAO"
+		class="com.ist.avp.template.dao.T02_tp_in_parmDAO">
+	</bean>
+	<bean id="t02_page_in_valDAO" parent="baseDAO"
+		class="com.ist.avp.template.dao.T02_page_in_valDAO">
+	</bean>
+	<bean id="t02_tp_exec_qryDAO" parent="baseDAO"
+		class="com.ist.avp.template.dao.T02_tp_exec_qryDAO">
+	</bean>
+	<bean id="t02_tp_exec_rstDAO" parent="baseDAO"
+		class="com.ist.avp.template.dao.T02_tp_exec_rstDAO">
+	</bean>
+	<bean id="t02_tp_disp_rstDAO" parent="baseDAO"
+		class="com.ist.avp.template.dao.T02_tp_disp_rstDAO">
+	</bean>
+	<bean id="t02_jump_tpDAO" parent="baseDAO"
+		class="com.ist.avp.template.dao.T02_jump_tpDAO">
+	</bean>
+
+	<bean id="t02_parm_subDAO" parent="baseDAO"
+		class="com.ist.avp.template.dao.T02_parm_subDAO">
+	</bean>
+
+	<bean id="t02_cond_subDAO" parent="baseDAO"
+		class="com.ist.avp.template.dao.T02_cond_subDAO">
+	</bean>
+    <bean id="t02_tp_tab_relDAO" parent="baseDAO" 
+        class="com.ist.avp.template.dao.T02_tp_tab_relDAO" >
+    </bean>
+    <bean id="t02_tp_logDAO" parent="baseDAO" 
+        class="com.ist.avp.template.dao.T02_tp_logDAO" >
+    </bean>
+
+
+	
+
+	<!-- 模板查证使用bean begin-->
+
+	<!-- 用户输入参数bean 定义,id 为parm+"_"+系统输入参数定义表系统输入参数编码，注意id必须正确，否则会导致解析输入参数失败-->
+	<!-- 缺省输入参数，抽象类 -->
+	<bean id="abs_input" abstract="true"
+		class="com.ist.avp.params.DefaultInput">
+		<property name="cm" ref="catchManager" />
+	</bean>
+	<!-- 系统输入类参数定义 -->
+	<bean id="parm_110" parent="abs_input"
+		class="com.ist.avp.params.ExactTextInput">
+	</bean>
+	<bean id="parm_111" parent="abs_input"
+		class="com.ist.avp.params.HideInput">
+	</bean>
+	<bean id="parm_112" parent="abs_input"
+		class="com.ist.avp.params.ManyExactTextInput">
+	</bean>
+	<bean id="parm_120" parent="abs_input"
+		class="com.ist.avp.params.FuzzyTextInput">
+	</bean>
+	<bean id="parm_121" parent="abs_input"
+		class="com.ist.avp.params.AfterFuzzyTextInput">
+	</bean>
+	<bean id="parm_122" parent="abs_input"
+		class="com.ist.avp.params.BeforeFuzzyTextInput">
+	</bean>
+	<bean id="parm_130" parent="abs_input"
+		class="com.ist.avp.params.NumberInput">
+	</bean>
+	<bean id="parm_140" parent="abs_input"
+		class="com.ist.avp.params.DateInput">
+	</bean>
+	<bean id="parm_145" parent="abs_input"
+		class="com.ist.avp.params.PeriodFreInput">
+	</bean>
+	<bean id="parm_150" parent="abs_input"
+		class="com.ist.avp.params.PeriodInput">
+	</bean>
+	<bean id="parm_151" parent="abs_input"
+		class="com.ist.avp.params.DateMonthInput">
+	</bean>
+	<bean id="parm_160" parent="abs_input"
+		class="com.ist.avp.params.TwoNumInput">
+	</bean>
+	<bean id="parm_170" parent="abs_input"
+		class="com.ist.avp.params.AuthOrgSingleInput">
+	</bean>
+	<bean id="parm_180" parent="abs_input"
+		class="com.ist.avp.params.AuthOrgMultiInput">
+	</bean>
+	
+	<!-- 定位输入参数定义 -->
+	<bean id="parm_210" parent="abs_input"
+		class="com.ist.avp.params.LocateSingleInput">
+	</bean>
+	<bean id="parm_220" parent="abs_input"
+		class="com.ist.avp.params.LocateMultiInput">
+	</bean>
+	<bean id="parm_225" parent="abs_input"
+		class="com.ist.avp.params.LocateFuzzyInput">
+	</bean>
+	<bean id="parm_230" parent="abs_input"
+		class="com.ist.avp.params.TreeSingleInput">
+	</bean>
+	<bean id="parm_240" parent="abs_input"
+		class="com.ist.avp.params.TreeMultiInput">
+	</bean>
+	<bean id="parm_250" parent="abs_input"
+		class="com.ist.avp.params.TreeFuzzyInput">
+	</bean>
+	<!-- 码表输入参数定义 -->
+	<bean id="parm_310" parent="abs_input"
+		class="com.ist.avp.params.CdRadioInput">
+	</bean>
+	<bean id="parm_320" parent="abs_input"
+		class="com.ist.avp.params.CdCheckInput">
+	</bean>
+	<bean id="parm_330" parent="abs_input"
+		class="com.ist.avp.params.CdListInput">
+	</bean>
+	<bean id="parm_340" parent="abs_input"
+		class="com.ist.avp.params.CdLocateSingleInput">
+	</bean>
+	<bean id="parm_350" parent="abs_input"
+		class="com.ist.avp.params.CdLocateMultiInput">
+	</bean>
+	<bean id="parm_360" parent="abs_input"
+		class="com.ist.avp.params.CdFuzzyInput">
+	</bean>
+	<bean id="parm_152" parent="abs_input"
+		class="com.ist.avp.params.SpecialPeriodInput">
+	</bean>
+	<bean id="parm_141" parent="abs_input"
+		class="com.ist.avp.params.SpecialDateInput">
+	</bean>
+	<!-- 输入参数 查询及重置按钮定义 -->
+	<bean id="input_button"
+		class="com.ist.avp.params.InputButtonHtml">
+		<property name="systemConfig" ref="sysConfig"></property>
+	</bean>
+	<bean id="parm_370" parent="abs_input"
+		class="com.ist.avp.params.AutoCompleteInput">
+	</bean>
+	<!-- 机构权限定位 -->
+	<bean id="parm_380" parent="abs_input"
+		class="com.ist.avp.params.OrgTreeMultiInput">
+	</bean>
+	<bean id="parm_381" parent="abs_input"
+		class="com.ist.avp.params.OrgTreeSingleInput">
+	</bean>
+	<!-- 用户输入参数定义bean end -->
+	
+	<!-- session 压缩转码工具 -->
+	<bean id="compUtil"
+		class="com.ist.avp.common.CompUtil">
+	</bean>
+	
+	<!-- 模板缓存使用bean -->
+	<bean id="avpCm" class="com.ist.avp.common.AvpCacheMgr">
+		<property name="sqlMap" ref="sqlMapClient"></property>
+		<property name="cm" ref="catchManager" />
+		<property name="t02_tp_bas_infDAO" ref="t02_tp_bas_infDAO"></property>
+		<property name="t02_tp_in_parmDAO" ref="t02_tp_in_parmDAO"></property>
+		<property name="t02_tp_exec_qryDAO" ref="t02_tp_exec_qryDAO"></property>
+		<property name="t02_cond_subDAO" ref="t02_cond_subDAO"></property>
+		<property name="t02_jump_tpDAO" ref="t02_jump_tpDAO"></property>
+		<property name="t02_tp_disp_rstDAO" ref="t02_tp_disp_rstDAO"></property>
+		<property name="t02_parm_subDAO" ref="t02_parm_subDAO"></property>
+		<property name="t02_tp_cus_actionDAO" ref="t02_tp_cus_actionDAO"></property>
+		<property name="t02_tp_showDAO" ref="t02_tp_showDAO"></property>
+		<property name="t02_tp_chartDAO" ref="t02_tp_chartDAO"></property>
+		<property name="t02_tp_reportDAO" ref="t02_tp_reportDAO"></property>
+		<property name="t02_tp_statDAO" ref="t02_tp_statDAO"></property>
+	</bean>
+	
+	<!-- 输入条件生成ID -->
+	<bean id="parmUtils" class="com.ist.avp.params.ParmHtmlUtils"></bean>
+
+	<!-- 数据转换beanID -->
+	<bean id="dataChange"
+		class="com.ist.avp.results.DefaultDataChange">
+		<property name="cm" ref="catchManager"></property>
+	</bean>
+
+	<!-- 输出beanID -->
+	<bean id="defaultOutput" class="com.ist.avp.results.DefaultOutput"></bean>
+
+	<!-- 生成模板查询结果，使用bean, max_qry_time最大查询日期，单位秒-->
+	<bean id="bdu" class="com.ist.common.db.common.BaseDbUtils">
+		<property name="systemConfig" ref="sysConfig"></property>
+	</bean>
+	
+
+	<!-- 模板查证使用bean end-->
+
+	<!-- 报表计算引擎 -->
+	<bean id="reportEngine" class="com.ist.avp.report.JReportEngine"></bean>
+	
+	<bean id="t02_tp_cus_actionDAO" parent="baseDAO"
+		class="com.ist.avp.template.dao.T02_tp_cus_actionDAO">
+	</bean>
+	
+	<!-- 字符串加密解密 -->
+	<bean id="DESUtils" class="com.ist.common.util.DESUtils"></bean>
+	
+	<!-- 统一视图 -->
+    <bean id="t02_srch_infDAO" parent="baseDAO" class="com.ist.avp.search.dao.T02_srch_infDAO" ></bean>	
+    <bean id="t02_crlt_srchDAO" parent="baseDAO" class="com.ist.avp.search.dao.T02_crlt_srchDAO" ></bean>
+    <bean id="t02_parm_elmtDAO" parent="baseDAO" class="com.ist.avp.search.dao.T02_parm_elmtDAO" ></bean> 
+    <bean id="t02_parm_elmt_relaDAO" parent="baseDAO" class="com.ist.avp.search.dao.T02_parm_elmt_relaDAO" ></bean>           
+    <bean id="t02_srch_cateDAO" parent="baseDAO" class="com.ist.avp.search.dao.T02_srch_cateDAO" ></bean> 
+    <bean id="t02_srch_eng_infDAO" parent="baseDAO" class="com.ist.avp.search.dao.T02_srch_eng_infDAO" ></bean>
+    <bean id="t02_srch_eng_logDAO" parent="baseDAO" class="com.ist.avp.search.dao.T02_srch_eng_logDAO" ></bean> 
+    <bean id="t02_srch_eng_parmDAO" parent="baseDAO" class="com.ist.avp.search.dao.T02_srch_eng_parmDAO" ></bean> 
+    <!-- 统一视图end -->
+    
+    <!-- 临时表管理 -->
+    <bean id="oracUpdate"
+		class="com.ist.common.db.results.oracle.OracleUpdate">
+		<property name="bdu" ref="bdu"></property>
+		<property name="sp" ref="oracleSqlParse"></property>
+		<property name="ds" ref="DataSource"></property>
+	</bean>
+	<bean id="db2Update"
+		class="com.ist.common.db.results.db2.Db2Update">
+		<property name="bdu" ref="bdu"></property>
+		<property name="sp" ref="db2SqlParse"></property>
+		<property name="ds" ref="DataSource"></property>
+	</bean>
+	<bean id="t02_tp_chartDAO" parent="baseDAO" class="com.ist.avp.template.dao.T02_tp_chartDAO" ></bean>
+    <bean id="t02_tp_reportDAO" parent="baseDAO" class="com.ist.avp.template.dao.T02_tp_reportDAO" ></bean>
+    <bean id="t02_tp_showDAO" parent="baseDAO" class="com.ist.avp.template.dao.T02_tp_showDAO" ></bean>
+    <bean id="t02_tp_statDAO" parent="baseDAO" class="com.ist.avp.template.dao.T02_tp_statDAO" ></bean>
+    
+    <bean id="avp"
+		class="com.ist.avp.common.AvpPageUtils">
+	</bean>
+	
+	<bean id="avpBackService" class="com.ist.avp.services.impl.AvpBaseServiceImpl"/>
+</beans>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 知识管理平台模块配置 -->
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	
+	<bean id="templateManager" parent="baseDAO" class="com.ist.rpp.template.TemplateManager" ></bean>
+	<bean id="template2Excel" parent="baseDAO" class="com.ist.rpp.template.Template2Excel" ></bean>
+	<bean id="dataManager" parent="baseDAO" class="com.ist.rpp.data.DataManager" ></bean>
+	
+	
+	<bean id="t10_reportDAO" parent="baseDAO" class="com.ist.rpp.report.dao.T10_reportDAO" ></bean>
+	<bean id="t10_reportParmDAO" parent="baseDAO" class="com.ist.rpp.report.dao.T10_reportParmDAO" ></bean>
+	<bean id="t10_page_in_valDAO" parent="baseDAO" class="com.ist.rpp.report.dao.T10_page_in_valDAO" ></bean>
+	<bean id="t10_rep_graphDAO" parent="baseDAO" class="com.ist.rpp.report.dao.T10_rep_graphDAO" ></bean>
+	<bean id="t00_dictDAO" parent="baseDAO" class="com.ist.platform.dao.T00_dictDAO" ></bean>
+	<bean id="load_window_dao" parent="baseDAO" class="com.ist.platform.dao.Load_window_dao" ></bean>
+	<bean id="t00_categoryDAO" parent="baseDAO" class="com.ist.impfile.bmp.platform.dao.T00_categoryDAO" ></bean>
+	
+	
+	
+	
+</beans>

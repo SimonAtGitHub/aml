@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T00_system_log">
+  <statement id="getT00_system_logList" parameterClass="com.ist.platform.dto.T00_system_log" resultClass="com.ist.platform.dto.T00_system_log">
+  SELECT LOGKEY,CREATEDATE,USERNAME,REALNAME,ROLEKEY,ROLENAME,GROUPKEY,GROUPNAME,IPADDRESS,ACTIONFLAG,MODULEKEY,MODULENAME,SYSTEMKEY,REMARK FROM T00_SYSTEM_LOG
+  <dynamic prepend="where" >
+    <isNotEmpty prepend="AND" property="realname">
+     USERNAME LIKE #username#
+    </isNotEmpty>
+      <isNotEmpty prepend="AND" property="createdate_disp">
+     <![CDATA[createdate >= #createdate#]]> and 
+      <![CDATA[createdate < #createdateend#]]>
+    </isNotEmpty>
+   </dynamic>
+  
+  ORDER BY CREATEDATE DESC
+  </statement>
+
+  <statement id="getT00_system_logListCount" parameterClass="com.ist.platform.dto.T00_system_log" resultClass="int">
+  SELECT COUNT(*) FROM T00_SYSTEM_LOG
+ <dynamic prepend="where" >
+     <isNotEmpty prepend="AND" property="realname">
+     USERNAME LIKE #username#
+    </isNotEmpty>
+      <isNotEmpty prepend="AND" property="createdate_disp">
+     <![CDATA[createdate >= #createdate#]]> and 
+      <![CDATA[createdate < #createdateend#]]>
+    </isNotEmpty>
+   </dynamic>
+  </statement>
+
+  <statement id="insertT00_system_log" parameterClass="com.ist.platform.dto.T00_system_log" resultClass="int">
+  INSERT INTO T00_SYSTEM_LOG(
+  LOGKEY,CREATEDATE,USERNAME,REALNAME,ROLEKEY,ROLENAME,GROUPKEY,GROUPNAME,IPADDRESS,ACTIONFLAG,MODULEKEY,MODULENAME,SYSTEMKEY,REMARK
+  ) VALUES(
+  #logkey#,#createdate#,#username#,#realname#,#rolekey#,#rolename#,#groupkey#,#groupname#,#ipaddress#,#actionflag#,#modulekey#,#modulename#,#systemkey#,#remark#
+  )
+  </statement>
+
+  <statement id="modifyT00_system_log" parameterClass="com.ist.platform.dto.T00_system_log" resultClass="int">
+  UPDATE T00_SYSTEM_LOG SET
+  LOGKEY=#logkey#,CREATEDATE=#createdate#,USERNAME=#username#,REALNAME=#realname#,ROLEKEY=#rolekey#,ROLENAME=#rolename#,GROUPKEY=#groupkey#,GROUPNAME=#groupname#,IPADDRESS=#ipaddress#,ACTIONFLAG=#actionflag#,MODULEKEY=#modulekey#,MODULENAME=#modulename#,SYSTEMKEY=#systemkey#,REMARK=#remark#
+  WHERE LOGKEY=#logkey#
+  </statement>
+
+  <statement id="deleteT00_system_log" parameterClass="java.util.Date" resultClass="int">
+  <![CDATA[ DELETE FROM   T00_SYSTEM_LOG  WHERE CREATEDATE <=#value# ]]>
+  </statement>
+
+  <statement id="getT00_system_logDisp" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_system_log">
+  SELECT * FROM T00_SYSTEM_LOG WHERE LOGKEY=#value#
+  </statement>
+
+</sqlMap>
+

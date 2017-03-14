@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_answer_subject"> 
+  <statement id="getT12_answer_subjectList" parameterClass="com.ist.cms.dto.T12_answer_subject" resultClass="com.ist.cms.dto.T12_answer_subject"> 
+  select subjectinskey,answerkey,content,subjecttype from t12_answer_subject 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="subjectkey"> 
+    subjectinskey = #subjectinskey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT12_answer_subjectListCount" parameterClass="com.ist.cms.dto.T12_answer_subject" resultClass="int"> 
+  select count(*) from t12_answer_subject 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="subjectkey"> 
+    subjectinskey = #subjectinskey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_answer_subject" parameterClass="com.ist.cms.dto.T12_answer_subject" resultClass="int"> 
+	  INSERT INTO T12_ANSWER_SUBJECT(SUBJECTINSKEY,ANSWERKEY,CONTENT,SUBJECTTYPE) 
+	  VALUES(#subjectinskey#,#answerkey#,#content#,#subjecttype#) 
+  </statement> 
+ 
+  <statement id="modifyT12_answer_subject" parameterClass="com.ist.cms.dto.T12_answer_subject" resultClass="int"> 
+  update T12_answer_subject set 
+  answerkey=#answerkey#,content=#content#,subjecttype=#subjecttype#
+  where subjectinskey=#subjectinskey# 
+  </statement> 
+ <!-- zhangqiaojun delete for reAnswer -->
+  <statement id="deleteT12_answer_subject" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_answer_subject where answerkey=#answerkey#
+  </statement> 
+ 
+  <statement id="getT12_answer_subjectDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_answer_subject"> 
+  select * from T12_answer_subject where subjectinskey=#value# 
+  </statement> 
+ 
+ <statement id="getT12_answer_subjectForAnswerQuestion" parameterClass="com.ist.cms.dto.T12_answer_subject" resultClass="com.ist.cms.dto.T12_answer_subject"> 
+  select * from T12_answer_subject where subjectinskey=#subjectinskey# and answerkey=#answerkey#
+  </statement> 
+ 
+ 
+ 
+ <!-- add zhangqiaojun -->
+ <statement id="getT12_answer_subjectForJudeMent" parameterClass="com.ist.cms.dto.T12_answer_subject" resultClass="com.ist.cms.dto.T12_answer_subject"> 
+  select * from T12_answer_subject where subjectinskey=#subjectinskey# and answerkey=#answerkey# and (subjecttype='1' or subjecttype='2' or subjecttype='3')
+  </statement> 
+</sqlMap> 
+

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T07_INREP_FR"> 
+  <statement id="getT07_INREP_FRSumByOrgan" parameterClass="com.ist.aml.inves.dto.T07_INREP_FR" resultClass="com.ist.aml.inves.dto.T07_INREP_FR"> 
+  select organkey,
+  case when sum(cust_all_c) is null then 0 else sum(cust_all_c) end  as cust_all_c,
+	case when sum(cust_all_i) is null then 0 else sum(cust_all_i) end  as cust_all_i,
+	case when sum(cust_need_c) is null then 0 else sum(cust_need_c) end  as cust_need_c,
+	case when sum(cust_need_i) is null then 0 else sum(cust_need_i) end  as cust_need_i,
+	case when sum(cust_done_c) is null then 0 else sum(cust_done_c) end  as cust_done_c,
+	case when sum(cust_done_i) is null then 0 else sum(cust_done_i) end  as cust_done_i,
+	case when sum(trans_all_dc) is null then 0 else sum(trans_all_dc) end  as trans_all_dc,
+	case when sum(trans_all_fc) is null then 0 else sum(trans_all_fc) end  as trans_all_fc,
+	case when sum(trans_need_dc) is null then 0 else sum(trans_need_dc) end  as trans_need_dc,
+	case when sum(trans_need_fc) is null then 0 else sum(trans_need_fc) end  as trans_need_fc,
+	case when sum(trans_done_dc) is null then 0 else sum(trans_done_dc) end  as trans_done_dc,
+	case when sum(trans_done_fc) is null then 0 else sum(trans_done_fc) end  as trans_done_fc
+  from t07_inrep_fr 
+  <dynamic prepend="where"> 
+  	<isNotEmpty prepend="and" property="cast_type"> 
+    cast_type=#cast_type#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="org_ids"> 
+    organkey in ($org_ids$) 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="start_time">
+    <![CDATA[statistic_dt >= #report_dt_start:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="end_time">
+    <![CDATA[statistic_dt <= #report_dt_end:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organkey">
+    	organkey=#organkey#
+    </isNotEmpty>
+  </dynamic> 
+  group by organkey
+  order by organkey
+  </statement> 
+  
+ <statement id="getT07_INREP_FRSum" parameterClass="com.ist.aml.inves.dto.T07_INREP_FR" resultClass="com.ist.aml.inves.dto.T07_INREP_FR"> 
+  select 
+  case when sum(cust_all_c) is null then 0 else sum(cust_all_c) end  as cust_all_c,
+	case when sum(cust_all_i) is null then 0 else sum(cust_all_i) end  as cust_all_i,
+	case when sum(cust_need_c) is null then 0 else sum(cust_need_c) end  as cust_need_c,
+	case when sum(cust_need_i) is null then 0 else sum(cust_need_i) end  as cust_need_i,
+	case when sum(cust_done_c) is null then 0 else sum(cust_done_c) end  as cust_done_c,
+	case when sum(cust_done_i) is null then 0 else sum(cust_done_i) end  as cust_done_i,
+	case when sum(trans_all_dc) is null then 0 else sum(trans_all_dc) end  as trans_all_dc,
+	case when sum(trans_all_fc) is null then 0 else sum(trans_all_fc) end  as trans_all_fc,
+	case when sum(trans_need_dc) is null then 0 else sum(trans_need_dc) end  as trans_need_dc,
+	case when sum(trans_need_fc) is null then 0 else sum(trans_need_fc) end  as trans_need_fc,
+	case when sum(trans_done_dc) is null then 0 else sum(trans_done_dc) end  as trans_done_dc,
+	case when sum(trans_done_fc) is null then 0 else sum(trans_done_fc) end  as trans_done_fc
+  from t07_inrep_fr 
+  <dynamic prepend="where"> 
+  	<isNotEmpty prepend="and" property="cast_type"> 
+    cast_type=#cast_type#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="org_ids"> 
+    organkey in ($org_ids$) 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="start_time">
+    <![CDATA[statistic_dt >= #report_dt_start:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="end_time">
+    <![CDATA[statistic_dt <= #report_dt_end:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organkey">
+    	organkey=#organkey#
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+  <statement id="getT07_INREP_FRList" parameterClass="com.ist.aml.inves.dto.T07_INREP_FR" resultClass="com.ist.aml.inves.dto.T07_INREP_FR"> 
+  select organkey,statistic_dt,cast_type,cust_all_c,cust_all_i,cust_need_c,cust_need_i,cust_done_c,cust_done_i,trans_all_dc,trans_all_fc,trans_need_dc,trans_need_fc,trans_done_dc,trans_done_fc from t07_inrep_fr 
+  <dynamic prepend="where"> 
+  	<isNotEmpty prepend="and" property="cast_type"> 
+    cast_type=#cast_type#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="org_ids"> 
+    organkey in ($org_ids$) 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="start_time">
+    <![CDATA[statistic_dt >= #report_dt_start:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="end_time">
+    <![CDATA[statistic_dt <= #report_dt_end:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organkey">
+    	organkey=#organkey#
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+  <statement id="getT07_INREP_FRSumCountByOrgan" parameterClass="com.ist.aml.inves.dto.T07_INREP_FR" resultClass="int"> 
+  select count(distinct organkey) from t07_inrep_fr 
+  <dynamic prepend="where"> 
+  	<isNotEmpty prepend="and" property="cast_type"> 
+    cast_type=#cast_type#
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="org_ids"> 
+    organkey in ($org_ids$) 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="start_time">
+    <![CDATA[statistic_dt >= #report_dt_start:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="end_time">
+    <![CDATA[statistic_dt <= #report_dt_end:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organkey">
+    	organkey=#organkey#
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+ 
+  
+ 
+</sqlMap> 
+

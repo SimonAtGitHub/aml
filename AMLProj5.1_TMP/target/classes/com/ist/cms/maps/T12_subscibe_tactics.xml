@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T12_subscibe_tactics"> 
+  <statement id="getT12_subscibe_tacticsList" parameterClass="com.ist.cms.dto.T12_subscibe_tactics" resultClass="com.ist.cms.dto.T12_subscibe_tactics"> 
+  select subscibekey,subscibename,subscibetype,subscibedt,des from t12_subscibe_tactics 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="subscibename"> 
+    subscibename like '%'||#subscibename#||'%' 
+    </isNotEmpty> 
+    
+    <isNotEmpty prepend="and" property="creator"> 
+    creator = #creator# 
+    </isNotEmpty> 
+    
+    <isNotEmpty prepend="and" property="begindate"> 
+    <![CDATA[
+    subscibedt >= #begindate#
+    ]]>
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="enddate"> 
+    <![CDATA[
+    subscibedt <= #enddate#
+    ]]>
+    </isNotEmpty> 
+  </dynamic> 
+  <isNotEmpty prepend="" property="sort_type"> 
+    order by $sort$ $sort_type$ 
+  </isNotEmpty> 
+  </statement> 
+ 
+  <statement id="getT12_subscibe_tacticsListCount" parameterClass="com.ist.cms.dto.T12_subscibe_tactics" resultClass="int"> 
+  select count(*) from t12_subscibe_tactics 
+  <dynamic prepend="where"> 
+     <isNotEmpty prepend="and" property="subscibename"> 
+    subscibename like '%'||#subscibekey#||'%' 
+    </isNotEmpty> 
+    
+    <isNotEmpty prepend="and" property="creator"> 
+    creator = #creator# 
+    </isNotEmpty> 
+    
+    
+    <isNotEmpty prepend="and" property="begindate"> 
+    <![CDATA[
+    subscibedt >= #begindate#
+    ]]>
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="enddate"> 
+    <![CDATA[
+    subscibedt <= #enddate#
+    ]]>
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT12_subscibe_tactics" parameterClass="com.ist.cms.dto.T12_subscibe_tactics" resultClass="int"> 
+  insert into T12_subscibe_tactics(
+  subscibekey,subscibename,subscibetype,subscibedt,flag,creator,createdate,des
+  ) values(
+  #subscibekey#,#subscibename#,#subscibetype#,#subscibedt#,#flag#,#creator#,#createdate#,#des#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT12_subscibe_tactics" parameterClass="com.ist.cms.dto.T12_subscibe_tactics" resultClass="int"> 
+  update T12_subscibe_tactics set 
+  subscibekey=#subscibekey#,subscibetype=#subscibetype#,subscibedt=#subscibedt#,modifier=#modifier#,modifydate=#modifydate#
+  where subscibekey=#subscibekey# 
+  </statement> 
+ 
+  <statement id="deleteT12_subscibe_tactics" parameterClass="java.lang.String" resultClass="int">
+  delete from T12_subscibe_tactics where subscibekey=#value# 
+  </statement> 
+ 
+  <statement id="getT12_subscibe_tacticsDisp" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_subscibe_tactics"> 
+  select * from T12_subscibe_tactics where subscibekey=#value# 
+  </statement> 
+  
+  <statement id="getT12_subscibe_tacticsDisp2" parameterClass="java.lang.String" resultClass="com.ist.cms.dto.T12_subscibe_tactics"> 
+  select * from T12_subscibe_tactics where subscibename=#value# 
+  </statement> 
+ 
+</sqlMap> 
+

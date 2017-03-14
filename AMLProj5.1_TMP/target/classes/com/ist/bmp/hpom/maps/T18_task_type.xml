@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T18_task_type"> 
+  <statement id="getT18_task_typeList" parameterClass="com.ist.bmp.hpom.dto.T18_task_type" resultClass="com.ist.bmp.hpom.dto.T18_task_type"> 
+  select tasktype,typegroup,typename,cfgclass,execlass,typedes,isflex,flex,starttime,endtime,exec_server from t18_task_type 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="tasktype"> 
+    	tasktype like '%'||#tasktype#||'%'
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="typename"> 
+    	typename like '%'||#typename#||'%' 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="isflex"> 
+    	isflex = #isflex# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="flex"> 
+    	flex = #flex# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="typegroup"> 
+    	typegroup = #typegroup# 
+    </isNotEmpty>
+  </dynamic>
+	order by tasktype
+  </statement> 
+ 
+  <statement id="getT18_task_typeListCount" parameterClass="com.ist.bmp.hpom.dto.T18_task_type" resultClass="int"> 
+  select count(*) from t18_task_type 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="tasktype"> 
+    	tasktype like '%'||#tasktype#||'%'
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="typename"> 
+    	typename like '%'||#typename#||'%' 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="isflex"> 
+    	isflex = #isflex# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="flex"> 
+    	flex = #flex# 
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="typegroup"> 
+    	typegroup = #typegroup# 
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+ 
+ 
+  <statement id="modifyT18_task_type" parameterClass="com.ist.bmp.hpom.dto.T18_task_type" resultClass="int"> 
+  update T18_task_type set 
+  isflex = #isflex#,flex = #flex#,starttime = #starttime#,endtime = #endtime#
+  <dynamic prepend="where"> 
+  	<isNotNull property="tasktypeList">
+	    <iterate prepend="AND" property="tasktypeList" open="(" close=")" conjunction="or">
+			tasktype = #tasktypeList[]#
+		</iterate>
+	</isNotNull>
+  </dynamic>
+  </statement> 
+ 
+ 
+  <statement id="getT18_task_typeDisp" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_task_type"> 
+  select * from T18_task_type where tasktype=#value# 
+  </statement> 
+ 
+</sqlMap> 
+

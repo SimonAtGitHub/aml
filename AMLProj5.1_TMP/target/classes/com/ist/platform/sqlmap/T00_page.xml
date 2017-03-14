@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T00_page"> 
+  <statement id="getT00_pageList" parameterClass="com.ist.platform.dto.T00_page" resultClass="com.ist.platform.dto.T00_page"> 
+  SELECT PAGEKEY,SYSTEMKEY,PAGENAME,URL,ACTION_PATH,FLAG,DES,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER FROM T00_PAGE 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="systemkey"> 
+    SYSTEMKEY = #systemkey# 
+    </isNotEmpty>   
+    <isNotEmpty prepend="AND" property="pagename"> 
+    PAGENAME LIKE #pagename# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="action_path"> 
+    ACTION_PATH LIKE #action_path# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="url"> 
+    URL LIKE #url# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="flag"> 
+    FLAG = #flag# 
+    </isNotEmpty>                  
+  </dynamic> 
+  ORDER BY PAGEKEY
+  </statement> 
+ 
+  <statement id="getT00_pageListCount" parameterClass="com.ist.platform.dto.T00_page" resultClass="int"> 
+  SELECT COUNT(*) FROM T00_PAGE 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="systemkey"> 
+    SYSTEMKEY = #systemkey# 
+    </isNotEmpty>    
+    <isNotEmpty prepend="AND" property="pagename"> 
+    PAGENAME LIKE #pagename# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="action_path"> 
+    ACTION_PATH LIKE #action_path# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="url"> 
+    URL LIKE #url# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="flag"> 
+    FLAG = #flag# 
+    </isNotEmpty>                  
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT00_page" parameterClass="com.ist.platform.dto.T00_page" resultClass="int"> 
+  INSERT INTO T00_PAGE(
+  PAGEKEY,SYSTEMKEY,PAGENAME,URL,ACTION_PATH,FLAG,DES,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER
+  ) VALUES(
+  #pagekey#,#systemkey#,#pagename#,#url#,#action_path#,#flag#,#des#,#createdate#,#creator#,#modifydate#,#modifier#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT00_page" parameterClass="com.ist.platform.dto.T00_page" resultClass="int"> 
+  UPDATE T00_PAGE SET 
+  PAGENAME=#pagename#,URL=#url#,ACTION_PATH=#action_path#,FLAG=#flag#,DES=#des#,MODIFYDATE=#modifydate#,MODIFIER=#modifier#
+  WHERE PAGEKEY=#pagekey# 
+  </statement> 
+ 
+  <statement id="deleteT00_page" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T00_PAGE WHERE PAGEKEY=#value# 
+  </statement> 
+ 
+  <statement id="getT00_pageDisp" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_page"> 
+  SELECT * FROM T00_PAGE WHERE PAGEKEY=#value# 
+  </statement> 
+
+  <statement id="getPagekeyByModulekeyFromAuth" parameterClass="string" resultClass="com.ist.platform.dto.T00_page"> 
+  SELECT PAGEKEY FROM T00_PMODULE_AUTH WHERE MODULEKEY=#modulekey#
+  </statement> 
+
+  <statement id="getT00_pageListByModulekey" parameterClass="string" resultClass="com.ist.platform.dto.T00_page"> 
+  SELECT P.PAGEKEY,P.SYSTEMKEY,P.PAGENAME,P.URL,P.ACTION_PATH,P.FLAG,P.DES,P.CREATEDATE,P.CREATOR,P.MODIFYDATE,P.MODIFIER FROM T00_PAGE P,T00_PMODULE_AUTH M
+  WHERE P.PAGEKEY=M.PAGEKEY AND M.MODULEKEY=#value#
+  ORDER BY P.PAGEKEY
+  </statement> 
+  
+  <statement id="getT00_pageListNotInModulekey" parameterClass="com.ist.platform.dto.T00_page" resultClass="com.ist.platform.dto.T00_page"> 
+  SELECT PAGEKEY,SYSTEMKEY,PAGENAME,URL,ACTION_PATH,FLAG,DES,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER FROM T00_PAGE   
+  WHERE PAGEKEY NOT IN(SELECT PAGEKEY FROM T00_PMODULE_AUTH WHERE MODULEKEY=#modulekey#)
+  <dynamic> 
+    <isNotEmpty prepend="AND" property="systemkey"> 
+    SYSTEMKEY = #systemkey# 
+    </isNotEmpty>   
+    <isNotEmpty prepend="AND" property="pagename"> 
+    PAGENAME LIKE #pagename# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="action_path"> 
+    ACTION_PATH LIKE #action_path# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="url"> 
+    URL LIKE #url# 
+    </isNotEmpty> 
+    <isNotEmpty prepend="AND" property="flag"> 
+    FLAG = #flag# 
+    </isNotEmpty>                  
+  </dynamic>   
+  ORDER BY PAGEKEY
+  </statement>   
+  
+  <statement id="insertT00_pmodule_auth" parameterClass="com.ist.platform.dto.T00_pmodule_auth" resultClass="int"> 
+  INSERT INTO T00_PMODULE_AUTH(
+  MODULEKEY,PAGEKEY,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER
+  ) VALUES(
+  #modulekey#,#pagekey#,#createdate#,#creator#,#modifydate#,#modifier#
+  ) 
+  </statement> 
+  
+  <statement id="deleteT00_pmodule_authByModulekey" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T00_PMODULE_AUTH WHERE MODULEKEY=#value# 
+  </statement>
+  
+  <statement id="deleteT00_pmodule_authByPagekey" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T00_PMODULE_AUTH WHERE PAGEKEY=#value# 
+  </statement>   
+  
+  <statement id="deleteT00_pmodule_authByPagekeyModulekey" parameterClass="com.ist.platform.dto.T00_pmodule_auth" resultClass="int">
+  DELETE FROM T00_PMODULE_AUTH WHERE PAGEKEY=#pagekey# AND MODULEKEY=#modulekey#
+  </statement>       
+</sqlMap> 
+

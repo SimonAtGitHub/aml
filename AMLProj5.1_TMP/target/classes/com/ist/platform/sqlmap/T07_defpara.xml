@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T07_defpara">
+	<statement id="getT07_defparaList"
+		parameterClass="com.ist.platform.dto.T07_defpara"
+		resultClass="com.ist.platform.dto.T07_defpara">
+		SELECT
+		DEFPARAKEY,PARATYPE,CURR_CD,PARTY_CD,PARTY_ACCT_CD,PARA_DES,FLAG,VALIDATE_DT,INVALIDATE_DT,PARA_VAL,TAG,DYNA_IND
+		FROM T07_DEFPARA WHERE 1=1 
+		<dynamic>
+			<isNotEmpty prepend="AND" property="defparakey">
+				DEFPARAKEY = #defparakey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="paratype">
+				PARATYPE = #paratype#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="curr_cd">
+				CURR_CD = #curr_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_cd">
+				PARTY_CD = #party_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_acct_cd">
+				PARTY_ACCT_CD = #party_acct_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="flag">
+				FLAG = #flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="dyna_ind">
+				DYNA_IND = #dyna_ind#
+			</isNotEmpty>
+			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="0">
+					ORDER BY DEFPARAKEY
+				</isEqual>
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY PARATYPE
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY CURR_CD
+				</isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY PARTY_CD
+				</isEqual>
+				<isEqual property="orderby" compareValue="4">
+					ORDER BY PARTY_ACCT_CD
+				</isEqual>
+				<isEqual property="orderby" compareValue="5">
+					ORDER BY FLAG
+				</isEqual>
+				<isEqual property="orderby" compareValue="6">
+					ORDER BY DYNA_IND
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty property="orderby">
+				<isNotEmpty property="order">
+					<isEqual property="order" compareValue="1"></isEqual>
+					<isEqual property="order" compareValue="2">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="getT07_defparaListCount"
+		parameterClass="com.ist.platform.dto.T07_defpara" resultClass="int">
+		SELECT COUNT(*) FROM T07_DEFPARA
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="defparakey">
+				DEFPARAKEY = #defparakey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="paratype">
+				PARATYPE = #paratype#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="curr_cd">
+				CURR_CD = #curr_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_cd">
+				PARTY_CD = #party_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_acct_cd">
+				PARTY_ACCT_CD = #party_acct_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="flag">
+				FLAG = #flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="dyna_ind">
+				DYNA_IND = #dyna_ind#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="insertT07_defpara"
+		parameterClass="com.ist.platform.dto.T07_defpara" resultClass="int">
+		INSERT INTO T07_DEFPARA(
+		DEFPARAKEY,PARATYPE,CURR_CD,PARTY_CD,PARTY_ACCT_CD,PARA_DES,FLAG,VALIDATE_DT,INVALIDATE_DT,PARA_VAL,TAG,DYNA_IND
+		) VALUES(
+		#defparakey#,#paratype#,#curr_cd#,#party_cd#,#party_acct_cd#,#para_des#,#flag#,#validate_dt:DATE#,#invalidate_dt:DATE#,#para_val#,#tag#,#dyna_ind#
+		)
+	</statement>
+
+	<statement id="modifyT07_defpara"
+		parameterClass="com.ist.platform.dto.T07_defpara" resultClass="int">
+		UPDATE T07_DEFPARA SET
+		DEFPARAKEY=#defparakey#,PARATYPE=#paratype#,CURR_CD=#curr_cd#,PARTY_CD=#party_cd#,PARTY_ACCT_CD=#party_acct_cd#,PARA_DES=#para_des#,FLAG=#flag#,VALIDATE_DT=#validate_dt:DATE#,INVALIDATE_DT=#invalidate_dt:DATE#,PARA_VAL=#para_val#,TAG=#tag#,DYNA_IND=#dyna_ind#
+		WHERE DEFPARAKEY=#defparakey#
+	</statement>
+
+	<statement id="deleteT07_defpara" parameterClass="java.lang.String"
+		resultClass="int">
+		DELETE FROM T07_DEFPARA WHERE DEFPARAKEY=#value#
+	</statement>
+
+	<statement id="getT07_defparaDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.platform.dto.T07_defpara">
+		SELECT * FROM T07_DEFPARA WHERE DEFPARAKEY=#value#
+	</statement>
+	<statement id="getT07_indic_defparaList"
+		parameterClass="com.ist.platform.dto.T07_defpara"
+		resultClass="com.ist.platform.dto.T07_defpara">
+		SELECT * FROM V07_INDIC A, T07_INDIC_DEFPARA B WHERE A.INDICKEY
+		= B.INDICKEY
+		<dynamic>
+			<isNotEmpty prepend="AND" property="defparakey">
+				B.DEFPARAKEY = #defparakey#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+</sqlMap>
+
+
+
+
+
+

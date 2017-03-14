@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T01_attachment">
+  <statement id="getT01_attachmentList"
+    parameterClass="com.ist.common.attachment.dto.T01_attachment"
+    resultClass="com.ist.common.attachment.dto.T01_attachment">
+    select
+    t1.attachkey,t1.sfilename,t1.tfilename,t1.tpath,t1.filesize,t1.creator,t1.createdate,t2.attachtype,t2.businesskey,t2.systemkey,t1.modifier,t1.modifydate
+    from t01_attachment t1, t01_attach_map t2 where t1.attachkey =
+    t2.attachkey
+    <dynamic>
+      <isNotEmpty prepend="and" property="attachkey">
+        t2.attachkey = #attachkey#
+      </isNotEmpty>
+      <isNotEmpty prepend="and" property="businesskey">
+        t2.businesskey = #businesskey#
+      </isNotEmpty>
+    </dynamic>
+    order by t1.createdate
+  </statement>
+
+  <statement id="getT01_attachmentListCount"
+    parameterClass="com.ist.common.attachment.dto.T01_attachment"
+    resultClass="int">
+    select count(*) from t01_attachment t1, t01_attach_map t2 where
+    t1.attachkey = t2.attachkey
+    <dynamic>
+      <isNotEmpty prepend="and" property="attachkey">
+        t2.attachkey = #attachkey#
+      </isNotEmpty>
+      <isNotEmpty prepend="and" property="businesskey">
+        t2.businesskey = #businesskey#
+      </isNotEmpty>
+    </dynamic>
+  </statement>
+
+  <statement id="insertT01_attachment"
+    parameterClass="com.ist.common.attachment.dto.T01_attachment"
+    resultClass="int">
+    insert into T01_attachment(
+    attachkey,sfilename,tfilename,tpath,filesize,creator,createdate
+    ) values(
+    #attachkey#,#sfilename#,#tfilename#,#tpath#,#filesize#,#creator#,#createdate#
+    )
+  </statement>
+  
+   <statement id="insertT01_attachment_pmp"
+    parameterClass="com.ist.common.attachment.dto.T01_attachment"
+    resultClass="int">
+    insert into T01_attachment(
+    attachkey,sfilename,tfilename,tpath,filesize,creator,createdate,modifier,modifydate
+    ) values(
+    #attachkey#,#sfilename#,#tfilename#,#tpath#,#filesize#,#creator#,#createdate#,#modifier#,#modifydate#
+    )
+  </statement>
+
+  <statement id="modifyT01_attachment"
+    parameterClass="com.ist.common.attachment.dto.T01_attachment"
+    resultClass="int">
+    update T01_attachment set
+    attachkey=#attachkey#,sfilename=#sfilename#,tfilename=#tfilename#,tpath=#tpath#,filesize=#filesize#,modifier=#modifier#,modifydate=#modifydate#
+    where attachkey=#attachkey#
+  </statement>
+
+  <statement id="deleteT01_attachment"
+    parameterClass="java.lang.String" resultClass="int">
+    delete from T01_attachment where attachkey=#value#
+  </statement>
+
+  <statement id="getT01_attachmentDisp"
+    parameterClass="java.lang.String"
+    resultClass="com.ist.common.attachment.dto.T01_attachment">
+    select *  from T01_attachment where attachkey = #attachkey#
+  </statement>
+  <statement id="getT01_attachmentDispRevision"
+    parameterClass="java.lang.String" resultClass="int">
+    select count(*) from T01_attachment where tfilename=#tfilename#
+  </statement>
+  
+  <statement id="getT01_programa_attachtypeList" parameterClass="com.ist.common.attachment.dto.T01_programa_attachtype" resultClass="com.ist.common.attachment.dto.T01_programa_attachtype"> 
+  select t1.programakey,t1.attachkey,t1.attachname,t1.flag,t1.modifier,t1.modifydate,t1.creator,t1.createdate ,t2.programaname
+  from T12_programa_attachtype  t1 , T12_PROGRAMA t2
+  where t1.programakey = t2.programakey
+  <dynamic prepend=""> 
+    <isNotEmpty prepend="and" property="programakey"> 
+      t1.programakey = #programakey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+</sqlMap>
+

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T09_indic_subitem1">
+
+	<statement id="getT09_indic_subitem1ListByIndickey"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.iap.dto.T09_indic_subitem1">
+		select execsqlkey,indickey,exeseq,ismainsql,des from
+		t09_indic_subitem1 where indickey = #value#
+	</statement>
+
+	<statement id="getT09_indic_subitem1MainSqlByIndickey"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.iap.dto.T09_indic_subitem1">
+		select indickey,exeseq,ismainsql,des,execsqlkey from
+		t09_indic_subitem1 where indickey = #value# and ismainsql = '1'
+	</statement>
+
+	<statement id="insertT09_indic_subitem1"
+		parameterClass="com.ist.iap.dto.T09_indic_subitem1"
+		resultClass="int">
+		insert into T09_indic_subitem1(
+		indickey,exeseq,ismainsql,des,execsqlkey ) values(
+		#indickey#,#exeseq#,#ismainsql#,#des#,#execsqlkey# )
+	</statement>
+
+	<statement id="updateT09_indic_subitem1InsertSql"
+		parameterClass="com.ist.iap.dto.T09_indic_subitem1"
+		resultClass="int">
+		update T09_indic_subitem1 set inssql=#inssql# where
+		indickey= #indickey# and exeseq = #exeseq#
+	</statement>
+
+	<statement id="deleteT09_indic_subitem1ByIndickey"
+		parameterClass="java.lang.String" resultClass="int">
+		delete from T09_indic_subitem1 where indickey=#value#
+	</statement>
+	
+    <statement id="insertT09_tp_exec_qry_seq" parameterClass="com.ist.iap.dto.T09_indic_subitem1" resultClass="int"> 
+        insert into T09_tp_exec_qry_seq(execsqlkey,seq,execsql) values(#execsqlkey#,#seq#,#execsql#) 
+    </statement> 
+  
+    <statement id="deleteT09_tp_exec_qry_seq" parameterClass="java.lang.String" resultClass="int"> 
+		delete from T09_TP_EXEC_QRY_SEQ s where exists (select 'X' from T09_INDIC_SUBITEM1 d where d.indickey=#indickey# 
+		and s.execsqlkey = d.execsqlkey )
+    </statement> 
+	  
+	<statement id="getRel_sql_by_indickey" parameterClass="java.lang.String" resultClass="com.ist.iap.dto.T09_indic_subitem1"> 
+       SELECT s.* FROM T09_indic_subitem1 t , T09_TP_EXEC_QRY_SEQ s WHERE  t.EXECSQLKEY = s.EXECSQLKEY AND t.indickey=#value# ORDER BY s.execsqlkey,s.seq
+    </statement>
+    
+    <statement id="getRel_sql_by_execsqlkey" parameterClass="java.lang.String" resultClass="com.ist.iap.dto.T09_indic_subitem1"> 
+       SELECT * FROM T09_TP_EXEC_QRY_SEQ  WHERE execsqlkey=#value# ORDER BY execsqlkey,seq
+    </statement>   
+</sqlMap>

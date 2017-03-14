@@ -1,0 +1,740 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T47_party">
+<statement id="getT47_partyDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.aml.report.dto.T47_party">
+		SELECT
+		PARTY_CLASS_CD,PARTY_ID,PARTY_CHN_NAME,CARD_TYPE,HOST_CUST_ID,CARD_NO,PARTY_STATUS_CD,
+		COUNTRY_CD,AML2_TYPE_CD,AML1_TYPE_CD,ADDR1,ADDR2,TEL_NO,CELL_NO,NET_ADDRESS,POSTALCODE,EMAIL_ADDR,ORGANKEY
+		FROM T47_PARTY WHERE PARTY_ID=#value#
+	</statement>
+	<!-- 调查分析-数据查询-客户视图 start added by shanbh -->
+	<statement id="getT47_partyList"
+		parameterClass="com.ist.aml.report.dto.T47_party"
+		resultClass="com.ist.aml.report.dto.T47_party">
+		SELECT P.PARTY_ID,P.PARTY_CHN_NAME,P.PARTY_CLASS_CD,P.ORGANKEY,P.CARD_TYPE,P.CARD_NO
+		FROM T47_PARTY P
+		WHERE 1=1
+		<isNotEmpty prepend="AND" property="organkeys">
+				ORGANKEY IN ($organkeys$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+				PARTY_ID = #party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+				PARTY_CLASS_CD = #party_class_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+				ORGANKEY = #organkey#
+		</isNotEmpty>
+	</statement>
+	<statement id="getT47_partyListCount"
+		parameterClass="com.ist.aml.report.dto.T47_party"
+		resultClass="int">
+		SELECT COUNT(*)
+		FROM T47_PARTY P
+		WHERE 1=1
+		<isNotEmpty prepend="AND" property="organkeys">
+				ORGANKEY IN ($organkeys$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+				PARTY_ID = #party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+				PARTY_CLASS_CD = #party_class_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+				ORGANKEY = #organkey#
+		</isNotEmpty>
+	</statement>
+	<!-- 调查分析-数据查询-客户视图 end -->
+	
+<statement id="getT47_party_ucList"
+		parameterClass="com.ist.aml.report.dto.T47_party"
+		resultClass="com.ist.aml.report.dto.T47_party">
+		SELECT A.PARTY_ID,A.PARTY_CLASS_CD,A.PARTY_CHN_NAME,A.COUNTRY_CD,SUBSTR(A.CARD_TYPE,1,2) AS CARD_TYPE,A.CARD_NO,A.ORGANKEY,
+		A.VALIDATE_IND,A.VALIDATE_IND2 FROM T47_PARTY_UC A WHERE (A.VALIDATE_IND='0' OR A.VALIDATE_IND2='0' OR
+		A.VALIDATE_IND='2' OR A.VALIDATE_IND2='2' )
+		
+		
+		<dynamic>
+			<isNotEmpty prepend="AND" property="organkeys">
+				ORGANKEY IN ($organkeys$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id_s">
+				PARTY_ID = #party_id_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd_s">
+				PARTY_CLASS_CD = #party_class_cd_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="card_type_s">
+				CARD_TYPE LIKE  '%'||#card_type_s# ||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="card_no_s">
+				CARD_NO = #card_no_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_chn_name_s">
+				PARTY_CHN_NAME LIKE '%'||#party_chn_name#||'%'
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="getT47_party_ucListCount"
+		parameterClass="com.ist.aml.report.dto.T47_party" resultClass="int">
+		SELECT COUNT(*) FROM T47_PARTY_UC A WHERE (A.VALIDATE_IND= '0' OR A.VALIDATE_IND2= '0' OR
+		A.VALIDATE_IND='2' OR A.VALIDATE_IND2='2')
+		
+		<!-- AND EXISTS (SELECT 1 FROM T07_CASE_APPLICATION T1,T07_CASE_PARTY T2 WHERE T1.APPLICATION_NUM=T2.APPLICATION_NUM AND T1.APP_STATE_CD!=4 AND T2.STATUS_CD!=1 AND T2.PARTY_ID=A.PARTY_ID) -->
+		<dynamic>
+			<isNotEmpty prepend="AND" property="organkeys">
+				ORGANKEY IN ($organkeys$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id_s">
+				PARTY_ID = #party_id_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd_s">
+				PARTY_CLASS_CD = #party_class_cd_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="card_type_s">
+				CARD_TYPE LIKE  '%'||#card_type_s# ||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="card_no_s">
+				CARD_NO = #card_no_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_chn_name_s">
+				PARTY_CHN_NAME LIKE '%'||#party_chn_name#||'%'
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="getT47_party_ucByHostId"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.report.dto.T47_party">
+		SELECT PARTY_ID,HOST_CUST_ID,PARTY_CLASS_CD,AML2_TYPE_CD,PARTY_CHN_NAME,CARD_TYPE,CARD_NO,COUNTRY_CD,ADDR1,TEL_NO,
+		CELL_NO,EMAIL_ADDR,ORGANKEY,INDUSTRYKEY,ENROL_FUND_AMT,ENROL_FUND_CURRENCY_CD,LEGAL_OBJ,LEGAL_CARD_TYPE,LEGAL_CARD_NO,
+		OCCUPATION,VALIDATE_IND,VALIDATE_IND2 FROM T47_PARTY_UC WHERE PARTY_ID=#value#
+	</statement>
+	
+	<statement id="saveModifyT47_partyUc_20091211"
+		parameterClass="com.ist.aml.report.dto.T47_party" resultClass="int">
+		UPDATE T47_PARTY_UC SET VALIDATE_IND = CASE VALIDATE_IND WHEN '0' THEN '1' WHEN '2' THEN '1' ELSE VALIDATE_IND END,
+                                VALIDATE_IND2= CASE VALIDATE_IND2 WHEN '0' THEN '1' WHEN '2' THEN '1' ELSE VALIDATE_IND2 END
+		<dynamic>
+      <isNotEqual prepend="," property="host_cust_id" compareValue="#">
+				HOST_CUST_ID=#host_cust_id#
+			</isNotEqual>
+			<isNotEqual prepend="," property="party_class_cd" compareValue="#">
+				PARTY_CLASS_CD=#party_class_cd#
+			</isNotEqual>
+			<isNotEqual prepend="," property="aml2_type_cd" compareValue="#">
+				AML2_TYPE_CD=#aml2_type_cd#
+			</isNotEqual>
+			<isNotEqual prepend="," property="party_chn_name" compareValue="#">
+				PARTY_CHN_NAME=#party_chn_name#
+			</isNotEqual>
+			<isNotEqual prepend="," property="card_type" compareValue="#">
+				CARD_TYPE=#card_type#
+			</isNotEqual>
+			<isNotEqual prepend="," property="card_no" compareValue="#">
+				CARD_NO=#card_no#
+			</isNotEqual>
+			<isNotEqual prepend="," property="country_cd" compareValue="#">
+				COUNTRY_CD=#country_cd#
+			</isNotEqual>
+			<isNotEqual prepend="," property="tel_no" compareValue="#">
+				TEL_NO=#tel_no#
+			</isNotEqual>
+			<isNotEqual prepend="," property="addr1" compareValue="#">
+				ADDR1=#addr1#
+			</isNotEqual>
+			<isNotEqual prepend="," property="industrykey" compareValue="#">
+				INDUSTRYKEY=#industrykey#
+			</isNotEqual>
+			<isNotEqual prepend="," property="enrol_fund_amt" compareValue="#">
+				ENROL_FUND_AMT=#enrol_fund_amt#
+			</isNotEqual>
+			<isNotEqual prepend="," property="legal_obj" compareValue="#">
+				LEGAL_OBJ=#legal_obj#
+			</isNotEqual>
+			<isNotEqual prepend="," property="legal_card_type" compareValue="#">
+				LEGAL_CARD_TYPE=#legal_card_type#
+			</isNotEqual>
+			<isNotEqual prepend="," property="legal_card_no" compareValue="#">
+				LEGAL_CARD_NO=#legal_card_no#
+			</isNotEqual>
+		</dynamic>
+	WHERE PARTY_ID=#party_id#
+	</statement>
+	
+		<statement id="modifyT47_partyFromReport"
+		parameterClass="com.ist.aml.report.dto.T47_party" resultClass="int">
+		UPDATE T47_PARTY_UC SET HOST_CUST_ID=#party_id#
+		<dynamic>
+			<isNotEmpty prepend="," property="party_class_cd">
+				PARTY_CLASS_CD=#party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="aml1_type_cd">
+				AML1_TYPE_CD=#aml1_type_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="aml2_type_cd">
+				AML2_TYPE_CD=#aml2_type_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="party_chn_name">
+				PARTY_CHN_NAME=#party_chn_name#
+			</isNotEmpty>
+		
+			<isNotEmpty prepend="," property="card_type">
+				CARD_TYPE=#card_type#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="card_no">
+				CARD_NO=#card_no#
+			</isNotEmpty>
+	
+			<isNotEmpty prepend="," property="country_residence">
+				COUNTRY_RESIDENCE=#country_residence#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="country_cd">
+				COUNTRY_CD=#country_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="addr1">
+				ADDR1=#addr1#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="addr2">
+				ADDR2=#addr2#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="tel_no">
+				TEL_NO=#tel_no#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="cell_no">
+				CELL_NO=#cell_no#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="net_address">
+				NET_ADDRESS=#net_address#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="email_addr">
+				EMAIL_ADDR=#email_addr#
+			</isNotEmpty>
+	
+				<isNotEmpty prepend="," property="industrykey">
+				industrykey=#industrykey#
+			</isNotEmpty>
+				<isNotEmpty prepend="," property="occupation">
+				occupation=#occupation#
+			</isNotEmpty>
+				<isNotEmpty prepend="," property="enrol_fund_amt">
+				enrol_fund_amt=#enrol_fund_amt#
+			</isNotEmpty>
+				<isNotEmpty prepend="," property="legal_obj">
+				legal_obj=#legal_obj#
+			</isNotEmpty>
+			 <isNotEmpty prepend="," property="legal_card_no">
+				legal_card_no=#legal_card_no#
+			</isNotEmpty>
+			 <isNotEmpty prepend="," property="legal_card_type">
+				legal_card_type=#legal_card_type#
+			</isNotEmpty>
+		
+			
+			
+		</dynamic>
+		WHERE PARTY_ID=#party_id#
+	</statement>
+	<statement id="getT47_caseparty_ucValidate" 
+		parameterClass="java.lang.String" resultClass="com.ist.aml.report.dto.T47_party">
+		SELECT  distinct A.VALIDATE_IND,A.VALIDATE_IND2 FROM T47_PARTY_UC A, T07_CASE_STCR_KY B 
+		WHERE b.PARTY_STATUS!='4' and  A.PARTY_ID=B.PARTY_ID AND B.APPLICATION_NUM=#application_num#
+	</statement>
+	<statement id="insertT47_party_uc"
+		parameterClass="com.ist.aml.report.dto.T47_party" resultClass="int">
+	INSERT INTO T47_PARTY_UC (PARTY_ID, HOST_CUST_ID, PARTY_CLASS_CD, AML2_TYPE_CD, PARTY_CHN_NAME, CARD_TYPE, CARD_NO, COUNTRY_CD, ADDR1, TEL_NO, CELL_NO, EMAIL_ADDR, ORGANKEY, INDUSTRYKEY, ENROL_FUND_AMT, ENROL_FUND_CURRENCY_CD, LEGAL_OBJ, LEGAL_CARD_TYPE, LEGAL_CARD_NO, OCCUPATION, VALIDATE_IND, VALIDATE_IND2)
+	VALUES (#party_id#, #host_cust_id#, #party_class_cd#, #aml2_type_cd#, #party_chn_name#, #card_type#, #card_no#, #country_cd#, #addr1#, #tel_no#, #cell_no#, #email_addr#, #organkey#, #industrykey#, #enrol_fund_amt#, #enrol_fund_currency_cd#, #legal_obj#, #legal_card_type#, #legal_card_no#, #occupation#, #validate_ind#, #validate_ind2#)
+</statement>
+   <statement id="insertT47_party_uc_tpla"
+		parameterClass="com.ist.aml.report.dto.T47_party" resultClass="int">
+	INSERT INTO T47_PARTY_UC (PARTY_ID, HOST_CUST_ID, PARTY_CLASS_CD, AML2_TYPE_CD, PARTY_CHN_NAME, CARD_TYPE, CARD_NO, COUNTRY_CD, ADDR1, TEL_NO, CELL_NO, EMAIL_ADDR, ORGANKEY,VALIDATE_IND2)
+	(SELECT PARTY_ID, HOST_CUST_ID, PARTY_CLASS_CD, AML2_TYPE_CD, PARTY_CHN_NAME, CARD_TYPE, CARD_NO, COUNTRY_CD, ADDR1, TEL_NO, CELL_NO, EMAIL_ADDR, ORGANKEY,'1' FROM T47_PARTY WHERE PARTY_ID = #party_id#)
+</statement>
+<statement id="isExist_t47_party_uc" parameterClass="com.ist.aml.report.dto.T47_party" resultClass="int">
+	SELECT count(0) FROM T47_PARTY_UC T WHERE T.PARTY_ID=#party_id#
+</statement>
+
+<statement id="modifyT47_party_uc2"
+		parameterClass="com.ist.aml.report.dto.T47_party" resultClass="int">
+	UPDATE T47_PARTY_UC set HOST_CUST_ID=#host_cust_id#, PARTY_CLASS_CD=#party_class_cd#, 
+	AML2_TYPE_CD=#aml2_type_cd#, PARTY_CHN_NAME=#party_chn_name#, CARD_TYPE=#card_type#, 
+	CARD_NO=#card_no#, COUNTRY_CD=#country_cd#, ADDR1=#addr1#, TEL_NO=#tel_no#, CELL_NO=#cell_no#, 
+	EMAIL_ADDR=#email_addr#, ORGANKEY=#organkey#, INDUSTRYKEY=#industrykey#,
+	 ENROL_FUND_AMT=#enrol_fund_amt#, ENROL_FUND_CURRENCY_CD=#enrol_fund_currency_cd#, 
+	 LEGAL_OBJ=#legal_obj#, LEGAL_CARD_TYPE=#legal_card_type#, LEGAL_CARD_NO= #legal_card_no#, 
+	 OCCUPATION=#occupation#,  VALIDATE_IND2=#validate_ind2#
+	 WHERE PARTY_ID=#party_id#
+ 
+</statement>
+
+<statement id="modifyT47_party_uc1"
+		parameterClass="com.ist.aml.report.dto.T47_party" resultClass="int">
+	UPDATE T47_PARTY_UC set HOST_CUST_ID=#host_cust_id#, PARTY_CLASS_CD=#party_class_cd#, 
+	AML2_TYPE_CD=#aml2_type_cd#, PARTY_CHN_NAME=#party_chn_name#, CARD_TYPE=#card_type#, 
+	CARD_NO=#card_no#, COUNTRY_CD=#country_cd#,   VALIDATE_IND=#validate_ind#
+	 WHERE PARTY_ID=#party_id#
+</statement>
+	<statement id="getT47_partyDispByCase" parameterClass="java.lang.String"
+		resultClass="com.ist.aml.report.dto.T47_party">
+		SELECT ORGANKEY
+		FROM T47_PARTY_UC WHERE PARTY_ID=#value#
+	</statement>
+  
+	
+	
+	
+	<statement id="getT47_partyDisp1" parameterClass="java.lang.String"
+		resultClass="com.ist.aml.report.dto.T47_party">
+		SELECT ORGANKEY
+		FROM T47_PARTY_UC WHERE PARTY_ID=#value#
+	</statement>
+	
+	<statement id="getT47_partyComm"
+		parameterClass="com.ist.aml.report.dto.T47_party"
+		resultClass="com.ist.aml.report.dto.T47_party">
+		SELECT
+		A.PARTY_ID,A.HOST_CUST_ID,A.PARTY_CLASS_CD,A.AML1_TYPE_CD,A.AML2_TYPE_CD,A.PARTY_CHN_NAME,ORGANKEY,
+		A.PARTY_ENG_NAME,A.CARD_TYPE,A.CARD_NO,A.BIRTH_DT,A.COUNTRY_RESIDENCE,A.COUNTRY_CD,
+		A.ADDR1,A.ADDR2,A.TEL_NO,A.CELL_NO,A.NET_ADDRESS,A.EMAIL_ADDR,A.CREATE_DT,A.LAST_UPD_DT,A.LAST_UPD_USER
+		FROM T47_PARTY A WHERE 1>0
+		<dynamic>
+			<!-- 
+			<isNotEmpty prepend="AND" property="host_cust_id">
+				A.HOST_CUST_ID = #host_cust_id#
+			</isNotEmpty>
+			 -->
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_chn_name">
+				A.PARTY_CHN_NAME =#party_chn_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				A.PARTY_CLASS_CD= #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="card_no">
+				A.CARD_NO= #card_no#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey"> 
+				A.ORGANKEY IN ($organkey$) 
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="getT47_partyCommCount"
+		parameterClass="com.ist.aml.report.dto.T47_party" resultClass="int">
+		SELECT COUNT(*) FROM T47_PARTY A WHERE 1>0
+		<dynamic>
+			<!-- 
+			<isNotEmpty prepend="AND" property="host_cust_id">
+				A.HOST_CUST_ID = #host_cust_id#
+			</isNotEmpty>
+			 -->
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_chn_name">
+				A.PARTY_CHN_NAME =#party_chn_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				A.PARTY_CLASS_CD= #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="card_no">
+				A.CARD_NO= #card_no#
+			</isNotEmpty>
+			 <isNotEmpty prepend="AND" property="organkey"> 
+				A.ORGANKEY IN ($organkey$) 
+			</isNotEmpty>  
+		</dynamic>
+	</statement>
+	
+	<statement id="getT47_partyCommForIList"
+		parameterClass="com.ist.aml.report.dto.T47_party"
+		resultClass="com.ist.aml.report.dto.T47_party">
+		 SELECT
+		A.PARTY_ID,A.HOST_CUST_ID,A.PARTY_CLASS_CD,A.AML1_TYPE_CD,A.AML2_TYPE_CD,A.PARTY_CHN_NAME,ORGANKEY,
+		A.PARTY_ENG_NAME,A.CARD_TYPE,A.CARD_NO,A.BIRTH_DT,A.COUNTRY_RESIDENCE,A.COUNTRY_CD,
+		A.ADDR1,A.ADDR2,A.TEL_NO,A.CELL_NO,A.NET_ADDRESS,A.EMAIL_ADDR,A.CREATE_DT,A.LAST_UPD_DT,A.LAST_UPD_USER,b.OCCUPATION as industrykey
+		FROM T47_PARTY A,t47_individual b
+     WHERE a.party_id=b.party_id and A.PARTY_CLASS_CD='I'
+    
+		<dynamic>
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_chn_name">
+				A.PARTY_CHN_NAME =#party_chn_name#
+			</isNotEmpty>
+	
+			<isNotEmpty prepend="AND" property="card_no">
+				A.CARD_NO= #card_no#
+			</isNotEmpty>
+			 <isNotEmpty prepend="AND" property="organkey"> 
+				A.ORGANKEY IN ($organkey$) 
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="getT47_partyCommForCList"
+		parameterClass="com.ist.aml.report.dto.T47_party"
+		resultClass="com.ist.aml.report.dto.T47_party">
+		 SELECT
+		A.PARTY_ID,A.HOST_CUST_ID,A.PARTY_CLASS_CD,A.AML1_TYPE_CD,A.AML2_TYPE_CD,A.PARTY_CHN_NAME,ORGANKEY,
+		A.PARTY_ENG_NAME,A.CARD_TYPE,A.CARD_NO,A.BIRTH_DT,A.COUNTRY_RESIDENCE,A.COUNTRY_CD,
+		A.ADDR1,A.ADDR2,A.TEL_NO,A.CELL_NO,A.NET_ADDRESS,A.EMAIL_ADDR,A.CREATE_DT,A.LAST_UPD_DT,A.LAST_UPD_USER,b.industrykey,
+    b.enrol_fund_amt,b.legal_obj,b.legal_card_type,b.legal_card_no
+		FROM T47_PARTY A,T47_Corporation b
+     WHERE a.party_id=b.party_id and A.PARTY_CLASS_CD='C'
+     
+		<dynamic>
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_chn_name">
+				A.PARTY_CHN_NAME =#party_chn_name#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="card_no">
+				A.CARD_NO= #card_no#
+			</isNotEmpty>
+			 <isNotEmpty prepend="AND" property="organkey"> 
+				A.ORGANKEY IN ($organkey$) 
+			</isNotEmpty> 
+		</dynamic>
+	</statement>
+	<statement id="getT47_partyCommForCCount"
+		parameterClass="com.ist.aml.report.dto.T47_party" resultClass="int">
+		SELECT COUNT(*) FROM(SELECT A.party_id FROM T47_PARTY A,T47_Corporation b
+     WHERE a.party_id=b.party_id and A.PARTY_CLASS_CD='C'
+		<dynamic>
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_chn_name">
+				A.PARTY_CHN_NAME =#party_chn_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="card_no">
+				A.CARD_NO= #card_no#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey"> 
+				A.ORGANKEY IN ($organkey$) 
+			</isNotEmpty> 
+		</dynamic>
+		) T
+	</statement>
+	<statement id="getT47_partyCommForICount"
+		parameterClass="com.ist.aml.report.dto.T47_party" resultClass="int">
+		SELECT COUNT(*) FROM(SELECT A.party_id FROM T47_PARTY A,t47_individual b
+     WHERE a.party_id=b.party_id and A.PARTY_CLASS_CD='I'
+		<dynamic>
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_chn_name">
+				A.PARTY_CHN_NAME =#party_chn_name#
+			</isNotEmpty>
+	
+			<isNotEmpty prepend="AND" property="card_no">
+				A.CARD_NO= #card_no#
+			</isNotEmpty>
+			 <isNotEmpty prepend="AND" property="organkey"> 
+				A.ORGANKEY IN ($organkey$) 
+			</isNotEmpty> 
+		</dynamic>
+		) T
+	</statement>
+	
+	<!-- lijie -->
+	<statement id="getT47_customerList"
+		parameterClass="com.ist.aml.report.dto.T47_party"
+		resultClass="com.ist.aml.report.dto.T47_party">
+		SELECT A.PARTY_ID,A.PARTY_CLASS_CD,A.PARTY_CHN_NAME,A.COUNTRY_CD
+		AS COUNTRY_CD,A.CARD_TYPE,A.CARD_NO,A.PARTY_STATUS_CD FROM
+		T47_PARTY A WHERE 1>0
+		<dynamic>
+			<isNotEmpty prepend="AND" property="organ_id">
+				A.ORGANKEY IN ($organ_id$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				A.PARTY_CLASS_CD = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_status_cd">
+				A.PARTY_STATUS_CD = #party_status_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id_disp">
+				A.PARTY_ID= #party_id_disp#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchorgankey">
+				A.ORGANKEY = #searchorgankey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_chn_name_s">
+				A.PARTY_CHN_NAME = #party_chn_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="card_type">
+				A.CARD_TYPE = #card_type#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="card_no">
+				A.CARD_NO = #card_no#
+			</isNotEmpty>
+			<isNotEmpty property="customerorder">
+				<isEqual property="customerorder" compareValue="0">
+					ORDER BY PARTY_ID
+				</isEqual>
+				<isEqual property="customerorder" compareValue="1">
+					ORDER BY PARTY_CLASS_CD
+				</isEqual>
+				<isEqual property="customerorder" compareValue="2">
+					ORDER BY PARTY_STATUS_CD
+				</isEqual>
+				<isNotEmpty property="order">
+					<isEqual property="order" compareValue="0"></isEqual>
+					<isEqual property="order" compareValue="1">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+
+		</dynamic>
+	</statement>
+	
+	<statement id="getT47_customerListCount"
+		parameterClass="com.ist.aml.report.dto.T47_party" resultClass="int">
+		SELECT COUNT(*) FROM T47_PARTY A
+
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="organ_id">
+				ORGANKEY IN ($organ_id$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				PARTY_CLASS_CD = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_status_cd">
+				PARTY_STATUS_CD = #party_status_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id_disp">
+				PARTY_ID= #party_id_disp#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchorgankey">
+				ORGANKEY = #searchorgankey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_chn_name_s">
+				PARTY_CHN_NAME = #party_chn_name#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="card_type">
+				A.CARD_TYPE = #card_type#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="card_no">
+				A.CARD_NO = #card_no#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="checkT47_party"
+		parameterClass="com.ist.aml.report.dto.T47_party" resultClass="int">
+		SELECT COUNT(*) FROM T47_PARTY A WHERE 1>0
+		<dynamic>
+			<isNotEmpty prepend="AND" property="card_type">
+				A.CARD_TYPE = #card_type#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="card_no">
+				A.CARD_NO= #card_no#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="insertT47_party"
+		parameterClass="com.ist.aml.report.dto.T47_party" resultClass="int">
+		INSERT INTO T47_PARTY(
+		PARTY_ID,HOST_CUST_ID,PARTY_CLASS_CD,AML1_TYPE_CD,AML2_TYPE_CD,PARTY_CHN_NAME,PARTY_ENG_NAME,CARD_TYPE,CARD_NO,BIRTH_DT,COUNTRY_RESIDENCE,COUNTRY_CD,ADDR1,ADDR2,TEL_NO,CELL_NO,NET_ADDRESS,EMAIL_ADDR,CREATE_DT,LAST_UPD_DT,LAST_UPD_USER
+		) VALUES(
+		#party_id#,#host_cust_id#,#party_class_cd#,#aml1_type_cd#,#aml2_type_cd#,#party_chn_name#,#party_eng_name#,#card_type#,#card_no#,#birth_dt#,#country_residence#,#country_cd#,#addr1#,#addr2#,#tel_no#,#cell_no#,#net_address#,#email_addr#,#create_dt:DATE#,#last_upd_dt#,#last_upd_user#
+		)
+	</statement>
+	<statement id="getCorporationDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.aml.report.dto.T47_party">
+		SELECT
+		A.ORGANKEY,A.PARTY_CLASS_CD,A.PARTY_ID,A.PARTY_CHN_NAME,A.CARD_TYPE,A.HOST_CUST_ID,A.CARD_NO,A.COUNTRY_CD,A.AML2_TYPE_CD,A.AML1_TYPE_CD,A.ADDR1,A.ADDR2,A.TEL_NO,A.CELL_NO,A.NET_ADDRESS,A.POSTALCODE,A.EMAIL_ADDR,B.INDUSTRYKEY,B.LEGAL_OBJ,B.ENROL_FUND_AMT,B.ENROL_FUND_CURRENCY_CD,B.LEGAL_CARD_TYPE,B.LEGAL_CARD_NO,B.ORG_CREDIT_NO ,B.ORG_CREDIT_VT
+		FROM T47_PARTY A , T47_CORPORATION B WHERE A.PARTY_ID=#value#
+		AND B.PARTY_ID=A.PARTY_ID
+	</statement>
+	<statement id="getCorporationDisp1"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.report.dto.T47_party">
+		SELECT
+		A.ORGANKEY,A.PARTY_CLASS_CD,A.PARTY_ID,A.PARTY_CHN_NAME,A.CARD_TYPE,A.HOST_CUST_ID,A.CARD_NO,A.COUNTRY_CD,A.AML2_TYPE_CD,A.AML1_TYPE_CD,A.ADDR1,A.ADDR2,A.TEL_NO,A.CELL_NO,A.NET_ADDRESS,A.POSTALCODE,A.EMAIL_ADDR,B.OCCUPATION
+		FROM T47_PARTY A , T47_INDIVIDUAL B WHERE A.PARTY_ID=#value# AND
+		B.PARTY_ID=A.PARTY_ID
+	</statement>
+	<statement id="modifyT47_corp"
+		parameterClass="com.ist.aml.report.dto.T47_party" resultClass="int">
+		UPDATE T47_CORPORATION SET
+		INDUSTRYKEY=#industrykey#,ENROL_FUND_AMT=#enrol_fund_amt#,ENROL_FUND_CURRENCY_CD=#enrol_fund_currency_cd#,LEGAL_OBJ=#legal_obj#,
+		LEGAL_CARD_NO=#legal_card_no#,LEGAL_CARD_TYPE=#legal_card_type#,org_credit_no=#org_credit_no#,org_credit_vt=#org_credit_vt#
+		WHERE PARTY_ID=#party_id#
+	</statement>
+	<statement id="modifyT47_client"
+		parameterClass="com.ist.aml.report.dto.T47_party" resultClass="int">
+		UPDATE T47_PARTY SET
+		PARTY_CHN_NAME=#party_chn_name#,CARD_TYPE=#card_type#,HOST_CUST_ID=#host_cust_id#,CARD_NO=#card_no#,AML2_TYPE_CD=#aml2_type_cd#,AML1_TYPE_CD=#aml1_type_cd#,COUNTRY_CD=#country_cd#,
+		ADDR1=#addr1#,ADDR2=#addr2#,TEL_NO=#tel_no#,CELL_NO=#cell_no#,NET_ADDRESS=#net_address#,EMAIL_ADDR=#email_addr#,POSTALCODE=#postalcode#,ORGANKEY=#organkey#,OBJORGANKEY=#organkey#
+		WHERE PARTY_ID=#party_id#
+	</statement>
+	<statement id="modifyT47_indi"
+		parameterClass="com.ist.aml.report.dto.T47_party" resultClass="int">
+		UPDATE T47_INDIVIDUAL SET OCCUPATION=#occupation# WHERE
+		PARTY_ID=#party_id#
+	</statement>
+	
+	
+	<statement id="getT07_modify_partyorganList"
+		parameterClass="com.ist.aml.report.dto.T47_party"
+		resultClass="com.ist.aml.report.dto.T47_party">
+		SELECT *
+		 FROM T07_modify_partyorgan
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="organkey_s">
+				organkey= #organkey_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_organkey_s">
+				opp_organkey = #opp_organkey_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_pbc_party_class_cd_s">
+				PARTY_CLASS_CD=#opp_pbc_party_class_cd_s#
+			</isNotEmpty>
+			
+		</dynamic>
+	</statement>
+	<statement id="getT07_modify_partyorganCount"
+		parameterClass="com.ist.aml.report.dto.T47_party"
+		resultClass="int">
+		SELECT COUNT(*) FROM T07_modify_partyorgan
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="organkey_s">
+				organkey= #organkey_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_organkey_s">
+				opp_organkey = #opp_organkey_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_pbc_party_class_cd_s">
+				PARTY_CLASS_CD=#opp_pbc_party_class_cd_s#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="modifyT47_party_organ"
+		parameterClass="com.ist.aml.report.dto.T47_party"
+		resultClass="int">
+		UPDATE T47_party SET
+		organkey=#organkey#
+		WHERE organkey=#opp_organkey#
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				party_class_cd = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				party_id = #party_id#
+			</isNotEmpty>
+
+	</statement>
+	
+	<statement id="modifyT47_agreement_I"
+		parameterClass="com.ist.aml.report.dto.T47_party"
+		resultClass="int">
+		UPDATE t47_id_deposit SET
+		organkey=#organkey#
+		WHERE organkey=#opp_organkey#
+			<isNotEmpty prepend="AND" property="party_id">
+				party_id = #party_id#
+			</isNotEmpty>
+
+	</statement>
+	<statement id="modifyT47_agreement_C"
+		parameterClass="com.ist.aml.report.dto.T47_party"
+		resultClass="int">
+		UPDATE t47_cp_deposit SET
+		organkey=#organkey#
+		WHERE organkey=#opp_organkey#
+			<isNotEmpty prepend="AND" property="party_id">
+				party_id = #party_id#
+			</isNotEmpty>
+
+	</statement>
+	<statement id="modifyT47_agreement_D"
+		parameterClass="com.ist.aml.report.dto.T47_party"
+		resultClass="int">
+		UPDATE t47_loan_acct a SET
+		a.organkey=#organkey#
+		WHERE organkey=#opp_organkey#
+		    <isNotEmpty prepend="AND" property="party_class_cd">
+				exists (select 'X' from t47_party b where b.party_id=a.party_id and b.party_class_cd = #party_class_cd#)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				a.party_id = #party_id#
+			</isNotEmpty>
+
+	</statement>
+	<statement id="insertT07_modify_partyorgan"
+		parameterClass="com.ist.aml.report.dto.T47_party"
+		resultClass="int">
+		INSERT INTO T07_modify_partyorgan(
+		organkey,organname,PARTY_CLASS_CD,opp_organkey,party_id,opp_organname,create_user,create_dt
+		) VALUES(
+		#organkey#,#organname#,#party_class_cd#,#opp_organkey#,#party_id#,#opp_organname#,#create_user#,#create_dt#
+		)
+	</statement>
+	
+	<statement id="insertT47_party1"
+		parameterClass="com.ist.aml.report.dto.T47_party" resultClass="int">
+		INSERT INTO T47_PARTY(
+		PARTY_ID,HOST_CUST_ID,PARTY_CLASS_CD,AML1_TYPE_CD,AML2_TYPE_CD,PARTY_CHN_NAME,PARTY_ENG_NAME,CARD_TYPE,CARD_NO,BIRTH_DT,COUNTRY_RESIDENCE,COUNTRY_CD,ADDR1,ADDR2,TEL_NO,CELL_NO,NET_ADDRESS,EMAIL_ADDR,CREATE_DT,LAST_UPD_DT,LAST_UPD_USER,ORGANKEY,PARTY_STATUS_CD,POSTALCODE,OBJORGANKEY
+		) VALUES(
+		#party_id#,#host_cust_id#,#party_class_cd#,#aml1_type_cd#,#aml2_type_cd#,#party_chn_name#,#party_eng_name#,#card_type#,#card_no#,#birth_dt#,#country_residence#,#country_cd#,#addr1#,#addr2#,#tel_no#,#cell_no#,#net_address#,#email_addr#,#create_dt:DATE#,#last_upd_dt#,#last_upd_user#,#organkey#,'0',#postalcode#,#objorgankey#
+		)
+	</statement>
+	
+	<statement id="getT47_partyList_for_caseC" parameterClass="com.ist.aml.report.dto.T47_party" resultClass="com.ist.aml.report.dto.T47_party">
+		 SELECT
+		A.PARTY_ID,A.HOST_CUST_ID,A.PARTY_CLASS_CD,A.AML1_TYPE_CD,A.AML2_TYPE_CD,A.PARTY_CHN_NAME,ORGANKEY,
+		A.PARTY_ENG_NAME,A.CARD_TYPE,A.CARD_NO,A.BIRTH_DT,A.COUNTRY_RESIDENCE,A.COUNTRY_CD,
+		A.ADDR1,A.ADDR2,A.TEL_NO,A.CELL_NO,A.NET_ADDRESS,A.EMAIL_ADDR,A.CREATE_DT,A.LAST_UPD_DT,A.LAST_UPD_USER, '1' AS IS_PARTY, '1' AS Validate_ind2,
+		b.industrykey, b.enrol_fund_amt,b.legal_obj,b.legal_card_type,b.legal_card_no
+		FROM T47_PARTY A,T47_Corporation b WHERE a.party_id=b.party_id and A.PARTY_CLASS_CD='C'
+    	<dynamic>
+			<isNotNull property="selectList">
+				<iterate prepend="AND" property="selectList" open="(" close=")" conjunction="or">
+					A.PARTY_ID=#selectList[]#
+				</iterate>
+			</isNotNull>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT47_partyList_for_caseI" parameterClass="com.ist.aml.report.dto.T47_party" resultClass="com.ist.aml.report.dto.T47_party">
+		 SELECT
+		A.PARTY_ID,A.HOST_CUST_ID,A.PARTY_CLASS_CD,A.AML1_TYPE_CD,A.AML2_TYPE_CD,A.PARTY_CHN_NAME,ORGANKEY,
+		A.PARTY_ENG_NAME,A.CARD_TYPE,A.CARD_NO,A.BIRTH_DT,A.COUNTRY_RESIDENCE,A.COUNTRY_CD,
+		A.ADDR1,A.ADDR2,A.TEL_NO,A.CELL_NO,A.NET_ADDRESS,A.EMAIL_ADDR,A.CREATE_DT,A.LAST_UPD_DT,A.LAST_UPD_USER, '1' AS IS_PARTY, '1' AS Validate_ind2,
+		b.OCCUPATION as industrykey
+		FROM T47_PARTY A,t47_individual b WHERE a.party_id=b.party_id and A.PARTY_CLASS_CD='I'
+    	<dynamic>
+			<isNotNull property="selectList">
+				<iterate prepend="AND" property="selectList" open="(" close=")" conjunction="or">
+					A.PARTY_ID=#selectList[]#
+				</iterate>
+			</isNotNull>
+		</dynamic>
+	</statement>
+	
+</sqlMap>

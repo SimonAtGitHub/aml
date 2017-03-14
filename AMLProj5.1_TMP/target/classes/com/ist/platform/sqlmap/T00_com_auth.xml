@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T00_com_auth">
+  <statement id="insertT00_com_auth" parameterClass="com.ist.platform.dto.T00_com_auth" resultClass="int">
+  INSERT INTO T00_COM_AUTH(
+  USERNAME,ROLEKEY,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER,GROUPKEY
+  ) VALUES(
+  #username#,#rolekey#,#createdate#,#creator#,#modifydate#,#modifier#,#groupkey#
+  )
+  </statement>
+
+  <statement id="deleteT00_com_auth" parameterClass="com.ist.platform.dto.T00_com_auth" resultClass="int">
+  DELETE FROM T00_COM_AUTH
+  <dynamic prepend="WHERE">
+  	<isNotEmpty prepend="AND" property="groupkey">
+    	GROUPKEY = #groupkey#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="username">
+    	USERNAME = #username#
+    </isNotEmpty>
+  </dynamic>
+  </statement>
+
+   <statement id="getT00_com_authList" parameterClass="com.ist.platform.dto.T00_com_auth" resultClass="com.ist.platform.dto.T00_com_auth">
+	SELECT T1.*,T2.ROLENAME AS ROLEKEY_DISP,T3.REALNAME FROM T00_COM_AUTH T1,T00_ROLE T2,T00_USER T3
+	WHERE T1.ROLEKEY=T2.ROLEKEY AND T1.USERNAME=T3.USERNAME
+  <dynamic prepend="">
+    <isNotEmpty prepend="AND" property="username">
+    T1.USERNAME = #username#
+    </isNotEmpty>
+
+    <isNotEmpty prepend="AND" property="rolekey">
+    T1.ROLEKEY = #rolekey#
+    </isNotEmpty>
+     <isNotEmpty prepend="AND" property="groupkey">
+    T1.GROUPKEY = #groupkey#
+    </isNotEmpty>
+ 
+  </dynamic>
+  ORDER BY T1.USERNAME
+  </statement>
+
+   <statement id="getT00_com_authListCount" parameterClass="com.ist.platform.dto.T00_com_auth" resultClass="int">
+	SELECT COUNT(*) FROM T00_COM_AUTH T1,T00_ROLE T2,T00_USER T3 WHERE T1.ROLEKEY=T2.ROLEKEY AND T1.USERNAME=T3.USERNAME
+  <dynamic prepend="">
+     <isNotEmpty prepend="AND" property="username">
+    T1.USERNAME = #username#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="rolekey">
+    T1.ROLEKEY = #rolekey#
+    </isNotEmpty>
+     <isNotEmpty prepend="AND" property="groupkey">
+    T1.GROUPKEY = #groupkey#
+    </isNotEmpty>
+  </dynamic>
+  </statement>
+
+  <statement id="getT00_com_authDisp" parameterClass="com.ist.platform.dto.T00_com_auth" resultClass="com.ist.platform.dto.T00_com_auth">
+  SELECT * FROM T00_COM_AUTH
+  <dynamic prepend="WHERE">
+    <isNotEmpty prepend="AND" property="username">
+    	USERNAME = #username#
+    </isNotEmpty>
+
+    <isNotEmpty prepend="AND" property="rolekey">
+   	 	ROLEKEY = #rolekey#
+    </isNotEmpty>
+    <isNotEmpty prepend="AND" property="groupkey">
+   	 	groupkey = #groupkey#
+    </isNotEmpty>
+  </dynamic>
+  </statement>
+
+  
+  <statement id="getT00_com_authListByUsername_cmbc" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_com_auth">
+  SELECT T1.ROLEKEY,T2.ROLENAME AS ROLEKEY_DISP,T1.groupkey FROM T00_COM_AUTH T1,T00_ROLE T2 WHERE T1.ROLEKEY=T2.ROLEKEY AND T1.USERNAME=#value#
+  </statement>
+  <statement id="getT00_com_authList1" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_com_auth">
+  SELECT T1.ROLEKEY,T2.ROLENAME AS ROLEKEY_DISP,T1.USERNAME FROM T00_COM_AUTH T1,T00_ROLE T2 WHERE T1.ROLEKEY=T2.ROLEKEY
+  </statement>
+
+ 
+  
+  <statement id="deleteT00_com_authByUsername" parameterClass="string" resultClass="int">
+  DELETE FROM T00_COM_AUTH WHERE USERNAME=#value#
+  </statement>
+  <statement id="getT00_com_authListByGroupkey"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.platform.dto.T00_com_auth">
+		select u.realname,r.rolename rolekey_disp,c.* from t00_com_auth
+		c,t00_user u,t00_role r where c.username=u.username and
+		c.rolekey=r.rolekey and c.groupkey=#value# order by
+		c.username,c.rolekey
+	</statement>
+  <statement id="getT00_com_authListByGroupkeyUsername"
+		parameterClass="com.ist.platform.dto.T00_com_auth"
+		resultClass="com.ist.platform.dto.T00_com_auth">
+		select a.rolekey,r.rolename as rolekey_disp from t00_com_auth a,t00_role r
+		where a.rolekey=r.rolekey
+			<isNotEmpty prepend="and" property="username">
+				a.username = #username#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="groupkey">
+				a.groupkey = #groupkey#
+			</isNotEmpty>
+		order by a.username,a.groupkey,a.rolekey
+	</statement>
+</sqlMap>
+

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T23_module_stcr">
+	<statement id="getT23_module_stcrList" parameterClass="com.ist.mfa.dto.T23_module_stcr"
+		resultClass="com.ist.mfa.dto.T23_module_stcr">
+		SELECT * FROM T23_MODULE_STCR A, T21_PBCRULE B WHERE A.KEYSTCR= B.PBCKEY 
+		<isNotEmpty prepend="AND" property="module_no">
+			MODULE_NO = #module_no#
+	          </isNotEmpty>
+		<isNotEmpty prepend="AND" property="stcr_type">
+			STCR_TYPE = #stcr_type#
+	    </isNotEmpty>
+	    ORDER BY STCR_TYPE
+	</statement>
+	<statement id="getT23_module_stcrByNoList" parameterClass="com.ist.mfa.dto.T23_module_stcr"
+		resultClass="com.ist.mfa.dto.T23_module_stcr">
+		SELECT * FROM T23_MODULE_STCR
+	  <dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="module_no">
+			MODULE_NO = #module_no#
+	    </isNotEmpty>
+	 </dynamic>
+	</statement>
+	<statement id="insertT23_module_stcr" parameterClass="com.ist.mfa.dto.T23_module_stcr"
+		resultClass="int">
+		INSERT INTO T23_MODULE_STCR(
+		MODULE_NO,STCR_TYPE,KEYSTCR,STCRSCORE
+		) VALUES(
+		#module_no#,#stcr_type#,#keystcr#,#stcrscore_d:DOUBLE#
+		)
+    </statement>
+    <statement id="deleteT23_module_stcr" parameterClass="String"
+		resultClass="int">
+		delete from T23_MODULE_STCR where MODULE_NO=#module_no#
+    </statement>
+    <statement id="updateStcr_type" parameterClass="com.ist.mfa.dto.T23_module_stcr" resultClass="int">
+		UPDATE T23_MODULE_STCR SET STCR_TYPE=#stcr_type# where MODULE_NO=#module_no# AND KEYSTCR=#keystcr#
+    </statement>
+</sqlMap>
+

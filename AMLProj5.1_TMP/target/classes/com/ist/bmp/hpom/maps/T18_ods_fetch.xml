@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T18_ods_fetch"> 
+  <statement id="getT18_ods_fetchList" parameterClass="com.ist.bmp.hpom.dto.T18_ods_fetch" resultClass="com.ist.bmp.hpom.dto.T18_ods_fetch"> 
+  select b.dsname,a.tableename,a.dskey,a.fetchmethod,a.fetchseq,a.shfilename,a.colnum,a.sepchar,a.fetchsql,a.isedit,a.islock,a.deploytime,a.isdeploy,a.creator,a.createdate,a.modifier,a.modifydate,t.granularity 
+  from t18_ods_fetch a ,t18_datasource b,t18_ods_table t 
+  where a.dskey=b.dskey and b.flag = '1' and a.TABLEENAME = t.TABLEENAME
+    <isNotEmpty prepend="and" property="tableename"> 
+    a.tableename like  '%'||#tableename#||'%'
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="shfilename"> 
+    a.shfilename like  '%'||#shfilename#||'%'
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="isedit"> 
+    a.isedit = #isedit#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="isdeploy"> 
+    a.isdeploy = #isdeploy#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="fetchmethod"> 
+    a.fetchmethod = #fetchmethod#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="createdate"> 
+    a.createdate like '%'||#createdate#||'%'
+    </isNotEmpty>   
+    
+    <dynamic prepend="">
+     <isNotEmpty prepend="" property="sort">
+    <isNotEmpty prepend="" property="sort_type">
+	 ORDER BY $sort$ $sort_type$
+	</isNotEmpty>
+	</isNotEmpty>
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT18_ods_fetchListCount" parameterClass="com.ist.bmp.hpom.dto.T18_ods_fetch" resultClass="int"> 
+  select count(*)   from t18_ods_fetch a ,t18_datasource b
+  where a.dskey=b.dskey and b.flag = '1' 
+  <dynamic > 
+    <isNotEmpty prepend="and" property="tableename"> 
+    a.tableename like  '%'||#tableename#||'%'
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="shfilename"> 
+    a.shfilename like  '%'||#shfilename#||'%'
+    </isNotEmpty>  
+    <isNotEmpty prepend="and" property="isedit"> 
+    a.isedit = #isedit#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="isdeploy"> 
+    a.isdeploy = #isdeploy#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="fetchmethod"> 
+    a.fetchmethod = #fetchmethod#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="createdate"> 
+    a.createdate like '%'||#createdate#||'%'
+    </isNotEmpty>   
+  </dynamic>  
+  </statement> 
+ 
+  <statement id="insertT18_ods_fetch" parameterClass="com.ist.bmp.hpom.dto.T18_ods_fetch" resultClass="int"> 
+  insert into T18_ods_fetch(
+  tableename,dskey,fetchmethod,fetchseq,shfilename,colnum,sepchar,fetchsql,isedit,islock,deploytime,isdeploy,creator,createdate,modifier,modifydate
+  ) values(
+  #tableename#,#dskey#,#fetchmethod#,#fetchseq#,#shfilename#,#colnum#,#sepchar#,#fetchsql#,#isedit#,#islock#,#deploytime#,#isdeploy#,#creator#,#createdate#,#modifier#,#modifydate#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT18_ods_fetch" parameterClass="com.ist.bmp.hpom.dto.T18_ods_fetch" resultClass="int"> 
+  update T18_ods_fetch set 
+  tableename=#tableename#,shfilename=#shfilename#,colnum=#colnum#,sepchar=#sepchar#,fetchsql=#fetchsql#,isedit=#isedit#,modifier=#modifier#,modifydate=#modifydate#
+  where tableename=#tableename# 
+  </statement> 
+ 
+  <statement id="deleteT18_ods_fetch" parameterClass="java.lang.String" resultClass="int">
+  delete from T18_ods_fetch where tableename=#value# 
+  </statement> 
+ 
+  <statement id="getT18_ods_fetchDisp" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_ods_fetch"> 
+  select * from T18_ods_fetch where tableename=#value# 
+  </statement> 
+ 
+  <statement id="deployT18_ods_fetch" parameterClass="com.ist.bmp.hpom.dto.T18_ods_fetch" resultClass="com.ist.bmp.hpom.dto.T18_ods_fetch"> 
+  update T18_ods_fetch set isdeploy =#isdeploy# ,deploytime=#deploytime# where tableename=#tableename# 
+  </statement> 
+  
+   <statement id="lockT18_ods_fetch" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_ods_fetch"> 
+  update T18_ods_fetch set islock ='1' where tableename=#value# 
+  </statement> 
+  
+   <statement id="unlockT18_ods_fetch" parameterClass="java.lang.String" resultClass="com.ist.bmp.hpom.dto.T18_ods_fetch"> 
+  update T18_ods_fetch set islock ='0' where tableename=#value# 
+  </statement> 
+ 
+  <statement id="getT18_ods_fetch_shcontent" parameterClass="com.ist.bmp.hpom.dto.T18_ods_fetch" resultClass="com.ist.bmp.hpom.dto.T18_ods_fetch"> 
+  	select * from t18_shcontent 
+  	<dynamic prepend="where"> 
+  	<isNotEmpty prepend="and" property="tableename"> 
+    tableename = #tableename#
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="shcontenttype"> 
+    shcontenttype = #shcontenttype#
+    </isNotEmpty>
+    </dynamic> 
+  </statement> 
+ 
+  <statement id="deleteT18_shcontent_fetch" parameterClass="com.ist.bmp.hpom.dto.T18_ods_fetch" resultClass="int"> 
+	  delete from  T18_shcontent  
+	  where tableename=#tableename# and shcontenttype=#shcontenttype#
+  </statement>
+
+  <statement id="insertT18_shcontent_fetch" parameterClass="com.ist.bmp.hpom.dto.T18_ods_fetch" resultClass="int"> 
+	  insert into  T18_shcontent  (tableename,seq,shcontenttype,shcontent)
+	  values (#tableename#,#seq#,#shcontenttype#,#shcontent#)
+  </statement>
+   <statement id="modifyT18_ods_fetch_shfilename" parameterClass="com.ist.bmp.hpom.dto.T18_ods_fetch" resultClass="int"> 
+  update T18_ods_fetch set 
+  shfilename=#shfilename#
+  where tableename=#tableename# 
+  </statement> 
+</sqlMap> 
+

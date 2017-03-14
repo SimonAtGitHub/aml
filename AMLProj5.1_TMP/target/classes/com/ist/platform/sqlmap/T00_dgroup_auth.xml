@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T00_dgroup_auth">
+  <statement id="getT00_dgroup_authList" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T00_dgroup_auth">
+ SELECT A.DGROUPKEY,A.ORGANKEY,O.ORGANNAME,A.CREATEDATE,A.CREATOR,A.MODIFYDATE,A.MODIFIER,O.ORGANLEVEL,O.ORGANKEY  FROM T00_DGROUP_AUTH A,T00_ORGAN O 
+  WHERE A.ORGANKEY=O.ORGANKEY AND A.DGROUPKEY=#value#
+  ORDER BY O.ORGANLEVEL ASC,O.ORGANKEY DESC
+  </statement>
+
+  <statement id="getT00_dgroup_authListCountByOrgankey" parameterClass="java.lang.String" resultClass="int">
+  SELECT COUNT(*) FROM T00_USER WHERE ORGANKEY=#value#
+  </statement>
+  <statement id="getT00_dgroupkey" parameterClass="java.lang.String" resultClass="java.lang.String">
+  SELECT DGROUPKEY
+    FROM (SELECT DGROUPKEY, COUNT(1) AS COUNTNUM
+          FROM T00_DGROUP_AUTH T
+         WHERE T.DGROUPKEY IN (SELECT DISTINCT (DGROUPKEY) AS DGROUPKEY
+                                 FROM T00_DGROUP_AUTH
+                                WHERE ORGANKEY =#value#)
+         GROUP BY DGROUPKEY
+         ORDER BY COUNTNUM ASC)
+  </statement>
+  <statement id="insertT00_dgroup_auth" parameterClass="com.ist.platform.dto.T00_dgroup_auth" resultClass="int">
+  INSERT INTO T00_DGROUP_AUTH(
+ DGROUPKEY,ORGANKEY,CREATEDATE,CREATOR,MODIFYDATE,MODIFIER
+  ) VALUES(
+  #dgroupkey#,#organkey#,#createdate#,#creator#,#modifydate#,#modifier#
+  )
+  </statement>
+
+  <statement id="deleteT00_dgroup_auth" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T00_DGROUP_AUTH WHERE DGROUPKEY=#value#
+  </statement>
+</sqlMap>

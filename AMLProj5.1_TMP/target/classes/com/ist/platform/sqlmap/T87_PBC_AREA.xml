@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T87_PBC_AREA"> 
+  <statement id="getT87_PBC_AREAList" parameterClass="com.ist.platform.dto.T87_PBC_AREA" resultClass="com.ist.platform.dto.T87_PBC_AREA"> 
+  SELECT PBC_AREAKEY,PBC_AREALAYER,PBC_UP_AREAKEY,PBC_AREANAME FROM T87_PBC_AREA 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="pbc_areakey"> 
+    PBC_AREAKEY = #pbc_areakey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT87_PBC_AREAListCount" parameterClass="com.ist.platform.dto.T87_PBC_AREA" resultClass="int"> 
+  SELECT COUNT(*) FROM T00_GROUP 
+  <dynamic prepend="WHERE"> 
+    <isNotEmpty prepend="AND" property="pbc_areakey"> 
+    PBC_AREAKEY = #pbc_areakey# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT87_PBC_AREA" parameterClass="com.ist.platform.dto.T87_PBC_AREA" resultClass="int"> 
+  INSERT INTO T87_PBC_AREA(
+  PBC_AREAKEY,PBC_AREALAYER,PBC_UP_AREAKEY,PBC_AREANAME
+  ) VALUES(
+  #pbc_areakey#,#pbc_arealayer#,#pbc_up_areakey#,#pbc_areaname#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT87_PBC_AREA" parameterClass="com.ist.platform.dto.T87_PBC_AREA" resultClass="int"> 
+  UPDATE T87_PBC_AREA SET 
+  PBC_AREAKEY=#pbc_areakey#,PBC_AREALAYER=#pbc_arealayer#,PBC_UP_AREAKEY=#pbc_up_areakey#,PBC_AREANAME=#pbc_areaname#
+  WHERE PBC_AREAKEY=#pbc_areakey# 
+  </statement> 
+ 
+  <statement id="deleteT87_PBC_AREA" parameterClass="java.lang.String" resultClass="int">
+  DELETE FROM T87_PBC_AREA WHERE PBC_AREAKEY=#value# 
+  </statement> 
+ 
+  <statement id="getT87_PBC_AREADisp" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T87_PBC_AREA"> 
+  SELECT * FROM T87_PBC_AREA WHERE PBC_AREAKEY=#value# 
+  </statement> 
+  <statement id="getT87_PBC_AREADisp1" parameterClass="java.lang.String" resultClass="com.ist.platform.dto.T87_PBC_AREA"> 
+  SELECT * FROM T87_PBC_AREA WHERE PBC_AREAKEY=#value# 
+  </statement> 
+  
+
+  <statement id="getT87_pbc_tsctList" parameterClass="com.ist.platform.dto.T87_PBC_AREA" resultClass="com.ist.platform.dto.T87_PBC_AREA"> 
+  SELECT T.TSCTKEY,T.TSCTNAME,T.UP_TSCTKEY FROM T87_PBC_TSCT T
+  WHERE T.TSCT_LEVEL!='1'
+  </statement>
+  
+  <!-- add by liulb FOR VALIDATE REPORT -->
+  <!-- parameter like '11____' -->
+  <statement id="getCityListByProvince" parameterClass="java.lang.String" resultClass="com.ist.aml.pbcreport.bo.PairBean"> 
+  SELECT T.PBC_AREAKEY AS KEY1 , T.PBC_AREANAME  AS VALUE1  
+  FROM T87_PBC_AREA T WHERE T.PBC_AREALAYER='2' AND T.PBC_UP_AREAKEY LIKE #value#
+  </statement>
+  
+  <!-- parameter like '1101__' -->
+  <statement id="getTownListByCity" parameterClass="java.lang.String" resultClass="com.ist.aml.pbcreport.bo.PairBean"> 
+  SELECT T.PBC_AREAKEY AS KEY1 , T.PBC_AREANAME  AS VALUE1  
+  FROM T87_PBC_AREA T WHERE T.PBC_AREALAYER='3' AND T.PBC_UP_AREAKEY LIKE #value#
+  </statement>
+  <!-- END add by liulb FOR VALIDATE REPORT -->
+</sqlMap> 
+

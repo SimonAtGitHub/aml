@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<report_des>第Ⅱ部分：贷款质量五级分类情况简表</report_des>
+	<page>
+		<param type="mark">p_organkey</param>		
+		<param type="mark">p_statisticdate</param>		
+		<param type="mark">p_uploadtype</param>	
+	</page>
+	<table id="table1" classtype="awp_head">
+		<define name="table_width">5</define>
+		<define name="title_start">1</define>
+		<define name="title_end">3</define>
+	</table>
+		<table id="table2" classtype="awp_line_write">
+		<define name="table_width">5</define>
+		<define name="list_maxrow">1</define>
+		<define name="detail_start">7</define>
+		<define name="detail_end">17</define>
+		<define name="head_start">4</define>
+		<define name="head_end">6</define>
+		<data type="dynamic" name="profit">select ROW_NUM,ITEMNAME,A,B,C from t35_b_g01_06 where organkey=#p_organkey# and statisticdate=last_day(to_date(#p_statisticdate#,'yyyy-mm-dd')) order by row_num
+		</data>
+	</table> 		
+</root>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T07_INREP_BH_cny_sta"> 
+  <statement id="getT07_INREP_BH_cny_staSumByOrgan" parameterClass="com.ist.aml.inves.dto.T07_INREP_BH_cny_sta" resultClass="com.ist.aml.inves.dto.T07_INREP_BH_cny_sta"> 
+  select organkey,
+	case when sum(trans_01_c) is null then 0 else sum(trans_01_c) end  as trans_01_c,
+	case when sum(amt_01_c) is null then 0 else sum(amt_01_c) end  as amt_01_c,
+	case when sum(trans_02_c) is null then 0 else sum(trans_02_c) end  as trans_02_c,
+	case when sum(amt_02_c) is null then 0 else sum(amt_02_c) end  as amt_02_c,
+	case when sum(trans_03_c) is null then 0 else sum(trans_03_c) end  as trans_03_c,
+	case when sum(amt_03_c) is null then 0 else sum(amt_03_c) end  as amt_03_c,
+	case when sum(trans_04_c) is null then 0 else sum(trans_04_c) end  as trans_04_c,
+	case when sum(amt_04_c) is null then 0 else sum(amt_04_c) end  as amt_04_c,
+	case when sum(trans_01_i) is null then 0 else sum(trans_01_i) end  as trans_01_i,
+	case when sum(amt_01_i) is null then 0 else sum(amt_01_i) end  as amt_01_i,
+	case when sum(trans_02_i) is null then 0 else sum(trans_02_i) end  as trans_02_i,
+	case when sum(amt_02_i) is null then 0 else sum(amt_02_i) end  as amt_02_i,
+	case when sum(trans_03_i) is null then 0 else sum(trans_03_i) end  as trans_03_i,
+	case when sum(amt_03_i) is null then 0 else sum(amt_03_i) end  as amt_03_i,
+	case when sum(trans_04_i) is null then 0 else sum(trans_04_i) end  as trans_04_i,
+	case when sum(amt_04_i) is null then 0 else sum(amt_04_i) end  as amt_04_i
+  from t07_inrep_bh_cny_sta 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="org_ids"> 
+    organkey in ($org_ids$) 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="start_time">
+    <![CDATA[statistic_dt >= #report_dt_start:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="end_time">
+    <![CDATA[statistic_dt <= #report_dt_end:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organkey">
+    	organkey=#organkey#
+    </isNotEmpty>
+  </dynamic> 
+  group by organkey
+  order by organkey
+  </statement> 
+  
+  <statement id="getT07_INREP_BH_cny_staSum" parameterClass="com.ist.aml.inves.dto.T07_INREP_BH_cny_sta" resultClass="com.ist.aml.inves.dto.T07_INREP_BH_cny_sta"> 
+  select 
+	case when sum(trans_01_c) is null then 0 else sum(trans_01_c) end  as trans_01_c,
+	case when sum(amt_01_c) is null then 0 else sum(amt_01_c) end  as amt_01_c,
+	case when sum(trans_02_c) is null then 0 else sum(trans_02_c) end  as trans_02_c,
+	case when sum(amt_02_c) is null then 0 else sum(amt_02_c) end  as amt_02_c,
+	case when sum(trans_03_c) is null then 0 else sum(trans_03_c) end  as trans_03_c,
+	case when sum(amt_03_c) is null then 0 else sum(amt_03_c) end  as amt_03_c,
+	case when sum(trans_04_c) is null then 0 else sum(trans_04_c) end  as trans_04_c,
+	case when sum(amt_04_c) is null then 0 else sum(amt_04_c) end  as amt_04_c,
+	case when sum(trans_01_i) is null then 0 else sum(trans_01_i) end  as trans_01_i,
+	case when sum(amt_01_i) is null then 0 else sum(amt_01_i) end  as amt_01_i,
+	case when sum(trans_02_i) is null then 0 else sum(trans_02_i) end  as trans_02_i,
+	case when sum(amt_02_i) is null then 0 else sum(amt_02_i) end  as amt_02_i,
+	case when sum(trans_03_i) is null then 0 else sum(trans_03_i) end  as trans_03_i,
+	case when sum(amt_03_i) is null then 0 else sum(amt_03_i) end  as amt_03_i,
+	case when sum(trans_04_i) is null then 0 else sum(trans_04_i) end  as trans_04_i,
+	case when sum(amt_04_i) is null then 0 else sum(amt_04_i) end  as amt_04_i
+  from t07_inrep_bh_cny_sta 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="org_ids"> 
+    organkey in ($org_ids$) 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="start_time">
+    <![CDATA[statistic_dt >= #report_dt_start:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="end_time">
+    <![CDATA[statistic_dt <= #report_dt_end:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organkey">
+    	organkey=#organkey#
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+ <statement id="getT07_INREP_BH_cny_staList" parameterClass="com.ist.aml.inves.dto.T07_INREP_BH_cny_sta" resultClass="com.ist.aml.inves.dto.T07_INREP_BH_cny_sta"> 
+  select organkey,statistic_dt,trans_01_c,amt_01_c,trans_02_c,amt_02_c,trans_03_c,amt_03_c,trans_04_c,amt_04_c,trans_01_i,amt_01_i,trans_02_i,amt_02_i,trans_03_i,amt_03_i,trans_04_i,amt_04_i from t07_inrep_bh_cny_sta 
+   <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="org_ids"> 
+    organkey in ($org_ids$) 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="start_time">
+    <![CDATA[statistic_dt >= #report_dt_start:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="end_time">
+    <![CDATA[statistic_dt <= #report_dt_end:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organkey">
+    	organkey=#organkey#
+    </isNotEmpty>
+  </dynamic>  
+  </statement>
+  <statement id="getT07_INREP_BH_cny_staSumCountByOrgan" parameterClass="com.ist.aml.inves.dto.T07_INREP_BH_cny_sta" resultClass="int"> 
+  select count(distinct organkey) from t07_inrep_bh_cny_sta 
+   <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="org_ids"> 
+    organkey in ($org_ids$) 
+    </isNotEmpty> 
+    <isNotEmpty prepend="and" property="start_time">
+    <![CDATA[statistic_dt >= #report_dt_start:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="end_time">
+    <![CDATA[statistic_dt <= #report_dt_end:DATE#]]>
+    </isNotEmpty>
+    <isNotEmpty prepend="and" property="organkey">
+    	organkey=#organkey#
+    </isNotEmpty>
+  </dynamic> 
+  </statement> 
+ 
+  
+ 
+</sqlMap> 
+

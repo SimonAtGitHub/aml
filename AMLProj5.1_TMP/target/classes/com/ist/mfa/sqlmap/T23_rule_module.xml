@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T23_rule_module">
+	<statement id="getT23_rule_moduleList" parameterClass="com.ist.mfa.dto.T23_rule_module"
+		resultClass="com.ist.mfa.dto.T23_rule_module">
+		SELECT MODULE_NO,MODULE_NAME,MODULE_TYPE,STATUS_CD,MODULE_DES,CREATE_USER,CREATE_DT,ORGANKEY,module_grey FROM T23_RULE_MODULE
+	  <dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="module_name">
+			MODULE_NAME like '%'||#module_name#||'%'
+	          </isNotEmpty>
+		<isNotEmpty prepend="AND" property="module_type">
+			MODULE_TYPE = #module_type#
+	          </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="module_grey">
+			MODULE_GREY = #module_grey#
+	    </isNotEmpty>
+		<isNotEmpty prepend="AND" property="status_cd">
+			STATUS_CD = #status_cd#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="status_dis">
+			STATUS_CD IN ($status_dis$)
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organkey">
+			ORGANKEY IN ($organkey$)
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="create_dt_start">
+	     <![CDATA[create_dt >= #create_dt_start#]]> 
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="create_dt_end">
+	     <![CDATA[create_dt <= #create_dt_end#]]>
+	    </isNotEmpty>
+	 </dynamic>
+	 ORDER BY MODULE_NO
+	</statement>
+	
+	<statement id="getT23_rule_moduleCount" parameterClass="com.ist.mfa.dto.T23_rule_module"
+		resultClass="int">
+		SELECT count(*) FROM T23_RULE_MODULE
+		  <dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="module_name">
+				MODULE_NAME like '%'||#module_name#||'%'
+	    </isNotEmpty>
+		<isNotEmpty prepend="AND" property="module_type">
+					MODULE_TYPE = #module_type#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="module_grey">
+			MODULE_GREY = #module_grey#
+	    </isNotEmpty>
+		<isNotEmpty prepend="AND" property="status_cd">
+					STATUS_CD = #status_cd#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="status_dis">
+			STATUS_CD IN ($status_dis$)
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organkey">
+			ORGANKEY IN ($organkey$)
+	    </isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt_start">
+	     <![CDATA[create_dt >= #create_dt_start#]]> 
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="create_dt_end">
+	     <![CDATA[create_dt <= #create_dt_end#]]>
+	    </isNotEmpty>
+		</dynamic>	
+	</statement>
+	<statement id="insertT23_rule_module" parameterClass="com.ist.mfa.dto.T23_rule_module"
+		resultClass="int">
+		INSERT INTO T23_RULE_MODULE(
+		MODULE_NO,MODULE_NAME,MODULE_TYPE,STATUS_CD,MODULE_DES,TOTALDAY,CREATE_USER,CREATE_DT,
+		MODIFY_USER,ORGANKEY,MODIFY_DT,MODULE_GREY,STCR_COUNT,ACTIONCODE
+		) VALUES(
+		#module_no#,#module_name#,#module_type#,#status_cd#,#module_des#,#totalday:INTEGER#,#create_user#,#create_dt#,#modify_user#,#organkey#,#modify_dt#,
+		#module_grey#,#stcr_count#,#actioncode#
+		)
+  </statement>
+
+	<statement id="deleteT23_rule_module" parameterClass="String"
+		resultClass="int">
+		delete from T23_RULE_MODULE where MODULE_NO=#module_no#
+    </statement>
+     <statement id="getT23_rule_moduleDisp" parameterClass="java.lang.String" resultClass="com.ist.mfa.dto.T23_rule_module">
+        SELECT *  FROM T23_RULE_MODULE WHERE MODULE_NO=#module_no#
+     </statement>
+	<statement id="modifyT23_rule_module" parameterClass="com.ist.mfa.dto.T23_rule_module"
+		resultClass="int">
+		UPDATE T23_RULE_MODULE SET ACTIONCODE=#actioncode#,
+		MODULE_NAME=#module_name#,MODULE_TYPE=#module_type#,MODULE_DES=#module_des#,MODULE_GREY=#module_grey#,STCR_COUNT=#stcr_count#,TOTALDAY=#totalday:INTEGER#
+		WHERE MODULE_NO=#module_no#
+	</statement>
+	<statement id="modifyCase_minscore" parameterClass="com.ist.mfa.dto.T23_rule_module" resultClass="int">
+		UPDATE T23_RULE_MODULE SET	CASE_MINSCORE=#case_minscore:INTEGER#	WHERE MODULE_NO=#module_no#
+	</statement>
+	<statement id="modifyT23_rule_release" parameterClass="com.ist.mfa.dto.T23_rule_module"
+		resultClass="int">
+		UPDATE T23_RULE_MODULE SET
+		STATUS_CD=#status_cd#
+		WHERE MODULE_NO=#module_no#
+	</statement>
+	<!--   特征定位配置   -->
+	<statement id="getT21_pbcruleListForModule" parameterClass="com.ist.mfa.dto.T23_rule_module"
+		resultClass="com.ist.mfa.dto.T23_rule_module">
+		SELECT PBCKEY as STCRKEY,PBC_DES FROM T21_PBCRULE  WHERE MODULEFLAG = '1'  AND FLAG ='1'
+	  <dynamic>
+		<isNotEmpty prepend="AND" property="pbc_des">
+			PBC_DES like #pbc_des#
+	          </isNotEmpty>
+		<isNotEmpty prepend="AND" property="stcrkey">
+			PBCKEY = #stcrkey#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="dispatcher_key">
+			PBCKEY NOT IN ($dispatcher_key$)
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="keyList">
+  			<iterate prepend="PBCKEY NOT IN " property="keyList" open="(" close=")" conjunction=",">
+				#keyList[]#
+  			</iterate>
+  		</isNotEmpty>
+	 </dynamic>
+	 ORDER BY STCRKEY
+	</statement>
+	<statement id="getT07_pbcruleDisp" parameterClass="java.lang.String" resultClass="com.ist.mfa.dto.T23_rule_module">
+      SELECT PBCKEY as STCRKEY,PBC_DES FROM T07_PBCRULE  WHERE PBC_TYPE_CD='2' AND FLAG ='1' AND PBCKEY=#stcrkey#
+     </statement>
+</sqlMap>
+
