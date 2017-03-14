@@ -98,7 +98,11 @@ function clearText(){
 						
 									</span>
 									 <span class="buttons">
-									  <a href="#" id="hdd_display" class="bt_hidden"></a>  </span>
+									  <a href="#" id="hdd_display" class="bt_hidden"></a> 
+									  <a href="#"  
+									  onClick="dosubmit('t07_blacklist_export.do','export')">
+										<img src="../../images/<%=session.getAttribute("style") %>/b_download.png" />黑名单导出</a>
+									 </span>
 									</div>
 			
 			<html:errors />
