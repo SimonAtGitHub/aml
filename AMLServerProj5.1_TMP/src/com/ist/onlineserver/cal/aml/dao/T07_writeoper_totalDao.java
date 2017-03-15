@@ -317,10 +317,10 @@ public int insertT07_writeoper_risk(Connection conn)throws Exception{
 	sql=sql+"  select c.tx_dt,c.organkey,'13',c.party_class_cd,c.total_num,d.nooper_num as nooper_num,c.total_num-d.nooper_num as oper_num"
          +" from("
          +" SELECT organkey,create_dt as tx_dt,party_class_cd,count(RESULEKEY) as total_num"
-         +" from T37_PARTY_RESULT  where FRISTAPPRALEVEL>='1004'"
+         +" from T37_PARTY_RESULT  where FRISTAPPRALEVEL>='1003'"//雅安:调整为一般风险
          +" group by ORGANKEY,create_dt,party_class_cd) c,(SELECT organkey,create_dt as tx_dt,party_class_cd,count(RESULEKEY) as nooper_num"
                                            +" from T37_PARTY_RESULT "
-                                           +" where MODIFY_CD='0' and FRISTAPPRALEVEL>='1004'"
+                                           +" where MODIFY_CD='0' and FRISTAPPRALEVEL>='1003'"//雅安:调整为一般风险
                                            +" group by ORGANKEY,create_dt,party_class_cd) d"
          +" where c.tx_dt=d.tx_dt"
          +" and c.organkey=d.organkey and c.party_class_cd=d.party_class_cd";
