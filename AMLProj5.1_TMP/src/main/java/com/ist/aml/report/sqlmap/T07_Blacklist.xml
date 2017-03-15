@@ -6,7 +6,7 @@
 		resultClass="com.ist.aml.report.dto.T07_Blacklist">
 		select
 		party_id,obj_name,organkey,isuse,party_class_cd,list_type,reason_create,
-		reason_cancel,validate_dt,invalidate_dt,create_user,create_dt,modify_user,modify_dt,ischeck,name_type,objkey
+		reason_cancel,validate_dt,invalidate_dt,create_user,create_dt,modify_user,modify_dt,ischeck,name_type,objkey,card_no,card_type
 		from t07_blacklist a
 		<dynamic prepend=" WHERE">
 			<isNotEmpty prepend="and" property="list_type">
@@ -14,6 +14,9 @@
 			</isNotEmpty>
 			<isNotEmpty prepend="and" property="ischeck">
 				ischeck =#ischeck#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="isuse">
+				isuse =#isuse#
 			</isNotEmpty>
 			<isNotEmpty prepend="and" property="party_id">
 				party_id = #party_id#

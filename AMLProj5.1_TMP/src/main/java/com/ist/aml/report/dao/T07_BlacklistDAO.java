@@ -69,6 +69,10 @@ public class T07_BlacklistDAO extends BaseDAO {
 			throws SQLException {
 		ArrayList list = (ArrayList) sqlMap.queryForList(
 				"getT07_BlacklistList", t07_blacklist, iStartRec, iPageSize);
+		if(iPageSize == 0){
+			list = (ArrayList) sqlMap.queryForList("getT07_BlacklistList", t07_blacklist);
+		}
+		
 		ArrayList t07_blacklistList = new ArrayList();
 		LinkedHashMap list_typeMap = cm.getMapFromCache("clienttype");
 		LinkedHashMap isuseMap = cm.getMapFromCache("isuse_type");

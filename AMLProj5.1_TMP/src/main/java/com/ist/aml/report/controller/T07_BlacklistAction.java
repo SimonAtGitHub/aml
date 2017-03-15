@@ -922,9 +922,10 @@ public class T07_BlacklistAction extends BaseAction {
 			t07_blacklist.setIscheck("1");//ÉóºËÍ¨¹ý
 			t07_blacklistList = t07_blacklistDAO.getT07_BlacklistList(
 					sqlMap, t07_blacklist, this.getStartRec(intPage),
-					this.getIntPageSize());
+					0);
 			
-			
+			String excelName = DateUtils.getDate10to8(DateUtils.getCurrTime())+"blacklist";
+			request.setAttribute("excelName", excelName);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error(e);
@@ -933,7 +934,7 @@ public class T07_BlacklistAction extends BaseAction {
 			saveErrors(request, errors);
 			return actionMapping.findForward("failure");
 		} 
-		
+		request.setAttribute("t07_blacklistList", t07_blacklistList);
 		return actionMapping.findForward("success");
 	}
 	
