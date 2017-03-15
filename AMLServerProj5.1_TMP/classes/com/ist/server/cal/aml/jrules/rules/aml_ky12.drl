@@ -1,0 +1,82 @@
+#created on: Jan 16, 2007
+package com.ist.server.cal.aml.jrules.rules.aml_ky12
+ 
+#list any import classes here.
+import java.util.HashMap;
+import java.lang.Boolean;
+
+import com.ist.server.cal.aml.jrules.dto.RuleFact;
+import com.ist.server.cal.aml.jrules.dto.IndicFact;
+import com.ist.server.cal.aml.jrules.component.CommonUtil;
+
+#declare any global variables here
+
+ 
+rule "KY1201"
+	when
+	  #conditions
+	  #get IndicFact from RuleFact.IndicHash
+	  #get alertHash from RuleFact
+      $T : RuleFact(alerthash : alertHash , indichash : indicHash,propertyHash : propertyHash);
+     eval((indichash.containsKey("JC10093"))
+      &&(propertyHash.containsKey("SX1005"))
+      && (indichash.containsKey("GZ10116")));
+      eval( ((IndicFact)CommonUtil.getObj(indichash,"JC10093")).getIndicval()>((IndicFact)CommonUtil.getObj(indichash,"JC10093")).getLow_limit()
+      &&((IndicFact)CommonUtil.getObj(indichash,"GZ10116")).getIndicval()>=((IndicFact)CommonUtil.getObj(indichash,"GZ10116")).getLow_limit());
+
+	then
+	#actions
+	#set true(alert) into the alerthash
+	  alerthash.put("KY1201",new Integer(1));
+
+end
+
+rule "KY1202"
+	when
+	  #conditions
+	  #get IndicFact from RuleFact.IndicHash
+	  #get alertHash from RuleFact
+      $T : RuleFact(alerthash : alertHash , indichash : indicHash,propertyHash : propertyHash);
+     eval((indichash.containsKey("JC10168"))
+      &&(propertyHash.containsKey("SX1005"))
+      && (indichash.containsKey("JC10167")));
+      eval( ((IndicFact)CommonUtil.getObj(indichash,"JC10168")).getIndicval()>((IndicFact)CommonUtil.getObj(indichash,"JC10168")).getLow_limit());
+    
+	then
+	#actions
+	#set true(alert) into the alerthash
+	  alerthash.put("KY1202",new Integer(1));
+
+end
+
+rule "KY1203"
+	when
+	  #conditions
+	  #get IndicFact from RuleFact.IndicHash
+	  #get alertHash from RuleFact
+      $T : RuleFact(alerthash : alertHash , indichash : indicHash,propertyHash : propertyHash);
+     eval((indichash.containsKey("JC10169"))
+      &&(propertyHash.containsKey("SX1005"))
+      && (indichash.containsKey("JC10167")));
+      eval( ((IndicFact)CommonUtil.getObj(indichash,"JC10169")).getIndicval()>((IndicFact)CommonUtil.getObj(indichash,"JC10169")).getLow_limit());
+    
+	then
+	#actions
+	#set true(alert) into the alerthash
+	  alerthash.put("KY1203",new Integer(1));
+
+end
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

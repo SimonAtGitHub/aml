@@ -1,0 +1,75 @@
+#created on: Jan 16, 2007
+package com.ist.server.cal.aml.jrules.rules.aml_ky14
+ 
+#list any import classes here
+import java.util.HashMap;
+import java.lang.Boolean;
+
+import com.ist.server.cal.aml.jrules.dto.RuleFact;
+import com.ist.server.cal.aml.jrules.dto.IndicFact;
+import com.ist.server.cal.aml.jrules.component.CommonUtil;
+
+#declare any global variables here
+
+ 
+rule "KY1401"
+	when
+	  #conditions
+	  #get IndicFact from RuleFact.IndicHash
+	  #get alertHash from RuleFact
+      $T : RuleFact(alerthash : alertHash , indichash : indicHash );
+       eval((indichash.containsKey("JC20166"))
+			 &&(indichash.containsKey("GZ10182")));
+      eval( 	
+      			( 	((indichash.containsKey("GZ20430"))
+							&&((IndicFact)CommonUtil.getObj(indichash,"GZ20430")).getIndicval()> ((IndicFact)CommonUtil.getObj(indichash,"GZ20430")).getLow_limit()
+							)
+	      			||((indichash.containsKey("GZ20428"))
+	      			&&((IndicFact)CommonUtil.getObj(indichash,"GZ20428")).getIndicval()> ((IndicFact)CommonUtil.getObj(indichash,"GZ20428")).getLow_limit()
+	      			)
+	      			||((indichash.containsKey("GZ20465"))
+	      			&&((IndicFact)CommonUtil.getObj(indichash,"GZ20465")).getIndicval()> ((IndicFact)CommonUtil.getObj(indichash,"GZ20465")).getLow_limit()
+	      			)
+      			)
+      		&&((IndicFact)CommonUtil.getObj(indichash,"GZ10182")).getIndicval()>=((IndicFact)CommonUtil.getObj(indichash,"GZ10182")).getLow_limit()
+		     	&&((IndicFact)CommonUtil.getObj(indichash,"GZ10182")).getIndicval()<=((IndicFact)CommonUtil.getObj(indichash,"GZ10182")).getUpper_limit()
+      		);     
+
+	then
+	#actions
+	#set true(alert) into the alerthash
+	  alerthash.put("KY1401",new Integer(1));
+
+end
+ 
+
+
+rule "KY1402"
+	when
+	  #conditions
+	  #get IndicFact from RuleFact.IndicHash
+	  #get alertHash from RuleFact
+      $T : RuleFact(alerthash : alertHash , indichash : indicHash);
+   eval((indichash.containsKey("JC20165"))
+       && (indichash.containsKey("GZ10183")) );
+       
+      eval( 		
+	      	 (
+	       				(indichash.containsKey("GZ20431")
+	       				&&((IndicFact)CommonUtil.getObj(indichash,"GZ20431")).getIndicval()>=((IndicFact)CommonUtil.getObj(indichash,"GZ20431")).getLow_limit())
+	            ||(indichash.containsKey("GZ20429")
+	            	&&((IndicFact)CommonUtil.getObj(indichash,"GZ20429")).getIndicval()> ((IndicFact)CommonUtil.getObj(indichash,"GZ20429")).getLow_limit())
+	            ||(indichash.containsKey("GZ20432")
+	            	&&((IndicFact)CommonUtil.getObj(indichash,"GZ20432")).getIndicval()> ((IndicFact)CommonUtil.getObj(indichash,"GZ20432")).getLow_limit())
+	           )
+	          &&		((IndicFact)CommonUtil.getObj(indichash,"GZ10183")).getIndicval()>=((IndicFact)CommonUtil.getObj(indichash,"GZ10183")).getLow_limit()
+	      		&&		((IndicFact)CommonUtil.getObj(indichash,"GZ10183")).getIndicval()<=((IndicFact)CommonUtil.getObj(indichash,"GZ10183")).getUpper_limit()
+           
+          );  
+     
+	then
+	#actions
+	#set true(alert) into the alerthash
+	  alerthash.put("KY1402",new Integer(1));
+
+end 

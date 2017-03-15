@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/activation.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/ant.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/commons-beanutils-bean-collections.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/commons-beanutils-core.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/commons-beanutils.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/commons-collections-3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/commons-dbcp-1.2.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/commons-digester.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/commons-fileupload.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/commons-jci-core-1.0-406301.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/commons-jci-eclipse-3.2.0.666.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/commons-jci-janino-2.4.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/commons-logging-api-1.0.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/commons-logging.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/commons-pool-1.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/commons-validator.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/servlet.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jcs/concurrent.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jcs/jcs-1.2.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/log/log4j-1.2.8.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lucene/dom4j-1.6.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lucene/fontbox-1.1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lucene/geronimo-stax-api_1.0_spec-1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lucene/jempbox-1.1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lucene/lucene-analyzers-2.2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lucene/lucene-core-2.2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lucene/lucene-highlighter-2.2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lucene/paoding-analysis.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lucene/pdfbox-1.1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lucene/xmlbeans-2.3.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/xml/jdom.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/xml/xercesImpl.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/xml/xml-apis.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/antlr-2.7.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/antlr-3.0ea8.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/antlr.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/CBHXmlBean.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/core-3.2.0.666.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/DBHXmlBean.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/drools-compiler-3.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/drools-core-3.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/drools-decisiontables-3.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/drools-jsr94-3.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/FeedBackXmlBean.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/IBHXmlBean.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jsr173_1.0_api.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/NBHXmlBean.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/NBSXmlBean.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/stringtemplate-2.3b6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/xbean_xpath.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/xbean.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jdbc/db2java.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/jdbc/db2jcc_license_cisuz.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jdbc/db2jcc_license_cu.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jdbc/db2jcc.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jdbc/ifxjdbc.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jdbc/jconn2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jdbc/jconn3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jdbc/mysql-connector-java-5.0.4-bin.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jdbc/ojdbc14.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jdbc/sqljdbc.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jdbc/tdgssjava.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jdbc/terajdbc4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/spring/spring-2.5.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/spring/spring-beans-2.5.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/spring/spring-context-2.5.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/spring/spring-context-support-2.5.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/spring/spring-core-2.5.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/spring/spring-flex-core-1.5.0.RC1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/spring/spring-web-2.5.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/spring/spring-webmvc-2.5.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/spring/spring-webmvc-struts-2.5.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jdbc/ibatis-sqlmap-2.3.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/jxl-2.6.10.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/jxls-core-0.9.9.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/jxls-reader-0.9.9.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/oscore-2.2.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lucene/poi-3.8.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lucene/poi-ooxml-3.8.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lucene/poi-ooxml-schemas-3.8.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lucene/poi-scratchpad-3.8.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/velocity-1.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/commons-io-2.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pool/c3p0-0.9.1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/commons-lang-2.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/common/oro-2.0.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/server/istaml.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/server/istamlreport.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/server/istamlRrisk.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/server/istamlvalidate.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/server/istcalmain.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/server/istcommon.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/server/istonlineserver.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="classes"/>
+</classpath>

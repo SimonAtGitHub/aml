@@ -1,0 +1,144 @@
+#created on: Jan 16, 2007
+package com.ist.server.cal.aml.jrules.rules.aml_de01
+ 
+#list any import classes here.
+import java.util.HashMap;
+import java.lang.Boolean;
+
+import com.ist.server.cal.aml.jrules.dto.RuleFact;
+import com.ist.server.cal.aml.jrules.dto.IndicFact;
+import com.ist.server.cal.aml.jrules.component.CommonUtil;
+
+#declare any global variables here
+
+ 
+rule "DE0101"
+	when
+	  #conditions
+	  #get IndicFact from RuleFact.IndicHash
+	  #get alertHash from RuleFact
+      $T : RuleFact(alerthash : alertHash , indichash : indicHash);
+      eval(indichash.containsKey("JC10094"));
+      eval( ( (IndicFact)CommonUtil.getObj(indichash,"JC10094")).getIndicval() >= ((IndicFact)CommonUtil.getObj(indichash,"JC10094")).getLow_limit());
+	
+	then
+	#actions
+	#set true(alert) into the alerthash
+	  alerthash.put("DE0101",new Integer(1));
+
+end
+
+rule "DE0102"
+	when
+	  #conditions
+	  #get IndicFact from RuleFact.IndicHash
+	  #get alertHash from RuleFact
+      $T : RuleFact(alerthash : alertHash , indichash : indicHash);
+      eval(indichash.containsKey("JC10095"));
+      eval( ( (IndicFact)CommonUtil.getObj(indichash,"JC10095")).getIndicval() >= ((IndicFact)CommonUtil.getObj(indichash,"JC10095")).getLow_limit());
+	
+	then
+	#actions
+	#set true(alert) into the alerthash
+	  alerthash.put("DE0102",new Integer(1));
+
+end
+
+rule "DE0103"
+	when
+	  #conditions
+	  #get IndicFact from RuleFact.IndicHash
+	  #get alertHash from RuleFact
+      $T : RuleFact(alerthash : alertHash , indichash : indicHash);
+      eval(indichash.containsKey("JC10096"));
+      eval( ( (IndicFact)CommonUtil.getObj(indichash,"JC10096")).getIndicval() >= ((IndicFact)CommonUtil.getObj(indichash,"JC10096")).getLow_limit());
+	
+	then
+	#actions
+	#set true(alert) into the alerthash
+	  alerthash.put("DE0103",new Integer(1));
+
+end
+
+rule "DE0104"
+	when
+	  #conditions
+	  #get IndicFact from RuleFact.IndicHash
+	  #get alertHash from RuleFact
+      $T : RuleFact(alerthash : alertHash , indichash : indicHash);
+      eval(indichash.containsKey("JC10097"));
+      eval( ( (IndicFact)CommonUtil.getObj(indichash,"JC10097")).getIndicval() >= ((IndicFact)CommonUtil.getObj(indichash,"JC10097")).getLow_limit());
+	
+	then
+	#actions
+	#set true(alert) into the alerthash
+	  alerthash.put("DE0104",new Integer(1));
+
+end
+
+rule "DE0105"
+	when
+	  #conditions
+	  #get IndicFact from RuleFact.IndicHash
+	  #get alertHash from RuleFact
+      $T : RuleFact(alerthash : alertHash , indichash : indicHash);
+      eval(indichash.containsKey("JC10098"));
+      eval( ( (IndicFact)CommonUtil.getObj(indichash,"JC10098")).getIndicval() >= ((IndicFact)CommonUtil.getObj(indichash,"JC10098")).getLow_limit());
+	
+	then
+	#actions
+	#set true(alert) into the alerthash
+	  alerthash.put("DE0105",new Integer(1));
+
+end
+
+rule "DE0106"
+	when
+	  #conditions
+	  #get IndicFact from RuleFact.IndicHash
+	  #get alertHash from RuleFact
+      $T : RuleFact(alerthash : alertHash , indichash : indicHash);
+      eval(indichash.containsKey("JC10099"));
+      eval( ( (IndicFact)CommonUtil.getObj(indichash,"JC10099")).getIndicval() >= ((IndicFact)CommonUtil.getObj(indichash,"JC10099")).getLow_limit());
+	
+	then
+	#actions
+	#set true(alert) into the alerthash
+	  alerthash.put("DE0106",new Integer(1));
+
+end
+
+rule "DE0107"
+	when
+	  #conditions
+	  #get IndicFact from RuleFact.IndicHash
+	  #get alertHash from RuleFact
+      $T : RuleFact(alerthash : alertHash , indichash : indicHash);
+      eval(indichash.containsKey("JC10100"));
+      eval( ( (IndicFact)CommonUtil.getObj(indichash,"JC10100")).getIndicval() >= ((IndicFact)CommonUtil.getObj(indichash,"JC10100")).getLow_limit());
+	
+	then
+	#actions
+	#set true(alert) into the alerthash
+	  alerthash.put("DE0107",new Integer(1));
+
+end
+ 
+rule "DE0108"
+	when
+	  #conditions
+	  #get IndicFact from RuleFact.IndicHash
+	  #get alertHash from RuleFact
+      $T : RuleFact(alerthash : alertHash , indichash : indicHash);
+      eval(indichash.containsKey("JC10101"));
+      eval( ( (IndicFact)CommonUtil.getObj(indichash,"JC10101")).getIndicval() >= ((IndicFact)CommonUtil.getObj(indichash,"JC10101")).getLow_limit());
+	
+	then
+	#actions
+	#set true(alert) into the alerthash
+	  alerthash.put("DE0108",new Integer(1));
+
+end
+
+
+ 

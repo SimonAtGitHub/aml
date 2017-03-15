@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!-- 公共模块配置 -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<!--
+		Local Apache Commons DBCP DataSource that refers to a combined
+		database
+	-->
+	<!-- (see dataAccessContext-jta.xml for an alternative) -->
+	<!-- The placeholders are resolved from jdbc.properties through -->
+	<!-- the PropertyPlaceholderConfigurer in applicationContext.xml -->
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:/db2/db2_db.properties</value>
+				<value>classpath:/db2/db2_ods_db.properties</value>
+				<value>classpath:/oracle/oracle_db.properties</value>
+				<value>classpath:/oracle/oracle_ods_db.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${db2_jdbc.driver}"/>
+	    <property name="jdbcUrl" value="${db2_jdbc.url}"/>
+	    <property name="user" value="${db2_jdbc.username}"/>
+	    <property name="password" value="${db2_jdbc.password}"/>
+	    <property name="minPoolSize" value="2"/>
+	    <property name="acquireIncrement" value="1"/>
+	    <property name="maxPoolSize" value="5"/>
+	</bean>
+	
+	<bean id="dataSource_ods" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${db2_ods_jdbc.driver}"/>
+	    <property name="jdbcUrl" value="${db2_ods_jdbc.url}"/>
+	    <property name="user" value="${db2_ods_jdbc.username}"/>
+	    <property name="password" value="${db2_ods_jdbc.password}"/>
+	    <property name="minPoolSize" value="2"/>
+	    <property name="acquireIncrement" value="1"/>
+	    <property name="maxPoolSize" value="5"/>
+	</bean> -->
+	
+	 <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		>
+		<property name="driverClass" value="${oracle_jdbc.driver}"/>
+	    <property name="jdbcUrl" value="${oracle_jdbc.url}"/>
+	    <property name="user" value="${oracle_jdbc.username}"/>
+	    <property name="password" value="${oracle_jdbc.password}"/>
+	    <property name="minPoolSize" value="2"/>
+	    <property name="acquireIncrement" value="1"/>
+	    <property name="maxPoolSize" value="5"/>
+	</bean>
+	
+	<bean id="dataSource_ods" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		>
+		<property name="driverClass" value="${oracle_ods_jdbc.driver}"/>
+	    <property name="jdbcUrl" value="${oracle_ods_jdbc.url}"/>
+	    <property name="user" value="${oracle_ods_jdbc.username}"/>
+	    <property name="password" value="${oracle_ods_jdbc.password}"/>
+	    <property name="minPoolSize" value="2"/>
+	    <property name="acquireIncrement" value="1"/>
+	    <property name="maxPoolSize" value="5"/>
+	</bean> 
+
+	<!-- SystemConfig -->
+	<bean id="sysConfig" class="com.ist.common.properties.XMLProperties">
+		<constructor-arg>
+			<value>classes1/system_config.xml</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="connectionManager" class="com.ist.common.db.common.ConnectionManager" scope="singleton">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!-- JCS 缓存接口注入 -->
+	<bean id="catchManager" class="com.ist.common.jcs.onlinecache.CatchManager">
+		<constructor-arg index="0" ref="sysConfig" />
+		<constructor-arg index="1" ref="dataSource" />
+		<constructor-arg index="2">
+			<map>
+				<entry key="oracleQuery_0" value-ref="dataSource" />
+				<entry key="db2Query_1" value-ref="dataSource" />
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<!-- 生成模板查询结果，使用bean, max_qry_time最大查询日期，单位秒-->
+	<bean id="bdu" class="com.ist.common.db.common.BaseDbUtils">
+		<property name="systemConfig" ref="sysConfig"></property>
+	</bean>
+
+	<bean id="db2SqlParse" class="com.ist.common.db.results.db2.Db2SqlParse"></bean>
+	<bean id="db2Query_1" class="com.ist.common.db.results.db2.Db2Query">
+		<property name="bdu" ref="bdu"></property>
+		<property name="sp" ref="db2SqlParse"></property>
+		<property name="ds" ref="dataSource"></property>
+	</bean>
+	<bean id="db2Query_2" class="com.ist.common.db.results.db2.Db2Query">
+		<property name="bdu" ref="bdu"></property>
+		<property name="sp" ref="db2SqlParse"></property>
+		<property name="ds" ref="dataSource_ods"></property>
+	</bean>
+
+	<bean id="oracleSqlParse" class="com.ist.common.db.results.oracle.OracleSqlParse"></bean>
+	<bean id="oracleQuery_0" class="com.ist.common.db.results.oracle.OracleQuery">
+		<property name="bdu" ref="bdu"></property>
+		<property name="sp" ref="oracleSqlParse"></property>
+		<property name="ds" ref="dataSource"></property>
+	</bean>
+	<bean id="oracleQuery_1" class="com.ist.common.db.results.oracle.OracleQuery">
+		<property name="bdu" ref="bdu"></property>
+		<property name="sp" ref="oracleSqlParse"></property>
+		<property name="ds" ref="dataSource_ods"></property>
+	</bean>
+
+	<!-- 让SqlMapClientFactoryBean支持JDBC事务 -->
+	<bean id="transactionConfigClass" class="java.lang.Class"
+		factory-method="forName">
+		<constructor-arg index="0"
+			value="com.ibatis.sqlmap.engine.transaction.jdbc.JdbcTransactionConfig" />
+	</bean>
+
+	<bean id="sqlMapClient"
+		class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation">
+			<value>ibatis/sql-map-config.xml</value>
+		</property>
+		<property name="transactionConfigClass"
+			ref="transactionConfigClass" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="sqlMapClientTemplate"
+		class="org.springframework.orm.ibatis.SqlMapClientTemplate">
+		<property name="sqlMapClient" ref="sqlMapClient" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 模板缓存使用bean -->
+	<bean id="avpCm" class="com.ist.onlineserver.cal.download.avp.common.AvpCacheMgr">
+		<property name="sqlMap" ref="sqlMapClient"></property>
+		<property name="cm" ref="catchManager" />
+		<property name="t02_tp_bas_infDAO" ref="t02_tp_bas_infDAO"></property>
+		<property name="t02_tp_in_parmDAO" ref="t02_tp_in_parmDAO"></property>
+		<property name="t02_tp_exec_qryDAO" ref="t02_tp_exec_qryDAO"></property>
+		<property name="t02_tp_disp_rstDAO" ref="t02_tp_disp_rstDAO"></property>
+	</bean>
+
+	<bean id="baseDAO" abstract="true"
+		class="com.ist.common.base.BaseDAO">
+		<property name="dataSource" ref="dataSource" />
+		<property name="cm" ref="catchManager" />
+		<property name="sqlMapClient" ref="sqlMapClient" />
+	</bean>
+	
+	<bean id="t68_alertDAO" parent="baseDAO" class="com.ist.onlineserver.cal.download.fdp.dao.T68_alertDAO"/>
+	<bean id="t03_entity_kindDAO" parent="baseDAO" class="com.ist.onlineserver.cal.download.fdp.dao.T03_entity_kindDAO"></bean>
+	<bean id="t02_tp_in_parmDAO" parent="baseDAO" class="com.ist.onlineserver.cal.download.avp.dao.T02_tp_in_parmDAO"></bean>
+	<bean id="t02_tp_bas_infDAO" parent="baseDAO" class="com.ist.onlineserver.cal.download.avp.dao.T02_tp_bas_infDAO"></bean>
+	<bean id="t02_tp_disp_rstDAO" parent="baseDAO" class="com.ist.onlineserver.cal.download.avp.dao.T02_tp_disp_rstDAO"></bean>
+	<bean id="t02_tp_exec_qryDAO" parent="baseDAO" class="com.ist.onlineserver.cal.download.avp.dao.T02_tp_exec_qryDAO"></bean>
+	<bean id="t01_mt_propertyDAO" parent="baseDAO" class="com.ist.onlineserver.cal.download.met.dao.T01_mt_propertyDAO"></bean>
+	<bean id="t01_mt_col_proDAO" parent="baseDAO" class="com.ist.onlineserver.cal.download.met.dao.T01_mt_col_proDAO"></bean>
+	<!--<bean id="t02_tp_logDAO" parent="baseDAO" class="com.ist.onlineserver.cal.avpqry.avp.dao.T02_tp_logDAO" ></bean>-->
+	<!-- DataExport Template-->
+	<!-- <bean id="template" class="com.ist.common.Template">
+		<property name="sysConfig" ref="sysConfig" />
+	</bean> -->
+	<!-- 数据脱敏对象 -->
+	<bean id="desensitize" class="com.ist.common.db.common.DefaultDesensitize"/>
+	<!-- 加密导出文件 -->
+	<bean id="encryptFile" class="com.ist.common.encrypt.DefaultEncryptFile" />
+	<!-- 数据转换beanID -->
+	<bean id="dataChange"
+		class="com.ist.common.results.DefaultDataChange">
+		<property name="cm" ref="catchManager"></property>
+	</bean>
+	<!-- DataExport Template-->
+		<bean id="template" class="com.ist.common.Template">
+		<property name="sysConfig" ref="sysConfig" />
+		</bean> 
+	<bean
+		class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+		 
+</beans>

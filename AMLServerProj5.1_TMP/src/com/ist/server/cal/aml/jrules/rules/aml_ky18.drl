@@ -1,0 +1,71 @@
+#created on: Jan 16, 2007
+package com.ist.server.cal.aml.jrules.rules.aml_ky18
+ 
+#list any import classes here.
+import java.util.HashMap;
+import java.lang.Boolean;
+
+import com.ist.server.cal.aml.jrules.dto.RuleFact;
+import com.ist.server.cal.aml.jrules.dto.IndicFact;
+import com.ist.server.cal.aml.jrules.component.CommonUtil;
+
+#declare any global variables here
+
+ 
+rule "KY1801"
+	when
+	  #conditions
+	  #get IndicFact from RuleFact.IndicHash
+	  #get alertHash from RuleFact
+      $T : RuleFact(alerthash : alertHash , indichash : indicHash);
+      eval((indichash.containsKey("GZ20198"))
+       && (indichash.containsKey("GZ10106"))&& (indichash.containsKey("JC10122")));
+     eval( ( (IndicFact)CommonUtil.getObj(indichash,"GZ20198")).getIndicval() >= ((IndicFact)CommonUtil.getObj(indichash,"GZ20198")).getLow_limit()
+     && ( (IndicFact)CommonUtil.getObj(indichash,"GZ10106")).getIndicval() >= ((IndicFact)CommonUtil.getObj(indichash,"GZ10106")).getLow_limit()
+     && ( (IndicFact)CommonUtil.getObj(indichash,"JC10122")).getIndicval() >= ((IndicFact)CommonUtil.getObj(indichash,"JC10122")).getLow_limit());
+	then
+	#actions
+	#set true(alert) into the alerthash
+	  alerthash.put("KY1801",new Integer(1));
+
+end
+
+rule "KY1802"
+	when
+	  #conditions
+	  #get IndicFact from RuleFact.IndicHash
+	  #get alertHash from RuleFact
+      $T : RuleFact(alerthash : alertHash , indichash : indicHash);
+      eval((indichash.containsKey("GZ20230"))
+       && (indichash.containsKey("GZ10107"))&& (indichash.containsKey("JC10123")));
+     eval( ( (IndicFact)CommonUtil.getObj(indichash,"GZ20230")).getIndicval() >= ((IndicFact)CommonUtil.getObj(indichash,"GZ20230")).getLow_limit()
+     && ( (IndicFact)CommonUtil.getObj(indichash,"GZ10107")).getIndicval() >= ((IndicFact)CommonUtil.getObj(indichash,"GZ10107")).getLow_limit()
+     && ( (IndicFact)CommonUtil.getObj(indichash,"JC10123")).getIndicval() >= ((IndicFact)CommonUtil.getObj(indichash,"JC10123")).getLow_limit());
+	then
+	#actions
+	#set true(alert) into the alerthash
+	  alerthash.put("KY1802",new Integer(1));
+
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

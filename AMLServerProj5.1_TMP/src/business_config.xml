@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- root element,all element must in this element -->
+<root>
+	<reportXML>
+		<!--upload xml document's version-->
+		<version>0690</version>
+		<!--the path to store xml document-->
+		<storepath>upreportXML/</storepath>
+		<!--xmlns-->
+		<reportxmlns>http://fitech-report.com/smis</reportxmlns>
+		<reportxmlnsxsi>
+			http://www.w3.org/2001/XMLSchema
+		</reportxmlnsxsi>
+		<!--store path of upreort zip-->
+		<zipStorepath>upreportPacket/</zipStorepath>
+		<!--store path of feendback xml -->
+		<feedbackStorepath>feedbackXML/</feedbackStorepath>
+		<!-- temp path of temp path -->
+		<tempStorepath>temp/</tempStorepath>
+		<!--store path of previewing xml -->
+		<previwStorepath>c:/report/previw.xml/</previwStorepath>
+		<!-- max size of packet-->
+		<zipMaxSize>5000000</zipMaxSize>
+		<!--max size of attach -->
+		<attachMaxSize>2000000</attachMaxSize>
+		<!--add number of suspect packet sending invalid data  -->
+		<sPSend_dt_addnum>30</sPSend_dt_addnum>
+		<!-- invalid date -->
+		<invaliddateNum>5</invaliddateNum>
+		
+		<!-- xml create class  -->
+		<classNBH>com.ist.server.cal.aml.createzip.bo.CreateNBH</classNBH>
+		<classNBS>com.ist.server.cal.aml.createzip.bo.CreateNBS</classNBS>
+		<classABH>com.ist.server.cal.aml.createzip.bo.CreateNBH</classABH>
+		<classABS>com.ist.server.cal.aml.createzip.bo.CreateNBS</classABS>
+		<classCBH>com.ist.server.cal.aml.createzip.bo.CreateCBH</classCBH>
+		<classCBS>com.ist.server.cal.aml.createzip.bo.CreateNBS</classCBS>
+		<classDBH>com.ist.server.cal.aml.createzip.bo.CreateDBH</classDBH>
+		<classDBS>com.ist.server.cal.aml.createzip.bo.CreateNBS</classDBS>
+		<classIBH>com.ist.server.cal.aml.createzip.bo.CreateIBH</classIBH>
+		<classIBS>com.ist.server.cal.aml.createzip.bo.CreateNBS</classIBS>
+		<classRBH>com.ist.server.cal.aml.createzip.bo.CreateNBH</classRBH>
+		<classRBS>com.ist.server.cal.aml.createzip.bo.CreateNBS</classRBS>
+		<!-- feedback read class  -->
+
+		
+	</reportXML>
+	<reportOrgan>
+		<!--Report Organ's name-->
+		<reportOrganname>北京农商行</reportOrganname>
+		<!--Report Organ's key-->
+		<reportOrgankey>013021100001536</reportOrgankey>
+		<!--Report Organ Area's key-->
+		<organAreakey>110000</organAreakey>
+		<!--Report Organ's type-->
+		<organtype>00</organtype>
+	</reportOrgan>
+	<reportBasic>
+		<!--XML Encoding formation-->
+		<encoding>gb2312</encoding>
+		<defaultCharacter1>@N</defaultCharacter1>
+		<defaultCharacter2>@I</defaultCharacter2>
+		<defaultCharacter3>@E</defaultCharacter3>
+		<timeComplement>t</timeComplement>
+		<batchDelete>@A</batchDelete>
+		<deletedTransSum>@N</deletedTransSum>
+		<innerOrganTextStorepath>
+			report/innerOrganText/
+		</innerOrganTextStorepath>
+		<seperate>,</seperate>
+		<resendInv_dt>5</resendInv_dt>
+	</reportBasic>
+</root>

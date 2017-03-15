@@ -1,0 +1,91 @@
+#created on: Jan 16, 2007
+package com.ist.server.cal.aml.jrules.rules.aml_ky07
+ 
+#list any import classes here.
+import java.util.HashMap;
+import java.lang.Boolean;
+
+import com.ist.server.cal.aml.jrules.dto.RuleFact;
+import com.ist.server.cal.aml.jrules.dto.IndicFact;
+import com.ist.server.cal.aml.jrules.component.CommonUtil;
+
+#declare any global variables here
+
+ 
+rule "KY0701"
+	when
+	  #conditions
+	  #get IndicFact from RuleFact.IndicHash
+	  #get alertHash from RuleFact
+      $T : RuleFact(alerthash : alertHash , indichash : indicHash);
+      eval( 
+      ((indichash.containsKey("JC30001")&&( (IndicFact)CommonUtil.getObj(indichash,"JC30001")).getIndicval()>=((IndicFact)CommonUtil.getObj(indichash,"JC30001")).getLow_limit())
+        || (indichash.containsKey("GZ30044")&&( (IndicFact)CommonUtil.getObj(indichash,"GZ30044")).getIndicval()>=((IndicFact)CommonUtil.getObj(indichash,"GZ30044")).getLow_limit()))
+        &&(indichash.containsKey("JC10073")&&((IndicFact)CommonUtil.getObj(indichash,"JC10073")).getIndicval() >= ((IndicFact)CommonUtil.getObj(indichash,"JC10073")).getLow_limit()));
+	
+	then
+	#actions
+	#set true(alert) into the alerthash
+	  alerthash.put("KY0701",new Integer(1));
+
+end
+
+rule "KY0702"
+	when
+	  #conditions
+	  #get IndicFact from RuleFact.IndicHash
+	  #get alertHash from RuleFact
+      $T : RuleFact(alerthash : alertHash , indichash : indicHash);
+      eval(( (indichash.containsKey("JC30002")&&( (IndicFact)CommonUtil.getObj(indichash,"JC30002")).getIndicval()>=((IndicFact)CommonUtil.getObj(indichash,"JC30002")).getLow_limit())
+        || (indichash.containsKey("GZ30045")&&( (IndicFact)CommonUtil.getObj(indichash,"GZ30045")).getIndicval()>=((IndicFact)CommonUtil.getObj(indichash,"GZ30045")).getLow_limit()))
+        &&(indichash.containsKey("JC10074")&&( (IndicFact)CommonUtil.getObj(indichash,"JC10074")).getIndicval() >= ((IndicFact)CommonUtil.getObj(indichash,"JC10074")).getLow_limit()));
+	
+	then
+	#actions
+	#set true(alert) into the alerthash
+	  alerthash.put("KY0702",new Integer(1));
+
+end
+
+rule "KY0703"
+	when
+	  #conditions
+	  #get IndicFact from RuleFact.IndicHash
+	  #get alertHash from RuleFact
+      $T : RuleFact(alerthash : alertHash , indichash : indicHash);
+      eval(((indichash.containsKey("JC30003")&& ( (IndicFact)CommonUtil.getObj(indichash,"JC30003")).getIndicval()>=((IndicFact)CommonUtil.getObj(indichash,"JC30003")).getLow_limit())
+        || (indichash.containsKey("GZ30046")&&( (IndicFact)CommonUtil.getObj(indichash,"GZ30046")).getIndicval()>=((IndicFact)CommonUtil.getObj(indichash,"GZ30046")).getLow_limit()))
+        &&(indichash.containsKey("JC10075")&&( (IndicFact)CommonUtil.getObj(indichash,"JC10075")).getIndicval() >= ((IndicFact)CommonUtil.getObj(indichash,"JC10075")).getLow_limit()));
+	
+	then
+	#actions
+	#set true(alert) into the alerthash
+	  alerthash.put("KY0703",new Integer(1));
+
+end 
+rule "KY0704"
+	when
+	  #conditions
+	  #get IndicFact from RuleFact.IndicHash
+	  #get alertHash from RuleFact
+      $T : RuleFact(alerthash : alertHash , indichash : indicHash);
+      eval(((indichash.containsKey("JC30004")&& ( (IndicFact)CommonUtil.getObj(indichash,"JC30004")).getIndicval()>=((IndicFact)CommonUtil.getObj(indichash,"JC30004")).getLow_limit())
+        || (indichash.containsKey("GZ30047")&&( (IndicFact)CommonUtil.getObj(indichash,"GZ30047")).getIndicval()>=((IndicFact)CommonUtil.getObj(indichash,"GZ30047")).getLow_limit()))
+        &&(indichash.containsKey("JC10076")&&( (IndicFact)CommonUtil.getObj(indichash,"JC10076")).getIndicval() >= ((IndicFact)CommonUtil.getObj(indichash,"JC10076")).getLow_limit()));
+	
+	then
+	#actions
+	#set true(alert) into the alerthash
+	  alerthash.put("KY0704",new Integer(1));
+
+end 
+
+
+
+
+
+
+
+
+
+

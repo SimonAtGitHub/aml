@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<root>
+<!-- 计算时间和业务时间相差的天数 -->
+   <diftime>1</diftime>
+   <!-- 删除交易事实表的天数 -->
+   <delfactday>31</delfactday>
+    <!-- 数据库连接信息 -->
+   <use_type_cd>1</use_type_cd>
+  <sequence>
+      <!-- 如果idtype = db，取数据库seq,否则取系统方式 
+         id的生成使用sequence，则写出取sequence的前半部分sql、后半部分sql，dao中直接中间拼写sequence的name即可形成取数SQL -->
+        <idtype>db</idtype> 
+       <!--  <idtype>oracle</idtype>-->
+       <seqbeginsql>select</seqbeginsql><!-- oracle --> 
+         <!-- <seqbeginsql>select NEXTVAL FOR </seqbeginsql --><!-- DB2 -->
+          <!--<seqbeginsqlspace>yes</seqbeginsqlspace-->
+        <!-- seqbeginsql + seqname 中间是否带空格 -->
+       <seqendsql>.Nextval from dual</seqendsql><!-- oracle -->
+         <!-- <seqendsql> from  sysibm.sysdummy1</seqendsql--><!-- DB2 -->
+        <seqendsqlspace>no</seqendsqlspace>
+        <!-- seqname + seqendsql 中间是否带空格 -->
+        <!-- id的生成使用id生成器，则写出如果此id不存在时，默认的初始id数是多少 -->
+        <!--  idtype>id</idtype  -->
+        <idbegin>200</idbegin>
+        <idtablename>t07_sequence</idtablename>      
+    </sequence>
+	<!-- 数据库连接信息 -->
+	<database>
+	    <is_encryption>0</is_encryption>
+		<dbtype>ORACLE</dbtype>
+		<!--dbtype>DB2</dbtype>-->
+		<charset>GBK</charset><!-- 数据库字符集是：gbk 还是 iso -->
+		<!-- AWP DM 的数据库信息 -->
+		<defaultProvider>
+			<driver>oracle.jdbc.driver.OracleDriver</driver>
+			<!--driver>com.ibm.db2.jcc.DB2Driver</driver-->
+			<!--serverURL说明
+				通用连接:jdbc:db2://ServerIP:Port/dbname
+				客户端连接:jdbc:db2:<数据库在本地别名>
+				com.ibm.db2.jcc.DB2Driver
+				jdbc:db2://192.168.0.8:50000/awpc
+				jdbc:oracle:thin:@vm-hubq:1521:orcl
+			-->
+		<!-- <serverURL>jdbc:oracle:thin:@192.168.77.128:1521:ORAC</serverURL>  -->
+			 <serverURL>jdbc:oracle:thin:@localhost:1521:ORCL</serverURL>
+		<!--	<serverURL>jdbc:oracle:thin:@10.6.50.113:1521:VISTDB</serverURL> -->
+			<!-- serverURL>jdbc:db2://10.6.8.110:60000/AMLDEVDB</serverURL>-->
+			<!--serverURL>jdbc:oracle:thin:@localhost:1521:orcl</serverURL-->
+			  <username>aml</username>
+			<password>aml</password>
+			<!--<username>aml</username>
+			<password>aml</password>-->
+		</defaultProvider>
+		<!-- AWP ODS 的数据库信息 -->
+		<ods>
+			<username>ods</username>
+			<password>ods</password>
+		</ods>
+	</database>
+	<!-- >organkey_zonghang>9901</organkey_zonghang -->
+	<!-- catch switch(on/off) -->
+	<catch>
+		<jcs>
+			<switch>on</switch><!-- 缓存是否打开，on-打开，off,关闭 -->
+			<common_catch>commonCache</common_catch><!-- 要实例化的cache类名 -->
+		</jcs>
+	</catch>
+
+	<server>
+	<server_tasktime_dep>1</server_tasktime_dep>
+	<server_threadnum>2</server_threadnum><!-- 线程数 -->
+		<!-- 规则计算出错，on继续执行下一个规则，off停止计算 -->
+		<cal_mode>on</cal_mode>
+		<max_row>10000</max_row><!-- 规则预警量阀值，超过该值的预警数据不作预警，存放到t68_alert_tmp_his-->
+		<!--<odsdata_oneday>0</odsdata_oneday>1表示ods层数据只存一天，0表示ods层数据不止存一天 -->
+		<load_tasktype></load_tasktype><!--装载任务的前置任务，ods层数据只存一天需控制的任务类型   302-->
+		<server_S1001><!-- AuditServer -->
+		
+			<cal_time_begin>00:01:00</cal_time_begin><!-- AuditServer 开始执行时间-->
+			<cal_time_end>23:59:00</cal_time_end><!-- AuditServer 结束执行时间-->
+			<task_type></task_type><!-- 被限制任务类型 -->
+			<task_cal_time_begin>00:01:00</task_cal_time_begin><!-- 被限制任务开始执行时间 -->
+			<task_cal_time_end>23:59:00</task_cal_time_end><!-- 被限制任务结束执行时间 -->
+			<scan_timespace>1</scan_timespace><!-- AuditServer每隔多久执行一次 -->
+			
+		</server_S1001>
+		<server_S1002><!-- ConfigServer -->
+			<cal_time_begin>00:01:00</cal_time_begin><!-- ConfigServer 开始执行时间-->
+			<cal_time_end>23:59:00</cal_time_end><!-- ConfigServer 结束执行时间-->
+			<scan_timespace>1</scan_timespace><!-- ConfigServer每隔多久执行一次 -->
+		</server_S1002>
+		
+	</server>
+	<onlineserver>
+		<!-- 存储数据清理 1删除；0不删除，手动维护 -->
+		<isdelstoredata>1</isdelstoredata>
+		<!-- 是否备份数据文件 1备份 0不备份 -->
+		<isbakdatafile>1</isbakdatafile>
+		<!-- 备份数据文件保留天数 -->
+		<bakdays>5</bakdays>
+		 <serverport>8806</serverport>
+          <!-- <clientips>17.1.2.152</clientips> -->
+       <clientips>127.0.0.1</clientips>
+        <threadpool>
+		<minpools>1</minpools>
+		<maxpools>5</maxpools>
+		<checkthreadperiod>1</checkthreadperiod>
+		<poolsnum>1</poolsnum>
+		</threadpool>
+	</onlineserver>
+	
+
+	
+	<rule>
+        <!--一次加载的对象数  -->
+        <bath_account>5000</bath_account>
+        <obj_type>1</obj_type>
+        <obj_count>3000</obj_count>
+        <staff_ratio>0.4</staff_ratio>
+        <case_curr_type>1</case_curr_type>
+        <org_level>3</org_level>
+        <validate_thread_number>10</validate_thread_number>
+        <validate_trans_max>10000</validate_trans_max>
+        <alert_bath>0</alert_bath><!--是否采用批量处理，1是采用，0不采用,2采用固定逻辑-->
+        <trans_count>500</trans_count><!-- 达到可疑交易数生成案例 -->
+        <trans_de_count>1000</trans_de_count><!-- 大额交易控制 -->          
+         <trans_stcr_count>3</trans_stcr_count><!-- 可疑达到规则数生成案例 -->
+        <trans_ke_day>0</trans_ke_day><!-- 可疑达到数据时间-天数时生成案例 -->
+         <workdateflag>1</workdateflag><!-- 可疑天数是否按工作日 0：否 1 是 -->
+        <beforeday>2</beforeday><!-- 处理灰名单时离大额到期日的提前天数 -->
+        <alert_dif_day>5</alert_dif_day>
+        <txdt_flag>2</txdt_flag>
+         <alert_bcount>10000</alert_bcount><!--单个规则预警结果集单页处理记录数  -->
+         <module_ke_day>1</module_ke_day><!-- 模型生成案例合并天数 -->
+        
+    </rule>
+    
+    <path>
+        <!--外部文件路径是否可执行任务文件 -->
+        <aml_path>D:/work/CMBCAMLServerProj/settask</aml_path>
+    </path>
+     <out_database>
+        <out_defaultProvider>         
+            <out_driver>oracle.jdbc.driver.OracleDriver</out_driver>
+            <out_serverURL>jdbc:oracle:thin:@localhost:1521:ORCL</out_serverURL>             
+            <out_username>tbank</out_username>
+            <out_password>tbank</out_password>           
+            <out_minConnections>3</out_minConnections>
+            <out_maxConnections>10</out_maxConnections>
+            <out_connectionTimeout>0.5</out_connectionTimeout>
+        </out_defaultProvider>
+        <out_ods>
+            <out_username>odsaml</out_username>
+            <out_password>odsaml</out_password>
+        </out_ods>
+        <out_charset>gbk</out_charset><!-- 数据库字符集是：gbk 还是 iso -->
+    </out_database>
+    
+    
+    <data>
+      <!-- download temp dir -->
+        <export>D:/aml/download/</export>
+        <!-- upload dir -->
+        <import>D:/aml/upload/</import>
+        <!-- cmbc export trans dir -->
+        <cmbcExpTrans>D:/aml/download/expTrans/</cmbcExpTrans>
+    	<!-- data root 数据文件保存的根路径 -->
+    	<dir_root>D:/FTP_ROOT/</dir_root>
+        <!-- export template dir 相对路径 -->
+        <template>template</template>
+        <!-- edit file in temp dir 相对路径 -->
+        <dir_temp>temp</dir_temp>
+        <dir_report>reporttpl</dir_report>
+        <!-- 存放脚本相对路径 -->
+        <dir_script>script</dir_script>
+
+      
+        <!-- upload file size. Units:KB -->
+        <size_limit>1000000</size_limit>
+        <!-- create sub dir. year, month, day -->
+        <dir_date>month</dir_date>
+        
+        <!-- Excel每个sheet中的数据条数-->
+        <perpage>10000</perpage>
+    </data>
+    
+    <reportXML>
+    	<!--upload xml document's version-->
+		<version>0690</version>
+		<!--the path to store xml document-->
+		<storepath>upreportXML/</storepath>
+		<!--xmlns-->
+		<reportxmlns>http://fitech-report.com/smis</reportxmlns>
+		<reportxmlnsxsi>
+			http://www.w3.org/2001/XMLSchema
+		</reportxmlnsxsi>
+		<!--store path of upreort zip-->
+		<zipStorepath>upreportPacket/</zipStorepath>
+		<!--store path of feendback xml -->
+		<feedbackStorepath>feedbackXML/</feedbackStorepath>
+		<!-- temp path of temp path -->
+		<tempStorepath>temp/</tempStorepath>
+		<!--store path of previewing xml -->
+		<previwStorepath>e:/report/previw.xml/</previwStorepath>
+		<!-- max size of packet-->
+		<zipMaxSize>5000000</zipMaxSize>
+		<zipCountMaxSize>2</zipCountMaxSize>
+		<!--max size of attach -->
+		<attachMaxSize>2000000</attachMaxSize>
+		<!-- xml create class  -->
+		<classNBH>com.ist.server.cal.aml.createzip.CreateNBH</classNBH>
+		<classNBS>com.ist.server.cal.aml.createzip.CreateNBS</classNBS>
+		<!-- when createZipping, a huge packet's message count -->
+		<NBHMsgCount>150</NBHMsgCount>
+		<!-- when createZipping, a huge packet's message count -->
+		<NBSMsgCount>300</NBSMsgCount>
+		<!-- if pass this time , then get next date -->
+		<packetEndHour>20</packetEndHour>
+		<!-- if zipping,then the status of report is this. -->
+		<report_status_cd>3</report_status_cd>
+		<!-- max case count of 383 task -->
+        <maxCaseCount>10000</maxCaseCount>
+        <!-- case reduce count of 383 task -->
+        <caseReduceCount>2000</caseReduceCount>
+        <!-- max trans count of 383 task  -->
+		<maxCaseTransCount>100000</maxCaseTransCount>
+	</reportXML>
+	<reportBasic>
+	<innerOrganTextTitle>现代化支付系统行号,账户管理系统行号,内部代码,其它类型代码,网点名称,所在地区行政区划码,网点地址</innerOrganTextTitle>
+		<innerOrganTextname> innerorgcode.csv</innerOrganTextname>
+		<seperate>,</seperate>
+	</reportBasic>
+	<risk>
+	    <is_move_gd_party>no</is_move_gd_party>
+		<cat_inner_readjust_flag>1</cat_inner_readjust_flag>
+		<risk_score_area_flag>0</risk_score_area_flag>
+		<!-- 日粒度的评级结果留给操作人员的最长操作时间，超过此时间的将把评级结果转移到历史中去 -->
+		<risk_deal_days>10</risk_deal_days>
+		<acct_risk>2</acct_risk><!-- 账户行是否参与风险等级调整：1，是；2，否 -->
+		<update_level>1</update_level><!-- 是否更新评级结果：1，是；2，否 -->
+		<risk_flag9>2</risk_flag9><!-- 久悬户处理标志：1、不做任何处理； 2、默认评级级别，同时将结果放在久悬户结果表中，供查询用； 3、默认评级级别，数据放置表同其他客户同样处理。-->
+		<risk_active_deal>3</risk_active_deal>
+		<risk_default_level>1023</risk_default_level>
+		<bank_all_dates></bank_all_dates>
+	    <risk_atten_level>1002</risk_atten_level> <!--关注可以级别-->
+	    <splittables>T47_PARTY</splittables><!-- 在风险评级计算之前需要拆分的表，表名间用","分割 -->
+	    <split_ind></split_ind><!-- 是否拆分表，1采用；2不采用 -->
+	    <alert_bath>0</alert_bath><!--是否采用批量处理，1是采用，0不采用-->
+	    <risk_remove>2</risk_remove><!-- 半年粒度是否全部重新评级：1、是；2、否 -->
+	    <statusflag>0</statusflag><!--risk_remove=2时 statusflag=1时未审核完得不重新评级否则0重新评-->
+	    <movetag>2</movetag><!--risk_remove=2时 movetag=1高风险的不重新评 =2 调整过的不重新评-->
+	    <bakflag>2</bakflag><!-- 2半年粒度时备份历史表不按日期 1按日期备份历史表 -->
+	</risk>
+</root>

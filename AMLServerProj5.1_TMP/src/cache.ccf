@@ -1,0 +1,82 @@
+# DEFAULT CACHE REGION
+
+# sets the default aux value for any non configured caches
+jcs.default=DC
+jcs.default.cacheattributes=org.apache.jcs.engine.CompositeCacheAttributes
+jcs.default.cacheattributes.MaxObjects=1000
+jcs.default.cacheattributes.MemoryCacheName=org.apache.jcs.engine.memory.lru.LRUMemoryCache
+jcs.default.elementattributes=org.apache.jcs.engine.ElementAttributes
+jcs.default.elementattributes.IsEternal=false
+jcs.default.elementattributes.MaxLifeSeconds=3600
+jcs.default.elementattributes.IdleTime=1800
+jcs.default.elementattributes.IsSpool=true
+jcs.default.elementattributes.IsRemote=false
+jcs.default.elementattributes.IsLateral=false
+
+
+# CACHE REGIONS AVAILABLE
+
+# Regions preconfigured for caching
+jcs.region.commonCache=DC
+jcs.region.commonCache.cacheattributes=org.apache.jcs.engine.CompositeCacheAttributes
+jcs.region.commonCache.cacheattributes.MaxObjects=1200
+jcs.region.commonCache.cacheattributes.MemoryCacheName=org.apache.jcs.engine.memory.lru.LRUMemoryCache
+jcs.region.commonCache.elementattributes=org.apache.jcs.engine.ElementAttributes
+jcs.region.commonCache.elementattributes.IsEternal=false
+jcs.region.commonCache.elementattributes.MaxLifeSeconds=7200
+jcs.region.commonCache.elementattributes.IdleTime=1800
+jcs.region.commonCache.elementattributes.IsSpool=true
+jcs.region.commonCache.elementattributes.IsRemote=false
+jcs.region.commonCache.elementattributes.IsLateral=false
+
+# AUXILIARY CACHES AVAILABLE
+
+# Primary Disk Cache -- faster than the rest because of memory key storage
+jcs.auxiliary.DC=org.apache.jcs.auxiliary.disk.indexed.IndexedDiskCacheFactory
+jcs.auxiliary.DC.attributes=org.apache.jcs.auxiliary.disk.indexed.IndexedDiskCacheAttributes
+jcs.auxiliary.DC.attributes.DiskPath=/usr/opt/bookstore/dc
+jcs.auxiliary.DC.attributes.MaxPurgatorySize=10000
+jcs.auxiliary.DC.attributes.MaxKeySize=10000
+jcs.auxiliary.DC.attributes.OptimizeAtRemoveCount=300000
+jcs.auxiliary.DC.attributes.MaxRecycleBinSize=7500
+jcs.auxiliary.DC.attributes.OptimizeAtRemoveCount=300000 
+
+# Regions preconfigured for caching
+jcs.region.awpCommonCache=RDC
+jcs.region.awpCommonCache.cacheattributes=org.apache.jcs.engine.CompositeCacheAttributes
+jcs.region.awpCommonCache.cacheattributes.MaxObjects=1200
+jcs.region.awpCommonCache.cacheattributes.MemoryCacheName=org.apache.jcs.engine.memory.lru.LRUMemoryCache
+jcs.region.awpCommonCache.elementattributes=org.apache.jcs.engine.ElementAttributes
+jcs.region.awpCommonCache.elementattributes.IsEternal=false
+jcs.region.awpCommonCache.elementattributes.MaxLifeSeconds=7200
+jcs.region.awpCommonCache.elementattributes.IdleTime=1800
+jcs.region.awpCommonCache.elementattributes.IsSpool=true
+jcs.region.awpCommonCache.elementattributes.IsRemote=false
+jcs.region.awpCommonCache.elementattributes.IsLateral=false
+
+ Regions preconfigured for caching
+jcs.region.avpCache=RDC
+jcs.region.avpCache.cacheattributes=org.apache.jcs.engine.CompositeCacheAttributes
+jcs.region.avpCache.cacheattributes.MaxObjects=1200
+jcs.region.avpCache.cacheattributes.MemoryCacheName=org.apache.jcs.engine.memory.lru.LRUMemoryCache
+jcs.region.avpCache.elementattributes=org.apache.jcs.engine.ElementAttributes
+jcs.region.avpCache.elementattributes.IsEternal=false
+jcs.region.avpCache.elementattributes.MaxLifeSeconds=7200
+jcs.region.avpCache.elementattributes.IdleTime=1800
+jcs.region.avpCache.elementattributes.IsSpool=true
+jcs.region.avpCache.elementattributes.IsRemote=false
+jcs.region.avpCache.elementattributes.IsLateral=false
+
+# AUXILIARY CACHES AVAILABLE
+
+# Primary Disk Cache -- faster than the rest because of memory key storage
+jcs.auxiliary.RDC=org.apache.jcs.auxiliary.disk.indexed.IndexedDiskCacheFactory
+jcs.auxiliary.RDC.attributes=org.apache.jcs.auxiliary.disk.indexed.IndexedDiskCacheAttributes
+jcs.auxiliary.RDC.attributes.DiskPath=/usr/opt/bookstore/rdc
+jcs.auxiliary.RDC.attributes.MaxPurgatorySize=10000
+jcs.auxiliary.RDC.attributes.MaxKeySize=10000
+jcs.auxiliary.RDC.attributes.OptimizeAtRemoveCount=300000
+jcs.auxiliary.RDC.attributes.MaxRecycleBinSize=7500
+jcs.auxiliary.RDC.attributes.OptimizeAtRemoveCount=300000 
+
+
