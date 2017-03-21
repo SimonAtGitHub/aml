@@ -724,8 +724,16 @@ area6='<bean:write name='t47_transaction' property='opp_area1'/>';
 									</td>
 									
 								</tr>
-							
+								<tr>
+									</td>
+									<td>
+										IPµÿ÷∑£∫
+									</td>
 
+									<td>
+										<input type="text" name="trans_ip"  value="<bean:write name="t47_transactionActionForm" property="trans_ip"/>" size="25" maxlength="15"/>
+									</td>								
+								</tr>
 
 								<tr>
 									<td>

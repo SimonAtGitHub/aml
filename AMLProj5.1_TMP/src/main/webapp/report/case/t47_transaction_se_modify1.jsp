@@ -1026,8 +1026,14 @@ function _Confim(url){
 										</td><td bgcolor="F6F9FF" colspan="3" align="left">			
 											 <html:text property="use_des" size="40" maxlength="64" onchange="change();" onblur="validateDetail2('use_des');" />
 										<div id="des_disp" style="display: none;">
-			  							</div>
-										</td>
+			  							</div></td>
+							    </tr>
+							    <tr>
+									<td  height="18" align="right" bgcolor="ECF3FF">
+										IPµÿ÷∑£∫
+									</td><td bgcolor="F6F9FF" colspan="3" align="left">			
+									 <html:text property="trans_ip" size="40" maxlength="64"/>
+									</td>
 							    </tr>
 								<tr>
 								

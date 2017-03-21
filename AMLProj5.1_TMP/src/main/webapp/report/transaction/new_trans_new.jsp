@@ -1309,6 +1309,16 @@ showValidateMsg(obj, 0, "");
 									</div>
 								</td>
 							</tr>
+							
+							<tr>
+								<td height="18" align="right" bgcolor="ECF3FF">
+									IPµÿ÷∑£∫
+								</td>
+								<td bgcolor="F6F9FF" colspan="3" align="left">
+									<html:text property="trans_ip" size="25" maxlength="64"  />
+								</td>
+							</tr>
+							
 							<tr>
 
 								<td height="18" align="right" bgcolor="ECF3FF">

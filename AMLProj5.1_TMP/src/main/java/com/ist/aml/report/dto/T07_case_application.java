@@ -297,6 +297,7 @@ public class T07_case_application implements Serializable {
 	private int stcr_count; //特征总数
 	private int agreement_count; //账户总数
 	private String curr_oper_id = ""; //当前操作Id
+	private String oper_desc = ""; //当前操作描述
 	private String post02_date = ""; //编辑岗操作日期
 	private String post02_result = ""; //编辑岗操作结果
 	private String post03_date = "";  //审核岗操作日期
@@ -1925,4 +1926,12 @@ public class T07_case_application implements Serializable {
 		case_kind_flag = caseKindFlag;
 	}
 
+	public String getOper_desc() {
+		return oper_desc;
+	}
+
+	public void setOper_desc(String oper_desc) {
+		this.oper_desc = oper_desc;
+	}
+	
 }

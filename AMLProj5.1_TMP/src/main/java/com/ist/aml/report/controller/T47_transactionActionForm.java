@@ -118,7 +118,7 @@ private String agent_card_no="" ; //代办人身份证件/证明文件号码
 private String agent_country="";	//代办人国籍
 private String  org_trans_rela=""; 	//金融机构和交易关系
 private String  org_trans_rela_flag=""; 	//金融机构和交易关系
-
+private String trans_ip="";
 
 /** 结算方式 */
 private String settle_type_cd = "";
@@ -1684,6 +1684,11 @@ return this.opp_tx_dt_disp;
 	public void setOrgankey_new(String organkeyNew) {
 		organkey_new = organkeyNew;
 	}
-	
+	public String getTrans_ip() {
+		return trans_ip;
+	}
+	public void setTrans_ip(String trans_ip) {
+		this.trans_ip = trans_ip;
+	}
 }
 

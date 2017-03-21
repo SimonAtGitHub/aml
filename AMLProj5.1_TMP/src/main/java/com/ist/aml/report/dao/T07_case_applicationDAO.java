@@ -356,6 +356,7 @@ public class T07_case_applicationDAO extends BaseDAO {
 					&& !"".equals(caseapp.getCurr_org()))
 				caseapp.setOrganname((String) organMap.get(caseapp
 						.getCurr_org()));
+			caseapp.setCreate_dt_disp(DateUtils.dateToString(caseapp.getCreate_dt()));
 			list.add(caseapp);
 		}
 		return list;

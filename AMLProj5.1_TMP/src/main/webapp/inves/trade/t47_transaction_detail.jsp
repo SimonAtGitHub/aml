@@ -407,6 +407,14 @@ function checkForm(theUrl){
 									<bean:write name="t47_transaction" property="dt_time_disp" />
 								</td>
 							</tr>
+							<tr>
+								<td>
+									IPµÿ÷∑£∫
+								</td>
+								<td>
+									<bean:write name="t47_transaction" property="trans_ip" />
+								</td>
+							</tr>
 						</table>
 					</div>
 				</div>

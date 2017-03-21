@@ -176,7 +176,8 @@ public class T47_transaction extends BaseDTO{
 	private String  org_trans_rela_flag="";
 	private String  objname="";
     private String jiaoyifangshi="";
-
+    private String trans_ip="";
+    
 	/** Ω·À„∑Ω Ω */
 	private String settle_type_cd = "";
 	private String settle_type_cd_flag = "";
@@ -3624,5 +3625,12 @@ public class T47_transaction extends BaseDTO{
 		trans_searchtime = transSearchtime;
 	}
 
-	
+	public String getTrans_ip() {
+		return trans_ip;
+	}
+
+	public void setTrans_ip(String trans_ip) {
+		this.trans_ip = trans_ip;
+	}
+
 }

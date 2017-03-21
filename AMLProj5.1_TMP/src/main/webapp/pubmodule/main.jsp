@@ -75,7 +75,7 @@ function _Open1(url){
      <td width="18%">案例日期: <span><%=datemap.get("2")%></span></td>
      <td width="15%">未协查案例: <span><%=noHelpCheckAppCount%></span></td>
      <td width="25%"> <%=request.getAttribute("organStrDisp")%></td>
-      <td width="25%"><a href="<%=root%>/risk/result/result_list2.do?newsearchflag=0&flow_id=20&post_id=P2001">未调整的高风险评级客户数:<span>
+      <td width="25%"><a href="<%=root%>/risk/result/result_list2.do?newsearchflag=0&flow_id=20&post_id=P2001">未调整的中，较高，高客户数:<span>
       <%if(map.get("13")==null){
       %>
       0

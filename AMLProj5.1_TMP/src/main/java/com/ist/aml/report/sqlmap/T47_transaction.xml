@@ -1085,7 +1085,7 @@
 		A.OVERAREA_IND,A.SETTLE_TYPE_CD,A.USE_DES,A.OPP_SYS_ID,A.OPP_AREA,A.OPP_ORGAN_TYPE,A.OPP_ORGANKEY,A.OPP_PBC_PARTY_CLASS_CD,
 		A.OPP_PARTY_ID,A.OPP_NAME,A.OPP_ACCT_NUM,A.OPP_TX_DT,A.OPP_ACCT_TYPE_CD,A.OPP_CARD_TYPE,A.OPP_CARD_NO,
 		A.OPP_PARTY_CLASS_CD,A.BATCH_IND,A.TELLER,A.RE_IND,A.HANDLE_STATUS_CD,A.PARTY_CHN_NAME,A.ADDTIONAL, 
-		A.VOUCHER_NO,A.HOST_CUST_ID,A.OPP_OFF_SHORE_IND,A.CAL_IND,A.VALIDATE_IND2,A.VALIDATE_IND,A.TSCTKEY
+		A.VOUCHER_NO,A.HOST_CUST_ID,A.OPP_OFF_SHORE_IND,A.CAL_IND,A.VALIDATE_IND2,A.VALIDATE_IND,A.TSCTKEY,A.TRANS_IP
 		FROM T47_TRANSACTION_UC A  WHERE A.TRANSACTIONKEY=#value#
 	</statement>
 	<statement id="saveValidatedSET47_transaction"
@@ -1126,6 +1126,9 @@
 		   </isNotEqual>
 		     <isNotEqual prepend="," property="acct_num" compareValue="#">
 				ACCT_NUM=#acct_num#
+		   </isNotEqual>
+		    <isNotEqual prepend="," property="trans_ip" compareValue="#">
+				TRANS_IP=#trans_ip#
 		   </isNotEqual>
 		
 	<!--  	<isNotEmpty prepend="," property="cash_ind">
@@ -1306,7 +1309,7 @@
 		OPP_CARD_TYPE,OPP_CARD_NO,OPP_PARTY_CLASS_CD,CANCEL_IND,AMT_CD,BATCH_IND,TELLER,RE_IND,HANDLE_STATUS_CD,PARTY_CHN_NAME,
 		ADDTIONAL,TX_DIRECT,TOKEN_NO,HOST_CUST_ID,CHANNEL,CAL_IND,OPP_COUNTRY,TSCTKEY,TX_GO_COUNTRY,
 		TX_GO_AREA,TX_OCCUR_COUNTRY,TX_OCCUR_AREA,AGENT_NAME,AGENT_CARD_TYPE,AGENT_CARD_NO,AGENT_COUNTRY,ORG_TRANS_RELA,
-		CASH_IND,OPP_PBC_PARTY_CLASS_CD,OPP_OFF_SHORE_IND,VALIDATE_IND,VALIDATE_IND2,TEMP1,RE_DT
+		CASH_IND,OPP_PBC_PARTY_CLASS_CD,OPP_OFF_SHORE_IND,VALIDATE_IND,VALIDATE_IND2,TEMP1,RE_DT,TRANS_IP
 		) VALUES(
 		#transactionkey#,#cb_pk#,#tx_no#,#voucher_no#,#organkey#,#tx_dt#,#dt_time#,#acct_num#,#party_id#,#party_class_cd#,#tx_cd#,
 		#cb_tx_cd#,#bus_type_cd#,#tx_type_cd#,#debit_credit#,#receive_pay_cd#,#subjectno#,#currency_cd#,#curr_cd#,#amt#,#cny_amt#,
@@ -1315,7 +1318,7 @@
 		#opp_card_type#,#opp_card_no#,#opp_party_class_cd#,#cancel_ind#,#amt_cd#,#batch_ind#,#teller#,#re_ind#,#handle_status_cd#,#party_chn_name#,
 		#addtional#,#tx_direct#,#token_no#,#host_cust_id#,#channel#,#cal_ind#,#opp_country#,#tsctkey#,#tx_go_country#,
 		#tx_go_area#,#tx_occur_country#,#tx_occur_area#,#agent_name#,#agent_card_type#,#agent_card_no#,#agent_country#,#org_trans_rela#,
-		#cash_ind#,#opp_pbc_party_class_cd#,#opp_off_shore_ind#,#validate_ind#,#validate_ind2#,#txt#,#re_dt#
+		#cash_ind#,#opp_pbc_party_class_cd#,#opp_off_shore_ind#,#validate_ind#,#validate_ind2#,#txt#,#re_dt#,#trans_ip#
 		)
 	</statement>
 	
@@ -2704,7 +2707,7 @@
 	A.OVERAREA_IND,A.SETTLE_TYPE_CD,A.USE_DES,A.OPP_SYS_ID,A.OPP_ORGAN_TYPE,A.OPP_ORGANKEY,A.OPP_PBC_PARTY_CLASS_CD,
 	A.OPP_PARTY_ID,A.OPP_NAME,A.OPP_ACCT_NUM,A.OPP_TX_DT,A.OPP_ACCT_TYPE_CD,A.OPP_CARD_TYPE,A.OPP_CARD_NO,A.OPP_ISPARTY,
 	A.OPP_PARTY_CLASS_CD,A.BATCH_IND,A.TELLER,A.RE_IND,A.HANDLE_STATUS_CD,A.PARTY_CHN_NAME,A.ADDTIONAL,
-	A.VOUCHER_NO,A.OPP_OFF_SHORE_IND,A.CAL_IND,A.VALIDATE_IND2,A.VALIDATE_IND,A.TSCTKEY
+	A.VOUCHER_NO,A.OPP_OFF_SHORE_IND,A.CAL_IND,A.VALIDATE_IND2,A.VALIDATE_IND,A.TSCTKEY,A.TRANS_IP
 	FROM 
 		<dynamic>
 			<isNotEmpty prepend="" property="alertsearchtime"> 
@@ -2979,8 +2982,8 @@
 				A.OPP_OFF_SHORE_IND,
 				A.BIZ_TYPE_CD,
 				A.VALIDATE_IND,
-				A.VALIDATE_IND2 
-		
+				A.VALIDATE_IND2, 
+				A.TRANS_IP
 		FROM T47_TRANSACTION A
 		WHERE A.TRANSACTIONKEY=#transactionkey#
 	
@@ -3019,7 +3022,8 @@ SETTLE_TYPE_CD=#settle_type_cd#,USE_DES=#use_des#,OPP_SYS_ID=#opp_sys_id#,OPP_AR
 		OPP_ORGANNAME=#opp_organname#,ORG_TRANS_RELA=#org_trans_rela#,AGENT_NAME=#agent_name#,AGENT_COUNTRY=#agent_country#
 		,AGENT_CARD_TYPE=#agent_card_type#,AGENT_CARD_NO=#agent_card_no#,HOST_CUST_ID=#host_cust_id#,CURR_CD=#curr_cd#,CASH_IND=#cash_ind#,
 		TX_GO_COUNTRY=#tx_go_country#,TX_GO_AREA=#tx_go_area#,TX_OCCUR_COUNTRY=#tx_occur_country#,TX_OCCUR_AREA=#tx_occur_area#
-		,OPP_OFF_SHORE_IND=#opp_off_shore_ind#,OPP_PBC_PARTY_CLASS_CD=#opp_pbc_party_class_cd#,OPP_COUNTRY=#opp_country#,TSCTKEY=#tsctkey#,OPP_ISPARTY=#opp_isparty#
+		,OPP_OFF_SHORE_IND=#opp_off_shore_ind#,OPP_PBC_PARTY_CLASS_CD=#opp_pbc_party_class_cd#,OPP_COUNTRY=#opp_country#,TSCTKEY=#tsctkey#,OPP_ISPARTY=#opp_isparty#,
+		TRANS_IP=#trans_ip#
 		WHERE TRANSACTIONKEY=#transactionkey#
 	</statement>
 	
@@ -3040,7 +3044,7 @@ SETTLE_TYPE_CD=#settle_type_cd#,USE_DES=#use_des#,OPP_SYS_ID=#opp_sys_id#,OPP_AR
 		A.OVERAREA_IND,A.SETTLE_TYPE_CD,A.USE_DES,A.OPP_SYS_ID,A.OPP_AREA,A.OPP_ORGAN_TYPE,A.OPP_ORGANKEY,A.OPP_PBC_PARTY_CLASS_CD,
 		A.OPP_PARTY_ID,A.OPP_NAME,A.OPP_ACCT_NUM,A.OPP_TX_DT,A.OPP_ACCT_TYPE_CD,A.OPP_CARD_TYPE,A.OPP_CARD_NO,
 		A.OPP_PARTY_CLASS_CD,A.BATCH_IND,A.TELLER,A.RE_IND,A.HANDLE_STATUS_CD,A.PARTY_CHN_NAME,A.ADDTIONAL, 
-		A.VOUCHER_NO,A.HOST_CUST_ID,A.OPP_OFF_SHORE_IND,A.CAL_IND,A.VALIDATE_IND2,A.VALIDATE_IND,A.TSCTKEY
+		A.VOUCHER_NO,A.HOST_CUST_ID,A.OPP_OFF_SHORE_IND,A.CAL_IND,A.VALIDATE_IND2,A.VALIDATE_IND,A.TSCTKEY,A.TRANS_IP
 		FROM T47_TRANSACTION_UC A  WHERE 		A.HANDLE_STATUS_CD = '1'
 		<dynamic>
 		    <isNotEmpty prepend="AND" property="tx_no">

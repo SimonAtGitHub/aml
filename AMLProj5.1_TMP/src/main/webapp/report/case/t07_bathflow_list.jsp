@@ -253,8 +253,9 @@ function change_lineColor(){
 								<td><%=com.ist.util.Constans.CASE_NAME%>类型：</td>
 								<td>
 									<html:select property="cast_type">
-										<html:options collection="casetypeMap" property="label"
-											labelProperty="value" />
+										<html:option value="1">大额</html:option><!-- 雅安：可疑案例屏蔽批量操作 -->
+										<!-- <html:options collection="casetypeMap" property="label"
+											labelProperty="value" />-->
 									</html:select>
 								</td>
 							</tr>

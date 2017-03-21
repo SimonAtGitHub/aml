@@ -55,6 +55,8 @@ function _Onblur(pname){
 	  <span>重新客户识别</span>  
 	  <span class="buttons">
 	  <a href="#" id="hdd_display" class="bt_hidden"></a>&nbsp;
+	   <a href="#" onclick="dosubmit('exportT10_checkparty_relist.do','export');"><img
+									src="../../images/<%=session.getAttribute("style") %>/b_excel.png" />导出Excel</a>
 	  <a href="#" title="发起调查" onclick="ymPrompt.win({message:'t10_survey_partyAdd.do?newsearchflag=1',width:650,height:420,title:'添加',handler:handler,iframe:true,fixPosition:true,dragOut:false});">
       <img src="../../images/<%=session.getAttribute("style")%>/b_add2.png" />发起调查</a> 
       <a href="#" onclick="checkForm('t10_checkparty_deleteByList_do.do','del')"><img src="../../images/<%=session.getAttribute("style")%>/b_delete.png" />删除</a>
@@ -95,11 +97,19 @@ function _Onblur(pname){
 				<html:select property="recheck_type">
 				<html:options collection="recheck_typeMap" property="label" labelProperty="value" />
 				</html:select>
-				<input name="" type="button" value="查　询"  class="in_button1" onClick="dosubmit('<%=request.getContextPath() %>/report/cust_identify/t10_checkparty_relist.do?newsearchflag=1','search')"/>
 			</td>
          	
            </tr>
-           
+           <tr>
+           <td>证件到期时间：</td>
+           <td>
+				<html:select property="expire_period">
+				<html:options collection="expire_periodMap" property="label" labelProperty="value" />
+				</html:select>
+			</td>
+           </td>
+           <td><input name="" type="button" value="查　询"  class="in_button1" onClick="dosubmit('<%=request.getContextPath() %>/report/cust_identify/t10_checkparty_relist.do?newsearchflag=1','search')"/></td>
+           </tr>
         </table>
       </div>
    </div>

@@ -1203,7 +1203,11 @@
 			validate="false" scope="request">
 			<forward name="success" path="/cust_identify/t10_checkparty_uhlist.jsp" />
 		</action>
-		
+		<action path="/cust_identify/exportT10_checkparty_relist" parameter="exportT10_checkparty_relist"
+			name="t10_checkpartyActionForm" type="com.ist.aml.cust_identify.controller.T10_checkpartyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/cust_identify/t10_checkparty_relist_excel.jsp" />
+		</action>
 		
 		
 		<!-- 调查分析 客户调查lizb 20140122_start -->

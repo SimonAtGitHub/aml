@@ -353,6 +353,15 @@ function validateCheckBox(err){
 						</td>
 					</tr>
 					<tr>
+						<td>性別：</td>
+						<td>
+							<html:select name="clientInfo" property="gender" styleId="gender">
+								<html:options collection="genderMap" property="label" labelProperty="value" />
+							</html:select>
+							<br/>
+						</td>
+					</tr>
+					<tr>
 					  <td>证件号码： </td>
 					  <td><html:text name="clientInfo" property="card_no" styleId="card_no"/>
 						<font color="#FF0000">*</font></td>
@@ -454,6 +463,23 @@ function validateCheckBox(err){
 						 	<html:text name="clientInfo" property="card_no" styleId="card_no"/>
 							<font color="#FF0000">*</font>
 						</td>
+						<td>证件到期日： </td>
+						<td>
+							<html:text name="clientInfo" property="licence_end_dt_disp" styleId="licence_end_dt_disp" onclick="calendar.show(this);" readonly="true" style="background:url(../../images/blue/icon_r.gif) no-repeat right 50%" />
+							<font color="red">*</font>
+						</td>
+					</tr>
+					<tr>
+						<td>国税登记证号： </td>
+						<td>
+						 	<html:text name="clientInfo" property="nation_affair_no" styleId="nation_affair_no"/>
+						</td>
+						<td>地税登记证号： </td>
+						<td>
+						 	<html:text name="clientInfo" property="local_affair_no" styleId="local_affair_no"/>
+						</td>
+					</tr>
+					<tr>
 						<td>对公客户行业：</td>
 						<td>
 							<html:select name="clientInfo" property="industry">
@@ -480,6 +506,10 @@ function validateCheckBox(err){
 					<tr>
 					  <td>法定代表人姓名：</td>
 					  <td><html:text name="clientInfo" property="legal_obj" styleId="legal_obj"/><font color="red">*</font></td>
+					  <td>客戶地址：</td>
+				      <td>
+						<html:text name="clientInfo" property="addr1" />
+					  </td>
 					</tr>
 					<tr>
 					  <td>法定代表人身份证件类型：</td>
@@ -498,11 +528,11 @@ function validateCheckBox(err){
 						<td><html:text name="clientInfo" property="legal_card_no_end_dt_disp" styleId="legal_card_no_end_dt_disp" onclick="calendar.show(this);" readonly="true" style="background:url(../../images/blue/icon_r.gif) no-repeat right 50%"/><font color="red">*</font></td>
 					</tr>
 					<tr>
-					  <td>实际控股股东：</td>
+					  <td>控股股东或实际控制人：</td>
 					  <td><html:text name="clientInfo" property="stock_holder" styleId="stock_holder"/><font color="red">*</font></td>
 					</tr>
 					<tr>
-						<td>实际控股人身份证件种类：</td>
+						<td>控股股东或实际控制人身份证件种类：</td>
 					  <td colspan=3>
 					  	<html:select name="clientInfo" property="stock_holder_card_type" styleId="stock_holder_card_type" >
 								<html:options collection="bitpMap" property="label" labelProperty="value" />
@@ -510,9 +540,9 @@ function validateCheckBox(err){
 					  </td>
 					</tr>
 					<tr>
-						<td>实际控股人身份证件号码：</td>
+						<td>控股股东或实际控制人身份证件号码：</td>
 						<td><html:text name="clientInfo" property="stock_holder_card_no" styleId="stock_holder_card_no"/><font color="red">*</font></td>
-						<td>实际控股人证件到期日</td>
+						<td>控股股东或实际控制人证件到期日</td>
 						<td><html:text name="clientInfo" property="stock_holder_card_no_end_dt_disp" styleId="stock_holder_card_no_end_dt_disp" onclick="calendar.show(this);" readonly="true" style="background:url(../../images/blue/icon_r.gif) no-repeat right 50%"/><font color="red">*</font></td>
 					</tr>
 	                  <tr>

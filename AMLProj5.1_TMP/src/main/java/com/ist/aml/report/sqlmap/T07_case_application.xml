@@ -516,21 +516,21 @@
 		resultClass="com.ist.aml.report.dto.T07_case_application">
 		SELECT T.CURR_POST,B.Organkey AS
 		Curr_Org,T.LAST_UPD_USER,T.APPLICATION_ADVICE AS
-		REASON,T.CURR_OPER_ID,T.CREATE_DT
+		REASON,T.CURR_OPER_ID,T.CREATE_DT,C.OPER_DESC
 		FROM
 		<isNotEmpty prepend="" property="casesearchtime">
 			<isEqual property="casesearchtime" compareValue="0">
-				T07_APP_MOVEFATE T,T00_user B
-				WHERE T.Last_Upd_User=B.Username
+				T07_APP_MOVEFATE T,T00_user B,T07_n_move C
+				WHERE T.Last_Upd_User=B.Username AND T.CURR_OPER_ID = C.OPER_ID
 	  	</isEqual>
 			<isEqual property="casesearchtime" compareValue="1">
-				T07_APP_MOVEFATE_UH T,T00_user B
-				WHERE T.Last_Upd_User=B.Username
+				T07_APP_MOVEFATE_UH T,T00_user B,T07_n_move C
+				WHERE T.Last_Upd_User=B.Username AND T.CURR_OPER_ID = C.OPER_ID
 	  	</isEqual>
 		</isNotEmpty>
 		<isEmpty prepend="" property="casesearchtime">
-			T07_APP_MOVEFATE T,T00_user B
-			WHERE T.Last_Upd_User=B.Username
+			T07_APP_MOVEFATE T,T00_user B,T07_n_move C
+			WHERE T.Last_Upd_User=B.Username AND T.CURR_OPER_ID = C.OPER_ID
 	</isEmpty>
 
 		<isNotEmpty prepend="AND" property="application_num">

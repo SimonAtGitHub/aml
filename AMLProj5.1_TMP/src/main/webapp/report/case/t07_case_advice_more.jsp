@@ -76,6 +76,12 @@ function _Open(url){
 								操作员
 							</th>
 							<th>
+								完成的操作
+							</th>
+							<th>
+								操作时间
+							</th>
+							<th>
 							    <%=com.ist.util.Constans.CASE_NAME%>意见
 							</th>
 						</tr>
@@ -89,6 +95,12 @@ function _Open(url){
 								</td>
 								<td>
 									<bean:write name="advi" property="last_upd_user" scope="page" />
+								</td>
+								<td>
+									<bean:write name="advi" property="oper_desc" scope="page" />
+								</td>
+								<td>
+									<bean:write name="advi" property="create_dt_disp" scope="page" />
 								</td>
 								<td style="white-space:normal;"> 
 								
