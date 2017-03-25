@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T31_risk_level"> 
+  <statement id="getT31_risk_levelList" parameterClass="com.ist.aml.newrisk.dto.T31_risk_level" resultClass="com.ist.aml.newrisk.dto.T31_risk_level"> 
+  select create_dt,create_org,create_user,flag,leveldes,levelkey,levelmax,levelmin,levelname,maxisclosed,minisclosed,modify_dt,modify_user from t31_risk_level 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="create_dt"> 
+    create_dt = #create_dt# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT31_risk_levelListCount" parameterClass="com.ist.aml.newrisk.dto.T31_risk_level" resultClass="int"> 
+  select count(*) from t31_risk_level 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="create_dt"> 
+    create_dt = #create_dt# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT31_risk_level" parameterClass="com.ist.aml.newrisk.dto.T31_risk_level" resultClass="int"> 
+  insert into T31_risk_level(
+  create_dt,create_org,create_user,flag,leveldes,levelkey,levelmax,levelmin,levelname,maxisclosed,minisclosed,modify_dt,modify_user
+  ) values(
+  #create_dt#,#create_org#,#create_user#,#flag#,#leveldes#,#levelkey#,#levelmax#,#levelmin#,#levelname#,#maxisclosed#,#minisclosed#,#modify_dt#,#modify_user#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT31_risk_level" parameterClass="com.ist.aml.newrisk.dto.T31_risk_level" resultClass="int"> 
+  update T31_risk_level set 
+  create_dt=#create_dt#,create_org=#create_org#,create_user=#create_user#,flag=#flag#,leveldes=#leveldes#,levelkey=#levelkey#,levelmax=#levelmax#,levelmin=#levelmin#,levelname=#levelname#,maxisclosed=#maxisclosed#,minisclosed=#minisclosed#,modify_dt=#modify_dt#,modify_user=#modify_user#
+  where create_dt=#create_dt# 
+  </statement> 
+ 
+  <statement id="deleteT31_risk_level" parameterClass="java.lang.String" resultClass="int">
+  delete from T31_risk_level where LEVELKEY=#value# 
+  </statement> 
+ 
+  <statement id="getT31_risk_levelDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.newrisk.dto.T31_risk_level"> 
+  select * from T31_risk_level where create_dt=#value# 
+  </statement> 
+ 
+ <statement id="t31_risk_levelList" parameterClass="java.lang.String" resultClass="com.ist.aml.newrisk.dto.T31_risk_level"> 
+  select levelkey,levelname,minisclosed,maxisclosed,levelmin as levelmin_d,levelmax  as levelmax_d from T31_risk_level WHERE flag='1' 
+  </statement>
+</sqlMap> 
+

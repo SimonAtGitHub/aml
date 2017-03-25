@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+	<!-- modified by chenhao date:2010-05 start-->
+<sqlMap namespace="T37_risk_attach">
+	<statement id="getT37_risk_attachList"
+		parameterClass="com.ist.aml.newrisk.dto.T37_risk_attach"
+		resultClass="com.ist.aml.newrisk.dto.T37_risk_attach">
+		SELECT
+		RESULEKEY,ATTACHKEY,ATTACH_NAME,ATTACH_REALNAME,LOAD_DATE,LOAD_USER
+		FROM T37_RISK_ATTACH
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="resulekey">
+				RESULEKEY = #resulekey#
+			</isNotEmpty>
+			<!-- 
+			<isNotEmpty prepend="AND" property="alertkey">
+				ALERTKEY = #alertkey#
+			</isNotEmpty>
+			 -->
+		</dynamic>
+	</statement>
+
+	<statement id="getT37_risk_attachListCount"
+		parameterClass="com.ist.aml.newrisk.dto.T37_risk_attach"
+		resultClass="int">
+		SELECT COUNT(*) FROM T37_RISK_ATTACH
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="resulekey">
+				RESULEKEY = #resulekey#
+			</isNotEmpty>
+			<!-- 
+			<isNotEmpty prepend="AND" property="alertkey">
+				ALERTKEY = #alertkey#
+			</isNotEmpty>
+			 -->
+		</dynamic>
+	</statement>
+
+	<statement id="insertT37_risk_attach"
+		parameterClass="com.ist.aml.newrisk.dto.T37_risk_attach"
+		resultClass="int">
+		<!-- APPLICATION_NUM,ALERTKEY,ATTACHKEY,ATTACH_NAME,ATTACH_REALNAME,LOAD_DATE,LOAD_USER -->
+		INSERT INTO T37_RISK_ATTACH(
+		RESULEKEY,ATTACHKEY,ATTACH_NAME,ATTACH_REALNAME,LOAD_DATE,LOAD_USER
+		) VALUES(
+		#resulekey#,#attachkey#,#attach_name#,#attach_realname#,#load_date#,#load_user#
+		)
+	</statement>
+
+	
+	<statement id="deleteT37_risk_attach"
+		parameterClass="java.lang.String" resultClass="int">
+		DELETE FROM T37_RISK_ATTACH WHERE ATTACHKEY=#value#
+	</statement>
+
+	<statement id="getT37_risk_attachDisp"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.newrisk.dto.T37_risk_attach">
+		SELECT * FROM T37_RISK_ATTACH WHERE RESULEKEY=#value#
+	</statement>
+	<statement id="getT37_risk_attachDispByAttachkey"
+		parameterClass="java.lang.String"
+		resultClass="com.ist.aml.newrisk.dto.T37_risk_attach">
+		SELECT * FROM T37_RISK_ATTACH WHERE ATTACHKEY=#value#
+	</statement>
+	<!-- end -->
+
+</sqlMap>
+

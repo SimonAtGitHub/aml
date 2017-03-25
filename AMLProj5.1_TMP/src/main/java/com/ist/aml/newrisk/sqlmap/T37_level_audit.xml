@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T37_level_audit"> 
+  <statement id="getT37_level_auditList" parameterClass="com.ist.aml.newrisk.dto.T37_level_audit" resultClass="com.ist.aml.newrisk.dto.T37_level_audit"> 
+  select adjust_reason,audit_no,last_upd_dt,last_upd_user,level_after_adjust,level_before_adjust,party_id,post_id,res_post_id,rsltkey,statistic_dt from t37_level_audit 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="adjust_reason"> 
+    adjust_reason = #adjust_reason# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="getT37_level_auditListCount" parameterClass="com.ist.aml.newrisk.dto.T37_level_audit" resultClass="int"> 
+  select count(*) from t37_level_audit 
+  <dynamic prepend="where"> 
+    <isNotEmpty prepend="and" property="adjust_reason"> 
+    adjust_reason = #adjust_reason# 
+    </isNotEmpty> 
+  </dynamic> 
+  </statement> 
+ 
+  <statement id="insertT37_level_audit" parameterClass="com.ist.aml.newrisk.dto.T37_level_audit" resultClass="int"> 
+  insert into T37_level_audit(
+  adjust_reason,audit_no,last_upd_dt,last_upd_user,level_after_adjust,level_before_adjust,party_id,post_id,res_post_id,rsltkey,statistic_dt
+  ) values(
+  #adjust_reason#,#audit_no#,#last_upd_dt#,#last_upd_user#,#level_after_adjust#,#level_before_adjust#,#party_id#,#post_id#,#res_post_id#,#rsltkey#,#statistic_dt#
+  ) 
+  </statement> 
+ 
+  <statement id="modifyT37_level_audit" parameterClass="com.ist.aml.newrisk.dto.T37_level_audit" resultClass="int"> 
+  update T37_level_audit set 
+  adjust_reason=#adjust_reason#,audit_no=#audit_no#,last_upd_dt=#last_upd_dt#,last_upd_user=#last_upd_user#,level_after_adjust=#level_after_adjust#,level_before_adjust=#level_before_adjust#,party_id=#party_id#,post_id=#post_id#,res_post_id=#res_post_id#,rsltkey=#rsltkey#,statistic_dt=#statistic_dt#
+  where adjust_reason=#adjust_reason# 
+  </statement> 
+ 
+  <statement id="deleteT37_level_audit" parameterClass="java.lang.String" resultClass="int">
+  delete from T37_level_audit where adjust_reason=#value# 
+  </statement> 
+ 
+  <statement id="getT37_level_auditDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.newrisk.dto.T37_level_audit"> 
+  select * from T37_level_audit where adjust_reason=#value# 
+  </statement> 
+ 
+</sqlMap> 
+

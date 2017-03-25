@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T10_checkparty"> 
+  <!--新开客户识别查询 -->
+  <statement id="getT10_checkparty_newList" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty"
+		resultClass="com.ist.aml.cust_identify.dto.T10_checkparty">
+		SELECT PARTY_ID,PARTY_CHN_NAME,PARTY_CLASS_CD,ORGANKEY,CARD_NO,CARD_TYPE FROM T10_CHECKPARTY_NEW
+	  <dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="party_id">
+			PARTY_ID = #party_id#
+	          </isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			ORGANKEY = #organkey#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="party_class_cd">
+			PARTY_CLASS_CD = #party_class_cd#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organStr">
+				ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+		AND CHECK_STATUS='0'
+	 </dynamic>
+	</statement>
+	<statement id="getT10_checkparty_newCount" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty"
+		resultClass="int">
+		SELECT COUNT(*) FROM T10_CHECKPARTY_NEW
+	  <dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="party_id">
+			PARTY_ID = #party_id#
+	          </isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			ORGANKEY = #organkey#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="party_class_cd">
+			PARTY_CLASS_CD = #party_class_cd#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organStr">
+				ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+		AND CHECK_STATUS='0'
+	 </dynamic>
+	</statement>
+	<!--重新客户识别查询 -->
+  <statement id="getT10_checkparty_reList" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty"
+		resultClass="com.ist.aml.cust_identify.dto.T10_checkparty">
+		SELECT PARTY_ID,PARTY_CHN_NAME,PARTY_CLASS_CD,CARD_NO,CARD_TYPE,ORGANKEY,RECHECK_TYPE FROM T10_CHECKPARTY_RE
+	  <dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="party_id">
+			PARTY_ID = #party_id#
+	          </isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			ORGANKEY = #organkey#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="party_class_cd">
+			PARTY_CLASS_CD = #party_class_cd#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="recheck_type">
+			RECHECK_TYPE = #recheck_type#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organStr">
+				ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+		AND CHECK_STATUS='0'
+	 </dynamic>
+	</statement>
+	<statement id="getT10_checkparty_reCount" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty"
+		resultClass="int">
+		SELECT COUNT(*) FROM T10_CHECKPARTY_RE
+	  <dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="party_id">
+			PARTY_ID = #party_id#
+	          </isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			ORGANKEY = #organkey#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="party_class_cd">
+			PARTY_CLASS_CD = #party_class_cd#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="recheck_type">
+			RECHECK_TYPE = #recheck_type#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organStr">
+				ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+		AND CHECK_STATUS='0'
+	 </dynamic>
+	</statement>
+	<statement id="getT10_checkparty_alreadyList" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty"
+		resultClass="com.ist.aml.cust_identify.dto.T10_checkparty">
+		SELECT PARTY_ID,
+		       PARTY_CHN_NAME,
+		       PARTY_CLASS_CD,
+		       CARD_NO,
+		       CARD_TYPE,
+		       CHECK_RESULT,
+		       CHECK_REASON,
+		       ORGANKEY
+		  FROM T10_CHECKPARTY_RELT A
+		  WHERE 1 > 0
+		<isNotEmpty prepend="AND" property="party_id">
+			A.PARTY_ID = #party_id#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="party_class_cd">
+			A.PARTY_CLASS_CD = #party_class_cd#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organkey">
+			ORGANKEY = #organkey#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="check_type">
+			A.CHECK_TYPE = #check_type#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organStr">
+				A.ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+	</statement>
+	<statement id="getT10_checkparty_alreadyCount" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty"
+		resultClass="int">
+		
+	SELECT COUNT(*)
+		FROM T10_CHECKPARTY_RELT A
+		WHERE 1 > 0
+	   <isNotEmpty prepend="AND" property="party_id">
+			A.PARTY_ID = #party_id#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="party_class_cd">
+			A.PARTY_CLASS_CD = #party_class_cd#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organkey">
+			ORGANKEY = #organkey#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="check_type">
+			A.CHECK_TYPE = #check_type#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organStr">
+				A.ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+	</statement>
+ <!--已识别客户查询 -->
+  <statement id="getT10_checkparty_uhList" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty"
+		resultClass="com.ist.aml.cust_identify.dto.T10_checkparty">
+		<dynamic>
+			<isEmpty property="check_type">
+			  SELECT * FROM ((SELECT tcu.PARTY_ID,tcu.PARTY_CLASS_CD,tcu.PARTY_CHN_NAME,tcu.ORGANKEY,tcu.CHECK_DT,tcu.CHECK_TYPE,tcu.VALID_DT,tcu.CHECK_RESULT,tcu.CHECKER FROM  T10_CHECKPARTY_UH tcu )            
+              union (SELECT tcru.PARTY_ID,tcru.PARTY_CLASS_CD,tcru.PARTY_CHN_NAME,tcru.ORGANKEY,tcru.CHECK_DT,'5' AS CHECK_TYPE,tcru.VALID_DT,tcru.CHECK_RESULT,tcru.CHECKER FROM T10_CHECKPARTY_RE_UH tcru)) WHERE 1>0
+			</isEmpty>
+			<isNotEmpty property="check_type">
+			  SELECT PARTY_ID,PARTY_CLASS_CD,PARTY_CHN_NAME,ORGANKEY,CHECK_DT,VALID_DT,CHECK_RESULT,CHECKER,
+				<isEqual property="check_type" compareValue="5">
+				   '5' AS CHECK_TYPE FROM T10_CHECKPARTY_RE_UH WHERE 1=1
+				</isEqual>
+				<isNotEqual property="check_type" compareValue="5">
+				   CHECK_TYPE FROM T10_CHECKPARTY_UH  WHERE 1=1
+				    <isNotEmpty prepend="AND" property="check_type">
+					CHECK_TYPE = #check_type#
+			        </isNotEmpty>
+				</isNotEqual>
+			</isNotEmpty>
+		</dynamic>
+		  <dynamic>
+				<isNotEmpty prepend="AND" property="party_id">
+					PARTY_ID = #party_id#
+			          </isNotEmpty>
+				<isNotEmpty prepend="AND" property="organkey">
+					ORGANKEY = #organkey#
+			    </isNotEmpty>
+			    <isNotEmpty prepend="AND" property="party_class_cd">
+					PARTY_CLASS_CD = #party_class_cd#
+			    </isNotEmpty>
+			    <isNotEmpty prepend="AND" property="organStr">
+						ORGANKEY IN ($organStr$)
+				</isNotEmpty>
+			    
+				<isNotEmpty prepend="AND" property="check_dt_start_disp">
+			     <![CDATA[CHECK_DT >= #check_dt_start#]]> 
+			    </isNotEmpty>
+			    <isNotEmpty prepend="AND" property="check_dt_end_disp">
+			     <![CDATA[CHECK_DT <= #check_dt_end#]]> 
+			    </isNotEmpty>
+			    <isNotEmpty prepend="AND" property="valid_dt_start_disp">
+			     <![CDATA[VALID_DT >= #valid_dt_start#]]> 
+			    </isNotEmpty>
+			    <isNotEmpty prepend="AND" property="valid_dt_end_disp">
+			     <![CDATA[VALID_DT <= #valid_dt_end#]]> 
+			    </isNotEmpty>
+		 </dynamic>
+	</statement>
+	<statement id="getT10_checkparty_uhCount" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty"
+		resultClass="int">
+		<dynamic>
+		<isEmpty property="check_type">
+		   SELECT COUNT(*) FROM ((SELECT tcu.PARTY_ID,tcu.PARTY_CLASS_CD,tcu.PARTY_CHN_NAME,tcu.ORGANKEY,tcu.CHECK_DT,tcu.VALID_DT,tcu.CHECK_RESULT,tcu.CHECKER FROM  T10_CHECKPARTY_UH tcu )            
+              union (SELECT tcru.PARTY_ID,tcru.PARTY_CLASS_CD,tcru.PARTY_CHN_NAME,tcru.ORGANKEY,tcru.CHECK_DT,tcru.VALID_DT,tcru.CHECK_RESULT,tcru.CHECKER FROM T10_CHECKPARTY_RE_UH tcru)) WHERE 1>0
+		</isEmpty>
+		<isNotEmpty property="check_type">
+		   SELECT COUNT(*) FROM
+			<isEqual property="check_type" compareValue="5">
+			   T10_CHECKPARTY_RE_UH WHERE 1=1
+			</isEqual>
+			<isNotEqual property="check_type" compareValue="5">
+			   T10_CHECKPARTY_UH WHERE 1=1
+			   <isNotEmpty prepend="AND" property="check_type">
+				CHECK_TYPE = #check_type#
+		      </isNotEmpty>
+			</isNotEqual>
+		</isNotEmpty>
+		</dynamic>
+	  <dynamic>
+		<isNotEmpty prepend="AND" property="party_id">
+			PARTY_ID = #party_id#
+	          </isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			ORGANKEY = #organkey#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="party_class_cd">
+			PARTY_CLASS_CD = #party_class_cd#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organStr">
+				ORGANKEY IN ($organStr$)
+		   </isNotEmpty>
+		<isNotEmpty prepend="AND" property="check_dt_start_disp">
+	     <![CDATA[CHECK_DT >= #check_dt_start#]]> 
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="check_dt_end_disp">
+	     <![CDATA[CHECK_DT <= #check_dt_end#]]> 
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="valid_dt_start_disp">
+	     <![CDATA[VALID_DT >= #valid_dt_start#]]> 
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="valid_dt_end_disp">
+	     <![CDATA[VALID_DT <= #valid_dt_end#]]> 
+	    </isNotEmpty>
+	 </dynamic>
+	</statement>
+	
+	<statement id="deleteT10_checkparty_new" parameterClass="java.lang.String" resultClass="int">
+		DELETE FROM T10_CHECKPARTY_NEW WHERE PARTY_ID = #value#
+	</statement>
+	
+	<statement id="modifyT10_checkparty_uh" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty_fun" resultClass="int">
+		UPDATE T10_CHECKPARTY_UH SET CHECK_NO=#host_cust_id#,PARTY_CLASS_CD=#party_class_cd#,PARTY_CHN_NAME=#party_chn_name#,
+		CARD_TYPE=#card_type#,CARD_NO=#card_no#,ORGANKEY=#organkey#,PARTY_STATUS_CD=#party_status_cd#,AML1_TYPE_CD=#aml1_type_cd#,CHECK_DT=#check_dt#,
+		VALID_DT=#valid_dt#,CHECK_RESULT=#check_result#,CHECK_EXPLAIN=#check_explain#,CHECKER=#checker#,CHECKER_ORG=#checker_org#
+		WHERE CHECK_TYPE = #check_type# AND PARTY_ID = #party_id#
+	</statement>
+	
+	<statement id="insertT10_checkparty_uh" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty_fun" resultClass="int">
+		INSERT INTO T10_CHECKPARTY_UH
+		(CHECK_TYPE, PARTY_ID, CHECK_NO, HOST_CUST_ID, PARTY_CLASS_CD, PARTY_CHN_NAME, CARD_TYPE, CARD_NO, ORGANKEY, 
+		 PARTY_STATUS_CD, AML1_TYPE_CD, CHECK_DT, VALID_DT, CHECK_RESULT, CHECK_EXPLAIN, CHECKER, CHECKER_ORG)
+		VALUES 
+		(#check_type#,#party_id#,#check_no#,#host_cust_id#,#party_class_cd#,#party_chn_name#,#card_type#,#card_no#,#organkey#,
+		 #party_status_cd#,#aml1_type_cd#,#check_dt#,#valid_dt#,#check_result#,#check_explain#,#checker#,#checker_org#)
+		
+	</statement>
+	
+	<statement id="getT10_checkparty_reDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.cust_identify.dto.T10_checkparty">
+		SELECT PARTY_ID,PARTY_CLASS_CD,PARTY_CHN_NAME,CHECK_REASON FROM T10_CHECKPARTY_RE WHERE PARTY_ID = #value# AND CHECK_STATUS='0' 
+	</statement>
+	
+	<statement id="deleteT10_checkparty_re" parameterClass="java.lang.String" resultClass="int">
+		DELETE FROM T10_CHECKPARTY_RE WHERE PARTY_ID = #value#
+	</statement>
+	 <statement id="deleteT10_checkparty_re_byList" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty" resultClass="int"> 
+	  delete from T10_CHECKPARTY_RE WHERE CHECK_STATUS='0'
+		<isNotNull property="list">
+		    <iterate prepend="AND" property="list" open="("
+				close=")" conjunction="or">
+				PARTY_ID=#list[]#
+			</iterate>
+		</isNotNull>
+  </statement>
+   <statement id="deleteT10_checkparty_reason_byList" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty" resultClass="int"> 
+	  delete from T10_CHECK_PARTY_REASON
+	    <dynamic prepend="WHERE">
+			<isNotNull property="list">
+			    <iterate prepend="AND" property="list" open="("
+						close=")" conjunction="or">
+						PARTY_ID=#list[]#
+					</iterate>
+			</isNotNull>
+	    </dynamic> 
+  </statement>
+	<statement id="modifyT10_checkparty_re_uh" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty_fun" resultClass="int">
+		UPDATE T10_CHECKPARTY_RE_UH SET CHECK_NO=#check_no#, HOST_CUST_ID=#host_cust_id#, PARTY_CLASS_CD=#party_class_cd#, 
+		PARTY_CHN_NAME=#party_chn_name#,CARD_TYPE=#card_type#, CARD_NO=#card_no#, ORGANKEY=#organkey#, PARTY_STATUS_CD=#party_status_cd#, 
+		AML1_TYPE_CD=#aml1_type_cd#, IS_UPDATECARD=#is_updatecard#, CHECK_DT=#check_dt#, VALID_DT=#valid_dt#, CHECK_RESULT=#check_result#, 
+		CHECK_EXPLAIN=#check_explain#, CHECKER=#checker#, CHECKER_ORG=#checker_org#
+		WHERE PARTY_ID = #party_id# AND RECHECK_TYPE=#check_type#
+	</statement>
+	
+	<statement id="insertT10_checkparty_re_uh" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty_fun" resultClass="int">
+		INSERT INTO T10_CHECKPARTY_RE_UH
+		(PARTY_ID, RECHECK_TYPE, CHECK_NO, HOST_CUST_ID, PARTY_CLASS_CD, PARTY_CHN_NAME, CARD_TYPE, CARD_NO, ORGANKEY, PARTY_STATUS_CD, 
+		AML1_TYPE_CD, IS_UPDATECARD, CHECK_DT, VALID_DT, CHECK_RESULT, CHECK_EXPLAIN, CHECKER, CHECKER_ORG)
+		VALUES 
+		(#party_id#,#check_type#,#check_no#,#host_cust_id#,#party_class_cd#,#party_chn_name#,#card_type#,#card_no#,#organkey#,#party_status_cd#,
+		#aml1_type_cd#,#is_updatecard#,#check_dt#,#valid_dt#,#check_result#,#check_explain#,#checker#,#checker_org#)
+		
+	</statement>
+	<statement id="insertT10_checkparty_re" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty" resultClass="int">
+		INSERT INTO T10_CHECKPARTY_RE
+		(PARTY_ID, RECHECK_TYPE,HOST_CUST_ID, PARTY_CLASS_CD, PARTY_CHN_NAME, CARD_TYPE, CARD_NO, ORGANKEY, PARTY_STATUS_CD, 
+		AML1_TYPE_CD,CREATE_DT,CHECK_STATUS,CHECK_REASON)
+		VALUES 
+		(#party_id#,#recheck_type#,#host_cust_id#,#party_class_cd#,#party_chn_name#,#card_type#,#card_no#,#organkey#,#party_status_cd#,
+		#aml1_type_cd#,#create_dt#,#check_status#,#check_reason#)
+		
+	</statement>
+	
+    <statement id="insertT10_checkparty_re_fromcase" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty" resultClass="int">
+		INSERT INTO T10_CHECKPARTY_RE
+      		   (PARTY_ID, RECHECK_TYPE,HOST_CUST_ID, PARTY_CLASS_CD, PARTY_CHN_NAME, CARD_TYPE, CARD_NO, ORGANKEY, PARTY_STATUS_CD, 
+      		 	AML1_TYPE_CD,CREATE_DT,CHECK_STATUS,CHECK_REASON)
+		select PARTY_ID, #check_type#,HOST_CUST_ID, PARTY_CLASS_CD, PARTY_CHN_NAME, substr(CARD_TYPE,1,2) as CARD_TYPE, CARD_NO, ORGANKEY, PARTY_STATUS_CD, 
+     		    AML1_TYPE_CD,#create_dt:DATE#,#check_status#,#check_reason#
+  		  from t47_party t where t.party_id=#party_id#
+	</statement>
+	<statement id="getT10_checkparty_uhCount1" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty"
+		resultClass="int">
+		SELECT COUNT(*) FROM
+		<dynamic>
+		<isEqual property="check_type" compareValue="2">
+		   T10_CHECKPARTY_RE_UH WHERE 1=1
+		  
+		</isEqual>
+		<isNotEqual property="check_type" compareValue="2">
+		   <isEqual property="check_type" compareValue="5">
+		   T10_CHECKPARTY_RE_UH WHERE 1=1
+		   </isEqual>
+		   <isNotEqual property="check_type" compareValue="5">
+		     T10_CHECKPARTY_UH WHERE 1=1
+		     <isNotEmpty prepend="AND" property="check_type">
+			   CHECK_TYPE = #check_type#
+	         </isNotEmpty>
+		   </isNotEqual>
+
+		</isNotEqual>
+		</dynamic>
+	  <dynamic>
+		<isNotEmpty prepend="AND" property="party_id">
+			PARTY_ID = #party_id#
+	          </isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			ORGANKEY = #organkey#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="party_class_cd">
+			PARTY_CLASS_CD = #party_class_cd#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organStr">
+				ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="check_dt_start_disp">
+	     <![CDATA[CHECK_DT >= #check_dt_start#]]> 
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="check_dt_end_disp">
+	     <![CDATA[CHECK_DT <= #check_dt_end#]]> 
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="valid_dt_start_disp">
+	     <![CDATA[VALID_DT >= #valid_dt_start#]]> 
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="valid_dt_end_disp">
+	     <![CDATA[VALID_DT <= #valid_dt_end#]]> 
+	    </isNotEmpty>
+	    
+	 </dynamic>
+	</statement>
+	
+</sqlMap>

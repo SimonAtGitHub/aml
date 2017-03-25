@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T10_checkparty_fun">
+	<statement id="getT10_party_riskList"
+		parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty_fun"
+		resultClass="com.ist.aml.cust_identify.dto.T10_checkparty_fun">
+		SELECT PARTYRISK_NO, PARTY_ID,PARTY_CHN_NAME, RISK_TYPE, VALIDITE_DT AS risk_validite_dt, RISK_DES, RISK_DETAIL, 
+		CREATE_USER AS risk_create_user, CREATE_DT AS risk_create_dt,elementkey,element_score FROM T10_PARTY_RISK
+		<dynamic prepend="WHERE">
+		    <isNotEmpty prepend="AND" property="party_id">
+				party_id = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="risk_type">
+				risk_type = #risk_type#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="risk_create_org">
+			    CREATE_ORG IN ($risk_create_org$)
+	        </isNotEmpty>
+			<isNotEmpty prepend="AND" property="risk_validite_dt_start_disp">
+				<![CDATA[VALIDITE_DT >= #risk_validite_dt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="risk_validite_dt_end_disp">
+				<![CDATA[VALIDITE_DT <= #risk_validite_dt_end:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="risk_create_dt_start_disp">
+				<![CDATA[create_dt >= #risk_create_dt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="risk_create_dt_end_disp">
+				<![CDATA[create_dt <= #risk_create_dt_end:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT10_party_riskListCount"
+		parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty_fun"
+		resultClass="int">
+		select count(*) from T10_PARTY_RISK
+		<dynamic prepend="WHERE">
+		    <isNotEmpty prepend="AND" property="party_id">
+				party_id = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="risk_type">
+				risk_type = #risk_type#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="risk_create_org">
+			    CREATE_ORG IN ($risk_create_org$)
+	        </isNotEmpty>
+			<isNotEmpty prepend="AND" property="risk_validite_dt_start_disp">
+				<![CDATA[VALIDITE_DT >= #risk_validite_dt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="risk_validite_dt_end_disp">
+				<![CDATA[VALIDITE_DT <= #risk_validite_dt_end:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="risk_create_dt_start_disp">
+				<![CDATA[create_dt >= #risk_create_dt_start:DATE#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="risk_create_dt_end_disp">
+				<![CDATA[create_dt <= #risk_create_dt_end:DATE#]]>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="getT10_party_riskDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.aml.cust_identify.dto.T10_checkparty_fun">
+		SELECT PARTYRISK_NO, PARTY_ID,PARTY_CHN_NAME, RISK_TYPE, VALIDITE_DT AS risk_validite_dt, RISK_DES, RISK_DETAIL, 
+		CREATE_USER AS risk_create_user, CREATE_DT AS risk_create_dt ,ELEMENTKEY,ELEMENTNAME,ELEMENT_SCORE FROM T10_PARTY_RISK WHERE PARTYRISK_NO=#value#
+	</statement>
+	
+	<statement id="insertT10_party_risk" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty_fun"
+		resultClass="int">
+		INSERT INTO T10_PARTY_RISK (PARTYRISK_NO, PARTY_ID,PARTY_CHN_NAME, RISK_TYPE, VALIDITE_DT, RISK_DES, RISK_DETAIL, CREATE_USER, CREATE_DT, CREATE_ORG ,ELEMENTKEY,ELEMENTNAME, ELEMENT_SCORE)
+		VALUES
+		(#partyrisk_no#, #party_id#,#party_chn_name#, #risk_type#, #risk_validite_dt:DATE#, #risk_des#, #risk_detail#, #risk_create_user#, #risk_create_dt:DATE#,#risk_create_org#,#elementkey#,#elementname#,#element_score_d:DOUBLE#)
+  	</statement>
+  	
+  	<statement id="modifyT10_party_risk" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty_fun"
+		resultClass="int">
+		UPDATE T10_PARTY_RISK SET
+		RISK_TYPE=#risk_type#,ELEMENTKEY=#elementkey#,ELEMENTNAME=#elementname#,ELEMENT_SCORE=#element_score_d:DOUBLE#,RISK_DES=#risk_des#,
+		RISK_DETAIL=#risk_detail#,VALIDITE_DT=#risk_validite_dt:DATE#
+		WHERE PARTYRISK_NO=#partyrisk_no#
+  	</statement>
+  	
+	<statement id="deleteT10_party_risk" parameterClass="java.lang.String"
+		resultClass="int">
+		DELETE FROM T10_PARTY_RISK WHERE PARTYRISK_NO=#value#
+  	</statement>
+  	
+	<statement id="getT10_check_reasonList"
+		parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty_fun"
+		resultClass="com.ist.aml.cust_identify.dto.T10_checkparty_fun">
+		SELECT RISK_NO, RISK_NAME  FROM T10_CHECK_REASON ORDER BY RISK_NO
+	</statement>
+	
+	<!--调查结论查询-->
+	<statement id="getT10_party_reltList" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty_fun"
+		resultClass="com.ist.aml.cust_identify.dto.T10_checkparty_fun">
+		SELECT CHECK_NO,CHECKER_ORG,CHECKER,CHECK_RESULT,AUDITLEVEL,CHECK_METHOD,CHECK_DT,VALID_DT,CHECK_TYPE,PARTY_ID,PARTY_CLASS_CD FROM T10_CHECKPARTY_RELT 
+	    <dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="party_id">
+			PARTY_ID = #party_id#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="party_class_cd">
+			PARTY_CLASS_CD = #party_class_cd#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organStr">
+				CHECKER_ORG IN ($organStr$)
+		</isNotEmpty>
+	 </dynamic>
+	</statement> 
+	<statement id="getT10_party_reltCount" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty_fun"
+		resultClass="int">
+		SELECT count(*) FROM T10_CHECKPARTY_RELT
+	    <dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="party_id">
+			PARTY_ID = #party_id#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="party_class_cd">
+			PARTY_CLASS_CD = #party_class_cd#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organStr">
+				CHECKER_ORG IN ($organStr$)
+		</isNotEmpty>
+	 </dynamic>
+	</statement>
+	
+	<statement id="getT10_party_relt_viewList" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty_fun"
+		resultClass="com.ist.aml.cust_identify.dto.T10_checkparty_fun">
+		SELECT CHECK_NO,CHECKER_ORG,CHECKER,CHECK_RESULT,AUDITLEVEL,CHECK_METHOD,CHECK_DT,VALID_DT,CHECK_TYPE,PARTY_ID,PARTY_CLASS_CD,table_status FROM V10_CHECKPARTY_RELT 
+	    <dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="party_id">
+			PARTY_ID = #party_id#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="party_class_cd">
+			PARTY_CLASS_CD = #party_class_cd#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organStr">
+				CHECKER_ORG IN ($organStr$)
+		</isNotEmpty>
+	 </dynamic>
+	</statement> 
+	<statement id="getT10_party_relt_viewCount" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty_fun"
+		resultClass="int">
+		SELECT count(*) FROM V10_CHECKPARTY_RELT
+	    <dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="party_id">
+			PARTY_ID = #party_id#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="party_class_cd">
+			PARTY_CLASS_CD = #party_class_cd#
+	    </isNotEmpty>
+	    <isNotEmpty prepend="AND" property="organStr">
+				CHECKER_ORG IN ($organStr$)
+		</isNotEmpty>
+	 </dynamic>
+	</statement>
+	
+	<statement id="getT10_checkparty_reltDisp" parameterClass="java.lang.String"
+		resultClass="com.ist.aml.cust_identify.dto.T10_checkparty_fun">
+		SELECT PARTY_ID,CHECK_NO,PARTY_CLASS_CD,AML1_TYPE_CD,CHECK_DT,VALID_DT,CHECK_TYPE,RECHECK_TYPE,CHECK_METHOD,CREDIT_FLAG,LIAN_FLAG,ADDWMENU_FLAG as addw_flag,ADDBMENU_FLAG as addb_flag,AUDITLEVEL_FLAG,
+			   AUDITLEVEL,CHECK_RESULT,CHECK_EXPLAIN,LEADER_NUM,DAELI_FLAG as agent_flag,CHECKER,CHECKER_ORG FROM T10_CHECKPARTY_RELT WHERE CHECK_NO = #check_no#
+	   
+	</statement>
+	
+	<statement id="modifyT10_checkparty_relt" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty_fun"
+		resultClass="int">
+		UPDATE T10_CHECKPARTY_RELT SET CHECK_TYPE=#check_type#,CHECK_METHOD=#check_method#,CREDIT_FLAG=#credit_flag#,
+		LIAN_FLAG=#lian_flag#,DAELI_FLAG=#agent_flag#,ADDWMENU_FLAG=#addw_flag#,ADDBMENU_FLAG=#addb_flag#,AUDITLEVEL_FLAG=#auditlevel_flag#,
+		AUDITLEVEL=#auditlevel#,CHECK_RESULT=#check_result#,CHECK_EXPLAIN=#check_explain#,
+		LEADER_NUM=#leader_num#
+		WHERE CHECK_NO = #check_no# AND PARTY_ID = #party_id#
+	   
+	</statement>
+	<statement id="insertT10_checkparty_relt" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty_fun"
+		resultClass="int">
+		INSERT INTO T10_CHECKPARTY_RELT
+		(CHECK_NO, CHECK_TYPE, PARTY_ID, PARTY_CLASS_CD, AML1_TYPE_CD, RECHECK_TYPE, CHECK_DT, VALID_DT, CHECK_METHOD, CREDIT_FLAG, LIAN_FLAG, LEADER_NUM, DAELI_FLAG, ADDWMENU_FLAG, ADDBMENU_FLAG, AUDITLEVEL_FLAG, AUDITLEVEL, CHECK_RESULT, CHECK_EXPLAIN, CHECKER, CHECKER_ORG)
+		VALUES
+		(#check_no#, #check_type#, #party_id#, #party_class_cd#, #aml1_type_cd#, #recheck_type#, #check_dt#, #valid_dt#, #check_method#, #credit_flag#, #lian_flag#, #leader_num#, #agent_flag#, #addw_flag#, #addb_flag#, #auditlevel_flag#, #auditlevel#, #check_result#, #check_explain#, #checker#, #checker_org#)
+
+	   
+	</statement>
+	
+	<statement id="insertT10_check_party_reason" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty_fun"
+		resultClass="int">
+		INSERT INTO T10_CHECK_PARTY_REASON 
+		(CHECK_NO, CHECK_REASION_NO, CHECK_TYPE, PARTY_ID, RISK_TYPE, PARTY_CLASS_CD, AML1_TYPE_CD, IS_RELALEDER, CREATE_USER, CREATE_DT, CREATE_ORG)
+		VALUES 
+		(#check_no#, #check_reason_no#, #check_type#, #party_id#, #risk_type#, #party_class_cd#, #aml1_type_cd#, #is_relaleder#, 
+		#checker#,#check_dt#,#checker_org#)
+	   
+	</statement>
+	
+	<statement id="updateT08_party_result" parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty_fun"
+		resultClass="int">
+		UPDATE T08_PARTY_RESULT SET EMENDATIONLEVEL=#auditlevel#,CURR_POST=#post_id#,MODIFIER=#checker#,MODIFYDATE=#check_dt#,MODIFY_CD=#modify_cd#
+		
+		WHERE PARTY_ID = #party_id#
+	   
+	</statement>
+</sqlMap>

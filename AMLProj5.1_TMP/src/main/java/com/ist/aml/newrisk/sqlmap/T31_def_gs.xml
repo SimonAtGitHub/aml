@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T31_def_gs"> 
+  <statement id="getT31_def_gsList" parameterClass="com.ist.aml.newrisk.dto.T31_def_gs" resultClass="com.ist.aml.newrisk.dto.T31_def_gs"> 
+  	select calseq,create_dt,create_org,create_user,des,flag,granularity,gskey,gsname,gsrm,levelkey,modify_dt,modify_user,templatekey,party_class_cd
+  	from t31_def_gs
+  	<dynamic prepend="WHERE">
+  			<isNotEmpty prepend="AND" property="templatekey">
+				TEMPLATEKEY = #templatekey#
+			</isNotEmpty>
+  			<isNotEmpty prepend="AND" property="gsname">
+				GSNAME LIKE '%'||#gsname#||'%'
+			</isNotEmpty>
+		<!-- 	<isNotEmpty prepend="AND" property="calseq">
+				 calseq = #calseq# 
+			</isNotEmpty> -->
+			<isNotEmpty prepend="AND" property="levelkey">
+				 LEVELKEY = #levelkey# 
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt_start">
+				<![CDATA[CREATE_DT >= #create_dt_start# ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt_end">
+				<![CDATA[CREATE_DT <= #create_dt_end# ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="flag">
+				FLAG = #flag#
+			</isNotEmpty>
+	</dynamic>
+  </statement> 
+ 
+  <statement id="getT31_def_gsListCount" parameterClass="com.ist.aml.newrisk.dto.T31_def_gs" resultClass="int"> 
+  	select count(*) from t31_def_gs 
+  	<dynamic prepend="WHERE">
+  			<isNotEmpty prepend="AND" property="templatekey">
+				TEMPLATEKEY = #templatekey#
+			</isNotEmpty>
+  			<isNotEmpty prepend="AND" property="gsname">
+				GSNAME LIKE '%'||#gsname#||'%'
+			</isNotEmpty>
+		<!-- 	<isNotEmpty prepend="AND" property="calseq">
+				 calseq = #calseq# 
+			</isNotEmpty> -->
+			<isNotEmpty prepend="AND" property="levelkey">
+				 LEVELKEY = #levelkey# 
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt_start">
+				<![CDATA[CREATE_DT >= #create_dt_start# ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt_end">
+				<![CDATA[CREATE_DT <= #create_dt_end# ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="flag">
+				FLAG = #flag#
+			</isNotEmpty>
+	</dynamic>
+  </statement> 
+ 
+  <statement id="insertT31_def_gs" parameterClass="com.ist.aml.newrisk.dto.T31_def_gs" resultClass="int"> 
+  	INSERT INTO T31_def_gs( GSKEY, TEMPLATEKEY, GSNAME, LEVELKEY, DES, GRANULARITY, GSRM, CALSEQ, FLAG, MODIFY_USER, MODIFY_DT, CREATE_DT, CREATE_USER, CREATE_ORG,party_class_cd) 
+  	values
+  	(#gskey#,#templatekey#,#gsname#,#levelkey#,#des#,#granularity#,#gsrm#,#calseq#,#flag#,#modify_user#,#modify_dt#,#create_dt#,#create_user#,#create_org#,#party_class_cd#) 
+  </statement> 
+ 
+ <statement id="insertT31_def_gs_indic" parameterClass="com.ist.aml.newrisk.dto.T31_def_gs" resultClass="int"> 
+  	INSERT INTO T31_def_gs_indic(GSKEY, INDICKEY, VALNUM, IS_SUM, VALTYPE, VALPARAMIN, VALPARAMAX ) 
+  	values(#gskey#, #indickey#, #valnum#, #is_sum#, #valtype#, #valparamin#, #valparamax#)
+  </statement>
+  
+  <statement id="modifyT31_def_gs" parameterClass="com.ist.aml.newrisk.dto.T31_def_gs" resultClass="int"> 
+  	update T31_DEF_GS set GSNAME=#gsname#, DES=#des#, LEVELKEY=#levelkey#, GSRM=#gsrm#, CALSEQ=#calseq#,FLAG=#flag#,party_class_cd=#party_class_cd#,
+  	modify_dt=#modify_dt#,modify_user=#modify_user#
+  	where GSKEY=#gskey# 
+  </statement> 
+ 
+  <statement id="deleteT31_def_gs" parameterClass="java.lang.String" resultClass="int">
+  	delete from T31_DEF_GS where GSKEY=#value# 
+  </statement> 
+ 
+  <statement id="getT31_def_gsDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.newrisk.dto.T31_def_gs"> 
+  	select * from T31_DEF_GS where GSKEY=#value# 
+  </statement> 
+  
+  <statement id="getT31_def_gs_indicDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.newrisk.dto.T31_def_gs"> 
+  	SELECT GSKEY, INDICKEY, VALNUM, IS_SUM, VALTYPE, VALPARAMIN AS valparamin, VALPARAMIN AS valparamin1, VALPARAMAX FROM T31_DEF_GS_INDIC
+ 	where GSKEY=#value# 
+  </statement>
+  
+  <statement id="deleteT31_def_gs_indic" parameterClass="java.lang.String" resultClass="com.ist.aml.newrisk.dto.T31_def_gs"> 
+  	DELETE from T31_DEF_GS_INDIC where GSKEY=#value# 
+  </statement>
+  
+   <statement id="copyT31_def_gs" parameterClass="com.ist.aml.newrisk.dto.T31_def_temp" resultClass="int"> 
+   	INSERT INTO T31_DEF_GS 
+	SELECT '$templatekey$'||GSKEY AS GSKEY, '$templatekey$' AS TEMPLATEKEY, A.GSNAME, A.LEVELKEY, A.DES, A.GRANULARITY, A.GSRM, A.CALSEQ, A.FLAG,
+	'$modify_user$' AS MODIFY_USER, '$modify_dt$' AS MODIFY_DT, '$create_dt$' AS CREATE_DT, '$create_user$' AS CREATE_USER, '$create_org$' AS CREATE_ORG, A.PARTY_CLASS_CD 
+	FROM T31_DEF_GS A WHERE A.TEMPLATEKEY = #templatekey_temp#
+  </statement>
+  
+   <statement id="copyT31_def_gs_indic" parameterClass="com.ist.aml.newrisk.dto.T31_def_temp" resultClass="int"> 
+   	INSERT INTO T31_DEF_GS_INDIC
+	SELECT  '$templatekey$'||GSKEY AS GSKEY,A.INDICKEY,A.VALNUM,A.IS_SUM,VALTYPE,A.VALPARAMIN,A.VALPARAMAX  FROM T31_DEF_GS_INDIC A
+	WHERE A.GSKEY IN 
+	(SELECT GSKEY FROM T31_DEF_GS WHERE TEMPLATEKEY = #templatekey_temp#)
+  </statement>
+</sqlMap> 
+
