@@ -132,11 +132,16 @@
 /*  216 */         .getParameter("newsearchflag"));
 /*  217 */       int intPage = PageUtils.intPage(request, newsearchflag);
 /*      */ 
-/*  219 */       request.getSession().setAttribute("intPage", intPage);
+/*  219 */       request.getSession().setAttribute("intPage", intPage + "");
 /*      */ 
 /*  221 */       request.setAttribute("party_id", form.getParty_id());
 /*      */ 
 /*  225 */       LinkedHashMap risk_typeMap = this.cm.getMapFromCache("risk_type");
+				 risk_typeMap.put("F12", "有权机关立案调查或监控");
+				 risk_typeMap.put("F13", "有洗钱犯罪记录");
+				 risk_typeMap.put("F14", "拒绝配合客户尽职调查");
+				 risk_typeMap.put("F15", "拒绝更新其基本信息");
+				 risk_typeMap.put("F16", "国家有权机关查询、冻结或扣划且需要关注");			
 /*  226 */       request.setAttribute("risk_typeMap", getOptionsListByMap(
 /*  227 */         risk_typeMap, null, true));
 /*      */ 
@@ -339,7 +344,7 @@
 /*  464 */       String partyrisk_no = getSequenceNextVal("SEQ_T10_PARTY_RISK");
 /*  465 */       t10_party_risk.setPartyrisk_no(partyrisk_no);
 /*      */ 
-/*  467 */       row = t10_checkparty_funDAO.insertT10_party_risk(this.sqlMap, t10_party_risk);
+/*  467 */       int row = t10_checkparty_funDAO.insertT10_party_risk(this.sqlMap, t10_party_risk);
 /*      */     }
 /*      */     catch (Exception e)
 /*      */     {
@@ -375,7 +380,7 @@
 /*      */       }
 /*      */ 
 /*  516 */       if (row < 0) {
-/*  517 */         throw new Exception("删除失败");
+/*  517 */         throw new Exception("闁告帞濞�濞呭孩寰勬潏顐バ�");
 /*      */       }
 /*      */     }
 /*      */     catch (Exception e)
@@ -707,22 +712,11 @@
 /*      */       else
 /*      */       {
 /*  920 */         errors.add("org.apache.struts.action.GLOBAL_ERROR", new ActionError(
-/*  921 */           "error.pagertitle.common", "新建调查结论失败！"));
+/*  921 */           "error.pagertitle.common", "闁哄倹婢樼紓鎾舵嫬閸愨晝鍙�缂備焦鎹侀鎴炲緞鏉堫偉袝闁挎冻鎷�"));
 /*  922 */         saveErrors(request, errors);
 /*  923 */         return actionMapping.findForward("failure");
 /*      */       }
-/*      */       String check_no;
-/*      */       String party_id;
-/*      */       String changeflag;
-/*      */       String level_flag;
-/*      */       String B_flag;
-/*      */       String W_flag;
-/*      */       String list_type;
-/*      */       String check_type;
-/*      */       int row2;
-/*      */       int row1;
-/*      */       int i;
-/*      */       T10_checkparty_funActionForm form;
+///*      */       T10_checkparty_funActionForm form;
 /*  930 */       if ((list_type != null) && (!"".equals(list_type)))
 /*      */       {
 /*  932 */         if ((W_flag != null) && ("1".equals(W_flag))) {
@@ -821,7 +815,7 @@
 /* 1036 */       isNewrisk(this.sqlMap, request, party_id);
 /*      */     } catch (Exception e) {
 /* 1038 */       e.printStackTrace();
-/* 1039 */       this.logger.error("异常", e);
+/* 1039 */       this.logger.error("鐎殿喖鍊搁悥锟�", e);
 /* 1040 */       return actionMapping.findForward("failure");
 /*      */     }
 /* 1042 */     return actionMapping.findForward("success");
@@ -844,7 +838,7 @@
 /*      */     }
 /*      */     catch (Exception e) {
 /* 1062 */       e.printStackTrace();
-/* 1063 */       this.logger.error("异常", e);
+/* 1063 */       this.logger.error("鐎殿喖鍊搁悥锟�", e);
 /* 1064 */       return actionMapping.findForward("failure");
 /*      */     }
 /* 1066 */     return actionMapping.findForward("success");
@@ -877,7 +871,7 @@
 /*      */     }
 /*      */     catch (Exception e) {
 /* 1104 */       e.printStackTrace();
-/* 1105 */       this.logger.error("异常", e);
+/* 1105 */       this.logger.error("鐎殿喖鍊搁悥锟�", e);
 /* 1106 */       return actionMapping.findForward("failure");
 /*      */     }
 /* 1108 */     request.setAttribute("t10_check_reasonList", t10_check_reasonList);
@@ -895,7 +889,7 @@
 /*      */     }
 /*      */     catch (Exception e) {
 /* 1130 */       e.printStackTrace();
-/* 1131 */       this.logger.error("异常", e);
+/* 1131 */       this.logger.error("鐎殿喖鍊搁悥锟�", e);
 /* 1132 */       return actionMapping.findForward("failure");
 /*      */     }
 /* 1134 */     request.setAttribute("checkparty_relt", checkparty_relt);
@@ -931,7 +925,7 @@
 /* 1176 */       response.getWriter().close();
 /*      */     } catch (Exception e) {
 /* 1178 */       e.printStackTrace();
-/* 1179 */       this.logger.error("异常", e);
+/* 1179 */       this.logger.error("鐎殿喖鍊搁悥锟�", e);
 /* 1180 */       return actionMapping.findForward("failure");
 /*      */     }
 /* 1182 */     return null;
@@ -1048,7 +1042,7 @@
 /*      */   }
 /*      */ }
 
-/* Location:           C:\Users\alca\Desktop\雅安开发程序\istNewrisk.jar
+/* Location:           C:\Users\alca\Desktop\闂傚棗鎳庨悾銊ヮ嚕閿熶粙宕ｉ幋鐘煠閹兼潙鐚緄stNewrisk.jar
  * Qualified Name:     com.ist.aml.cust_identify.controller.T10_checkparty_funAction
  * JD-Core Version:    0.6.2
  */

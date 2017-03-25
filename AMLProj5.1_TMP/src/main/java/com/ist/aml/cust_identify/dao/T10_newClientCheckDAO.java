@@ -66,6 +66,9 @@
 /*  78 */         t10_newClientCheck.setLegal_card_typeinfo(t10_newClientCheck.getLegal_card_type().split(";")[1]);
 /*  79 */         t10_newClientCheck.setLegal_card_type(t10_newClientCheck.getLegal_card_type().split(";")[0]);
 /*     */       }
+				if (t10_newClientCheck.getLicence_end_dt() != null) {
+					t10_newClientCheck.setLicence_end_dt_disp(DateUtils.dateToStringShort(t10_newClientCheck.getLicence_end_dt()));
+				}
 /*     */     }
 /*  82 */     return t10_newClientCheck;
 /*     */   }
@@ -100,7 +103,9 @@
 /* 124 */       if ((t10NewClientCheck.getCard_end_dt_disp() != null) && (!"".equals(t10NewClientCheck.getCard_end_dt_disp()))) {
 /* 125 */         t10NewClientCheck.setCard_end_dt(DateUtils.stringToDateShort(t10NewClientCheck.getCard_end_dt_disp()));
 /*     */       }
-/*     */ 
+		 		if ((t10NewClientCheck.getLicence_end_dt_disp() != null) && (!"".equals(t10NewClientCheck.getLicence_end_dt_disp()))) {
+		 			t10NewClientCheck.setLicence_end_dt(DateUtils.stringToDateShort(t10NewClientCheck.getLicence_end_dt_disp()));
+		        }
 /* 128 */       if ((t10NewClientCheck.getLegal_card_no_end_dt_disp() != null) && (!"".equals(t10NewClientCheck.getLegal_card_no_end_dt_disp()))) {
 /* 129 */         t10NewClientCheck.setLegal_card_no_end_dt(DateUtils.stringToDateShort(t10NewClientCheck.getLegal_card_no_end_dt_disp()));
 /*     */       }
@@ -273,12 +278,12 @@
 /*     */ 
 /* 385 */       if ((tmp.getIstrue() != null) && (!"".equals(tmp.getIstrue()))) {
 /* 386 */         if ("0".equals(tmp.getIstrue()))
-/* 387 */           tmp.setIstrue_disp("否");
+/* 387 */           tmp.setIstrue_disp("鍚�");
 /*     */         else
-/* 389 */           tmp.setIstrue_disp("是");
+/* 389 */           tmp.setIstrue_disp("鏄�");
 /*     */       }
 /*     */       else {
-/* 392 */         tmp.setIstrue_disp("否");
+/* 392 */         tmp.setIstrue_disp("鍚�");
 /*     */       }
 /*     */ 
 /* 395 */       if ((tmp.getCheckdate() != null) && (!"".equals(tmp.getCheckdate()))) {
@@ -315,13 +320,13 @@
 /*     */       }
 /* 433 */       if ((tt.getCheck_result() != null) && (!"".equals(tt.getCheck_result()))) {
 /* 434 */         if ("0".equals(tt.getCheck_result()))
-/* 435 */           tt.setCheck_result_disp("无需关注");
+/* 435 */           tt.setCheck_result_disp("鏃犻渶鍏虫敞");
 /* 436 */         else if ("1".equals(tt.getCheck_result()))
-/* 437 */           tt.setCheck_result_disp("一般关注");
+/* 437 */           tt.setCheck_result_disp("涓�鑸叧娉�");
 /* 438 */         else if ("2".equals(tt.getCheck_result()))
-/* 439 */           tt.setCheck_result_disp("持续关注");
+/* 439 */           tt.setCheck_result_disp("鎸佺画鍏虫敞");
 /* 440 */         else if ("3".equals(tt.getCheck_result())) {
-/* 441 */           tt.setCheck_result_disp("重点关注");
+/* 441 */           tt.setCheck_result_disp("閲嶇偣鍏虫敞");
 /*     */         }
 /*     */       }
 /* 444 */       tt.setCheck_reason(check_reason == null ? "" : check_reason);
@@ -346,8 +351,8 @@
 /*     */     }
 /* 471 */     if ((w < 1) && (b < 1)) {
 /* 472 */       T10_newClientCheck tt = new T10_newClientCheck();
-/* 473 */       tt.setAddbmenu_flag_disp("否");
-/* 474 */       tt.setAddwmenu_flag_disp("否");
+/* 473 */       tt.setAddbmenu_flag_disp("鍚�");
+/* 474 */       tt.setAddwmenu_flag_disp("鍚�");
 /* 475 */       return tt;
 /*     */     }
 /* 477 */     return new T10_newClientCheck();
@@ -356,18 +361,18 @@
 /*     */   private T10_newClientCheck getT07_WHITELIST_INFO_single(SqlMapClient sqlMap, String partyId) throws SQLException {
 /* 481 */     T10_newClientCheck tt = (T10_newClientCheck)sqlMap.queryForObject("getT07_WHITELIST_INFO_single", partyId);
 /* 482 */     tt.setAddwmenu_flag("1");
-/* 483 */     tt.setAddwmenu_flag_disp("是");
+/* 483 */     tt.setAddwmenu_flag_disp("鏄�");
 /* 484 */     tt.setAddbmenu_flag("0");
-/* 485 */     tt.setAddbmenu_flag_disp("否");
+/* 485 */     tt.setAddbmenu_flag_disp("鍚�");
 /* 486 */     return tt;
 /*     */   }
 /*     */ 
 /*     */   private T10_newClientCheck getT07_BLACKLIST_single(SqlMapClient sqlMap, String partyId) throws SQLException {
 /* 490 */     T10_newClientCheck tt = (T10_newClientCheck)sqlMap.queryForObject("getT07_BLACKLIST_single", partyId);
 /* 491 */     tt.setAddwmenu_flag("0");
-/* 492 */     tt.setAddwmenu_flag_disp("否");
+/* 492 */     tt.setAddwmenu_flag_disp("鍚�");
 /* 493 */     tt.setAddbmenu_flag("1");
-/* 494 */     tt.setAddbmenu_flag_disp("是");
+/* 494 */     tt.setAddbmenu_flag_disp("鏄�");
 /* 495 */     return tt;
 /*     */   }
 /*     */ 
@@ -416,7 +421,7 @@
 /*     */   }
 /*     */ }
 
-/* Location:           C:\Users\alca\Desktop\雅安开发程序\istNewrisk.jar
+/* Location:           C:\Users\alca\Desktop\闆呭畨寮�鍙戠▼搴廫istNewrisk.jar
  * Qualified Name:     com.ist.aml.cust_identify.dao.T10_newClientCheckDAO
  * JD-Core Version:    0.6.2
  */

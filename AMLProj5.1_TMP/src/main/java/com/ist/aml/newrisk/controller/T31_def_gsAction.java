@@ -151,7 +151,7 @@
 /* 208 */     request.setAttribute("valtypeMap", getOptionsListByMap(
 /* 209 */       valtypeMap, null, true));
 /*     */     try {
-/* 211 */       form = (T31_def_gsActionForm)actionForm;
+/* 211 */       T31_def_gsActionForm form = (T31_def_gsActionForm)actionForm;
 /*     */     }
 /*     */     catch (Exception e)
 /*     */     {
@@ -342,8 +342,8 @@
 /*     */         {
 /* 438 */           t31_def_gs.setValparamin(form.getValparamin1());
 /* 439 */           t31_def_gs.setValparamax(form.getValparamax());
-/* 440 */           min_str1 = form.getValparamin1().toString();
-/* 441 */           gsrm = indicname + " " + val + " " + "(" + min_str1 + ", " + max_str + ")";
+/* 440 */           min_str = form.getValparamin1().toString();
+/* 441 */           gsrm = indicname + " " + val + " " + "(" + min_str + ", " + max_str + ")";
 /*     */         }
 /*     */         else
 /*     */         {
@@ -353,7 +353,7 @@
 /*     */ 
 /* 450 */         t31_def_gs.setGsrm(gsrm);
 /* 451 */         t31_def_gsDAO.deleteT31_def_gs_indic(this.sqlMap, gskey);
-/* 452 */         String min_str1 = t31_def_gsDAO.insertT31_def_gs_indic(this.sqlMap, t31_def_gs);
+/* 452 */         t31_def_gsDAO.insertT31_def_gs_indic(this.sqlMap, t31_def_gs);
 /*     */       }
 /*     */ 
 /* 455 */       t31_def_gs.setModify_dt(DateUtils.dateToStringShort(DateUtils.getCurrDateTime()));
@@ -392,7 +392,7 @@
 /* 501 */       for (int i = 0; i < gskey_array.length; i++) {
 /* 502 */         String gskey = gskey_array[i];
 /* 503 */         int row = t31_def_gsDAO.deleteT31_def_gs(this.sqlMap, gskey);
-/* 504 */         int i = t31_def_gsDAO.deleteT31_def_gs_indic(this.sqlMap, gskey);
+/* 504 */         int result_row = t31_def_gsDAO.deleteT31_def_gs_indic(this.sqlMap, gskey);
 /*     */       }
 /*     */ 
 /*     */     }
@@ -438,7 +438,7 @@
 /*     */   }
 /*     */ }
 
-/* Location:           C:\Users\alca\Desktop\雅安开发程序\istNewrisk.jar
+/* Location:           C:\Users\alca\Desktop\闆呭畨寮�鍙戠▼搴廫istNewrisk.jar
  * Qualified Name:     com.ist.aml.newrisk.controller.T31_def_gsAction
  * JD-Core Version:    0.6.2
  */

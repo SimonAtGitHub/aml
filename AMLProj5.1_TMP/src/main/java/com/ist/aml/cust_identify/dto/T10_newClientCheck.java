@@ -100,7 +100,14 @@
 /*     */   private String table_name;
 /*     */   private String check_reason;
 /*     */   private String aml1_type_cd;
-/*     */ 
+/*     */ 	
+			private String gender;
+			private String gender_disp;
+			private Date licence_end_dt;
+			private String licence_end_dt_disp;
+			private String nation_affair_no;
+			private String local_affair_no;
+			
 /*     */   public String getOrgankey()
 /*     */   {
 /* 317 */     return this.organkey;
@@ -639,9 +646,46 @@
 /*     */   public String getCheck_org() {
 /* 851 */     return this.check_org;
 /*     */   }
+			public String getGender() {
+				return gender;
+			}
+			public void setGender(String gender) {
+				this.gender = gender;
+			}
+			public String getGender_disp() {
+				return gender_disp;
+			}
+			public void setGender_disp(String gender_disp) {
+				this.gender_disp = gender_disp;
+			}
+			public Date getLicence_end_dt() {
+				return licence_end_dt;
+			}
+			public void setLicence_end_dt(Date licence_end_dt) {
+				this.licence_end_dt = licence_end_dt;
+			}
+			public String getLicence_end_dt_disp() {
+				return licence_end_dt_disp;
+			}
+			public void setLicence_end_dt_disp(String licence_end_dt_disp) {
+				this.licence_end_dt_disp = licence_end_dt_disp;
+			}
+			public String getNation_affair_no() {
+				return nation_affair_no;
+			}
+			public void setNation_affair_no(String nation_affair_no) {
+				this.nation_affair_no = nation_affair_no;
+			}
+			public String getLocal_affair_no() {
+				return local_affair_no;
+			}
+			public void setLocal_affair_no(String local_affair_no) {
+				this.local_affair_no = local_affair_no;
+			}
+			
 /*     */ }
 
-/* Location:           C:\Users\alca\Desktop\雅安开发程序\istNewrisk.jar
+/* Location:           C:\Users\alca\Desktop\闆呭畨寮�鍙戠▼搴廫istNewrisk.jar
  * Qualified Name:     com.ist.aml.cust_identify.dto.T10_newClientCheck
  * JD-Core Version:    0.6.2
  */

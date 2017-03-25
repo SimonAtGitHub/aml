@@ -123,7 +123,7 @@
 /*     */   public List<T31_def_element> getT31_def_elementLocate(SqlMapClient sqlMap, T31_def_element t31_def_element, int iStartRec, int iPageSize)
 /*     */     throws SQLException
 /*     */   {
-/* 210 */     List list = sqlMap.queryForList("getT31_def_elementLocate", 
+/* 210 */     List<T31_def_element> list = sqlMap.queryForList("getT31_def_elementLocate", 
 /* 211 */       t31_def_element, iStartRec, iPageSize);
 /* 212 */     LinkedHashMap riskcaltypeMap = this.cm.getMapFromCache("riskcaltype");
 /*     */ 
@@ -163,7 +163,7 @@
 /*     */     throws SQLException
 /*     */   {
 /* 252 */     Map map = new HashMap();
-/* 253 */     List list = sqlMap.queryForList("getT31_def_elementscoreMap", t31_def_element);
+/* 253 */     List<T31_def_elementscore> list = sqlMap.queryForList("getT31_def_elementscoreMap", t31_def_element);
 /* 254 */     List scoreList = null;
 /* 255 */     for (T31_def_elementscore score : list)
 /*     */     {
@@ -223,7 +223,7 @@
 /*     */   }
 /*     */ }
 
-/* Location:           C:\Users\alca\Desktop\雅安开发程序\istNewrisk.jar
+/* Location:           C:\Users\alca\Desktop\闆呭畨寮�鍙戠▼搴廫istNewrisk.jar
  * Qualified Name:     com.ist.aml.newrisk.dao.T31_def_elementDAO
  * JD-Core Version:    0.6.2
  */

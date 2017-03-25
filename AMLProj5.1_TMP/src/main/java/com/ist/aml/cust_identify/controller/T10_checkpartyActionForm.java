@@ -34,7 +34,9 @@
 /*     */ 
 /*  51 */   private String recheck_type = "";
 /*  52 */   private String recheck_type_disp = "";
-/*     */ 
+/*     */ 	
+			private String expire_period = ""; //已到期期限
+			
 /*  54 */   private String risk_type_str = "";
 /*     */ 
 /*  56 */   private String check_result = "";
@@ -323,9 +325,16 @@
 /*     */   public void setRecheck_type_disp(String recheckTypeDisp) {
 /* 341 */     this.recheck_type_disp = recheckTypeDisp;
 /*     */   }
+			public String getExpire_period() {
+				return expire_period;
+			}
+			public void setExpire_period(String expire_period) {
+				this.expire_period = expire_period;
+			}
+			
 /*     */ }
 
-/* Location:           C:\Users\alca\Desktop\雅安开发程序\istNewrisk.jar
+/* Location:           C:\Users\alca\Desktop\闆呭畨寮�鍙戠▼搴廫istNewrisk.jar
  * Qualified Name:     com.ist.aml.cust_identify.controller.T10_checkpartyActionForm
  * JD-Core Version:    0.6.2
  */

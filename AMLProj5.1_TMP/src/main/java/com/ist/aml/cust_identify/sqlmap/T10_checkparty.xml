@@ -61,6 +61,20 @@
 	    <isNotEmpty prepend="AND" property="organStr">
 				ORGANKEY IN ($organStr$)
 		</isNotEmpty>
+		<isNotEmpty property="expire_period">
+			<isEqual prepend="AND" property="expire_period" compareValue="3">
+				 <![CDATA[months_between(#current_date:DATE#,create_dt) <= #expire_period#]]>
+			</isEqual>
+			<isEqual prepend="AND" property="expire_period" compareValue="6">
+				 <![CDATA[months_between(#current_date:DATE#,create_dt) <= #expire_period#]]>
+			</isEqual>
+			<isEqual prepend="AND" property="expire_period" compareValue="12">
+				 <![CDATA[months_between(#current_date:DATE#,create_dt) <= #expire_period#]]>
+			</isEqual>
+			<isEqual prepend="AND" property="expire_period" compareValue="13">
+				 <![CDATA[months_between(#current_date:DATE#,create_dt) > 12]]>
+			</isEqual>
+		</isNotEmpty>
 		AND CHECK_STATUS='0'
 	 </dynamic>
 	</statement>
@@ -82,6 +96,20 @@
 	    </isNotEmpty>
 	    <isNotEmpty prepend="AND" property="organStr">
 				ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+		<isNotEmpty property="expire_period">
+			<isEqual prepend="AND" property="expire_period" compareValue="3">
+				 <![CDATA[months_between(#current_date:DATE#,create_dt) <= #expire_period#]]>
+			</isEqual>
+			<isEqual prepend="AND" property="expire_period" compareValue="6">
+				 <![CDATA[months_between(#current_date:DATE#,create_dt) <= #expire_period#]]>
+			</isEqual>
+			<isEqual prepend="AND" property="expire_period" compareValue="12">
+				 <![CDATA[months_between(#current_date:DATE#,create_dt) <= #expire_period#]]>
+			</isEqual>
+			<isEqual prepend="AND" property="expire_period" compareValue="13">
+				 <![CDATA[months_between(#current_date:DATE#,create_dt) > 12]]>
+			</isEqual>
 		</isNotEmpty>
 		AND CHECK_STATUS='0'
 	 </dynamic>

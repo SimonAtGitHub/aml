@@ -120,7 +120,7 @@
 /*     */       else
 /*     */       {
 /* 170 */         String treelaye = t31_def_elementDAO.getTreelaye(this.sqlMap, elementkey);
-/* 171 */         form.setTreelaye(Integer.parseInt(treelaye) + 1);
+/* 171 */         form.setTreelaye(String.valueOf(Integer.parseInt(treelaye) + 1));
 /*     */       }
 /*     */ 
 /* 176 */       String js_type = t31_def_elementDAO.getT31_def_element_jsType(this.sqlMap, t31_def_element);
@@ -224,7 +224,7 @@
 /* 306 */         if ("5".equals(t31_def_element.getCaltype()))
 /*     */         {
 /* 308 */           Map t31_def_elementscoreMap = (HashMap)request.getSession().getAttribute("t31_def_elementscoreMap");
-/* 309 */           List t31_def_elementscoreList = (ArrayList)t31_def_elementscoreMap.get(randomChars[i]);
+/* 309 */           List<T31_def_elementscore> t31_def_elementscoreList = (ArrayList)t31_def_elementscoreMap.get(randomChars[i]);
 /*     */ 
 /* 311 */           for (T31_def_elementscore score : t31_def_elementscoreList)
 /*     */           {
@@ -354,7 +354,7 @@
 /* 467 */       t31_def_element.setElementkeys(elementkeys);
 /*     */ 
 /* 469 */       this.sqlMap.startTransaction();
-/* 470 */       List notInList = t31_def_elementDAO.getT31_def_elementList(this.sqlMap, t31_def_element);
+/* 470 */       List<T31_def_element> notInList = t31_def_elementDAO.getT31_def_elementList(this.sqlMap, t31_def_element);
 /*     */ 
 /* 472 */       ArrayList allList = new ArrayList();
 /*     */ 
@@ -425,7 +425,7 @@
 /* 542 */         if (("1".equals(form.getIs_last())) && ("5".equals(t31_def_element.getCaltype())))
 /*     */         {
 /* 546 */           Map t31_def_elementscoreMap = (HashMap)request.getSession().getAttribute("t31_def_elementscoreMap");
-/* 547 */           List t31_def_elementscoreList = (ArrayList)t31_def_elementscoreMap.get(randomChars[i]);
+/* 547 */           List<T31_def_elementscore> t31_def_elementscoreList = (ArrayList)t31_def_elementscoreMap.get(randomChars[i]);
 /*     */ 
 /* 549 */           for (T31_def_elementscore score : t31_def_elementscoreList)
 /*     */           {
@@ -646,7 +646,7 @@
 /*     */   }
 /*     */ }
 
-/* Location:           C:\Users\alca\Desktop\雅安开发程序\istNewrisk.jar
+/* Location:           C:\Users\alca\Desktop\闆呭畨寮�鍙戠▼搴廫istNewrisk.jar
  * Qualified Name:     com.ist.aml.newrisk.controller.T31_def_elementAction
  * JD-Core Version:    0.6.2
  */

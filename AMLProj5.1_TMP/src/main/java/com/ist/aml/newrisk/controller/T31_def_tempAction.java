@@ -210,10 +210,14 @@
 /*  281 */     LinkedHashMap coverMap = this.cm.getMapFromCache("yesNo");
 /*  282 */     request.setAttribute("coverMap", getOptionsListByMap(
 /*  283 */       coverMap, null, true));
+				return actionMapping.findForward("success"); 
+				}
 /*      */ 
-/*  289 */     return actionMapping.findForward("success"); } 
+/*  289 */     
 /*      */   // ERROR //
 /*      */   public ActionForward performAddT31_def_tempDo(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) { // Byte code:
+				return actionMapping.findForward("success"); 
+				}
 /*      */     //   0: new 147	org/apache/struts/action/ActionMessages
 /*      */     //   3: dup
 /*      */     //   4: invokespecial 149	org/apache/struts/action/ActionMessages:<init>	()V
@@ -457,7 +461,7 @@
 /*      */     catch (Exception e)
 /*      */     {
 /*  392 */       e.printStackTrace();
-/*  393 */       this.logger.error("异常", e);
+/*  393 */       this.logger.error("寮傚父", e);
 /*  394 */       errors.add("org.apache.struts.action.GLOBAL_ERROR", new ActionError(
 /*  395 */         "error.pagertitle.default"));
 /*  396 */       saveErrors(request, errors);
@@ -747,7 +751,7 @@
 /*  715 */       for (int i = 0; i < sqlkey_array.length; i++) {
 /*  716 */         String sqlkey = sqlkey_array[i];
 /*  717 */         int row = t31_def_tempDAO.deleteT31_def_temp_gran(this.sqlMap, sqlkey);
-/*  718 */         int i = t31_def_tempDAO.delT31_def_temp_sql(this.sqlMap, sqlkey);
+/*  718 */         int result_row = t31_def_tempDAO.delT31_def_temp_sql(this.sqlMap, sqlkey);
 /*      */       }
 /*      */ 
 /*      */     }
@@ -907,7 +911,7 @@
 /*  939 */       t31_def_temp.setModify_dt(DateUtils.dateToStringShort(DateUtils.getCurrDateTime()));
 /*  940 */       t31_def_temp.setModify_user(auth.getT00_user().getUsername());
 /*  941 */       t31_def_temp.setTemplatekey(templatekey1);
-/*  942 */       t31_def_temp.setTemplatename(t31_def_temp.getTemplatename() + "(副本)");
+/*  942 */       t31_def_temp.setTemplatename(t31_def_temp.getTemplatename() + "(鍓湰)");
 /*  943 */       t31_def_temp.setTag("0");
 /*  944 */       int row1 = t31_def_tempDAO.insertT31_def_temp(this.sqlMap, t31_def_temp);
 /*      */ 
@@ -946,7 +950,7 @@
 /*      */ 
 /*  984 */           int row4 = t31_def_gsDAO.copyT31_def_gs(this.sqlMap, t31_def_temp);
 /*      */ 
-/*  986 */           t31_def_elementDAO = t31_def_gsDAO.copyT31_def_gs_indic(this.sqlMap, t31_def_temp);
+/*  986 */           t31_def_gsDAO.copyT31_def_gs_indic(this.sqlMap, t31_def_temp);
 /*      */         }
 /*      */       }
 /*  989 */       this.sqlMap.commitTransaction();
@@ -969,7 +973,7 @@
 /*      */   }
 /*      */ }
 
-/* Location:           C:\Users\alca\Desktop\雅安开发程序\istNewrisk.jar
+/* Location:           C:\Users\alca\Desktop\闆呭畨寮�鍙戠▼搴廫istNewrisk.jar
  * Qualified Name:     com.ist.aml.newrisk.controller.T31_def_tempAction
  * JD-Core Version:    0.6.2
  */

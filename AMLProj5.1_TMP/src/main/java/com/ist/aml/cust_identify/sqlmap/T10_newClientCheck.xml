@@ -57,7 +57,7 @@
 				parameterClass="java.lang.String" resultClass="com.ist.aml.cust_identify.dto.T10_newClientCheck">
 				SELECT 
 					A.PARTY_ID,A.PARTY_CLASS_CD,A.ORGANKEY,A.PARTY_CHN_NAME,A.PARTY_ENG_NAME,A.COUNTRY_CD,A.CARD_TYPE,A.CARD_NO,B.CARD_END_DT,A.ADDR1,A.CELL_NO,
-					A.AML1_TYPE_CD,B.OCCUPATION,B.DUTY,B.COMPANY,B.INDUSTRY,B.INDIV_INCOME,B.INCOME_ECNO,B.INCOME_SOURCE,B.CREATE_PURPOSE 
+					A.AML1_TYPE_CD,B.OCCUPATION,B.DUTY,B.COMPANY,B.INDUSTRY,B.INDIV_INCOME,B.INCOME_ECNO,B.INCOME_SOURCE,B.CREATE_PURPOSE,B.GENDER  
 				FROM T47_PARTY A,T47_INDIVIDUAL B 
 				WHERE A.PARTY_ID = B.PARTY_ID AND A.PARTY_ID = #value#
 			</statement>
@@ -66,13 +66,13 @@
 				SELECT 
 					A.PARTY_ID,A.PARTY_CLASS_CD,A.ORGANKEY,A.PARTY_CHN_NAME,A.COUNTRY_CD,A.CARD_TYPE AS CARD_TYPE_C,A.CARD_NO,B.INDUSTRYKEY AS INDUSTRY,A.AML2_TYPE_CD,B.MAIN_MANAGE_SCOPE,A.AML1_TYPE_CD,
 					B.MAIN_MANAGE_BUSINESS,B.ENROL_FUND_CURRENCY_CD,B.ENROL_FUND_AMT,B.LEGAL_OBJ,B.LEGAL_CARD_TYPE,B.LEGAL_CARD_NO,B.LEGAL_CARD_NO_END_DT,
-					B.STOCK_HOLDER,B.STOCK_HOLDER_CARD_TYPE,B.STOCK_HOLDER_CARD_NO,B.STOCK_HOLDER_CARD_NO_END_DT,B.ORG_CREDIT_NO,B.ORG_CREDIT_VT
+					B.STOCK_HOLDER,B.STOCK_HOLDER_CARD_TYPE,B.STOCK_HOLDER_CARD_NO,B.STOCK_HOLDER_CARD_NO_END_DT,B.ORG_CREDIT_NO,B.ORG_CREDIT_VT,A.ADDR1,B.LICENCE_END_DT,B.NATION_AFFAIR_NO,B.LOCAL_AFFAIR_NO 
 				FROM T47_PARTY A,T47_CORPORATION B
 				WHERE A.PARTY_ID = B.PARTY_ID AND A.PARTY_ID = #value#
 			</statement>
 			<statement id="modifyClientInfo_C_t47_PARTY"
 				parameterClass="com.ist.aml.cust_identify.dto.T10_newClientCheck" resultClass="int">
-				UPDATE T47_PARTY SET ORGANKEY=#organkey#,PARTY_CHN_NAME=#party_chn_name#,COUNTRY_CD=#country_cd#,CARD_TYPE=#card_type_c#,CARD_NO=#card_no#
+				UPDATE T47_PARTY SET ORGANKEY=#organkey#,PARTY_CHN_NAME=#party_chn_name#,COUNTRY_CD=#country_cd#,CARD_TYPE=#card_type_c#,CARD_NO=#card_no#,ADDR1=#addr1#
 				WHERE PARTY_ID=#party_id#
 			</statement>
 			<statement id="modifyClientInfo_C_t47_CORPORATION"
@@ -80,7 +80,8 @@
 				UPDATE T47_CORPORATION SET LEGAL_OBJ=#legal_obj#,LEGAL_CARD_TYPE=#legal_card_type#,LEGAL_CARD_NO=#legal_card_no#,LEGAL_CARD_NO_END_DT=#legal_card_no_end_dt#,
 				STOCK_HOLDER=#stock_holder#,STOCK_HOLDER_CARD_TYPE=#stock_holder_card_type#,STOCK_HOLDER_CARD_NO=#stock_holder_card_no#,STOCK_HOLDER_CARD_NO_END_DT=#stock_holder_card_no_end_dt#,
 				ORGAN_CODE=#organkey#,INDUSTRYKEY=#industry#,MAIN_MANAGE_SCOPE=#main_manage_scope#,MAIN_MANAGE_BUSINESS=#main_manage_business#,
-				ENROL_FUND_CURRENCY_CD=#enrol_fund_currency_cd#,ENROL_FUND_AMT=#enrol_fund_amt#,ORG_CREDIT_NO=#org_credit_no#,ORG_CREDIT_VT=#org_credit_vt#
+				ENROL_FUND_CURRENCY_CD=#enrol_fund_currency_cd#,ENROL_FUND_AMT=#enrol_fund_amt#,ORG_CREDIT_NO=#org_credit_no#,ORG_CREDIT_VT=#org_credit_vt#,
+				LICENCE_END_DT=#licence_end_dt#,NATION_AFFAIR_NO=#nation_affair_no#,LOCAL_AFFAIR_NO=#local_affair_no# 
 				WHERE PARTY_ID=#party_id#
 			</statement>
 			<statement id="modifyClientInfo_I_t47_PARTY"
@@ -94,7 +95,7 @@
 				parameterClass="com.ist.aml.cust_identify.dto.T10_newClientCheck" resultClass="int">
 				UPDATE T47_INDIVIDUAL SET 
 				CARD_END_DT=#card_end_dt#,OCCUPATION=#occupation#,DUTY=#duty#,COMPANY=#company#,INDUSTRY=#industry#,INDIV_INCOME=#indiv_income#,INCOME_ECNO=#income_ecno#,
-				INCOME_SOURCE=#income_source#,CREATE_PURPOSE=#create_purpose#
+				INCOME_SOURCE=#income_source#,CREATE_PURPOSE=#create_purpose#,GENDER=#gender#
 				WHERE PARTY_ID=#party_id#
 			</statement>
 		<!-- for client info end -->

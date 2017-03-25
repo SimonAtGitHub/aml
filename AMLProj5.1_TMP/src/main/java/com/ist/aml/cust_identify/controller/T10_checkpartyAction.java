@@ -4,6 +4,8 @@
 /*     */ import com.ist.aml.cust_identify.dao.T10_checkparty_funDAO;
 /*     */ import com.ist.aml.cust_identify.dto.T10_checkparty;
 /*     */ import com.ist.aml.cust_identify.dto.T10_checkparty_fun;
+import com.ist.aml.inves.dao.T07_ReportSearch_msDAO;
+import com.ist.aml.report.dto.T07_case_application;
 /*     */ import com.ist.common.AuthBean;
 /*     */ import com.ist.common.Authorization;
 /*     */ import com.ist.common.MyBeanUtils;
@@ -25,6 +27,7 @@
 /*     */ import org.apache.struts.action.ActionForward;
 /*     */ import org.apache.struts.action.ActionMapping;
 /*     */ import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 /*     */ import org.springframework.context.ApplicationContext;
 /*     */ 
 /*     */ public class T10_checkpartyAction extends BaseAction
@@ -73,7 +76,11 @@
 /* 109 */       myforward = performAddT10_checkparty_re_fromcaseDo(mapping, form, request, 
 /* 110 */         response);
 /*     */     }
-/*     */ 
+/*     */ 	  // 导出客户重新识别名单
+			  else if ("exportT10_checkparty_relist".equalsIgnoreCase(myaction)) {
+				myforward = performExportT10_checkparty_relist(mapping, form, request,
+						response);
+			  }	
 /* 113 */     return myforward;
 /*     */   }
 /*     */ 
@@ -110,7 +117,7 @@
 /* 160 */       request.setAttribute("party_class_cd_str", party_class_cd_str);
 /*     */     } catch (Exception e) {
 /* 162 */       e.printStackTrace();
-/* 163 */       this.logger.error("异常", e);
+/* 163 */       this.logger.error("寮傚父", e);
 /*     */ 
 /* 165 */       errors.add("org.apache.struts.action.GLOBAL_MESSAGE", new ActionMessage(
 /* 166 */         "error.pagertitle.default", e.getMessage()));
@@ -174,7 +181,7 @@
 /* 233 */       request.setAttribute("party_class_cd_str", party_class_cd_str);
 /*     */     } catch (Exception e) {
 /* 235 */       e.printStackTrace();
-/* 236 */       this.logger.error("异常", e);
+/* 236 */       this.logger.error("寮傚父", e);
 /*     */ 
 /* 238 */       errors.add("org.apache.struts.action.GLOBAL_MESSAGE", new ActionMessage(
 /* 239 */         "error.pagertitle.default", e.getMessage()));
@@ -198,7 +205,13 @@
 /* 265 */       T10_checkpartyActionForm form = (T10_checkpartyActionForm)actionForm;
 /*     */ 
 /* 268 */       LinkedHashMap recheck_typeMap = this.cm.getMapFromCache("recheck_type");
+				LinkedHashMap expire_periodMap = new LinkedHashMap();
+				expire_periodMap.put("3", "3个月内");
+				expire_periodMap.put("6", "6个月内");
+				expire_periodMap.put("12", "1年内");
+				expire_periodMap.put("13", "1年以上");
 /* 269 */       request.setAttribute("recheck_typeMap", getOptionsListByMap(recheck_typeMap, null, true));
+				request.setAttribute("expire_periodMap", getOptionsListByMap(expire_periodMap, null, true));
 /* 270 */       String newsearchflag = StringUtils.nullObject2String(request.getParameter("newsearchflag"));
 /* 271 */       int intPage = PageUtils.intPage(request, newsearchflag);
 /*     */ 
@@ -221,7 +234,7 @@
 /* 289 */       request.setAttribute("party_class_cd_str", party_class_cd_str);
 /*     */     } catch (Exception e) {
 /* 291 */       e.printStackTrace();
-/* 292 */       this.logger.error("异常", e);
+/* 292 */       this.logger.error("寮傚父", e);
 /*     */ 
 /* 294 */       errors.add("org.apache.struts.action.GLOBAL_MESSAGE", new ActionMessage(
 /* 295 */         "error.pagertitle.default", e.getMessage()));
@@ -268,7 +281,7 @@
 /* 345 */       request.setAttribute("party_class_cd_str", party_class_cd_str);
 /*     */     } catch (Exception e) {
 /* 347 */       e.printStackTrace();
-/* 348 */       this.logger.error("异常", e);
+/* 348 */       this.logger.error("寮傚父", e);
 /*     */ 
 /* 350 */       errors.add("org.apache.struts.action.GLOBAL_MESSAGE", new ActionMessage(
 /* 351 */         "error.pagertitle.default", e.getMessage()));
@@ -330,7 +343,7 @@
 /*     */ 
 /* 427 */       T10_checkparty checkparty = t10_checkpartyDAO.getT10_checkparty_reDisp(this.sqlMap, form.getParty_id());
 /* 428 */       if ((checkparty != null) && (!checkparty.getParty_id().equals(""))) {
-/* 429 */         errors.add("org.apache.struts.action.GLOBAL_ERROR", new ActionError("error.common", "该客户已存在！"));
+/* 429 */         errors.add("org.apache.struts.action.GLOBAL_ERROR", new ActionError("error.common", "璇ュ鎴峰凡瀛樺湪锛�"));
 /* 430 */         saveErrors(request, errors);
 /* 431 */         return actionMapping.findForward("failure");
 /*     */       }
@@ -425,7 +438,7 @@
 /*     */ 
 /* 526 */       T10_checkparty checkparty = t10_checkpartyDAO.getT10_checkparty_reDisp(this.sqlMap, form.getParty_id());
 /* 527 */       if ((checkparty != null) && (!checkparty.getParty_id().equals(""))) {
-/* 528 */         errors.add("org.apache.struts.action.GLOBAL_ERROR", new ActionError("error.common", "该客户已存在！"));
+/* 528 */         errors.add("org.apache.struts.action.GLOBAL_ERROR", new ActionError("error.common", "璇ュ鎴峰凡瀛樺湪锛�"));
 /* 529 */         saveErrors(request, errors);
 /* 530 */         return actionMapping.findForward("failure");
 /*     */       }
@@ -444,9 +457,47 @@
 /* 544 */     request.setAttribute("refresh", "1");
 /* 545 */     return actionMapping.findForward("success");
 /*     */   }
-/*     */ }
 
-/* Location:           C:\Users\alca\Desktop\雅安开发程序\istNewrisk.jar
+	public ActionForward performExportT10_checkparty_relist(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response)
+   {
+		ActionErrors errors = new ActionErrors();
+		HttpSession session = request.getSession();
+		ArrayList t10_checkparty_relist = new ArrayList();
+		T10_checkpartyDAO t10_checkpartyDAO = (T10_checkpartyDAO)this.context.getBean("t10_checkpartyDAO");
+	    T10_checkparty t10_checkparty = new T10_checkparty();
+		try {
+			// 组织用户所属的机构ID
+			t10_checkparty = (T10_checkparty) session
+					.getAttribute("t10_checkparty_reSearchObj");
+			if (t10_checkparty == null)
+				t10_checkparty_relist = new ArrayList();
+			else
+				t10_checkparty_relist = t10_checkpartyDAO
+						.getT10_checkparty_relist(sqlMap,
+								t10_checkparty, 0, 5000);
+			
+			
+			if(t10_checkparty_relist.size() > 5000){
+				errors.add(errors.GLOBAL_ERROR, new ActionError("error.common","一次导出交易不得超过5000条！"));
+		        saveErrors(request, errors);
+    			return actionMapping.findForward("failure");
+			}
+			String excelName = DateUtils.getDate10to8(DateUtils.getCurrTime())+"partyrecheck";
+			request.setAttribute("excelName", excelName);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e);
+			errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
+			        "error.pagertitle.default", e.getMessage()));
+			saveMessages(request, errors);
+			return actionMapping.findForward("failure");
+		}
+		request.setAttribute("t10_checkparty_relist", t10_checkparty_relist);
+		return actionMapping.findForward("success");
+   }
+ }
+
+/* Location:           C:\Users\alca\Desktop\闆呭畨寮�鍙戠▼搴廫istNewrisk.jar
  * Qualified Name:     com.ist.aml.cust_identify.controller.T10_checkpartyAction
  * JD-Core Version:    0.6.2
  */

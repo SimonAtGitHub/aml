@@ -140,7 +140,7 @@
 /* 229 */         .getProperty("reportXML.attachMaxSize");
 /* 230 */       if (file.getFileSize() > Integer.parseInt(i)) {
 /* 231 */         errors.add("org.apache.struts.action.GLOBAL_ERROR", new ActionError("error.common", 
-/* 232 */           "文件大小不能超过2M!"));
+/* 232 */           "鏂囦欢澶у皬涓嶈兘瓒呰繃2M!"));
 /* 233 */         saveErrors(request, errors);
 /* 234 */         return actionMapping.findForward("failure");
 /*     */       }
@@ -159,7 +159,7 @@
 /*     */       }
 /* 249 */       if ((newFilePathAndPath.equals("")) || (newFilePathAndPath == null)) {
 /* 250 */         errors.add("org.apache.struts.action.GLOBAL_ERROR", new ActionError("error.common", 
-/* 251 */           "上传失败!"));
+/* 251 */           "涓婁紶澶辫触!"));
 /* 252 */         saveErrors(request, errors);
 /* 253 */         return actionMapping.findForward("failure");
 /*     */       }
@@ -212,7 +212,7 @@
 /* 318 */       if (storeFile.exists()) {
 /* 319 */         storeFile.delete();
 /*     */       }
-/* 321 */       rows = t37_risk_attachDAO.deleteT37_risk_attach(this.sqlMap, 
+/* 321 */       int rows = t37_risk_attachDAO.deleteT37_risk_attach(this.sqlMap, 
 /* 322 */         attachkey);
 /*     */     }
 /*     */     catch (Exception e)
@@ -251,7 +251,7 @@
 /*     */   }
 /*     */ }
 
-/* Location:           C:\Users\alca\Desktop\雅安开发程序\istNewrisk.jar
+/* Location:           C:\Users\alca\Desktop\闆呭畨寮�鍙戠▼搴廫istNewrisk.jar
  * Qualified Name:     com.ist.aml.newrisk.controller.T37_risk_attachAction
  * JD-Core Version:    0.6.2
  */

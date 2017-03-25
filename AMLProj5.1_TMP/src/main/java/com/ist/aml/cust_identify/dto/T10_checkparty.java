@@ -39,7 +39,8 @@
 /*     */ 
 /*  61 */   private String recheck_type = "";
 /*  62 */   private String recheck_type_disp = "";
-/*     */ 
+/*     */ 	
+			private String expire_period = ""; ////已到期期限
 /*  64 */   private String check_result = "";
 /*  65 */   private String check_result_disp = "";
 /*     */ 
@@ -60,7 +61,7 @@
 /*  81 */   private String valid_dt_start_disp = "";
 /*  82 */   private Date valid_dt_end = new Date();
 /*  83 */   private String valid_dt_end_disp = "";
-/*     */ 
+/*     */ 	private Date current_date = new Date();
 /*  85 */   private String checker = "";
 /*     */ 
 /*  87 */   private String checker_org = "";
@@ -381,9 +382,22 @@
 /*     */   public void setCheck_status(String checkStatus) {
 /* 409 */     this.check_status = checkStatus;
 /*     */   }
+			public String getExpire_period() {
+				return expire_period;
+			}
+			public void setExpire_period(String expire_period) {
+				this.expire_period = expire_period;
+			}
+			public Date getCurrent_date() {
+				return current_date;
+			}
+			public void setCurrent_date(Date current_date) {
+				this.current_date = current_date;
+			}
+			
 /*     */ }
 
-/* Location:           C:\Users\alca\Desktop\雅安开发程序\istNewrisk.jar
+/* Location:           C:\Users\alca\Desktop\闆呭畨寮�鍙戠▼搴廫istNewrisk.jar
  * Qualified Name:     com.ist.aml.cust_identify.dto.T10_checkparty
  * JD-Core Version:    0.6.2
  */

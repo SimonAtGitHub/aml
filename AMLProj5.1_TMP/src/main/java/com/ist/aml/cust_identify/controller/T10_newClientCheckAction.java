@@ -178,10 +178,10 @@
 /* 220 */       this.sqlMap.endTransaction();
 /*     */     } catch (Exception e) {
 /* 222 */       e.printStackTrace();
-/* 223 */       this.logger.error("异常", e);
+/* 223 */       this.logger.error("寮傚父", e);
 /* 224 */       return mapping.findForward("failure");
 /*     */     }
-/* 226 */     String downloadname = DateUtils.dateToStringShort(DateUtils.getCurrDateTime()) + "-客户调查信息";
+/* 226 */     String downloadname = DateUtils.dateToStringShort(DateUtils.getCurrDateTime()) + "-瀹㈡埛璋冩煡淇℃伅";
 /* 227 */     request.setAttribute("downloadname", downloadname);
 /* 228 */     request.setAttribute("clientInfo", clientInfo);
 /* 229 */     request.setAttribute("checkStateMap", checkStateMap);
@@ -245,6 +245,12 @@
 /*     */ 
 /* 299 */     LinkedHashMap yesNoMap = this.cm.getMapFromCache("yesNo");
 /* 300 */     request.setAttribute("yesNoMap", getOptionsListByMap(yesNoMap, null, true));
+				
+			  LinkedHashMap genderMap = new LinkedHashMap();
+			  genderMap.put("1", "男");
+			  genderMap.put("2", "女");
+			  request.setAttribute("genderMap", getOptionsListByMap(genderMap, null, true));
+			  
 /*     */     try {
 /* 302 */       T10_newClientCheckActionForm t10_newClientCheckActionForm = (T10_newClientCheckActionForm)form;
 /* 303 */       String party_id = "";
@@ -316,6 +322,9 @@
 /* 369 */       if ((clientInfo.getStock_holder_card_type() != null) && (!"".equals(clientInfo.getStock_holder_card_type()))) {
 /* 370 */         clientInfo.setStock_holder_card_type_disp((String)bitpMap.get(clientInfo.getStock_holder_card_type()));
 /*     */       }
+				if ((clientInfo.getGender() != null) && (!"".equals(clientInfo.getGender()))) {
+					clientInfo.setGender_disp((String)genderMap.get(clientInfo.getGender()));
+				}
 /* 372 */       MyBeanUtils.copyBean2Bean(form, clientInfo);
 /*     */ 
 /* 375 */       T10_newClientCheck listType = t10_newClientCheckDAO.getT10_newClientCheck_listType(this.sqlMap, party_id);
@@ -343,7 +352,7 @@
 /*     */     catch (Exception e)
 /*     */     {
 /* 400 */       e.printStackTrace();
-/* 401 */       this.logger.error("异常", e);
+/* 401 */       this.logger.error("寮傚父", e);
 /* 402 */       return mapping.findForward("failure");
 /*     */     }
 /* 404 */     request.setAttribute("clientInfo", clientInfo);
@@ -467,7 +476,7 @@
 /*     */       {
 /* 531 */         int k = t10_newClientCheckDAO.insertT10_newClientCheck_checkState_uh(this.sqlMap, party_id);
 /*     */ 
-/* 533 */         elementid = t10_newClientCheckDAO.deleteT10_newClientCheck_checkState_single(this.sqlMap, party_id);
+/* 533 */         t10_newClientCheckDAO.deleteT10_newClientCheck_checkState_single(this.sqlMap, party_id);
 /*     */       }
 /*     */ 
 /* 536 */       int h = t10_newClientCheckDAO.insertT10_newClientCheck_checkState(this.sqlMap, tmpList);
@@ -608,7 +617,7 @@
 /*     */       {
 /* 697 */         if ("0".equals(check_exist))
 /*     */         {
-/* 699 */           flag = t10_newClientCheckDAO.isExistT10_CHECKPARTY_NEW(this.sqlMap, t10NewClientCheck.getParty_id());
+/* 699 */           boolean flag = t10_newClientCheckDAO.isExistT10_CHECKPARTY_NEW(this.sqlMap, t10NewClientCheck.getParty_id());
 /*     */           int i;
 /* 700 */           if (flag)
 /*     */           {
@@ -619,14 +628,14 @@
 /*     */           }
 /*     */         }
 /*     */ 
-/* 709 */         boolean flag = t10_newClientCheckDAO.modifyStatusT10_CHECKPARTY_NEW(this.sqlMap, t10NewClientCheck.getParty_id());
+/* 709 */         t10_newClientCheckDAO.modifyStatusT10_CHECKPARTY_NEW(this.sqlMap, t10NewClientCheck.getParty_id());
 /*     */       }
 /*     */ 
 /* 712 */       if (check_type.equals("2"))
 /*     */       {
 /* 714 */         if ("0".equals(check_exist))
 /*     */         {
-/* 716 */           flag = t10_newClientCheckDAO.isExistT10_CHECKPARTY_RE(this.sqlMap, t10NewClientCheck.getParty_id());
+/* 716 */           boolean flag = t10_newClientCheckDAO.isExistT10_CHECKPARTY_RE(this.sqlMap, t10NewClientCheck.getParty_id());
 /*     */           int i;
 /* 717 */           if (flag)
 /*     */           {
@@ -640,7 +649,7 @@
 /*     */           }
 /*     */         }
 /*     */ 
-/* 729 */         boolean flag = t10_newClientCheckDAO.modifyStatusT10_CHECKPARTY_RE(this.sqlMap, t10NewClientCheck.getParty_id());
+/* 729 */         t10_newClientCheckDAO.modifyStatusT10_CHECKPARTY_RE(this.sqlMap, t10NewClientCheck.getParty_id());
 /*     */       }
 /*     */ 
 /* 732 */       boolean flag = t10_newClientCheckDAO.isExistT10_CHECKPARTY_RELT(this.sqlMap, t10NewClientCheck.getParty_id());
@@ -690,7 +699,7 @@
 /* 777 */           t07_attention_log.setOp_time(DateUtils.getCurrTime());
 /* 778 */           t07_attention_log.setOp_person(t10NewClientCheck.getChecker());
 /* 779 */           t07_attention_log.setOp_type("1");
-/* 780 */           t07_attention_log.setOp_reason("由新增调查结论添加");
+/* 780 */           t07_attention_log.setOp_reason("鐢辨柊澧炶皟鏌ョ粨璁烘坊鍔�");
 /* 781 */           t07_attention_libDAO.insertT07_ATTENTION_log(this.sqlMap, t07_attention_log);
 /*     */         }
 /*     */       }
@@ -698,7 +707,7 @@
 /*     */   }
 /*     */ }
 
-/* Location:           C:\Users\alca\Desktop\雅安开发程序\istNewrisk.jar
+/* Location:           C:\Users\alca\Desktop\闆呭畨寮�鍙戠▼搴廫istNewrisk.jar
  * Qualified Name:     com.ist.aml.cust_identify.controller.T10_newClientCheckAction
  * JD-Core Version:    0.6.2
  */
