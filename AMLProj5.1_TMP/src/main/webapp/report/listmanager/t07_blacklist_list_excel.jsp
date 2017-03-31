@@ -98,10 +98,10 @@ td
 	mso-font-charset:0;
 	text-align:center;
 	vertical-align:middle;
-	border-top:.5pt solid black;
+	border-top:none;
 	border-right:none;
 	border-bottom:none;
-	border-left:.5pt solid black;
+	border-left:none;
 	mso-background-source:auto;
 	mso-pattern:auto;
 	white-space:normal;}

@@ -918,7 +918,7 @@ public class T07_BlacklistAction extends BaseAction {
 				.getBean("t07_blacklistDAO");
 		T07_Blacklist t07_blacklist = new T07_Blacklist();
 		try {
-			t07_blacklist.setIsuse("0");// 在使用
+			//t07_blacklist.setIsuse("0");// 在使用
 			t07_blacklist.setIscheck("1");//审核通过
 			t07_blacklistList = t07_blacklistDAO.getT07_BlacklistList(
 					sqlMap, t07_blacklist, this.getStartRec(intPage),
