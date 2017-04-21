@@ -350,6 +350,10 @@ private String trans_table ="";
 
 private String is_party ="1";
 
+private String searchPurpose = ""; //查询目的
+private Date terr_update_dt = null; //涉恐名单更新日期
+private String terr_update_dt_disp ="";
+
     public String getOpp_card_inf() {
 	return opp_card_inf;
 }
@@ -1683,6 +1687,24 @@ return this.opp_tx_dt_disp;
 	}
 	public void setOrgankey_new(String organkeyNew) {
 		organkey_new = organkeyNew;
+	}
+	public String getSearchPurpose() {
+		return searchPurpose;
+	}
+	public void setSearchPurpose(String searchPurpose) {
+		this.searchPurpose = searchPurpose;
+	}
+	public Date getTerr_update_dt() {
+		return terr_update_dt;
+	}
+	public void setTerr_update_dt(Date terr_update_dt) {
+		this.terr_update_dt = terr_update_dt;
+	}
+	public String getTerr_update_dt_disp() {
+		return terr_update_dt_disp;
+	}
+	public void setTerr_update_dt_disp(String terr_update_dt_disp) {
+		this.terr_update_dt_disp = terr_update_dt_disp;
 	}
 	
 }

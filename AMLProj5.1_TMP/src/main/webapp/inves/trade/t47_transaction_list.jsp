@@ -46,6 +46,23 @@ var errMsg = "";
     _Date1 = document.forms[0].tx_dt_disp.value;
     _Date2 = document.forms[0].tx_enddt_disp.value;
     
+    var purpose = "";
+    var objs = document.getElementsByName("searchPurpose");    
+	for(var i=0;i<objs.length;i++)   
+	{   
+		  if(objs[i].checked)   
+		  {   
+			   if(objs[i].value=="1")   
+			  {   
+			   purpose = "1";  
+			  }   
+			  if(objs[i].value=="2")   
+			   {   
+			   purpose = "2";
+			  }   
+		}   
+	}   
+    
     if(_Date1 == '' && _Date2 == ''){
         errMsg += "交易起止日期不能为空！";
     }      
@@ -61,13 +78,15 @@ var errMsg = "";
      alert(errMsg);
       return false; 
   }
-   errMsg = DateDiff(_Date1,_Date2,183);
+  if(purpose == "1"){
+    errMsg = DateDiff(_Date1,_Date2,183);
+  }
    if(errMsg!=''){
       alert(errMsg);
       bool = false;
       return false;
    }
-   if(document.forms[0].party_id.value ==""){
+   if(document.forms[0].party_id.value =="" && purpose == "1"){
 		errMsg+="请选择客户进行查询！";
         document.forms[0].party_id.focus();
 	}
@@ -363,13 +382,28 @@ function _Open(url){
 									<html:radio property="order" value="1" />
 									升序
 									<html:radio property="order" value="2" />
-									降序&nbsp;&nbsp;&nbsp;&nbsp;
+									降序
+								</td>
+							</tr>
+							<tr>
+								<td>
+									查询目的：
+								</td>
+								<td>
+									<html:radio property="searchPurpose" value="1" />
+									普通查询
+									<html:radio property="searchPurpose" value="2" />
+									回溯性查询
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									涉恐名单更新日期：
+									<html:text property="terr_update_dt_disp" size="12" onclick="calendar.show(this);" readonly="true" styleClass="calimg" />
+									&nbsp;&nbsp;&nbsp;&nbsp;
 									<html:hidden property="searchtype" />
-								 
 									<input type="button" name="ok" value="查 询" class="in_button1"
 										onclick="dosubmit('<%=request.getContextPath()%>/inves/trade/t47_transaction_list.do?newsearchflag=1')" />
 								</td>
 							</tr>
+							
 						</table>
 					</div>
 				</div>
