@@ -185,6 +185,8 @@ public class T47_transaction extends BaseDTO{
 	
 	private Date alert_dt=null;
 	private String rulekey="";
+	private String searchPurpose="";
+	private Date terr_update_dt = null;
 	public String getCase_kind() {
 		return case_kind;
 	}
@@ -3625,8 +3627,16 @@ public class T47_transaction extends BaseDTO{
 		trans_searchtime = transSearchtime;
 	}
 
-	public String getTrans_ip() {
-		return trans_ip;
+	public String getSearchPurpose() {
+		return searchPurpose;
+	}
+
+	public void setSearchPurpose(String searchPurpose) {
+		this.searchPurpose = searchPurpose;
+	}
+
+	public Date getTerr_update_dt() {
+		return terr_update_dt;
 	}
 
 	public void setTrans_ip(String trans_ip) {

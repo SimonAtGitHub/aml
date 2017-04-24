@@ -1947,6 +1947,12 @@
 			<isNotEmpty prepend="AND" property="opp_party_class_cd">
 				A.OPP_PARTY_CLASS_CD = #opp_party_class_cd#
 			</isNotEmpty>
+			<isEqual prepend="AND" property="searchPurpose" compareValue="2">
+				A.PARTY_ID in(
+					select t.party_id from t07_blacklist t where t.isuse = '0' and t.ischeck = '1' and list_type in ('2','21','22','23') and
+					(<![CDATA[t.create_dt = #terr_update_dt:DATE#]]>  or  <![CDATA[t.modify_dt = #terr_update_dt:DATE#]]> ))
+			</isEqual>
+			
 			<isEmpty  property="orderby">
 			ORDER BY  A.TX_DT DESC
 			</isEmpty>
@@ -2102,6 +2108,11 @@
 			<isNotEmpty prepend="AND" property="opp_party_class_cd">
 				A.OPP_PARTY_CLASS_CD = #opp_party_class_cd#
 			</isNotEmpty>
+			<isEqual prepend="AND" property="searchPurpose" compareValue="2">
+				A.PARTY_ID in(
+					select t.party_id from t07_blacklist t where t.isuse = '0' and t.ischeck = '1' and list_type in ('2','21','22','23') and
+					(<![CDATA[t.create_dt = #terr_update_dt:DATE#]]>  or  <![CDATA[t.modify_dt = #terr_update_dt:DATE#]]> ))
+			</isEqual>
 		</dynamic>
 
 	</statement>

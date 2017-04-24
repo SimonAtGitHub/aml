@@ -213,6 +213,10 @@ public class T47_transactionAction extends BaseAction {
 				form.setOrder("2");
 
 			}
+			if ("".equals(form.getSearchPurpose())) {
+				form.setSearchPurpose("1");
+
+			}
 			String searchtype = request.getParameter("searchtype");
 			String bustypecd = "";
 			if ("".equals(searchtype)) {
@@ -311,6 +315,10 @@ public class T47_transactionAction extends BaseAction {
 			{
 				form.setTx_enddt_disp(today);
 			}
+			if("".equals(form.getTerr_update_dt_disp()))
+			{
+				form.setTerr_update_dt_disp(today);
+			}
 		} catch (Exception e) {
 		
 			return actionMapping.findForward("failure");
@@ -383,6 +391,7 @@ public class T47_transactionAction extends BaseAction {
 			form.setTx_dt(DateUtils.stringToDateShort(form.getTx_dt_disp()));
 			form.setTx_dtEnd(DateUtils.stringToDateShort(form
 					.getTx_enddt_disp()));
+			form.setTerr_update_dt(DateUtils.stringToDateShort(form.getTerr_update_dt_disp()));
 			form.setDebit_credit(form.getDebit_credit_disp());
 			form.setCash_trans_flag(form.getCash_trans_flag_disp());
 			if (form.getAmt_start_search() != null
