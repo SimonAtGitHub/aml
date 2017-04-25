@@ -3638,7 +3638,14 @@ public class T47_transaction extends BaseDTO{
 	public Date getTerr_update_dt() {
 		return terr_update_dt;
 	}
-
+	
+	public void setTerr_update_dt(Date terr_update_dt) {
+		this.terr_update_dt = terr_update_dt;
+	}
+	
+	public String getTrans_ip() {
+		return trans_ip;
+	}
 	public void setTrans_ip(String trans_ip) {
 		this.trans_ip = trans_ip;
 	}
