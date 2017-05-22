@@ -1,4 +1,4 @@
-CREATE OR REPLACE PACKAGE BODY AML."PKG_ETL_ODS_TO_AML" IS
+CREATE OR REPLACE PACKAGE BODY "PKG_ETL_ODS_TO_AML" IS
 
   -- 0 停用DEBUG信息输出,1 启用DEBUG信息输出
   GV_DEBUG NUMBER := 0;
@@ -1052,9 +1052,9 @@ CREATE OR REPLACE PACKAGE BODY AML."PKG_ETL_ODS_TO_AML" IS
   * DATE       : 2007-07-25
   */
   PROCEDURE P05_T87_UNION(DTINPUTDT IN VARCHAR2) AS
-  
+
   BEGIN
-  
+
     BEGIN
       MERGE INTO T87_UNION T
       USING (SELECT trim(RH.ZFHHH) as ZFHHH,
@@ -1090,7 +1090,7 @@ CREATE OR REPLACE PACKAGE BODY AML."PKG_ETL_ODS_TO_AML" IS
            T1.UNION_NAME,
            T1.UNION_SIMPLE_NAME);
       COMMIT;
-    
+
     END;
     BEGIN
       MERGE INTO T87_UNION T
@@ -1105,7 +1105,7 @@ CREATE OR REPLACE PACKAGE BODY AML."PKG_ETL_ODS_TO_AML" IS
         UPDATE
            SET T.COUNTRY_CD        = 'CHN', --默认为 11：现代化支付系统行号
                T.CITY_CD           = F10_PBC_AREA_4_TO_6(T1.CCPC),
-               T.UNION_TYPE        = '11', --默认为 CHN                    
+               T.UNION_TYPE        = '11', --默认为 CHN
                T.UNION_NAME        = T1.UNION_NAME,
                T.UNION_SIMPLE_NAME = T1.UNION_SIMPLE_NAME
       WHEN NOT MATCHED THEN
@@ -1124,7 +1124,7 @@ CREATE OR REPLACE PACKAGE BODY AML."PKG_ETL_ODS_TO_AML" IS
            T1.UNION_NAME,
            T1.UNION_SIMPLE_NAME);
       COMMIT;
-    
+
     END;
   END;
 
@@ -1191,7 +1191,7 @@ BEGIN
       INTO LV_ORGANKEY, LV_DQDH, LV_ORGANNAME, LV_UPORGANKEY, LV_ORGANADDRESS, LV_TELEPHONE, LV_LINKMAN, LV_UNIONORGKEY, LV_WGBM;
     EXIT WHEN CURS_ORGAN%NOTFOUND;
     BEGIN
-      IF (NOT F09_ORGAN_IS_EXIST(LV_ORGANKEY)) THEN
+    IF (NOT F09_ORGAN_IS_EXIST(LV_ORGANKEY)) THEN
         LV_ORG_AREA        := F01_ETL_CODE_MAP('1010', LV_ORGANKEY);
         IF LV_ORGANKEY = '69100' THEN
           LV_ORGANLEVEL := '0'; --总行机构级别为0
@@ -1472,9 +1472,9 @@ END;
                    case when t1.jlzt='1' then '0'  when  t1.jlzt='2' then '1'  when  t1.jlzt='0' then '4' end as party_status_cd
              FROM ODS.ODS_DGKHXXWJ T1 ) T2
       ON ( T.PARTY_ID = T2.KHDH )
-      WHEN MATCHED THEN
+      /*WHEN MATCHED THEN
          UPDATE SET T.LAST_UPD_DT = LV_INPUTDT,
-                    T.LAST_UPD_USER = 'ADMIN'
+                    T.LAST_UPD_USER = 'ADMIN'*/
       WHEN NOT MATCHED THEN
         INSERT (T.PARTY_ID,           --客户号
                 T.HOST_CUST_ID,       --客户号
@@ -1529,7 +1529,46 @@ END;
                 T2.ORGANKEY,
                 t2.party_status_cd );
         COMMIT;
+        --更新对公客户信息
+        MERGE INTO T47_PARTY T
+        USING ( SELECT 'KHK' || T1.KHDH AS KHDH,      --客户号
+                   T1.DQDH || T1.KHJGDH AS ORGANKEY,    --开户机构
+                   '99' AS AML1_TYPE_CD,             --aml类型1
+                   '01' AS AML2_TYPE_CD,             --aml类型2
+                   T1.KHMC,      --客户名称
+                   T1.YWMC1,      --英文名称
+                   CASE WHEN F01_ETL_CODE_MAP('1023',T1.ZJZL) IS NULL THEN '22'
+                        ELSE F01_ETL_CODE_MAP('1023',T1.ZJZL) END
+                   AS CARD_TYPE,                  --证件类型
+                   CASE WHEN LENGTH(T1.ZJHM) = 10 AND T1.ZJHM LIKE '%-%' THEN REPLACE(T1.ZJHM,'-','')
+                        ELSE T1.ZJHM END AS ZJHM,       --证件号码
+                   'CHN' AS COUNTRY_CD ,              --所属国家
+                   T1.KHRQ,        --开户日期
+                   case when lengthb(SUBSTR(ZZHM, 1, 6))=length(SUBSTR(ZZHM, 1, 6)) then SUBSTR(ZZHM,1,6) end AS COUNTRY_RESIDENCE,
+                   T1.BGDZ AS ADDR1,
+                   CASE WHEN LENGTH(T1.DHHM)<>11 OR (LENGTH(T1.DHHM)=11 AND T1.DHHM LIKE '0%') THEN T1.DHHM END AS TEL_NO,
+                   CASE WHEN LENGTH(T1.DHHM)=11 AND T1.DHHM NOT LIKE '0%' THEN T1.DHHM END AS CELL_NO,
+                   case when t1.jlzt='1' then '0'  when  t1.jlzt='2' then '1'  when  t1.jlzt='0' then '4' end as party_status_cd
+                   FROM ODS.ODS_DGKHXXWJ T1 WHERE T1.GXRQ =LV_INPUTDT) T2
+            ON ( T.PARTY_ID = T2.KHDH)
+            WHEN MATCHED THEN
+               UPDATE SET T.ORGANKEY = T2.ORGANKEY,
+                          T.PARTY_CHN_NAME = T2.KHMC,
+                          T.ADDR1 = T2.ADDR1,
+                          T.CARD_NO = T2.ZJHM,
+                          T.LAST_UPD_DT = LV_INPUTDT,
+                          T.LAST_UPD_USER = 'ADMIN';
 
+       COMMIT;
+
+       --更新对公客户号下无有效账户（无账户或账户已全部销户）的默认1001
+       UPDATE T37_PARTY_RESULT T
+          SET T.FRISTAPPRALEVEL = '1001', T.EMENDATIONLEVEL = '1001'
+        WHERE T.PARTY_ID IN (SELECT T.PARTY_ID
+                        FROM T47_PARTY T
+                       WHERE PARTY_CLASS_CD = 'C'
+                         AND PARTY_STATUS_CD <> '0');
+       COMMIT;
   END;
 
   /**
@@ -1546,21 +1585,21 @@ END;
     LV_INPUTDT DATE := F03_STRINGTODATE(DTINPUTDT, 'YYYY-MM-DD');
     V_SQL1     VARCHAR2(100);
     V_SQL2     VARCHAR2(100);
-  
+
     CURSOR CURS_DSBIRTH_DT IS
       SELECT T.PARTY_ID, SUBSTR(T.ZJHM, 7, 8) AS BIRTH_DT
         FROM ODS.ODS_DSKHB T
        WHERE LENGTH(T.ZJHM) = 18;
-  
+
     LV_PARTY_ID ODS.ODS_DSKHB.PARTY_ID%TYPE;
     LV_BIRTH_DT VARCHAR2(8);
-  
+
   BEGIN
     V_SQL1 := 'TRUNCATE TABLE DSKHRQ_TEMP';
     V_SQL2 := 'TRUNCATE TABLE DSBIRTH_DT';
     EXECUTE IMMEDIATE V_SQL1;
     EXECUTE IMMEDIATE V_SQL2;
-  
+
     OPEN CURS_DSBIRTH_DT;
     LOOP
       FETCH CURS_DSBIRTH_DT
@@ -1576,8 +1615,65 @@ END;
       END;
     END LOOP;
     CLOSE CURS_DSBIRTH_DT;
-  
+
+    --对私客户有活期账户归入最近开户的活期账户机构
     INSERT INTO DSKHRQ_TEMP
+      SELECT PARTY_ID, KHRQ, KHJGDH
+        FROM (SELECT ROW_NUMBER() OVER(PARTITION BY A.PARTY_ID ORDER BY NVL(B.KHRQ,to_date('19000101','yyyymmdd')) DESC ) AS NUM,
+                     A.PARTY_ID,
+                     B.KHRQ,
+                     B.DQDH || B.JGDH AS KHJGDH
+                FROM ODS.ODS_DSKHXXWJ A
+                INNER JOIN (SELECT NVL(KHDH, ZHDH) AS ZHDH, KHRQ, DQDH, JGDH
+                            FROM ODS.ODS_DSHQZWJ where jlzt NOT IN('0','2')
+                          ) B ON (A.ZHDH = B.ZHDH))
+       WHERE NUM = 1;
+       commit;
+
+    --对私客户没有活期账户归入到最近开户机构
+    INSERT INTO DSKHRQ_TEMP
+    select T2.PARTY_ID,T2.KHRQ, T2.KHJGDH FROM (
+      SELECT PARTY_ID, KHRQ, KHJGDH
+        FROM (SELECT ROW_NUMBER() OVER(PARTITION BY A.PARTY_ID ORDER BY NVL(B.KHRQ,to_date('19000101','yyyymmdd')) DESC) AS NUM,
+                     A.PARTY_ID,
+                     B.KHRQ,
+                     B.DQDH || B.JGDH AS KHJGDH
+                FROM ODS.ODS_DSKHXXWJ A
+                INNER JOIN (SELECT NVL(KHDH, ZHDH) AS ZHDH, KHRQ, DQDH, JGDH
+                            FROM ODS.ODS_DQZWJ
+                           WHERE KMDH LIKE '2112%' and jlzt NOT IN('0','2')) B ON (A.ZHDH = B.ZHDH))
+       WHERE NUM = 1) T2 WHERE NOT EXISTS (select 1 from DSKHRQ_TEMP T1 WHERE T2.PARTY_ID = T1.PARTY_ID);
+    commit;
+
+    --对私客户号下无有效账户（无账户或账户已全部销户）的默认1001
+    UPDATE T37_PARTY_RESULT T
+       SET T.FRISTAPPRALEVEL = '1001', T.EMENDATIONLEVEL = '1001'
+     WHERE T.PARTY_ID IN
+       (SELECT T1.PARTY_ID
+          FROM T37_PARTY_RESULT T1
+         WHERE NOT EXISTS
+         (SELECT 1 FROM DSKHRQ_TEMP T2 WHERE T1.PARTY_ID = T2.PARTY_ID)
+           AND T1.PARTY_CLASS_CD = 'I');
+    COMMIT;
+
+    --对私客户已经销户的客户
+    INSERT INTO DSKHRQ_TEMP
+    select T2.PARTY_ID,T2.KHRQ, T2.KHJGDH FROM (
+      SELECT PARTY_ID, KHRQ, KHJGDH
+        FROM (SELECT ROW_NUMBER() OVER(PARTITION BY A.PARTY_ID ORDER BY NVL(B.KHRQ,to_date('19000101','yyyymmdd')) DESC) AS NUM,
+                     A.PARTY_ID,
+                     B.KHRQ,
+                     B.DQDH || B.JGDH AS KHJGDH
+                FROM ODS.ODS_DSKHXXWJ A
+                INNER JOIN (SELECT NVL(KHDH, ZHDH) AS ZHDH, KHRQ, DQDH, JGDH
+                            FROM ODS.ODS_DSHQZWJ where jlzt='2'
+                            UNION ALL
+                             SELECT NVL(KHDH, ZHDH) AS ZHDH, KHRQ, DQDH, JGDH
+                              FROM ODS.ODS_DQZWJ
+                             WHERE KMDH LIKE '2112%' and jlzt ='2') B ON (A.ZHDH = B.ZHDH))
+       WHERE NUM = 1) T2 WHERE NOT EXISTS (select 1 from DSKHRQ_TEMP T1 WHERE T2.PARTY_ID = T1.PARTY_ID);
+    commit;
+    /*INSERT INTO DSKHRQ_TEMP
       SELECT PARTY_ID, KHRQ, KHJGDH
         FROM (SELECT ROW_NUMBER() OVER(PARTITION BY A.PARTY_ID ORDER BY B.KHRQ) AS NUM,
                      A.PARTY_ID,
@@ -1585,14 +1681,14 @@ END;
                      A.KHDQDH || A.KHJGDH AS KHJGDH
                 FROM ODS.ODS_DSKHXXWJ A
                 LEFT JOIN (SELECT NVL(KHDH, ZHDH) AS ZHDH, KHRQ
-                            FROM ODS.ODS_DSHQZWJ
+                            FROM ODS.ODS_DSHQZWJ where jlzt<>'2'
                           UNION ALL
                           SELECT NVL(KHDH, ZHDH) AS ZHDH, KHRQ
                             FROM ODS.ODS_DQZWJ
-                           WHERE KMDH LIKE '2112%') B ON (A.ZHDH = B.ZHDH))
+                           WHERE KMDH LIKE '2112%' and jlzt<>'2') B ON (A.ZHDH = B.ZHDH))
        WHERE NUM = 1;
-       commit;
-       
+       commit;*/
+
     MERGE INTO T47_PARTY T
     USING ( SELECT T1.PARTY_ID, --客户代号
                    'I' AS PARTY_CLASS_CD, --客户类型，对私客户 I
@@ -1624,9 +1720,9 @@ END;
             LEFT JOIN ODS.ODS_DSKHBCB D ON T1.PARTY_ID=D.ZJZL||D.ZJHM
             where exists(select 1 from ODS.ODS_DSKHXXWJ t2 where t1.PARTY_ID=t2.PARTY_ID))  T3
     ON ( T.PARTY_ID = T3.PARTY_ID )
-    WHEN MATCHED THEN
+    /*WHEN MATCHED THEN
          UPDATE SET LAST_UPD_DT = LV_INPUTDT,
-                    LAST_UPD_USER = 'ADMIN'
+                    LAST_UPD_USER = 'ADMIN'*/
     WHEN NOT MATCHED THEN
          INSERT  ( T.PARTY_ID,
                    T.HOST_CUST_ID,
@@ -1682,6 +1778,41 @@ END;
                    T3.ORGANKEY);
     COMMIT;
 
+    --更新对私客户信息
+    MERGE INTO T47_PARTY T
+    USING ( SELECT T1.PARTY_ID, --客户代号
+                   T1.ZWXM AS PARTY_CHN_NAME, --中文姓名
+                   CASE WHEN F01_ETL_CODE_MAP('1023',T1.ZJZL) IS NULL THEN '15'
+                        ELSE F01_ETL_CODE_MAP('1023',T1.ZJZL) END
+                   AS CARD_TYPE,  --证件种类
+                   T1.ZJHM AS CARD_NO, --证件号码
+                   CASE WHEN D.GJ IS NOT NULL THEN D.GJ
+                        WHEN F01_ETL_CODE_MAP('1024',T1.ZJZL) IS NULL THEN 'CHN'
+                        ELSE F01_ETL_CODE_MAP('1024',T1.ZJZL) END
+                   AS COUNTRY_CD,          --所属国家
+                   T1.DZ1 AS ADDR1 ,
+                   case when length(nvl(nvl(nvl(yddh,jtdh),bgdh),jtdh))<>11  OR (length(nvl(nvl(nvl(yddh,jtdh),bgdh),jtdh))=11 AND nvl(nvl(nvl(yddh,jtdh),bgdh),jtdh) LIKE '0%') then nvl(nvl(nvl(yddh,jtdh),bgdh),jtdh) end AS TEL_NO,
+                   case when length(nvl(nvl(nvl(yddh,jtdh),bgdh),jtdh))=11 AND nvl(nvl(nvl(yddh,jtdh),bgdh),jtdh) NOT LIKE '0%' then nvl(nvl(nvl(yddh,jtdh),bgdh),jtdh) end AS CELL_NO,
+                   B.khrq AS CREATE_DT,
+                   B.KHJGDH AS ORGANKEY
+            FROM ODS.ODS_DSKHB T1 left join DSKHRQ_TEMP b on(t1.PARTY_ID=b.PARTY_ID) left join DSBIRTH_DT c on (t1.PARTY_ID=c.PARTY_ID)
+            LEFT JOIN ODS.ODS_DSKHBCB D ON T1.PARTY_ID=D.ZJZL||D.ZJHM
+            where exists(select 1 from ODS.ODS_DSKHXXWJ t2 where t1.PARTY_ID=t2.PARTY_ID) AND T1.GXRQ = LV_INPUTDT)  T3
+    ON ( T.PARTY_ID = T3.PARTY_ID )
+    WHEN MATCHED THEN
+         UPDATE SET T.PARTY_CHN_NAME = T3.PARTY_CHN_NAME,
+                    T.COUNTRY_CD = T3.COUNTRY_CD,
+                    T.ADDR1 = T3.ADDR1,
+                    T.TEL_NO = T3.TEL_NO,
+                    T.CELL_NO = T3.CELL_NO,
+                    T.CARD_TYPE = T3.CARD_TYPE,
+                    T.CARD_NO = T3.CARD_NO,
+                    T.CREATE_DT = T3.CREATE_DT,--更新开户日期
+                    T.ORGANKEY = T3.ORGANKEY,--更新归属机构
+                    LAST_UPD_DT = LV_INPUTDT,
+                    LAST_UPD_USER = 'ADMIN';
+    COMMIT;
+
     /*UPDATE T47_PARTY T
     SET T.ORGANKEY = ( SELECT MIN(T1.KHDQDH || T1.KHJGDH)
                        FROM ODS.ODS_DSKHXXWJ T1
@@ -1718,7 +1849,7 @@ END;
   * DATE       : 2007-08-27
   */
   PROCEDURE P20_T47_CORPORATION(DTINPUTDT IN VARCHAR2,TASKKEY IN VARCHAR2) AS
-
+    LV_INPUTDT DATE := F03_STRINGTODATE(DTINPUTDT, 'YYYY-MM-DD');
   BEGIN
        MERGE INTO T47_CORPORATION T
        USING ( SELECT 'KHK' || T1.KHDH AS PARTY_ID,
@@ -1739,7 +1870,9 @@ END;
                       case when ZCSXQX=to_date('18991231','yyyymmdd') then null else ZCSXQX end AS ISSUE_LICENSE_DT,
                       case when ZCYXQX=to_date('18991231','yyyymmdd') then null else ZCYXQX end AS LICENCE_END_DT,
                       qyjyfw AS MAIN_MANAGE_SCOPE ,
-                      T1.FRZJZL||T1.FRZJHM as LEGAL_PARTY_ID
+                      T1.FRZJZL||T1.FRZJHM as LEGAL_PARTY_ID,
+                      T1.YWMC2 AS NATION_AFFAIR_NO,
+                      T1.YWDZ2 AS LOCAL_AFFAIR_NO
                FROM ODS.ODS_DGKHXXWJ T1 ) T2
        ON ( T.PARTY_ID = T2.PARTY_ID )
       /* WHEN MATCHED THEN
@@ -1758,7 +1891,9 @@ END;
                    T.LICENCE_END_DT,
                    T.MAIN_MANAGE_SCOPE,
                    T.INCOME_DT,
-                   T.LEGAL_PARTY_ID)
+                   T.LEGAL_PARTY_ID,
+                   T.NATION_AFFAIR_NO,
+                   T.LOCAL_AFFAIR_NO)
             VALUES ( T2.PARTY_ID,
                      T2.INDUSTRYKEY,
                      T2.ZJHM,
@@ -1777,9 +1912,47 @@ END;
                      T2.LICENCE_END_DT,
                      T2.MAIN_MANAGE_SCOPE,
                      F03_STRINGTODATE(DTINPUTDT, 'YYYY-MM-DD'),
-                     T2.LEGAL_PARTY_ID);
+                     T2.LEGAL_PARTY_ID,
+                     T2.NATION_AFFAIR_NO,
+                     T2.LOCAL_AFFAIR_NO);
        COMMIT;
 
+       --更新对公客户信息
+       MERGE INTO T47_CORPORATION T
+       USING ( SELECT 'KHK' || T1.KHDH AS PARTY_ID,
+                      CASE WHEN F01_ETL_CODE_MAP('1025',T1.SSHY) IS NULL THEN '2O' --默认为 其他：2O
+                            ELSE F01_ETL_CODE_MAP('1025',T1.SSHY) END
+                      AS INDUSTRYKEY,   --行业
+                      T1.ZJHM, --注册证号
+                      T1.ZCZJ, --注册资本
+                      CASE WHEN F01_ETL_CODE_MAP('1006',T1.ZCHBZL) IS NULL THEN 'CNY' --默认为人民币
+                           ELSE F01_ETL_CODE_MAP('1006',T1.ZCHBZL) END
+                      AS ENROL_FUND_CURRENCY_CD, --注册资本币别代码
+                      T1.FRMC,
+                      CASE WHEN F01_ETL_CODE_MAP('1023',T1.FRZJZL) IS NULL THEN '22'
+                           ELSE F01_ETL_CODE_MAP('1023',T1.FRZJZL) END
+                      AS LEGAL_CARD_TYPE,       --法人证件类型
+                      T1.FRZJHM,
+                      T1.DQDH || T1.KHJGDH AS ORGANKEY,
+                      case when ZCSXQX=to_date('18991231','yyyymmdd') then null else ZCSXQX end AS ISSUE_LICENSE_DT,
+                      case when ZCYXQX=to_date('18991231','yyyymmdd') then null else ZCYXQX end AS LICENCE_END_DT,
+                      qyjyfw AS MAIN_MANAGE_SCOPE ,
+                      T1.FRZJZL||T1.FRZJHM as LEGAL_PARTY_ID,
+                      T1.YWMC2 AS NATION_AFFAIR_NO,
+                      T1.YWDZ2 AS LOCAL_AFFAIR_NO
+               FROM ODS.ODS_DGKHXXWJ T1 WHERE T1.GXRQ = LV_INPUTDT) T2
+       ON ( T.PARTY_ID = T2.PARTY_ID )
+       WHEN MATCHED THEN
+            UPDATE SET T.MAIN_MANAGE_SCOPE = T2.MAIN_MANAGE_SCOPE,
+                       T.BUSINESS_LICENCE = T2.ZJHM,
+                       T.LICENCE_END_DT = T2.LICENCE_END_DT,
+                       T.LEGAL_OBJ = T2.FRMC,
+                       T.NATION_AFFAIR_NO = T2.NATION_AFFAIR_NO,
+                       T.LOCAL_AFFAIR_NO = T2.LOCAL_AFFAIR_NO,
+                       T.LAST_UPD_DT = LV_INPUTDT,
+                       T.LAST_UPD_USER = 'ADMIN';
+
+       COMMIT;
   END;
 
   /**
@@ -1796,7 +1969,7 @@ END;
   *
   */
   PROCEDURE P30_T47_INDIVIDUAL(DTINPUTDT IN VARCHAR2, TASKKEY IN VARCHAR2) AS
-
+   LV_INPUTDT DATE := F03_STRINGTODATE(DTINPUTDT, 'YYYY-MM-DD');
    V_SQL1 varchar2(100);
  BEGIN
 
@@ -1832,6 +2005,7 @@ END;
                          ELSE F01_ETL_CODE_MAP('1028',nvl(b.zy,T1.ZY)) END
                     AS OCCUPATION,
                     B.SFZYXQ AS CARD_END_DT, --证件到期日,
+                    T1.xb AS gender,
                     nvl(F01_ETL_CODE_MAP('1025',c.hy),b.zy) as industry
                FROM ODS.ODS_DSKHB T1
                left join ods.ods_dskhbcb b on T1.party_id = b.zjzl || b.zjhm
@@ -1844,10 +2018,12 @@ END;
            INSERT ( T.PARTY_ID ,  --当事人编号
                     T.OCCUPATION,  --职业
                     T.CARD_END_DT,--证件到期日
+                    T.GENDER,
                     T.INDUSTRY  )
            VALUES ( T2.PARTY_ID, --当事人编号
                     T2.OCCUPATION,  --职业
                     T2.CARD_END_DT,--证件到期日
+                    T2.GENDER,
                     T2.INDUSTRY);
       COMMIT;
 
@@ -1860,6 +2036,27 @@ END;
       UPDATE
          SET T.OBJORGANKEY = T2.ORGANKEY;
     COMMIT;
+
+    --更新个人客户信息
+     MERGE INTO T47_INDIVIDUAL T        --AML个人信息表
+      USING (SELECT T1.PARTY_ID ,          --当事人编号
+                    CASE WHEN F01_ETL_CODE_MAP('1028',nvl(b.zy,T1.ZY)) IS NULL THEN '1H'   --默认为 1H:不便分类的其他劳动者
+                         ELSE F01_ETL_CODE_MAP('1028',nvl(b.zy,T1.ZY)) END
+                    AS OCCUPATION,
+                    B.SFZYXQ AS CARD_END_DT, --证件到期日,
+                    T1.xb AS gender
+               FROM ODS.ODS_DSKHB T1
+               left join ods.ods_dskhbcb b on T1.party_id = b.zjzl || b.zjhm
+               left join DSKHHY_TEMP c on t1.zjzl||t1.zjhm =c.zjzl||c.zjhm
+               where exists(select 1 from ODS.ODS_DSKHXXWJ t2 where t1.PARTY_ID=t2.PARTY_ID) AND T1.gxrq = LV_INPUTDT) T2
+      ON (T2.PARTY_ID = T.PARTY_ID)
+      WHEN MATCHED THEN
+        UPDATE SET T.GENDER = T2.GENDER,
+                   T.OCCUPATION = T2.OCCUPATION,
+                   T.CARD_END_DT = T2.CARD_END_DT,
+                   T.LAST_UPD_DT = LV_INPUTDT,
+                   T.LAST_UPD_USER = 'ADMIN';
+      COMMIT;
 
   END;
 
@@ -2581,10 +2778,10 @@ END;
          AND JYJE >= 0 --交易金额小于0的不纳入反洗钱系统
          AND ((BCZBZ = '1' AND CBBZ <> '0') OR --排除bczbz +被冲帐标志和cbbz+冲补标志的组合：1，0和0，1
              (BCZBZ = '0' AND CBBZ <> '1'))
-         AND NOT (JYJGDH = '101' AND QDZL <> '204')
-         AND NOT (JYJGDH = '102' AND QDZL <> '204')
-         AND NOT (JYJGDH = '103' AND QDZL <> '204')
-         AND NOT (JYJGDH = '104' AND QDZL <> '204');
+         --AND JYJGDH <> '101'
+         AND JYJGDH <> '102'
+         AND JYJGDH <> '103'
+         AND JYJGDH <> '104';
 
     --定义游标中的各个字段的变量
     LV_TRANSACTIONKEY     T47_TRANS_TEMP.TRANSACTIONKEY%TYPE;
@@ -3489,7 +3686,8 @@ END;
                    CASE WHEN T2.DFZH IS NULL THEN NULL
                         ELSE 'ZH' || T2.DFZH END,
                    NULL,
-                   T2.DFZH,
+                   CASE WHEN T2.DFZH IS NULL THEN T2.JSZH
+                        ELSE T2.DFZH END, --无对方账号，取清算内部帐
                    NULL,
                    NULL,
                    '0',
@@ -4939,6 +5137,19 @@ END;
         WHEN OTHERS THEN
           V_RULE_TYPE := NULL;
       END;
+
+      --判断交易对手为本行客户，且在白名单内
+      IF V_RULE_TYPE IS NULL THEN
+        SELECT RULE_TYPE
+          INTO V_RULE_TYPE
+          FROM T07_WHITELIST_INFO A
+         WHERE A.ISUSE = '0'
+           AND A.ISCHECK = '1'
+           AND A.PARTY_ID = V_OPP_PARTY_ID;
+      END IF;
+      EXCEPTION
+        WHEN OTHERS THEN
+          V_RULE_TYPE := NULL;
 
       IF F19_IS_FILTER_ACCT_NUM(LV_ACCT_NUM,'07') OR V_RULE_TYPE ='3' THEN
            V_RE_IND := '0';
