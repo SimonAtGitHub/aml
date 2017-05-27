@@ -124,7 +124,7 @@
 			<statement id="insertT10_CHECKPARTY_NEW"
 				parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty" resultClass="int">
 				INSERT INTO T10_CHECKPARTY_NEW
-				(PARTY_ID,HOST_CUST_ID,PARTY_CLASS_CD,PARTY_CHN_NAME,CARD_TYPE,CARD_NO,ORGANKEY,CREATE_DT,PARTY_STATUS_CD,AML1_TYPE_CD,CHECK_STATUS
+				(PARTY_ID,HOST_CUST_ID,PARTY_CLASS_CD,PARTY_CHN_NAME,CARD_TYPE,CARD_NO,ORGANKEY,CREATE_DT,PARTY_STATUS_CD,AML1_TYPE_CD,CHECK_STATUS)
 				VALUES 
 				(#party_id#,#host_cust_id#,#party_class_cd#,#party_chn_name#,#card_type#,#card_no#,#organkey#,#create_dt#,#party_status_cd#,#aml1_type_cd#,#check_status#)
 			</statement>
