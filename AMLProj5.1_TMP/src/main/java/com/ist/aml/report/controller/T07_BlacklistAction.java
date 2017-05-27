@@ -250,7 +250,7 @@ public class T07_BlacklistAction extends BaseAction {
 			String lt = "m_list_type_b";
 			LinkedHashMap m_list_typeMap = cm.getMapFromCache(lt);
 			m_list_typeMap.put("10", "客户实际控制人或实际收益人属前5项");
-			m_list_typeMap.put("11", "客户多次设计可疑交易报告");
+			m_list_typeMap.put("11", "客户多次涉及可疑交易报告");
 			// start modify lixx 2011.09.26 名单管理 流程添加是否有审核操作
 
 			// 审批状态
