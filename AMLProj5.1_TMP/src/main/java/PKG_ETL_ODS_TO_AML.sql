@@ -1183,7 +1183,7 @@ CREATE OR REPLACE PACKAGE BODY "PKG_ETL_ODS_TO_AML" IS
     LV_report_organkey VARCHAR2(15);
 BEGIN
 
-  LV_REPORT_ORGANKEY := '010115117002477';
+  LV_REPORT_ORGANKEY := '010115118017417';
 
   OPEN CURS_ORGAN;
   LOOP
@@ -1454,7 +1454,8 @@ END;
     MERGE INTO T47_PARTY T
     USING ( SELECT 'KHK' || T1.KHDH AS KHDH,      --客户号
                    T1.DQDH || T1.KHJGDH AS ORGANKEY,    --开户机构
-                   '99' AS AML1_TYPE_CD,             --aml类型1
+                   CASE WHEN t1.jmbz = '01' THEN '98'
+                        ELSE '99' END AS AML1_TYPE_CD,             --aml类型1
                    '01' AS AML2_TYPE_CD,             --aml类型2
                    T1.KHMC,      --客户名称
                    T1.YWMC1,      --英文名称
@@ -4801,7 +4802,9 @@ END;
      V_ZYDH                                      T47_TRANS_TEMP.ZYDH%TYPE;
      V_TX_NO                                     T47_TRANS_TEMP.TX_NO%TYPE;
      V_RULE_TYPE                                 T07_WHITELIST_INFO.RULE_TYPE%TYPE;
-
+     V_AML1_TYPE_CD                              T47_PARTY.AML1_TYPE_CD%TYPE;
+     V_OPP_AML1_TYPE_CD                          T47_PARTY.AML1_TYPE_CD%TYPE;
+     V_COUNT_LOAN_ACCT                           NUMBER;
      LV_INPUTDT DATE := F03_STRINGTODATE(DTINPUTDT, 'YYYY-MM-DD');
 
 
@@ -5129,8 +5132,25 @@ END;
       END IF;
 
       --处理是否跨境交易
+      SELECT AML1_TYPE_CD
+        INTO V_AML1_TYPE_CD
+        FROM T47_PARTY T
+       WHERE T.PARTY_ID = LV_PARTY_ID;
+       
+      V_OPP_AML1_TYPE_CD := '01';
+      
+      IF LV_OPP_ISPARTY = '1' THEN
+        SELECT AML1_TYPE_CD
+        INTO V_OPP_AML1_TYPE_CD
+        FROM T47_PARTY T
+       WHERE T.PARTY_ID = V_OPP_PARTY_ID;
+      END IF;
+      
       V_OVERAREA_IND := CASE  WHEN V_OVERAREA_IND IS NOT NULL THEN V_OVERAREA_IND
                               ELSE CASE WHEN V_OPP_COUNTRY IS NOT NULL AND V_OPP_COUNTRY <> 'CHN' THEN '1'
+                                        WHEN V_AML1_TYPE_CD = '02' THEN '1'
+                                        WHEN V_OPP_AML1_TYPE_CD = '02' OR V_OPP_AML1_TYPE_CD = '98' THEN '1'
+                                        WHEN LV_OPP_ACCT_NUM LIKE '%NRA%' OR LV_OPP_ACCT_NUM LIKE '%OSA%' OR LV_OPP_ACCT_NUM LIKE '%FT%' THEN '1'
                                         ELSE '0' END
                         END;
 
@@ -5215,6 +5235,17 @@ END;
           V_AGENT_CARD_NO   := NULL;
           V_AGENT_COUNTRY   := NULL;
       END;
+
+      --本行境内同名账户之间的划转不作为大额监测
+      V_COUNT_LOAN_ACCT := 0;
+      IF LV_OPP_ISPARTY = '1' THEN
+        SELECT COUNT(*) INTO V_COUNT_LOAN_ACCT
+        FROM ODS.ODS_DKHZWJ WHERE ZHDH IN (LV_ACCT_NUM,LV_OPP_ACCT_NUM);
+      END IF;
+      
+      IF LV_OPP_ISPARTY = '1' AND LV_PARTY_ID = V_OPP_PARTY_ID AND V_COUNT_LOAN_ACCT = 0 THEN
+        V_RULE_IND := '2';
+      END IF;
 
       UPDATE T47_TRANS_TEMP SET
              TX_CD                         = V_TX_CD,
