@@ -1837,7 +1837,7 @@ public class T07_case_applicationAction extends BaseAction {
 
 			//失效日期
 			
-			String invalid_dt=this.getWorkDate(sqlMap,data_dt, "5", "C");//中国人民银行令〔2016〕第3号令修改报送期限为T+5		
+			String invalid_dt=this.getWorkDate(sqlMap,data_dt, "10", "C");
 			t07_case_application.setCase_date(data_dt);//案例时间
 			t07_case_application.setCase_end_date(DateUtils.stringToDateShort(invalid_dt));//案例失效时间
 			Date now=DateUtils.stringToDateShort(DateUtils.dateToStringShort(new Date()));
