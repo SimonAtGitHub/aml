@@ -39,4 +39,9 @@
 	<bean id="t07_inrep_bh_usd_staDAO" parent="baseDAO" class="com.ist.aml.inves.dao.T07_INREP_BH_usd_staDAO" ></bean>
 	<bean id="t07_inrep_bh_sum_repDAO" parent="baseDAO" class="com.ist.aml.inves.dao.T07_INREP_BH_sum_repDAO" ></bean>
 	<bean id="t07_inrep_bh_sum_staDAO" parent="baseDAO" class="com.ist.aml.inves.dao.T07_INREP_BH_sum_staDAO" ></bean>
+	
+	<!-- start of Dowjons Templet added by liuzhipeng -->
+	<bean id="t52_def_tempDAO" parent="baseDAO" class="com.ist.aml.blacklist.dao.T52_def_tempDAO" ></bean>
+	<bean id="t52_def_remountDAO" parent="baseDAO" class="com.ist.aml.blacklist.dao.T52_def_remountDAO" ></bean>
+	<!-- End of Dowjons Templet added by liuzhipeng -->
 </beans>

@@ -304,5 +304,10 @@
 	<sqlMap resource="com/ist/aml/inves/sqlmap/T07_INREP_BH_sum_sta.xml" />
 
 	<sqlMap resource="com/ist/aml/report/sqlmap/T07_cd_apply.xml"/>
-	
+	<!-- add by liuzhipeng begin -->
+    <!-- 名单模板 -->
+    <sqlMap resource="com/ist/aml/blacklist/sqlmap/T52_def_temp.xml"/>
+    <!-- 回溯结果显示 -->
+    <sqlMap resource="com/ist/aml/blacklist/sqlmap/T52_def_remount.xml"/>
+    <!-- add by liuzhipeng end -->
 </sqlMapConfig>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T52_def_temp">
+	<statement id="getT52_def_tempList" parameterClass="com.ist.aml.blacklist.dto.T52_def_temp"
+		resultClass="com.ist.aml.blacklist.dto.T52_def_temp">
+		SELECT B.*
+		FROM T52_B_DEF_TEMP B WHERE 1=1
+		<dynamic>
+			<isNotEmpty prepend="AND" property="templatename"> TEMPLATENAME
+				LIKE '%'||#templatename#||'%' </isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				PARTY_CLASS_CD = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt_start"> 
+			<![CDATA[CREATE_DT >= #create_dt_start# ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt_end"> <![CDATA[CREATE_DT <= 
+					#create_dt_end# ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="flag">
+				FLAG = #flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="coverflag">
+				COVERFLAG = #coverflag#
+			</isNotEmpty>
+		</dynamic>
+		order by b.CALCULATESEQ desc
+	</statement>
+
+	<statement id="getT52_def_tempListCount" parameterClass="com.ist.aml.blacklist.dto.T52_def_temp"
+		resultClass="int">
+		SELECT COUNT(1)
+		FROM T52_B_DEF_TEMP B WHERE 1=1
+		<dynamic>
+			<isNotEmpty prepend="AND" property="templatename"> TEMPLATENAME
+				LIKE '%'||#templatename#||'%' </isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				PARTY_CLASS_CD = #party_class_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt_start"> <![CDATA[CREATE_DT >= #create_dt_start# ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt_end"> <![CDATA[CREATE_DT <= 
+					#create_dt_end# ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="flag">
+				FLAG = #flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="coverflag">
+				COVERFLAG = #coverflag#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+
+	<statement id="insertT52_b_def_temp" parameterClass="com.ist.aml.blacklist.dto.T52_def_temp"
+		resultClass="int">
+		INSERT INTO T52_B_DEF_TEMP T
+		  (T.TEMPLATEKEY,
+		   T.TEMPLATENAME,
+		   T.DES,
+		   T.GRANULARITY,
+		   T.FLAG,
+		   T.MODIFY_USER,
+		   T.MODIFY_DT,
+		   T.CREATE_USER,
+		   T.CREATE_DT,
+		   T.CREATE_ORG,
+		   T.IS_BUILD,
+		   T.COVERFLAG,
+		   T.CALCULATESEQ,
+		   T.PARTY_CLASS_CD,
+		   T.MATCHCONDITION, 
+		   T.MODULETYPE
+		   )
+		VALUES
+			(#templatekey#, #templatename#,#des#, #granularity#, #flag#,
+			#modify_user#, #modify_dt#, #create_user#, #create_dt#, #create_org#,
+			#is_build#, #coverflag#, #calculateseq#, #party_class_cd#, #matchcondition#,
+			#moduletype#
+			)
+		
+	</statement>
+
+	
+	<!-- 取单条明细操作 -->
+	<statement id="getT52_def_tempDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.blacklist.dto.T52_def_temp"> 
+		SELECT * FROM T52_B_DEF_TEMP WHERE TEMPLATEKEY=#value# 
+	</statement>
+
+	<!-- 基本信息修改 -->
+	<statement id="modifyT52_def_temp" parameterClass="com.ist.aml.blacklist.dto.T52_def_temp" 
+		resultClass="int"> 
+		update T52_b_def_temp set 
+		calculateseq=#calculateseq#,des=#des#,granularity=#granularity#,modify_dt=#modify_dt#,modify_user=#modify_user#, 
+		templatename=#templatename#,coverflag=#coverflag#, matchcondition = #matchcondition#
+		where TEMPLATEKEY=#templatekey# 
+	</statement>
+	
+	<!-- 模板执行粒度 -->
+	 <statement id="getT52_def_temp_granList" parameterClass="java.lang.String" resultClass="com.ist.aml.blacklist.dto.T52_def_temp"> 
+		SELECT B.TEMPLATEKEY, B.SQLKEY, B.ROSTER_TABLE, B.DATAGRANULARITY 
+		FROM T52_B_DEF_TEMP A, T52_B_DEF_TEMP_GRAN B WHERE A.TEMPLATEKEY = B.TEMPLATEKEY 
+		AND A.TEMPLATEKEY=#value# 
+	</statement>
+	
+	<!-- 执行粒度模板添加 -->
+	<statement id="insertT52_b_def_temp_gran" parameterClass="com.ist.aml.blacklist.dto.T52_def_temp"
+		resultClass="int">
+		INSERT INTO T52_B_DEF_TEMP_GRAN T 
+			(T.TEMPLATEKEY, T.SQLKEY, T.ROSTER_TABLE, T.DATAGRANULARITY, T.SQLGRANULARITY)
+		VALUES
+			(#templatekey#, #sqlkey#,#roster_table#, #datagranularity#, #sqlgranularity#)
+	</statement>
+	
+	<!-- 删除粒度模板数据 -->
+	<statement id="delT52_b_def_temp_sql" parameterClass="java.lang.String" resultClass="int"> 
+		delete from T52_b_def_temp_sql where SQLKEY=#value# 
+	</statement>
+	
+	<!-- 插入sql模板数据 -->
+	<statement id="t52_b_def_temp_sql" parameterClass="com.ist.aml.blacklist.dto.T52_def_temp" resultClass="int"> 
+		INSERT INTO T52_B_DEF_TEMP_SQL (TEMPLATEKEY,SQLKEY, CALSQL, 
+		SQL_STR) VALUES (#templatekey#,#sqlkey#, #calsql#, #sql_str#) 
+	</statement> 
+	
+	<!-- 更新sql模板 -->
+	<statement id="updateT52_b_def_temp_sql" parameterClass="com.ist.aml.blacklist.dto.T52_def_temp" resultClass="int"> 
+		UPDATE T52_B_DEF_TEMP_SQL SET   CALSQL= #calsql#,  SQL_STR=#sql_str#  where SQLKEY = #sqlkey#
+	</statement> 
+	
+	<!-- 校验sql是否正确 -->
+	<statement id="validateSql" parameterClass="com.ist.aml.blacklist.dto.T52_def_temp"  resultClass="int"> 
+		select count(1) from  $validateSql$ 
+	</statement> 
+	
+	<statement id="getT52_def_temp_granDisp" parameterClass="java.lang.String" resultClass="com.ist.aml.blacklist.dto.T52_def_temp"> 
+		SELECT * from T52_B_DEF_TEMP_GRAN 
+		where SQLKEY=#value# 
+	</statement>
+	
+	
+	<statement id="getT52_def_temp_sqlList" parameterClass="java.lang.String" resultClass="com.ist.aml.blacklist.dto.T52_def_temp"> 
+		SELECT SQLKEY ,CALSQL, SQL_STR FROM T52_B_DEF_TEMP_SQL where SQLKEY=#value# 
+	</statement>
+	
+	<!-- 删除模板 -->
+	<statement id="deleteT52_def_temp" parameterClass="java.lang.String" resultClass="int"> 
+		delete from T52_B_def_temp where TEMPLATEKEY=#value# 
+	</statement>
+	
+	<!-- 删除模板执行粒度表T52_B_DEF_TEMP_GRAN -->
+	<statement id="deleteT52_b_def_temp_gran" parameterClass="java.lang.String" resultClass="int"> 
+		delete from T52_B_DEF_TEMP_GRAN where SQLKEY=#value# 
+	</statement>
+	
+	<!-- 修改模板执行粒度表T52_DEF_TEMP_GRAN -->
+	<statement id="modifyT52_def_temp_gran" parameterClass="com.ist.aml.blacklist.dto.T52_def_temp" resultClass="int"> 
+		UPDATE T52_B_DEF_TEMP_GRAN SET SQLGRANULARITY=#sqlgranularity#, 
+		DATAGRANULARITY=#datagranularity# where SQLKEY=#sqlkey# 
+	</statement>
+	
+	<!-- 修改模板状态 -->
+	<statement id="modifyT52_def_temp_flag" 
+		parameterClass="com.ist.aml.blacklist.dto.T52_def_temp" resultClass="int"> 
+		update T52_b_def_temp set flag=#flag# where TEMPLATEKEY=#templatekey# 
+	</statement> 
+	
+	
+	<statement id="copyT52_b_def_temp_gran" parameterClass="com.ist.aml.blacklist.dto.T52_def_temp" 
+		resultClass="int"> 
+		INSERT INTO T52_B_DEF_TEMP_GRAN SELECT '$templatekey$' AS 
+		TEMPLATEKEY,'$templatekey$'||SQLKEY AS SQLKEY, SQLGRANULARITY, 
+		DATAGRANULARITY FROM T52_B_DEF_TEMP_GRAN WHERE TEMPLATEKEY = #templatekey_temp# 
+	</statement>  
+	
+	<statement id="copyT52_b_def_temp_sql" parameterClass="com.ist.aml.blacklist.dto.T52_def_temp"
+	resultClass="int"> 
+		INSERT INTO
+		T52_b_def_temp_sql(templatekey,sqlkey,calsql,sql_str)
+		SELECT #templatekey#,'$templatekey$'||SQLKEY AS SQLKEY, CALSQL, SQL_STR FROM
+		T52_b_def_temp_sql WHERE SQLKEY IN (SELECT SQLKEY FROM T52_B_DEF_TEMP_GRAN
+		WHERE
+		TEMPLATEKEY = #templatekey_temp#)
+</statement>
+
+</sqlMap> 
+
