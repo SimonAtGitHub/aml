@@ -6033,5 +6033,597 @@ INSERT INTO T47_TRANSACTION_MINI
 COMMIT;
 
   END;
+  
+  PROCEDURE P808_T52TOBLACKLIST AS
+  /*---------------------------------------------------------------------------------------------------------------------*/
+  /* 该程序的目的:
+      名单信息 TO AML黑名单库(T52 TO BLACKLIST)
+  /* 创建时间：    2015.01.26
+  /* 创建人:          chenxm
+  /*-----------------------------------------------------------------------------------------------------*/
+
+  VAR_PROC_MEMO  VARCHAR2(1000);
+  VAR_SP_NAME         VARCHAR2(100);
+  VAR_ERRM                VARCHAR2(400);
+  VAR_BEGIN_TIME    DATE;
+
+  VAR_SQLA       VARCHAR2(2000); --国外，生日，证件号
+  VAR_SQLA_02 VARCHAR2(2000);
+  VAR_SQLB       VARCHAR2(2000); --国外，证件号
+  VAR_SQLB_02 VARCHAR2(2000);
+  VAR_SQLC       VARCHAR2(2000); --国内，证件号
+  VAR_SQLC_02 VARCHAR2(2000);
+  VAR_SQLD       VARCHAR2(2000); --国外，名称，生日
+  VAR_SQLD_02 VARCHAR2(2000);
+  VAR_SQLE        VARCHAR2(2000); --国外，名称
+  VAR_SQLE_02  VARCHAR2(2000);
+
+  VAR_OUT_PUTLINE VARCHAR2(4000);
+
+  --声明需要更新的名单类型游标
+  TYPE LIST_TYPE_COR IS REF CURSOR;
+  m_list_type_cor LIST_TYPE_COR;
+  --声明容器
+  TYPE LIST_TYPE is RECORD
+  (
+  M_LIST_TYPE  AML.T52_SCAN_CODE.M_LIST_TYPE%type,
+  SCORE_TYPE   AML.T52_SCAN_CODE.SCORE_TYPE%type
+   );
+  TYPE M_LIST_TYPE IS TABLE OF LIST_TYPE
+  INDEX BY BINARY_INTEGER;
+  m_list_type_c  M_LIST_TYPE;
+
+
+BEGIN
+
+  --Mapping名称：MAP_T52TOBLACKLIST
+  --Mapping描述：名单信息 TO AML黑名单库(T52 TO BLACKLIST)
+
+  --OPEN CURSOR FOR m_list_type_c
+  OPEN m_list_type_cor FOR
+       SELECT DISTINCT  M_LIST_TYPE,SCORE_TYPE FROM T52_SCAN_CODE T
+       WHERE T.SCAN_CODE IS NOT NULL ORDER BY T.M_LIST_TYPE;
+       FETCH m_list_type_cor bulk collect into  m_list_type_c;
+  CLOSE m_list_type_cor;
+
+  --清空临时表
+  EXECUTE IMMEDIATE 'TRUNCATE TABLE  aml.T52_IDVALUE_TMP';
+
+  INSERT /*+append*/
+  INTO T52_IDVALUE_TMP nologging
+    (ID, SOURCE_ID, CODE, IDVALUE, IDTYPE, BIRTH, NAME,REC_TYPE)
+    SELECT/*+parallel(T1,8)*/ DISTINCT T1.ID,
+                    T1.SOURCE_ID,
+                    T2.CODE,
+                    T3.IDVALUE,
+                    T3.IDTYPE,
+                    T5.BIRTH,
+                    T1.NAME,
+                    T1.REC_TYPE
+      FROM T52_B_RECORDS_LIST T1，T52_P_COUNTRYDETAIL T2,
+           T52_P_IDNUMDETAIL T3,
+           T52_P_DATEDETAIL T4,
+           (SELECT t.ID, YEAR || '-' || t1.value || '-' || DAY AS BIRTH
+              FROM T52_P_DATEDETAIL T, T52_CODE_VALUE t1
+             WHERE --T.DATETYPE = 'Date of Birth' --生日类型
+               --AND
+               T.YEAR IS NOT NULL
+               AND T.MONTH IS NOT NULL
+               AND T.DAY IS NOT NULL
+               AND T.MONTH = T1.ID) T5
+     WHERE T1.ACT_STATUS='Active'
+       AND T1.ID = T2.ID(+)
+       AND T1.ID = T3.ID(+)
+       AND T1.ID = T4.ID(+)
+       AND T1.ID = T5.ID(+)
+       AND T2.CODE IS NOT NULL --国籍
+       AND T3.IDVALUE IS NOT NULL
+       AND LENGTH(T3.IDVALUE) >= 4  --增加证件匹配位数限制
+       ; --证件号
+  commit;
+
+  EXECUTE IMMEDIATE 'TRUNCATE TABLE T47_PARTY_TMP_DQS';
+  INSERT INTO T47_PARTY_TMP_DQS
+    SELECT PARTY_ID,
+           HOST_CUST_ID,
+           PARTY_CLASS_CD,
+           NEW_IND,
+           AML1_TYPE_CD,
+           AML2_TYPE_CD,
+           PARTY_STATUS_CD,
+           PARTY_CHN_NAME,
+           PARTY_ENG_NAME,
+           CARD_TYPE,
+           CARD_NO,
+           TO_CHAR(BIRTH_DT, 'YYYY-MM-DD'),
+           COUNTRY_RESIDENCE,
+           COUNTRY_CD,
+           ADDR1,
+           ADDR2,
+           TEL_NO,
+           CELL_NO,
+           NET_ADDRESS,
+           EMAIL_ADDR,
+           CREATE_DT,
+           LAST_UPD_DT,
+           LAST_UPD_USER,
+           ORGANKEY,
+           POSTALCODE,
+           TEMP1,
+           TEMP2,
+           IS_AGENT,
+           GUONEIFENGXIAN,
+           GUOJIFENGXIAN,
+           FANXIQIANJIANK,
+           OBJORGANKEY
+      FROM T47_PARTY T
+     WHERE T.COUNTRY_CD != 'CHN'
+     AND T.ORGANKEY IS NOT NULL ;--增加机构非空限制
+  COMMIT;
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+  /*更新LIST_TYPE
+  24;客户是OFAC发布的恐怖组织、恐怖分子名单
+  25;客户是欧盟发布的恐怖组织、恐怖分子名单
+  1;外国政要名单(PEP)
+  2;国务院有关部门、机构发布的恐怖组织、恐怖分子名单
+  21;司法机关发布的恐怖组织、恐怖分子名单
+  22;联合国安理会决议中所列的恐怖组织、恐怖分子名单
+  23;中国人民银行要求关注的其他恐怖组织、恐怖分子嫌疑人名单
+  3;重点关注客户名单
+  4;公检法机关涉嫌犯罪的查询资产名单
+  5;公检法机关涉嫌犯罪的冻结资产名单
+  6;公检法机关涉嫌犯罪的扣划资产名单
+  7;公检法机关查询资产的可能涉嫌经济类、洗钱类或者洗钱上游犯罪的
+  8;公检法机关冻结资产的可能涉嫌经济类、洗钱类或者洗钱上游犯罪的
+  9;公检法机关冻结扣划资产的可能涉嫌经济类、洗钱类或者洗钱上游犯罪的  */
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+  --开始处理 名单类型匹配
+  FOR C IN m_list_type_c.FIRST ..m_list_type_c.LAST LOOP
+   IF m_list_type_c(C).SCORE_TYPE='1' AND m_list_type_c(C).M_LIST_TYPE='21' THEN      --制裁(中国司法)
+      MERGE INTO T52_IDVALUE_TMP T1
+      USING (
+        WITH AA AS
+         (SELECT DISTINCT TT.ID
+            FROM T52_P_SAN_REF_DETAIL      TT,
+                 T52_P_DESCRIPTIONS_DETAIL SS,
+                 T52_B_RECORDS_LIST        CC
+           WHERE TT.SAN_CODE IN
+                 (SELECT SS.SCAN_CODE
+                    FROM T52_SCAN_CODE SS
+                   WHERE SS.M_LIST_TYPE = m_list_type_c(C).M_LIST_TYPE
+                     AND SS.SCORE_TYPE = '1')
+             AND TT.ID = SS.ID
+             AND SS.DES1_ID = '3' /*Special Interest Person (SIP)*/
+             AND TT.ID = CC.ID
+             AND CC.COU_TYPE = 'Citizenship'
+             AND CC.CODE = 'CHINA')
+        SELECT DISTINCT AA.ID
+          FROM AA, T52_IDVALUE_TMP BB
+         WHERE AA.ID = BB.ID(+)
+           AND BB.LIST_TYPE IS NULL) TT ON (T1.ID = TT.ID) WHEN MATCHED THEN
+          UPDATE SET T1.LIST_TYPE = m_list_type_c(C).M_LIST_TYPE;
+      COMMIT;
+   ELSIF m_list_type_c(C).SCORE_TYPE='1' AND m_list_type_c(C).M_LIST_TYPE!='21' THEN       --制裁来源
+      MERGE INTO T52_IDVALUE_TMP T1
+      USING (
+        WITH AA AS
+         (SELECT DISTINCT TT.ID
+            FROM T52_P_SAN_REF_DETAIL TT
+           WHERE TT.SAN_CODE IN
+                 (SELECT SS.SCAN_CODE
+                    FROM T52_SCAN_CODE SS
+                   WHERE SS.M_LIST_TYPE = m_list_type_c(C).M_LIST_TYPE
+                     AND SS.SCORE_TYPE = '1'))
+        SELECT DISTINCT AA.ID
+          FROM AA, T52_IDVALUE_TMP BB
+         WHERE AA.ID = BB.ID(+)
+           AND BB.LIST_TYPE IS NULL) TT ON (T1.ID = TT.ID) WHEN MATCHED THEN
+          UPDATE SET T1.LIST_TYPE = m_list_type_c(C).M_LIST_TYPE;
+      COMMIT;
+   ELSIF m_list_type_c(C).SCORE_TYPE='2' AND m_list_type_c(C).M_LIST_TYPE='1' THEN        --PEP(国外)
+      MERGE INTO T52_IDVALUE_TMP T1
+      USING (
+        WITH AA AS
+         (SELECT DISTINCT TT.ID
+            FROM T52_P_DESCRIPTIONS_DETAIL TT, T52_B_RECORDS_LIST T2
+           WHERE TT.ID = T2.ID
+             AND T2.COU_TYPE = 'Citizenship'
+             AND T2.CODE <> 'CHINA'
+             AND T2.CODE IS NOT NULL
+             AND TT.DES1_ID IN
+                 (SELECT SS.SCAN_CODE
+                    FROM T52_SCAN_CODE SS
+                   WHERE SS.M_LIST_TYPE = m_list_type_c(C).M_LIST_TYPE
+                     AND SS.SCORE_TYPE = '2'))
+        SELECT DISTINCT AA.ID
+          FROM AA, T52_IDVALUE_TMP BB
+         WHERE AA.ID = BB.ID(+)
+           AND BB.LIST_TYPE IS NULL) TT ON (T1.ID = TT.ID AND T1.REC_TYPE = 'person'        --PEP 限制个人
+         ) WHEN MATCHED THEN
+          UPDATE SET T1.LIST_TYPE = m_list_type_c(C).M_LIST_TYPE;
+      COMMIT;
+    ELSIF m_list_type_c(C).SCORE_TYPE='2' AND m_list_type_c(C).M_LIST_TYPE='11' THEN     --PEP(国内)
+      MERGE INTO T52_IDVALUE_TMP T1
+      USING (
+        WITH AA AS
+         (SELECT DISTINCT TT.ID
+            FROM T52_P_DESCRIPTIONS_DETAIL TT, T52_B_RECORDS_LIST T2
+           WHERE TT.ID = T2.ID
+             AND T2.COU_TYPE = 'Citizenship'
+             AND T2.CODE = 'CHINA'
+             AND T2.CODE IS NOT NULL
+             AND TT.DES1_ID IN
+                 (SELECT SS.SCAN_CODE
+                    FROM T52_SCAN_CODE SS
+                   WHERE SS.M_LIST_TYPE = m_list_type_c(C).M_LIST_TYPE
+                     AND SS.SCORE_TYPE = '2'))
+        SELECT DISTINCT AA.ID
+          FROM AA, T52_IDVALUE_TMP BB
+         WHERE AA.ID = BB.ID(+)
+           AND BB.LIST_TYPE IS NULL) TT ON (T1.ID = TT.ID AND T1.REC_TYPE = 'person'   --PEP 限制个人
+         ) WHEN MATCHED THEN
+          UPDATE SET T1.LIST_TYPE = m_list_type_c(C).M_LIST_TYPE;
+      COMMIT;
+   ELSIF m_list_type_c(C).SCORE_TYPE='3'  AND m_list_type_c(C).M_LIST_TYPE='99' THEN      /*对于未分类出来的客户分类类型取其他：99*/
+        UPDATE T52_IDVALUE_TMP T SET T.LIST_TYPE=m_list_type_c(C).M_LIST_TYPE/*其他*/
+        WHERE T.LIST_TYPE IS NULL;
+        COMMIT;
+   END IF ;
+   END LOOP ;
+   --END
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+  VAR_SQLA := 'FROM T47_PARTY_TMP_DQS T, T07_BLACKLIST_DOWJONES_TMP T1 WHERE
+  T.PARTY_ID = T1.PARTY_ID(+) AND T1.PARTY_ID IS NULL --未增加
+  AND EXISTS (SELECT  1  FROM T52_IDVALUE_TMP T2
+  WHERE T2.IDVALUE = T.CARD_NO
+  AND T2.BIRTH = T.BIRTH_DT and t2.code !=''CHINA''
+  AND T2.REC_TYPE=''entity'')
+  AND T.PARTY_CLASS_CD=''C''';
+
+  VAR_SQLA_02 := 'FROM T47_PARTY_TMP_DQS T, T07_BLACKLIST_DOWJONES_TMP T1 WHERE
+  T.PARTY_ID = T1.PARTY_ID(+) AND T1.PARTY_ID IS NULL --未增加
+  AND EXISTS (SELECT  1  FROM T52_IDVALUE_TMP T2
+  WHERE T2.IDVALUE = T.CARD_NO
+  AND T2.BIRTH = T.BIRTH_DT and t2.code !=''CHINA''
+  AND T2.REC_TYPE=''person'')
+  AND T.PARTY_CLASS_CD=''I''';
+
+  VAR_SQLB :='FROM T47_PARTY T,T07_BLACKLIST_DOWJONES_TMP T2 WHERE EXISTS
+  (SELECT ''X'' FROM T52_IDVALUE_TMP T1
+  WHERE  T.CARD_NO = T1.IDVALUE
+  AND t1.code !=''CHINA'' AND T1.REC_TYPE=''person'')
+  AND T.COUNTRY_CD!=''CHN'' AND T.PARTY_CLASS_CD=''I''
+  AND  T.PARTY_ID = T2.PARTY_ID(+) AND T2.PARTY_ID IS NULL --未增加
+  AND T.ORGANKEY IS NOT NULL --增加机构非空限制
+  ';
+
+  VAR_SQLB_02 :='FROM T47_PARTY T,T07_BLACKLIST_DOWJONES_TMP T2 WHERE EXISTS
+  (SELECT ''X'' FROM T52_IDVALUE_TMP T1
+  WHERE  T.CARD_NO = T1.IDVALUE
+  AND t1.code !=''CHINA'' AND T1.REC_TYPE=''entity'')
+  AND T.COUNTRY_CD!=''CHN'' AND T.PARTY_CLASS_CD=''C''
+  AND  T.PARTY_ID = T2.PARTY_ID(+) AND T2.PARTY_ID IS NULL --未增加
+  AND T.ORGANKEY IS NOT NULL --增加机构非空限制
+  ';
+
+  VAR_SQLC :='FROM T47_PARTY T,T07_BLACKLIST_DOWJONES_TMP T2 WHERE EXISTS
+  (SELECT ''X'' FROM T52_IDVALUE_TMP T1
+  WHERE  T.CARD_NO = T1.IDVALUE
+  AND t1.code =''CHINA''  AND T1.REC_TYPE=''entity'')
+  AND T.COUNTRY_CD=''CHN'' AND T.PARTY_CLASS_CD=''C''
+  AND  T.PARTY_ID = T2.PARTY_ID(+) AND T2.PARTY_ID IS NULL --未增加
+  AND T.ORGANKEY IS NOT NULL --增加机构非空限制
+  ';
+
+   VAR_SQLC_02 :='FROM T47_PARTY T,T07_BLACKLIST_DOWJONES_TMP T2 WHERE EXISTS
+  (SELECT ''X'' FROM T52_IDVALUE_TMP T1
+  WHERE  T.CARD_NO = T1.IDVALUE
+  AND t1.code =''CHINA''  AND T1.REC_TYPE=''person'')
+  AND T.COUNTRY_CD=''CHN'' AND T.PARTY_CLASS_CD=''I''
+  AND  T.PARTY_ID = T2.PARTY_ID(+) AND T2.PARTY_ID IS NULL --未增加
+  AND T.ORGANKEY IS NOT NULL --增加机构非空限制
+  ';
+
+  VAR_SQLD := 'FROM T47_PARTY_TMP_DQS T, T07_BLACKLIST_DOWJONES_TMP T1 WHERE
+  T.PARTY_ID = T1.PARTY_ID(+) AND T1.PARTY_ID IS NULL --未增加
+  AND EXISTS (SELECT  1 FROM T52_IDVALUE_TMP T2
+  WHERE T2.NAME = T.PARTY_CHN_NAME   AND T2.REC_TYPE=''entity''
+  AND T2.BIRTH = T.BIRTH_DT and t2.code !=''CHINA'')
+  AND  T.PARTY_CLASS_CD=''C''';
+
+  VAR_SQLD_02 := 'FROM T47_PARTY_TMP_DQS T, T07_BLACKLIST_DOWJONES_TMP T1 WHERE
+  T.PARTY_ID = T1.PARTY_ID(+) AND T1.PARTY_ID IS NULL --未增加
+  AND EXISTS (SELECT  1 FROM T52_IDVALUE_TMP T2
+  WHERE T2.NAME = T.PARTY_CHN_NAME   AND T2.REC_TYPE=''person''
+  AND T2.BIRTH = T.BIRTH_DT and t2.code !=''CHINA'')
+  AND  T.PARTY_CLASS_CD=''I''';
+
+  VAR_SQLE := 'FROM T47_PARTY_TMP_DQS T, T07_BLACKLIST_DOWJONES_TMP T1 WHERE
+  T.PARTY_ID = T1.PARTY_ID(+) AND T1.PARTY_ID IS NULL --未增加
+  AND EXISTS (SELECT  1 FROM T52_IDVALUE_TMP T2
+  WHERE T2.NAME = T.PARTY_CHN_NAME and t2.code !=''CHINA''
+  AND T2.REC_TYPE=''entity'')
+  AND  T.PARTY_CLASS_CD=''C''';
+
+  VAR_SQLE_02 := 'FROM T47_PARTY_TMP_DQS T, T07_BLACKLIST_DOWJONES_TMP T1 WHERE
+  T.PARTY_ID = T1.PARTY_ID(+) AND T1.PARTY_ID IS NULL --未增加
+  AND EXISTS (SELECT  1 FROM T52_IDVALUE_TMP T2
+  WHERE T2.NAME = T.PARTY_CHN_NAME and t2.code !=''CHINA''
+  AND T2.REC_TYPE=''person'')
+  AND  T.PARTY_CLASS_CD=''I''';
+
+
+  --开始处理,20151204 ISUSE='0'
+  FOR C IN 1 .. 10 LOOP
+    VAR_OUT_PUTLINE := 'INSERT INTO T07_BLACKLIST_DOWJONES_TMP NOLOGGING
+    (PARTY_ID, /*客户号*/OBJ_NAME, /*客户名称*/ORGANKEY, /*机构*/ISUSE, /*是否启用*/PARTY_CLASS_CD, /*对公/对私*/
+    LIST_TYPE, /*名单类型*/REASON_CREATE, /*名单建立原因*/REASON_CANCEL, /*名单取消原因*/VALIDATE_DT, /*生效日期*/
+    INVALIDATE_DT, /*失效日期*/CREATE_USER, /*创建用户*/CREATE_DT, /*创建日期*/MODIFY_USER, /*最后修改用户*/
+    MODIFY_DT, /*最后修改时间*/ISUSE_NEW, /*是否启用 修改*/REASON_CREATE_NEW, /*名单建立原因  修改*/
+    VALIDATE_DT_NEW, /*生效日期 修改*/INVALIDATE_DT_NEW, /*失效日期 修改*/EXTERNAL_ID, /*客户编号*/
+    CATEGORY, /*客户类型*/TITLE, /*标题*/NAME_TYPE, /*名称类型*/ADDRESS, /*通讯地址*/CITY, /*所在城市*/COUNTRY, /*所在国家*/
+    PROGRAMS, /*风险类别*/BIRTH_DATE, /*出生日期*/LAST_OCCUPATION, /*职业*/RESIDENCE_COUNTRY, /*居住地*/BIRTH_COUNTRY, /*出生地*/
+    NATIONALITY, /*国籍*/GENDER, /*性别*/REMARKS, /*备注*/OBJKEY, /*对象键值*/ISCHECK, /*是否申核（1：申批通过，2：添加待申批，3：修改待申批，4：申批未通过）*/
+    M_LIST_TYPE, /*黑、灰名单类型*/CARD_TYPE, /*证件类型*/CARD_NO, /*证件号码*/IS_PARTY_ID, /*是否有客户号*/CREATE_ORGANKEY, /*创建机构*/
+    BLACKTYPE /*黑名单类型联合国制裁名单 为1;外国政要 为 2;“东突”名单为 3;OFAC名单为 4；欧盟名单为5；联合国制裁*/
+    )SELECT/*+parallel(T,4)*/  T.PARTY_ID,T.PARTY_CHN_NAME,T.ORGANKEY,''0'',T.PARTY_CLASS_CD,NULL, /*名单类型*/''Dow Jones'', /*建立原因*/'''', /*取消原因*/
+    sysdate, /*生效日期*/to_date(''3099-12-30'', ''YYYY-MM-DD''), /*失效日期*/''admin'', /*创建用户*/TRUNC(SYSDATE), /*创建日期*/null,null,''0'',null,null,null,
+    T.Party_Id, /*客户编号*/t.party_class_cd, /*客户类型*/''Dow Jones'', /*标题*/null, /*名称类型*/t.addr1, /*通讯地址*/null,t.country_cd,null,t.birth_dt,
+    null,null,null,t.country_cd,null,null,t.party_id,''2'', /*添加待审批*/''3'',t.card_type,t.card_no,''1'',t.organkey,NULL ' || CASE
+   WHEN C = 1 THEN
+    VAR_SQLA
+   WHEN C = 2 THEN
+    VAR_SQLA_02
+   WHEN C = 3 THEN
+    VAR_SQLB
+   WHEN C = 4 THEN
+    VAR_SQLB_02
+   WHEN C = 5 THEN
+    VAR_SQLC
+   WHEN C = 6 THEN
+    VAR_SQLC_02
+   WHEN C = 7 THEN
+    VAR_SQLD
+   WHEN C = 8 THEN
+    VAR_SQLD_02
+   WHEN C = 9 THEN
+    VAR_SQLE
+   WHEN C = 10 THEN
+    VAR_SQLE_02
+  END;
+    EXECUTE IMMEDIATE VAR_OUT_PUTLINE;
+    COMMIT;
+  END LOOP;
+
+  --根据TEMP表更新名单类型,M_LIST_TYPE
+  --根据证件号和日期 更新 M_LIST_TYPE,ID
+  MERGE INTO T07_BLACKLIST_DOWJONES_TMP T
+  USING (
+    WITH AA AS
+     (SELECT C.IDVALUE,
+             C.BIRTH,
+             C.LIST_TYPE,
+             C.ID,
+             C.NAME,
+             DECODE(C.REC_TYPE, 'entity', 'C', 'person', 'I', '') AS PARTY_CLASS_CD
+        FROM T52_IDVALUE_TMP C
+       WHERE C.LIST_TYPE IS NOT NULL)
+    SELECT DISTINCT AA.IDVALUE,
+                    AA.BIRTH,
+                    AA.LIST_TYPE,
+                    AA.ID,
+                    AA.NAME,
+                    AA.PARTY_CLASS_CD,
+                    ROW_NUMBER() OVER(PARTITION BY AA.IDVALUE,AA.BIRTH,AA.PARTY_CLASS_CD ORDER BY AA.LIST_TYPE) RN
+      FROM AA, T07_BLACKLIST_DOWJONES_TMP T
+     WHERE AA.ID = T.DOWJONES_ID(+)
+       AND T.DOWJONES_ID IS NULL
+    ) S ON (T.CARD_NO = S.IDVALUE AND T.BIRTH_DATE = S.BIRTH AND T.PARTY_CLASS_CD = S.PARTY_CLASS_CD AND S.RN = 1) WHEN MATCHED THEN
+      UPDATE SET T.M_LIST_TYPE = S.LIST_TYPE, T.DOWJONES_ID = S.ID;
+  commit;
+  --根据证件号更新 M_LIST_TYPE,ID
+  MERGE INTO T07_BLACKLIST_DOWJONES_TMP T
+  USING (
+    WITH AA AS
+     (SELECT C.IDVALUE,
+             C.BIRTH,
+             C.LIST_TYPE,
+             C.ID,
+             C.NAME,
+             DECODE(C.REC_TYPE, 'entity', 'C', 'person', 'I', '') AS PARTY_CLASS_CD
+        FROM T52_IDVALUE_TMP C
+       WHERE C.LIST_TYPE IS NOT NULL)
+    SELECT DISTINCT AA.IDVALUE,
+                    AA.BIRTH,
+                    AA.LIST_TYPE,
+                    AA.ID,
+                    AA.NAME,
+                    AA.PARTY_CLASS_CD,
+                    ROW_NUMBER() OVER(PARTITION BY AA.IDVALUE,AA.PARTY_CLASS_CD ORDER BY AA.LIST_TYPE) RN
+      FROM AA, T07_BLACKLIST_DOWJONES_TMP T
+     WHERE AA.ID = T.DOWJONES_ID(+)
+       AND T.DOWJONES_ID IS NULL
+    ) S ON (T.CARD_NO = S.IDVALUE AND T.PARTY_CLASS_CD = S.PARTY_CLASS_CD AND S.RN = 1) WHEN MATCHED THEN
+      UPDATE SET T.M_LIST_TYPE = S.LIST_TYPE, T.DOWJONES_ID = S.ID;
+
+  commit;
+  --根据名称和生日更新 M_LIST_TYPE,ID
+  MERGE INTO T07_BLACKLIST_DOWJONES_TMP T
+  USING (
+    WITH AA AS
+     (SELECT C.IDVALUE,
+             C.BIRTH,
+             C.LIST_TYPE,
+             C.ID,
+             C.NAME,
+             DECODE(C.REC_TYPE, 'entity', 'C', 'person', 'I', '') AS PARTY_CLASS_CD
+        FROM T52_IDVALUE_TMP C
+       WHERE C.LIST_TYPE IS NOT NULL)
+    SELECT DISTINCT AA.IDVALUE,
+                    AA.BIRTH,
+                    AA.LIST_TYPE,
+                    AA.ID,
+                    AA.NAME,
+                    AA.PARTY_CLASS_CD,
+                    ROW_NUMBER() OVER(PARTITION BY AA.NAME,AA.BIRTH,AA.PARTY_CLASS_CD ORDER BY AA.LIST_TYPE) RN
+      FROM AA, T07_BLACKLIST_DOWJONES_TMP T
+     WHERE AA.ID = T.DOWJONES_ID(+)
+       AND T.DOWJONES_ID IS NULL
+    ) S ON (T.OBJ_NAME = S.NAME AND T.BIRTH_DATE = S.BIRTH AND T.PARTY_CLASS_CD = S.PARTY_CLASS_CD AND S.RN = 1) WHEN MATCHED THEN
+      UPDATE SET T.M_LIST_TYPE = S.LIST_TYPE, T.DOWJONES_ID = S.ID;
+  commit;
+    --根据名称更新 M_LIST_TYPE,ID
+  MERGE INTO T07_BLACKLIST_DOWJONES_TMP T
+  USING (
+    WITH AA AS
+     (SELECT C.IDVALUE,
+             C.BIRTH,
+             C.LIST_TYPE,
+             C.ID,
+             C.NAME,
+             DECODE(C.REC_TYPE, 'entity', 'C', 'person', 'I', '') AS PARTY_CLASS_CD
+        FROM T52_IDVALUE_TMP C
+       WHERE C.LIST_TYPE IS NOT NULL)
+    SELECT DISTINCT AA.IDVALUE,
+                    AA.BIRTH,
+                    AA.LIST_TYPE,
+                    AA.ID,
+                    AA.NAME,
+                    AA.PARTY_CLASS_CD,
+                    ROW_NUMBER() OVER(PARTITION BY AA.NAME,AA.PARTY_CLASS_CD ORDER BY AA.LIST_TYPE) RN
+      FROM AA, T07_BLACKLIST_DOWJONES_TMP T
+     WHERE AA.ID = T.DOWJONES_ID(+)
+       AND T.DOWJONES_ID IS NULL
+    ) S ON (T.OBJ_NAME = S.NAME AND T.PARTY_CLASS_CD = S.PARTY_CLASS_CD AND S.RN = 1) WHEN MATCHED THEN
+      UPDATE SET T.M_LIST_TYPE = S.LIST_TYPE, T.DOWJONES_ID = S.ID;
+  commit;
+  /*根据道琼斯ID更新 认定原因*/
+ /*step1.0*/
+  UPDATE T07_BLACKLIST_DOWJONES_TMP T
+     SET T.REASON_CREATE =
+         (SELECT 'Dow Jones-'||CODE_NAME
+            FROM (SELECT T3.CODE_NAME,
+                         T2.ID,
+                         T3.M_LIST_TYPE,
+                         ROW_NUMBER() OVER(PARTITION BY T2.ID, T3.M_LIST_TYPE ORDER BY T3.SCAN_CODE) RN
+                    FROM v52_b_sanctionrelist T2, T52_SCAN_CODE T3
+                   WHERE T2.SAN_CODE = T3.SCAN_CODE) A
+           WHERE A.ID = T.DOWJONES_ID
+             AND A.M_LIST_TYPE = T.M_LIST_TYPE
+             AND RN = 1)
+   WHERE T.DOWJONES_ID IS NOT NULL
+     AND T.M_LIST_TYPE <> '99'
+     AND T.REASON_CREATE = 'Dow Jones';
+     commit;
+   /*step2.0*/
+   UPDATE T07_BLACKLIST_DOWJONES_TMP T
+      SET T.REASON_CREATE =
+          (SELECT  'Dow Jones-'||CODE_NAME
+             FROM (SELECT T3.CODE_NAME,
+                          T2.ID,
+                          ROW_NUMBER() OVER(PARTITION BY T2.ID ORDER BY T2.SAN_CODE) RN
+                     FROM v52_b_sanctionrelist T2, T52_SCAN_CODE T3
+                    WHERE T2.SAN_CODE = T3.SCAN_CODE) A
+            WHERE A.ID = T.DOWJONES_ID
+              AND A.RN = 1)
+    WHERE T.DOWJONES_ID IS NOT NULL
+      AND T.M_LIST_TYPE = '99'
+      AND T.REASON_CREATE = 'Dow Jones'
+      AND EXISTS (SELECT 1
+             FROM v52_b_sanctionrelist T2, T52_SCAN_CODE T3
+            WHERE T2.SAN_CODE = T3.SCAN_CODE
+              AND T2.ID = T.DOWJONES_ID);
+     commit;
+  UPDATE T07_BLACKLIST_DOWJONES_TMP T
+     SET T.REASON_CREATE =
+         (SELECT  'Dow Jones-'||scan_name
+            FROM (SELECT T2.scan_name,
+                         T2.ID,
+                         ROW_NUMBER() OVER(PARTITION BY T2.ID ORDER BY T2.SAN_CODE) RN
+                    FROM v52_b_sanctionrelist T2) A
+           WHERE A.ID = T.DOWJONES_ID
+             AND A.RN = 1)
+   WHERE T.DOWJONES_ID IS NOT NULL
+     AND T.M_LIST_TYPE = '99'
+     AND T.REASON_CREATE = 'Dow Jones';
+     commit;
+     --根据 T47_INDIVIDUAL 更新 职业，性别，出生地等信息
+  UPDATE T07_BLACKLIST_DOWJONES_TMP T
+     SET (T.CITY, T.LAST_OCCUPATION, T.GENDER) =
+         (SELECT NVL(A.PLACE_ORIG, T.CITY),
+                 NVL(A.OCCUPATION, T.LAST_OCCUPATION),
+                 NVL(A.GENDER, T.GENDER)
+            FROM T47_INDIVIDUAL A
+           WHERE A.PARTY_ID = T.PARTY_ID)
+   WHERE EXISTS
+   (SELECT 'X' FROM T47_INDIVIDUAL A2 WHERE A2.PARTY_ID = T.PARTY_ID)
+     AND T.DOWJONES_ID IS NOT NULL; --只更新道琼斯 名单匹配的名单
+  commit;
+  --LIST_TYPE=M_LIST_TYPE
+  UPDATE T07_BLACKLIST_DOWJONES_TMP T
+     SET T.LIST_TYPE = T.M_LIST_TYPE, T.ISUSE = '0', T.ISUSE_NEW = 0;
+  COMMIT;
+    --处理黑名单库数据
+  INSERT INTO T07_BLACKLIST
+    SELECT T1.party_id,
+  T1.obj_name,
+  T1.organkey,
+  T1.isuse,
+  T1.party_class_cd,
+  T1.list_type,
+  T1.reason_create,
+  T1.reason_cancel,
+  T1.validate_dt,
+  T1.invalidate_dt,
+  T1.create_user,
+  T1.create_dt,
+  T1.modify_user,
+  T1.modify_dt,
+  T1.isuse_new,
+  T1.reason_create_new,
+  T1.validate_dt_new,
+  T1.invalidate_dt_new,
+  T1.external_id,
+  T1.category,
+  T1.title,
+  T1.name_type,
+  T1.address,
+  T1.city,
+  T1.country,
+  T1.programs,
+  T1.birth_date,
+  T1.last_occupation,
+  T1.residence_country,
+  T1.birth_country,
+  T1.nationality,
+  T1.gender,
+  T1.remarks,
+  T1.objkey,
+  T1.ischeck,
+  T1.m_list_type,
+  T1.card_type,
+  T1.card_no,
+  T1.is_party_id
+      FROM T07_BLACKLIST_DOWJONES_TMP T1, T07_BLACKLIST T2
+     WHERE T1.PARTY_ID = T2.PARTY_ID(+)
+       AND T2.PARTY_ID IS NULL;
+  commit;
+
+EXCEPTION
+  WHEN OTHERS THEN
+    BEGIN
+      --拼接错误信息
+      VAR_ERRM := sqlerrm;
+      commit;
+      --执行失败,插入日志
+      insert into t18_errorlog values (T00_SYSTEM_LOG_LOGKEY.NEXTVAL,'BLACKLIST',VAR_ERRM,TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:MI:SS'),null,null,null);
+
+      commit;
+     --抛出异常
+     RAISE;
+    END;
+END P808_T52TOBLACKLIST;
 
 END PKG_ETL_ODS_TO_AML;
