@@ -46,7 +46,7 @@ var errMsg = "";
     _Date1 = document.forms[0].tx_dt_disp.value;
     _Date2 = document.forms[0].tx_enddt_disp.value;
     
-    var purpose = "";
+    var purpose = "1";//默认普通查询
     var objs = document.getElementsByName("searchPurpose");    
 	for(var i=0;i<objs.length;i++)   
 	{   
@@ -382,8 +382,8 @@ function _Open(url){
 									<html:radio property="order" value="1" />
 									升序
 									<html:radio property="order" value="2" />
-									降序
-								</td>
+									降序&nbsp;&nbsp;&nbsp;&nbsp;
+								<!-- </td>
 							</tr>
 							<tr>
 								<td>
@@ -397,7 +397,7 @@ function _Open(url){
 									&nbsp;&nbsp;&nbsp;&nbsp;
 									涉恐名单更新日期：
 									<html:text property="terr_update_dt_disp" size="12" onclick="calendar.show(this);" readonly="true" styleClass="calimg" />
-									&nbsp;&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp; -->
 									<html:hidden property="searchtype" />
 									<input type="button" name="ok" value="查 询" class="in_button1"
 										onclick="dosubmit('<%=request.getContextPath()%>/inves/trade/t47_transaction_list.do?newsearchflag=1')" />
