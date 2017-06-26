@@ -382,8 +382,8 @@ function _Open(url){
 									<html:radio property="order" value="1" />
 									升序
 									<html:radio property="order" value="2" />
-									降序&nbsp;&nbsp;&nbsp;&nbsp;
-								<!-- </td>
+									降序
+								</td>
 							</tr>
 							<tr>
 								<td>
@@ -397,7 +397,7 @@ function _Open(url){
 									&nbsp;&nbsp;&nbsp;&nbsp;
 									涉恐名单更新日期：
 									<html:text property="terr_update_dt_disp" size="12" onclick="calendar.show(this);" readonly="true" styleClass="calimg" />
-									&nbsp;&nbsp;&nbsp;&nbsp; -->
+									&nbsp;&nbsp;&nbsp;&nbsp; 
 									<html:hidden property="searchtype" />
 									<input type="button" name="ok" value="查 询" class="in_button1"
 										onclick="dosubmit('<%=request.getContextPath()%>/inves/trade/t47_transaction_list.do?newsearchflag=1')" />
