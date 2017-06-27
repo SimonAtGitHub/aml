@@ -99,5 +99,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/ibp-search-20170522-jar-with-dependencies.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

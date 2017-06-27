@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="T52_def_remount">
+	<statement id="getT52_def_remountList" parameterClass="com.ist.aml.blacklist.dto.T52_def_remount"
+		resultClass="com.ist.aml.blacklist.dto.T52_def_remount">
+		SELECT T3.ID,
+		       T3.TRANSACTIONKEY,
+		       T1.PARTY_ID,
+		       T1.ORGANKEY,
+		       T1.PARTY_CLASS_CD,
+		       T3.NAME,
+		       T1.COUNTRY_CD,
+		       T1.CARD_TYPE,
+		       T1.CARD_NO
+		  FROM T52_B_REMOUNT T3
+		  LEFT JOIN T47_PARTY T1 ON T3.PARTY_ID = T1.PARTY_ID
+		  <!-- LEFT JOIN T47_TRANSACTION T2 ON T3.TRANSACTIONKEY = T2.TRANSACTIONKEY -->
+		<dynamic>
+			<isNotEmpty prepend="AND" property="organkeys">
+				ORGANKEY IN ($organkeys$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id_s">
+				PARTY_ID = #party_id_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd_s">
+				PARTY_CLASS_CD = #party_class_cd_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="card_type_s">
+				CARD_TYPE LIKE  '%'||#card_type_s# ||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="card_no_s">
+				CARD_NO = #card_no_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_chn_name_s">
+				PARTY_CHN_NAME LIKE '%'||#party_chn_name#||'%'
+			</isNotEmpty>
+		</dynamic>
+		<!-- order by b.CALCULATESEQ desc  -->
+	</statement>
+
+	<statement id="getT52_def_remountListCount" parameterClass="com.ist.aml.blacklist.dto.T52_def_remount"
+		resultClass="int">
+		SELECT COUNT(1)
+		  
+		  from t52_b_remount t3
+		  left join t47_party T1 on t3.party_id = T1.party_id
+		  <!-- left join t47_transaction t2 on t3.transactionkey = t2.transactionkey -->
+		<dynamic>
+			<isNotEmpty prepend="AND" property="organkeys">
+				ORGANKEY IN ($organkeys$)
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id_s">
+				PARTY_ID = #party_id_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd_s">
+				PARTY_CLASS_CD = #party_class_cd_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="card_type_s">
+				CARD_TYPE LIKE  '%'||#card_type_s# ||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="card_no_s">
+				CARD_NO = #card_no_s#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkey">
+				ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_chn_name_s">
+				PARTY_CHN_NAME LIKE '%'||#party_chn_name#||'%'
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	
+	<statement id="getT52_remount_trans_list"
+		parameterClass="com.ist.aml.blacklist.dto.T52_def_remount"
+		resultClass="com.ist.aml.blacklist.dto.T52_def_remount">
+		SELECT
+		A.TX_GO_COUNTRY,A.TX_GO_AREA,A.HOST_CUST_ID,A.CASH_IND,A.CURR_CD,A.TX_OCCUR_COUNTRY
+		,A.TX_OCCUR_AREA,A.OPP_COUNTRY,A.OPP_AREA,A.OPP_ORGANNAME,A.AGENT_NAME,A.AGENT_COUNTRY,A.ORG_TRANS_RELA,
+		A.AGENT_CARD_TYPE,A.AGENT_CARD_NO,
+		A.TRANSACTIONKEY,A.CB_PK,A.TX_NO,A.ORGANKEY,A.TX_DT,A.DT_TIME,A.ACCT_NUM,A.PARTY_ID,
+		A.PARTY_CLASS_CD,A.TX_CD,A.CB_TX_CD,A.BUS_TYPE_CD,A.TX_TYPE_CD,A.DEBIT_CREDIT,A.RECEIVE_PAY_CD,
+		A.SUBJECTNO,A.CURRENCY_CD,A.AMT,A.CNY_AMT,A.USD_AMT,A.CASH_TRANS_FLAG,A.REMIT_TYPE_CD,A.DES,
+		A.OVERAREA_IND,A.SETTLE_TYPE_CD,A.USE_DES,A.OPP_SYS_ID,A.OPP_AREA,A.OPP_ORGAN_TYPE,A.OPP_ORGANKEY,A.OPP_PBC_PARTY_CLASS_CD,
+		A.OPP_PARTY_ID,A.OPP_NAME,A.OPP_ACCT_NUM,A.OPP_TX_DT,A.OPP_ACCT_TYPE_CD,A.OPP_CARD_TYPE,A.OPP_CARD_NO,
+		A.OPP_PARTY_CLASS_CD,A.BATCH_IND,A.TELLER,A.RE_IND,A.HANDLE_STATUS_CD,A.PARTY_CHN_NAME,A.ADDTIONAL,
+		A.VOUCHER_NO,A.HOST_CUST_ID,A.OPP_OFF_SHORE_IND,A.CAL_IND,A.VALIDATE_IND2,A.VALIDATE_IND,A.TSCTKEY, 
+		(CASE WHEN A.VALIDATE_IND IS NULL AND A.VALIDATE_IND2 IS NULL THEN '0' 
+		 WHEN A.VALIDATE_IND IS NOT NULL AND A.VALIDATE_IND2 IS NULL THEN '1' 
+		 WHEN A.VALIDATE_IND IS NULL AND A.VALIDATE_IND2 IS NOT NULL THEN '2' 
+		 WHEN A.VALIDATE_IND IS NOT NULL AND A.VALIDATE_IND2 IS NOT NULL THEN '3' END) AS VALIDATE_FLAG
+		 <!-- add zhaowei start -->
+		 ,CARD_STYLE,CARD_NO,RCV_PAY_TYPE,RCV_PAY_NO,NON_DEPT_TYPE,EQPT_CD,BANK_PAY_CD
+		 <!-- add zhaowei end -->
+		FROM V47_TRANSACTION A
+
+		<dynamic prepend="WHERE">
+		
+		    <!-- add by lkl -->
+		    <!-- <isNotEmpty prepend="AND" property="tx_no">
+				A.tx_no = #tx_no#
+			</isNotEmpty> -->
+			<!-- end lkl -->
+			
+
+			
+			<isNotEmpty prepend="AND" property="organkey">
+				A.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				A.ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			
+
+			<isNotEmpty prepend="AND" property="bus_type_cd">
+
+				A.BUS_TYPE_CD LIKE #bus_type_cd#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="transactionkey">
+				A.TRANSACTIONKEY = #transactionkey#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="acct_num">
+				A.ACCT_NUM = #acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cash_trans_flag">
+				A.CASH_TRANS_FLAG = #cash_trans_flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="channel">
+				A.CHANNEL = #channel#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="debit_credit">
+				A.DEBIT_CREDIT = #debit_credit#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="overarea_ind">
+				A.OVERAREA_IND = #overarea_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="re_ind">
+				A.RE_IND = #re_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="addtional">
+				A.ADDTIONAL = #addtional#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="validate_ind">
+				<isNotEmpty prepend="" property="alert_type_cd">
+					<isEqual prepend="" property="alert_type_cd"  compareValue="DE">
+						A.VALIDATE_IND = #validate_ind#
+					</isEqual>
+					<isEqual prepend="" property="alert_type_cd"  compareValue="KY">
+						A.VALIDATE_IND2 = #validate_ind#
+					</isEqual>
+				</isNotEmpty>
+				<isEmpty prepend="" property="alert_type_cd">
+					(A.VALIDATE_IND = #validate_ind# OR A.VALIDATE_IND2 = #validate_ind#)
+				</isEmpty>
+			</isNotEmpty>
+			
+			<!-- add by lkl -->
+				<isNotEmpty prepend="AND" property="party_class_cd">
+					A.PARTY_CLASS_CD = #party_class_cd#
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="curr_cd">
+					A.CURR_CD = #curr_cd#
+				</isNotEmpty>
+				    <isNotEmpty prepend="AND" property="teller">
+					A.TELLER = #teller#
+				</isNotEmpty>
+			<!-- end lkl -->
+			<isNotEmpty prepend="AND" property="opp_party_class_cd">
+				A.OPP_PARTY_CLASS_CD = #opp_party_class_cd#
+			</isNotEmpty>
+			<isEmpty  property="orderby">
+			ORDER BY  A.TX_DT DESC
+			</isEmpty>
+			
+			<isNotEmpty property="orderby">
+				<isEqual property="orderby" compareValue="0">
+					ORDER BY A.TX_DT
+				</isEqual>
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY A.PARTY_ID
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY A.ACCT_NUM
+				</isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY A.ORGANKEY
+				</isEqual>
+				<isEqual property="orderby" compareValue="4">
+					ORDER BY A.TELLER
+				</isEqual>
+				<isEqual property="orderby" compareValue="5">
+					ORDER BY A.TX_CD
+				</isEqual>
+				<isEqual property="orderby" compareValue="6">
+					ORDER BY A.AMT
+				</isEqual>
+				<isEqual property="orderby" compareValue="7">
+					ORDER BY A.ADDTIONAL
+				</isEqual>
+				<isEqual property="orderby" compareValue="8">
+					ORDER BY A.CHANNEL
+				</isEqual>
+
+				<isNotEmpty property="order">
+					<isEqual property="order" compareValue="1">
+					   <isNotEqual property="orderby" compareValue="0">
+					     ,A.TX_DT DESC,A.TX_NO ASC
+					   </isNotEqual>
+					</isEqual>
+					<isEqual property="order" compareValue="2">
+					       DESC
+					        <isNotEqual property="orderby" compareValue="0">
+					      ,A.TX_DT DESC,A.TX_NO ASC
+					        </isNotEqual>
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+			
+		</dynamic>
+	</statement>
+	
+	
+	<statement id="getT52_remount_trans_listCount"
+		parameterClass="com.ist.aml.blacklist.dto.T52_def_remount"
+		resultClass="int">
+		SELECT count(*) FROM V47_TRANSACTION A
+	
+		<dynamic prepend="WHERE">
+		    <!-- add by lkl -->
+		    <!-- <isNotEmpty prepend="AND" property="tx_no">
+				A.tx_no = #tx_no#
+			</isNotEmpty> -->
+			<!-- end lkl -->
+		
+			
+			<isNotEmpty prepend="AND" property="channel">
+				A.CHANNEL = #channel#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="organkey">
+				A.ORGANKEY = #organkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="organkeystr">
+				A.ORGANKEY IN ($organkeystr$)
+			</isNotEmpty>
+			
+			
+			<!-- add by lkl -->
+				<isNotEmpty prepend="AND" property="party_class_cd">
+					A.PARTY_CLASS_CD = #party_class_cd#
+				</isNotEmpty>
+				<isNotEmpty prepend="AND" property="curr_cd">
+					A.CURR_CD = #curr_cd#
+				</isNotEmpty>
+				    <isNotEmpty prepend="AND" property="teller">
+					A.TELLER = #teller#
+				</isNotEmpty>
+		
+			<isNotEmpty prepend="AND" property="bus_type_cd">
+						A.BUS_TYPE_CD LIKE #bus_type_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="alertkey">
+				B.ALERTKEY = #alertkey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="transactionkey">
+				A.TRANSACTIONKEY = #transactionkey#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="acct_num">
+				A.ACCT_NUM = #acct_num#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				A.PARTY_ID = #party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cash_trans_flag">
+				A.CASH_TRANS_FLAG = #cash_trans_flag#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="debit_credit">
+				A.DEBIT_CREDIT = #debit_credit#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="overarea_ind">
+				A.OVERAREA_IND = #overarea_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="re_ind">
+				A.RE_IND = #re_ind#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="addtional">
+				A.ADDTIONAL = #addtional#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="validate_ind">
+				<isNotEmpty prepend="" property="alert_type_cd">
+					<isEqual prepend="" property="alert_type_cd"  compareValue="DE">
+						A.VALIDATE_IND = #validate_ind#
+					</isEqual>
+					<isEqual prepend="" property="alert_type_cd"  compareValue="KY">
+						A.VALIDATE_IND2 = #validate_ind#
+					</isEqual>
+				</isNotEmpty>
+				<isEmpty prepend="" property="alert_type_cd">
+					(A.VALIDATE_IND = #validate_ind# OR A.VALIDATE_IND2 = #validate_ind#)
+				</isEmpty>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="opp_party_class_cd">
+				A.OPP_PARTY_CLASS_CD = #opp_party_class_cd#
+			</isNotEmpty>
+		</dynamic>
+
+	</statement>
+
+	<!-- 是否是道琼斯名单 -->
+	<statement id="getT52_def_remountList_dowjons" parameterClass="com.ist.aml.blacklist.dto.T52_def_remount"
+		resultClass="com.ist.aml.blacklist.dto.T52_def_remount">
+			SELECT ID,
+	       SOURCE_ID,
+	       NAME,
+	       REC_TYPE,
+	       GENDER,
+	       CODE,
+	       CARD_TYPE,
+	       CARD_NO,
+	       SOURCE_LIST,
+	       FILETYPE,
+	       FILEDATE
+	  FROM T52_B_RECORDS_LIST T WHERE T.ID IN (
+	   SELECT 
+	     T.ID
+	    FROM T52_B_REMOUNT T 
+	  )
+	</statement>
+
+</sqlMap> 
+

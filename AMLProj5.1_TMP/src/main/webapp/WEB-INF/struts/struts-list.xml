@@ -4,6 +4,10 @@
 	<form-beans>
 	    <form-bean name="t00_list_tableActionForm"	type="com.ist.aml.lip.controller.T00_list_tableActionForm" />
 	    <form-bean name="t00_list_colsActionForm"	type="com.ist.aml.lip.controller.T00_list_colsActionForm" />
+	    <!-- added by liuzhipeng begin -->
+		<form-bean name="t52_def_tempActionForm" type="com.ist.aml.blacklist.controller.T52_def_tempActionForm"></form-bean>
+		<form-bean name="t52_def_remountActionForm" type="com.ist.aml.blacklist.controller.T52_def_remountActionForm"></form-bean>
+	    <!-- added by liuzhipeng end -->
 	</form-beans>
 	<global-forwards type="org.apache.struts.action.ActionForward">
 		<forward name="failure" path="/../common/errors.jsp" />
@@ -34,6 +38,168 @@
 	    <forward name="success" path="/lipmanager/t20_list_details.jsp"/> 
 	    <forward name="failure" path="/lipmanager/t20_list_details.jsp"/>
     </action>
+    <!-- start of Dowjons Templet added by liuzhipeng -->
+    <!-- 道格琼斯模板配置 -->
+    <action path="/blacklist/t52_def_tempList" 
+    		parameter="getT52_def_tempList" name="t52_def_tempActionForm" 
+    		type="com.ist.aml.blacklist.controller.T52_def_tempAction" 
+    	 	validate="false" scope="request"> 
+	    <forward name="success" path="/blacklist/t52_def_temp_list.jsp"/> 
+    </action>
+    
+    <!-- 回溯模板 -->
+    <action path="/blacklist/t52_def_temp_add"
+			parameter="addT52_def_temp" name="t52_def_tempActionForm"
+			type="com.ist.aml.blacklist.controller.T52_def_tempAction"
+			validate="false" scope="request">
+		<forward name="success" path="/blacklist/t52_def_temp_add.jsp" />
+	</action>
+	
+	<!-- 回溯模板添加提交 -->
+	<action path="/blacklist/t52_def_temp_add_do" 
+			parameter="addT52_def_tempDo" name="t52_def_tempActionForm" 
+			type="com.ist.aml.blacklist.controller.T52_def_tempAction" 
+			validate="false" scope="request"> 
+    	<forward name="success" path="/blacklist/t52_def_temp_add.do"/> 
+    	<forward name="failure" path="/blacklist/t52_def_temp_add.do"/> 
+   	</action>
+   	
+   	<!-- 添加名单模板 -->
+    <action path="/blacklist/t52_def_temp_md_add"
+			parameter="addT52_def_temp" name="t52_def_tempActionForm"
+			type="com.ist.aml.blacklist.controller.T52_def_tempAction"
+			validate="false" scope="request">
+		<forward name="success" path="/blacklist/t52_def_temp_md_add.jsp" />
+	</action>
+	
+	<!-- 模板名单添加提交 -->
+	<action path="/blacklist/t52_def_temp_md_add_do" 
+			parameter="md_addT52_def_tempDo" name="t52_def_tempActionForm" 
+			type="com.ist.aml.blacklist.controller.T52_def_tempAction" 
+			validate="false" scope="request"> 
+    	<forward name="success" path="/blacklist/t52_def_temp_add.do"/> 
+    	<forward name="failure" path="/blacklist/t52_def_temp_add.do"/> 
+   	</action>
+   	
+   	<!-- 修改主页面 -->
+   	<action path="/blacklist/t52_def_temp_main_modify" 
+   			parameter="modifyT52_def_temp_main" name="t52_def_tempActionForm" 
+ 			type="com.ist.aml.blacklist.controller.T52_def_tempAction" 
+ 			validate="false" scope="request"> 
+	  	<forward name="success" path="/blacklist/t52_def_temp_main_mod.jsp"/> 
+	  	<forward name="failure" path="/blacklist/t52_def_tempList.do"/> 
+ 	</action>
+   	
+   	<!-- 修改基本属性界面 -->
+   	<action path="/blacklist/t52_def_temp_modify" 
+   			parameter="modifyT52_def_temp" name="t52_def_tempActionForm" 
+   			type="com.ist.aml.blacklist.controller.T52_def_tempAction" 
+   			validate="false" scope="request"> 
+    	<forward name="success" path="/blacklist/t52_temp_mod.jsp"/> 
+    	<forward name="namelist" path="/blacklist/t52_temp_mod_md.jsp"/> 
+    	<forward name="failure" path="/blacklist/t52_def_tempList.do"/> 
+   	</action>
+   	
+   	<!-- 基本属性页面修改提交 -->
+   	<action path="/blacklist/t52_def_temp_modify_do" 
+   			parameter="modifyT52_def_tempDo" name="t52_def_tempActionForm" 
+   			type="com.ist.aml.blacklist.controller.T52_def_tempAction" 
+   			validate="false" scope="request"> 
+    	<forward name="success" path="/blacklist/t52_def_temp_modify.do"/> 
+    	<forward name="failure" path="/blacklist/t52_def_temp_modify.do"/> 
+   	</action>
+   	
+   	<!-- 名单对象 -->
+   	<action path="/blacklist/t52_def_temp_gran" 
+   			parameter="getT52_def_temp_granList" name="t52_def_tempActionForm" 
+   			type="com.ist.aml.blacklist.controller.T52_def_tempAction" 
+   			validate="false" scope="request"> 
+    	<forward name="success" path="/blacklist/t52_def_temp_granList.jsp"/> 
+    	<forward name="failure" path="/blacklist/t52_def_temp_main_modify.do"/> 
+   	</action>
+   	
+   	<!-- 添加名单执行粒度表 -->
+   	<action path="/blacklist/t52_def_temp_gran_add" 
+   			parameter="addT52_def_temp_gran" name="t52_def_tempActionForm" 
+   			type="com.ist.aml.blacklist.controller.T52_def_tempAction" 
+   			validate="false" scope="request"> 
+    	<forward name="success_hs" path="/blacklist/t52_def_temp_gran_add.jsp"/> 
+    	<forward name="success_md" path="/blacklist/t52_def_temp_gran_add_md.jsp"/> 
+    	<forward name="failure" path="/blacklist/t52_def_temp_gran.do"/> 
+   	</action>
+   	
+   	<!-- 添加名单执行粒度表提交 -->
+   	<action path="/blacklist/t52_def_temp_gran_add_do" 
+   			parameter="addT52_def_temp_granDo" name="t52_def_tempActionForm" 
+   			type="com.ist.aml.blacklist.controller.T52_def_tempAction" 
+   			validate="false" scope="request"> 
+    	<forward name="success" path="/blacklist/t52_def_temp_gran.do"/> 
+    	<forward name="failure" path="/blacklist/t52_def_temp_gran.do"/>
+    	<forward name="failure_hs" path="/blacklist/t52_def_temp_gran_add.jsp"/> 
+    	<forward name="failure_md" path="/blacklist/t52_def_temp_gran_add_md.jsp"/>  
+   	</action>
+   	
+   	<!-- 修改名单执行粒度表 -->
+   	<action path="/blacklist/t52_def_temp_gran_mod" 
+   			parameter="modT52_def_temp_gran" name="t52_def_tempActionForm" 
+   			type="com.ist.aml.blacklist.controller.T52_def_tempAction" 
+   			validate="false" scope="request"> 
+    	<forward name="success_hs" path="/blacklist/t52_def_temp_gran_mod.jsp"/> 
+    	<forward name="success_md" path="/blacklist/t52_def_temp_gran_mod_md.jsp"/> 
+    	<forward name="failure" path="/blacklist/t52_def_temp_gran.do"/> 
+   	</action>
+   	
+   	<!-- 修改名单执行粒度表提交 -->
+   	<action path="/blacklist/t52_def_temp_gran_mod_do" 
+   			parameter="modT52_def_temp_granDo" name="t52_def_tempActionForm" 
+   			type="com.ist.aml.blacklist.controller.T52_def_tempAction" 
+   			validate="false" scope="request"> 
+    	<forward name="success" path="/blacklist/t52_def_temp_gran.do"/> 
+    	<forward name="failure" path="/blacklist/t52_def_temp_gran.do"/> 
+   	</action>
+   	
+   	<!-- 删除名单执行粒度表 -->
+   	<action path="/blacklist/t52_def_temp_gran_del" 
+   			parameter="delT52_def_temp_gran" name="t52_def_tempActionForm" 
+   			type="com.ist.aml.blacklist.controller.T52_def_tempAction" 
+   			validate="false" scope="request"> 
+    	<forward name="success" path="/blacklist/t52_def_temp_gran.do"/> 
+    	<forward name="failure" path="/blacklist/t52_def_temp_gran.do"/>
+    	<forward name="failure_md" path="/blacklist/t52_def_temp_gran_mod_md.jsp"/> 
+    	<forward name="failure_hs" path="/blacklist/t52_def_temp_gran_mod.jsp"/>  
+   	</action>
+   	
+   	<!-- 查询sql -->
+   	<action path="/blacklist/t52_def_temp_sqlList" 
+   			parameter="getT52_def_temp_sqlList" name="t52_def_tempActionForm" 
+   			type="com.ist.aml.blacklist.controller.T52_def_tempAction" 
+   			validate="false" scope="request"> 
+    	<forward name="success" path="/blacklist/t52_def_temp_sqlList.jsp"/> 
+    	<forward name="failure" path="/blacklist/t52_def_temp_main_modify.do"/> 
+   	</action>
+   	
+   	<!-- 回溯结果查询 -->
+   	<action path="/blacklist/t52_b_remout_list" 
+   			parameter="getT52_b_remout_list" name="t52_def_remountActionForm" 
+   			type="com.ist.aml.blacklist.controller.T52_def_remountAction" 
+   			validate="false" scope="request"> 
+    	<forward name="success" path="/blacklist/t52_def_remount_list.jsp"/> 
+   	</action>
+   	
+   <!-- 查看交易信息 -->
+   	<action path="/blacklist/t52_remount_trans_list" 
+   			parameter="getT52_remount_trans_list" name="t52_def_remountActionForm" 
+   			type="com.ist.aml.blacklist.controller.T52_def_remountAction" 
+   			validate="false" scope="request"> 
+    	<forward name="success" path="/blacklist/t52_remount_trans_list.jsp"/> 
+   	</action>
+    <!-- End of Dowjons Templet added by liuzhipeng -->
+
+<action path="/blacklist/flag_change" parameter="changeT52_def_tempFlag" name="t52_def_tempActionForm" 
+   			type="com.ist.aml.blacklist.controller.T52_def_tempAction" validate="false" scope="request"> 
+    	<forward name="success" path="/blacklist/t52_def_tempList.do"/> 
+    	<forward name="failure" path="/blacklist/t52_def_tempList.do"/> 
+   	</action>
 	</action-mappings>
 	<message-resources parameter="ApplicationResources_zh_CN" />
 </struts-config>
