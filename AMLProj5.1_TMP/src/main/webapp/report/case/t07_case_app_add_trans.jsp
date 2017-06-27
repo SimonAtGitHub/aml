@@ -120,12 +120,15 @@ function _open(type){
    }
     
 	if (type=='add'){
+	    // ljd add stcr
+   		 var stcr="";
 	     if(casetype=="1"){
 		 party_id=parent.document.forms[0].csnm.value;
+		 //ljd add stcr
+		 stcr=parent.document.forms[0].stcr.value;
+		 
 		 }
-		
-   		url='<%=request.getContextPath()%>/report/case/t07_case_app_add_trans_page.do?searchtype=all&party_id='+ party_id;
-    
+   		url='<%=request.getContextPath()%>/report/case/t07_case_app_add_trans_page.do?searchtype=all&party_id='+ party_id+'&stcr='+stcr;
 	}
 	
 	if(type=='newadd')

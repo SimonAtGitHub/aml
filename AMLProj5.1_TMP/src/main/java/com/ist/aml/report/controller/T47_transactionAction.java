@@ -248,6 +248,13 @@ public class T47_transactionAction extends BaseAction {
 				form.setSearchtype(searchtype);
 			}
 
+			/**
+			 * add by ljd start 2017-06-10
+			 * */
+			String stcr=request.getParameter("stcr");
+			/**
+			 * add by ljd end 2017-06-10
+			 * */
 			int intPage = StringUtils.nullObject2int(request
 					.getParameter("intPage"), 0);
 			request.setAttribute("intPage", new Integer(intPage));
@@ -270,10 +277,7 @@ public class T47_transactionAction extends BaseAction {
 			String debit_credit_disp_str=cm.getMapFromCacheToStr("trackflag", "debit_credit_disp", form.getDebit_credit_disp(),"", true);
 			request.setAttribute("debit_credit_disp_str", debit_credit_disp_str);
 
-			//现转标记
-//			LinkedHashMap goflagMap = cm.getMapFromCache("goflag");
-//			request.setAttribute("goflagMap", this.getOptionsListByMap(goflagMap,
-//					null, true));
+			/* ljd 注释//现转标记
 			String cash_trans_flag_str=cm.getMapFromCacheToStr("goflag", "cash_trans_flag_disp", form.getCash_trans_flag_disp(),"", true);
 			request.setAttribute("cash_trans_flag_str", cash_trans_flag_str);
 
@@ -283,7 +287,44 @@ public class T47_transactionAction extends BaseAction {
 //			request.setAttribute("clienttypeMap", this.getOptionsListByMap(
 //					clienttypeMap, null, true));
 			String party_class_cd_str=cm.getMapFromCacheToStr("clienttype", "party_class_cd", form.getParty_class_cd(),"", true);
+			request.setAttribute("party_class_cd_str", party_class_cd_str);*/
+			
+			
+			/**
+			 * ljd add start
+			 * 2017-06-10
+			 * */
+			//现转标记
+			String cash_trans_flag_str=cm.getMapFromCacheToStr("goflag", "cash_trans_flag_disp", "1","", true);
+			if("CPDE-DE01".equals(stcr)){
+				cash_trans_flag_str= "<input  type='hidden'  name='cash_trans_flag_disp' value='1'/> <span class='choose'><div><span class='selected'>现金</span></div></span>";
+			}else if("CPDE-DE02".equals(stcr)||"CPDE-DE03".equals(stcr)||"CPDE-DE04".equals(stcr)){
+				cash_trans_flag_str= "<input  type='hidden'  name='cash_trans_flag_disp' value='2'/> <span class='choose'><div><span class='selected'>转账</span></div></span>";
+			}else{
+				cash_trans_flag_str=cm.getMapFromCacheToStr("goflag", "cash_trans_flag_disp", form.getCash_trans_flag_disp(),"", true);
+			}
+			request.setAttribute("cash_trans_flag_str", cash_trans_flag_str);
+
+		
+			// 客户类型
+			String party_class_cd_str="";
+				//cm.getMapFromCacheToStr("clienttype", "party_class_cd", form.getParty_class_cd(),"", true);
+			if("CPDE-DE02".equals(stcr)){
+				party_class_cd_str="<input  type='hidden'  name='party_class_cd' value='C'/><span class='choose'><div><span class='selected'>对公</span></div></span>"; 
+			}else if("CPDE-DE03".equals(stcr)||"CPDE-DE04".equals(stcr)){
+				party_class_cd_str="<input  type='hidden'  name='party_class_cd' value='I'/><span class='choose'><div><span class='selected'>对私</span></div></span>"; 
+			}else{
+				party_class_cd_str=cm.getMapFromCacheToStr("clienttype", "party_class_cd", form.getParty_class_cd(),"", true);
+			}
 			request.setAttribute("party_class_cd_str", party_class_cd_str);
+			
+			//是否跨境
+			String overarea_ind_str=cm.getMapFromCacheToStr("yesNo", "overarea_ind", form.getOverarea_ind(),"", true);
+			request.setAttribute("overarea_ind_str", overarea_ind_str);
+			/**
+			 * ljd add end
+			 * 2017-06-10
+			 * */
 			//对手客户类型
 			String opp_party_class_cd_str=cm.getMapFromCacheToStr("clienttype", "opp_party_class_cd", form.getOpp_party_class_cd(),"", true);
 			request.setAttribute("opp_party_class_cd_str", opp_party_class_cd_str);
@@ -301,6 +342,10 @@ public class T47_transactionAction extends BaseAction {
 			String party_id=request.getParameter("party_id");
 			request.setAttribute("party_id", party_id);
 			form.setParty_id(party_id);
+			//add ljd start
+			request.setAttribute("stcr", stcr);
+			form.setStcr(stcr);
+			//add ljd end	
 			String today = DateUtils.getCurrTime();
 			DateUtils dateUtils = new DateUtils();
 			String tendaybefor = dateUtils.getDateChangeTime(today, "d",
@@ -732,7 +777,58 @@ String cash_trans_flag_str=cm.getMapFromCacheToStr("goflag", "cash_trans_flag_di
 //					trackflagMap, null, true));
 			String debit_credit_disp_str=cm.getMapFromCacheToStr("trackflag", "debit_credit_disp", form.getDebit_credit_disp(),"", true);
 			request.setAttribute("debit_credit_disp_str", debit_credit_disp_str);
-
+			 System.out.println("=====================================form.getStcr()::"+form.getStcr());
+			/**
+			 * add ljd start 2017-06-10
+			 * */
+			if(form.getStcr().equals("CPDE-DE01")||form.getStcr().equals("CPDE-DE02")||form.getStcr().equals("CPDE-DE03")||form.getStcr().equals("CPDE-DE04")){
+				//现转标记
+				String cash_trans_flag_str="";
+				if(form.getCash_trans_flag_disp()!=null&&!"".equals(form.getCash_trans_flag_disp())){
+					if(form.getCash_trans_flag_disp().equals("1")){
+						cash_trans_flag_str= "<input  type='hidden'  name='cash_trans_flag_disp' value='1'/> <span class='choose'><div><span class='selected'>现金</span></div></span>";
+					}else if(form.getCash_trans_flag_disp().equals("2")){
+						cash_trans_flag_str= "<input  type='hidden'  name='cash_trans_flag_disp' value='2'/> <span class='choose'><div><span class='selected'>转账</span></div></span>";
+					}
+				}else {
+				cash_trans_flag_str=cm.getMapFromCacheToStr("goflag", "cash_trans_flag_disp", form.getCash_trans_flag_disp(),"", true);
+				}
+				request.setAttribute("cash_trans_flag_str", cash_trans_flag_str);
+				// 客户类型
+				String party_class_cd_str="";
+				if(form.getParty_class_cd()!=null&&!"".equals(form.getParty_class_cd())){
+					if(form.getParty_class_cd().equalsIgnoreCase("C")){
+						party_class_cd_str="<input  type='hidden'  name='party_class_cd' value='C'/><span class='choose'><div><span class='selected'>对公</span></div></span>";
+					}else if(form.getParty_class_cd().equalsIgnoreCase("I")){
+						party_class_cd_str="<input  type='hidden'  name='party_class_cd' value='I'/><span class='choose'><div><span class='selected'>对私</span></div></span>"; 
+					}
+				}else{
+					party_class_cd_str=cm.getMapFromCacheToStr("clienttype", "party_class_cd", form.getParty_class_cd(),"", true);
+				}
+				request.setAttribute("party_class_cd_str", party_class_cd_str);
+			}else {
+				//现转标记
+				LinkedHashMap goflagMap = cm.getMapFromCache("goflag");
+				request.setAttribute("goflagMap", this.getOptionsListByMap(goflagMap,
+						null, true));
+				String cash_trans_flag_str=cm.getMapFromCacheToStr("goflag", "cash_trans_flag_disp", form.getCash_trans_flag_disp(),"", true);
+				request.setAttribute("cash_trans_flag_str", cash_trans_flag_str);
+				// 客户类型
+			LinkedHashMap clienttypeMap = cm.getMapFromCache("clienttype"); 
+				request.setAttribute("clienttypeMap", this.getOptionsListByMap(
+						clienttypeMap, null, true));
+				String party_class_cd_str=cm.getMapFromCacheToStr("clienttype", "party_class_cd", form.getParty_class_cd(),"", true);
+				request.setAttribute("party_class_cd_str", party_class_cd_str);
+				
+			}
+				//是否跨境
+			String overarea_ind_str=cm.getMapFromCacheToStr("yesNo", "overarea_ind", form.getOverarea_ind(),"", true);
+			request.setAttribute("overarea_ind_str", overarea_ind_str);
+			/**
+			 * add ljd end 2017-06-10
+			 * */
+			
+			
 			//现转标记
 //			LinkedHashMap goflagMap = cm.getMapFromCache("goflag");
 //			request.setAttribute("goflagMap", this.getOptionsListByMap(goflagMap,

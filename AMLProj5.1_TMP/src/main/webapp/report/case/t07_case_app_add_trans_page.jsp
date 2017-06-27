@@ -312,6 +312,9 @@ function quit()
 				<td>
 					<html:text property="party_id"
 						 onblur="" readonly="true" />
+						 <!-- add ljd start -->
+						 <html:hidden property="stcr" />
+						  <!-- add ljd end -->
 					<!--<html:text property="party_chn_name" styleClass="text_white"
 						size="23" readonly="true" />
 					 	<a href="#" onclick="window.open('<%=request.getContextPath()%>/common/t47_party_list.do?newsearchflag=1&input_name=party_id&input_name_disp=party_chn_name','enter2','height=400, width=600,left=100,top=100,scrollbars=yes,resizable=yes');" ><span class="cond_buttons"><img src="../../images/blue/b_location.png" />定位</span></a>
@@ -407,11 +410,11 @@ function quit()
 					<bean:define id="debit_credit_disp_str" name="debit_credit_disp_str"></bean:define><%=debit_credit_disp_str %>
 				</td>
 			</tr>
-			<logic:equal property="searchtype" value="overarea"
+			<!-- ljd注释<logic:equal property="searchtype" value="overarea"
 				name="t47_transactionActionForm">
 				<html:hidden property="overarea_ind" />
 			</logic:equal>
-			<tr>
+			--><tr>
 				<%-- <td width="14%" height="22" align="right" bgcolor="ECF3FF">
 					是否计算：
 				</td>
@@ -438,6 +441,15 @@ function quit()
 				</td>
 			</tr>
 			<tr>
+			<!--add ljd start overarea_ind-->
+			
+				<td>
+				是否跨境：
+				</td>
+				<td>
+					<bean:define id="overarea_ind_str" name="overarea_ind_str"></bean:define><%=overarea_ind_str %>
+				</td>
+				<!--add ljd end-->
 				<td>
 					排序：
 				</td>
@@ -452,11 +464,10 @@ function quit()
 					<html:radio property="order" value="2" />
 					降序&nbsp;&nbsp;&nbsp;&nbsp;
 					<html:hidden property="searchtype" />
-				</td>
-				<td></td>
-				<td>
-					<input type="button" name="ok" value="查 询" class="in_button1"
+				<!-- ljd add start -->
+						<input type="button" name="ok" value="查 询" class="in_button1"
 						onClick="dosubmit('<%=request.getContextPath()%>/report/case/t07_case_app_add_trans_page_query.do?newsearchflag=1')" />
+					<!-- ljd add end -->
 				</td>
 			</tr>
 		</table>
