@@ -2610,10 +2610,19 @@ public class T07_case_applicationAction extends BaseAction {
 			//验证交易日期和交易金额                                                                                                                                                    
 			double total_cny=0;                                                                                                                                                         
 			double total_usd=0;                                                                                                                                                         
-			double tran_amt=0;                                                                                                                                                          
+			double tran_amt=0;  
+			//add ljd start 
+			String is_local_1="";//本外币标示 1：本币 0：外币 2：本外币
+			//付
+			double total_cny2=0;                                                                                                                                                         
+			double total_usd2=0;                                                                                                                                                         
+			double tran_amt2=0;
+			String is_local_2="";//本外币标示 1：本币 0：外币 2：本外币
+			//add ljd end
 			HashMap acctHash=new HashMap();                                                                                                                                             
 			boolean validate_date=false;                                                                                                                                                
-			String tx_dt_first="";                                                                                                                                                      
+			String tx_dt_first="";  
+			String stcr=form.getStcr();                                                                                                                                                     
 			Date data_dt=DateUtils.stringToDateShort(DateUtils.getCurrTime());                                                                                                          
 			{                                                                                                                                                                           
 			int i=0;     
@@ -2627,9 +2636,25 @@ public class T07_case_applicationAction extends BaseAction {
 			{                                                                                                                                                                           
 				T47_transaction temp=(T47_transaction)iter.next();   
 				String trans_currcd=temp.getCurr_cd();
-				if(!curr_cd.equals(trans_currcd)){
+				
+					/*ljd 注释 if(!curr_cd.equals(trans_currcd)){
 					errMes="交易的币种必须和案例币种相同！";  	
+				}*/
+				String  cashtransflag=temp.getCash_trans_flag();
+				//mod ljd stcr 为 CPDE- 开头
+				if("CPDE-DE01".equals(stcr)){
+					if(cashtransflag.equals("01")){
+						errMes="必须是现金交易！";  	
+						break;
+					}
 				}
+				if("CPDE-DE02".equals(stcr)||"CPDE-DE03".equals(stcr)){
+					if(cashtransflag.equals("00")){
+						errMes="必须是非现金交易！";  	
+						break;
+					}
+				}
+				//mod ljd end stcr 为 CPDE- 开头
 			  if(temp.getParty_id().equals(party_id)){
 					newtransMap.put(temp.getTransactionkey(), temp);
 	
@@ -2659,11 +2684,38 @@ public class T07_case_applicationAction extends BaseAction {
 					maxorgankey=StringUtils.null2String(temp.getOrgankey());                                                                                                                
 				}                                                                                                                                                                         
 				if(!acct_num.equals(""))                                                                                                                                                  
-				acctHash.put(acct_num, "");                                                                                                                                               
+				acctHash.put(acct_num, ""); 
+				//ljd 注释
+				/*                                                                                                                                              
 				tran_amt+=temp.getAmt().doubleValue();                                                                                                                                    
 				total_cny+=temp.getCny_amt().doubleValue();   
 				if(temp.getUsd_amt()!=null)
-				total_usd+=temp.getUsd_amt().doubleValue();                                                                                                                               
+				total_usd+=temp.getUsd_amt().doubleValue();   */
+				//add ljd start 2017-06-10
+				//收
+				tran_amt+=temp.getAmt().doubleValue();                                                                                                                                    
+				total_cny+=temp.getCny_amt().doubleValue();   
+			if(temp.getUsd_amt()!=null){
+				total_usd+=temp.getUsd_amt().doubleValue(); 
+		    if("".equals(is_local_1)||is_local_1==null ){
+			   is_local_1=temp.getCurr_cd();
+		    }else if(!is_local_1.equals(temp.getCurr_cd())){
+			    is_local_1="3";
+		    }
+			//付
+			}else if(temp.getReceive_pay_cd().equals("02")){
+				tran_amt2+=temp.getAmt().doubleValue();                                                                                                                                    
+				total_cny2+=temp.getCny_amt().doubleValue();   
+			if(temp.getUsd_amt()!=null){
+			total_usd2+=temp.getUsd_amt().doubleValue(); 
+			}
+		    if("".equals(is_local_2)||is_local_2==null ){
+			   is_local_2=temp.getCurr_cd();
+		    }else if(!is_local_2.equals(temp.getCurr_cd())){
+			   is_local_2="3";
+		    }
+			}
+			//add ljd end 2017-06-10
 				i++;  
 			}
 			} 
@@ -2679,9 +2731,49 @@ public class T07_case_applicationAction extends BaseAction {
 				                                                                                                             
 			}                                                                                                                                                                           
 			}                                                                                                                                                                           
-			//验证交易金额必须与特征的金额对应                                                                                                                                          
+			//验证交易金额必须与特征的金额对应 
+			//ljd add start
+			String destcr = form.getStcr();
+			Map dataMap = new HashMap();
+			//特征
+		    dataMap.put("destcr", destcr);
+		    dataMap.put("cust_id",form.getCsnm());   //客户号
+		    dataMap.put("cust_name",form.getCtnm());//客户名称
+		    Map resultMap = new HashMap();
+			if(total_cny>0 && total_usd>0){
+				//收
+				//本外币标示 1：本币 0：外币 2：本外币
+				if(is_local_1!=null&&!"".equals(is_local_1)){
+					dataMap.put("is_local_curr",is_local_1);
+				}
+				dataMap.put("total_cny",total_cny);
+			    dataMap.put("total_usd",total_usd);  
+			    resultMap=ValidateBhRule(dataMap);
+				} 
+			if(resultMap.get("isValidBhTrans")==null||"".equals(resultMap.get("isValidBhTrans"))){
+				resultMap.put("isValidBhTrans","false"); 
+			if(resultMap.get("isValidBhTrans").toString().equals("false")){
+				if(total_cny2>0 && total_usd2>0 ){
+			    //付
+				if(is_local_2!=null&&!"".equals(is_local_2)){
+					dataMap.put("is_local_curr",is_local_2);
+				}
+			    dataMap.put("total_cny",total_cny2);
+			    dataMap.put("total_usd",total_usd2);  
+			    resultMap=ValidateBhRule(dataMap);
+			}
+			}
+		}
+			String isValidBhTrans="";
+			if(resultMap!=null&&!"".equals(resultMap)){
+				isValidBhTrans = resultMap.get("isValidBhTrans").toString();
+			}
+			if(isValidBhTrans.equals("false")){
+				errMes = resultMap.get("errorMsg").toString();
+			}
+			//ljd add end
 		                                                                                                                                                     
-			String stcr=form.getStcr();  
+			/* ljd 注释String stcr=form.getStcr();  
 		
 			if("DE01".equals(stcr))                                                                                                                                                     
 			{                                                                                                                                                                           
@@ -2708,7 +2800,7 @@ public class T07_case_applicationAction extends BaseAction {
 				{                                                                                                                                                                         
 					errMes="交易金额与大额交易特征0904不符!";                                                                                                                               
 				}                                                                                                                                                                         
-			}                                                                                                                                                                           
+			}    */                                                                                                                                                                       
 			if(!"".equals(errMes))                                                                                                                                                      
 			{                                                                                                                                                                           
 				//throw new Exception(errMes); 
@@ -5365,6 +5457,113 @@ public class T07_case_applicationAction extends BaseAction {
 		
 		return actionMapping.findForward("success");
 	}
+/**
+ * @author ljd
+ * @param 三号令 大额特征验证
+ * */
+	//add ljd start
+	public  Map ValidateBhRule(Map dataMap){
+		 Map resultMap = new HashMap();
+		//获取大额特征标志
+		 String destcr =(String) dataMap.get("destcr");
+		//获取本外币标志 1:本币 2：外币 3：本外币
+		 String is_local_curr =  (String) dataMap.get("is_local_curr");
+		 //获取折合人民币金额
+		 Double total_cny = (Double) dataMap.get("total_cny");
+		//获取折合美元金额
+		 Double total_usd =  (Double) dataMap.get("total_usd");
+		 String cust_id = (String) dataMap.get("cust_id");
+		 String cust_name = (String) dataMap.get("cust_name");
+		 //大额01验证
+		 if(destcr.equals("CPDE-DE01")){
+			 if(is_local_curr.equals("1") && total_cny<50000.0D){
+				 resultMap.put("isValidBhTrans","false"); 
+		         resultMap.put("errorMsg","客户:"+cust_name+"("+cust_id+")，交易不满足大额01标准！");
+		         return resultMap; 
+			 }
+			 if(is_local_curr.equals("2") && total_usd<10000.0D){
+				 resultMap.put("isValidBhTrans","false"); 
+		         resultMap.put("errorMsg","客户:"+cust_name+"("+cust_id+")，交易不满足大额01标准！");
+		         return resultMap; 
+			 }
+			 if(is_local_curr.equals("3")){
+				 if(total_usd<10000.0D && total_cny<50000.0D){
+					 resultMap.put("isValidBhTrans","false"); 
+			         resultMap.put("errorMsg","客户:"+cust_name+"("+cust_id+")，交易不满足大额01标准！");
+			         return resultMap; 
+				 }
+			 } 
+				  resultMap.put("isValidBhTrans","true");
+			 }
+		
+		//大额02验证
+		 if(destcr.equals("CPDE-DE02")){
+			 if(is_local_curr.equals("1") && total_cny<2000000.0D){
+				 resultMap.put("isValidBhTrans","false"); 
+		         resultMap.put("errorMsg","客户:"+cust_name+"("+cust_id+")，交易不满足大额02标准！");
+		         return resultMap; 
+			 }
+			 if(is_local_curr.equals("2") && total_usd<200000.0D){
+				 resultMap.put("isValidBhTrans","false"); 
+		         resultMap.put("errorMsg","客户:"+cust_name+"("+cust_id+")，交易不满足大额02标准！");
+		         return resultMap; 
+			 }
+			 if(is_local_curr.equals("3")){
+				 if(total_usd<200000.0D && total_cny<2000000.0D){
+					 resultMap.put("isValidBhTrans","false"); 
+			         resultMap.put("errorMsg","客户:"+cust_name+"("+cust_id+")，交易不满足大额02标准！");
+			         return resultMap; 
+				 }
+			 } 
+				  resultMap.put("isValidBhTrans","true");
+			 }
+		//大额03验证
+		 if(destcr.equals("CPDE-DE03")){
+			 if(is_local_curr.equals("1") && total_cny<500000.0D){
+				 resultMap.put("isValidBhTrans","false"); 
+		         resultMap.put("errorMsg","客户:"+cust_name+"("+cust_id+")，交易不满足大额03标准！");
+		         return resultMap; 
+			 }
+			 if(is_local_curr.equals("2") && total_usd<100000.0D){
+				 resultMap.put("isValidBhTrans","false"); 
+		         resultMap.put("errorMsg","客户:"+cust_name+"("+cust_id+")，交易不满足大额03标准！");
+		         return resultMap; 
+			 }
+			 if(is_local_curr.equals("3")){
+				 if(total_usd<100000.0D && total_cny<500000.0D){
+					 resultMap.put("isValidBhTrans","false"); 
+			         resultMap.put("errorMsg","客户:"+cust_name+"("+cust_id+")，交易不满足大额03标准！");
+			         return resultMap; 
+				 }
+			 } 
+				  resultMap.put("isValidBhTrans","true");
+			 }
+		
+		//大额04验证
+		 if(destcr.equals("CPDE-DE04")){
+			 if(is_local_curr.equals("1") && total_cny<200000.0D){
+				 resultMap.put("isValidBhTrans","false"); 
+		         resultMap.put("errorMsg","客户:"+cust_name+"("+cust_id+")，交易不满足大额04标准！");
+		         return resultMap; 
+			 }
+			 if(is_local_curr.equals("2") && total_usd<10000.0D){
+				 resultMap.put("isValidBhTrans","false"); 
+		         resultMap.put("errorMsg","客户:"+cust_name+"("+cust_id+")，交易不满足大额04标准！");
+		         return resultMap; 
+			 }
+			 if(is_local_curr.equals("3")){
+				 if(total_usd<10000.0D && total_cny<200000.0D){
+					 resultMap.put("isValidBhTrans","false"); 
+			         resultMap.put("errorMsg","客户:"+cust_name+"("+cust_id+")，交易不满足大额04标准！");
+			         return resultMap; 
+				 }
+			 } 
+				  resultMap.put("isValidBhTrans","true");
+			 }
+		
+		 return resultMap;
+	 }
+//add ljd end
 	
 	
 }
