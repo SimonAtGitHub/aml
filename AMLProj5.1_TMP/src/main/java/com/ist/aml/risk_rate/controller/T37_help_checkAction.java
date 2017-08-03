@@ -597,11 +597,15 @@ public class T37_help_checkAction extends BaseAction{
 			int intPage = StringUtils.nullObject2int(request.getParameter("intPage"), 0);
 			LinkedHashMap statusMap = cm.getMapFromCache("check_help_status");
 			request.setAttribute("statusMap", this.getOptionsListByMap(statusMap, null, true));
+			LinkedHashMap clienttypeMap = this.cm.getMapFromCache("clienttype");
+			request.setAttribute("clienttypeMap", getOptionsListByMap(clienttypeMap, null, true));
+			
 			//取的当前用户信息
 			AuthBean authBean = (AuthBean) session.getAttribute("authBean");
 			Authorization auth = authBean.getAuthToken();
 			String organKey = auth.getT00_user().getOrgankey();
 			String organStr = auth.getOrganstr();
+			String party_class_cd=form.getParty_class_cd();
 			if ("0".equals(newsearchflag)) {
 				if("".equals(form.getOrgankey())){
 					form.setOrgankey(auth.getT00_user().getOrgankey());
@@ -623,6 +627,10 @@ public class T37_help_checkAction extends BaseAction{
 					String tmp = form.getSend_date_end_disp();
 					t37_help_check.setSend_date_end_disp(tmp);
 					t37_help_check.setSend_date_end(DateUtils.stringToDateShort(tmp));
+				}
+				if (party_class_cd != null
+						&& !"".equals(party_class_cd.trim())) {
+					t37_help_check.setParty_class_cd(party_class_cd);
 				}
 				
 				t37_help_check.setInt_page(intPage);
@@ -677,11 +685,14 @@ public class T37_help_checkAction extends BaseAction{
 			T37_help_checkActionForm form = (T37_help_checkActionForm) actionForm;
 			String newsearchflag = StringUtils.nullObject2String(request.getParameter("newsearchflag"));
 			int intPage = StringUtils.nullObject2int(request.getParameter("intPage"), 0);
+			LinkedHashMap clienttypeMap = this.cm.getMapFromCache("clienttype");
+			request.setAttribute("clienttypeMap", getOptionsListByMap(clienttypeMap, null, true));
 			
 			//取的当前用户信息
 			AuthBean authBean = (AuthBean) session.getAttribute("authBean");
 			Authorization auth = authBean.getAuthToken();
 			String organStr = auth.getOrganstr();
+			String party_class_cd=form.getParty_class_cd();
 			
 			if ("0".equals(newsearchflag)) {
 				if("".equals(form.getOrgankey())){
@@ -701,6 +712,10 @@ public class T37_help_checkAction extends BaseAction{
 					String tmp = form.getSend_date_end_disp();
 					t37_help_check.setSend_date_end_disp(tmp);
 					t37_help_check.setSend_date_end(DateUtils.stringToDateShort(tmp));
+				}
+				if (party_class_cd != null
+						&& !"".equals(party_class_cd.trim())) {
+					t37_help_check.setParty_class_cd(party_class_cd);
 				}
 				
 				t37_help_check.setInt_page(intPage);

@@ -18,6 +18,10 @@
 		<isEmpty prepend="AND" property="status_cd">
 			STATUS_CD in ('1','4')
 		</isEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			party_class_cd =
+			#party_class_cd#
+		</isNotEmpty>
 		<isNotEmpty prepend="AND" property="send_date">
 			SEND_DATE = #send_date#
 		</isNotEmpty>
@@ -38,6 +42,10 @@
 		WHERE STATUS_CD ='2'
 		<isNotEmpty prepend="AND" property="organstr">
 			CHECK_ORG in ($organstr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			party_class_cd =
+			#party_class_cd#
 		</isNotEmpty>
 		<isNotEmpty prepend="AND" property="send_date">
 			<![CDATA[SEND_DATE >= #send_date#]]>
@@ -65,6 +73,10 @@
 		<isNotEmpty prepend="AND" property="status_cd">
 			STATUS_CD = #status_cd#
 		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			party_class_cd =
+			#party_class_cd#
+		</isNotEmpty>
 		<isNotEmpty prepend="AND" property="send_date">
 			SEND_DATE = #send_date#
 		</isNotEmpty>
@@ -91,6 +103,10 @@
 		WHERE STATUS_CD='2'
 		<isNotEmpty prepend="AND" property="organstr">
 			CHECK_ORG in ($organstr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			party_class_cd =
+			#party_class_cd#
 		</isNotEmpty>
 		<isNotEmpty prepend="AND" property="send_date">
 			<![CDATA[SEND_DATE >= #send_date#]]>

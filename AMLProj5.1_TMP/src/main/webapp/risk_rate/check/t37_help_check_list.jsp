@@ -58,6 +58,17 @@
 				<a href="#" onclick="window.open('<%=request.getContextPath()%>/common/t47_party_list.do?newsearchflag=1&input_name=party_id&input_name_disp=party_chn_name','enter2','height=400, width=600,left=100,top=100,scrollbars=yes,resizable=yes');" ><span class="cond_buttons"><img src="../../images/<%=session.getAttribute("style") %>/b_location.png" />定位</span></a>
 			</td>
 		</tr>
+		<tr>
+			<td>
+				客户类型：
+			</td>
+			<td>
+				<html:select property="party_class_cd">
+					<html:options collection="clienttypeMap" property="label"
+						labelProperty="value" />
+				</html:select>
+			</td>
+		</tr>
         <tr>
         
         <td>发起协查机构：</td>

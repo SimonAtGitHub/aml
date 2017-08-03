@@ -14,6 +14,10 @@
 		<isNotEmpty prepend="AND" property="status_cd">
 			R.status_cd=#status_cd#
 		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			party_class_cd =
+			#party_class_cd#
+		</isNotEmpty>
 		<isNotEmpty prepend="AND" property="post_id">
 			R.CURR_POST =#post_id#
 		</isNotEmpty>
@@ -94,6 +98,10 @@
 		<dynamic prepend="WHERE">
 		<isNotEmpty prepend="AND" property="organStr">
 			R.ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			party_class_cd =
+			#party_class_cd#
 		</isNotEmpty>
 		<isNotEmpty prepend="AND" property="status_cd">
 			R.status_cd=#status_cd#
@@ -182,6 +190,10 @@
 		</isNotEmpty>
 		<isNotEmpty prepend="AND" property="status_cd">
 			R.status_cd=#status_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			party_class_cd =
+			#party_class_cd#
 		</isNotEmpty>
 		<isNotEmpty prepend="AND" property="post_id">
 			R.CURR_POST =#post_id#
@@ -273,6 +285,10 @@
 		</isNotEmpty>
 		<isNotEmpty prepend="AND" property="status_cd">
 			R.status_cd=#status_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_class_cd">
+			party_class_cd =
+			#party_class_cd#
 		</isNotEmpty>
 		<isNotEmpty prepend="AND" property="post_id">
 			R.CURR_POST =#post_id#

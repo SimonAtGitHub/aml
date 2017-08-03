@@ -158,6 +158,7 @@ public class T37_party_resultCurrAction extends BaseAction {
 				String statistic_dt_disp_end=form.getStatistic_dt_disp_end();
 				String create_dt = form.getCreate_dt_disp();
 				String create_dt_end = form.getCreate_dt_disp_end();
+				String party_class_cd=form.getParty_class_cd();
 				if (statistic_dt_disp != null && !"".equals(statistic_dt_disp)) {
 					t37_party_result.setStatistic_dt(DateUtils.stringToDateShort(statistic_dt_disp));
 				}
@@ -172,6 +173,10 @@ public class T37_party_resultCurrAction extends BaseAction {
 				}
 				if(t37_party_result.getTempcategory()!=null&&!"".equals(t37_party_result.getTempcategory())){
 					t37_party_result.setTempcategory_c(surroundSymbol(t37_party_result.getTempcategory(),",","'"));
+				}
+				if (party_class_cd != null
+						&& !"".equals(party_class_cd.trim())) {
+					t37_party_result.setParty_class_cd(party_class_cd);
 				}
 				session.setAttribute("t37_level_adjust_progressSearchObj",t37_party_result);
 				
@@ -304,6 +309,7 @@ public class T37_party_resultCurrAction extends BaseAction {
 				String rcheck_dt_disp_end = form.getRcheck_dt_disp_end();
 				String create_dt = form.getCreate_dt_disp();
 				String create_dt_end = form.getCreate_dt_disp_end();
+				String party_class_cd=form.getParty_class_cd();
 				if (statistic_dt_disp != null && !"".equals(statistic_dt_disp)) {
 					t37_party_result.setStatistic_dt(DateUtils.stringToDateShort(statistic_dt_disp));
 				}
@@ -324,6 +330,10 @@ public class T37_party_resultCurrAction extends BaseAction {
 				}
 				if(t37_party_result.getTempcategory()!=null&&!"".equals(t37_party_result.getTempcategory())){
 					t37_party_result.setTempcategory_c(surroundSymbol(t37_party_result.getTempcategory(),",","'"));
+				}
+				if (party_class_cd != null
+						&& !"".equals(party_class_cd.trim())) {
+					t37_party_result.setParty_class_cd(party_class_cd);
 				}
 				session.setAttribute("t37_party_result_currSearchObj",t37_party_result);
 				

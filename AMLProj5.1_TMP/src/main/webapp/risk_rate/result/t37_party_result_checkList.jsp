@@ -196,6 +196,17 @@ function _Open(url){
 							</tr>
 							<tr>
 								<td>
+									客户类型：
+								</td>
+								<td>
+									<html:select property="party_class_cd">
+										<html:options collection="clienttypeMap" property="label"
+											labelProperty="value" />
+									</html:select>
+								</td>
+							</tr>
+							<tr>
+								<td>
 									系统评级：
 								</td>
 								<td>

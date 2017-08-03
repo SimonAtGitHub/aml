@@ -295,7 +295,9 @@ public class T37_party_resultAction extends BaseAction {
 			request.setAttribute("resultsortMap", this.getOptionsListByMap(resultsortMap, null, true));
 			LinkedHashMap levelMap = cm.getMapFromCache("t31_risk_level"); // 风险等级
 			request.setAttribute("riskLevelMap", this.getOptionsListByMap(levelMap, null, true));
-			
+			LinkedHashMap clienttypeMap = this.cm.getMapFromCache("clienttype");
+			request.setAttribute("clienttypeMap", getOptionsListByMap(clienttypeMap, null, true));
+			 
 			request.setAttribute("is_showSurvey", t87_sysparaMap.get(Constans.IS_SHOW_SURVEY)); //调查是否在列表显示
 			request.setAttribute("is_flowSurvey", t87_sysparaMap.get(Constans.IS_FLOW_SURVEY)); //调查是否走流程
 			request.setAttribute("is_showCheck", t87_sysparaMap.get(Constans.IS_SHOW_CHECK));   //协查是否在列表显示
@@ -311,6 +313,7 @@ public class T37_party_resultAction extends BaseAction {
 				t37_party_result.setOrganStr(organStr);
 				String statistic_dt_disp=form.getStatistic_dt_disp();
 				String statistic_dt_disp_end=form.getStatistic_dt_disp_end();
+				String party_class_cd=form.getParty_class_cd();
 				if (statistic_dt_disp != null && !"".equals(statistic_dt_disp)) {
 					t37_party_result.setStatistic_dt(DateUtils
 							.stringToDateShort(statistic_dt_disp));
@@ -323,6 +326,10 @@ public class T37_party_resultAction extends BaseAction {
 				
 				if(t37_party_result.getTempcategory()!=null&&!"".equals(t37_party_result.getTempcategory())){
 					t37_party_result.setTempcategory_c(surroundSymbol(t37_party_result.getTempcategory(),",","'"));
+				}
+				if (party_class_cd != null
+						&& !"".equals(party_class_cd.trim())) {
+					t37_party_result.setParty_class_cd(party_class_cd);
 				}
 				session.setAttribute("t37_party_result_rateSearchObj",t37_party_result);
 				
@@ -429,7 +436,9 @@ public class T37_party_resultAction extends BaseAction {
 			request.setAttribute("rate_sourceMap", this.getOptionsListByMap(rate_sourceMap, null, true));
 			LinkedHashMap t87_sysparaMap = cm.getMapFromCache("t87_syspara");
 			request.setAttribute("is_showCheck", t87_sysparaMap.get(Constans.IS_SHOW_CHECK));   //协查是否在列表显示
-
+			LinkedHashMap clienttypeMap = this.cm.getMapFromCache("clienttype");
+			request.setAttribute("clienttypeMap", getOptionsListByMap(clienttypeMap, null, true));
+			
 			if ("0".equals(newsearchflag)) {
 //				if(form.getOrgankey().equals("")){
 //					form.setOrgankey(auth.getT00_user().getOrgankey());
@@ -445,6 +454,7 @@ public class T37_party_resultAction extends BaseAction {
 				String modifydate_disp_end = form.getModifydate_disp_end();
 				String create_dt_disp = form.getCreate_dt_disp();
 				String create_dt_disp_end = form.getCreate_dt_disp_end();
+				String party_class_cd=form.getParty_class_cd();
 				if (statistic_dt_disp != null && !"".equals(statistic_dt_disp)) {
 					t37_party_result.setStatistic_dt(DateUtils
 							.stringToDateShort(statistic_dt_disp));
@@ -472,6 +482,10 @@ public class T37_party_resultAction extends BaseAction {
 				}
 				if(t37_party_result.getTempcategory()!=null&&!"".equals(t37_party_result.getTempcategory())){
 					t37_party_result.setTempcategory_c(surroundSymbol(t37_party_result.getTempcategory(),",","'"));
+				}
+				if (party_class_cd != null
+						&& !"".equals(party_class_cd.trim())) {
+					t37_party_result.setParty_class_cd(party_class_cd);
 				}
 				session.setAttribute("t37_party_result_checkRateSearchObj",t37_party_result);
 				

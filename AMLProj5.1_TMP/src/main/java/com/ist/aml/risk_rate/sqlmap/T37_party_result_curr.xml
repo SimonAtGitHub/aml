@@ -531,6 +531,10 @@
 			<isNotEmpty prepend="AND" property="status_cd">
 				STATUS_CD = #status_cd#
 			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				party_class_cd =
+				#party_class_cd#
+			</isNotEmpty>
 			<isNotEmpty prepend="AND" property="temptype">
 			    TEMPTYPE = #temptype#
 		    </isNotEmpty>
@@ -601,6 +605,10 @@
 			</isNotEmpty>
 			<isNotEmpty prepend="AND" property="status_cd">
 				STATUS_CD = #status_cd#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_class_cd">
+				party_class_cd =
+				#party_class_cd#
 			</isNotEmpty>
 			<isNotEmpty prepend="AND" property="party_id">
 				PARTY_ID =#party_id#
