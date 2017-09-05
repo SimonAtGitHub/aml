@@ -52,11 +52,12 @@ function dosubmit(theUrl,type){
         var errMsg = "";
         var isSub = false;
         if(type=='modi'||type=='del'){
-        if (checkRadio(document.forms[0])<0){
+        if (checkRadio(document.forms[0].selectedPartyId)<0){
             alert("请选择!");
             return false;
         }
         }
+        /*
         if(type=='modi'){
             errMsg = CheckBoxCheckedSingleOne(document.forms[0]);
             var len=document.forms[0].selectedPartyId.length;
@@ -112,8 +113,22 @@ function dosubmit(theUrl,type){
                 }
             }
         }    
-        else if(type=='search' || type=='add'){
+        else if(type=='search' || type=='add'){*/
+        
+        /*if(type=='modi' && checkRadio(document.forms[0].selectedPartyId) > 1){
+        	alert(checkRadio(document.forms[0].selectedPartyId));
+            alert("请选择一个名单!");
+            return false;
+        }else if(type=='modi' && checkRadio(document.forms[0].selectedPartyId) = 1){
+        	isSub = true;
+        }*/
+        if(type=='add'|| type=='modi'){
             isSub = true;
+        }
+        if(type=='del' && errMsg==''){
+        	if(confirm('你真的要删除选择的名单吗？')){
+                isSub = true;
+            }
         }
          if(type=='search'){
         _Date1 = document.forms[0].create_dt_disp.value;

@@ -65,12 +65,12 @@ function _isDateSpaceComplete(_Date1, _Date2) {
         var errMsg = "";
         var isSub = false;
         if(type=='modi'||type=='del'){
-        if (checkRadio(document.forms[0])<0){
+        if (checkRadio(document.forms[0].selectedPartyId)<0){
             alert("请选择!");
             return false;
         }
         }
-        if(type=='modi'){
+        /*if(type=='modi'){
             errMsg = CheckBoxCheckedSingleOne(document.forms[0]);
             var len=document.forms[0].selectedPartyId.length;
             if(len >= 1)
@@ -126,8 +126,14 @@ function _isDateSpaceComplete(_Date1, _Date2) {
                 }
             }
         }
-        else if(type=='search' || type=='add'){
+        else if(type=='search' || type=='add'){*/
+        if(type=='add'|| type=='modi'){
             isSub = true;
+        }
+        if(type=='del' && errMsg==''){
+        	if(confirm('你真的要删除选择的名单吗？')){
+                isSub = true;
+            }
         }
         if(type=='search'){
     	_Date1 = document.forms[0].create_dt_disp.value;
