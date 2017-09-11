@@ -11,7 +11,7 @@
     APPLICATION_NUM=#application_num#
     </isNotEmpty>
     <isNotEmpty prepend="AND" property="deal_organkeys">
-    deal_organkey in ($deal_organkeys$)
+    deal_organkey in ($deal_organkeys$) or req_organkey in ($deal_organkeys$)
     </isNotEmpty> 
      <isNotEmpty prepend="AND" property="req_organkey">
     req_organkey =#req_organkey#
