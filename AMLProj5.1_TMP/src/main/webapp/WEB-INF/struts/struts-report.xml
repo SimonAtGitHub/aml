@@ -7,6 +7,12 @@
 	<form-beans>
 		<form-bean name="t47_transactionActionForm"
 			type="com.ist.aml.report.controller.T47_transactionActionForm" />
+		<form-bean name="t47_trans_recordLogForm"
+			type="com.ist.aml.report.controller.T47_trans_recordLogForm" />
+			
+		<form-bean name="t47_cust_recordLogForm"
+			type="com.ist.aml.report.controller.T47_cust_recordLogForm" />
+			
 		<form-bean name="t47_partyActionForm"
 			type="com.ist.aml.report.controller.T47_partyActionForm" />
 		<form-bean name="t07_post_operatorActionForm"
@@ -150,6 +156,24 @@
 			validate="false" scope="request">
 			<forward name="success" path="/case/t47_party_uc_list.do" />
 		</action>
+		
+		
+		<!-- 交易补录信息日志 -->
+		<action path="/case/t47_transaction_recordLog" parameter="getT47_transaction_recordlog_List" 
+		 	name="t47_trans_recordLogForm" type="com.ist.aml.report.controller.T47_transactionAction" 
+		 	validate="false" scope="request">
+		 	<forward name="success" path="/case/t47_transaction_recordLog.jsp"></forward>
+		 </action>
+		 
+		 <!-- 客户信息补录日志 -->
+		 <action path="/case/t47_cust_recordLog" parameter="getT47_cust_recordlog_List"
+		 	name="t47_cust_recordLogForm" type="com.ist.aml.report.controller.T47_partyAction"
+		 	validate="false" scope="request">
+		 	<forward name="success" path="/case/t47_cust_recordLog.jsp"></forward>
+		 </action>
+		
+		
+		
 		<!-- 案例处理 -->
 		<action path="/case/t07_flow_list" parameter="getT07_flowList"
 			name="t07_post_operatorActionForm" type="com.ist.aml.report.controller.T07_flowAction"

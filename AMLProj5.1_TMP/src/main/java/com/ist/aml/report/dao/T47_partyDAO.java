@@ -35,7 +35,9 @@ import org.springframework.context.ApplicationContext;
 import com.ibatis.sqlmap.client.SqlMapClient;
 
 import com.ist.aml.information.dto.T47_Opp_info;
+import com.ist.aml.report.dto.T47_cust_recordLog;
 import com.ist.aml.report.dto.T47_party;
+import com.ist.aml.report.dto.T47_trans_recordLog;
 import com.ist.common.LogUtils;
 import com.ist.common.base.BaseDAO;
 import com.ist.common.db.results.DefaultDbQuery;
@@ -703,5 +705,55 @@ public class T47_partyDAO extends BaseDAO {
 
 		}
 		return t47_partyList;
+	}
+	
+	/**
+	 * 客户信息补录信息
+	 * @author caoxiang 2017/9/7
+	 */
+	public int insertT47_cust_recordLog(SqlMapClient sqlMap,
+			T47_cust_recordLog t47_cust_recordLog) throws SQLException {
+		int i = sqlMap.update("insertT47_cust_recordLog", t47_cust_recordLog);
+		return i;
+	}
+	/**
+	 * 客户信息补录日志持久化
+	 * @author caoxiang 2017/9/7
+	 * @param sqlMap
+	 * @param t47_cust_recordLog
+	 * @param startRec
+	 * @param intPageSize
+	 * @return
+	 * @throws SQLException 
+	 */
+	public ArrayList getT47_cust_recordLogList(SqlMapClient sqlMap, T47_cust_recordLog t47_cust_recordLog, int startRec,
+			int intPageSize) throws SQLException {
+		// TODO Auto-generated method stub
+		ArrayList list = (ArrayList) sqlMap.queryForList("getT47_cust_recordLog_List",
+				t47_cust_recordLog, startRec, intPageSize);
+		
+		LinkedHashMap card_typeMap = cm.getMapFromCache("card_type");
+		Iterator iter = list.iterator();
+		ArrayList<T47_cust_recordLog> t47_cust_recordLogList = new ArrayList();
+		
+		while (iter.hasNext()) {
+			T47_cust_recordLog t47_cust_recordLog1 = (T47_cust_recordLog) iter.next();
+			// 把客户对象类型进行转换，以供显示
+			
+				t47_cust_recordLog1.setCard_type((String) card_typeMap.get(t47_cust_recordLog1
+						.getCard_type()));
+			
+			
+			t47_cust_recordLogList.add(t47_cust_recordLog1);
+		}
+		
+		return list;
+	}
+
+	public int getT47_cust_recordLog_ListCount(SqlMapClient sqlMap, T47_cust_recordLog t47_cust_recordLog) throws SQLException {
+		// TODO Auto-generated method stub
+		Integer iCount = (Integer)sqlMap.queryForObject(
+				"getT47_cust_recordLog_ListCount", t47_cust_recordLog);
+		return iCount.intValue();
 	}
 }

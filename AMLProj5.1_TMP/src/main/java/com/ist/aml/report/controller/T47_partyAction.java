@@ -21,7 +21,10 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
 import com.ist.aml.report.dao.T47_partyDAO;
+import com.ist.aml.report.dao.T47_transactionDAO;
+import com.ist.aml.report.dto.T47_cust_recordLog;
 import com.ist.aml.report.dto.T47_party;
+import com.ist.aml.report.dto.T47_trans_recordLog;
 import com.ist.aml.report.dto.T47_transaction;
 import com.ist.common.AuthBean;
 import com.ist.common.Authorization;
@@ -57,6 +60,14 @@ public class T47_partyAction extends BaseAction {
 			myforward = performSaveT47_party_uc(mapping, form, request,
 					response);
 		}
+		 
+		//客户补录信息日志
+		else if("getT47_cust_recordlog_List".equals(myaction)) {
+			myforward = performGetT47_cust_recordLog_list(mapping, form, request,
+					response);
+		}
+		 
+		 
 		// 公共定位客户信息
 		else if ("getT47_partyComm".equalsIgnoreCase(myaction)) {
 			myforward = performGetT47_partyComm(mapping, form, request,
@@ -84,6 +95,106 @@ public class T47_partyAction extends BaseAction {
 		}
 		return myforward;
 
+	}
+	
+	
+	
+	/**
+	 * 客户信息补录日志
+	 * @author caoxiang  2017/8/31
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	private ActionForward performGetT47_cust_recordLog_list(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+
+		ActionErrors errors = new ActionErrors();
+		HttpSession session = request.getSession();
+		ArrayList t47_cust_recordLog_List;
+		String pageInfo = "";
+
+	
+		T47_partyDAO t47_partyDAO = (T47_partyDAO)context.getBean("t47_partyDAO");
+		T47_cust_recordLog t47_cust_recordLog = new T47_cust_recordLog(); 
+		
+		
+
+		try {
+			T47_cust_recordLogForm form = (T47_cust_recordLogForm) actionForm;   //获得表单
+			
+			String newsearchflag = StringUtils.nullObject2String(request
+					.getParameter("newsearchflag"));
+		
+			int intPage = PageUtils.intPage(request, newsearchflag);
+
+			// 从右侧菜单进入
+			if ("0".equals(newsearchflag)) {
+			
+				return mapping.findForward("success");
+				// 新的查询
+			} else if ("1".equals(newsearchflag)) {
+				MyBeanUtils.copyBean2Bean(t47_cust_recordLog, form);
+				
+				//获取创建时间
+				if(form.getCreate_dt()!=null  ){
+					t47_cust_recordLog.setCreate_dt(form.getCreate_dt());
+				}
+				//获取创建者
+				if (form.getCreate_user() != null) {
+					t47_cust_recordLog
+							.setCreate_usr(form.getCreate_user());
+				}
+				//获取客户号
+				if (form.getParty_id() != null) {
+					t47_cust_recordLog
+							.setParty_id(form.getParty_id());
+				}
+				
+//				t47_cust_recordLog.setIntPage("0");
+//				// 设置案例下客户查询标志
+//				
+//				session.setAttribute("T47_partysearch", t47_party);
+//				// 翻页
+				
+			} else {
+				t47_cust_recordLog = (T47_cust_recordLog) session
+						.getAttribute("T47_custsearch");
+			   if(t47_cust_recordLog!=null){
+				   MyBeanUtils.copyBean2Bean(form,t47_cust_recordLog);  
+			   }
+				session.setAttribute("T47_custsearch", t47_cust_recordLog);
+			}
+			// 执行查询动作
+			int totalRow;
+
+			t47_cust_recordLog_List = t47_partyDAO.getT47_cust_recordLogList(sqlMap,
+					t47_cust_recordLog, this.getStartRec(intPage), this
+								.getIntPageSize());
+				totalRow = t47_partyDAO.getT47_cust_recordLog_ListCount(sqlMap,
+						t47_cust_recordLog);
+		
+
+			String url = request.getContextPath() + "/report"
+					+ mapping.getPath() + ".do";
+			pageInfo = this.getPageInfoStr(totalRow, intPage, url, "");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("异常",e);
+			errors.add(errors.GLOBAL_ERROR, new ActionError(
+					"error.pagertitle.default"));
+			saveErrors(request, errors);
+			return mapping.findForward("failure");
+		}
+
+		request.setAttribute("pageInfo", pageInfo);
+		request.setAttribute("t47_cust_recordLogList", t47_cust_recordLog_List);
+		
+		return mapping.findForward("success");
 	}
 	/**
 	 * 客户视图列表 added by shanbh
@@ -180,12 +291,12 @@ public class T47_partyAction extends BaseAction {
 
 	
 		T47_partyDAO t47_partyDAO = (T47_partyDAO)context.getBean("t47_partyDAO");
-		T47_party t47_party = new T47_party();
+		T47_party t47_party = new T47_party();   //表T47_party是客户信息表
 		
 		
 
 		try {
-			T47_partyActionForm form = (T47_partyActionForm) actionForm;
+			T47_partyActionForm form = (T47_partyActionForm) actionForm;   //获得表单
 
 			
 			
@@ -201,11 +312,10 @@ public class T47_partyAction extends BaseAction {
 			String newsearchflag = StringUtils.nullObject2String(request
 					.getParameter("newsearchflag"));
 		
-			int intPage = PageUtils.intPage(request, newsearchflag);;
+			int intPage = PageUtils.intPage(request, newsearchflag);
 
 			// 从右侧菜单进入
 			if ("0".equals(newsearchflag)) {
-			
 				return mapping.findForward("success");
 				// 新的查询
 			} else if ("1".equals(newsearchflag)) {
@@ -238,7 +348,6 @@ public class T47_partyAction extends BaseAction {
 			// 执行查询动作
 			int totalRow;
 
-			
 				t47_partyList = t47_partyDAO.getT47_party_ucList(sqlMap,
 						t47_party, this.getStartRec(intPage), this
 								.getIntPageSize());
@@ -393,6 +502,7 @@ public class T47_partyAction extends BaseAction {
 	private ActionForward performSaveT47_party_uc(ActionMapping mapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) {
+		
 
 		ActionErrors errors = new ActionErrors();
 		T47_partyDAO t47_partyDAO = (T47_partyDAO)context.getBean("t47_partyDAO");
@@ -418,8 +528,11 @@ public class T47_partyAction extends BaseAction {
 			t47_party_uc.setParty_id(source.getParty_id());
 			//20091211，修改客户表同时修改验证状态标志
 			t47_partyDAO.saveModifyT47_partyUc(sqlMap, t47_party_uc);
+			
+			
+			this.writeT47_cust_recordLog(source,request);
 		
-		
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("异常",e);
@@ -431,6 +544,42 @@ public class T47_partyAction extends BaseAction {
 
 		return mapping.findForward("success");
 	}
+	
+	
+	/**
+	 * 新增客户信息补录信息
+	 * @param t47_party
+	 * @param request
+	 * @throws Exception
+	 * @author yangyu
+	 */
+	
+	private void writeT47_cust_recordLog(T47_party t47_party,
+			HttpServletRequest request)throws Exception{
+		Authorization auth = this.getAuthorization(request);
+		T47_partyDAO t47_partyDAO = (T47_partyDAO)context.getBean("t47_partyDAO");
+		T47_cust_recordLog t47_cust_recordLog = new T47_cust_recordLog();
+		String currentTime=DateUtils.dateToStringShort(DateUtils.getCurrDateTime());
+		String userName=auth.getT00_user().getUsername();
+		
+		t47_cust_recordLog.setParty_chn_name(t47_party.getParty_chn_name());
+		
+		String str = t47_party.getParty_chn_name();
+		
+		t47_cust_recordLog.setParty_id(t47_party.getParty_id());
+		t47_cust_recordLog.setCard_no(t47_party.getCard_no());
+		t47_cust_recordLog.setCard_type(t47_party.getCard_type());
+		t47_cust_recordLog.setOper_des("客户信息补录信息");
+		t47_cust_recordLog.setOper_obj_type("2");
+		t47_cust_recordLog.setCreate_dt(currentTime);
+		t47_cust_recordLog.setCreate_usr(userName);
+		int i = t47_partyDAO.insertT47_cust_recordLog(sqlMap, t47_cust_recordLog);
+		if(i < 0) {
+   	 		throw new Exception("写入客户信息补录日志出错!");
+   	 	}
+	}
+	
+
 	public ActionForward performGetT47_partyComm(ActionMapping actionMapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) {

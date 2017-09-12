@@ -2,6 +2,50 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="T47_party">
+<!-- 客户信息补录信息保存 -->
+<statement id="insertT47_cust_recordLog" parameterClass="com.ist.aml.report.dto.T47_cust_recordLog"
+		resultClass="int">
+		INSERT INTO T47_cust_recordLog(PARTY_ID, PARTY_CHN_NAME, CARD_NO, CARD_TYPE, OPER_DES, CREATE_DT, CREATE_USR, OPER_OBJ_TYPE)
+		VALUES(#party_id#, #party_chn_name#, #card_no#, #card_type#, #oper_des#, #create_dt#, #create_usr#, #oper_obj_type#)
+</statement>
+<!-- 客户信息补录日志显示 -->
+<statement id="getT47_cust_recordLog_List" parameterClass="com.ist.aml.report.dto.T47_cust_recordLog" 
+		resultClass="com.ist.aml.report.dto.T47_cust_recordLog">
+		select * from t47_cust_recordlog where 1 = 1
+		
+		<dynamic>
+			<isNotEmpty prepend="AND" property="create_dt">
+				CREATE_DT = #create_dt#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="create_usr">
+				CREATE_USR = #create_usr#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="party_id">
+				PARTY_ID = #party_id#
+			</isNotEmpty>
+		</dynamic>	
+</statement>
+<statement id="getT47_cust_recordLog_ListCount" parameterClass="com.ist.aml.report.dto.T47_cust_recordLog"
+		resultClass="int">
+		SELECT count(*) FROM
+		t47_cust_recordlog A where 1=1
+		
+		<dynamic>
+			<isNotEmpty prepend="AND" property="create_dt">
+				CREATE_DT = #create_dt#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="create_usr">
+				CREATE_USR = #create_usr#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="party_id">
+				PARTY_ID = #party_id#
+			</isNotEmpty>
+		</dynamic>	
+	</statement>
 <statement id="getT47_partyDisp" parameterClass="java.lang.String"
 		resultClass="com.ist.aml.report.dto.T47_party">
 		SELECT
@@ -387,6 +431,7 @@
 		parameterClass="com.ist.aml.report.dto.T47_party"
 		resultClass="com.ist.aml.report.dto.T47_party">
 		 SELECT
+		 
 		A.PARTY_ID,A.HOST_CUST_ID,A.PARTY_CLASS_CD,A.AML1_TYPE_CD,A.AML2_TYPE_CD,A.PARTY_CHN_NAME,ORGANKEY,
 		A.PARTY_ENG_NAME,A.CARD_TYPE,A.CARD_NO,A.BIRTH_DT,A.COUNTRY_RESIDENCE,A.COUNTRY_CD,
 		A.ADDR1,A.ADDR2,A.TEL_NO,A.CELL_NO,A.NET_ADDRESS,A.EMAIL_ADDR,A.CREATE_DT,A.LAST_UPD_DT,A.LAST_UPD_USER,b.industrykey,

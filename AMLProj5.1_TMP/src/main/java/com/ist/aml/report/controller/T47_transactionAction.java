@@ -157,6 +157,15 @@ public class T47_transactionAction extends BaseAction {
 			myforward = performModifySecondTransDo(mapping, form, request,
 					response);
 		} 
+		
+		
+		//交易信息补录日志
+		else if("getT47_transaction_recordlog_List".equals(myaction)) {
+			myforward = performGetT47_transaction_recordLog_List(mapping, form,
+					request, response);
+		}
+		
+		
 	   // 新增交易查询
 		else if ("getT47_transaction_newList".equalsIgnoreCase(myaction)) {
 			myforward = performGetnewT47_transactionList(mapping, form,
@@ -199,7 +208,99 @@ public class T47_transactionAction extends BaseAction {
 		
 	}
 	
+	/**
+	 * 交易信息补录日志
+	 * @author caoxiang 2017/8/31
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	private ActionForward performGetT47_transaction_recordLog_List(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) {
+
+		ActionErrors errors = new ActionErrors();
+		HttpSession session = request.getSession();
+		ArrayList t47_trans_recordLogList;
+		String pageInfo = "";
+
 	
+		T47_transactionDAO t47_transactionDAO = (T47_transactionDAO)context.getBean("t47_transactionDAO");
+		T47_trans_recordLog t47_trans_recordLog = new T47_trans_recordLog(); 
+		
+		
+
+		try {
+			T47_trans_recordLogForm form = (T47_trans_recordLogForm) actionForm;   //获得表单
+			
+			String newsearchflag = StringUtils.nullObject2String(request
+					.getParameter("newsearchflag"));
+		
+			int intPage = PageUtils.intPage(request, newsearchflag);
+
+			// 从右侧菜单进入
+			if ("0".equals(newsearchflag)) {
+			
+				return mapping.findForward("success");
+				// 新的查询
+			} else if ("1".equals(newsearchflag)) {
+				MyBeanUtils.copyBean2Bean(t47_trans_recordLog, form);
+				
+				//获取创建时间
+				if(form.getCreate_dt()!=null  ){
+					t47_trans_recordLog.setCreate_dt(form.getCreate_dt());
+				}
+				//获取创建者
+				if (form.getCreate_user() != null) {
+					t47_trans_recordLog
+							.setCreate_usr(form.getCreate_user());
+				}
+				//获取客户号
+				if (form.getParty_id() != null) {
+					t47_trans_recordLog
+							.setParty_id(form.getParty_id());
+				}
+				
+			} else {
+				t47_trans_recordLog = (T47_trans_recordLog) session
+						.getAttribute("T47_transsearch");
+			   if(t47_trans_recordLog!=null){
+				   MyBeanUtils.copyBean2Bean(form,t47_trans_recordLog);  
+			   }
+				session.setAttribute("T47_transsearch", t47_trans_recordLog);
+			}
+			// 执行查询动作
+			int totalRow;
+
+			t47_trans_recordLogList = t47_transactionDAO.getT47_trans_recordLogList(sqlMap,
+					t47_trans_recordLog, this.getStartRec(intPage), this
+								.getIntPageSize());
+				totalRow = t47_transactionDAO.getT47_trans_recordLog_ListCount(sqlMap,
+						t47_trans_recordLog);
+		
+
+			String url = request.getContextPath() + "/report"
+					+ mapping.getPath() + ".do";
+			pageInfo = this.getPageInfoStr(totalRow, intPage, url, "");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("异常",e);
+			errors.add(errors.GLOBAL_ERROR, new ActionError(
+					"error.pagertitle.default"));
+			saveErrors(request, errors);
+			return mapping.findForward("failure");
+		}
+
+		request.setAttribute("pageInfo", pageInfo);
+		request.setAttribute("t47_trans_recordLogList", t47_trans_recordLogList);
+	
+		return mapping.findForward("success");
+	}
+
+
 	public ActionForward performSearchT47_transaction(
 			ActionMapping actionMapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response) {
@@ -211,10 +312,6 @@ public class T47_transactionAction extends BaseAction {
 			T47_transactionActionForm form = (T47_transactionActionForm) actionForm;
 			if ("".equals(form.getOrder())) {
 				form.setOrder("2");
-
-			}
-			if ("".equals(form.getSearchPurpose())) {
-				form.setSearchPurpose("1");
 
 			}
 			String searchtype = request.getParameter("searchtype");
@@ -248,13 +345,6 @@ public class T47_transactionAction extends BaseAction {
 				form.setSearchtype(searchtype);
 			}
 
-			/**
-			 * add by ljd start 2017-06-10
-			 * */
-			String stcr=request.getParameter("stcr");
-			/**
-			 * add by ljd end 2017-06-10
-			 * */
 			int intPage = StringUtils.nullObject2int(request
 					.getParameter("intPage"), 0);
 			request.setAttribute("intPage", new Integer(intPage));
@@ -277,7 +367,10 @@ public class T47_transactionAction extends BaseAction {
 			String debit_credit_disp_str=cm.getMapFromCacheToStr("trackflag", "debit_credit_disp", form.getDebit_credit_disp(),"", true);
 			request.setAttribute("debit_credit_disp_str", debit_credit_disp_str);
 
-			/* ljd 注释//现转标记
+			//现转标记
+//			LinkedHashMap goflagMap = cm.getMapFromCache("goflag");
+//			request.setAttribute("goflagMap", this.getOptionsListByMap(goflagMap,
+//					null, true));
 			String cash_trans_flag_str=cm.getMapFromCacheToStr("goflag", "cash_trans_flag_disp", form.getCash_trans_flag_disp(),"", true);
 			request.setAttribute("cash_trans_flag_str", cash_trans_flag_str);
 
@@ -287,44 +380,7 @@ public class T47_transactionAction extends BaseAction {
 //			request.setAttribute("clienttypeMap", this.getOptionsListByMap(
 //					clienttypeMap, null, true));
 			String party_class_cd_str=cm.getMapFromCacheToStr("clienttype", "party_class_cd", form.getParty_class_cd(),"", true);
-			request.setAttribute("party_class_cd_str", party_class_cd_str);*/
-			
-			
-			/**
-			 * ljd add start
-			 * 2017-06-10
-			 * */
-			//现转标记
-			String cash_trans_flag_str=cm.getMapFromCacheToStr("goflag", "cash_trans_flag_disp", "1","", true);
-			if("CPDE-DE01".equals(stcr)){
-				cash_trans_flag_str= "<input  type='hidden'  name='cash_trans_flag_disp' value='1'/> <span class='choose'><div><span class='selected'>现金</span></div></span>";
-			}else if("CPDE-DE02".equals(stcr)||"CPDE-DE03".equals(stcr)||"CPDE-DE04".equals(stcr)){
-				cash_trans_flag_str= "<input  type='hidden'  name='cash_trans_flag_disp' value='2'/> <span class='choose'><div><span class='selected'>转账</span></div></span>";
-			}else{
-				cash_trans_flag_str=cm.getMapFromCacheToStr("goflag", "cash_trans_flag_disp", form.getCash_trans_flag_disp(),"", true);
-			}
-			request.setAttribute("cash_trans_flag_str", cash_trans_flag_str);
-
-		
-			// 客户类型
-			String party_class_cd_str="";
-				//cm.getMapFromCacheToStr("clienttype", "party_class_cd", form.getParty_class_cd(),"", true);
-			if("CPDE-DE02".equals(stcr)){
-				party_class_cd_str="<input  type='hidden'  name='party_class_cd' value='C'/><span class='choose'><div><span class='selected'>对公</span></div></span>"; 
-			}else if("CPDE-DE03".equals(stcr)||"CPDE-DE04".equals(stcr)){
-				party_class_cd_str="<input  type='hidden'  name='party_class_cd' value='I'/><span class='choose'><div><span class='selected'>对私</span></div></span>"; 
-			}else{
-				party_class_cd_str=cm.getMapFromCacheToStr("clienttype", "party_class_cd", form.getParty_class_cd(),"", true);
-			}
 			request.setAttribute("party_class_cd_str", party_class_cd_str);
-			
-			//是否跨境
-			String overarea_ind_str=cm.getMapFromCacheToStr("yesNo", "overarea_ind", form.getOverarea_ind(),"", true);
-			request.setAttribute("overarea_ind_str", overarea_ind_str);
-			/**
-			 * ljd add end
-			 * 2017-06-10
-			 * */
 			//对手客户类型
 			String opp_party_class_cd_str=cm.getMapFromCacheToStr("clienttype", "opp_party_class_cd", form.getOpp_party_class_cd(),"", true);
 			request.setAttribute("opp_party_class_cd_str", opp_party_class_cd_str);
@@ -342,10 +398,6 @@ public class T47_transactionAction extends BaseAction {
 			String party_id=request.getParameter("party_id");
 			request.setAttribute("party_id", party_id);
 			form.setParty_id(party_id);
-			//add ljd start
-			request.setAttribute("stcr", stcr);
-			form.setStcr(stcr);
-			//add ljd end	
 			String today = DateUtils.getCurrTime();
 			DateUtils dateUtils = new DateUtils();
 			String tendaybefor = dateUtils.getDateChangeTime(today, "d",
@@ -359,10 +411,6 @@ public class T47_transactionAction extends BaseAction {
 			if("".equals(form.getTx_enddt_disp()))
 			{
 				form.setTx_enddt_disp(today);
-			}
-			if("".equals(form.getTerr_update_dt_disp()))
-			{
-				form.setTerr_update_dt_disp(today);
 			}
 		} catch (Exception e) {
 		
@@ -436,7 +484,6 @@ public class T47_transactionAction extends BaseAction {
 			form.setTx_dt(DateUtils.stringToDateShort(form.getTx_dt_disp()));
 			form.setTx_dtEnd(DateUtils.stringToDateShort(form
 					.getTx_enddt_disp()));
-			form.setTerr_update_dt(DateUtils.stringToDateShort(form.getTerr_update_dt_disp()));
 			form.setDebit_credit(form.getDebit_credit_disp());
 			form.setCash_trans_flag(form.getCash_trans_flag_disp());
 			if (form.getAmt_start_search() != null
@@ -777,58 +824,7 @@ String cash_trans_flag_str=cm.getMapFromCacheToStr("goflag", "cash_trans_flag_di
 //					trackflagMap, null, true));
 			String debit_credit_disp_str=cm.getMapFromCacheToStr("trackflag", "debit_credit_disp", form.getDebit_credit_disp(),"", true);
 			request.setAttribute("debit_credit_disp_str", debit_credit_disp_str);
-			 System.out.println("=====================================form.getStcr()::"+form.getStcr());
-			/**
-			 * add ljd start 2017-06-10
-			 * */
-			if(form.getStcr().equals("CPDE-DE01")||form.getStcr().equals("CPDE-DE02")||form.getStcr().equals("CPDE-DE03")||form.getStcr().equals("CPDE-DE04")){
-				//现转标记
-				String cash_trans_flag_str="";
-				if(form.getCash_trans_flag_disp()!=null&&!"".equals(form.getCash_trans_flag_disp())){
-					if(form.getCash_trans_flag_disp().equals("1")){
-						cash_trans_flag_str= "<input  type='hidden'  name='cash_trans_flag_disp' value='1'/> <span class='choose'><div><span class='selected'>现金</span></div></span>";
-					}else if(form.getCash_trans_flag_disp().equals("2")){
-						cash_trans_flag_str= "<input  type='hidden'  name='cash_trans_flag_disp' value='2'/> <span class='choose'><div><span class='selected'>转账</span></div></span>";
-					}
-				}else {
-				cash_trans_flag_str=cm.getMapFromCacheToStr("goflag", "cash_trans_flag_disp", form.getCash_trans_flag_disp(),"", true);
-				}
-				request.setAttribute("cash_trans_flag_str", cash_trans_flag_str);
-				// 客户类型
-				String party_class_cd_str="";
-				if(form.getParty_class_cd()!=null&&!"".equals(form.getParty_class_cd())){
-					if(form.getParty_class_cd().equalsIgnoreCase("C")){
-						party_class_cd_str="<input  type='hidden'  name='party_class_cd' value='C'/><span class='choose'><div><span class='selected'>对公</span></div></span>";
-					}else if(form.getParty_class_cd().equalsIgnoreCase("I")){
-						party_class_cd_str="<input  type='hidden'  name='party_class_cd' value='I'/><span class='choose'><div><span class='selected'>对私</span></div></span>"; 
-					}
-				}else{
-					party_class_cd_str=cm.getMapFromCacheToStr("clienttype", "party_class_cd", form.getParty_class_cd(),"", true);
-				}
-				request.setAttribute("party_class_cd_str", party_class_cd_str);
-			}else {
-				//现转标记
-				LinkedHashMap goflagMap = cm.getMapFromCache("goflag");
-				request.setAttribute("goflagMap", this.getOptionsListByMap(goflagMap,
-						null, true));
-				String cash_trans_flag_str=cm.getMapFromCacheToStr("goflag", "cash_trans_flag_disp", form.getCash_trans_flag_disp(),"", true);
-				request.setAttribute("cash_trans_flag_str", cash_trans_flag_str);
-				// 客户类型
-			LinkedHashMap clienttypeMap = cm.getMapFromCache("clienttype"); 
-				request.setAttribute("clienttypeMap", this.getOptionsListByMap(
-						clienttypeMap, null, true));
-				String party_class_cd_str=cm.getMapFromCacheToStr("clienttype", "party_class_cd", form.getParty_class_cd(),"", true);
-				request.setAttribute("party_class_cd_str", party_class_cd_str);
-				
-			}
-				//是否跨境
-			String overarea_ind_str=cm.getMapFromCacheToStr("yesNo", "overarea_ind", form.getOverarea_ind(),"", true);
-			request.setAttribute("overarea_ind_str", overarea_ind_str);
-			/**
-			 * add ljd end 2017-06-10
-			 * */
-			
-			/* ljd 注释
+
 			//现转标记
 //			LinkedHashMap goflagMap = cm.getMapFromCache("goflag");
 //			request.setAttribute("goflagMap", this.getOptionsListByMap(goflagMap,
@@ -842,7 +838,7 @@ String cash_trans_flag_str=cm.getMapFromCacheToStr("goflag", "cash_trans_flag_di
 //			request.setAttribute("clienttypeMap", this.getOptionsListByMap(
 //					clienttypeMap, null, true));
 			String party_class_cd_str=cm.getMapFromCacheToStr("clienttype", "party_class_cd", form.getParty_class_cd(),"", true);
-			request.setAttribute("party_class_cd_str", party_class_cd_str);*/
+			request.setAttribute("party_class_cd_str", party_class_cd_str);
 			//对手客户类型
 			String opp_party_class_cd_str=cm.getMapFromCacheToStr("clienttype", "opp_party_class_cd", form.getOpp_party_class_cd(),"", true);
 			request.setAttribute("opp_party_class_cd_str", opp_party_class_cd_str);
@@ -3515,7 +3511,7 @@ String cash_trans_flag_str=cm.getMapFromCacheToStr("goflag", "cash_trans_flag_di
 						.equals(
 								java.net.URLDecoder.decode(saveStrs[6]
 										.substring(1)))) {
-					t47_transaction.setAcct_num("#");
+					t47_transaction.setAcct_num(t47_transaction.getAcct_num());
 				}
 				/*
 				 * if(StringUtils.null2String(t47_transaction.getOpen_dt_disp()).equals(java.net.URLDecoder.decode(saveStrs[7].substring(1)))){

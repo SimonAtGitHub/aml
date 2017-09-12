@@ -2464,5 +2464,25 @@ public class T47_transactionDAO extends BaseDAO {
 		int i = sqlMap.update("insertT47_trans_recordLog", t47_trans_recordLog);
 		return i;
 	}
-
+	
+	/**
+	 * 交易补录信息查询函数
+	 * @author caoxiang  2017/9/4
+	 */
+	public ArrayList getT47_trans_recordLogList(SqlMapClient sqlMap,
+			T47_trans_recordLog t47_trans_recordLog, int iStartRec, int iPageSize)
+			throws SQLException {
+		ArrayList list = (ArrayList) sqlMap.queryForList("getT47_trans_recordLog_List",
+				t47_trans_recordLog, iStartRec, iPageSize);
+		
+		return list;
+	}
+	
+	
+	public int getT47_trans_recordLog_ListCount(SqlMapClient sqlMap, T47_trans_recordLog t47_trans_recordLog)
+			throws SQLException {
+		Integer iCount = (Integer)sqlMap.queryForObject(
+				"getT47_trans_recordLog_ListCount", t47_trans_recordLog);
+		return iCount.intValue();
+	}
 }

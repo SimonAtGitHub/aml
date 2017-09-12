@@ -2,6 +2,42 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="T47_transaction">
+	<statement id="getT47_trans_recordLog_List" parameterClass="com.ist.aml.report.dto.T47_trans_recordLog"
+		resultClass="com.ist.aml.report.dto.T47_trans_recordLog">
+		select * from t47_trans_recordlog where 1 = 1
+		
+		<dynamic>
+			<isNotEmpty prepend="AND" property="create_dt">
+				CREATE_DT = #create_dt#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="create_usr">
+				CREATE_USR = #create_usr#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="party_id">
+				PARTY_ID = #party_id#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
+	<statement id="getT47_trans_recordLog_ListCount" parameterClass="com.ist.aml.report.dto.T47_trans_recordLog"
+		resultClass="int">
+		SELECT count(*) FROM
+		t47_trans_recordlog A where 1=1
+		<dynamic>
+			<isNotEmpty prepend="AND" property="create_dt">
+				CREATE_DT = #create_dt#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="create_usr">
+				CREATE_USR = #create_usr#
+			</isNotEmpty>
+			
+			<isNotEmpty prepend="AND" property="party_id">
+				PARTY_ID = #party_id#
+			</isNotEmpty>
+		</dynamic>
+	</statement>
 	<statement id="getT47_trade_transactionList_1b" parameterClass="com.ist.aml.report.dto.T47_transaction"
 		resultClass="com.ist.aml.report.dto.T47_transaction">
 		SELECT A.TRANSACTIONKEY,A.HOST_CUST_ID,A.TX_NO,A.ORGANKEY,A.TX_DT,A.ACCT_NUM,A.PARTY_ID,A.DEBIT_CREDIT,
@@ -1944,12 +1980,6 @@
 			<isNotEmpty prepend="AND" property="opp_party_class_cd">
 				A.OPP_PARTY_CLASS_CD = #opp_party_class_cd#
 			</isNotEmpty>
-			<isEqual prepend="AND" property="searchPurpose" compareValue="2">
-				A.PARTY_ID in(
-					select t.party_id from t07_blacklist t where t.isuse = '0' and t.ischeck = '1' and list_type in ('2','21','22','23') and
-					(<![CDATA[t.create_dt = #terr_update_dt:DATE#]]>  or  <![CDATA[t.modify_dt = #terr_update_dt:DATE#]]> ))
-			</isEqual>
-			
 			<isEmpty  property="orderby">
 			ORDER BY  A.TX_DT DESC
 			</isEmpty>
@@ -2105,11 +2135,6 @@
 			<isNotEmpty prepend="AND" property="opp_party_class_cd">
 				A.OPP_PARTY_CLASS_CD = #opp_party_class_cd#
 			</isNotEmpty>
-			<isEqual prepend="AND" property="searchPurpose" compareValue="2">
-				A.PARTY_ID in(
-					select t.party_id from t07_blacklist t where t.isuse = '0' and t.ischeck = '1' and list_type in ('2','21','22','23') and
-					(<![CDATA[t.create_dt = #terr_update_dt:DATE#]]>  or  <![CDATA[t.modify_dt = #terr_update_dt:DATE#]]> ))
-			</isEqual>
 		</dynamic>
 
 	</statement>
