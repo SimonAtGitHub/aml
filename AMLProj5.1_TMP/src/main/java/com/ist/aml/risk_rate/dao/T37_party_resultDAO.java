@@ -899,6 +899,72 @@ public int insertT37_level_audit(SqlMapClient sqlMap,
 		}
 		return iCount.intValue();
 	}
+	
+	
+	
+	
+	/**
+	 * 调整过风险客户等级客户列表查询
+	 * @param sqlMap
+	 * @param t37_level_audit
+	 * @param startRec
+	 * @param intPageSize
+	 * @return
+	 * @throws SQLException 
+	 */
+	public List getT37_level_adjust_customList(SqlMapClient sqlMap, T37_level_audit t37_level_audit, int startRec,
+			int intPageSize) throws SQLException {
+		// TODO Auto-generated method stub
+		ArrayList list = (ArrayList) sqlMap.queryForList("getT37_level_adjust_customList",t37_level_audit,startRec,intPageSize); 
+        ArrayList T37_level_adjust_customList = new ArrayList();
+        //风险级别
+		LinkedHashMap risk_levelMap = cm.getMapFromCache("t31_risk_level");
+		
+		for(int i=0;i<list.size();i++){
+			T37_level_audit t37_lev_audit=(T37_level_audit)list.get(i);
+			
+			//系统评级
+			if(t37_lev_audit.getLevel_before_adjust()!=null&&!"".equals(t37_lev_audit.getLevel_before_adjust())){
+				t37_lev_audit.setLevel_before_adjust_disp((String)risk_levelMap.get(t37_lev_audit.getLevel_before_adjust()));
+			}
+			//当前评级
+			if(t37_lev_audit.getLevel_after_adjust()!=null && !"".equals(t37_lev_audit.getLevel_after_adjust())){
+				t37_lev_audit.setLevel_after_adjust_disp((String)risk_levelMap.get(t37_lev_audit.getLevel_after_adjust()));
+			}
+			
+			//系统评级日期
+			if(t37_lev_audit.getStatistic_dt()!=null){
+				t37_lev_audit.setStatistic_dt_disp(DateUtils.dateToStringShort(t37_lev_audit.getStatistic_dt()));
+			}
+			//当前评级日期
+			if(t37_lev_audit.getLast_upd_dt()!=null){
+				t37_lev_audit.setLast_upd_dt_disp(DateUtils.dateToStringShort(t37_lev_audit.getLast_upd_dt()));
+			}
+			
+			T37_level_adjust_customList.add(t37_lev_audit);
+		}
+
+      return T37_level_adjust_customList; 
+	}
+	/**
+	 * 调整过风险等级客户记录数查询
+	 * @param sqlMap
+	 * @param t37_level_audit
+	 * @return
+	 * @throws SQLException 
+	 */
+	public int getT37_level_adjust_customListCount(SqlMapClient sqlMap, T37_level_audit t37_level_audit) throws SQLException {
+		// TODO Auto-generated method stub
+		Integer iCount = (Integer) sqlMap.queryForObject(
+				"getT37_level_adjust_customListCount", t37_level_audit);
+		if (iCount == null) {
+			return 0;
+		}
+		return iCount.intValue();
+	}
+	
+	
+	
 	/**
 	 * 导出风险评级结果
 	 * @param sqlMap
@@ -1058,7 +1124,6 @@ public int insertT37_level_audit(SqlMapClient sqlMap,
 		ArrayList list = (ArrayList) sqlMap.queryForList("getT31_def_elementList1",t31_def_element);
 		return list;
 	}
-	
 	
 }
 

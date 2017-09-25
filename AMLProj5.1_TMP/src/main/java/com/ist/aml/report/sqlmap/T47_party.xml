@@ -11,9 +11,9 @@
 <!-- 客户信息补录日志显示 -->
 <statement id="getT47_cust_recordLog_List" parameterClass="com.ist.aml.report.dto.T47_cust_recordLog" 
 		resultClass="com.ist.aml.report.dto.T47_cust_recordLog">
-		select * from t47_cust_recordlog where 1 = 1
+		select * from t47_cust_recordlog
 		
-		<dynamic>
+		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="create_dt">
 				CREATE_DT = #create_dt#
 			</isNotEmpty>
@@ -26,23 +26,26 @@
 				PARTY_ID = #party_id#
 			</isNotEmpty>
 		</dynamic>	
+		<dynamic prepend="ORDER BY">
+			CREATE_DT
+		</dynamic>
 </statement>
 <statement id="getT47_cust_recordLog_ListCount" parameterClass="com.ist.aml.report.dto.T47_cust_recordLog"
 		resultClass="int">
 		SELECT count(*) FROM
-		t47_cust_recordlog A where 1=1
+		t47_cust_recordlog A
 		
-		<dynamic>
+		<dynamic prepend="WHERE">
 			<isNotEmpty prepend="AND" property="create_dt">
-				CREATE_DT = #create_dt#
+				A.CREATE_DT = #create_dt#
 			</isNotEmpty>
 			
 			<isNotEmpty prepend="AND" property="create_usr">
-				CREATE_USR = #create_usr#
+				A.CREATE_USR = #create_usr#
 			</isNotEmpty>
 			
 			<isNotEmpty prepend="AND" property="party_id">
-				PARTY_ID = #party_id#
+				A.PARTY_ID = #party_id#
 			</isNotEmpty>
 		</dynamic>	
 	</statement>

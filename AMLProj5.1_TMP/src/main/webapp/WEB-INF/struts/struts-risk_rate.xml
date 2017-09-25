@@ -8,6 +8,7 @@
 		<form-bean name="t37_party_resultActionForm" type="com.ist.aml.risk_rate.controller.T37_party_resultActionForm" />
 		<form-bean name="t37_help_checkActionForm" type="com.ist.aml.risk_rate.controller.T37_help_checkActionForm" />
 		<form-bean name="t37_helpcheck_attachActionForm" type="com.ist.aml.risk_rate.controller.T37_helpcheck_attachActionForm" />
+		<form-bean name="t37_level_adjust_customActionForm" type="com.ist.aml.risk_rate.controller.T37_level_adjust_customActionForm"></form-bean>
 	</form-beans>
 
 
@@ -449,6 +450,14 @@
 			parameter="getT37_appr_elem_rslt_dispList2" name="t37_party_resultActionForm"
 			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
 			scope="request">
+		</action>
+		
+		<!-- 调整过风险等级客户查询 -->
+		<action path="/check/t37_level_adjust_custom_list" 
+			parameter="getT37_level_adjust_custom_list"
+			name="t37_level_adjust_customActionForm" 
+			type="com.ist.aml.risk_rate.controller.T37_party_resultCurrAction" validate="false" scope="request">
+			<forward name="success" path="/check/t37_level_adjust_custom.jsp"></forward>
 		</action>
 	</action-mappings>
 	<message-resources parameter="ApplicationResources_zh_CN" />

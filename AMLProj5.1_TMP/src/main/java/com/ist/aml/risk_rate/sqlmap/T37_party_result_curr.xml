@@ -125,6 +125,102 @@
 		</isNotEmpty>
 	    </dynamic>
   </statement>
+  
+  
+  <!-- 调整过风险等级客户列表查询 -->
+  <statement id="getT37_level_adjust_customList" parameterClass="com.ist.aml.risk_rate.dto.T37_level_audit" resultClass="com.ist.aml.risk_rate.dto.T37_level_audit"> 
+  SELECT  R.PARTY_ID, R.LEVEL_BEFORE_ADJUST, R.LEVEL_AFTER_ADJUST, R.STATISTIC_DT, R.LAST_UPD_DT, R.LAST_UPD_USER, R.AUDIT_NO
+  			FROM T37_level_audit R
+		<dynamic prepend="WHERE">
+			<isNotEmpty  prepend="AND">
+				1=1
+			</isNotEmpty>
+		    <isNotEmpty prepend="AND" property="statistic_dt_start">
+				<![CDATA[STATISTIC_DT >= #statistic_dt_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="statistic_dt_end">
+				<![CDATA[STATISTIC_DT <= #statistic_dt_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="last_upd_dt_start">
+				<![CDATA[LAST_UPD_DT >= #last_upd_dt_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="last_upd_dt_end">
+				<![CDATA[LAST_UPD_DT <= #last_upd_dt_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				R.PARTY_ID =#party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="level_before_adjust">
+				R.LEVEL_BEFORE_ADJUST = #level_before_adjust#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="level_after_adjust">
+				R.LEVEL_AFTER_ADJUST = #level_after_adjust#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="audit_no">
+				R.AUDIT_NO = #audit_no#
+			</isNotEmpty>
+			<isNotEmpty  property="orderby">
+				<isEqual property="orderby" compareValue="1">
+					ORDER BY R.STATISTIC_DT
+				</isEqual>
+				<isEqual property="orderby" compareValue="2">
+					ORDER BY R.LAST_UPD_DT
+				</isEqual>
+				<isEqual property="orderby" compareValue="3">
+					ORDER BY R.AUDIT_NO 
+				</isEqual>
+				<isEqual property="orderby" compareValue="4">
+					ORDER BY R.LEVEL_BEFORE_ADJUST 
+				</isEqual>
+				<isEqual property="orderby" compareValue="5">
+					ORDER BY R.LEVEL_AFTER_ADJUST 
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty property="orderby">
+				<isNotEmpty property="order">
+					<isEqual property="order" compareValue="1"></isEqual>
+					<isEqual property="order" compareValue="2">
+						DESC
+					</isEqual>
+				</isNotEmpty>
+			</isNotEmpty>
+	    </dynamic>
+  </statement>
+  
+  
+  <!-- 调整过风险等级客户记录数查询 -->
+  <statement id="getT37_level_adjust_customListCount" parameterClass="com.ist.aml.risk_rate.dto.T37_level_audit" resultClass="int">
+  	 SELECT  COUNT(*)
+        FROM T37_Level_Audit R
+		<dynamic prepend="WHERE">
+	    	<isNotEmpty prepend="AND" property="statistic_dt_start">
+				<![CDATA[STATISTIC_DT >= #statistic_dt_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="statistic_dt_end">
+				<![CDATA[STATISTIC_DT <= #statistic_dt_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="last_upd_dt_start">
+				<![CDATA[LAST_UPD_DT >= #last_upd_dt_start#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="last_upd_dt_end">
+				<![CDATA[LAST_UPD_DT <= #last_upd_dt_end#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="party_id">
+				R.PARTY_ID =#party_id#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="level_before_adjust">
+				R.LEVEL_BEFORE_ADJUST = #level_before_adjust#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="level_after_adjust">
+				R.LEVEL_AFTER_ADJUST = #level_after_adjust#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="audit_no">
+				R.AUDIT_NO = #audit_no#
+			</isNotEmpty>
+			
+	    </dynamic>
+  </statement>
+  
   <statement id="insertT37_party_result_currToAudit"
 		parameterClass="com.ist.aml.risk_rate.dto.T37_party_result"
 		resultClass="int">

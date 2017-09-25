@@ -17,6 +17,7 @@ import org.apache.struts.action.ActionMessages;
 
 import com.ist.aml.risk_rate.dao.T37_party_resultDAO;
 import com.ist.aml.risk_rate.dto.T37_appr_bas_rslt;
+import com.ist.aml.risk_rate.dto.T37_level_audit;
 import com.ist.aml.risk_rate.dto.T37_party_result;
 import com.ist.common.AuthBean;
 import com.ist.common.Authorization;
@@ -55,6 +56,11 @@ public class T37_party_resultCurrAction extends BaseAction {
 			myforward = performGetT37_curr_rate_resultList(mapping, form, request,
 					response);
 		}
+		//调整过风险等级客户查询
+		if("getT37_level_adjust_custom_list".equalsIgnoreCase(myaction)){
+			myforward = performGetT37_level_adjust_custom_list(mapping, form, request,
+					response);
+		}
 		//发起调整校验
 		if ("t37_result_currToAuditDoVerify".equalsIgnoreCase(myaction)) {
 			myforward = performT37_party_resultVerify(mapping, form, request,
@@ -85,6 +91,7 @@ public class T37_party_resultCurrAction extends BaseAction {
 		
 		return myforward;
 	}
+	
 	/**
 	 * 等级调整进度列表查询
 	 * @param mapping
@@ -350,6 +357,128 @@ public class T37_party_resultCurrAction extends BaseAction {
 			return actionMapping.findForward("failure");
 		}
 		request.setAttribute("t37_party_resultList", t37_party_resultList);
+		request.setAttribute("pageInfo", pageInfo);
+		return actionMapping.findForward("success");
+	}
+	
+	/**
+	 * 调整过风险等级客户查询
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	private ActionForward performGetT37_level_adjust_custom_list(ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		ActionMessages errors = new ActionMessages();
+		HttpSession session = request.getSession();
+		List t37_level_adjust_customList = null;
+		String pageInfo="";
+		
+		T37_party_resultDAO t37_party_resultDAO = (T37_party_resultDAO) context.getBean("t37_party_result_rateDAO");
+		T37_level_audit t37_level_audit = new T37_level_audit();
+		
+		
+		try {
+			T37_level_adjust_customActionForm form = (T37_level_adjust_customActionForm) actionForm;
+			String newsearchflag = StringUtils.nullObject2String(request.getParameter("newsearchflag"));
+			int intPage = PageUtils.intPage(request, newsearchflag);
+			//取的当前用户信息
+			AuthBean authBean = (AuthBean) session.getAttribute("authBean");
+			Authorization auth = authBean.getAuthToken();
+			
+//			LinkedHashMap rate_status_cdMap = cm.getMapFromCache("rate_status_cd");//状态
+//			request.setAttribute("rate_status_cdMap", this.getOptionsListByMap(rate_status_cdMap, null, true));
+			
+			
+			LinkedHashMap resultsortMap = cm.getMapFromCache("level_adjust");//排序
+			request.setAttribute("resultsortMap", this.getOptionsListByMap(resultsortMap, null, true));
+			LinkedHashMap levelMap = cm.getMapFromCache("t31_risk_level"); // 风险等级/低风险/较低风险/一般风险/高风险/较高风险
+			LinkedHashMap clienttypeMap = cm.getMapFromCache("clienttype"); // 客户类型
+			request.setAttribute("clienttypeMap", this.getOptionsListByMap(clienttypeMap, null, true));
+			request.setAttribute("riskLevelMap", this.getOptionsListByMap(levelMap, null, true));
+			
+			if ("1".equals(newsearchflag)) {
+				MyBeanUtils.copyBean2Bean(t37_level_audit, form);
+				//接受表单中评级日期开始时间和结束时间
+				String statistic_dt_disp=form.getStatistic_dt_disp();
+				String statistic_dt_disp_end=form.getStatistic_dt_disp_end();
+				
+				//接受表单中调整日期开始时间和结束时间
+				String last_upd_dt_disp = form.getLast_upd_dt_disp();
+				String last_upd_dt_disp_end = form.getLast_upd_dt_disp_end();
+				
+				String party_id = form.getParty_id();
+				String last_upd_user = form.getLast_upd_user();
+				String audit_no = form.getAudit_no();
+				
+				String level_before_adjust = form .getLevel_before_adjust();
+				String level_after_adjust = form .getLevel_after_adjust();
+				
+				String orderby = form.getOrderby();
+				String order = form.getOrder();
+				
+				
+				if (statistic_dt_disp != null && !"".equals(statistic_dt_disp)) {
+					t37_level_audit.setStatistic_dt_start(DateUtils.stringToDateShort(statistic_dt_disp));
+				}
+				if (statistic_dt_disp_end != null && !"".equals(statistic_dt_disp_end)) {
+					t37_level_audit.setStatistic_dt_end(DateUtils.stringToDateShort(statistic_dt_disp_end));
+				}
+				if(last_upd_dt_disp != null && !"".equals(last_upd_dt_disp)){
+					t37_level_audit.setLast_upd_dt_start(DateUtils.stringToDateShort(last_upd_dt_disp));
+				}
+				if(last_upd_dt_disp_end != null && !"".equals(last_upd_dt_disp_end)){
+					t37_level_audit.setLast_upd_dt_end(DateUtils.stringToDateShort(last_upd_dt_disp_end));
+				}
+				if(party_id!=null && !"".equals(party_id)) {
+					t37_level_audit.setParty_id(party_id);
+				}
+				if(last_upd_user!=null && !"".equals(last_upd_user)) {
+					t37_level_audit.setLast_upd_user(last_upd_user);
+				}
+				if(audit_no!=null && !"".equals(audit_no)) {
+					t37_level_audit.setAudit_no(audit_no);
+				}
+				if(level_before_adjust!=null && !"".equals(level_before_adjust)) {
+					t37_level_audit.setLevel_before_adjust(level_before_adjust);
+				}
+				if(level_after_adjust!=null && !"".equals(level_after_adjust)) {
+					t37_level_audit.setLevel_after_adjust(level_after_adjust);
+				}
+				if(orderby != null && !"".equals(orderby)) {
+					t37_level_audit.setOrderby(orderby);
+				}
+				if(order != null && !"".equals(order)) {
+					t37_level_audit.setOrder(order);
+				}
+				session.setAttribute("t37_level_adjust_customSearchObj",t37_level_audit);
+				
+			}else{
+				t37_level_audit=(T37_level_audit)session.getAttribute("t37_level_adjust_customSearchObj");
+				MyBeanUtils.copyBean2Bean(form, t37_level_audit);
+			}
+			if (!"0".equals(newsearchflag) ) {
+				t37_level_adjust_customList = t37_party_resultDAO
+						.getT37_level_adjust_customList(sqlMap, t37_level_audit, this
+								.getStartRec(intPage), this.getIntPageSize());
+				int totalRow = t37_party_resultDAO
+						.getT37_level_adjust_customListCount(sqlMap, t37_level_audit);
+				String url = request.getContextPath() + "/risk_rate"
+						+ actionMapping.getPath() + ".do";
+				pageInfo = this.getPageInfoStr(totalRow, intPage, url, "");
+				MyBeanUtils.copyBean2Bean(form, t37_level_audit);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
+					"error.common", e.getMessage()));
+			saveMessages(request, errors);
+			return actionMapping.findForward("failure");
+		}
+		request.setAttribute("t37_level_adjust_customList", t37_level_adjust_customList);
 		request.setAttribute("pageInfo", pageInfo);
 		return actionMapping.findForward("success");
 	}
