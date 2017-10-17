@@ -30,11 +30,14 @@ import com.ist.common.base.*;
 import com.ist.util.DateUtils;
 import com.ist.aml.newrisk.dto.T31_def_element;
 import com.ist.aml.newrisk.dto.T31_risk_level;
+import com.ist.aml.newrisk.dto.T37_party_result_uh;
 import com.ist.aml.risk_rate.dto.T31_n_move;
 import com.ist.aml.risk_rate.dto.T37_appr_bas_rslt;
 import com.ist.aml.risk_rate.dto.T37_level_audit;
 import com.ist.aml.risk_rate.dto.T37_party_result;
-
+import com.ist.aml.risk_rate.dto.T37_party_resultAndT00_organ;
+import com.ist.aml.risk_rate.dto.T37_party_resultAndT00_organAndT00_user;
+import com.ist.aml.risk_rate.dto.T37_primary_survey_delayResult;
 import com.ibatis.sqlmap.client.SqlMapClient; 
   
 public class T37_party_resultDAO  extends BaseDAO{
@@ -912,36 +915,32 @@ public int insertT37_level_audit(SqlMapClient sqlMap,
 	 * @return
 	 * @throws SQLException 
 	 */
-	public List getT37_level_adjust_customList(SqlMapClient sqlMap, T37_level_audit t37_level_audit, int startRec,
+	public List getT37_level_adjust_customList(SqlMapClient sqlMap, T37_party_resultAndT00_organ t37_party_resultAndT00_organ, int startRec,
 			int intPageSize) throws SQLException {
 		// TODO Auto-generated method stub
-		ArrayList list = (ArrayList) sqlMap.queryForList("getT37_level_adjust_customList",t37_level_audit,startRec,intPageSize); 
+		ArrayList list = (ArrayList) sqlMap.queryForList("getT37_level_adjust_customList",t37_party_resultAndT00_organ,startRec,intPageSize); 
         ArrayList T37_level_adjust_customList = new ArrayList();
         //风险级别
 		LinkedHashMap risk_levelMap = cm.getMapFromCache("t31_risk_level");
+		//机构信息
+		LinkedHashMap organMap = cm.getMapFromCache("organ");
+		LinkedHashMap template_category = cm.getMapFromCache("template_category");
 		
 		for(int i=0;i<list.size();i++){
-			T37_level_audit t37_lev_audit=(T37_level_audit)list.get(i);
+			T37_party_resultAndT00_organ t37_party_result_temp=(T37_party_resultAndT00_organ)list.get(i);
 			
-			//系统评级
-			if(t37_lev_audit.getLevel_before_adjust()!=null&&!"".equals(t37_lev_audit.getLevel_before_adjust())){
-				t37_lev_audit.setLevel_before_adjust_disp((String)risk_levelMap.get(t37_lev_audit.getLevel_before_adjust()));
+			//最初评级
+			if(t37_party_result_temp.getFristappralevel()!=null&&!"".equals(t37_party_result_temp.getFristappralevel())){
+				t37_party_result_temp.setFristappralevel((String)risk_levelMap.get(t37_party_result_temp.getFristappralevel()));
 			}
-			//当前评级
-			if(t37_lev_audit.getLevel_after_adjust()!=null && !"".equals(t37_lev_audit.getLevel_after_adjust())){
-				t37_lev_audit.setLevel_after_adjust_disp((String)risk_levelMap.get(t37_lev_audit.getLevel_after_adjust()));
+			//最终评级
+			if(t37_party_result_temp.getLevelkey()!=null && !"".equals(t37_party_result_temp.getLevelkey())){
+				t37_party_result_temp.setLevelkey((String)risk_levelMap.get(t37_party_result_temp.getLevelkey()));
 			}
-			
-			//系统评级日期
-			if(t37_lev_audit.getStatistic_dt()!=null){
-				t37_lev_audit.setStatistic_dt_disp(DateUtils.dateToStringShort(t37_lev_audit.getStatistic_dt()));
+			if(t37_party_result_temp.getTempcategory()!=null && !"".equals(t37_party_result_temp.getTempcategory())){
+				t37_party_result_temp.setTempcategory((String)template_category.get(t37_party_result_temp.getTempcategory()));
 			}
-			//当前评级日期
-			if(t37_lev_audit.getLast_upd_dt()!=null){
-				t37_lev_audit.setLast_upd_dt_disp(DateUtils.dateToStringShort(t37_lev_audit.getLast_upd_dt()));
-			}
-			
-			T37_level_adjust_customList.add(t37_lev_audit);
+			T37_level_adjust_customList.add(t37_party_result_temp);
 		}
 
       return T37_level_adjust_customList; 
@@ -953,16 +952,105 @@ public int insertT37_level_audit(SqlMapClient sqlMap,
 	 * @return
 	 * @throws SQLException 
 	 */
-	public int getT37_level_adjust_customListCount(SqlMapClient sqlMap, T37_level_audit t37_level_audit) throws SQLException {
+	public int getT37_level_adjust_customListCount(SqlMapClient sqlMap, T37_party_resultAndT00_organ t37_party_resultAndT00_organ) throws SQLException {
 		// TODO Auto-generated method stub
 		Integer iCount = (Integer) sqlMap.queryForObject(
-				"getT37_level_adjust_customListCount", t37_level_audit);
+				"getT37_level_adjust_customListCount", t37_party_resultAndT00_organ);
 		if (iCount == null) {
 			return 0;
 		}
 		return iCount.intValue();
 	}
 	
+	/**
+	 * 客户审查延期查询
+	 * @param sqlMap
+	 * @param t37_party_resultAndT00_organ
+	 * @param startRec
+	 * @param intPageSize
+	 * @return
+	 */
+	public List getT37_investigation_delay_List(SqlMapClient sqlMap,
+			T37_party_resultAndT00_organAndT00_user t37_party_resultAndT00_organAndT00_user, int startRec, int intPageSize) throws Exception {
+		// TODO Auto-generated method stub
+		ArrayList list = (ArrayList) sqlMap.queryForList("getT37_investigation_delay_List",t37_party_resultAndT00_organAndT00_user,startRec,intPageSize); 
+        
+		ArrayList t37_investigation_delay_List = new ArrayList();
+        //风险级别
+		LinkedHashMap risk_levelMap = cm.getMapFromCache("t31_risk_level");
+		//机构信息
+		LinkedHashMap organMap = cm.getMapFromCache("organ");
+		LinkedHashMap template_category = cm.getMapFromCache("template_category");
+		
+		for(int i=0;i<list.size();i++){
+			T37_party_resultAndT00_organAndT00_user list_temp=(T37_party_resultAndT00_organAndT00_user)list.get(i);
+			
+			//最初评级
+			if(list_temp.getFristappralevel()!=null&&!"".equals(list_temp.getFristappralevel())){
+				list_temp.setFristappralevel((String)risk_levelMap.get(list_temp.getFristappralevel()));
+			}
+			
+			
+			t37_investigation_delay_List.add(list_temp);
+		}
+      return t37_investigation_delay_List; 
+	}
+	
+	
+	/**
+	 * 客户审查延期查询记录数查询
+	 * @param sqlMap
+	 * @param t37_party_resultAndT00_organ
+	 * @return
+	 * @throws SQLException 
+	 */
+	public int getT37_investigation_delay_ListCount(SqlMapClient sqlMap,
+			T37_party_resultAndT00_organAndT00_user t37_party_resultAndT00_organAndT00_user) throws SQLException {
+		Integer iCount = (Integer) sqlMap.queryForObject(
+				"getT37_investigation_delay_ListCount", t37_party_resultAndT00_organAndT00_user);
+		if (iCount == null) {
+			return 0;
+		}
+		return iCount.intValue();
+		
+	}
+	
+	
+	/**
+	 * 客户调查延期查询-列表查询
+	 * @param sqlMap
+	 * @param t37_primary_survey_delayResult
+	 * @param startRec
+	 * @param intPageSize
+	 * @return
+	 * @throws SQLException 
+	 */
+	public List getT37_investigation_delay_List(SqlMapClient sqlMap,
+			T37_primary_survey_delayResult t37_primary_survey_delayResult, int startRec, int intPageSize) throws SQLException {
+		
+		ArrayList list = (ArrayList) sqlMap.queryForList("getT37_primary_survey_delayResult_List",t37_primary_survey_delayResult,startRec,intPageSize); 
+        
+      return list; 
+	}
+	
+	/**
+	 * 客户调查延期查询-记录数查询
+	 * @param sqlMap
+	 * @param t37_primary_survey_delayResult
+	 * @param startRec
+	 * @param intPageSize
+	 * @return
+	 * @throws SQLException 
+	 */
+	public int getT37_investigation_delay_ListCount(SqlMapClient sqlMap,
+			T37_primary_survey_delayResult t37_primary_survey_delayResult) throws Exception {
+		Integer iCount = (Integer) sqlMap.queryForObject(
+				"getT37_primary_survey_delayResult_ListCount", t37_primary_survey_delayResult);
+		if (iCount == null) {
+			return 0;
+		}
+		return iCount.intValue();
+	}
 	
 	
 	/**
@@ -1097,6 +1185,7 @@ public int insertT37_level_audit(SqlMapClient sqlMap,
 			if(t37_pt_result.getCreate_dt()!=null){
 				t37_pt_result.setCreate_dt_disp(DateUtils.dateToStringShort(t37_pt_result.getCreate_dt()));
 			}
+			
 			t37_party_resultList.add(t37_pt_result);
 		}
 
@@ -1124,6 +1213,5 @@ public int insertT37_level_audit(SqlMapClient sqlMap,
 		ArrayList list = (ArrayList) sqlMap.queryForList("getT31_def_elementList1",t31_def_element);
 		return list;
 	}
-	
 }
 

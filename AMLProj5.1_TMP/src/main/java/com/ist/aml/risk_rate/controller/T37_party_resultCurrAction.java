@@ -15,10 +15,14 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
+import com.ist.aml.newrisk.dto.T37_party_result_uh;
 import com.ist.aml.risk_rate.dao.T37_party_resultDAO;
 import com.ist.aml.risk_rate.dto.T37_appr_bas_rslt;
 import com.ist.aml.risk_rate.dto.T37_level_audit;
 import com.ist.aml.risk_rate.dto.T37_party_result;
+import com.ist.aml.risk_rate.dto.T37_party_resultAndT00_organ;
+import com.ist.aml.risk_rate.dto.T37_party_resultAndT00_organAndT00_user;
+import com.ist.aml.risk_rate.dto.T37_primary_survey_delayResult;
 import com.ist.common.AuthBean;
 import com.ist.common.Authorization;
 import com.ist.common.MyBeanUtils;
@@ -61,6 +65,16 @@ public class T37_party_resultCurrAction extends BaseAction {
 			myforward = performGetT37_level_adjust_custom_list(mapping, form, request,
 					response);
 		}
+		//客户审查延期查询
+		if("getT37_investigation_delay_list".equalsIgnoreCase(myaction)) {
+			myforward = performGetT37_investigation_delay_list(mapping, form, request,
+					response);
+		}
+		//客户调查延期查询
+		if("getT37_primary_survey_delay_list".equalsIgnoreCase(myaction)) {
+			myforward = performGetT37_primary_survey_delay_list(mapping, form, request,
+					response);
+		}
 		//发起调整校验
 		if ("t37_result_currToAuditDoVerify".equalsIgnoreCase(myaction)) {
 			myforward = performT37_party_resultVerify(mapping, form, request,
@@ -91,7 +105,7 @@ public class T37_party_resultCurrAction extends BaseAction {
 		
 		return myforward;
 	}
-	
+
 	/**
 	 * 等级调整进度列表查询
 	 * @param mapping
@@ -378,7 +392,7 @@ public class T37_party_resultCurrAction extends BaseAction {
 		String pageInfo="";
 		
 		T37_party_resultDAO t37_party_resultDAO = (T37_party_resultDAO) context.getBean("t37_party_result_rateDAO");
-		T37_level_audit t37_level_audit = new T37_level_audit();
+		T37_party_resultAndT00_organ t37_party_resultAndT00_organ = new T37_party_resultAndT00_organ();
 		
 		
 		try {
@@ -393,83 +407,65 @@ public class T37_party_resultCurrAction extends BaseAction {
 //			request.setAttribute("rate_status_cdMap", this.getOptionsListByMap(rate_status_cdMap, null, true));
 			
 			
-			LinkedHashMap resultsortMap = cm.getMapFromCache("level_adjust");//排序
-			request.setAttribute("resultsortMap", this.getOptionsListByMap(resultsortMap, null, true));
+//			LinkedHashMap resultsortMap = cm.getMapFromCache("level_adjust");//排序
+//			request.setAttribute("resultsortMap", this.getOptionsListByMap(resultsortMap, null, true));
 			LinkedHashMap levelMap = cm.getMapFromCache("t31_risk_level"); // 风险等级/低风险/较低风险/一般风险/高风险/较高风险
-			LinkedHashMap clienttypeMap = cm.getMapFromCache("clienttype"); // 客户类型
-			request.setAttribute("clienttypeMap", this.getOptionsListByMap(clienttypeMap, null, true));
+//			LinkedHashMap clienttypeMap = cm.getMapFromCache("clienttype"); // 客户类型
+			LinkedHashMap organMap = cm.getMapFromCache("organ"); //机构信息
+//			request.setAttribute("clienttypeMap", this.getOptionsListByMap(clienttypeMap, null, true));
 			request.setAttribute("riskLevelMap", this.getOptionsListByMap(levelMap, null, true));
 			
+			LinkedHashMap template_category = cm.getMapFromCache("template_category");
+			request.setAttribute("template_category", this.getOptionsListByMap(template_category, null, true));
+			
 			if ("1".equals(newsearchflag)) {
-				MyBeanUtils.copyBean2Bean(t37_level_audit, form);
+				MyBeanUtils.copyBean2Bean(t37_party_resultAndT00_organ, form);
 				//接受表单中评级日期开始时间和结束时间
 				String statistic_dt_disp=form.getStatistic_dt_disp();
 				String statistic_dt_disp_end=form.getStatistic_dt_disp_end();
 				
-				//接受表单中调整日期开始时间和结束时间
-				String last_upd_dt_disp = form.getLast_upd_dt_disp();
-				String last_upd_dt_disp_end = form.getLast_upd_dt_disp_end();
+				String fristappralevel = form.getFristappralevel();
+				String levelkey = form.getLevelkey();
 				
-				String party_id = form.getParty_id();
-				String last_upd_user = form.getLast_upd_user();
-				String audit_no = form.getAudit_no();
-				
-				String level_before_adjust = form .getLevel_before_adjust();
-				String level_after_adjust = form .getLevel_after_adjust();
-				
-				String orderby = form.getOrderby();
-				String order = form.getOrder();
-				
+				String organ_name = form.getOrgan_name();
+				String tempcategory = form.getTempcategory();
 				
 				if (statistic_dt_disp != null && !"".equals(statistic_dt_disp)) {
-					t37_level_audit.setStatistic_dt_start(DateUtils.stringToDateShort(statistic_dt_disp));
+					t37_party_resultAndT00_organ.setStatistic_dt(DateUtils.stringToDateShort(statistic_dt_disp));
 				}
 				if (statistic_dt_disp_end != null && !"".equals(statistic_dt_disp_end)) {
-					t37_level_audit.setStatistic_dt_end(DateUtils.stringToDateShort(statistic_dt_disp_end));
+					t37_party_resultAndT00_organ.setStatistic_dt_end(DateUtils.stringToDateShort(statistic_dt_disp_end));
 				}
-				if(last_upd_dt_disp != null && !"".equals(last_upd_dt_disp)){
-					t37_level_audit.setLast_upd_dt_start(DateUtils.stringToDateShort(last_upd_dt_disp));
+				
+				if(fristappralevel!=null && !"".equals(fristappralevel)) {
+					t37_party_resultAndT00_organ.setFristappralevel(fristappralevel);
 				}
-				if(last_upd_dt_disp_end != null && !"".equals(last_upd_dt_disp_end)){
-					t37_level_audit.setLast_upd_dt_end(DateUtils.stringToDateShort(last_upd_dt_disp_end));
+				if(levelkey!=null && !"".equals(levelkey)) {
+					t37_party_resultAndT00_organ.setLevelkey(levelkey);
 				}
-				if(party_id!=null && !"".equals(party_id)) {
-					t37_level_audit.setParty_id(party_id);
+				if(organ_name!=null && !"".equals(organ_name)) {
+					t37_party_resultAndT00_organ.setOrganname(organ_name);
 				}
-				if(last_upd_user!=null && !"".equals(last_upd_user)) {
-					t37_level_audit.setLast_upd_user(last_upd_user);
+				
+				if(tempcategory!=null && !"".equals(tempcategory)) {
+					t37_party_resultAndT00_organ.setTempcategory(tempcategory);
 				}
-				if(audit_no!=null && !"".equals(audit_no)) {
-					t37_level_audit.setAudit_no(audit_no);
-				}
-				if(level_before_adjust!=null && !"".equals(level_before_adjust)) {
-					t37_level_audit.setLevel_before_adjust(level_before_adjust);
-				}
-				if(level_after_adjust!=null && !"".equals(level_after_adjust)) {
-					t37_level_audit.setLevel_after_adjust(level_after_adjust);
-				}
-				if(orderby != null && !"".equals(orderby)) {
-					t37_level_audit.setOrderby(orderby);
-				}
-				if(order != null && !"".equals(order)) {
-					t37_level_audit.setOrder(order);
-				}
-				session.setAttribute("t37_level_adjust_customSearchObj",t37_level_audit);
+				session.setAttribute("t37_level_adjust_customSearchObj",t37_party_resultAndT00_organ);
 				
 			}else{
-				t37_level_audit=(T37_level_audit)session.getAttribute("t37_level_adjust_customSearchObj");
-				MyBeanUtils.copyBean2Bean(form, t37_level_audit);
+				t37_party_resultAndT00_organ=(T37_party_resultAndT00_organ)session.getAttribute("t37_level_adjust_customSearchObj");
+				MyBeanUtils.copyBean2Bean(form, t37_party_resultAndT00_organ);
 			}
 			if (!"0".equals(newsearchflag) ) {
 				t37_level_adjust_customList = t37_party_resultDAO
-						.getT37_level_adjust_customList(sqlMap, t37_level_audit, this
+						.getT37_level_adjust_customList(sqlMap, t37_party_resultAndT00_organ, this
 								.getStartRec(intPage), this.getIntPageSize());
 				int totalRow = t37_party_resultDAO
-						.getT37_level_adjust_customListCount(sqlMap, t37_level_audit);
+						.getT37_level_adjust_customListCount(sqlMap, t37_party_resultAndT00_organ);
 				String url = request.getContextPath() + "/risk_rate"
 						+ actionMapping.getPath() + ".do";
 				pageInfo = this.getPageInfoStr(totalRow, intPage, url, "");
-				MyBeanUtils.copyBean2Bean(form, t37_level_audit);
+				MyBeanUtils.copyBean2Bean(form, t37_party_resultAndT00_organ);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -482,6 +478,166 @@ public class T37_party_resultCurrAction extends BaseAction {
 		request.setAttribute("pageInfo", pageInfo);
 		return actionMapping.findForward("success");
 	}
+	
+	
+	/**
+	 * 客户审查延期查询
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	private ActionForward performGetT37_investigation_delay_list(ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		ActionMessages errors = new ActionMessages();
+		HttpSession session = request.getSession();
+		List t37_investigation_delay_List = null;
+		String pageInfo="";
+		
+		T37_party_resultDAO t37_party_resultDAO = (T37_party_resultDAO) context.getBean("t37_party_result_rateDAO");
+		T37_party_resultAndT00_organAndT00_user t37_party_resultAndT00_organAndT00_user = new T37_party_resultAndT00_organAndT00_user();
+		
+		
+		try {
+			T37_investigation_delayActionForm form = (T37_investigation_delayActionForm) actionForm;
+			String newsearchflag = StringUtils.nullObject2String(request.getParameter("newsearchflag"));
+			int intPage = PageUtils.intPage(request, newsearchflag);
+			//取的当前用户信息
+			AuthBean authBean = (AuthBean) session.getAttribute("authBean");
+			Authorization auth = authBean.getAuthToken();
+
+			LinkedHashMap organMap = cm.getMapFromCache("organ"); //机构信息
+
+			if ("1".equals(newsearchflag)) {
+				MyBeanUtils.copyBean2Bean(t37_party_resultAndT00_organAndT00_user, form);
+				//接受表单中评级日期开始时间和结束时间
+				String statistic_dt_disp=form.getStatistic_dt_disp();
+				String statistic_dt_disp_end=form.getStatistic_dt_disp_end();
+				
+				String organ_name = form.getOrgan_name();
+				
+				if (statistic_dt_disp != null && !"".equals(statistic_dt_disp)) {
+					t37_party_resultAndT00_organAndT00_user.setCreate_dt(DateUtils.stringToDateShort(statistic_dt_disp));
+				}
+				if (statistic_dt_disp_end != null && !"".equals(statistic_dt_disp_end)) {
+					t37_party_resultAndT00_organAndT00_user.setCreate_dt_end(DateUtils.stringToDateShort(statistic_dt_disp_end));
+				}
+				
+				if(organ_name!=null && !"".equals(organ_name)) {
+					t37_party_resultAndT00_organAndT00_user.setOrganname(organ_name);
+				}
+				session.setAttribute("t37_level_adjust_customSearchObj",t37_party_resultAndT00_organAndT00_user);
+				
+			}else{
+				t37_party_resultAndT00_organAndT00_user=(T37_party_resultAndT00_organAndT00_user)session.getAttribute("t37_level_adjust_customSearchObj");
+				MyBeanUtils.copyBean2Bean(form, t37_party_resultAndT00_organAndT00_user);
+			}
+			if (!"0".equals(newsearchflag) ) {
+				t37_investigation_delay_List = t37_party_resultDAO
+						.getT37_investigation_delay_List(sqlMap, t37_party_resultAndT00_organAndT00_user, this
+								.getStartRec(intPage), this.getIntPageSize());
+				int totalRow = t37_party_resultDAO
+						.getT37_investigation_delay_ListCount(sqlMap, t37_party_resultAndT00_organAndT00_user);
+				String url = request.getContextPath() + "/risk_rate"
+						+ actionMapping.getPath() + ".do";
+				pageInfo = this.getPageInfoStr(totalRow, intPage, url, "");
+				
+				MyBeanUtils.copyBean2Bean(form, t37_party_resultAndT00_organAndT00_user);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
+					"error.common", e.getMessage()));
+			saveMessages(request, errors);
+			return actionMapping.findForward("failure");
+		}
+		request.setAttribute("t37_investigation_delay_List", t37_investigation_delay_List);
+		request.setAttribute("t37_investigation_delay_List_size", t37_investigation_delay_List.size());
+		request.setAttribute("pageInfo", pageInfo);
+		return actionMapping.findForward("success");
+	}
+	
+	
+	
+	/**
+	 * 客户调查延期查询
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	private ActionForward performGetT37_primary_survey_delay_list(ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) {
+		ActionMessages errors = new ActionMessages();
+		HttpSession session = request.getSession();
+		List t37_primary_survey_delay_list = null;
+		String pageInfo="";
+		
+		T37_party_resultDAO t37_party_resultDAO = (T37_party_resultDAO) context.getBean("t37_party_result_rateDAO");
+		T37_primary_survey_delayResult t37_primary_survey_delayResult = new T37_primary_survey_delayResult();
+		
+		
+		try {
+			T37_investigation_delayActionForm form = (T37_investigation_delayActionForm) actionForm;
+			String newsearchflag = StringUtils.nullObject2String(request.getParameter("newsearchflag"));
+			int intPage = PageUtils.intPage(request, newsearchflag);
+			//取的当前用户信息
+			AuthBean authBean = (AuthBean) session.getAttribute("authBean");
+			Authorization auth = authBean.getAuthToken();
+
+			LinkedHashMap organMap = cm.getMapFromCache("organ"); //机构信息
+
+			if ("1".equals(newsearchflag)) {
+				MyBeanUtils.copyBean2Bean(t37_primary_survey_delayResult, form);
+				//接受表单中评级日期开始时间和结束时间
+				String statistic_dt_disp=form.getStatistic_dt_disp();
+				String statistic_dt_disp_end=form.getStatistic_dt_disp_end();
+				
+				String organ_name = form.getOrgan_name();
+				
+				if (statistic_dt_disp != null && !"".equals(statistic_dt_disp)) {
+					t37_primary_survey_delayResult.setCreate_dt(DateUtils.stringToDateShort(statistic_dt_disp));
+				}
+				if (statistic_dt_disp_end != null && !"".equals(statistic_dt_disp_end)) {
+					t37_primary_survey_delayResult.setCreate_dt_end(DateUtils.stringToDateShort(statistic_dt_disp_end));
+				}
+				
+				if(organ_name!=null && !"".equals(organ_name)) {
+					t37_primary_survey_delayResult.setOrganname(organ_name);
+				}
+				session.setAttribute("t37_level_adjust_customSearchObj",t37_primary_survey_delayResult);
+				
+			}else{
+				t37_primary_survey_delayResult=(T37_primary_survey_delayResult)session.getAttribute("t37_level_adjust_customSearchObj");
+				MyBeanUtils.copyBean2Bean(form, t37_primary_survey_delayResult);
+			}
+			if (!"0".equals(newsearchflag) ) {
+				t37_primary_survey_delay_list = t37_party_resultDAO
+						.getT37_investigation_delay_List(sqlMap, t37_primary_survey_delayResult, this
+								.getStartRec(intPage), this.getIntPageSize());
+				int totalRow = t37_party_resultDAO
+						.getT37_investigation_delay_ListCount(sqlMap, t37_primary_survey_delayResult);
+				String url = request.getContextPath() + "/risk_rate"
+						+ actionMapping.getPath() + ".do";
+				pageInfo = this.getPageInfoStr(totalRow, intPage, url, "");
+				MyBeanUtils.copyBean2Bean(form, t37_primary_survey_delayResult);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
+					"error.common", e.getMessage()));
+			saveMessages(request, errors);
+			return actionMapping.findForward("failure");
+		}
+		request.setAttribute("t37_primary_survey_delay_list", t37_primary_survey_delay_list);
+		request.setAttribute("pageInfo", pageInfo);
+		return actionMapping.findForward("success");
+	}
+	
+	
 	/**
      * 符号环绕
      * 将例如string=a,b,c regex=，symbol=‘  返回形式为'a','b','c'

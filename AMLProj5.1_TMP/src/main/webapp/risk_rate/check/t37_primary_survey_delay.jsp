@@ -40,38 +40,36 @@ function dosubmit(theUrl,type){
         return false;
     }
 }
+
 //这个函数是重置函数，直接<input type="reset"/>这种的话在提交之后就不能重置了，所以有了这个函数
 function reset_input() {
 	document.getElementById("organ_name").value="";
 	document.getElementById("statistic_dt_disp").value="";
 	document.getElementById("statistic_dt_disp_end").value="";
-	document.getElementById("fristappralevel").value="";
-	document.getElementById("levelkey").value="";
-	document.getElementById("tempcategory").value="";
 }
 </SCRIPT>
 </HEAD>
 <BODY leftmargin="0" topmargin="0">
-	<html:form action="/check/t37_level_adjust_custom_list.do" method="post">
-	<input type="hidden" name="backurl" value="/check/t37_level_adjust_custom_list.do"/>
+	<html:form action="/check/t37_primary_survey_delay_list.do" method="post">
+	<input type="hidden" name="backurl" value="/check/t37_primary_survey_delay_list.do.do"/>
 	
 		<div id="main">
 				<!-- conditions -->
 			<div class="conditions">
 					<!-- title -->
 				<div class="cond_t">
-					<span>结果查询 - 调整过风险等级的客户查询</span>
+					<span>结果查询 - 客户调查延期查询</span>
 				</div>
-				<div class="cond_c" id="searchtable">
+							<div class="cond_c" id="searchtable">
 					<table width="100%" border="0" cellpadding="1" cellspacing="1">
 							<tr>
-								<td width="14%" height="22" align="right" nowrap>机构名称：</td>
+								<td width="14%" height="22" align="right" nowrap>所属机构：</td>
 								<td width="36%">
 									<html:text styleId="organ_name" property="organ_name" styleClass="text_white" size="20" maxlength="32"/>
 									<a href="#" onclick="window.open('<%=request.getContextPath()%>/common/t00_organ_search.do?newsearchflag=1&input_name=organkey&input_name_disp=organ_name','enter2','height=400, width=600,left=100,top=100,scrollbars=yes,resizable=yes');" ><span class="cond_buttons"><img src="../../images/<%=session.getAttribute("style") %>/b_location.png" />定位</span></a>
 								</td>
 								<td width="14%" height="22" align="right">
-									评级日期：
+									开户日期：
 								</td>
 								<td width="36%">
 									<html:text styleId="statistic_dt_disp" property="statistic_dt_disp" onclick="calendar.show(this);" readonly="true" styleClass="calimg" size="12" />
@@ -79,42 +77,17 @@ function reset_input() {
 	                                <html:text styleId="statistic_dt_disp_end" property="statistic_dt_disp_end" onclick="calendar.show(this);" readonly="true" styleClass="calimg" size="12" />
 								</td>
 							</tr>
+							
 							<tr>
 								<td width="14%" height="22" align="right" nowrap>
-									初评等级：
+									
 								</td>
 								<td width="36%">
-									<html:select property="fristappralevel" styleId="fristappralevel">
-										<html:options collection="riskLevelMap" property="label"
-											labelProperty="value" />
-									</html:select>
-									<br>
-								</td>
-								<td width="14%" height="22" align="right" nowrap>
-									最终等级：
-								</td>
-								<td width="36%">
-									<html:select property="levelkey" styleId="levelkey">
-										<html:options collection="riskLevelMap" property="label"
-											labelProperty="value" />
-									</html:select>
-									<br>
-								</td>
-							</tr>
-							<tr>
-								<td width="14%" height="22" align="right" nowrap>
-									评级类别：
-								</td>
-								<td width="36%">
-									<html:select property="tempcategory" styleId="tempcategory">
-										<html:options collection="template_category" property="label"
-											labelProperty="value" />
-									</html:select>
-									<br>
+									
 								</td>
 								<td>
 									<input type="button" value="查  询" name="Button522"
-										onclick="dosubmit('t37_level_adjust_custom_list.do?newsearchflag=1','search')"
+										onclick="dosubmit('t37_primary_survey_delay_list.do?newsearchflag=1','search')"
 										class="in_button1" />
 									
 								</td>
@@ -126,44 +99,40 @@ function reset_input() {
 				<div class="list">
 					<table border="0" cellspacing="0" cellpadding="0">
 						<tr>
-							<th>机构号</th>
-							<th>机构名称</th>
 							<th>客户号</th>
 							<th>客户名称</th>
-							<th>评级日期</th>
-							<th>初评等级</th>
-							<th>最终等级</th>
-							<th>评级类别</th>
+							<th>所属机构</th>
+							<th>开户日期</th>
+							<th>识别日期</th>
+							<th>识别柜员号</th>
+							<th>识别柜员名</th>
 						</tr>
-						<logic:present name="t37_level_adjust_customList">
-							<logic:iterate id="result" name="t37_level_adjust_customList"
-								type="com.ist.aml.risk_rate.dto.T37_party_resultAndT00_organ">
+						<logic:present name="t37_primary_survey_delay_list">
+							<logic:iterate id="result" name="t37_primary_survey_delay_list" indexId="i"
+								type="com.ist.aml.risk_rate.dto.T37_primary_survey_delayResult">
 								
 								<tr align="center" bgcolor="#FFFFFF">
 									
 									<td>
-										<bean:write name="result" property="organkey" />
-									</td>
-									<td>
-							             <bean:write name="result" property="organname" />
-									</td>
-									<td>
 										<bean:write name="result" property="party_id" />
 									</td>
 									<td>
-										<bean:write name="result" property="party_chn_name" />
+							             <bean:write name="result" property="party_chn_name" />
 									</td>
 									<td>
-										<bean:write name="result" property="statistic_dt" format="yyyy-MM-dd"/>
+										<bean:write name="result" property="organname" />
 									</td>
 									<td>
-										<bean:write name="result" property="fristappralevel" />
+										<bean:write name="result" property="create_dt" format="yyyy-MM-dd"/>
 									</td>
 									<td>
-										<bean:write name="result" property="levelkey" />
+										<bean:write name="result" property="check_dt" format="yyyy-MM-dd"/>
 									</td>
 									<td>
-										<bean:write name="result" property="tempcategory" />
+										<bean:write name="result" property="checker"/>
+									</td>
+									<td>
+										<bean:write name="result" property="check_realname" />
 									</td>
 								</tr>
 							</logic:iterate>

@@ -128,98 +128,164 @@
   
   
   <!-- 调整过风险等级客户列表查询 -->
-  <statement id="getT37_level_adjust_customList" parameterClass="com.ist.aml.risk_rate.dto.T37_level_audit" resultClass="com.ist.aml.risk_rate.dto.T37_level_audit"> 
-  SELECT  R.PARTY_ID, R.LEVEL_BEFORE_ADJUST, R.LEVEL_AFTER_ADJUST, R.STATISTIC_DT, R.LAST_UPD_DT, R.LAST_UPD_USER, R.AUDIT_NO
-  			FROM T37_level_audit R
-		<dynamic prepend="WHERE">
-			<isNotEmpty  prepend="AND">
-				1=1
+  <statement id="getT37_level_adjust_customList" parameterClass="com.ist.aml.risk_rate.dto.T37_party_resultAndT00_organ" resultClass="com.ist.aml.risk_rate.dto.T37_party_resultAndT00_organ"> 
+		select A.ORGANKEY, B.ORGANNAME, A.PARTY_ID, A.PARTY_CHN_NAME, A.STATISTIC_DT, A.FRISTAPPRALEVEL, A.LEVELKEY, A.TEMPCATEGORY 
+		from T37_PARTY_RESULT_uh A, T00_ORGAN B
+		where A.ORGANKEY = B.ORGANKEY AND MODIFY_CD = '1'
+		
+		<dynamic>
+			<isNotEmpty prepend="AND" property="organname">
+				B.ORGANNAME like '%$organname$%'
 			</isNotEmpty>
-		    <isNotEmpty prepend="AND" property="statistic_dt_start">
-				<![CDATA[STATISTIC_DT >= #statistic_dt_start#]]>
+			<isNotEmpty prepend="AND" property="fristappralevel">
+				A.FRISTAPPRALEVEL = #fristappralevel#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="levelkey">
+				A.LEVELKEY = #levelkey#  
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tempcategory">
+				A.TEMPCATEGORY = #tempcategory#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="statistic_dt">
+				<![CDATA[STATISTIC_DT >= #statistic_dt#]]>
 			</isNotEmpty>
 			<isNotEmpty prepend="AND" property="statistic_dt_end">
 				<![CDATA[STATISTIC_DT <= #statistic_dt_end#]]>
 			</isNotEmpty>
-			<isNotEmpty prepend="AND" property="last_upd_dt_start">
-				<![CDATA[LAST_UPD_DT >= #last_upd_dt_start#]]>
-			</isNotEmpty>
-			<isNotEmpty prepend="AND" property="last_upd_dt_end">
-				<![CDATA[LAST_UPD_DT <= #last_upd_dt_end#]]>
-			</isNotEmpty>
-			<isNotEmpty prepend="AND" property="party_id">
-				R.PARTY_ID =#party_id#
-			</isNotEmpty>
-			<isNotEmpty prepend="AND" property="level_before_adjust">
-				R.LEVEL_BEFORE_ADJUST = #level_before_adjust#
-			</isNotEmpty>
-			<isNotEmpty prepend="AND" property="level_after_adjust">
-				R.LEVEL_AFTER_ADJUST = #level_after_adjust#
-			</isNotEmpty>
-			<isNotEmpty prepend="AND" property="audit_no">
-				R.AUDIT_NO = #audit_no#
-			</isNotEmpty>
-			<isNotEmpty  property="orderby">
-				<isEqual property="orderby" compareValue="1">
-					ORDER BY R.STATISTIC_DT
-				</isEqual>
-				<isEqual property="orderby" compareValue="2">
-					ORDER BY R.LAST_UPD_DT
-				</isEqual>
-				<isEqual property="orderby" compareValue="3">
-					ORDER BY R.AUDIT_NO 
-				</isEqual>
-				<isEqual property="orderby" compareValue="4">
-					ORDER BY R.LEVEL_BEFORE_ADJUST 
-				</isEqual>
-				<isEqual property="orderby" compareValue="5">
-					ORDER BY R.LEVEL_AFTER_ADJUST 
-				</isEqual>
-			</isNotEmpty>
-			<isNotEmpty property="orderby">
-				<isNotEmpty property="order">
-					<isEqual property="order" compareValue="1"></isEqual>
-					<isEqual property="order" compareValue="2">
-						DESC
-					</isEqual>
-				</isNotEmpty>
-			</isNotEmpty>
-	    </dynamic>
+		</dynamic>
+		<dynamic prepend="ORDER BY">
+			A.STATISTIC_DT
+		</dynamic>
   </statement>
   
   
   <!-- 调整过风险等级客户记录数查询 -->
-  <statement id="getT37_level_adjust_customListCount" parameterClass="com.ist.aml.risk_rate.dto.T37_level_audit" resultClass="int">
-  	 SELECT  COUNT(*)
-        FROM T37_Level_Audit R
-		<dynamic prepend="WHERE">
-	    	<isNotEmpty prepend="AND" property="statistic_dt_start">
-				<![CDATA[STATISTIC_DT >= #statistic_dt_start#]]>
+  <statement id="getT37_level_adjust_customListCount" parameterClass="com.ist.aml.risk_rate.dto.T37_party_resultAndT00_organ" resultClass="int">
+  	 select count(*)
+		from T37_PARTY_RESULT_uh A, T00_ORGAN B
+		where A.ORGANKEY = B.ORGANKEY AND MODIFY_CD = '1'
+        <dynamic>
+			<isNotEmpty prepend="AND" property="organname">
+				B.ORGANNAME like '%$organname$%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="fristappralevel">
+				A.FRISTAPPRALEVEL = #fristappralevel#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="levelkey">
+				A.LEVELKEY = #levelkey#  
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="tempcategory">
+				A.TEMPCATEGORY = #tempcategory#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="statistic_dt">
+				<![CDATA[STATISTIC_DT >= #statistic_dt#]]>
 			</isNotEmpty>
 			<isNotEmpty prepend="AND" property="statistic_dt_end">
 				<![CDATA[STATISTIC_DT <= #statistic_dt_end#]]>
 			</isNotEmpty>
-			<isNotEmpty prepend="AND" property="last_upd_dt_start">
-				<![CDATA[LAST_UPD_DT >= #last_upd_dt_start#]]>
-			</isNotEmpty>
-			<isNotEmpty prepend="AND" property="last_upd_dt_end">
-				<![CDATA[LAST_UPD_DT <= #last_upd_dt_end#]]>
-			</isNotEmpty>
-			<isNotEmpty prepend="AND" property="party_id">
-				R.PARTY_ID =#party_id#
-			</isNotEmpty>
-			<isNotEmpty prepend="AND" property="level_before_adjust">
-				R.LEVEL_BEFORE_ADJUST = #level_before_adjust#
-			</isNotEmpty>
-			<isNotEmpty prepend="AND" property="level_after_adjust">
-				R.LEVEL_AFTER_ADJUST = #level_after_adjust#
-			</isNotEmpty>
-			<isNotEmpty prepend="AND" property="audit_no">
-				R.AUDIT_NO = #audit_no#
-			</isNotEmpty>
-			
-	    </dynamic>
+		</dynamic>
   </statement>
+  
+  
+  <!-- 客户审查延期查询 -->
+  <statement id="getT37_investigation_delay_List"
+  			parameterClass="com.ist.aml.risk_rate.dto.T37_party_resultAndT00_organAndT00_user" 
+  			resultClass="com.ist.aml.risk_rate.dto.T37_party_resultAndT00_organAndT00_user">
+  			
+  			select A.PARTY_ID, A.PARTY_CHN_NAME, B.organname, A.STATISTICDATE, A.STATISTIC_DT, A.FRISTAPPRALEVEL, A.CREATE_DT, A.DEALMAX_DT, A.audit_user, U1.realname audit_realname, A.AUDIT_DT, A.check_user, U2.realname check_realname,A.CHECK_DT, A.RCHECK_DT, A.rcheck_user, U3.realname rcheck_realname, A.DEALMAX_DT
+		      from t37_party_result_curr A
+		      left join t00_user U1 on A.audit_user=U1.username
+		      left join t00_user U2 on A.check_user=U2.username
+		      left join t00_user U3 on A.rcheck_user=U3.username
+		      inner join t00_organ B on A.organkey = B.organkey
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="organname">
+				B.ORGANNAME like '%$organname$%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt">
+				<![CDATA[CREATE_DT >= #create_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt_end">
+				<![CDATA[CREATE_DT <= #create_dt_end#]]>
+			</isNotEmpty>
+		</dynamic>
+		<dynamic prepend="ORDER BY">
+			A.CREATE_DT
+		</dynamic>
+  </statement>
+  
+  <!-- 客户审查延期记录数查询 -->
+  <statement id="getT37_investigation_delay_ListCount" 
+  			parameterClass="com.ist.aml.risk_rate.dto.T37_party_resultAndT00_organAndT00_user"
+  			resultClass="int">
+  			
+  			select count(*)
+		      from t37_party_result_curr A
+		      left join t00_user U1 on A.audit_user=U1.username
+		      left join t00_user U2 on A.check_user=U2.username
+		      left join t00_user U3 on A.rcheck_user=U3.username
+		      left join t00_organ B on A.organkey = B.organkey
+			
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="organname">
+				B.ORGANNAME like '%$organname$%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt">
+				<![CDATA[CREATE_DT >= #create_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt_end">
+				<![CDATA[CREATE_DT <= #create_dt_end#]]>
+			</isNotEmpty>
+		</dynamic>
+  </statement>
+  
+  <!-- 客户调查延期查询 -->
+  <statement id="getT37_primary_survey_delayResult_List" 
+  		parameterClass="com.ist.aml.risk_rate.dto.T37_primary_survey_delayResult" 
+  		resultClass="com.ist.aml.risk_rate.dto.T37_primary_survey_delayResult">
+  		select A.PARTY_ID, A.PARTY_CHN_NAME, B.ORGANNAME, C.CREATE_DT, A.CHECK_DT, A.CHECKER, D.REALNAME CHECK_REALNAME
+			from t10_checkparty_relt A
+			LEFT JOIN T47_PARTY C ON A.PARTY_ID = C.PARTY_ID
+			LEFT JOIN T00_ORGAN B ON B.ORGANKEY = A.ORGANKEY
+			LEFT JOIN T00_USER D ON D.USERNAME = A.CHECKER
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="organname">
+				B.ORGANNAME like '%$organname$%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt">
+				<![CDATA[CREATE_DT >= #create_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt_end">
+				<![CDATA[CREATE_DT <= #create_dt_end#]]>
+			</isNotEmpty>
+		</dynamic>
+		<dynamic prepend="ORDER BY">
+			C.CREATE_DT
+		</dynamic>
+  </statement>
+  
+  <!-- 客户调查延期记录数查询 -->
+  <statement id="getT37_primary_survey_delayResult_ListCount" 
+  		parameterClass="com.ist.aml.risk_rate.dto.T37_primary_survey_delayResult"
+  		resultClass="int">
+  		select count(*)
+			from t10_checkparty_relt A
+			LEFT JOIN T47_PARTY C ON A.PARTY_ID = C.PARTY_ID
+			LEFT JOIN T00_ORGAN B ON B.ORGANKEY = A.ORGANKEY
+			LEFT JOIN T00_USER D ON D.USERNAME = A.CHECKER
+		<dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="organname">
+				B.ORGANNAME like '%$organname$%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt">
+				<![CDATA[CREATE_DT >= #create_dt#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="create_dt_end">
+				<![CDATA[CREATE_DT <= #create_dt_end#]]>
+			</isNotEmpty>
+		</dynamic>
+  </statement>
+  
   
   <statement id="insertT37_party_result_currToAudit"
 		parameterClass="com.ist.aml.risk_rate.dto.T37_party_result"

@@ -9,6 +9,7 @@
 		<form-bean name="t37_help_checkActionForm" type="com.ist.aml.risk_rate.controller.T37_help_checkActionForm" />
 		<form-bean name="t37_helpcheck_attachActionForm" type="com.ist.aml.risk_rate.controller.T37_helpcheck_attachActionForm" />
 		<form-bean name="t37_level_adjust_customActionForm" type="com.ist.aml.risk_rate.controller.T37_level_adjust_customActionForm"></form-bean>
+		<form-bean name="t37_investigation_delayActionForm" type="com.ist.aml.risk_rate.controller.T37_investigation_delayActionForm"></form-bean>
 	</form-beans>
 
 
@@ -459,6 +460,21 @@
 			type="com.ist.aml.risk_rate.controller.T37_party_resultCurrAction" validate="false" scope="request">
 			<forward name="success" path="/check/t37_level_adjust_custom.jsp"></forward>
 		</action>
+		<!-- 客户审查延期查询 -->
+		<action path="/check/t37_investigation_delay_list" 
+			parameter="getT37_investigation_delay_list"
+			name="t37_investigation_delayActionForm" 
+			type="com.ist.aml.risk_rate.controller.T37_party_resultCurrAction" validate="false" scope="request">
+			<forward name="success" path="/check/t37_investigation_delay.jsp"></forward>
+		</action>
+		
+		<!-- 客户调查延期查询 -->
+		<action path="/check/t37_primary_survey_delay_list" 
+			parameter="getT37_primary_survey_delay_list"
+			name="t37_investigation_delayActionForm" 
+			type="com.ist.aml.risk_rate.controller.T37_party_resultCurrAction" validate="false" scope="request">
+			<forward name="success" path="/check/t37_primary_survey_delay.jsp"></forward>
+		</action>                                
 	</action-mappings>
 	<message-resources parameter="ApplicationResources_zh_CN" />
 

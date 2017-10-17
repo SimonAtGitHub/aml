@@ -186,6 +186,8 @@ private String exportType;
 
 private String currresulekey = "";
 private String currtemplatekey = "";
+
+
 public String getCurrtemplatekey() {
 	return currtemplatekey;
 }
