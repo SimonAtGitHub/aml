@@ -122,7 +122,7 @@ function dosubmit(theUrl){
 									<bean:write name="t37_party_result" property="emendationlevel_disp" />
 							      </logic:equal>
 							      &nbsp;&nbsp;
-							      <a  href="#" onclick="ymPrompt.win({message:'<%=request.getContextPath()%>/risk_rate/result/getT37_level_auditList.do?newsearchflag=1&resulekey=<bean:write name="t37_party_result" property="resulekey" />&organkey=<bean:write name="t37_party_result" property="organkey"/>&rate_source=<bean:write name="t37_party_result" property="rate_source" />',width:650,height:350,title:'',handler:handler,iframe:true,fixPosition:true,dragOut:false}); ">
+							      <a  href="#" onclick="ymPrompt.win({message:'<%=request.getContextPath()%>/risk_rate/result/getT37_level_auditList.do?newsearchflag=1&party_id=<bean:write name="t37_party_result" property="party_id" />&organkey=<bean:write name="t37_party_result" property="organkey"/>&resulekey=<bean:write name="t37_party_result" property="resulekey" />&organkey=<bean:write name="t37_party_result" property="organkey"/>&rate_source=<bean:write name="t37_party_result" property="rate_source" />',width:650,height:350,title:'',handler:handler,iframe:true,fixPosition:true,dragOut:false}); ">
 							      <img src="../../images/<%=session.getAttribute("style")%>/b_risktranc.png" title="µ÷Õû¼ÇÂ¼" /></a>
 								  <logic:equal name="is_showCheck" value="1">
 								  &nbsp;&nbsp;

@@ -345,7 +345,33 @@ public List getT37_party_resultList(SqlMapClient sqlMap,T37_party_result t37_par
 		}
 		return list;
 	}
-
+	public ArrayList getT37_level_auditList1(SqlMapClient sqlMap,T37_party_result t37_party_result_temp)throws SQLException{
+		List t37_level_auditList = sqlMap.queryForList("getT37_level_auditList1", t37_party_result_temp);
+		LinkedHashMap postid2name = cm.getMapFromCache("t31_node");
+		LinkedHashMap riskLevelMap = cm.getMapFromCache("t31_risk_level");
+		ArrayList list = new ArrayList();
+		for(int i=0;i<t37_level_auditList.size();i++){
+			T37_level_audit t37_level_audit=(T37_level_audit)t37_level_auditList.get(i);
+			if(t37_level_audit.getLevel_before_adjust()!=null&&!"".equals(t37_level_audit.getLevel_before_adjust())){
+				t37_level_audit.setLevel_before_adjust((String)riskLevelMap.get(t37_level_audit.getLevel_before_adjust()));
+			}
+			if(t37_level_audit.getLevel_after_adjust()!=null&&!"".equals(t37_level_audit.getLevel_after_adjust())){
+				t37_level_audit.setLevel_after_adjust((String)riskLevelMap.get(t37_level_audit.getLevel_after_adjust()));
+			}
+			if(t37_level_audit.getLast_upd_dt()!=null){
+				t37_level_audit.setLast_upd_dt_disp(DateUtils.dateToStringShort(t37_level_audit.getLast_upd_dt()));
+			}
+			if(t37_level_audit.getRes_post_id()!=null&&!"".equals(t37_level_audit.getRes_post_id())){
+				t37_level_audit.setRes_post_id((String)postid2name.get(t37_level_audit.getRes_post_id()));
+			}
+			
+			if(t37_level_audit.getPost_id()!=null&&!"".equals(t37_level_audit.getPost_id())){
+				t37_level_audit.setPost_id((String)postid2name.get(t37_level_audit.getPost_id()));
+			}
+			list.add(t37_level_audit);
+		}
+		return list;
+	}
 	public ArrayList getT37_level_auditList(SqlMapClient sqlMap, T37_party_result t37_party_result,int iStartRec,int iPageSize)
 			throws SQLException {
 		List t37_level_auditList = sqlMap.queryForList("getT37_level_audit_rateList", t37_party_result,iStartRec,iPageSize);
