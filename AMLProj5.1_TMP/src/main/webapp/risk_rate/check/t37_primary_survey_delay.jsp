@@ -30,7 +30,10 @@ function dosubmit(theUrl,type){
        // }
         isSub = true;
     }
-    
+    if(type=='all'){
+     document.forms[0].action=theUrl;
+        document.forms[0].submit();
+    }
     if(isSub && errMsg==''){
         document.forms[0].action=theUrl;
         document.forms[0].submit();
@@ -59,6 +62,9 @@ function reset_input() {
 					<!-- title -->
 				<div class="cond_t">
 					<span>结果查询 - 客户调查延期查询</span>
+					<span class="buttons"><a href="#" onclick="dosubmit('t37_curr_rate_result_delay.do','all')" />
+						<img src="../../images/<%=session.getAttribute("style") %>/b_export.png" />全部导出</a>
+					</span>
 				</div>
 							<div class="cond_c" id="searchtable">
 					<table width="100%" border="0" cellpadding="1" cellspacing="1">

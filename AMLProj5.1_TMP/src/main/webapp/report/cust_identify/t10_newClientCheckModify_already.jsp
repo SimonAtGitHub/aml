@@ -12,6 +12,7 @@
 	<script type="text/javascript" src="../../js/jquery.js"></script>
 	<script type="text/javascript" src="../../js/aml.js"></script>
 	<script language="JavaScript" src="../../js/calendar.js"></script>
+	<script type="text/javascript" src="../../js/ymPrompt.js"></script>
 <!--[if lte IE 6]>
 <script type="text/javascript" src="../../js/unitpngfix.js"></script>
 <![endif]-->
@@ -149,6 +150,10 @@ function showOrNot(obj,id){
 						<td>开户目的：</td>
 						<td><bean:write name="clientInfo" property="create_purpose" /></td>
 					</tr>
+					<tr>
+					   <td>重新识别次数：</td>
+					  <td> <a href="#" onclick="ymPrompt.win({message:'<%=request.getContextPath()%>/report/cust_identify/new_client_investigation_view_t.do?party_id=<bean:write name="clientInfo" property="party_id"/>',width:650,height:350,title:'',handler:handler,iframe:true,fixPosition:true,dragOut:false}); "><u><font color="red"><%=session.getAttribute("rcheck_count1")%></font></u></a></td>
+					</tr>
 				</table>
 			</div>
 		</logic:equal>
@@ -231,6 +236,10 @@ function showOrNot(obj,id){
 						<bean:write name="clientInfo" property="org_credit_vt_disp"  />
 						</td>
 	                  </tr>
+	                  <tr>
+					   <td>重新识别次数：</td>
+					  <td> <a href="#" onclick="ymPrompt.win({message:'<%=request.getContextPath()%>/report/cust_identify/new_client_investigation_view_t.do?party_id=<bean:write name="clientInfo" property="party_id"/>',width:650,height:350,title:'',handler:handler,iframe:true,fixPosition:true,dragOut:false}); "><u><font color="red"><%=session.getAttribute("rcheck_count1")%></font></u></a></td>
+					</tr>
 				</table>
 			</div>
 		</logic:equal>

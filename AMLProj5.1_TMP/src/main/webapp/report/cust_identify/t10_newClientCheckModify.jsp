@@ -157,6 +157,10 @@ function checkForm(theUrl) {
 			errorMsg = "法定代表人证件到期日不能为空";
 			gEBI("legal_card_no_end_dt_disp").focus();
 		}
+		if(gEBI("licence_end_dt_disp").value==null || gEBI("licence_end_dt_disp").value==""){
+			errorMsg = "客户证件到期日不能为空";
+			gEBI("licence_end_dt_disp").focus();
+		}
 		if(gEBI("stock_holder").value==null || gEBI("stock_holder").value==""){
 			errorMsg = "实际控股股东姓名不能为空";
 			gEBI("stock_holder").focus();
@@ -522,6 +526,10 @@ function validateCheckBox(err){
 						<td>
 						<html:text name="clientInfo" property="org_credit_vt_disp" onclick="calendar.show(this);" readonly="true" style="background:url(../../images/blue/icon_r.gif) no-repeat right 50%"/>
 						</td>
+	                  </tr>
+	                  <tr>
+	                    <td>对公客户证件到期</td>
+						<td><html:text name="clientInfo" property="licence_end_dt_disp" styleId="licence_end_dt_disp" onclick="calendar.show(this);" readonly="true" style="background:url(../../images/blue/icon_r.gif) no-repeat right 50%"/><font color="red">*</font></td>                  
 	                  </tr>
 				</table>
 			</div>

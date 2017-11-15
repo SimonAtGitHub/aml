@@ -466,15 +466,26 @@
 			name="t37_investigation_delayActionForm" 
 			type="com.ist.aml.risk_rate.controller.T37_party_resultCurrAction" validate="false" scope="request">
 			<forward name="success" path="/check/t37_investigation_delay.jsp"></forward>
-		</action>
-		
+		</action>  
+		<action path="/check/t37_investigation_delay_list_export1" 
+			parameter="t37_investigation_delay_list_export"
+			name="t37_investigation_delayActionForm" 
+			type="com.ist.aml.risk_rate.controller.T37_party_resultCurrAction" validate="false" scope="request">
+			<forward name="success" path="/check/t37_investigation_delay_list_export.jsp"></forward>
+		</action> 
 		<!-- 客户调查延期查询 -->
 		<action path="/check/t37_primary_survey_delay_list" 
 			parameter="getT37_primary_survey_delay_list"
 			name="t37_investigation_delayActionForm" 
 			type="com.ist.aml.risk_rate.controller.T37_party_resultCurrAction" validate="false" scope="request">
 			<forward name="success" path="/check/t37_primary_survey_delay.jsp"></forward>
-		</action>                                
+		</action> 
+		<action path="/check/t37_curr_rate_result_delay" 
+			parameter="getT37_primary_survey_delay_list_export"
+			name="t37_investigation_delayActionForm" 
+			type="com.ist.aml.risk_rate.controller.T37_party_resultCurrAction" validate="false" scope="request">
+			<forward name="success" path="/check/t37_primary_survey_delay_export.jsp"></forward>
+		</action>                                  
 	</action-mappings>
 	<message-resources parameter="ApplicationResources_zh_CN" />
 

@@ -961,7 +961,10 @@ public int insertT37_level_audit(SqlMapClient sqlMap,
 		}
 		return iCount.intValue();
 	}
-	
+	public List getT37_investigation_delay_List1(SqlMapClient sqlMap,T37_party_resultAndT00_organAndT00_user t37_party_resultAndT00_organAndT00_user) throws Exception{
+		ArrayList list = (ArrayList) sqlMap.queryForList("getT37_investigation_delay_List_export1",t37_party_resultAndT00_organAndT00_user); 
+		return list;
+	}
 	/**
 	 * 客户审查延期查询
 	 * @param sqlMap
@@ -1051,7 +1054,10 @@ public int insertT37_level_audit(SqlMapClient sqlMap,
 		}
 		return iCount.intValue();
 	}
-	
+	public ArrayList getT37_investigation_delay_List_export(SqlMapClient sqlMap,T37_primary_survey_delayResult t37_primary_survey_delayResult) throws SQLException{
+		ArrayList tempList = (ArrayList) sqlMap.queryForList("getT37_investigation_delay_List_export", t37_primary_survey_delayResult);
+		return tempList;
+	}
 	
 	/**
 	 * 导出风险评级结果

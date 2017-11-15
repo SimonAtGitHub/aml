@@ -1177,10 +1177,15 @@
 				name="t10_newClientCheckActionForm" type="com.ist.aml.cust_identify.controller.T10_newClientCheckAction"
 				validate="false" scope="request">
 				<forward name="success" path="/cust_identify/t10_newClientCheckModify.jsp" />
-				<forward name="success_already" path="/cust_identify/t10_newClientCheckModify_already.jsp" />
+				<forward name="success_already" path="/cust_identify/t10_newClientCheckModify_already.jsp"/>
 				<forward name="failure" path="/cust_identify/t10_checkparty_rateRiskList.do?newsearchflag=1"></forward>
 			</action>
 			
+			<action path="/cust_identify/new_client_investigation_view_t" parameter="modifyNewClientCheck_t"
+				name="t10_newClientCheckActionForm" type="com.ist.aml.cust_identify.controller.T10_newClientCheckAction"
+				validate="false" scope="request">
+				<forward name="success" path="/cust_identify/t10_newClientCheckModify_already1.jsp"/>
+			</action>	
 			<action path="/cust_identify/modifyNewClientCheck_do" parameter="modifyNewClientCheck_do"
 				name="t10_newClientCheckActionForm" type="com.ist.aml.cust_identify.controller.T10_newClientCheckAction"
 				validate="false" scope="request">

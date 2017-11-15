@@ -115,6 +115,7 @@ function _Onblur(pname){
 	  <th width="10%">¹Ø×¢³Ì¶È</th>
       <th>×´Ì¬</th>
 	 </tr>
+	 
     <logic:iterate id="checkparty" name="t10_checkparty_alreadylist" indexId="i" type="com.ist.aml.cust_identify.dto.T10_checkparty">
     <%
 		String party_id = checkparty.getParty_id();

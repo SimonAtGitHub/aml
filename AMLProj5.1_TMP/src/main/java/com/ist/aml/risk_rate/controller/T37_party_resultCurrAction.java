@@ -98,6 +98,13 @@ public class T37_party_resultCurrAction extends BaseAction {
 		if ("exportT37_curr_rate_resultAll".equalsIgnoreCase(myaction)) {
 			myforward = performExportT37_curr_rate_result(mapping, form, request,response);
 		}
+		if ("getT37_primary_survey_delay_list_export".equalsIgnoreCase(myaction)) {
+			myforward = performExportT37_curr_rate_result_delay(mapping, form, request,response);
+		}
+		
+		if ("t37_investigation_delay_list_export".equalsIgnoreCase(myaction)) {
+			myforward = performExportT37_investigation_delay_list_export(mapping, form, request,response);
+		}
 		//等级调整进度查询
 		if("getT37_level_adjust_progressList".equals(myaction)){
 			myforward = performGetT37_level_adjust_progressList(mapping, form, request,response);
@@ -218,6 +225,30 @@ public class T37_party_resultCurrAction extends BaseAction {
 		request.setAttribute("pageInfo", pageInfo);
 		return actionMapping.findForward("success");
 	}
+	private ActionForward performExportT37_curr_rate_result_delay(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+		 	HttpServletResponse response){
+		ActionMessages errors = new ActionMessages();
+		ArrayList tempList = new ArrayList();
+		HttpSession session = request.getSession();
+		T37_party_resultDAO t37_party_resultDAO = (T37_party_resultDAO) context.getBean("t37_party_result_rateDAO");
+		T37_primary_survey_delayResult t37_primary_survey_delayResult = new T37_primary_survey_delayResult();
+		try {
+			T37_investigation_delayActionForm form = (T37_investigation_delayActionForm) actionForm;
+			t37_primary_survey_delayResult=(T37_primary_survey_delayResult)session.getAttribute("t37_level_adjust_customSearchObj");
+			tempList = t37_party_resultDAO.getT37_investigation_delay_List_export(sqlMap, t37_primary_survey_delayResult);
+			String downloadname = DateUtils.dateToStringShort(DateUtils.getCurrDateTime()) + "调查延期数据";
+			request.setAttribute("downloadname", downloadname);		
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
+					"error.common", e.getMessage()));
+			saveMessages(request, errors);
+			return actionMapping.findForward("failure");
+		}
+		request.setAttribute("tempList", tempList);
+		return actionMapping.findForward("success");
+	}
 	/**
 	 * 导出客户风险信息
 	 * @param mapping
@@ -228,7 +259,7 @@ public class T37_party_resultCurrAction extends BaseAction {
 	 */
 	private ActionForward performExportT37_curr_rate_result(
 			ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+		 	HttpServletResponse response) {
 		ActionMessages errors = new ActionMessages();
 		ArrayList tempList = new ArrayList();
 		HttpSession session = request.getSession();
@@ -479,7 +510,29 @@ public class T37_party_resultCurrAction extends BaseAction {
 		return actionMapping.findForward("success");
 	}
 	
-	
+	private ActionForward performExportT37_investigation_delay_list_export(ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) {
+		ActionMessages errors = new ActionMessages();
+		HttpSession session = request.getSession();
+		List t37_investigation_delay_List = null;
+		T37_party_resultDAO t37_party_resultDAO = (T37_party_resultDAO) context.getBean("t37_party_result_rateDAO");
+		T37_party_resultAndT00_organAndT00_user t37_party_resultAndT00_organAndT00_user = new T37_party_resultAndT00_organAndT00_user();
+		try{
+			T37_investigation_delayActionForm form = (T37_investigation_delayActionForm) actionForm;
+			t37_party_resultAndT00_organAndT00_user=(T37_party_resultAndT00_organAndT00_user)session.getAttribute("t37_level_adjust_customSearchObj");
+			t37_investigation_delay_List = t37_party_resultDAO.getT37_investigation_delay_List1(sqlMap, t37_party_resultAndT00_organAndT00_user);
+			String downloadname = DateUtils.dateToStringShort(DateUtils.getCurrDateTime()) + "审查延期数据";
+			request.setAttribute("downloadname", downloadname);	
+		}catch(Exception e) {
+			e.printStackTrace();
+			errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
+					"error.common", e.getMessage()));
+			saveMessages(request, errors);
+			return actionMapping.findForward("failure");
+		}
+		request.setAttribute("t37_investigation_delay_List", t37_investigation_delay_List);
+		return actionMapping.findForward("success");
+	}
 	/**
 	 * 客户审查延期查询
 	 * @param mapping
