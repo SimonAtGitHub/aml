@@ -63,7 +63,9 @@
 		<form-bean name="t07_cd_applyActionForm" type="com.ist.aml.report.controller.T07_cd_applyActionForm"></form-bean>
         <form-bean name="t07_bh_tsdt_pActinoForm" type="com.ist.aml.report.controller.T07_bh_tsdt_pActinoForm"></form-bean>
         
-         	</form-beans>
+        <form-bean name="finance_query_form" type="com.ist.aml.report.controller.Finance_query_form"></form-bean>
+        
+    </form-beans>
 	<global-exceptions />
 	<global-forwards >	
 	 <forward name="failure" path="/common/errors.jsp"  contextRelative="true"/>
@@ -1092,7 +1094,15 @@
 		</action>
 		<!-- 数据查询-客户视图 end -->
 		
-		
+		<!-- 金融查询start -->
+		<action path="/insidereport/finance_query"
+			parameter="finance_query"
+			name="finance_query_form"
+			type="com.ist.aml.report.controller.T47_partyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/insidereport/finance_query.jsp" />
+		</action>
+		<!-- 金融查询end -->
 		
 		<!-- 账户统计 -->
 		<action path="/insidereport/t07_sz_trans_report"
@@ -1101,6 +1111,8 @@
 			type="com.ist.aml.report.controller.T07_report_by_organAction"
 			validate="false" scope="request">
 			<forward name="success"
+				path="/insidereport/t07_sz_trans_report_list.jsp" />
+			<forward name="false"
 				path="/insidereport/t07_sz_trans_report_list.jsp" />
 		</action>
 		<action path="/insidereport/export_t07_detrans"
