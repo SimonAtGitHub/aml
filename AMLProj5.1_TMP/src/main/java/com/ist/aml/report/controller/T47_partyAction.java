@@ -866,34 +866,26 @@ public class T47_partyAction extends BaseAction {
         // 通过FormFile我们可以获取关于用户上传文件的各种信息，比如大小，名字等
         String fileName = formFile.getFileName();
         int fileSize = formFile.getFileSize();
+        
 
         if (fileSize > 10 * 1024 * 1024) {
             request.setAttribute("error", "文件大小不能超过10MB!");
             System.out.println("文件大小不能超过10MB!");
-        }
-
-        if(!formFile.getContentType().startsWith("image/")){
-            request.setAttribute("error", "文件格式有错，请检查!");
-            System.out.println("文件格式有错，请检查!");
+            return mapping.findForward("success"); //需要做前台显示
         }
 
         InputStream is = null;
         OutputStream os = null;
-        String uuid = getUUID();
-        String suffix = getFileSuffix(fileName);
-        String newFileName = uuid + suffix;
         try {
             is = formFile.getInputStream();
             String path = request.getSession().getServletContext().getRealPath("file");
             System.out.println(path);
-            os = new FileOutputStream(path + "\\" + newFileName);
+            os = new FileOutputStream(path + "\\" + fileName);
             int len = 0;
             byte[] bytes = new byte[1024];
             while ((len = is.read(bytes)) > 0) {
                 os.write(bytes, 0, len);
             }
-            
-            
             
             return mapping.findForward("success");
         } catch (Exception e) {
@@ -920,19 +912,11 @@ public class T47_partyAction extends BaseAction {
     }
 
     /**
-     * 得到UUID
-     * @return
-     */
-    public String getUUID(){
-        String uuid = UUID.randomUUID().toString();
-        return uuid;
-    }
-    /**
      * 获得文件夹下所有文件名称
      */
     public List<String> getFileName() {
     	List<String> lists = new ArrayList<String>();
-        String path = "F:\\apache-tomcat-6.0.37\\webapps\\aml\\file"; // 路径
+        String path = "C:\\"; // 路径
         File f = new File(path);
         if (!f.exists()) {
             System.out.println(path + " not exists");
@@ -942,10 +926,10 @@ public class T47_partyAction extends BaseAction {
         File fa[] = f.listFiles();
         for (int i = 0; i < fa.length; i++) {
             File fs = fa[i];
-            if (fs.isDirectory()) {
-                System.out.println(fs.getName());
-                lists.add(fs.getName());
-            } 
+            
+            System.out.println(fs.getName());
+            lists.add(fs.getName());
+            
         }
         
         return lists;
