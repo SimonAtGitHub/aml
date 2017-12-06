@@ -15,16 +15,22 @@
 <!--[if lte IE 6]>
 <script type="text/javascript" src="../../js/unitpngfix.js"></script>
 <![endif]-->
+<script type="text/javascript">
+     function dosubmit(theUrl){
+     document.forms[0].action=theUrl;
+     document.forms[0].submit();
+}
+</script>
 </head>
 <body>
 	<html:form action="/insidereport/finance_query.do" enctype="multipart/form-data" method="post">
 		<label>上传:</label>&nbsp;<input type="file" name="file_upload" /><br /><input type="submit" value="提交"/><br />
 
-		<select>
+		<select property="match_file">
 			<logic:iterate name="lists" id="o">
 		       <li><bean:write name="o" /></li>
 		    </logic:iterate>
-		</select><button>匹配</button>
+		</select><button onClick="dosubmit('<%=request.getContextPath() %>/report/t07_report_organ/t07_report_organ_list.do?newsearchflag=1','search')">匹配</button>
 		<br />
 		<button>下载</button>
 		

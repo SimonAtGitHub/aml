@@ -11,6 +11,8 @@ public class Finance_query_form extends ActionForm {
 	private static final long serialVersionUID = 1L;
 	
 	private FormFile file_upload;
+	private String match_file="";
+	
 
 	public FormFile getFile_upload() {
 		return file_upload;
@@ -18,6 +20,14 @@ public class Finance_query_form extends ActionForm {
 
 	public void setFile_upload(FormFile file_upload) {
 		this.file_upload = file_upload;
+	}
+
+	public String getMatch_file() {
+		return match_file;
+	}
+
+	public void setMatch_file(String match_file) {
+		this.match_file = match_file;
 	}
 
 	
