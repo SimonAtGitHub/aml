@@ -21,18 +21,36 @@
      document.forms[0].submit();
 }
 </script>
+
+<style type="text/css">
+	* {
+		font-size: 15px;
+	}
+	body {
+		padding: 50px 0 0 100px;
+	}
+	select {
+		padding: 4px;
+		margin-top: 10px;
+	}
+	.download {
+		margin-top: 10px;
+	}
+</style>
 </head>
 <body>
 	<html:form action="/insidereport/finance_query.do" enctype="multipart/form-data" method="post">
-		<label>上传:</label>&nbsp;<input type="file" name="file_upload" /><br /><input type="submit" value="提交"/><br />
-
-		<select property="match_file">
+		<label>上传:</label>&nbsp;<input type="file" name="file_upload" /><br />
+		<input type="submit" value="提交" style="font-size: 15px;"/><br />
+		
+		<select><!--  property="match_file" -->
 			<logic:iterate name="lists" id="o">
-		       <li><bean:write name="o" /></li>
+		       <option><bean:write name="o" /></option>
 		    </logic:iterate>
-		</select><button onClick="dosubmit('<%=request.getContextPath() %>/report/t07_report_organ/t07_report_organ_list.do?newsearchflag=1','search')">匹配</button>
+		</select>&nbsp;&nbsp;
+		<button onClick="dosubmit('<%=request.getContextPath() %>/report/t07_report_organ/t07_report_organ_list.do?newsearchflag=1','search')">匹配</button>
 		<br />
-		<button>下载</button>
+		<button class="download">下载</button>
 		
 	</html:form>
 </body>
