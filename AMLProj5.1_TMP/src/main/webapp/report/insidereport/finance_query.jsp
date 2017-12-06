@@ -17,8 +17,8 @@
 <![endif]-->
 <script type="text/javascript">
      function dosubmit(theUrl){
-     document.forms[0].action=theUrl;
-     document.forms[0].submit();
+     	document.forms[0].action=theUrl;
+     	document.forms[0].submit();
 }
 </script>
 
@@ -41,16 +41,21 @@
 <body>
 	<html:form action="/insidereport/finance_query.do" enctype="multipart/form-data" method="post">
 		<label>上传:</label>&nbsp;<input type="file" name="file_upload" /><br />
-		<input type="submit" value="提交" style="font-size: 15px;"/><br />
 		
+		<button onclick="dosubmit('<%=request.getContextPath() %>/report/insidereport/finance_query_upload.do?newsearchflag=1')">提交</button>
+		<select name="match_file">
+			<logic:iterate name="lists" id="o">
+		       <option><bean:write name="o" /></option>
+		    </logic:iterate>
+		</select>&nbsp;&nbsp;
+		<button onclick="dosubmit('<%=request.getContextPath() %>/report/insidereport/finance_query_match.do?newsearchflag=1')">匹配</button>
+		<br />
 		<select><!--  property="match_file" -->
 			<logic:iterate name="lists" id="o">
 		       <option><bean:write name="o" /></option>
 		    </logic:iterate>
 		</select>&nbsp;&nbsp;
-		<button onClick="dosubmit('<%=request.getContextPath() %>/report/t07_report_organ/t07_report_organ_list.do?newsearchflag=1','search')">匹配</button>
-		<br />
-		<button class="download">下载</button>
+		<button class="download" onclick="dosubmit('<%=request.getContextPath() %>/report/insidereport/finance_query_download.do?newsearchflag=1')">下载</button>
 		
 	</html:form>
 </body>

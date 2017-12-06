@@ -96,9 +96,26 @@ public class T47_partyAction extends BaseAction {
 			myforward = performFinance_query(mapping, form, request,
 					response);
 		}
+		//上传文件
+		else if("finance_query_upload".equalsIgnoreCase(myaction)){
+			myforward = performFinance_query_upload(mapping, form, request,
+					response);
+		}
+		 //匹配文件
+		else if("finance_query_match".equalsIgnoreCase(myaction)){
+			myforward = performFinance_query_match(mapping, form, request,
+					response);
+		}
+		 //文件下载
+		else if("finance_query_download".equalsIgnoreCase(myaction)){
+			myforward = performFinance_query_download(mapping, form, request,
+					response);
+		}
 		return myforward;
 
 	}
+
+	
 
 	/**
 	 * �ͻ���ͼ�б� added by shanbh
@@ -854,15 +871,26 @@ public class T47_partyAction extends BaseAction {
 		
 		request.setAttribute("lists", getFileName());
 		
+		return mapping.findForward("success");
+	
+	}
+	/**
+	 * 文件上传
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	private ActionForward performFinance_query_upload(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		request.setAttribute("lists", getFileName());
+		
 		Finance_query_form actionForm = (Finance_query_form) form;
 		
-        FormFile formFile = actionForm.getFile_upload();
-        if(formFile == null) {
-        	return mapping.findForward("success");
-        }else {
-        	
-        
-
+		FormFile formFile = actionForm.getFile_upload();
+         
         // 通过FormFile我们可以获取关于用户上传文件的各种信息，比如大小，名字等
         String fileName = formFile.getFileName();
         int fileSize = formFile.getFileSize();
@@ -904,7 +932,46 @@ public class T47_partyAction extends BaseAction {
         }
         request.setAttribute("error", "注册出错！");
         return mapping.findForward("success");
-        }
+    }
+	
+	/**
+	 * 文件匹配
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	private ActionForward performFinance_query_match(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
+		request.setAttribute("lists", getFileName());
+		
+		Finance_query_form actionForm = (Finance_query_form) form;
+		String match = actionForm.getMatch_file();
+		System.out.println(match);
+		
+		System.out.println("这是文件匹配");
+		return mapping.findForward("success");
+	}
+	
+	/**
+	 * 文件下载
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	private ActionForward performFinance_query_download(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
+		request.setAttribute("lists", getFileName());
+		
+		System.out.println("这是文件下载");
+		return mapping.findForward("success");
 	}
 
 	public String getFileSuffix(String fileName) {
