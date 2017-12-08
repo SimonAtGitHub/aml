@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=GBK"%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
@@ -43,6 +45,10 @@
 		<label>上传:</label>&nbsp;<input type="file" name="file_upload" /><br />
 		
 		<button onclick="dosubmit('<%=request.getContextPath() %>/report/insidereport/finance_query_upload.do?newsearchflag=1')">提交</button>
+		
+		
+		
+		<br />
 		<select name="match_file">
 			<logic:iterate name="lists" id="o">
 		       <option><bean:write name="o" /></option>
@@ -50,7 +56,7 @@
 		</select>&nbsp;&nbsp;
 		<button onclick="dosubmit('<%=request.getContextPath() %>/report/insidereport/finance_query_match.do?newsearchflag=1')">匹配</button>
 		<br />
-		<select><!--  property="match_file" -->
+		<select name="download_file"><!--  property="match_file" -->
 			<logic:iterate name="lists" id="o">
 		       <option><bean:write name="o" /></option>
 		    </logic:iterate>
