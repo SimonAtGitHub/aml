@@ -36,7 +36,12 @@ import com.ibatis.sqlmap.client.SqlMapClient;
 
 import com.ist.aml.information.dto.T47_Opp_info;
 import com.ist.aml.report.dto.T47_party;
+import com.ist.common.CopyBean;
+import com.ist.common.InnerDao;
+import com.ist.common.JSonUtil;
 import com.ist.common.LogUtils;
+import com.ist.common.OuterDao;
+import com.ist.common.RequestObject;
 import com.ist.common.base.BaseDAO;
 import com.ist.common.db.results.DefaultDbQuery;
 import com.ist.common.db.results.I_DatabaseQuery;
@@ -703,5 +708,20 @@ public class T47_partyDAO extends BaseDAO {
 
 		}
 		return t47_partyList;
+	}
+	public void insertInnerDao(SqlMapClient sqlMap, ArrayList<InnerDao> in)throws SQLException {
+		for (int i=0;i<in.size();i++){
+		 sqlMap.insert("insertInnerDao", in.get(i));
+		}
+	}
+	public void delInnerDao(SqlMapClient sqlMap, InnerDao in)throws SQLException {
+		 sqlMap.update("delInnerDao", in);	
+	}
+	public void matchInnerDao(SqlMapClient sqlMap, InnerDao in)throws SQLException {
+		 sqlMap.update("matchInnerDao", in);	
+	}
+	public ArrayList<OuterDao> getOuterDao(SqlMapClient sqlMap, InnerDao in)throws SQLException {
+		ArrayList<OuterDao> od=(ArrayList<OuterDao>) sqlMap.queryForList("getOuterDao", in);
+		return od;
 	}
 }

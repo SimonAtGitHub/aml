@@ -69,7 +69,7 @@
          	<td>人行机构名称：</td>
          	<td>
          	    <html:text property="organname"/>&nbsp;&nbsp;
-         	    <input name="" type="button" value="查　询"  class="in_button1" onClick="dosubmit('<%=request.getContextPath() %>/report/t07_report_organ/t07_report_organ_list.do?newsearchflag=1','search')"/>
+         	    <input name="" type="button" value="查　询"  class="in_button1" onClick="dosubmit('<%=request.getContextPath() %>/insidereport/finance_query_match)"/>
 			</td>
            </tr>
         </table>

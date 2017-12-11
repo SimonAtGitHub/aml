@@ -1,6 +1,7 @@
+/ApplicationResources.properties
+/ApplicationResources_zh_CN.properties
+/ApplicationResources_zh_CN2.properties
+/META-INF/
+/cache.ccf
 /com/
-/dic/
 /org/
-/paoding-dic-home.properties
-/propertyset.xml
-/resource/
