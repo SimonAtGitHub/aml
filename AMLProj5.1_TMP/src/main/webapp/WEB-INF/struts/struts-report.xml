@@ -1102,8 +1102,26 @@
 			validate="false" scope="request">
 			<forward name="success" path="/insidereport/finance_query.jsp" />
 		</action>
+		<!-- 上传 -->
+		<action path="/insidereport/finance_query_upload"
+			parameter="finance_query_upload"
+			name="finance_query_form"
+			type="com.ist.aml.report.controller.T47_partyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/insidereport/finance_query.jsp" />
+			<forward name="error" path="/insidereport/finance_query.jsp" />
+		</action>
+		<!-- 匹配 -->
 		<action path="/insidereport/finance_query_match"
 			parameter="finance_query_match"
+			name="finance_query_form"
+			type="com.ist.aml.report.controller.T47_partyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/insidereport/finance_query.jsp" />
+		</action>
+		<!-- 下载 -->
+		<action path="/insidereport/finance_query_download"
+			parameter="finance_query_download"
 			name="finance_query_form"
 			type="com.ist.aml.report.controller.T47_partyAction"
 			validate="false" scope="request">

@@ -1,3 +1,4 @@
+
 package com.ist.aml.report.controller;
 
 import org.apache.struts.action.ActionForm;
@@ -12,6 +13,7 @@ public class Finance_query_form extends ActionForm {
 	
 	private FormFile file_upload;
 	private String match_file="";
+	private String download_file = "";
 	
 
 	public FormFile getFile_upload() {
@@ -28,6 +30,14 @@ public class Finance_query_form extends ActionForm {
 
 	public void setMatch_file(String match_file) {
 		this.match_file = match_file;
+	}
+
+	public String getDownload_file() {
+		return download_file;
+	}
+
+	public void setDownload_file(String download_file) {
+		this.download_file = download_file;
 	}
 
 	

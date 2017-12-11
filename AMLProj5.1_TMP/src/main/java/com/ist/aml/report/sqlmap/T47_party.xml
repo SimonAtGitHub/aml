@@ -736,5 +736,30 @@
 			</isNotNull>
 		</dynamic>
 	</statement>
-	
+	<insert id="insertInnerDao" parameterClass="com.ist.common.InnerDao">        
+        
+      INSERT INTO t47_finsearch(people_id,xm,sfzh,hzsfzh,verification_dt,verification_batch,verification_seq)  
+      VALUES 
+           (      #people_id#,  
+                  #xm#,  
+                  #sfzh#,  
+                  #hzsfzh#,  
+                  #verification_dt#,  
+                  #verification_batch#,  
+                  #verification_seq#                   
+          )    
+  </insert> 
+	<statement id="delInnerDao" parameterClass="com.ist.common.InnerDao" resultClass="int">
+		delete from T47_finsearch where verification_dt=#verification_dt#
+  and verification_batch=#verification_batch# and verification_seq=#verification_seq#
+	</statement>
+	<statement id="matchInnerDao" parameterClass="com.ist.common.InnerDao" resultClass="int">
+		call finalsearch(#verification_dt#,#verification_batch#,#verification_seq#)
+	</statement>
+	<statement id="getOuterDao" parameterClass="com.ist.common.InnerDao" resultClass="com.ist.common.OuterDao">
+		select a.people_id, a.xm,a.sfzh,a.r2,a.r3,a.r4,a.r5,a.r6,a.r7,a.r8,a.r9,a.r10,a.r11,a.r12,a.r13,a.r14,a.r15
+   from T47_finresult a,T47_finsearch b where a.people_id=b.people_id and a.sfzh=b.sfzh
+   and b.verification_dt=#verification_dt#
+  and b.verification_batch=#verification_batch# and b.verification_seq=#verification_seq#
+	</statement>
 </sqlMap>
