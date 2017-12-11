@@ -961,7 +961,7 @@ public class T47_partyAction extends BaseAction {
 			t47_partyDAO.matchInnerDao(sqlMap,id);
 			ArrayList<OuterDao>od=t47_partyDAO.getOuterDao(sqlMap,id);
 			ArrayList<ReturnObject> reo=CopyBean.copyOut(od);
-			JSonUtil.writeJson(reo, match);			
+			JSonUtil.writeJson(reo, ver+"_"+"金融代号"+"_"+seq+".txt");			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
