@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -33,9 +34,15 @@ import com.ist.aml.report.dto.T47_party;
 import com.ist.aml.report.dto.T47_transaction;
 import com.ist.common.AuthBean;
 import com.ist.common.Authorization;
+import com.ist.common.CopyBean;
+import com.ist.common.InnerDao;
+import com.ist.common.JSonUtil;
 import com.ist.common.MyBeanUtils;
 import com.ist.common.ObjectCompare;
+import com.ist.common.OuterDao;
 import com.ist.common.PageUtils;
+import com.ist.common.RequestObject;
+import com.ist.common.ReturnObject;
 import com.ist.common.base.BaseAction;
 import com.ist.platform.dto.T00_organ;
 import com.ist.util.Constans;
@@ -934,12 +941,33 @@ public class T47_partyAction extends BaseAction {
 		// TODO Auto-generated method stub
 		
 		request.setAttribute("lists", getFileName());
-		
+		T47_partyDAO t47_partyDAO =(T47_partyDAO)context.getBean("t47_partyDAO");
 		Finance_query_form actionForm = (Finance_query_form) form;
 		String match = actionForm.getMatch_file();
 		System.out.println(match);
-		
-		System.out.println("�ļ�ƥ��");
+	    ArrayList<RequestObject> ro=JSonUtil.readJson(match);
+		ArrayList<InnerDao> in=CopyBean.copyIn(ro,match);
+		String dt=match.substring(0, match.indexOf("_"));
+		String date=dt.substring(0,4)+"-"+dt.substring(4,6)+"-"+dt.substring(6);
+		String ver=match.substring(match.indexOf("_")+1,match.lastIndexOf("_"));
+		String seq=match.substring(match.lastIndexOf("_")+1,match.lastIndexOf("."));
+		InnerDao id=new InnerDao();
+		id.setVerification_dt(date);
+		id.setVerification_batch(ver);
+		id.setVerification_seq(seq);
+		try {
+		    t47_partyDAO.delInnerDao(sqlMap,id);
+			t47_partyDAO.insertInnerDao(sqlMap, in);
+			t47_partyDAO.matchInnerDao(sqlMap,id);
+			ArrayList<OuterDao>od=t47_partyDAO.getOuterDao(sqlMap,id);
+			ArrayList<ReturnObject> reo=CopyBean.copyOut(od);
+			JSonUtil.writeJson(reo, match);			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("文件匹配");
 		return mapping.findForward("success");
 	}
 	
