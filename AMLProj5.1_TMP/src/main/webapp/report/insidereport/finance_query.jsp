@@ -21,7 +21,17 @@
      function dosubmit(theUrl){
      	document.forms[0].action=theUrl;
      	document.forms[0].submit();
-}
+	}
+	 function dosubmit_upload(theUrl){
+	 var file = document.getElementById("file_upload").value;
+	 	if(file == null || file == "") {
+	 		alert("请选择上传文件！");
+	 		return false;
+	 	}else {
+	     	document.forms[0].action=theUrl;
+	     	document.forms[0].submit();
+     	}
+	}
 </script>
 
 <style type="text/css">
@@ -38,26 +48,33 @@
 	.download {
 		margin-top: 10px;
 	}
+	select {
+		width: 260px;
+	}
 </style>
 </head>
 <body>
 	<html:form action="/insidereport/finance_query.do" enctype="multipart/form-data" method="post">
-		<label>上传:</label>&nbsp;<input type="file" name="file_upload" /><br />
+		<label>上传:</label>&nbsp;<input type="file" name="file_upload" id="file_upload"/><br />
 		
-		<button onclick="dosubmit('<%=request.getContextPath() %>/report/insidereport/finance_query_upload.do?newsearchflag=1')">提交</button>
-		
+		<button onclick="return dosubmit_upload('<%=request.getContextPath() %>/report/insidereport/finance_query_upload.do?newsearchflag=1')">提交</button>
+		<%if(request.getAttribute("result") != null) {
+			%>
+				<%=request.getAttribute("result") %>
+			<%
+		} %>
 		
 		
 		<br />
 		<select name="match_file">
-			<logic:iterate name="lists" id="o">
+			<logic:iterate name="upload_lists" id="o">
 		       <option><bean:write name="o" /></option>
 		    </logic:iterate>
 		</select>&nbsp;&nbsp;
 		<button onclick="dosubmit('<%=request.getContextPath() %>/report/insidereport/finance_query_match.do?newsearchflag=1')">匹配</button>
 		<br />
 		<select name="download_file"><!--  property="match_file" -->
-			<logic:iterate name="lists" id="o">
+			<logic:iterate name="download_lists" id="o">
 		       <option><bean:write name="o" /></option>
 		    </logic:iterate>
 		</select>&nbsp;&nbsp;
