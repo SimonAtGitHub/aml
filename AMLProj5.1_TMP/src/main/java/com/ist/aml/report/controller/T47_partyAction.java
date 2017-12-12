@@ -55,44 +55,44 @@ public class T47_partyAction extends BaseAction {
 
 		ActionForward myforward = null;
 		String myaction = mapping.getParameter();
-		myforward = this.preExecute(mapping, form, request,response);//ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½if("false".equals(request.getAttribute("goWayFlag")))
+		myforward = this.preExecute(mapping, form, request,response);//ÈçÔ¤´¦ÀíÖĞÇ¿ĞĞÌø³öif("false".equals(request.getAttribute("goWayFlag")))
 		if ("false".equals(request.getAttribute("goWayFlag")))
-			return myforward;//ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½
+			return myforward;//²éÑ¯½çÃæ
 		 if ("getT47_party_uc_List".equalsIgnoreCase(myaction)) {
 			myforward = performGetT47_party_uc_List(mapping, form, request,
 					response);
 		}
-		// ï¿½Í»ï¿½ï¿½ï¿½Â¼ï¿½ï¿½Ï¢Ò³ï¿½ï¿½
+		// ¿Í»§²¹Â¼ĞÅÏ¢Ò³Ãæ
 		else if ("modifyT47_party_uc".equalsIgnoreCase(myaction)) {
 			myforward = performModifyT47_party_uc(mapping, form, request,
 					response);
 		}
-		// ï¿½Í»ï¿½ï¿½ï¿½Â¼ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
+		// ¿Í»§²¹Â¼ĞÅÏ¢±£´æ
 		else if ("saveT47_party_ucmodify".equalsIgnoreCase(myaction)) {
 			myforward = performSaveT47_party_uc(mapping, form, request,
 					response);
 		}
-		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½Í»ï¿½ï¿½ï¿½Ï¢
+		// ¹«¹²¶¨Î»¿Í»§ĞÅÏ¢
 		else if ("getT47_partyComm".equalsIgnoreCase(myaction)) {
 			myforward = performGetT47_partyComm(mapping, form, request,
 					response);
 		}
-		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½Í»ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½party_class_cd
+		//¹«¹²¶¨Î»¿Í»§ĞÅÏ¢£º·µ»Ø´øparty_class_cd
 		else if ("getT47_partyComm1".equalsIgnoreCase(myaction)) {
 			myforward = performGetT47_partyComm1(mapping, form, request,
 					response);
 		}
-		 // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¿Í»ï¿½Ò³ï¿½ï¿½
+		 // °¸ÀıÌí¼ÓËûĞĞ¿Í»§Ò³Ãæ
 		else if ("case_new_party_add".equalsIgnoreCase(myaction)) {
 			myforward = performCase_new_party_add(mapping, form, request,
 					response);
 		}
-		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¿Í»ï¿½ï¿½ï¿½ï¿½ï¿½
+		// °¸ÀıÌí¼ÓËûĞĞ¿Í»§±£´æ
 		else if ("case_new_party_add_do".equalsIgnoreCase(myaction)) {
 			myforward = performCase_new_party_add_do(mapping, form, request,
 					response);
 		}
-		//ï¿½Í»ï¿½ï¿½ï¿½Í¼ï¿½Ğ±ï¿½ added by shanbh
+		//¿Í»§ÊÓÍ¼ÁĞ±í added by shanbh
 		else if("getT47_party_list".equalsIgnoreCase(myaction)){
 			myforward = performGetT47_party_list(mapping, form, request,
 					response);
@@ -100,17 +100,17 @@ public class T47_partyAction extends BaseAction {
 			myforward = performFinance_query(mapping, form, request,
 					response);
 		}
-		//ï¿½Ä¼ï¿½ï¿½Ï´ï¿½
+		//ÎÄ¼şÉÏ´«
 		else if("finance_query_upload".equalsIgnoreCase(myaction)){
 			myforward = performFinance_query_upload(mapping, form, request,
 					response);
 		}
-		 //ï¿½Ä¼ï¿½Æ¥ï¿½ï¿½
+		 //ÎÄ¼şÆ¥Åä
 		else if("finance_query_match".equalsIgnoreCase(myaction)){
 			myforward = performFinance_query_match(mapping, form, request,
 					response);
 		}
-		 //ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½
+		 //ÎÄ¼şÏÂÔØ
 		else if("finance_query_download".equalsIgnoreCase(myaction)){
 			myforward = performFinance_query_download(mapping, form, request,
 					response);
@@ -119,7 +119,7 @@ public class T47_partyAction extends BaseAction {
 
 	}
 	/**
-	 * ï¿½Í»ï¿½ï¿½ï¿½Í¼ï¿½Ğ±ï¿½ added by shanbh
+	 * ¿Í»§ÊÓÍ¼ÁĞ±í added by shanbh
 	 * @param mapping
 	 * @param form
 	 * @param request
@@ -141,21 +141,21 @@ public class T47_partyAction extends BaseAction {
 			T47_partyActionForm form = (T47_partyActionForm) actionForm;
 			String newsearchflag = StringUtils.nullObject2String(request.getParameter("newsearchflag"));
 			int intPage = StringUtils.nullObject2int(request.getParameter("intPage"), 0);
-			// ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½
+			// ¿Í»§ÀàĞÍ
 //			LinkedHashMap party_classMap = cm.getMapFromCache("clienttype");
 //			request.setAttribute("party_classMap", this.getOptionsListByMap(party_classMap, null, true));
-			// ï¿½Í»ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			// ¿Í»§Ö¤¼şÀàĞÍ
 			LinkedHashMap card_typeMap = cm.getMapFromCache("card_type");
 			request.setAttribute("card_typeMap", this.getOptionsListByMap(card_typeMap, null, true));
-			//ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			//¿Í»§¹éÊô»ú¹¹
 			LinkedHashMap organMap = cm.getMapFromCache("organ");	
 			request.setAttribute("organMap",this.getOptionsListByMap(organMap, null, true));
 			
-			// ï¿½Ã»ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½
+			// ÓÃ»§ÈÏÖ¤Àà
 			AuthBean authBean = (AuthBean) session.getAttribute("authBean");
 			Authorization auth = authBean.getAuthToken();
 			String organkeys = auth.getOrganstr();
-			// ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½
+			// ´Ó×ó²à²Ëµ¥½øÈë
 			if ("0".equals(newsearchflag)) {
 			
 				if("".equals(form.getOrgankey())){
@@ -163,12 +163,12 @@ public class T47_partyAction extends BaseAction {
 				}
 				session.removeAttribute("t47_partySearchObj");
 				
-			} else if ("1".equals(newsearchflag)) {// ï¿½ÂµÄ²ï¿½Ñ¯
+			} else if ("1".equals(newsearchflag)) {// ĞÂµÄ²éÑ¯
 				MyBeanUtils.copyBean2Bean(t47_party, form);
 				t47_party.setOrgankeys(organkeys);
 				t47_party.setIntPage("0");
 				session.setAttribute("T47_partysearch", t47_party);
-			} else {// ï¿½ï¿½Ò³
+			} else {// ·­Ò³
 				t47_party = (T47_party) session.getAttribute("T47_partysearch");
 				if(t47_party!=null){
 					   MyBeanUtils.copyBean2Bean(form,t47_party);  
@@ -176,11 +176,11 @@ public class T47_partyAction extends BaseAction {
 				session.setAttribute("T47_partysearch", t47_party);
 			}
 			
-			//ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½
+			//¿Í»§ÀàĞÍ
 			String party_class_str=cm.getMapFromCacheToStr("clienttype", "party_class_cd", form.getParty_class_cd(),"", true);
 			request.setAttribute("party_class_str", party_class_str);
 			if(!"0".equals(newsearchflag)){
-				// Ö´ï¿½Ğ²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½
+				// Ö´ĞĞ²éÑ¯¶¯×÷
 				int totalRow;
 				t47_partyList = t47_partyDAO.getT47_partyList(sqlMap,t47_party, this.getStartRec(intPage), this.getIntPageSize());
 				totalRow = t47_partyDAO.getT47_partyListCount(sqlMap,t47_party);
@@ -193,7 +193,7 @@ public class T47_partyAction extends BaseAction {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("ï¿½ì³£",e);
+			logger.error("Òì³£",e);
 			errors.add(errors.GLOBAL_ERROR, new ActionError(
 					"error.pagertitle.default"));
 			saveErrors(request, errors);
@@ -222,11 +222,11 @@ public class T47_partyAction extends BaseAction {
 
 			
 			
-			// ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½
+			// ¿Í»§ÀàĞÍ
 			LinkedHashMap party_classMap = cm.getMapFromCache("clienttype");
 			request.setAttribute("party_classMap", this.getOptionsListByMap(
 					party_classMap, null, true));
-			// ï¿½Í»ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			// ¿Í»§Ö¤¼şÀàĞÍ
 			LinkedHashMap card_typeMap = cm.getMapFromCache("card_type");
 			request.setAttribute("card_typeMap", this.getOptionsListByMap(
 					card_typeMap, null, true));
@@ -236,30 +236,30 @@ public class T47_partyAction extends BaseAction {
 		
 			int intPage = PageUtils.intPage(request, newsearchflag);;
 
-			// ï¿½ï¿½ï¿½Ò²ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½
+			// ´ÓÓÒ²à²Ëµ¥½øÈë
 			if ("0".equals(newsearchflag)) {
 			
 				return mapping.findForward("success");
-				// ï¿½ÂµÄ²ï¿½Ñ¯
+				// ĞÂµÄ²éÑ¯
 			} else if ("1".equals(newsearchflag)) {
 				MyBeanUtils.copyBean2Bean(t47_party, form);
-				// ï¿½Ã»ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½
+				// ÓÃ»§ÈÏÖ¤Àà
 				AuthBean authBean = (AuthBean) session.getAttribute("authBean");
 				Authorization auth = authBean.getAuthToken();
 				String organkeys = auth.getOrganstr();
 				t47_party.setOrgankeys(organkeys);
 				
-				// Ä£ï¿½ï¿½Æ¥ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				// Ä£ºıÆ¥Åä¿Í»§ÖĞÎÄÃû
 				if (form.getParty_chn_name_s() != null) {
 					t47_party
 							.setParty_chn_name(t47_party.getParty_chn_name_s());
 				}
 				
 				t47_party.setIntPage("0");
-				// ï¿½ï¿½ï¿½Ã°ï¿½ï¿½ï¿½ï¿½Â¿Í»ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½Ö¾
+				// ÉèÖÃ°¸ÀıÏÂ¿Í»§²éÑ¯±êÖ¾
 				
 				session.setAttribute("T47_partysearch", t47_party);
-				// ï¿½ï¿½Ò³
+				// ·­Ò³
 			} else {
 				t47_party = (T47_party) session
 						.getAttribute("T47_partysearch");
@@ -268,7 +268,7 @@ public class T47_partyAction extends BaseAction {
 			   }
 				session.setAttribute("T47_partysearch", t47_party);
 			}
-			// Ö´ï¿½Ğ²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½
+			// Ö´ĞĞ²éÑ¯¶¯×÷
 			int totalRow;
 
 			
@@ -285,7 +285,7 @@ public class T47_partyAction extends BaseAction {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("ï¿½ì³£",e);
+			logger.error("Òì³£",e);
 			errors.add(errors.GLOBAL_ERROR, new ActionError(
 					"error.pagertitle.default"));
 			saveErrors(request, errors);
@@ -306,18 +306,18 @@ public class T47_partyAction extends BaseAction {
 		T47_partyDAO dao = (T47_partyDAO)context.getBean("t47_partyDAO");
 		T47_party t47_party = new T47_party();
 		
-		// Ô¤ï¿½ï¿½ï¿½ï¿½Ö¾Î»
+		// Ô¤¾¯±êÖ¾Î»
 		String class_cd = "";
 
 		String party_id = StringUtils.nullObject2String(request
 				.getParameter("party_id"));
 		try {
-			// ï¿½ï¿½ï¿½Ã²ï¿½Ñ¯idï¿½ï¿½ï¿½ï¿½ï¿½İ´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½idï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½Ã¿Í»ï¿½ï¿½ï¿½Ï¢
+			// ÉèÖÃ²éÑ¯id£¬¸ù¾İ´«¹ıÀ´µÄid²éÑ¯³ö¸Ã¿Í»§ĞÅÏ¢
 			t47_party.setParty_id(party_id);
 			t47_party = dao.getT47_party_ucByHostId(sqlMap, party_id);
-			// ï¿½ï¿½ï¿½Ã¶Ô¹ï¿½ï¿½ï¿½Ë½ï¿½ï¿½Ö¾Î»
+			// ÉèÖÃ¶Ô¹«¶ÔË½±êÖ¾Î»
 			class_cd = t47_party.getParty_class_cd();
-			// ï¿½ï¿½ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½Î´Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½Î´Í¨ï¿½ï¿½
+			// ÉèÖÃÔ¤¾¯ÀàĞÍ,Èç¹û´ó¶î¿ÉÒÉÑéÖ¤¶¼Î´Í¨¹ıÔòÉèÖÃÎª¿ÉÒÉÎ´Í¨¹ı
 			if (t47_party.getValidate_ind() != null
 					&& "0".equals(t47_party.getValidate_ind())
 					|| t47_party.getValidate_ind() != null
@@ -339,7 +339,7 @@ public class T47_partyAction extends BaseAction {
 				t47_party.setCard_type(card_type08);
 				t47_party.setCard_type_inf(card_type_inf08);
 			}
-			// ï¿½ï¿½ï¿½Ë´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î´Öª
+			// ·¨ÈË´ú±í¹ú¼®Î´Öª
 			t47_party.setLegal_country_cd(t47_party.getCountry_cd());
 			if (t47_party.getLegal_card_type() != null
 					&& !t47_party.getLegal_card_type().equals("")) {
@@ -350,15 +350,15 @@ public class T47_partyAction extends BaseAction {
 				t47_party.setLegal_card_type(legal_card_type08);
 				t47_party.setLegal_card_type_inf(legal_card_type_inf08);
 			}
-			// ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½formï¿½ï¿½
+			// ½«Öµ¿½±´µ½formÖĞ
 			MyBeanUtils.copyBean2Bean(form, t47_party);
 			t47_party.setCard_type(t47_party.getCard_type()+t47_party.getCard_type_inf());
 			t47_party.setLegal_card_type(StringUtils.null2String(t47_party.getLegal_card_type())+StringUtils.null2String(t47_party.getLegal_card_type_inf()));
-			String saveString = ObjectCompare.ObjectToFormatStr(t47_party, "#_#", "@_@");//ï¿½Ñ¶ï¿½ï¿½ï¿½×ªï¿½ï¿½Îªï¿½Ö·ï¿½ï¿½ï¿½
+			String saveString = ObjectCompare.ObjectToFormatStr(t47_party, "#_#", "@_@");//°Ñ¶ÔÏó×ª»¯Îª×Ö·û´®
 			request.setAttribute("saveString", saveString);
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("ï¿½ì³£",e);
+			logger.error("Òì³£",e);
 			errors.add(errors.GLOBAL_ERROR, new ActionError(
 					"error.pagertitle.default"));
 			saveErrors(request, errors);
@@ -385,7 +385,7 @@ public class T47_partyAction extends BaseAction {
 		LinkedHashMap clienttypeMap = cm.getMapFromCache(pbc_cttp);
 		industrykeyMap = cm.getMapFromCache(industrykey);
 		LinkedHashMap card_typeMap = cm.getMapFromCache(card_type);
-		// ï¿½ï¿½ï¿½×¹ï¿½ï¿½ï¿½
+		// ½»Ò×¹ú¼Ò
 		LinkedHashMap nationalityMap = cm.getMapFromCache("country");
 		request.setAttribute("nationalityMap", this.getOptionsListByMap(
 				nationalityMap, null, true));
@@ -394,7 +394,7 @@ public class T47_partyAction extends BaseAction {
 		//LinkedHashMap country_map = new LinkedHashMap(new CountryComparator(map));
 		//country_map.putAll(map);
 		/** end */
-		//LinkedHashMap countryMap = country_map; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
+		//LinkedHashMap countryMap = country_map; // ¹ú¼ÒĞÅÏ¢
 
 		request.setAttribute("industrykeyMap", this.getOptionsListByMap(
 				industrykeyMap, null, true));
@@ -415,7 +415,7 @@ public class T47_partyAction extends BaseAction {
 	}
 
 	/**
-	 * ï¿½Í»ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
+	 * ¿Í»§ĞÅÏ¢±£´æ
 	 * 
 	 * @param mapping
 	 * @param actionForm
@@ -440,7 +440,7 @@ public class T47_partyAction extends BaseAction {
 			String saveString = request.getParameter("saveString");
 			T47_party source = new T47_party();
 			ObjectCompare.StrToFormatObject(source, saveString, "#_#", "@_@");
-			//ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ÍºÍ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ï²ï¿½ï¿½ï¿½Öµ
+			//µ±¿Í»§Éí·İÖ¤ÀàĞÍºÍ·¨¶¨´ú±íÈËÉí·İÖ¤¼şÀàĞÍÎªÆäËûÊ±£¬²»ºÏ²¢ÆäÖµ
 			if(form.getCard_type().equals("19") || form.getCard_type().equals("29")){
 				t47_party_uc.setCard_type(t47_party_uc.getCard_type()+t47_party_uc.getCard_type_inf());
 			}
@@ -449,13 +449,13 @@ public class T47_partyAction extends BaseAction {
 			}
 			ObjectCompare.ObjCompare(t47_party_uc, source, "#");
 			t47_party_uc.setParty_id(source.getParty_id());
-			//20091211ï¿½ï¿½ï¿½Ş¸Ä¿Í»ï¿½ï¿½ï¿½Í¬Ê±ï¿½Ş¸ï¿½ï¿½ï¿½Ö¤×´Ì¬ï¿½ï¿½Ö¾
+			//20091211£¬ĞŞ¸Ä¿Í»§±íÍ¬Ê±ĞŞ¸ÄÑéÖ¤×´Ì¬±êÖ¾
 			t47_partyDAO.saveModifyT47_partyUc(sqlMap, t47_party_uc);
 		
 		
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("ï¿½ì³£",e);
+			logger.error("Òì³£",e);
 			errors.add(errors.GLOBAL_ERROR, new ActionError(
 					"error.pagertitle.default"));
 			saveErrors(request, errors);
@@ -493,7 +493,7 @@ public class T47_partyAction extends BaseAction {
 			
 			if ("I".equals(type)) {
 				LinkedHashMap clienttypeMap = new LinkedHashMap();
-				clienttypeMap.put("I", "ï¿½ï¿½Ë½");
+				clienttypeMap.put("I", "¶ÔË½");
 				request.setAttribute("clienttypeMap", this.getOptionsListByMap(
 						clienttypeMap, null, false));
 			} else {
@@ -502,12 +502,12 @@ public class T47_partyAction extends BaseAction {
 						clienttypeMap, null, false));
 			}
 
-			if (newsearchflag.equals("1")) {// ï¿½ÂµÄ²ï¿½Ñ¯
+			if (newsearchflag.equals("1")) {// ĞÂµÄ²éÑ¯
 				MyBeanUtils.copyBean2Bean(t47_party, form);
 				if(form.getParty_id_s()!=null) {
 					t47_party.setParty_id(form.getParty_id_s());
 				}
-				// Ä£ï¿½ï¿½Æ¥ï¿½ä£¬ï¿½ï¿½Òªï¿½ï¿½ï¿½â´¦ï¿½ï¿½Ò»ï¿½ï¿½
+				// Ä£ºıÆ¥Åä£¬ĞèÒªÌØÊâ´¦ÀíÒ»ÏÂ
 //				if (!form.getParty_chn_name_search().equals("")) {
 //					t47_party.setParty_chn_name("%"
 //							+ form.getParty_chn_name_search() + "%");
@@ -516,7 +516,7 @@ public class T47_partyAction extends BaseAction {
 				 t47_party.setParty_chn_name(form.getParty_chn_name_search());
 				
 				session.setAttribute("t47_partySearchObj", t47_party);
-			} else {// ï¿½ï¿½Ò³
+			} else {// ·­Ò³
 				t47_party = (T47_party) session
 						.getAttribute("t47_partySearchObj");
 			}
@@ -525,18 +525,18 @@ public class T47_partyAction extends BaseAction {
 				t47_party = t47_party1;
 			}
 
-			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î§
+			// »ú¹¹·¶Î§
 			AuthBean authBean = (AuthBean) session.getAttribute("authBean");
 			Authorization auth = authBean.getAuthToken();
 			//String org_IDS = auth.getOrganstr();			
 			//t47_party.setOrgankey(org_IDS);
 			
 			String organstr="";
-			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¶ï¿½Î»ï¿½Í»ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğµï¿½
+			//´åÕòÒøĞĞ¶¨Î»¿Í»§ºÅÖ»¶¨Î»±¾´åÕòÒøĞĞµÄ
 			LinkedHashMap t87_sysparaMap=cm.getMapFromCache("t87_syspara");
 			if(t87_sysparaMap.containsKey("400")&&"1".equals(t87_sysparaMap.get("400")))
 			{
-				String user_org=auth.getT00_user().getOrgankey();//ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½
+				String user_org=auth.getT00_user().getOrgankey();//ÓÃ»§»ú¹¹
 				 LinkedHashMap organMap=cm.getMapFromCache("report_organ_map");
 				String reportorggankey=StringUtils.null2String((String)organMap.get(user_org));
 				
@@ -618,7 +618,7 @@ public class T47_partyAction extends BaseAction {
 			request.setAttribute("dispatcher", disp);
 			if ("I".equals(type)) {
 				LinkedHashMap clienttypeMap = new LinkedHashMap();
-				clienttypeMap.put("I", "ï¿½ï¿½Ë½");
+				clienttypeMap.put("I", "¶ÔË½");
 				request.setAttribute("clienttypeMap", this.getOptionsListByMap(
 						clienttypeMap, null, false));
 			} else {
@@ -627,7 +627,7 @@ public class T47_partyAction extends BaseAction {
 						clienttypeMap, null, false));
 			}
 
-			if (newsearchflag.equals("1")) {// ï¿½ÂµÄ²ï¿½Ñ¯
+			if (newsearchflag.equals("1")) {// ĞÂµÄ²éÑ¯
 				MyBeanUtils.copyBean2Bean(t47_party, form);
 				if(form.getParty_id_s()!=null) {
 					t47_party.setParty_id(form.getParty_id_s());
@@ -636,7 +636,7 @@ public class T47_partyAction extends BaseAction {
 				 t47_party.setParty_chn_name(form.getParty_chn_name_search());
 //				 intPage=1;
 				session.setAttribute("t47_partySearchObj", t47_party);
-			} else {// ï¿½ï¿½Ò³
+			} else {// ·­Ò³
 				t47_party = (T47_party) session
 						.getAttribute("t47_partySearchObj");
 			}
@@ -645,16 +645,16 @@ public class T47_partyAction extends BaseAction {
 				t47_party = t47_party1;
 			}
 
-			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î§
+			// »ú¹¹·¶Î§
 			AuthBean authBean = (AuthBean) session.getAttribute("authBean");
 			Authorization auth = authBean.getAuthToken();
 			
 			String organstr="";
-			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¶ï¿½Î»ï¿½Í»ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğµï¿½
+			//´åÕòÒøĞĞ¶¨Î»¿Í»§ºÅÖ»¶¨Î»±¾´åÕòÒøĞĞµÄ
 			LinkedHashMap t87_sysparaMap=cm.getMapFromCache("t87_syspara");
 			if(t87_sysparaMap.containsKey("400")&&"1".equals(t87_sysparaMap.get("400")))
 			{
-				String user_org=auth.getT00_user().getOrgankey();//ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½
+				String user_org=auth.getT00_user().getOrgankey();//ÓÃ»§»ú¹¹
 				 LinkedHashMap organMap=cm.getMapFromCache("report_organ_map");
 				String reportorggankey=StringUtils.null2String((String)organMap.get(user_org));
 				
@@ -694,7 +694,7 @@ public class T47_partyAction extends BaseAction {
 	}
 
 	/**
-	 * add by lijie 2013-8-6:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½
+	 * add by lijie 2013-8-6:ĞÂÔö°¸Àı¸ÄÎª¶à¿Í»§Ìí¼Ó
 	 * @param actionMapping
 	 * @param actionForm
 	 * @param request
@@ -712,30 +712,30 @@ public class T47_partyAction extends BaseAction {
 		try {
 			T47_partyActionForm form = (T47_partyActionForm) actionForm;
 			
-			LinkedHashMap party_typeMap = cm.getMapFromCache("clienttype"); // ï¿½ï¿½Ë½ï¿½Ô¹ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½
+			LinkedHashMap party_typeMap = cm.getMapFromCache("clienttype"); // ¶ÔË½¶Ô¹«¿Í»§ÀàĞÍ
 			request.setAttribute("party_typeMap", this.getOptionsListByMap(
 					party_typeMap, null, true));
 			
-			LinkedHashMap cardtypeMap = cm.getMapFromCache("card_type"); // Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			LinkedHashMap cardtypeMap = cm.getMapFromCache("card_type"); // Ö¤¼şÀàĞÍ
 			request.setAttribute("cardtypeMap", this.getOptionsListByMap(
 					cardtypeMap, null,true));
 			
-			Map countryMap = cm.getMapFromCache("country"); // ï¿½ï¿½ï¿½ï¿½
+			Map countryMap = cm.getMapFromCache("country"); // ¹ú¼®
 			request.setAttribute("countryMap", this.getOptionsListByMap(
 					countryMap, null,true));
 			
-			LinkedHashMap partytypeMap = cm.getMapFromCache("pbc_cttp"); // ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½
+			LinkedHashMap partytypeMap = cm.getMapFromCache("pbc_cttp"); // ¿Í»§ÀàĞÍ
 			request.setAttribute("partytypeMap",partytypeMap);
 			
-			LinkedHashMap pbc_ctvc_iMap = cm.getMapFromCache("pbc_ctvc_i"); //ï¿½ï¿½Ë½Ö°Òµ
+			LinkedHashMap pbc_ctvc_iMap = cm.getMapFromCache("pbc_ctvc_i"); //¶ÔË½Ö°Òµ
 			request.setAttribute("pbc_ctvc_iMap", this.getOptionsListByMap(
 					pbc_ctvc_iMap, null,true));
 			
-			LinkedHashMap pbc_ctvc_cMap = cm.getMapFromCache("pbc_ctvc_c"); //ï¿½Ô¹ï¿½ï¿½ï¿½Òµ
+			LinkedHashMap pbc_ctvc_cMap = cm.getMapFromCache("pbc_ctvc_c"); //¶Ô¹«ĞĞÒµ
 			request.setAttribute("pbc_ctvc_cMap", this.getOptionsListByMap(
 					pbc_ctvc_cMap, null,true));
 			
-			LinkedHashMap bi_card_typeMap = cm.getMapFromCache("BITP");//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			LinkedHashMap bi_card_typeMap = cm.getMapFromCache("BITP");//·¨¶¨´ú±íÈËÖ¤¼şÀàĞÍ
 			request.setAttribute("bi_card_typeMap", this.getOptionsListByMap(
 					bi_card_typeMap, null,true));
 			
@@ -792,7 +792,7 @@ public class T47_partyAction extends BaseAction {
 				//else{
 //					T47_party t47_party1=t47_partyDAO.getT47_partyDisp(sqlMap, comparty_id);
 //					if(t47_party1!=null && !t47_party1.getParty_id().equals("")){
-//						errors.add(errors.GLOBAL_ERROR, new ActionError("error.common","ï¿½Ã»ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½"));
+//						errors.add(errors.GLOBAL_ERROR, new ActionError("error.common","ÓÃ»§ÒÑ´æÔÚ"));
 //				      saveErrors(request, errors);
 //				      return mapping.findForward("failure");
 //					}else{
@@ -849,7 +849,7 @@ public class T47_partyAction extends BaseAction {
 		
 		}  catch (Exception e) {
 			e.printStackTrace();
-			logger.error("ï¿½ì³£",e);
+			logger.error("Òì³£",e);
 			errors.add(errors.GLOBAL_ERROR, new ActionError(
 					"error.pagertitle.default"));
 			saveErrors(request, errors);
@@ -862,13 +862,16 @@ public class T47_partyAction extends BaseAction {
 	private ActionForward performFinance_query(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) {
 		
-		request.setAttribute("lists", getFileName());
+		request.setAttribute("upload_lists", getFileName("upload"));
+		request.setAttribute("download_lists", getFileName("download"));
+		String result = "";
+        request.setAttribute("result", result);
 		
 		return mapping.findForward("success");
 	
 	}
 	/**
-	 * ï¿½Ä¼ï¿½ï¿½Ï´ï¿½
+	 * ÎÄ¼şÉÏ´«
 	 * @param mapping
 	 * @param form
 	 * @param request
@@ -878,36 +881,42 @@ public class T47_partyAction extends BaseAction {
 	private ActionForward performFinance_query_upload(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
 		
-		
-		System.out.println("----------------------------------------------------------------------");
 		Finance_query_form actionForm = (Finance_query_form) form;
 		FormFile formFile = actionForm.getFile_upload();
         String fileName = formFile.getFileName();
         int fileSize = formFile.getFileSize();
         
-//        if (fileSize > 10 * 1024 * 1024) {
-//            request.setAttribute("error", "ï¿½ï¿½ï¿½İ¹ï¿½ï¿½ï¿½!");
-//            System.out.println("ï¿½ï¿½ï¿½İ¹ï¿½ï¿½ó·¢µï¿½");
-//            String result="ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½Ê§ï¿½ï¿½";
-//            request.setAttribute("result", result);
-//            return mapping.findForward("success"); 
-//        }
-        System.out.println("=======================================================================");
+        if(fileSize == 0) {
+        	System.out.println("ÎÄ¼şÎª¿Õ");
+            String result="ÎÄ¼şÎª¿Õ£¬ÉÏ´«Ê§°Ü";
+            request.setAttribute("result", result);
+            request.setAttribute("upload_lists", getFileName("upload"));
+            request.setAttribute("download_lists", getFileName("download"));
+            return mapping.findForward("success"); 
+        }else if (fileSize > 10 * 1024 * 1024) {
+            System.out.println("ÄÚÈİ¹ı´ó");
+            String result="ÎÄ¼ş¹ı´ó£¬ÉÏ´«Ê§°Ü";
+            request.setAttribute("result", result);
+            request.setAttribute("upload_lists", getFileName("upload"));
+            request.setAttribute("download_lists", getFileName("download"));
+            return mapping.findForward("success"); 
+        }
         InputStream is = null;
         OutputStream os = null;
         try {
             is = formFile.getInputStream();
-            String path = request.getSession().getServletContext().getRealPath("file");
+            String path = "E:\\file";
             System.out.println(path);
             os = new FileOutputStream(path + "\\" + fileName);
             int len = 0;
-            byte[] bytes = new byte[1024];
+            byte[] bytes = new byte[1024*1024];
             while ((len = is.read(bytes)) > 0) {
                 os.write(bytes, 0, len);
             }
-            String result = "ï¿½Ï´ï¿½ï¿½É¹ï¿½";
+            String result = "ÉÏ´«³É¹¦";
             request.setAttribute("result", result);
-            request.setAttribute("lists", getFileName());
+            request.setAttribute("upload_lists", getFileName("upload"));
+            request.setAttribute("download_lists", getFileName("download"));
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -929,7 +938,7 @@ public class T47_partyAction extends BaseAction {
     }
 	
 	/**
-	 * ï¿½Ä¼ï¿½Æ¥ï¿½ï¿½
+	 * ÎÄ¼şÆ¥Åä
 	 * @param mapping
 	 * @param form
 	 * @param request
@@ -938,9 +947,6 @@ public class T47_partyAction extends BaseAction {
 	 */
 	private ActionForward performFinance_query_match(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		
-		request.setAttribute("lists", getFileName());
 		T47_partyDAO t47_partyDAO =(T47_partyDAO)context.getBean("t47_partyDAO");
 		Finance_query_form actionForm = (Finance_query_form) form;
 		String match = actionForm.getMatch_file();
@@ -959,20 +965,21 @@ public class T47_partyAction extends BaseAction {
 		    t47_partyDAO.delInnerDao(sqlMap,id);
 			t47_partyDAO.insertInnerDao(sqlMap, in);
 			t47_partyDAO.matchInnerDao(sqlMap,id);
-			ArrayList<OuterDao>od=t47_partyDAO.getOuterDao(sqlMap,id);
+			ArrayList<OuterDao> od=t47_partyDAO.getOuterDao(sqlMap,id);
 			ArrayList<ReturnObject> reo=CopyBean.copyOut(od);
-			JSonUtil.writeJson(reo, ver+"_"+"é‡‘èä»£å·"+"_"+seq+".txt");			
+			JSonUtil.writeJson(reo, ver+"_"+"»ú¹¹´úºÅ"+"_"+seq+".txt");			
 			
+			request.setAttribute("upload_lists", getFileName("upload"));
+			request.setAttribute("download_lists", getFileName("download"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("æ–‡ä»¶åŒ¹é…");
 		return mapping.findForward("success");
 	}
 	
 	/**
-	 * ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * ÎÄ¼şÏÂÔØ
 	 * @param mapping
 	 * @param form
 	 * @param request
@@ -982,26 +989,20 @@ public class T47_partyAction extends BaseAction {
 	 */
 	private ActionForward performFinance_query_download(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws IOException {
-		// TODO Auto-generated method stub
-		
-		request.setAttribute("lists", getFileName());
-		
-		System.out.println("ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½");
+		request.setAttribute("upload_lists", getFileName("upload"));
+		request.setAttribute("download_lists", getFileName("download"));
 		Finance_query_form actionForm = (Finance_query_form) form;
-		
 		String name = actionForm.getDownload_file();
-		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
+		//ÉèÖÃÏìÓ¦ÀàĞÍ
 		response.setContentType("multipart/form-data");
-	    
-	    String path = getServletContext().getRealPath("file\\"+name);
+	    String path = "E:\\isNew"+name;
 	    InputStream in = new FileInputStream(path);
 	    name = URLEncoder.encode(name, "UTF-8");
-	    //ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½Í·
+	    //ÉèÖÃÎÄ¼şÍ·
 	    response.setHeader("Content-Disposition", "attachment;filename="+name);   
 	    response.setContentLength(in.available());
-	    
 	    OutputStream out = response.getOutputStream();
-	    byte[] b = new byte[1024*1024*10];
+	    byte[] b = new byte[1024*1024];
 	    int len = 0;
 	    while((len = in.read(b))!=-1){
 	      out.write(b, 0, len);
@@ -1012,14 +1013,19 @@ public class T47_partyAction extends BaseAction {
 	    
 		return null;
 	}
-
-   /**
-    * ï¿½ï¿½È¡ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½
-    * @return
-    */
-    public List<String> getFileName() {
+	/**
+	 * »ñµÃÎÄ¼ş¼ĞÏÂÎÄ¼şµÄÃû³Æ
+	 * @return
+	 */
+	public List<String> getFileName(String flag) {
+		String path = "";
     	List<String> lists = new ArrayList<String>();
-        String path = "F:\\apache-tomcat-6.0.37\\webapps\\aml\\file\\"; 
+    	if(flag == "upload") {
+    		path = "E:\\file\\"; 
+    	}else if(flag == "download") {
+    		path = "E:\\isNew";
+    	}
+         
         File f = new File(path);
         if (!f.exists()) {
             System.out.println(path + " not exists");

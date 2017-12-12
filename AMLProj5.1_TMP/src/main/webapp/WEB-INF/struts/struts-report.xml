@@ -403,19 +403,6 @@
 			<forward name="failure" path="/custcheck/t10_capital_chain_out.jsp" />
 		</action>
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		<action path="/case/partyriskresult_list" parameter="getT08_partyriskresult_list"
 			name="t07_case_applicationActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
 			validate="false" scope="request">
@@ -649,15 +636,6 @@
 			scope="request">
 			<forward name="success" path="/case/result.jsp" />
 		</action>
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		<action path="/case/t07_case_app_add_trans" parameter="getT07_case_app_add_transList"
 			name="t47_transactionActionForm" type="com.ist.aml.report.controller.T07_case_applicationAction"
@@ -924,17 +902,6 @@
 			<forward name="failure" path="/listmanager/t07_obj_rule_list_check.do" />
 		</action>
 		<!-- mingdan end -->
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		<action path="/custcheck/t10_check_cust_show" parameter="get_survey_cust_info"
 			name="t10_check_cust_cardForm" type="com.ist.aml.report.controller.T10_check_custAction"
