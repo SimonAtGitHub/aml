@@ -22,8 +22,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JSonUtil {
-	public static final String readLoction="E:\\file\\";
-	public static final String writeLoction="E:\\isNew\\"; 
+	public static final String readLoction  ="/got_data_inner/";
+	public static final String writeLoction ="/got_data_outer/"; 
 	public JSonUtil(){		
 	}
 	public static ArrayList<RequestObject> readJson(String s){
