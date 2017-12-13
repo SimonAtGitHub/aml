@@ -2,6 +2,15 @@
     <wb-module deploy-name="AMLProj5.1_TMP">
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <dependent-module archiveName="jackson-annotations-2.2.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/Public/git/jrcx/aml/AMLProj5.1_TMP/lib/jackson-annotations-2.2.3.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jackson-core-2.2.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/Public/git/jrcx/aml/AMLProj5.1_TMP/lib/jackson-core-2.2.3.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jackson-databind-2.2.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/Public/git/jrcx/aml/AMLProj5.1_TMP/lib/jackson-databind-2.2.3.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="/aml"/>
         <property name="java-output-path" value="/AMLProj5.1_TMP/src/main/webapp/WEB-INF/classes"/>
         <property name="me-merge-utility-modules" value="true"/>
