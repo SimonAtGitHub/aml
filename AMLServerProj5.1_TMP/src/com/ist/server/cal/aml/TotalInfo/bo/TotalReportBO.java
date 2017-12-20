@@ -54,18 +54,18 @@ public class TotalReportBO {
 		String sql = "";
 		int count = 0;
 		if (case_type.equals("1")) {
-			// ���뱾�Ҵ��
+			// 锟斤拷锟诫本锟揭达拷锟�
 			sql = "insert into t07_inrep_by_acct_mid(organkey,report_dt,currency_cd,cast_type,total_num,"
 					+ "total_val,alert_num,success_num,alertnvl,handout_num) " + " SELECT T2.CREATE_ORG,"
 					+ func.vch2dt(statisticdate, "yyyy-mm-dd") + ",T3.CURR_CD,'1',"
 					+ "COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, "
-					+ // �Թ��˻�������ɽ��ױ������
-					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.CRAT ELSE 0 END) AS TOTAL_VAL, " + // �漰�ܽ��
-					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + // �漰���ױ���
+					+ // 锟皆癸拷锟剿伙拷锟斤拷锟斤拷锟斤拷山锟斤拷妆锟斤拷锟斤拷锟斤拷
+					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.CRAT ELSE 0 END) AS TOTAL_VAL, " + // 锟芥及锟杰斤拷锟�
+					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + // 锟芥及锟斤拷锟阶憋拷锟斤拷
 					"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, "
-					+ // �����˻�������ɽ��ױ������
-					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.CRAT ELSE 0 END) AS ALERTNVL, " + // �漰�ܽ��
-					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + // �漰���ױ���
+					+ // 锟斤拷锟斤拷锟剿伙拷锟斤拷锟斤拷锟斤拷山锟斤拷妆锟斤拷锟斤拷锟斤拷
+					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.CRAT ELSE 0 END) AS ALERTNVL, " + // 锟芥及锟杰斤拷锟�
+					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + // 锟芥及锟斤拷锟阶憋拷锟斤拷
 					" FROM   T07_MSG T1, T07_REPORT T2, T07_NBH_TSDT T3 "
 					+ "WHERE T1.REPORTKEY = T2.REPORTKEY  AND T2.REPORTKEY = T3.REPORTKEY  "
 					+ " AND    T1.SENDDATE_DT>=" + func.vch2dt(begindate, "yyyy-mm-dd") + " AND    T1.SENDDATE_DT<="
@@ -78,13 +78,13 @@ public class TotalReportBO {
 					+ "total_val,alert_num,success_num,alertnvl,handout_num) " + " SELECT T2.CREATE_ORG,"
 					+ func.vch2dt(statisticdate, "yyyy-mm-dd") + ",T3.CURR_CD,'1',"
 					+ "COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, "
-					+ // �Թ��˻�������ɽ��ױ������
-					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.CRAT ELSE 0 END) AS TOTAL_VAL, " + // �漰�ܽ��
-					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + // �漰���ױ���
+					+ // 锟皆癸拷锟剿伙拷锟斤拷锟斤拷锟斤拷山锟斤拷妆锟斤拷锟斤拷锟斤拷
+					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.CRAT ELSE 0 END) AS TOTAL_VAL, " + // 锟芥及锟杰斤拷锟�
+					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + // 锟芥及锟斤拷锟阶憋拷锟斤拷
 					"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, "
-					+ // �����˻�������ɽ��ױ������
-					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.CRAT ELSE 0 END) AS ALERTNVL, " + // �漰�ܽ��
-					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + // �漰���ױ���
+					+ // 锟斤拷锟斤拷锟剿伙拷锟斤拷锟斤拷锟斤拷山锟斤拷妆锟斤拷锟斤拷锟斤拷
+					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.CRAT ELSE 0 END) AS ALERTNVL, " + // 锟芥及锟杰斤拷锟�
+					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + // 锟芥及锟斤拷锟阶憋拷锟斤拷
 					" FROM   T07_MSG_UH T1, T07_REPORT_UH T2, T07_NBH_TSDT_UH T3 "
 					+ "WHERE T1.REPORTKEY = T2.REPORTKEY  AND T2.REPORTKEY = T3.REPORTKEY  "
 					+ " AND    T1.SENDDATE_DT>=" + func.vch2dt(begindate, "yyyy-mm-dd") + " AND    T1.SENDDATE_DT<="
@@ -93,20 +93,20 @@ public class TotalReportBO {
 					+ " GROUP  BY T2.CREATE_ORG,  T3.CURR_CD";
 			count = SQLExecute.exeSql(conn, sql);
 
-			// ������Ҵ��
+			// 锟斤拷锟斤拷锟斤拷掖锟斤拷
 			sql = "insert into t07_inrep_by_acct_mid(organkey,report_dt,currency_cd,cast_type,total_num,"
 					+ "total_val,alert_num,success_num,alertnvl,handout_num) " + " SELECT T2.CREATE_ORG,"
 					+ func.vch2dt(statisticdate, "yyyy-mm-dd") + ",T3.CURR_CD,'1',"
 					+ "COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, "
-					+ // �Թ��˻�������ɽ��ױ������
+					+ // 锟皆癸拷锟剿伙拷锟斤拷锟斤拷锟斤拷山锟斤拷妆锟斤拷锟斤拷锟斤拷
 					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN ((T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT) ELSE 0 END) AS TOTAL_VAL, "
-					+ // �漰�ܽ��
-					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + // �漰���ױ���
+					+ // 锟芥及锟杰斤拷锟�
+					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + // 锟芥及锟斤拷锟阶憋拷锟斤拷
 					"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, "
-					+ // �����˻�������ɽ��ױ������
+					+ // 锟斤拷锟斤拷锟剿伙拷锟斤拷锟斤拷锟斤拷山锟斤拷妆锟斤拷锟斤拷锟斤拷
 					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN ((T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT) ELSE 0 END) AS ALERTNVL, "
-					+ // �漰�ܽ��
-					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + // �漰���ױ���
+					+ // 锟芥及锟杰斤拷锟�
+					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + // 锟芥及锟斤拷锟阶憋拷锟斤拷
 					" FROM   T07_MSG T1, T07_REPORT T2, T07_NBH_TSDT T3,T87_EXCHANGE_RATE T4 "
 					+ "WHERE T1.REPORTKEY = T2.REPORTKEY  AND T2.REPORTKEY = T3.REPORTKEY  AND T3.CRTP=T4.CURRENCY_CD  "
 					+ " AND    T1.SENDDATE_DT>=" + func.vch2dt(begindate, "yyyy-mm-dd") + " AND    T1.SENDDATE_DT<="
@@ -120,15 +120,15 @@ public class TotalReportBO {
 					+ "total_val,alert_num,success_num,alertnvl,handout_num) " + " SELECT T2.CREATE_ORG,"
 					+ func.vch2dt(statisticdate, "yyyy-mm-dd") + ",T3.CURR_CD,'1',"
 					+ "COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, "
-					+ // �Թ��˻�������ɽ��ױ������
+					+ // 锟皆癸拷锟剿伙拷锟斤拷锟斤拷锟斤拷山锟斤拷妆锟斤拷锟斤拷锟斤拷
 					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN ((T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT) ELSE 0 END) AS TOTAL_VAL, "
-					+ // �漰�ܽ��
-					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + // �漰���ױ���
+					+ // 锟芥及锟杰斤拷锟�
+					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + // 锟芥及锟斤拷锟阶憋拷锟斤拷
 					"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, "
-					+ // �����˻�������ɽ��ױ������
+					+ // 锟斤拷锟斤拷锟剿伙拷锟斤拷锟斤拷锟斤拷山锟斤拷妆锟斤拷锟斤拷锟斤拷
 					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN ((T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT) ELSE 0 END) AS ALERTNVL, "
-					+ // �漰�ܽ��
-					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + // �漰���ױ���
+					+ // 锟芥及锟杰斤拷锟�
+					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + // 锟芥及锟斤拷锟阶憋拷锟斤拷
 					" FROM   T07_MSG_UH T1, T07_REPORT_UH T2, T07_NBH_TSDT_UH T3,T87_EXCHANGE_RATE T4 "
 					+ "WHERE T1.REPORTKEY = T2.REPORTKEY  AND T2.REPORTKEY = T3.REPORTKEY  AND T3.CRTP=T4.CURRENCY_CD  "
 					+ " AND    T1.SENDDATE_DT>=" + func.vch2dt(begindate, "yyyy-mm-dd") + " AND    T1.SENDDATE_DT<="
@@ -145,14 +145,14 @@ public class TotalReportBO {
 			// "SELECT T2.CREATE_ORG,T2.CURR_CD,"+
 			// "COUNT(DISTINCT(CASE WHEN T2.PARTY_CLASS_CD = 'C' THEN
 			// T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, " + //
-			// �Թ��˻�������ɽ��ױ������
-			// "0 AS TOTAL_VAL, " + // �漰�ܽ��
-			// "0 AS ALERT_NUM, " + // �漰���ױ���
+			// 锟皆癸拷锟剿伙拷锟斤拷锟斤拷锟斤拷山锟斤拷妆锟斤拷锟斤拷锟斤拷
+			// "0 AS TOTAL_VAL, " + // 锟芥及锟杰斤拷锟�
+			// "0 AS ALERT_NUM, " + // 锟芥及锟斤拷锟阶憋拷锟斤拷
 			// "COUNT(DISTINCT(CASE WHEN T2.PARTY_CLASS_CD = 'I' THEN
 			// T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, " + //
-			// �����˻�������ɽ��ױ������
-			// "0 AS ALERTNVL, " + // �漰�ܽ��
-			// "0 AS HANDOUT_NUM " + // �漰���ױ���
+			// 锟斤拷锟斤拷锟剿伙拷锟斤拷锟斤拷锟斤拷山锟斤拷妆锟斤拷锟斤拷锟斤拷
+			// "0 AS ALERTNVL, " + // 锟芥及锟杰斤拷锟�
+			// "0 AS HANDOUT_NUM " + // 锟芥及锟斤拷锟阶憋拷锟斤拷
 			// " FROM T07_MSG T1, T07_REPORT T2 left join T07_NBH_TSDT T3 on
 			// t2.reportkey=t3.reportkey" +
 			// " WHERE T1.REPORTKEY = T2.REPORTKEY "
@@ -169,18 +169,18 @@ public class TotalReportBO {
 			// count = SQLExecute.exeSql(conn, sql);
 
 		} else {
-			// ���ҿ���
+			// 锟斤拷锟揭匡拷锟斤拷
 			sql = "insert into t07_inrep_by_acct_mid(organkey,report_dt,currency_cd,cast_type,total_num,"
 					+ "total_val,alert_num,success_num,alertnvl,handout_num) " + " SELECT T2.CREATE_ORG,"
 					+ func.vch2dt(statisticdate, "yyyy-mm-dd") + ",T3.CURR_CD,'2',"
 					+ "COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, "
-					+ // �Թ��˻�������ɽ��ױ������
-					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.CRAT ELSE 0 END) AS TOTAL_VAL, " + // �漰�ܽ��
-					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + // �漰���ױ���
+					+ // 锟皆癸拷锟剿伙拷锟斤拷锟斤拷锟斤拷山锟斤拷妆锟斤拷锟斤拷锟斤拷
+					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.CRAT ELSE 0 END) AS TOTAL_VAL, " + // 锟芥及锟杰斤拷锟�
+					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + // 锟芥及锟斤拷锟阶憋拷锟斤拷
 					"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, "
-					+ // �����˻�������ɽ��ױ������
-					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.CRAT ELSE 0 END) AS ALERTNVL, " + // �漰�ܽ��
-					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + // �漰���ױ���
+					+ // 锟斤拷锟斤拷锟剿伙拷锟斤拷锟斤拷锟斤拷山锟斤拷妆锟斤拷锟斤拷锟斤拷
+					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.CRAT ELSE 0 END) AS ALERTNVL, " + // 锟芥及锟杰斤拷锟�
+					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + // 锟芥及锟斤拷锟阶憋拷锟斤拷
 					" FROM   T07_MSG T1, T07_REPORT T2, T07_NBS_RPDI T3 "
 					+ "WHERE T1.REPORTKEY = T2.REPORTKEY  AND T2.REPORTKEY = T3.REPORTKEY  "
 					+ " AND    T1.SENDDATE_DT>=" + func.vch2dt(begindate, "yyyy-mm-dd") + " AND    T1.SENDDATE_DT<="
@@ -194,13 +194,13 @@ public class TotalReportBO {
 					+ "total_val,alert_num,success_num,alertnvl,handout_num) " + " SELECT T2.CREATE_ORG,"
 					+ func.vch2dt(statisticdate, "yyyy-mm-dd") + ",T3.CURR_CD,'2',"
 					+ "COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, "
-					+ // �Թ��˻�������ɽ��ױ������
-					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.CRAT ELSE 0 END) AS TOTAL_VAL, " + // �漰�ܽ��
-					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + // �漰���ױ���
+					+ // 锟皆癸拷锟剿伙拷锟斤拷锟斤拷锟斤拷山锟斤拷妆锟斤拷锟斤拷锟斤拷
+					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.CRAT ELSE 0 END) AS TOTAL_VAL, " + // 锟芥及锟杰斤拷锟�
+					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + // 锟芥及锟斤拷锟阶憋拷锟斤拷
 					"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, "
-					+ // �����˻�������ɽ��ױ������
-					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.CRAT ELSE 0 END) AS ALERTNVL, " + // �漰�ܽ��
-					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + // �漰���ױ���
+					+ // 锟斤拷锟斤拷锟剿伙拷锟斤拷锟斤拷锟斤拷山锟斤拷妆锟斤拷锟斤拷锟斤拷
+					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.CRAT ELSE 0 END) AS ALERTNVL, " + // 锟芥及锟杰斤拷锟�
+					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + // 锟芥及锟斤拷锟阶憋拷锟斤拷
 					" FROM   T07_MSG_UH T1, T07_REPORT_UH T2, T07_NBS_RPDI_UH T3 "
 					+ "WHERE T1.REPORTKEY = T2.REPORTKEY  AND T2.REPORTKEY = T3.REPORTKEY  "
 					+ " AND    T1.SENDDATE_DT>=" + func.vch2dt(begindate, "yyyy-mm-dd") + " AND    T1.SENDDATE_DT<="
@@ -210,21 +210,21 @@ public class TotalReportBO {
 			" GROUP  BY T2.CREATE_ORG,  T3.CURR_CD";
 			count = SQLExecute.exeSql(conn, sql);
 
-			// ��ҿ���
+			// 锟斤拷铱锟斤拷锟�
 
 			sql = "insert into t07_inrep_by_acct_mid(organkey,report_dt,currency_cd,cast_type,total_num,"
 					+ "total_val,alert_num,success_num,alertnvl,handout_num) " + " SELECT T2.CREATE_ORG,"
 					+ func.vch2dt(statisticdate, "yyyy-mm-dd") + ",T3.CURR_CD,'2',"
 					+ "COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, "
-					+ // �Թ��˻�������ɽ��ױ������
+					+ // 锟皆癸拷锟剿伙拷锟斤拷锟斤拷锟斤拷山锟斤拷妆锟斤拷锟斤拷锟斤拷
 					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN (T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT  ELSE 0 END) AS TOTAL_VAL, "
-					+ // �漰�ܽ��
-					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + // �漰���ױ���
+					+ // 锟芥及锟杰斤拷锟�
+					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + // 锟芥及锟斤拷锟阶憋拷锟斤拷
 					"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, "
-					+ // �����˻�������ɽ��ױ������
+					+ // 锟斤拷锟斤拷锟剿伙拷锟斤拷锟斤拷锟斤拷山锟斤拷妆锟斤拷锟斤拷锟斤拷
 					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN (T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT  ELSE 0 END) AS ALERTNVL, "
-					+ // �漰�ܽ��
-					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + // �漰���ױ���
+					+ // 锟芥及锟杰斤拷锟�
+					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + // 锟芥及锟斤拷锟阶憋拷锟斤拷
 					" FROM   T07_MSG T1, T07_REPORT T2, T07_NBS_RPDI T3 ,T87_EXCHANGE_RATE T4 "
 					+ "WHERE T1.REPORTKEY = T2.REPORTKEY  AND T2.REPORTKEY = T3.REPORTKEY  AND T3.CRTP=T4.CURRENCY_CD   "
 					+ " AND    T1.SENDDATE_DT>=" + func.vch2dt(begindate, "yyyy-mm-dd") + " AND    T1.SENDDATE_DT<="
@@ -238,15 +238,15 @@ public class TotalReportBO {
 					+ "total_val,alert_num,success_num,alertnvl,handout_num) " + " SELECT T2.CREATE_ORG,"
 					+ func.vch2dt(statisticdate, "yyyy-mm-dd") + ",T3.CURR_CD,'2',"
 					+ "COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, "
-					+ // �Թ��˻�������ɽ��ױ������
+					+ // 锟皆癸拷锟剿伙拷锟斤拷锟斤拷锟斤拷山锟斤拷妆锟斤拷锟斤拷锟斤拷
 					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN (T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT  ELSE 0 END) AS TOTAL_VAL, "
-					+ // �漰�ܽ��
-					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + // �漰���ױ���
+					+ // 锟芥及锟杰斤拷锟�
+					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + // 锟芥及锟斤拷锟阶憋拷锟斤拷
 					"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, "
-					+ // �����˻�������ɽ��ױ������
+					+ // 锟斤拷锟斤拷锟剿伙拷锟斤拷锟斤拷锟斤拷山锟斤拷妆锟斤拷锟斤拷锟斤拷
 					"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN (T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT  ELSE 0 END) AS ALERTNVL, "
-					+ // �漰�ܽ��
-					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + // �漰���ױ���
+					+ // 锟芥及锟杰斤拷锟�
+					"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + // 锟芥及锟斤拷锟阶憋拷锟斤拷
 					" FROM   T07_MSG_UH T1, T07_REPORT_UH T2, T07_NBS_RPDI_UH T3 ,T87_EXCHANGE_RATE T4 "
 					+ "WHERE T1.REPORTKEY = T2.REPORTKEY  AND T2.REPORTKEY = T3.REPORTKEY  AND T3.CRTP=T4.CURRENCY_CD   "
 					+ " AND    T1.SENDDATE_DT>=" + func.vch2dt(begindate, "yyyy-mm-dd") + " AND    T1.SENDDATE_DT<="
@@ -260,13 +260,13 @@ public class TotalReportBO {
 					+ "total_val,alert_num,success_num,alertnvl,handout_num) " + " SELECT T2.CREATE_ORG,"
 					+ func.vch2dt(statisticdate, "yyyy-mm-dd") + ",T2.CURR_CD,'2',"
 					+ "COUNT(DISTINCT(CASE WHEN T2.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, "
-					+ // �Թ��˻�������ɽ��ױ������
-					"0 AS TOTAL_VAL, " + // �漰�ܽ��
-					"0 AS ALERT_NUM, " + // �漰���ױ���
+					+ // 锟皆癸拷锟剿伙拷锟斤拷锟斤拷锟斤拷山锟斤拷妆锟斤拷锟斤拷锟斤拷
+					"0 AS TOTAL_VAL, " + // 锟芥及锟杰斤拷锟�
+					"0 AS ALERT_NUM, " + // 锟芥及锟斤拷锟阶憋拷锟斤拷
 					"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, "
-					+ // �����˻�������ɽ��ױ������
-					"0 AS ALERTNVL, " + // �漰�ܽ��
-					"0 AS HANDOUT_NUM " + // �漰���ױ���
+					+ // 锟斤拷锟斤拷锟剿伙拷锟斤拷锟斤拷锟斤拷山锟斤拷妆锟斤拷锟斤拷锟斤拷
+					"0 AS ALERTNVL, " + // 锟芥及锟杰斤拷锟�
+					"0 AS HANDOUT_NUM " + // 锟芥及锟斤拷锟阶憋拷锟斤拷
 					" FROM   T07_MSG T1, T07_REPORT T2 left join  T07_NBS_RPDI T3 on   T2.REPORTKEY = T3.REPORTKEY "
 					+ " WHERE T1.REPORTKEY = T2.REPORTKEY AND T2.INTERFACEKEY='BS'  " + " AND    T1.SENDDATE_DT>="
 					+ func.vch2dt(begindate, "yyyy-mm-dd") + " AND    T1.SENDDATE_DT<="
@@ -280,13 +280,13 @@ public class TotalReportBO {
 					+ "total_val,alert_num,success_num,alertnvl,handout_num) " + " SELECT T2.CREATE_ORG,"
 					+ func.vch2dt(statisticdate, "yyyy-mm-dd") + ",T2.CURR_CD,'2',"
 					+ "COUNT(DISTINCT(CASE WHEN T2.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, "
-					+ // �Թ��˻�������ɽ��ױ������
-					"0 AS TOTAL_VAL, " + // �漰�ܽ��
-					"0 AS ALERT_NUM, " + // �漰���ױ���
+					+ // 锟皆癸拷锟剿伙拷锟斤拷锟斤拷锟斤拷山锟斤拷妆锟斤拷锟斤拷锟斤拷
+					"0 AS TOTAL_VAL, " + // 锟芥及锟杰斤拷锟�
+					"0 AS ALERT_NUM, " + // 锟芥及锟斤拷锟阶憋拷锟斤拷
 					"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, "
-					+ // �����˻�������ɽ��ױ������
-					"0 AS ALERTNVL, " + // �漰�ܽ��
-					"0 AS HANDOUT_NUM " + // �漰���ױ���
+					+ // 锟斤拷锟斤拷锟剿伙拷锟斤拷锟斤拷锟斤拷山锟斤拷妆锟斤拷锟斤拷锟斤拷
+					"0 AS ALERTNVL, " + // 锟芥及锟杰斤拷锟�
+					"0 AS HANDOUT_NUM " + // 锟芥及锟斤拷锟阶憋拷锟斤拷
 					" FROM   T07_MSG_UH T1, T07_REPORT_UH T2 left join  T07_NBS_RPDI_UH T3 on   T2.REPORTKEY = T3.REPORTKEY "
 					+ " WHERE T1.REPORTKEY = T2.REPORTKEY AND T2.INTERFACEKEY='BS'  " + " AND    T1.SENDDATE_DT>="
 					+ func.vch2dt(begindate, "yyyy-mm-dd") + " AND    T1.SENDDATE_DT<="
@@ -313,13 +313,13 @@ public class TotalReportBO {
 
 	/*
 	 * public int insert_T10_CHECKPARTY_NEW(Connection conn, String
-	 * statisticdate) throws Exception { // ɾ��һ������ǰ������ String befredate =
+	 * statisticdate) throws Exception { // 删锟斤拷一锟斤拷锟斤拷锟斤拷前锟斤拷锟斤拷锟斤拷 String befredate =
 	 * DateUtils.getDateChangeTime2(statisticdate + " 00:00:00", "m", -1);
 	 * String delsql = " delete from T10_CHECKPARTY_NEW where CREATE_DT<=" +
 	 * func.vch2dt(befredate, "yyyy-mm-dd"); int count1 =
 	 * SQLExecute.exeSql(conn, delsql);
 	 * 
-	 * // ���뵱������� String sql =
+	 * // 锟斤拷锟诫当锟斤拷锟斤拷锟斤拷锟� String sql =
 	 * "insert into T10_CHECKPARTY_NEW(PARTY_ID,HOST_CUST_ID,PARTY_CLASS_CD,PARTY_CHN_NAME,CARD_TYPE,"
 	 * +
 	 * "CARD_NO,ORGANKEY,CREATE_DT,PARTY_STATUS_CD,AML1_TYPE_CD,CHECK_STATUS) "
@@ -332,7 +332,7 @@ public class TotalReportBO {
 
 	public int insert_T10_CHECKPARTY_NEW(Connection conn, String statisticdate) throws Exception {
 		String befredate = DateUtils.getDateChangeTime2(statisticdate + " 00:00:00", "m", -1);
-		String delsql = " delete from T10_CHECKPARTY_NEW where CREATE_DT<=" + func.vch2dt(befredate, "yyyy-mm-dd");
+		String delsql = " delete from T10_CHECKPARTY_NEW where CREATE_DT=" + func.vch2dt(befredate, "yyyy-mm-dd");
 		int count1 = SQLExecute.exeSql(conn, delsql);
 		String sql = "insert into T10_CHECKPARTY_NEW(PARTY_ID,HOST_CUST_ID,PARTY_CLASS_CD,PARTY_CHN_NAME,CARD_TYPE,"
 				+ "CARD_NO,ORGANKEY,CREATE_DT,PARTY_STATUS_CD,AML1_TYPE_CD,CHECK_STATUS) "
@@ -362,13 +362,10 @@ public class TotalReportBO {
 	}
 
 	public int insert_T10_T10_CHECKPARTY_RELT1(Connection conn, String statisticdate) throws Exception {
-		String befredate = DateUtils.getDateChangeTime2(statisticdate + " 00:00:00", "m", -1);
-		String delsql = " delete from T10_CHECKPARTY_RELT  where party_id in" + "(select  party_id from t47_party where CREATE_DT<=" + func.vch2dt(befredate, "yyyy-mm-dd") +")";
-		int count1 = SQLExecute.exeSql(conn, delsql);
 		String sql = "insert into T10_CHECKPARTY_RELT (CHECK_NO,PARTY_ID,PARTY_CLASS_CD,PARTY_CHN_NAME,CARD_TYPE,CHECKER,CHECK_DT,"
 				+ " CARD_NO,ORGANKEY,AML1_TYPE_CD,check_explain,VALID_DT,check_result) "
 				+ "select  SEQ_T10_CHECKPARTY_RELT.Nextval,A.PARTY_ID,A.PARTY_CLASS_CD, A.PARTY_CHN_NAME,  A.CARD_TYPE, A.LAST_UPD_USER,A.CREATE_DT,  A.CARD_NO, "
-				+ "   A.ORGANKEY,  A.AML1_TYPE_CD, '系统自动识别',  to_date('2030-12-31','yyyy-mm-dd'), '0' "
+				+ "   A.ORGANKEY,  A.AML1_TYPE_CD, '绯荤粺鑷姩璇嗗埆',  to_date('2030-12-31','yyyy-mm-dd'), '1' "
 				+ " from t47_party A, t47_individual B    where A.PARTY_ID = B.PARTY_ID  AND A.PARTY_CLASS_CD = 'I' "
 				+ "AND A.COUNTRY_CD is not null  and A.CARD_TYPE is not null  and A.CARD_NO is not NULL and  B.CARD_END_DT is not  NULL and  B.OCCUPATION is not NULL "
 				+ "AND A.CREATE_DT = " + func.vch2dt(statisticdate, "yyyy-mm-dd");
@@ -381,7 +378,7 @@ public class TotalReportBO {
 		String sql = "insert into T10_CHECKPARTY_RELT (CHECK_NO,PARTY_ID,PARTY_CLASS_CD,PARTY_CHN_NAME,CARD_TYPE,CHECKER,CHECK_DT,"
 				+ " CARD_NO,ORGANKEY,AML1_TYPE_CD,check_explain,VALID_DT,check_result) "
 				+ "select SEQ_T10_CHECKPARTY_RELT.Nextval,A.PARTY_ID,A.PARTY_CLASS_CD, A.PARTY_CHN_NAME,  A.CARD_TYPE, A.LAST_UPD_USER,A.CREATE_DT,  A.CARD_NO, "
-				+ "   A.ORGANKEY,A.AML1_TYPE_CD, '系统自动识别',  to_date('2030-12-31','yyyy-mm-dd'), '0' "
+				+ "   A.ORGANKEY,A.AML1_TYPE_CD, '绯荤粺鑷姩璇嗗埆',  to_date('2030-12-31','yyyy-mm-dd'), '1' "
 				+ " from t47_party A, t47_corporation B    where A.PARTY_ID = B.PARTY_ID  AND A.PARTY_CLASS_CD = 'C' "
 				+ "AND A.COUNTRY_CD is not NULL and  A.AML2_TYPE_CD is not NULL and A.CARD_TYPE is not NULL and A.CARD_NO is not NULL and  B.ENROL_FUND_CURRENCY_CD is not NULL and  B.ENROL_FUND_AMT is not NULL "
 				+ "AND B.LEGAL_OBJ is not NULL and B.LEGAL_CARD_TYPE is not NULL and B.LEGAL_CARD_NO is not NULL and B.STOCK_HOLDER is not NULL and B.STOCK_HOLDER_CARD_TYPE is not NULL and  B.STOCK_HOLDER_CARD_NO_END_DT is not NULL "
@@ -547,20 +544,16 @@ public class TotalReportBO {
 		return count;
 	}
 
-	public int T10_CHECKPARTY_NEW(Connection conn, String statisticdate, String tablename) throws Exception {
-		String sql = " DELETE FROM " + tablename + " T WHERE T.CREATE_DT = " + func.vch2dt(statisticdate, "yyyy-mm-dd");
-		T10_CHECKPARTY_RELT(conn,statisticdate,tablename);
-		int count = SQLExecute.exeSql(conn, sql);
-		return count;
-	}
-	public int T10_CHECKPARTY_RELT(Connection conn, String statisticdate, String tablename) throws Exception {
-		String sql = " DELETE FROM " + tablename + "  WHERE  party_id in" + "(select  party_id from t47_party where CREATE_DT=" + func.vch2dt(statisticdate, "yyyy-mm-dd") +")";
+	public int del_T10_CHECKPARTY(Connection conn, String statisticdate, String tablename) throws Exception {
+		String befredate = DateUtils.getDateChangeTime2(statisticdate + " 00:00:00", "m", -1);
+		String sql = " DELETE FROM " + tablename + " T WHERE EXISTS (SELECT 1 FROM T47_PARTY A WHERE A.PARTY_ID=T.PARTY_ID AND A.CREATE_DT="+func.vch2dt(befredate, "yyyy-mm-dd")+")";
 		int count = SQLExecute.exeSql(conn, sql);
 		return count;
 	}
 
+
 	public int insert_T07_USER_IDENTITY_D(Connection conn, String statisticdate) throws Exception {
-		// ɾ��6������ǰ������
+		// 删锟斤拷6锟斤拷锟斤拷锟斤拷前锟斤拷锟斤拷锟斤拷
 		String befredate = DateUtils.getDateChangeTime2(statisticdate + " 00:00:00", "m", -6);
 		System.out.println("befredate:::" + befredate);
 		String delsql = " delete from T07_USER_IDENTITY_D where STATISTICDATE<=" + func.vch2dt(befredate, "yyyy-mm-dd");
@@ -569,7 +562,7 @@ public class TotalReportBO {
 		delsql = func.deleteTable("t07_user_identity_mid");
 		count = SQLExecute.exeSql(conn, delsql);
 
-		// ������ʶ���������
+		// 锟斤拷锟斤拷锟斤拷识锟斤拷锟斤拷锟斤拷锟斤拷锟�
 		String sql = " insert into t07_user_identity_mid(statisticdate,organkey,identityflag,cpm_total,cpm_proxy,cpm_thparty,cpm_disembark,cpm_benefit,cpm_questotal,   "
 				+ " cpm_anonymous,cpm_falsecard,cpm_failurecard,cpm_suspects,cpm_othercase,idm_total,idm_proxy,idm_thparty,idm_residents,idm_resiproxy,idm_nonresidents,  "
 				+ " idm_nonresiproxy,idm_questotal,idm_anonymous,idm_falsecard,idm_failurecard,idm_otherscard,idm_suspects,idm_othercase,ciall_total)                    "
@@ -664,7 +657,7 @@ public class TotalReportBO {
 	}
 
 	public int insert_T10_PARTY_CRETAL_D(Connection conn, String statisticdate) throws Exception {
-		// ɾ��3������ǰ������
+		// 删锟斤拷3锟斤拷锟斤拷锟斤拷前锟斤拷锟斤拷锟斤拷
 		String befredate = DateUtils.getDateChangeTime2(statisticdate + " 00:00:00", "m", -3);
 		System.out.println("befredate:::" + befredate);
 		String delsql = " delete from T10_PARTY_CRETAL_D where STATISTIC_DT<=" + func.vch2dt(befredate, "yyyy-mm-dd");
@@ -716,7 +709,7 @@ public class TotalReportBO {
 	}
 
 	public int insert_T07_USER_REIDENTITY_D(Connection conn, String statisticdate) throws Exception {
-		// ɾ��6������ǰ������
+		// 删锟斤拷6锟斤拷锟斤拷锟斤拷前锟斤拷锟斤拷锟斤拷
 
 		String befredate = DateUtils.getDateChangeTime2(statisticdate + " 00:00:00", "m", -6);
 		System.out.println("befredate:::" + befredate);
@@ -727,7 +720,7 @@ public class TotalReportBO {
 		delsql = func.deleteTable("T07_USER_REIDENTITY_MID");
 		count = SQLExecute.exeSql(conn, delsql);
 
-		// ������ʶ����ĶԹ���˽����
+		// 锟斤拷锟斤拷锟斤拷识锟斤拷锟斤拷亩怨锟斤拷锟剿斤拷锟斤拷锟�
 		String sql = "  INSERT INTO T07_USER_REIDENTITY_MID(STATISTICDATE,ORGANKEY,REIDENTITYFLAG,CHANGEINFO,BEHAVIOR,                                     "
 				+ "   SUSPECTS,SUSPICIOUS,OTHERCASE,INFO_VERIFIED,BEHA_VERIFIED,SUSPE_VERIFIED,SUSPI_VERIFIED,OTHER_VERIFIED)                           "
 				+ "   SELECT " + func.vch2dt(statisticdate, "yyyy-mm-dd")
@@ -746,7 +739,7 @@ public class TotalReportBO {
 				+ "   WHERE a.CHECK_TYPE IN('2','5') AND a.CREATE_DT=" + func.vch2dt(statisticdate, "yyyy-mm-dd")
 				+ "   GROUP BY a.CREATE_ORG,PARTY_CLASS_CD                                                                                              ";
 		count = SQLExecute.exeSql(conn, sql);
-		// ��˽����Ǿ�����
+		// 锟斤拷私锟斤拷锟斤拷蔷锟斤拷锟斤拷锟�
 		sql = "   INSERT INTO T07_USER_REIDENTITY_MID(STATISTICDATE,ORGANKEY,REIDENTITYFLAG,CHANGEINFO,BEHAVIOR,                                  "
 				+ "      SUSPECTS,SUSPICIOUS,OTHERCASE,INFO_VERIFIED,BEHA_VERIFIED,SUSPE_VERIFIED,SUSPI_VERIFIED,OTHER_VERIFIED)                      "
 				+ "	 SELECT " + func.vch2dt(statisticdate, "yyyy-mm-dd")
@@ -768,7 +761,7 @@ public class TotalReportBO {
 				+ "	  GROUP BY a.CREATE_ORG,A.AML1_TYPE_CD                                                                                           ";
 		count = SQLExecute.exeSql(conn, sql);
 
-		// �Թ��漰��������
+		// 锟皆癸拷锟芥及锟斤拷锟斤拷锟斤拷锟斤拷
 		sql = "   INSERT INTO T07_USER_REIDENTITY_MID(STATISTICDATE,ORGANKEY,REIDENTITYFLAG,CHANGEINFO,BEHAVIOR,                                  "
 				+ "      SUSPECTS,SUSPICIOUS,OTHERCASE,INFO_VERIFIED,BEHA_VERIFIED,SUSPE_VERIFIED,SUSPI_VERIFIED,OTHER_VERIFIED)                      "
 				+ "  SELECT " + func.vch2dt(statisticdate, "yyyy-mm-dd")
@@ -815,7 +808,7 @@ public class TotalReportBO {
 				+ " T07_USER_REIDENTITY_MID b where b.organkey=a.organkey and b.REIDENTITYFLAG='5')";
 		count = SQLExecute.exeSql(conn, sql);
 
-		// �޸ĶԹ���˽����֤��ʧЧ
+		// 锟睫改对癸拷锟斤拷私锟斤拷锟斤拷证锟斤拷失效
 		sql = " UPDATE T07_USER_REIDENTITY_MID D SET FAILURECARD=(SELECT  C.FAILURECARD FROM(                                            "
 				+ " SELECT B.ORGANKEY,CASE WHEN B.PARTY_CLASS_CD='C' THEN '1' ELSE '3' END AS REIDENTITYFLAG,COUNT(B.PARTY_ID) AS FAILURECARD    "
 				+ " FROM T10_CHECKPARTY_RE B                                                                                                     "
@@ -824,7 +817,7 @@ public class TotalReportBO {
 				+ " AND C.REIDENTITYFLAG=D.REIDENTITYFLAG) WHERE D.REIDENTITYFLAG IN('1','3')";
 		count = SQLExecute.exeSql(conn, sql);
 
-		// �޸�˽����Ǿ�������֤��ʧЧ
+		// 锟睫革拷私锟斤拷锟斤拷蔷锟斤拷锟斤拷锟斤拷锟街わ拷锟绞�
 		sql = "  UPDATE T07_USER_REIDENTITY_MID D SET FAILURECARD=(SELECT  C.FAILURECARD FROM(                                               "
 				+ " SELECT B.ORGANKEY,CASE WHEN B.AML1_TYPE_CD='01' THEN '4' ELSE '5' END AS REIDENTITYFLAG,COUNT(B.PARTY_ID) AS FAILURECARD     "
 				+ " FROM T10_CHECKPARTY_RE B                                                                                                     "
@@ -880,7 +873,7 @@ public class TotalReportBO {
 
 			count = SQLExecute.exeSql(conn, sql);
 
-			// ��˽����Ǿ���֤��ʧЧ�Ѹ�����
+			// 锟斤拷私锟斤拷锟斤拷蔷锟斤拷锟街わ拷锟绞э拷迅锟斤拷锟斤拷锟�
 			sql = " UPDATE T07_USER_REIDENTITY_M D SET UPDATECARD=( SELECT D.UPDATECARD-C.UPDATECARD FROM                      "
 					+ " T07_USER_REIDENTITY_MID C WHERE C.ORGANKEY=D.ORGANKEY AND C.REIDENTITYFLAG=D.REIDENTITYFLAG)       "
 					+ "  WHERE D.REIDENTITYFLAG IN('4','5') AND D.STATISTICDATE="
@@ -898,7 +891,7 @@ public class TotalReportBO {
 
 			count = SQLExecute.exeSql(conn, sql);
 
-			// ��˽֤��ʧЧ�Ѹ�����
+			// 锟斤拷私证锟斤拷失效锟窖革拷锟斤拷锟斤拷
 			sql = " UPDATE T07_USER_REIDENTITY_M D SET UPDATECARD=( SELECT D.UPDATECARD-C.UPDATECARD FROM                             "
 					+ " T07_USER_REIDENTITY_MID C WHERE C.ORGANKEY=D.ORGANKEY AND C.REIDENTITYFLAG=D.REIDENTITYFLAG)       "
 					+ "  WHERE D.REIDENTITYFLAG IN('3') AND D.STATISTICDATE="
@@ -917,7 +910,7 @@ public class TotalReportBO {
 
 			count = SQLExecute.exeSql(conn, sql);
 
-			// �Թ�֤��ʧЧ�Ѹ�����
+			// 锟皆癸拷证锟斤拷失效锟窖革拷锟斤拷锟斤拷
 			sql = " UPDATE T07_USER_REIDENTITY_M D SET UPDATECARD=( SELECT D.UPDATECARD-C.UPDATECARD FROM                            "
 					+ "  T07_USER_REIDENTITY_MID C WHERE C.ORGANKEY=D.ORGANKEY AND C.REIDENTITYFLAG=D.REIDENTITYFLAG)       "
 					+ "  WHERE D.REIDENTITYFLAG IN('1') AND D.STATISTICDATE="
