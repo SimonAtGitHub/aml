@@ -333,7 +333,7 @@ public class TotalReportBO {
 	public int insert_T10_CHECKPARTY_NEW(Connection conn, String statisticdate) throws Exception {
 		String befredate = DateUtils.getDateChangeTime2(statisticdate + " 00:00:00", "m", -1);
 		String delsql = " delete from T10_CHECKPARTY_NEW where CREATE_DT=" + func.vch2dt(befredate, "yyyy-mm-dd");
-		int count1 = SQLExecute.exeSql(conn, delsql);
+		//int count1 = SQLExecute.exeSql(conn, delsql);
 		String sql = "insert into T10_CHECKPARTY_NEW(PARTY_ID,HOST_CUST_ID,PARTY_CLASS_CD,PARTY_CHN_NAME,CARD_TYPE,"
 				+ "CARD_NO,ORGANKEY,CREATE_DT,PARTY_STATUS_CD,AML1_TYPE_CD,CHECK_STATUS) "
 				+ " select A.PARTY_ID, A.HOST_CUST_ID, A.PARTY_CLASS_CD,A.PARTY_CHN_NAME, A.CARD_TYPE,"
