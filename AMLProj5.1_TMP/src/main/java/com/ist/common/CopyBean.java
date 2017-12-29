@@ -2,6 +2,10 @@ package com.ist.common;
 
 import java.util.ArrayList;
 
+import org.springframework.core.io.FileSystemResource;
+
+import com.ist.common.properties.XMLProperties;
+
 public class CopyBean {
 	public static ArrayList<InnerDao> copyIn(ArrayList<RequestObject> request,String s){
 		String dt=s.substring(0, s.indexOf("_"));
@@ -47,5 +51,8 @@ public class CopyBean {
 		}
 		return obj;
 	}
-
+    public static String getProperties(String node){
+		XMLProperties xp=new XMLProperties(new FileSystemResource("/home/amlweb/apache-tomcat-6.0.10/webapps/aml/WEB-INF/classes/com/ist/aml/report/controller/jrcx.xml"));//F:/apache-tomcat-6.0.37/webapps/aml/WEB-INF/classes/com/ist/aml/report/controller/jrcx.xml
+		return xp.getProperty(node);
+	}
 }
