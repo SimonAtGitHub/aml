@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-body>
+   <key>12345678</key>
+   <ReadLocation>/got_data_inner</ReadLocation>
+   <WriteLocation>/got_data_outer</WriteLocation>
+</xml-body>

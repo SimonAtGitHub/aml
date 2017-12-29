@@ -22,12 +22,12 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JSonUtil {
-	public static final String readLoction  ="/got_data_inner/";
-	public static final String writeLoction ="/got_data_outer/"; 
+	public static final String readLocation  = CopyBean.getProperties("ReadLocation");
+	public static final String writeLocation = CopyBean.getProperties("WriteLocation"); 
 	public JSonUtil(){		
 	}
 	public static ArrayList<RequestObject> readJson(String s){
-		File in = new File(readLoction+s);
+		File in = new File(readLocation + "/" +s);
 		ArrayList<RequestObject> obj=new ArrayList<RequestObject>();
         String line="[";
         String msg;
@@ -38,8 +38,13 @@ public class JSonUtil {
 	          BufferedReader br = new BufferedReader(isr);
 	          
 	          while((msg = br.readLine()) != null){
-	              msg = DESUtil.decrypt(msg, "12345678");
-	              line=line+msg+",";
+	        	  try {
+	        		  msg = DESUtil.decrypt(msg, CopyBean.getProperties("key"));
+		              line=line+msg+",";
+				} catch (Exception e) {
+					System.out.println("ณ๖ดํมห");
+					return null;
+				}
 	          }
 	          br.close();
 	          line=line.substring(0,line.length()-1)+"]";
@@ -76,8 +81,8 @@ public class JSonUtil {
 	}
     public static void writeJson(ArrayList<ReturnObject> obj,String s){
     	ObjectMapper mapper=new ObjectMapper();
-    	File f=new File(writeLoction+s);
-    	File f1=new File(writeLoction+"before"+s);
+    	File f=new File(writeLocation + "/" +s);
+    	File f1=new File(writeLocation+ "/" + "before"+s);
     	try {
 			f.createNewFile();
 		} catch (IOException e2) {
@@ -113,7 +118,7 @@ public class JSonUtil {
 				st=st.replaceAll("\n", "");
 				st=st.replaceAll("\n\t", "");
 				st=st.replaceAll("null", "\"\"");
-				writer.println(DESUtil.encrypt(st, "12345678"));
+				writer.println(DESUtil.encrypt(st, CopyBean.getProperties("key")));
 				writer1.println(st);
 			}
 			String result=mapper.writeValueAsString(obj);
