@@ -19,7 +19,7 @@ import com.ist.server.dto.T18_task_fact;
 
 public class CalReportTotal extends BaseCalTask {
 
-	/** ³ÌÐòÔËÐÐÈÕÖ¾ */
+	/** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾ */
 	private static Logger logger = LogUtils.getLogger(CalReportTotal.class.getName());
 	TotalReportBO reportBo=new TotalReportBO();
 	
@@ -38,11 +38,8 @@ public class CalReportTotal extends BaseCalTask {
 		try {
 			String statisticdate=this.t18_task_fact.getStatisticdate();
 			
-//			 int  count=reportBo.T10_CHECKPARTY_NEW(conn, statisticdate,"T10_CHECKPARTY_NEW");
-//			   count=reportBo.T10_CHECKPARTY_NEW(conn, statisticdate,"T10_CHECKPARTY_RE");
-			int  count=reportBo.del_T10_CHECKPARTY(conn, statisticdate,"T10_CHECKPARTY_NEW");
-			   count=reportBo.del_T10_CHECKPARTY(conn, statisticdate,"T10_CHECKPARTY_RE");
-			   count=reportBo.del_T10_CHECKPARTY(conn, statisticdate,"T10_CHECKPARTY_RELT");
+		 int  count=reportBo.T10_CHECKPARTY_NEW(conn, statisticdate,"T10_CHECKPARTY_NEW");
+		       count=reportBo.T10_CHECKPARTY_NEW(conn, statisticdate,"T10_CHECKPARTY_RE");
 			   count=reportBo.del_T07_Table_MID(conn, statisticdate,"T07_USER_IDENTITY_D");
 			   count=reportBo.del_T07_Table_MID(conn, statisticdate,"T07_USER_REIDENTITY_D");
 			   count=reportBo.del_T07_Table_MID1(conn, statisticdate,"T10_PARTY_CRETAL_D");
@@ -79,26 +76,26 @@ public class CalReportTotal extends BaseCalTask {
 			String statisticdate=this.t18_task_fact.getStatisticdate();
         
 			
-		 //½«ÐÂ¿ª¿Í»§²åÈëµ½ÐÂ¿ª¿Í»§±í
+		 //ï¿½ï¿½ï¿½Â¿ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ëµ½ï¿½Â¿ï¿½ï¿½Í»ï¿½ï¿½ï¿½
 			int count=reportBo.insert_T10_CHECKPARTY_NEW(conn, statisticdate);
 			
-		 //ÖØÐÂ¿Í»§Ê¶±ð±í
-			count=reportBo.insert_T10_CHECKPARTY_RE1(conn, statisticdate); //ºÚÃûµ¥¿Í»§
-			count=reportBo.insert_T10_CHECKPARTY_RE2(conn, statisticdate);//¶ÔË½Ö¤¼þµ½ÆÚ¿Í»§
-			count=reportBo.insert_T10_CHECKPARTY_RE3(conn, statisticdate);//¶Ô¹«Ö¤¼þµ½ÆÚ¿Í»§
-		//	count=reportBo.insert_T10_CHECKPARTY_RE4(conn, statisticdate);//¸ß·çÏÕÒÔÉÏ¿Í»§
-		//	count=reportBo.insert_T10_CHECKPARTY_RE5(conn, statisticdate);//¿ÉÒÉÉÏ±¨¿Í»§
+		 //ï¿½ï¿½ï¿½Â¿Í»ï¿½Ê¶ï¿½ï¿½ï¿½
+			count=reportBo.insert_T10_CHECKPARTY_RE1(conn, statisticdate); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½
+			count=reportBo.insert_T10_CHECKPARTY_RE2(conn, statisticdate);//ï¿½ï¿½Ë½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿Í»ï¿½
+			count=reportBo.insert_T10_CHECKPARTY_RE3(conn, statisticdate);//ï¿½Ô¹ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿Í»ï¿½
+		//	count=reportBo.insert_T10_CHECKPARTY_RE4(conn, statisticdate);//ï¿½ß·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿Í»ï¿½
+		//	count=reportBo.insert_T10_CHECKPARTY_RE5(conn, statisticdate);//ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ï¿½Í»ï¿½
 			
-		 //ÐÂ¿ª¿Í»§Ê¶±ðÍ³¼Æ±í
+		 //ï¿½Â¿ï¿½ï¿½Í»ï¿½Ê¶ï¿½ï¿½Í³ï¿½Æ±ï¿½
 			count=reportBo.insert_T07_USER_IDENTITY_D(conn, statisticdate);
 			
-		 //ÖØÐÂ¿Í»§Ê¶±ðÍ³¼Æ±í
+		 //ï¿½ï¿½ï¿½Â¿Í»ï¿½Ê¶ï¿½ï¿½Í³ï¿½Æ±ï¿½
 		   count=reportBo.insert_T07_USER_REIDENTITY_D(conn, statisticdate);
 		 
-	     //»ú¹¹ÐÅÓÃ´úÂëÓ¦ÓÃÍ³¼Æ±í
+	     //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Í³ï¿½Æ±ï¿½
 		 //  count=reportBo.insert_T10_PARTY_CRETAL_D(conn, statisticdate);
 		   
-		  //Í³¼Æ±¨±í´æ´¢¹ý³Ì
+		  //Í³ï¿½Æ±ï¿½ï¿½ï¿½æ´¢ï¿½ï¿½ï¿½ï¿½
 		   this.insertTotalData(conn, statisticdate);
 			
 		} catch (Exception e) {
@@ -123,10 +120,10 @@ public class CalReportTotal extends BaseCalTask {
 				 packagecal = "call  PROC_AML_REPORT_MAIN(?) ";
 			 }		
 			calstmt = conn.prepareCall(packagecal);
-			calstmt.setString(1, statisticdate);//Êý¾ÝÊ±¼ä
+			calstmt.setString(1, statisticdate);//ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 			//calstmt.setString(2, this.getT18_task_fac().getTaskkey());
 			logger.debug("sql:" + packagecal);
-			//Ö´ÐÐ
+			//Ö´ï¿½ï¿½
 			calstmt.executeUpdate();
 			conn.commit();
 			

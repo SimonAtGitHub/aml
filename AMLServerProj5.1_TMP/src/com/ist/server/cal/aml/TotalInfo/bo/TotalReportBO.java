@@ -298,8 +298,8 @@ public class TotalReportBO {
 	 				+ " CARD_NO,ORGANKEY,AML1_TYPE_CD,check_explain,VALID_DT,check_result) "
 	 				+ "select  SEQ_T10_CHECKPARTY_RELT.Nextval,A.PARTY_ID,A.PARTY_CLASS_CD, A.PARTY_CHN_NAME,  A.CARD_TYPE, 'yaohl',A.CREATE_DT,  A.CARD_NO, "
 	 				+ "A.ORGANKEY,  A.AML1_TYPE_CD, '该客户为我行新网联合贷贷款客户,已完成反洗钱黑名单及涉恐名单排查,我行会持续关注',  to_date('2018-01-22','yyyy-mm-dd'), '1' "
-	 				+ " from t47_party A WHERE A.LY=1"
-	 				+ "AND A.CREATE_DT = " + func.vch2dt(statisticdate, "yyyy-mm-dd");
+	 				+ " from t47_party A"
+	 				+ " WHERE A.LY='1' AND A.CREATE_DT = " + func.vch2dt(statisticdate, "yyyy-mm-dd");
 	 		int count3 = SQLExecute.exeSql(conn, sql);
 	 		return count3;
 
@@ -446,16 +446,10 @@ public class TotalReportBO {
 	     	  int count = SQLExecute.exeSql(conn, sql); 
 	     	  return count;
 	  	}
-//	     public int T10_CHECKPARTY_NEW(Connection conn,String statisticdate,String tablename)throws Exception{
-//	    	  String sql=" DELETE FROM "+tablename+" T WHERE T.CREATE_DT = "+func.vch2dt(statisticdate, "yyyy-mm-dd");
-//	    	  int count = SQLExecute.exeSql(conn, sql); 
-//	    	  return count;
-//	 	}
-	     public int del_T10_CHECKPARTY(Connection conn, String statisticdate, String tablename) throws Exception {
-	 		String befredate = DateUtils.getDateChangeTime2(statisticdate + " 00:00:00", "m", -1);
-	 		String sql = " DELETE FROM " + tablename + " T WHERE EXISTS (SELECT 1 FROM T47_PARTY A WHERE A.PARTY_ID=T.PARTY_ID AND A.CREATE_DT="+func.vch2dt(befredate, "yyyy-mm-dd")+")";
-	 		int count = SQLExecute.exeSql(conn, sql);
-	 		return count;
+	     public int T10_CHECKPARTY_NEW(Connection conn,String statisticdate,String tablename)throws Exception{
+	    	  String sql=" DELETE FROM "+tablename+" T WHERE T.CREATE_DT = "+func.vch2dt(statisticdate, "yyyy-mm-dd");
+	    	  int count = SQLExecute.exeSql(conn, sql); 
+	    	  return count;
 	 	}
 	     public int insert_T07_USER_IDENTITY_D(Connection conn,String statisticdate)throws Exception{
 	     	 //ɾ��6������ǰ������
