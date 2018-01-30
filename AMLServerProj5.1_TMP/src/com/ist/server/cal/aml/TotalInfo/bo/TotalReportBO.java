@@ -53,16 +53,16 @@ public class TotalReportBO {
 	   	  String  sql ="";
 	    	int   count =0;
 	   	 if(case_type.equals("1")){
-	   		 //²åÈë±¾±Ò´ó¶î
+	   		 //ï¿½ï¿½ï¿½ë±¾ï¿½Ò´ï¿½ï¿½
 	   	  sql="insert into t07_inrep_by_acct_mid(organkey,report_dt,currency_cd,cast_type,total_num," +
 				"total_val,alert_num,success_num,alertnvl,handout_num) " +
 				" SELECT T2.CREATE_ORG,"+func.vch2dt(statisticdate, "yyyy-mm-dd")+",T3.CURR_CD,'1',"+
-				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, " + 	// ¶Ô¹«ÕË»§´ó¶î»ò¿ÉÒÉ½»Ò×±¨¸æ·ÝÊý
-				"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.CRAT ELSE 0 END) AS TOTAL_VAL, " + 	// Éæ¼°×Ü½ð¶î
-				"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + 	// Éæ¼°½»Ò×±ÊÊý
-				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, " + 	// ¸öÈËÕË»§´ó¶î»ò¿ÉÒÉ½»Ò×±¨¸æ·ÝÊý
-				"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.CRAT ELSE 0 END) AS ALERTNVL, " + 	// Éæ¼°×Ü½ð¶î
-				"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + 	// Éæ¼°½»Ò×±ÊÊý
+				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, " + 	// ï¿½Ô¹ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.CRAT ELSE 0 END) AS TOTAL_VAL, " + 	// ï¿½æ¼°ï¿½Ü½ï¿½ï¿½
+				"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + 	// ï¿½æ¼°ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½
+				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, " + 	// ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.CRAT ELSE 0 END) AS ALERTNVL, " + 	// ï¿½æ¼°ï¿½Ü½ï¿½ï¿½
+				"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + 	// ï¿½æ¼°ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½
 				" FROM   T07_MSG T1, T07_REPORT T2, T07_NBH_TSDT T3 " +
 				"WHERE T1.REPORTKEY = T2.REPORTKEY  AND T2.REPORTKEY = T3.REPORTKEY  "
 				+" AND    T1.SENDDATE_DT>=" +func.vch2dt(begindate, "yyyy-mm-dd")
@@ -74,12 +74,12 @@ public class TotalReportBO {
 	  	 sql="insert into t07_inrep_by_acct_mid(organkey,report_dt,currency_cd,cast_type,total_num," +
 			"total_val,alert_num,success_num,alertnvl,handout_num) " +
 			" SELECT T2.CREATE_ORG,"+func.vch2dt(statisticdate, "yyyy-mm-dd")+",T3.CURR_CD,'1',"+
-			"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, " + 	// ¶Ô¹«ÕË»§´ó¶î»ò¿ÉÒÉ½»Ò×±¨¸æ·ÝÊý
-			"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.CRAT ELSE 0 END) AS TOTAL_VAL, " + 	// Éæ¼°×Ü½ð¶î
-			"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + 	// Éæ¼°½»Ò×±ÊÊý
-			"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, " + 	// ¸öÈËÕË»§´ó¶î»ò¿ÉÒÉ½»Ò×±¨¸æ·ÝÊý
-			"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.CRAT ELSE 0 END) AS ALERTNVL, " + 	// Éæ¼°×Ü½ð¶î
-			"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + 	// Éæ¼°½»Ò×±ÊÊý
+			"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, " + 	// ï¿½Ô¹ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.CRAT ELSE 0 END) AS TOTAL_VAL, " + 	// ï¿½æ¼°ï¿½Ü½ï¿½ï¿½
+			"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + 	// ï¿½æ¼°ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½
+			"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, " + 	// ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.CRAT ELSE 0 END) AS ALERTNVL, " + 	// ï¿½æ¼°ï¿½Ü½ï¿½ï¿½
+			"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + 	// ï¿½æ¼°ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½
 			" FROM   T07_MSG_UH T1, T07_REPORT_UH T2, T07_NBH_TSDT_UH T3 " +
 			"WHERE T1.REPORTKEY = T2.REPORTKEY  AND T2.REPORTKEY = T3.REPORTKEY  "
 			+" AND    T1.SENDDATE_DT>=" +func.vch2dt(begindate, "yyyy-mm-dd")
@@ -88,16 +88,16 @@ public class TotalReportBO {
 			" GROUP  BY T2.CREATE_ORG,  T3.CURR_CD";
 	    count = SQLExecute.exeSql(conn, sql);
 	  	   
-	  	   //²åÈëÍâ±Ò´ó¶î
+	  	   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò´ï¿½ï¿½
 	  	 sql="insert into t07_inrep_by_acct_mid(organkey,report_dt,currency_cd,cast_type,total_num," +
 			"total_val,alert_num,success_num,alertnvl,handout_num) " +		
 		" SELECT T2.CREATE_ORG,"+func.vch2dt(statisticdate, "yyyy-mm-dd")+",T3.CURR_CD,'1',"+
-		"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, " + 	// ¶Ô¹«ÕË»§´ó¶î»ò¿ÉÒÉ½»Ò×±¨¸æ·ÝÊý
-		"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN ((T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT) ELSE 0 END) AS TOTAL_VAL, " + 	// Éæ¼°×Ü½ð¶î
-		"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + 	// Éæ¼°½»Ò×±ÊÊý
-		"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, " + 	// ¸öÈËÕË»§´ó¶î»ò¿ÉÒÉ½»Ò×±¨¸æ·ÝÊý
-		"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN ((T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT) ELSE 0 END) AS ALERTNVL, " + 	// Éæ¼°×Ü½ð¶î
-		"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + 	// Éæ¼°½»Ò×±ÊÊý
+		"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, " + 	// ï¿½Ô¹ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN ((T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT) ELSE 0 END) AS TOTAL_VAL, " + 	// ï¿½æ¼°ï¿½Ü½ï¿½ï¿½
+		"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + 	// ï¿½æ¼°ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½
+		"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, " + 	// ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN ((T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT) ELSE 0 END) AS ALERTNVL, " + 	// ï¿½æ¼°ï¿½Ü½ï¿½ï¿½
+		"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + 	// ï¿½æ¼°ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½
 		" FROM   T07_MSG T1, T07_REPORT T2, T07_NBH_TSDT T3,T87_EXCHANGE_RATE T4 " +
 		"WHERE T1.REPORTKEY = T2.REPORTKEY  AND T2.REPORTKEY = T3.REPORTKEY  AND T3.CRTP=T4.CURRENCY_CD  "
 		+" AND    T1.SENDDATE_DT>=" +func.vch2dt(begindate, "yyyy-mm-dd")
@@ -110,12 +110,12 @@ public class TotalReportBO {
 	  	 sql="insert into t07_inrep_by_acct_mid(organkey,report_dt,currency_cd,cast_type,total_num," +
 			"total_val,alert_num,success_num,alertnvl,handout_num) " +		
 		" SELECT T2.CREATE_ORG,"+func.vch2dt(statisticdate, "yyyy-mm-dd")+",T3.CURR_CD,'1',"+
-		"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, " + 	// ¶Ô¹«ÕË»§´ó¶î»ò¿ÉÒÉ½»Ò×±¨¸æ·ÝÊý
-		"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN ((T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT) ELSE 0 END) AS TOTAL_VAL, " + 	// Éæ¼°×Ü½ð¶î
-		"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + 	// Éæ¼°½»Ò×±ÊÊý
-		"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, " + 	// ¸öÈËÕË»§´ó¶î»ò¿ÉÒÉ½»Ò×±¨¸æ·ÝÊý
-		"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN ((T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT) ELSE 0 END) AS ALERTNVL, " + 	// Éæ¼°×Ü½ð¶î
-		"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + 	// Éæ¼°½»Ò×±ÊÊý
+		"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, " + 	// ï¿½Ô¹ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN ((T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT) ELSE 0 END) AS TOTAL_VAL, " + 	// ï¿½æ¼°ï¿½Ü½ï¿½ï¿½
+		"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + 	// ï¿½æ¼°ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½
+		"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, " + 	// ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN ((T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT) ELSE 0 END) AS ALERTNVL, " + 	// ï¿½æ¼°ï¿½Ü½ï¿½ï¿½
+		"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + 	// ï¿½æ¼°ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½
 		" FROM   T07_MSG_UH T1, T07_REPORT_UH T2, T07_NBH_TSDT_UH T3,T87_EXCHANGE_RATE T4 " +
 		"WHERE T1.REPORTKEY = T2.REPORTKEY  AND T2.REPORTKEY = T3.REPORTKEY  AND T3.CRTP=T4.CURRENCY_CD  "
 		+" AND    T1.SENDDATE_DT>=" +func.vch2dt(begindate, "yyyy-mm-dd")
@@ -128,12 +128,12 @@ public class TotalReportBO {
 //	  	 sql="insert into t07_inrep_by_acct_mid(organkey,report_dt,currency_cd,cast_type,total_num," +
 //			"total_val,alert_num,success_num,alertnvl,handout_num) " +	
 //			"SELECT T2.CREATE_ORG,T2.CURR_CD,"+
-//			"COUNT(DISTINCT(CASE WHEN T2.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, " + 	// ¶Ô¹«ÕË»§´ó¶î»ò¿ÉÒÉ½»Ò×±¨¸æ·ÝÊý
-//			"0 AS TOTAL_VAL, " + 	// Éæ¼°×Ü½ð¶î
-//			"0 AS ALERT_NUM, " + 	// Éæ¼°½»Ò×±ÊÊý
-//			"COUNT(DISTINCT(CASE WHEN T2.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, " + 	// ¸öÈËÕË»§´ó¶î»ò¿ÉÒÉ½»Ò×±¨¸æ·ÝÊý
-//			"0 AS ALERTNVL, " + 	// Éæ¼°×Ü½ð¶î
-//			"0 AS HANDOUT_NUM " + 	// Éæ¼°½»Ò×±ÊÊý
+//			"COUNT(DISTINCT(CASE WHEN T2.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, " + 	// ï¿½Ô¹ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//			"0 AS TOTAL_VAL, " + 	// ï¿½æ¼°ï¿½Ü½ï¿½ï¿½
+//			"0 AS ALERT_NUM, " + 	// ï¿½æ¼°ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½
+//			"COUNT(DISTINCT(CASE WHEN T2.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, " + 	// ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//			"0 AS ALERTNVL, " + 	// ï¿½æ¼°ï¿½Ü½ï¿½ï¿½
+//			"0 AS HANDOUT_NUM " + 	// ï¿½æ¼°ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½
 //			" FROM   T07_MSG T1, T07_REPORT T2 left join T07_NBH_TSDT T3  on t2.reportkey=t3.reportkey" +
 //			" WHERE T1.REPORTKEY = T2.REPORTKEY  "
 //			+" AND    T1.SENDDATE_DT>=" +func.vch2dt(statisticdate, "yyyy-mm-dd")
@@ -145,16 +145,16 @@ public class TotalReportBO {
 //	  	 count = SQLExecute.exeSql(conn, sql);
 	  	 
 	   	 }else{
-	   		 //±¾±Ò¿ÉÒÉ
+	   		 //ï¿½ï¿½ï¿½Ò¿ï¿½ï¿½ï¿½
 	   		 sql="insert into t07_inrep_by_acct_mid(organkey,report_dt,currency_cd,cast_type,total_num," +
 				"total_val,alert_num,success_num,alertnvl,handout_num) " +
 				" SELECT T2.CREATE_ORG,"+func.vch2dt(statisticdate, "yyyy-mm-dd")+",T3.CURR_CD,'2',"+
-				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, " + 	// ¶Ô¹«ÕË»§´ó¶î»ò¿ÉÒÉ½»Ò×±¨¸æ·ÝÊý
-				"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.CRAT ELSE 0 END) AS TOTAL_VAL, " + 	// Éæ¼°×Ü½ð¶î
-				"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + 	// Éæ¼°½»Ò×±ÊÊý
-				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, " + 	// ¸öÈËÕË»§´ó¶î»ò¿ÉÒÉ½»Ò×±¨¸æ·ÝÊý
-				"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.CRAT ELSE 0 END) AS ALERTNVL, " + 	// Éæ¼°×Ü½ð¶î
-				"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + 	// Éæ¼°½»Ò×±ÊÊý
+				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, " + 	// ï¿½Ô¹ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.CRAT ELSE 0 END) AS TOTAL_VAL, " + 	// ï¿½æ¼°ï¿½Ü½ï¿½ï¿½
+				"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + 	// ï¿½æ¼°ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½
+				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, " + 	// ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.CRAT ELSE 0 END) AS ALERTNVL, " + 	// ï¿½æ¼°ï¿½Ü½ï¿½ï¿½
+				"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + 	// ï¿½æ¼°ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½
 				" FROM   T07_MSG T1, T07_REPORT T2, T07_NBS_RPDI T3 " +
 				"WHERE T1.REPORTKEY = T2.REPORTKEY  AND T2.REPORTKEY = T3.REPORTKEY  "
 			    +" AND    T1.SENDDATE_DT>=" +func.vch2dt(begindate, "yyyy-mm-dd")
@@ -167,12 +167,12 @@ public class TotalReportBO {
 	   		 sql="insert into t07_inrep_by_acct_mid(organkey,report_dt,currency_cd,cast_type,total_num," +
 				"total_val,alert_num,success_num,alertnvl,handout_num) " +
 				" SELECT T2.CREATE_ORG,"+func.vch2dt(statisticdate, "yyyy-mm-dd")+",T3.CURR_CD,'2',"+
-				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, " + 	// ¶Ô¹«ÕË»§´ó¶î»ò¿ÉÒÉ½»Ò×±¨¸æ·ÝÊý
-				"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.CRAT ELSE 0 END) AS TOTAL_VAL, " + 	// Éæ¼°×Ü½ð¶î
-				"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + 	// Éæ¼°½»Ò×±ÊÊý
-				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, " + 	// ¸öÈËÕË»§´ó¶î»ò¿ÉÒÉ½»Ò×±¨¸æ·ÝÊý
-				"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.CRAT ELSE 0 END) AS ALERTNVL, " + 	// Éæ¼°×Ü½ð¶î
-				"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + 	// Éæ¼°½»Ò×±ÊÊý
+				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, " + 	// ï¿½Ô¹ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.CRAT ELSE 0 END) AS TOTAL_VAL, " + 	// ï¿½æ¼°ï¿½Ü½ï¿½ï¿½
+				"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + 	// ï¿½æ¼°ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½
+				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, " + 	// ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.CRAT ELSE 0 END) AS ALERTNVL, " + 	// ï¿½æ¼°ï¿½Ü½ï¿½ï¿½
+				"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + 	// ï¿½æ¼°ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½
 				" FROM   T07_MSG_UH T1, T07_REPORT_UH T2, T07_NBS_RPDI_UH T3 " +
 				"WHERE T1.REPORTKEY = T2.REPORTKEY  AND T2.REPORTKEY = T3.REPORTKEY  "
 			    +" AND    T1.SENDDATE_DT>=" +func.vch2dt(begindate, "yyyy-mm-dd")
@@ -182,17 +182,17 @@ public class TotalReportBO {
 				" GROUP  BY T2.CREATE_ORG,  T3.CURR_CD";
 	   		 count = SQLExecute.exeSql(conn, sql);
 	   		 
-	   		 //Íâ±Ò¿ÉÒÉ
+	   		 //ï¿½ï¿½Ò¿ï¿½ï¿½ï¿½
 	   		 
 	   		 sql="insert into t07_inrep_by_acct_mid(organkey,report_dt,currency_cd,cast_type,total_num," +
 				"total_val,alert_num,success_num,alertnvl,handout_num) " +
 				" SELECT T2.CREATE_ORG,"+func.vch2dt(statisticdate, "yyyy-mm-dd")+",T3.CURR_CD,'2',"+
-				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, " + 	// ¶Ô¹«ÕË»§´ó¶î»ò¿ÉÒÉ½»Ò×±¨¸æ·ÝÊý
-				"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN (T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT  ELSE 0 END) AS TOTAL_VAL, " + 	// Éæ¼°×Ü½ð¶î
-				"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + 	// Éæ¼°½»Ò×±ÊÊý
-				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, " + 	// ¸öÈËÕË»§´ó¶î»ò¿ÉÒÉ½»Ò×±¨¸æ·ÝÊý
-				"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN (T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT  ELSE 0 END) AS ALERTNVL, " + 	// Éæ¼°×Ü½ð¶î
-				"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + 	// Éæ¼°½»Ò×±ÊÊý
+				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, " + 	// ï¿½Ô¹ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN (T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT  ELSE 0 END) AS TOTAL_VAL, " + 	// ï¿½æ¼°ï¿½Ü½ï¿½ï¿½
+				"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + 	// ï¿½æ¼°ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½
+				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, " + 	// ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN (T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT  ELSE 0 END) AS ALERTNVL, " + 	// ï¿½æ¼°ï¿½Ü½ï¿½ï¿½
+				"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + 	// ï¿½æ¼°ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½
 				" FROM   T07_MSG T1, T07_REPORT T2, T07_NBS_RPDI T3 ,T87_EXCHANGE_RATE T4 " +
 				"WHERE T1.REPORTKEY = T2.REPORTKEY  AND T2.REPORTKEY = T3.REPORTKEY  AND T3.CRTP=T4.CURRENCY_CD   "
 				 +" AND    T1.SENDDATE_DT>=" +func.vch2dt(begindate, "yyyy-mm-dd")
@@ -205,12 +205,12 @@ public class TotalReportBO {
 	   		 sql="insert into t07_inrep_by_acct_mid(organkey,report_dt,currency_cd,cast_type,total_num," +
 				"total_val,alert_num,success_num,alertnvl,handout_num) " +
 				" SELECT T2.CREATE_ORG,"+func.vch2dt(statisticdate, "yyyy-mm-dd")+",T3.CURR_CD,'2',"+
-				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, " + 	// ¶Ô¹«ÕË»§´ó¶î»ò¿ÉÒÉ½»Ò×±¨¸æ·ÝÊý
-				"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN (T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT  ELSE 0 END) AS TOTAL_VAL, " + 	// Éæ¼°×Ü½ð¶î
-				"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + 	// Éæ¼°½»Ò×±ÊÊý
-				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, " + 	// ¸öÈËÕË»§´ó¶î»ò¿ÉÒÉ½»Ò×±¨¸æ·ÝÊý
-				"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN (T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT  ELSE 0 END) AS ALERTNVL, " + 	// Éæ¼°×Ü½ð¶î
-				"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + 	// Éæ¼°½»Ò×±ÊÊý
+				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, " + 	// ï¿½Ô¹ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN (T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT  ELSE 0 END) AS TOTAL_VAL, " + 	// ï¿½æ¼°ï¿½Ü½ï¿½ï¿½
+				"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'C' THEN T3.TICD ELSE NULL END) AS ALERT_NUM, " + 	// ï¿½æ¼°ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½
+				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, " + 	// ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				"SUM(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN (T4.USD_FX_RATE*T3.CRAT)/T4.CURRENCY_UNIT  ELSE 0 END) AS ALERTNVL, " + 	// ï¿½æ¼°ï¿½Ü½ï¿½ï¿½
+				"COUNT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T3.TICD ELSE NULL END) AS HANDOUT_NUM " + 	// ï¿½æ¼°ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½
 				" FROM   T07_MSG_UH T1, T07_REPORT_UH T2, T07_NBS_RPDI_UH T3 ,T87_EXCHANGE_RATE T4 " +
 				"WHERE T1.REPORTKEY = T2.REPORTKEY  AND T2.REPORTKEY = T3.REPORTKEY  AND T3.CRTP=T4.CURRENCY_CD   "
 				 +" AND    T1.SENDDATE_DT>=" +func.vch2dt(begindate, "yyyy-mm-dd")
@@ -225,12 +225,12 @@ public class TotalReportBO {
 	   		 sql="insert into t07_inrep_by_acct_mid(organkey,report_dt,currency_cd,cast_type,total_num," +
 				"total_val,alert_num,success_num,alertnvl,handout_num) " +
 				" SELECT T2.CREATE_ORG,"+func.vch2dt(statisticdate, "yyyy-mm-dd")+",T2.CURR_CD,'2',"+
-				"COUNT(DISTINCT(CASE WHEN T2.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, " + 	// ¶Ô¹«ÕË»§´ó¶î»ò¿ÉÒÉ½»Ò×±¨¸æ·ÝÊý
-				"0 AS TOTAL_VAL, " + 	// Éæ¼°×Ü½ð¶î
-				"0 AS ALERT_NUM, " + 	// Éæ¼°½»Ò×±ÊÊý
-				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, " + 	// ¸öÈËÕË»§´ó¶î»ò¿ÉÒÉ½»Ò×±¨¸æ·ÝÊý
-				"0 AS ALERTNVL, " + 	// Éæ¼°×Ü½ð¶î
-				"0 AS HANDOUT_NUM " + 	// Éæ¼°½»Ò×±ÊÊý
+				"COUNT(DISTINCT(CASE WHEN T2.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, " + 	// ï¿½Ô¹ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				"0 AS TOTAL_VAL, " + 	// ï¿½æ¼°ï¿½Ü½ï¿½ï¿½
+				"0 AS ALERT_NUM, " + 	// ï¿½æ¼°ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½
+				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, " + 	// ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				"0 AS ALERTNVL, " + 	// ï¿½æ¼°ï¿½Ü½ï¿½ï¿½
+				"0 AS HANDOUT_NUM " + 	// ï¿½æ¼°ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½
 				" FROM   T07_MSG T1, T07_REPORT T2 left join  T07_NBS_RPDI T3 on   T2.REPORTKEY = T3.REPORTKEY " +
 				" WHERE T1.REPORTKEY = T2.REPORTKEY AND T2.INTERFACEKEY='BS'  "
 				 +" AND    T1.SENDDATE_DT>=" +func.vch2dt(begindate, "yyyy-mm-dd")
@@ -243,12 +243,12 @@ public class TotalReportBO {
 	   		 sql="insert into t07_inrep_by_acct_mid(organkey,report_dt,currency_cd,cast_type,total_num," +
 				"total_val,alert_num,success_num,alertnvl,handout_num) " +
 				" SELECT T2.CREATE_ORG,"+func.vch2dt(statisticdate, "yyyy-mm-dd")+",T2.CURR_CD,'2',"+
-				"COUNT(DISTINCT(CASE WHEN T2.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, " + 	// ¶Ô¹«ÕË»§´ó¶î»ò¿ÉÒÉ½»Ò×±¨¸æ·ÝÊý
-				"0 AS TOTAL_VAL, " + 	// Éæ¼°×Ü½ð¶î
-				"0 AS ALERT_NUM, " + 	// Éæ¼°½»Ò×±ÊÊý
-				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, " + 	// ¸öÈËÕË»§´ó¶î»ò¿ÉÒÉ½»Ò×±¨¸æ·ÝÊý
-				"0 AS ALERTNVL, " + 	// Éæ¼°×Ü½ð¶î
-				"0 AS HANDOUT_NUM " + 	// Éæ¼°½»Ò×±ÊÊý
+				"COUNT(DISTINCT(CASE WHEN T2.PARTY_CLASS_CD = 'C' THEN T2.REPORTKEY ELSE NULL END)) AS TOTAL_NUM, " + 	// ï¿½Ô¹ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				"0 AS TOTAL_VAL, " + 	// ï¿½æ¼°ï¿½Ü½ï¿½ï¿½
+				"0 AS ALERT_NUM, " + 	// ï¿½æ¼°ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½
+				"COUNT(DISTINCT(CASE WHEN T3.PARTY_CLASS_CD = 'I' THEN T2.REPORTKEY ELSE NULL END)) AS SUCCESS_NUM, " + 	// ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½×±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				"0 AS ALERTNVL, " + 	// ï¿½æ¼°ï¿½Ü½ï¿½ï¿½
+				"0 AS HANDOUT_NUM " + 	// ï¿½æ¼°ï¿½ï¿½ï¿½×±ï¿½ï¿½ï¿½
 				" FROM   T07_MSG_UH T1, T07_REPORT_UH T2 left join  T07_NBS_RPDI_UH T3 on   T2.REPORTKEY = T3.REPORTKEY " +
 				" WHERE T1.REPORTKEY = T2.REPORTKEY AND T2.INTERFACEKEY='BS'  "
 				 +" AND    T1.SENDDATE_DT>=" +func.vch2dt(begindate, "yyyy-mm-dd")
@@ -278,22 +278,33 @@ public class TotalReportBO {
 		}
 	     
 	     public int insert_T10_CHECKPARTY_NEW(Connection conn,String statisticdate)throws Exception{
-	    	 //É¾³ýÒ»¸öÔÂÒÔÇ°µÄÊý¾Ý
+	    	 //É¾ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	    	 String befredate=DateUtils.getDateChangeTime2(statisticdate+" 00:00:00", "m", -1);
-	    	String delsql=" delete from T10_CHECKPARTY_NEW where CREATE_DT<="+func.vch2dt(befredate, "yyyy-mm-dd");
+	    	String delsql=" delete from T10_CHECKPARTY_NEW where CREATE_DT="+func.vch2dt(befredate, "yyyy-mm-dd");
 	    	int   count1 = SQLExecute.exeSql(conn, delsql);
 	    	 
-	    	 //²åÈëµ±ÌìµÄÊý¾Ý 
+	    	 //ï¿½ï¿½ï¿½ëµ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 	      	  String  sql="insert into T10_CHECKPARTY_NEW(PARTY_ID,HOST_CUST_ID,PARTY_CLASS_CD,PARTY_CHN_NAME,CARD_TYPE," +
 	   			"CARD_NO,ORGANKEY,CREATE_DT,PARTY_STATUS_CD,AML1_TYPE_CD,CHECK_STATUS) " +
 	   	   		" select PARTY_ID,HOST_CUST_ID,PARTY_CLASS_CD,PARTY_CHN_NAME,CARD_TYPE," +
 	   			"CARD_NO,ORGANKEY,create_dt,PARTY_STATUS_CD,AML1_TYPE_CD,'0'"
-	   			+"  from t47_party where  CREATE_DT="+func.vch2dt(statisticdate, "yyyy-mm-dd");
+	   			+"  from t47_party where LY!='1' AND CREATE_DT="+func.vch2dt(statisticdate, "yyyy-mm-dd");
 	      	  int count = SQLExecute.exeSql(conn, sql); 
+	      	insert_T10_T10_CHECKPARTY_RELT1(conn, statisticdate);
 	      	  return count;
 	   	}
-	     
-	     public int insert_T10_CHECKPARTY_RE1(Connection conn,String statisticdate)throws Exception{
+	     public int insert_T10_T10_CHECKPARTY_RELT1(Connection conn, String statisticdate) throws Exception {
+	 		String sql = "insert into T10_CHECKPARTY_RELT (CHECK_NO,PARTY_ID,PARTY_CLASS_CD,PARTY_CHN_NAME,CARD_TYPE,CHECKER,CHECK_DT,"
+	 				+ " CARD_NO,ORGANKEY,AML1_TYPE_CD,check_explain,VALID_DT,check_result) "
+	 				+ "select  SEQ_T10_CHECKPARTY_RELT.Nextval,A.PARTY_ID,A.PARTY_CLASS_CD, A.PARTY_CHN_NAME,  A.CARD_TYPE, 'yaohl',A.CREATE_DT,  A.CARD_NO, "
+	 				+ "A.ORGANKEY,  A.AML1_TYPE_CD, 'è¯¥å®¢æˆ·ä¸ºæˆ‘è¡Œæ–°ç½‘è”åˆè´·è´·æ¬¾å®¢æˆ·,å·²å®Œæˆåæ´—é’±é»‘åå•åŠæ¶‰æåå•æŽ’æŸ¥,æˆ‘è¡Œä¼šæŒç»­å…³æ³¨',  to_date('2018-01-22','yyyy-mm-dd'), '1' "
+	 				+ " from t47_party A WHERE A.LY=1"
+	 				+ "AND A.CREATE_DT = " + func.vch2dt(statisticdate, "yyyy-mm-dd");
+	 		int count3 = SQLExecute.exeSql(conn, sql);
+	 		return count3;
+
+	 	}
+	     public  int insert_T10_CHECKPARTY_RE1(Connection conn,String statisticdate)throws Exception{
 	     	  String  sql="insert into T10_CHECKPARTY_RE(PARTY_ID,RECHECK_TYPE,HOST_CUST_ID,PARTY_CLASS_CD,PARTY_CHN_NAME,CARD_TYPE," +
 	  			"CARD_NO,ORGANKEY,CREATE_DT,PARTY_STATUS_CD,AML1_TYPE_CD) " +
 	  	   		" select b.PARTY_ID,'1',b.HOST_CUST_ID,b.PARTY_CLASS_CD,b.PARTY_CHN_NAME,b.CARD_TYPE," +
@@ -435,14 +446,19 @@ public class TotalReportBO {
 	     	  int count = SQLExecute.exeSql(conn, sql); 
 	     	  return count;
 	  	}
-	     public int T10_CHECKPARTY_NEW(Connection conn,String statisticdate,String tablename)throws Exception{
-	    	  String sql=" DELETE FROM "+tablename+" T WHERE T.CREATE_DT = "+func.vch2dt(statisticdate, "yyyy-mm-dd");
-	    	  int count = SQLExecute.exeSql(conn, sql); 
-	    	  return count;
+//	     public int T10_CHECKPARTY_NEW(Connection conn,String statisticdate,String tablename)throws Exception{
+//	    	  String sql=" DELETE FROM "+tablename+" T WHERE T.CREATE_DT = "+func.vch2dt(statisticdate, "yyyy-mm-dd");
+//	    	  int count = SQLExecute.exeSql(conn, sql); 
+//	    	  return count;
+//	 	}
+	     public int del_T10_CHECKPARTY(Connection conn, String statisticdate, String tablename) throws Exception {
+	 		String befredate = DateUtils.getDateChangeTime2(statisticdate + " 00:00:00", "m", -1);
+	 		String sql = " DELETE FROM " + tablename + " T WHERE EXISTS (SELECT 1 FROM T47_PARTY A WHERE A.PARTY_ID=T.PARTY_ID AND A.CREATE_DT="+func.vch2dt(befredate, "yyyy-mm-dd")+")";
+	 		int count = SQLExecute.exeSql(conn, sql);
+	 		return count;
 	 	}
-	     
 	     public int insert_T07_USER_IDENTITY_D(Connection conn,String statisticdate)throws Exception{
-	     	 //É¾³ý6¸öÔÂÒÔÇ°µÄÊý¾Ý
+	     	 //É¾ï¿½ï¿½6ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	    	 String befredate=DateUtils.getDateChangeTime2(statisticdate+" 00:00:00", "m", -6);
 	    	 System.out.println("befredate:::"+befredate);
 	    	String delsql=" delete from T07_USER_IDENTITY_D where STATISTICDATE<="+func.vch2dt(befredate, "yyyy-mm-dd");
@@ -451,7 +467,7 @@ public class TotalReportBO {
 	    	delsql=func.deleteTable("t07_user_identity_mid");
 	    	count = SQLExecute.exeSql(conn, delsql);
 	    	
-	    	//²åÈëÒÑÊ¶±ðµ±ÌìµÄÊý¾Ý
+	    	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	    	String sql=" insert into t07_user_identity_mid(statisticdate,organkey,identityflag,cpm_total,cpm_proxy,cpm_thparty,cpm_disembark,cpm_benefit,cpm_questotal,   "    
 	 			  +" cpm_anonymous,cpm_falsecard,cpm_failurecard,cpm_suspects,cpm_othercase,idm_total,idm_proxy,idm_thparty,idm_residents,idm_resiproxy,idm_nonresidents,  "  
 	 			  +" idm_nonresiproxy,idm_questotal,idm_anonymous,idm_falsecard,idm_failurecard,idm_otherscard,idm_suspects,idm_othercase,ciall_total)                    "  
@@ -542,7 +558,7 @@ public class TotalReportBO {
 	     	  return count;
 	  	}
 	     public int insert_T10_PARTY_CRETAL_D(Connection conn,String statisticdate)throws Exception{
-	     	 //É¾³ý3¸öÔÂÒÔÇ°µÄÊý¾Ý
+	     	 //É¾ï¿½ï¿½3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	    	 String befredate=DateUtils.getDateChangeTime2(statisticdate+" 00:00:00", "m", -3);
 	    	 System.out.println("befredate:::"+befredate);
 	    	String delsql=" delete from T10_PARTY_CRETAL_D where STATISTIC_DT<="+func.vch2dt(befredate, "yyyy-mm-dd");
@@ -590,7 +606,7 @@ public class TotalReportBO {
 	  	}
 	     
 	     public int insert_T07_USER_REIDENTITY_D(Connection conn,String statisticdate)throws Exception{
-	     	 //É¾³ý6¸öÔÂÒÔÇ°µÄÊý¾Ý
+	     	 //É¾ï¿½ï¿½6ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	    	
 	    	 String befredate=DateUtils.getDateChangeTime2(statisticdate+" 00:00:00", "m", -6);
 	    	 System.out.println("befredate:::"+befredate);
@@ -600,7 +616,7 @@ public class TotalReportBO {
 	    	delsql=func.deleteTable("T07_USER_REIDENTITY_MID");
 	    	count = SQLExecute.exeSql(conn, delsql);
 	    	
-	    	//²åÈëÒÑÊ¶±ðµ±ÌìµÄ¶Ô¹«¶ÔË½Êý¾Ý
+	    	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¶ï¿½ï¿½ï¿½ï¿½Ä¶Ô¹ï¿½ï¿½ï¿½Ë½ï¿½ï¿½ï¿½ï¿½
 	    	String sql= "  INSERT INTO T07_USER_REIDENTITY_MID(STATISTICDATE,ORGANKEY,REIDENTITYFLAG,CHANGEINFO,BEHAVIOR,                                     " 
 	 	   +"   SUSPECTS,SUSPICIOUS,OTHERCASE,INFO_VERIFIED,BEHA_VERIFIED,SUSPE_VERIFIED,SUSPI_VERIFIED,OTHER_VERIFIED)                           "                                                             
 		   +"   SELECT "+func.vch2dt(statisticdate, "yyyy-mm-dd")+", a.CREATE_ORG,CASE WHEN A.PARTY_CLASS_CD='C' THEN '1' ELSE '3' END AS REIDENTITYFLAG,                   "
@@ -618,7 +634,7 @@ public class TotalReportBO {
 		   +"   WHERE a.CHECK_TYPE IN('2','5') AND a.CREATE_DT="+func.vch2dt(statisticdate, "yyyy-mm-dd")
 		   +"   GROUP BY a.CREATE_ORG,PARTY_CLASS_CD                                                                                              ";
 	    	count = SQLExecute.exeSql(conn, sql);
-	     	  //¶ÔË½¾ÓÃñ·Ç¾ÓÃñÊý
+	     	  //ï¿½ï¿½Ë½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½
 	     	sql= "   INSERT INTO T07_USER_REIDENTITY_MID(STATISTICDATE,ORGANKEY,REIDENTITYFLAG,CHANGEINFO,BEHAVIOR,                                  " 
 	    	+"      SUSPECTS,SUSPICIOUS,OTHERCASE,INFO_VERIFIED,BEHA_VERIFIED,SUSPE_VERIFIED,SUSPI_VERIFIED,OTHER_VERIFIED)                      "                                                                
 	     	+"	 SELECT "+func.vch2dt(statisticdate, "yyyy-mm-dd")+", a.CREATE_ORG,CASE WHEN A.AML1_TYPE_CD='01' THEN '4' ELSE '5' END AS REIDENTITYFLAG,                  "
@@ -638,7 +654,7 @@ public class TotalReportBO {
 	     	+"	  GROUP BY a.CREATE_ORG,A.AML1_TYPE_CD                                                                                           ";
 	     	count = SQLExecute.exeSql(conn, sql);
 	     	
-	     	//¶Ô¹«Éæ¼°ÊÕÒæÈËÊý
+	     	//ï¿½Ô¹ï¿½ï¿½æ¼°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	     sql= "   INSERT INTO T07_USER_REIDENTITY_MID(STATISTICDATE,ORGANKEY,REIDENTITYFLAG,CHANGEINFO,BEHAVIOR,                                  " 
 	         +"      SUSPECTS,SUSPICIOUS,OTHERCASE,INFO_VERIFIED,BEHA_VERIFIED,SUSPE_VERIFIED,SUSPI_VERIFIED,OTHER_VERIFIED)                      "                                                                
 	         +"  SELECT "+func.vch2dt(statisticdate, "yyyy-mm-dd")+",a.CREATE_ORG,'2' AS REIDENTITYFLAG,                                                        "
@@ -680,7 +696,7 @@ public class TotalReportBO {
 	 	 +" T07_USER_REIDENTITY_MID b where b.organkey=a.organkey and b.REIDENTITYFLAG='5')";
 	  count = SQLExecute.exeSql(conn, sql);
 	   
-	      //ÐÞ¸Ä¶Ô¹«¶ÔË½Áô´æÖ¤¼þÊ§Ð§ 
+	      //ï¿½Þ¸Ä¶Ô¹ï¿½ï¿½ï¿½Ë½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½Ê§Ð§ 
 	     sql= " UPDATE T07_USER_REIDENTITY_MID D SET FAILURECARD=(SELECT  C.FAILURECARD FROM(                                            "
 	     +" SELECT B.ORGANKEY,CASE WHEN B.PARTY_CLASS_CD='C' THEN '1' ELSE '3' END AS REIDENTITYFLAG,COUNT(B.PARTY_ID) AS FAILURECARD    "
 	     +" FROM T10_CHECKPARTY_RE B                                                                                                     "
@@ -689,7 +705,7 @@ public class TotalReportBO {
 	     +" AND C.REIDENTITYFLAG=D.REIDENTITYFLAG) WHERE D.REIDENTITYFLAG IN('1','3')"  ;
 	     count = SQLExecute.exeSql(conn, sql);
 	     
-	     //ÐÞ¸ÄË½¾ÓÃñ·Ç¾ÓÃñÁô´æÖ¤¼þÊ§Ð§
+	     //ï¿½Þ¸ï¿½Ë½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½Ê§Ð§
 	     sql="  UPDATE T07_USER_REIDENTITY_MID D SET FAILURECARD=(SELECT  C.FAILURECARD FROM(                                               "
 	    	 +" SELECT B.ORGANKEY,CASE WHEN B.AML1_TYPE_CD='01' THEN '4' ELSE '5' END AS REIDENTITYFLAG,COUNT(B.PARTY_ID) AS FAILURECARD     "
 	    	 +" FROM T10_CHECKPARTY_RE B                                                                                                     "
@@ -740,7 +756,7 @@ public class TotalReportBO {
 	      
 	      count = SQLExecute.exeSql(conn, sql);
 	      
-	      //¶ÔË½¾ÓÃñ·Ç¾ÓÃñÖ¤¼þÊ§Ð§ÒÑ¸üÐÂÊý
+	      //ï¿½ï¿½Ë½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½Ê§Ð§ï¿½Ñ¸ï¿½ï¿½ï¿½ï¿½ï¿½
 	      sql=" UPDATE T07_USER_REIDENTITY_M D SET UPDATECARD=( SELECT D.UPDATECARD-C.UPDATECARD FROM                      "  
 	    	  +" T07_USER_REIDENTITY_MID C WHERE C.ORGANKEY=D.ORGANKEY AND C.REIDENTITYFLAG=D.REIDENTITYFLAG)       "
 	    	  +"  WHERE D.REIDENTITYFLAG IN('4','5') AND D.STATISTICDATE="+func.vch2dt(statisticdate, "yyyy-mm-dd");
@@ -759,7 +775,7 @@ public class TotalReportBO {
 	      
 	      count = SQLExecute.exeSql(conn, sql);
 	      
-	      //¶ÔË½Ö¤¼þÊ§Ð§ÒÑ¸üÐÂÊý
+	      //ï¿½ï¿½Ë½Ö¤ï¿½ï¿½Ê§Ð§ï¿½Ñ¸ï¿½ï¿½ï¿½ï¿½ï¿½
 	      sql=" UPDATE T07_USER_REIDENTITY_M D SET UPDATECARD=( SELECT D.UPDATECARD-C.UPDATECARD FROM                             "  
 	    	  +" T07_USER_REIDENTITY_MID C WHERE C.ORGANKEY=D.ORGANKEY AND C.REIDENTITYFLAG=D.REIDENTITYFLAG)       "
 	    	  +"  WHERE D.REIDENTITYFLAG IN('3') AND D.STATISTICDATE="+func.vch2dt(statisticdate, "yyyy-mm-dd");
@@ -779,7 +795,7 @@ public class TotalReportBO {
 	      count = SQLExecute.exeSql(conn, sql);
 	      
 	      
-	      //¶Ô¹«Ö¤¼þÊ§Ð§ÒÑ¸üÐÂÊý
+	      //ï¿½Ô¹ï¿½Ö¤ï¿½ï¿½Ê§Ð§ï¿½Ñ¸ï¿½ï¿½ï¿½ï¿½ï¿½
 	      sql=" UPDATE T07_USER_REIDENTITY_M D SET UPDATECARD=( SELECT D.UPDATECARD-C.UPDATECARD FROM                            "  
 	    	  +"  T07_USER_REIDENTITY_MID C WHERE C.ORGANKEY=D.ORGANKEY AND C.REIDENTITYFLAG=D.REIDENTITYFLAG)       "
 	    	  +"  WHERE D.REIDENTITYFLAG IN('1') AND D.STATISTICDATE="+func.vch2dt(statisticdate, "yyyy-mm-dd");

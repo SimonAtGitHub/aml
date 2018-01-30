@@ -38,8 +38,11 @@ public class CalReportTotal extends BaseCalTask {
 		try {
 			String statisticdate=this.t18_task_fact.getStatisticdate();
 			
-			 int  count=reportBo.T10_CHECKPARTY_NEW(conn, statisticdate,"T10_CHECKPARTY_NEW");
-			   count=reportBo.T10_CHECKPARTY_NEW(conn, statisticdate,"T10_CHECKPARTY_RE");
+//			 int  count=reportBo.T10_CHECKPARTY_NEW(conn, statisticdate,"T10_CHECKPARTY_NEW");
+//			   count=reportBo.T10_CHECKPARTY_NEW(conn, statisticdate,"T10_CHECKPARTY_RE");
+			int  count=reportBo.del_T10_CHECKPARTY(conn, statisticdate,"T10_CHECKPARTY_NEW");
+			   count=reportBo.del_T10_CHECKPARTY(conn, statisticdate,"T10_CHECKPARTY_RE");
+			   count=reportBo.del_T10_CHECKPARTY(conn, statisticdate,"T10_CHECKPARTY_RELT");
 			   count=reportBo.del_T07_Table_MID(conn, statisticdate,"T07_USER_IDENTITY_D");
 			   count=reportBo.del_T07_Table_MID(conn, statisticdate,"T07_USER_REIDENTITY_D");
 			   count=reportBo.del_T07_Table_MID1(conn, statisticdate,"T10_PARTY_CRETAL_D");
