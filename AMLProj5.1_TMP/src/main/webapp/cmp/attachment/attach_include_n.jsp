@@ -5,8 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 
 <script language="JavaScript" src="<%=request.getContextPath()%>/js/upload_attachment.js"></script>
-
-
+ 
 <input type="hidden" id="attachkeys" name="attachkeys" />
 <script>
   var obj = document.getElementById("attachkeys").value = '<c:out value="${attachkeyString}" />'; //单引号不能丢
@@ -31,30 +30,24 @@
         <input type=button value="添 加 附 件" name="add" class="input"
             onClick="uploadfile_n('<%=request.getContextPath()%>/cmp/attachment/t01_attachment_addType.do?programakey=<c:out value="${t12_articleActionForm.programakey}" />&systemkey=<c:out value="${systemkey}" />')">
     </p>
-    <div class='awp_dynamic_list'>
+    <div class='list'>
         <table id="attachListTable">
             <tr align="center">
-                  <td>
-                    附件类别
-                </td>
-                <td>
+                <th>
                     附件名称
-                </td>
-                <td>
+                </th>
+                <th>
                     文件大小(KB)
-                </td>
-                <td>
+                </th>
+                <th>
                     创建人
-                </td>
-                <td>
+                </th>
+                <th>
                     操作
-                </td>
+                </th>
             </tr>
             <c:forEach var="attachList" items="${t01_attachmentList}">
                 <TR align="center">
-                	<TD nowrap>
-                        <c:out value="${attachList['attachtype_disp']}" />
-                    </TD>
                     <TD>
                         <a href="javascript:void(0);"
                             onclick="showAttach('<%=request.getContextPath()%>/cmp/attachment/t01_attachment_disp.do?attachkey=<c:out value="${attachList['attachkey']}" />')"><c:out
@@ -85,27 +78,21 @@
 
 <!-- 只显示附件 -->
 <c:if test="${showMode == 'view'}">
-    <div class='awp_dynamic_list'>
+    <div class='list'>
         <table id="attachShow">
             <tr align="center">
-                <td class="td_right_bottom">
-                    附件类别
-                </td>
-                <td class="td_right_bottom">
+                <th>
                     附件名称
-                </td>
-                <td class="td_right_bottom">
+                </th>
+                <th>
                     文件大小(KB)
-                </td>
-                <td class="td_right_bottom">
+                </th>
+                <th>
                     创建人
-                </td>
+                </th>
             </tr>
             <c:forEach var="attachList" items="${t01_attachmentList}">
                 <TR align="center">
-                	<TD nowrap>
-                        <c:out value="${attachList['attachtype']}" />
-                    </TD>
                     <TD>
                         <a href="javascript:void(0);"
                             onclick="showAttach('<%=request.getContextPath()%>/cmp/attachment/t01_attachment_disp.do?attachkey=<c:out value="${attachList['attachkey']}" />')"><c:out

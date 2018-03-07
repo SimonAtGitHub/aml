@@ -224,3 +224,35 @@ function addAttach_n(dispPath,editPath,akey,fname,filesize,creator,attachtype){
 	myTD = objRow.insertCell();
 	myTD.innerHTML = "<a href=\"#\" onclick=\"delAttach('"+akey+"')\">删除</a>";
 }
+
+
+//页面上新增附件
+function addAttach_ch(dispPath,editPath,akey,fname,filesize,creator,attachtype){
+	var s = document.getElementById("attachkeys").value;
+	if (s.length == 0){
+		s = akey;
+	}else{
+		s = s + "," + akey;
+	}
+	document.getElementById("attachkeys").value = s;
+
+	var objTable = document.getElementById("attachListTable");
+ 	var objRow = objTable.insertRow(); 
+ 	
+ 	//设置行的样式
+ 	objRow.style.backgroundColor="#FFFFFF";
+ 	objRow.style.textAlign="center";
+	
+	myTD = objRow.insertCell();
+	//myTD.innerText = fname;
+	myTD.innerHTML = "<a href=\"javascript:void(0);\" onclick=\"showAttach('/aml/cmp/attachment/t01_attachment_disp.do?attachkey="+akey+"')\">"+fname+"</a>";
+
+	myTD = objRow.insertCell();
+	myTD.innerText = filesize;
+
+	myTD = objRow.insertCell();
+	myTD.innerText = creator;
+
+	myTD = objRow.insertCell();
+	myTD.innerHTML = "<a href=\"javascript:void(0);\" onclick=\"delAttach('"+akey+"')\">删除</a>";
+}

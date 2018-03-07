@@ -167,6 +167,16 @@ function checkForm(theUrl){
                   </html:select>
           </td>
         </tr>
+         <tr>
+		 <td>金融机构代码：</td>
+         <td><html:text property="organcode" /></td>
+		 <td><font color="#FF0000">*</font>是否跨境：</td>
+         <td>
+         <html:select property="overarea_ind">
+                      <html:options collection="overarea_indMap" property="label" labelProperty="value"/>
+          </html:select>
+		</td>
+        </tr> 
          
      
 	        <tr>

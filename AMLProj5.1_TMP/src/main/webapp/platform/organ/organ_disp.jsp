@@ -56,6 +56,16 @@ function dosubmit(theUrl){
        
           </td>
         </tr>
+        
+         <tr>
+		 <td>金融机构代码：</td>
+         <td><bean:write name="t00_organ"  property="organcode" />
+               </td>
+		 <td>是否跨境：</td>
+         <td> <bean:write name="t00_organ"  property="overarea_ind_disp" />
+               </td>
+        </tr>
+        
          
      
 	        <tr>
