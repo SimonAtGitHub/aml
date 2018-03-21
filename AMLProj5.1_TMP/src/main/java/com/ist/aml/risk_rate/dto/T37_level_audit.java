@@ -57,8 +57,42 @@ private String statistic_dt_disp = "";
 /** 调整日期 */
 private String last_upd_dt_disp = "";
 private String tablename="";
-                                              
-    public String getTablename() {
+private String party_chn_name = ""; 
+private String check_user = "";
+private String rcheck_user = ""; 
+private String party_class_cd = "";
+private String create_dt;
+    public String getCreate_dt() {
+	return create_dt;
+}
+public void setCreate_dt(String create_dt) {
+	this.create_dt = create_dt;
+}
+	public String getParty_class_cd() {
+	return party_class_cd;
+}
+public void setParty_class_cd(String party_class_cd) {
+	this.party_class_cd = party_class_cd;
+}
+	public String getParty_chn_name() {
+	return party_chn_name;
+}
+public void setParty_chn_name(String party_chn_name) {
+	this.party_chn_name = party_chn_name;
+}
+public String getCheck_user() {
+	return check_user;
+}
+public void setCheck_user(String check_user) {
+	this.check_user = check_user;
+}
+public String getRcheck_user() {
+	return rcheck_user;
+}
+public void setRcheck_user(String rcheck_user) {
+	this.rcheck_user = rcheck_user;
+}
+	public String getTablename() {
 	return tablename;
 }
 public void setTablename(String tablename) {

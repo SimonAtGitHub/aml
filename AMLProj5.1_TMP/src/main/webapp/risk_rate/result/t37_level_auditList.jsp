@@ -11,7 +11,7 @@
 	<script language="JavaScript" src="../../js/basefunc.js"></script>
 	<script LANGUAGE="JavaScript" src="../../js/uc.js"></script>
 	<script language="JavaScript">
-function dosubmit(theUrl){
+function dosubmit(theUrl){ 
    document.forms[0].action=theUrl;
    document.forms[0].submit();
 }
@@ -49,12 +49,15 @@ function dosubmit(theUrl){
 				<th align="center" >
 					调整人
 				</th>
+				<th align="center">
+					<a href="#" onclick="dosubmit('getT37_level_auditList_export.do?party_id=<%=session.getAttribute("party_id")%>')" >
+					<img src="../../images/blue/b_export.png" />导出评级台账</a>
+				</th>
 			</tr>
 			<logic:present name="t37_level_auditList">
 			
 				<logic:iterate id="result" name="t37_level_auditList"
 					type="com.ist.aml.risk_rate.dto.T37_level_audit">
-					
 					<tr>
 						<td align="center"  height="22">
 							<bean:write name="result" property="audit_no" />
@@ -79,7 +82,7 @@ function dosubmit(theUrl){
 						</td>
 						<td align="center"  >
 							<bean:write name="result" property="last_upd_user" />
-						</td>
+						</td>			
 					</tr>
 				</logic:iterate>
 			</logic:present>

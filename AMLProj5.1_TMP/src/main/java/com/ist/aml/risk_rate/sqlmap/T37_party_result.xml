@@ -483,7 +483,7 @@
 		parameterClass="com.ist.aml.risk_rate.dto.T37_party_result"
 		resultClass="com.ist.aml.risk_rate.dto.T37_level_audit">
 		SELECT
-		A.AUDIT_NO,A.LAST_UPD_DT,A.LAST_UPD_USER,A.LEVEL_BEFORE_ADJUST,A.LEVEL_AFTER_ADJUST, A.RES_POST_ID,
+		A.PARTY_ID,A.AUDIT_NO,A.LAST_UPD_DT,A.LAST_UPD_USER,A.LEVEL_BEFORE_ADJUST,A.LEVEL_AFTER_ADJUST, A.RES_POST_ID,
 		A.ADJUST_REASON,A.POST_ID FROM $table_name$ A WHERE
 		A.RSLTKEY=#resulekey# 
 		<isNotEmpty prepend="AND" property="organkey">
@@ -491,6 +491,14 @@
 		 </isNotEmpty>
 		 order by A.AUDIT_NO desc
   </statement>
+  <statement id="getT37_level_auditList1"
+       parameterClass="com.ist.aml.risk_rate.dto.T37_party_result"
+	   resultClass="com.ist.aml.risk_rate.dto.T37_level_audit">
+	   SELECT
+		A.PARTY_ID,A.AUDIT_NO,A.LAST_UPD_DT,A.LAST_UPD_USER,A.LEVEL_BEFORE_ADJUST,A.LEVEL_AFTER_ADJUST, A.RES_POST_ID,
+		A.ADJUST_REASON,A.POST_ID,B.PARTY_CHN_NAME,B.PARTY_CLASS_CD,B.CHECK_USER,B.RCHECK_USER,B.CREATE_DT FROM T37_LEVEL_AUDIT A,T37_PARTY_RESULT B WHERE
+		A.PARTY_ID=#party_id# AND A.PARTY_ID =B.PARTY_ID
+    </statement>
   <statement id="getT37_level_auditListCount"
 		parameterClass="com.ist.aml.risk_rate.dto.T37_party_result"
 		resultClass="int">
