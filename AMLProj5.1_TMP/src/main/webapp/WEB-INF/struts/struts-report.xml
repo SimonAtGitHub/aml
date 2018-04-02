@@ -730,13 +730,21 @@
 			validate="false" scope="request">
 			<forward name="success" path="/listmanager/t07_obj_rule_list.jsp" />
 		</action>
-
+        <action path="/listmanager/t07_obj_rule_check" parameter="getT07_OBJ_RULECheck"
+			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_obj_ruleCheck.jsp" />
+		</action>
 		<action path="/listmanager/t07_obj_rule_disp" parameter="getT07_OBJ_RULEDisp"
 			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
 			validate="false" scope="request">
 			<forward name="success" path="/listmanager/t07_obj_rule_disp.jsp" />
 		</action>
-
+        <action path="/listmanager/t07_obj_rule_dispCheck" parameter="getT07_OBJ_RULEDispCheck"
+			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_obj_rule_dispCheck.jsp" />
+		</action>
 		<action path="/listmanager/t07_blacklist_list_look" parameter="getT07_BlacklistList"
 			name="t07_blacklistActionForm" type="com.ist.aml.report.controller.T07_BlacklistAction"
 			validate="false" scope="request">
@@ -761,7 +769,12 @@
 			<forward name="success" path="/listmanager/t07_obj_rule_add.jsp" />
 			<forward name="failure" path="/listmanager/t07_obj_rule_list.do" />
 		</action>
-
+		<action path="/listmanager/t07_obj_rule_addCheck" parameter="addT07_OBJ_RULECheck"
+			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_obj_rule_addCheck.jsp" />
+			<forward name="failure" path="/listmanager/t07_obj_rule_check.do" />
+		</action>
 		<action path="/listmanager/t07_obj_rule_add_do" parameter="addT07_OBJ_RULEDo"
 			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
 			validate="false" scope="request">
@@ -769,14 +782,24 @@
 			<forward name="success1" path="/listmanager/t07_obj_rule_list_check.do" />
 			<forward name="failure" path="/listmanager/t07_obj_rule_add.do" />
 		</action>
-
+        <action path="/listmanager/t07_obj_rule_add_doCheck" parameter="addT07_OBJ_RULEDoCheck"
+			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_obj_rule_check.do" />
+			<forward name="failure" path="/listmanager/t07_obj_rule_addCheck.do" />
+		</action>
 		<action path="/listmanager/t07_obj_rule_modify" parameter="modifyT07_OBJ_RULE"
 			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
 			validate="false" scope="request">
 			<forward name="success" path="/listmanager/t07_obj_rule_modify.jsp" />
 			<forward name="failure" path="/listmanager/t07_obj_rule_list.do" />
 		</action>
-
+       <action path="/listmanager/t07_obj_rule_modifyCheck" parameter="modifyT07_OBJ_RULECheck"
+			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_obj_rule_modifyCheck.jsp" />
+			<forward name="failure" path="/listmanager/t07_obj_rule_check.do" />
+		</action>
 		<action path="/listmanager/t07_obj_rule_modify_do" parameter="modifyT07_OBJ_RULEDo"
 			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
 			validate="false" scope="request">
@@ -784,7 +807,12 @@
 			<forward name="success1" path="/listmanager/t07_obj_rule_list_check.do" />
 			<forward name="failure" path="/listmanager/t07_obj_rule_modify.do" />
 		</action>
-		
+		<action path="/listmanager/t07_obj_rule_modifyCheck_do" parameter="modifyT07_OBJ_RULEDoCheck"
+			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success" path="/listmanager/t07_obj_rule_check.do" />
+			<forward name="failure" path="/listmanager/t07_obj_rule_modifyCheck.do" />
+		</action>
 		<action path="/listmanager/t07_obj_rule_delete_do"
 			parameter="deleteT07_OBJ_RULEDo" name="t07_obj_ruleActionForm"
 			type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
@@ -794,7 +822,15 @@
 			<forward name="failure"
 				path="/listmanager/t07_obj_rule_list.do" />
 		</action>
-
+        <action path="/listmanager/t07_obj_rule_deleteCheck_do"
+			parameter="deleteT07_OBJ_RULEDoCheck" name="t07_obj_ruleActionForm"
+			type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
+			validate="false" scope="request">
+			<forward name="success"
+				path="/listmanager/t07_obj_rule_check.do" />
+			<forward name="failure"
+				path="/listmanager/t07_obj_rule_check.do" />
+		</action>
 		<action path="/listmanager/t07_obj_rule_list_inport" parameter="inportT07_OBJ_RULEDo"
 			name="t07_obj_ruleActionForm" type="com.ist.aml.report.controller.T07_OBJ_RULEAction"
 			validate="false" scope="request">

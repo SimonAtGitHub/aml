@@ -123,6 +123,132 @@ public class T07_OBJ_RULE implements Serializable {
 	/** MODIFY_DT */
 	private String modify_dt_disp = "";
 	private String[] selectedPartyId = {};
+	private String bank_name;
+	private String bank_code2;
+	private String checkdate;
+	private String checkdate1;
+	public String getCheckdate1() {
+		return checkdate1;
+	}
+
+	public void setCheckdate1(String checkdate1) {
+		this.checkdate1 = checkdate1;
+	}
+
+	private String checktime;
+	private String name;
+	private String id_no;
+	private String result;
+	private String counter_no;
+	private String ope_line;
+	private String checkmode;
+	private String purpose;
+	private String tb_id;
+	private String is_inst;
+	public String getBank_name() {
+		return bank_name;
+	}
+
+	public void setBank_name(String bank_name) {
+		this.bank_name = bank_name;
+	}
+
+	public String getBank_code2() {
+		return bank_code2;
+	}
+
+	public void setBank_code2(String bank_code2) {
+		this.bank_code2 = bank_code2;
+	}
+
+	public String getCheckdate() {
+		return checkdate;
+	}
+
+	public void setCheckdate(String checkdate) {
+		this.checkdate = checkdate;
+	}
+
+	public String getChecktime() {
+		return checktime;
+	}
+
+	public void setChecktime(String checktime) {
+		this.checktime = checktime;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getId_no() {
+		return id_no;
+	}
+
+	public void setId_no(String id_no) {
+		this.id_no = id_no;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+	public String getCounter_no() {
+		return counter_no;
+	}
+
+	public void setCounter_no(String counter_no) {
+		this.counter_no = counter_no;
+	}
+
+	public String getOpe_line() {
+		return ope_line;
+	}
+
+	public void setOpe_line(String ope_line) {
+		this.ope_line = ope_line;
+	}
+
+	public String getCheckmode() {
+		return checkmode;
+	}
+
+	public void setCheckmode(String checkmode) {
+		this.checkmode = checkmode;
+	}
+
+	public String getPurpose() {
+		return purpose;
+	}
+
+	public void setPurpose(String purpose) {
+		this.purpose = purpose;
+	}
+
+	public String getTb_id() {
+		return tb_id;
+	}
+
+	public void setTb_id(String tb_id) {
+		this.tb_id = tb_id;
+	}
+
+	public String getIs_inst() {
+		return is_inst;
+	}
+
+	public void setIs_inst(String is_inst) {
+		this.is_inst = is_inst;
+	}
+
 	public String[] getSelectedPartyId() {
 		return selectedPartyId;
 	}

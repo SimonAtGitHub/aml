@@ -105,6 +105,11 @@ public class T07_OBJ_RULEAction extends BaseAction {
 			myforward = performGetT07_OBJ_RULEList(mapping, form, request,
 					response);
 		}
+		//联网核查查询结果
+		else if ("getT07_OBJ_RULECheck".equalsIgnoreCase(myaction)) {
+			myforward = performGetT07_OBJ_RULECheck(mapping, form, request,
+					response);
+		}
 		// 灰名单
 		else if ("getT07_grey_list".equalsIgnoreCase(myaction)) {
 			myforward = performGetT07_greyList(mapping, form, request, response);
@@ -113,6 +118,16 @@ public class T07_OBJ_RULEAction extends BaseAction {
 		else if ("getT07_OBJ_RULEDisp".equalsIgnoreCase(myaction)) {
 			myforward = performGetT07_OBJ_RULEDisp(mapping, form, request,
 					response);
+		}
+		//联网核查详细信息
+		// 查询详细信息
+		else if ("getT07_OBJ_RULEDispCheck".equalsIgnoreCase(myaction)) {
+			myforward = performGetT07_OBJ_RULEDispCheck(mapping, form, request,
+					response);
+				}
+		//联网核查添加页面
+		else if ("addT07_OBJ_RULECheck".equalsIgnoreCase(myaction)) {
+			myforward = performAddT07_OBJ_RULECheck(mapping, form, request, response);
 		}
 		// 添加界面
 		else if ("addT07_OBJ_RULE".equalsIgnoreCase(myaction)) {
@@ -124,6 +139,11 @@ public class T07_OBJ_RULEAction extends BaseAction {
 		else if ("addT07_OBJ_RULEDo".equalsIgnoreCase(myaction)) {
 			myforward = performAddT07_OBJ_RULEDo(mapping, form, request,
 					response);
+		}
+		//联网核查 添加动作
+		else if ("addT07_OBJ_RULEDoCheck".equalsIgnoreCase(myaction)) {
+		    myforward = performAddT07_OBJ_RULEDoCheck(mapping, form, request,
+						response);
 		} else if ("addT07_greyDo".equalsIgnoreCase(myaction)) {
 			myforward = performAddT07_greyDo(mapping, form, request, response);
 		}
@@ -131,8 +151,19 @@ public class T07_OBJ_RULEAction extends BaseAction {
 		else if ("modifyT07_OBJ_RULE".equalsIgnoreCase(myaction)) {
 			myforward = performModifyT07_OBJ_RULE(mapping, form, request,
 					response);
-		} else if ("modifyT07_grey".equalsIgnoreCase(myaction)) {
+		}
+		// 联网核查修改界面
+	    else if ("modifyT07_OBJ_RULECheck".equalsIgnoreCase(myaction)) {
+			myforward = performModifyT07_OBJ_RULECheck(mapping, form, request,
+					response);
+		}
+		else if ("modifyT07_grey".equalsIgnoreCase(myaction)) {
 			myforward = performModifyT07_grey(mapping, form, request, response);
+		}
+		// 联网核查修改提交动作
+		else if ("modifyT07_OBJ_RULEDoCheck".equalsIgnoreCase(myaction)) {
+			myforward = performModifyT07_OBJ_RULEDoCheck(mapping, form, request,
+				    response);
 		}
 		// 修改动作
 		else if ("modifyT07_OBJ_RULEDo".equalsIgnoreCase(myaction)) {
@@ -147,6 +178,11 @@ public class T07_OBJ_RULEAction extends BaseAction {
 			myforward = performDeleteT07_OBJ_RULEDo(mapping, form, request,
 					response);
 		}
+		//联网核查删除动作
+	    else if ("deleteT07_OBJ_RULEDoCheck".equalsIgnoreCase(myaction)) {
+			myforward = performDeleteT07_OBJ_RULEDoCheck(mapping, form, request,
+					response);
+				}
 		// 导入名单 modfiy by shichao 2011-8-24
 		else if ("inportT07_OBJ_RULEDo".equalsIgnoreCase(myaction)) {
 			myforward = performInportT07_OBJ_RULEDo(mapping, form, request,
@@ -381,6 +417,108 @@ public class T07_OBJ_RULEAction extends BaseAction {
 		request.setAttribute("t07_obj_ruleList", t07_obj_ruleList);
 		return actionMapping.findForward("success");
 	}
+/**
+ * 联网核查列表显示
+ * */
+	public ActionForward performGetT07_OBJ_RULECheck(
+			ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) {
+		ActionErrors errors = new ActionErrors();
+		HttpSession session = request.getSession();
+		ArrayList t07_obj_ruleList = new ArrayList();
+		String pageInfo = "";
+		T07_OBJ_RULEDAO t07_obj_ruleDAO = (T07_OBJ_RULEDAO) context
+				.getBean("t07_obj_ruleDAO");
+		T07_OBJ_RULE t07_obj_rule = new T07_OBJ_RULE();
+		try {
+			T07_OBJ_RULEActionForm form = (T07_OBJ_RULEActionForm) actionForm;
+			String newsearchflag = StringUtils.nullObject2String(request
+					.getParameter("newsearchflag"));		
+			int intPage = PageUtils.intPage(request, newsearchflag);
+			LinkedHashMap checkresultMap = cm.getMapFromCache("checkresults");
+			request.setAttribute("checkresultMap", this.getOptionsListByMap(checkresultMap,
+					null, true));
+			LinkedHashMap is_instMap = cm.getMapFromCache("is_inst");
+			request.setAttribute("is_instMap", this.getOptionsListByMap(is_instMap,
+					null, true));			// 新的查询
+			if (newsearchflag.equals("1")){
+				String checkdate = form.getCheckdate();
+				String checkdate1 = form.getCheckdate1();
+				String qcheckdate = null;
+				String qcheckdate1 = null;
+				if(!"".equals(checkdate)&&!"".equals(checkdate1)){
+					qcheckdate = checkdate.substring(0, 4)+checkdate.substring(5, 7)+checkdate.substring(8, 10);
+					qcheckdate1 = checkdate1.substring(0, 4)+checkdate1.substring(5, 7)+checkdate1.substring(8, 10);
+					form.setCheckdate(qcheckdate);
+					form.setCheckdate1(qcheckdate1);
+				}
+				
+				if (form.getBank_code2() != null
+						&& !"".equals(form.getBank_code2().trim())) {
+					t07_obj_rule.setBank_code2(form.getBank_code2());
+				}
+				if (form.getResult() != null
+						&& !"".equals(form.getResult().trim())) {
+					t07_obj_rule.setResult(form.getResult());
+				}
+				if (form.getCheckmode() != null
+						&& !"".equals(form.getCheckmode().trim())) {
+					t07_obj_rule.setCheckmode(form.getCheckmode());
+				}
+				if (form.getCheckdate() != null
+						&& !"".equals(form.getCheckdate().trim())) {
+					t07_obj_rule.setCheckdate(form.getCheckdate());
+				}
+				
+				form.setCheckdate(checkdate);
+				form.setCheckdate1(checkdate1);
+				MyBeanUtils.copyBean2Bean(t07_obj_rule, form);
+				session.setAttribute("t07_obj_ruleSearchObj", t07_obj_rule);
+			} else {// 翻页
+				t07_obj_rule = (T07_OBJ_RULE) session
+						.getAttribute("t07_obj_ruleSearchObj");
+				if (t07_obj_rule == null) {
+					t07_obj_rule = new T07_OBJ_RULE();
+				}
+				MyBeanUtils.copyBean2Bean(form, t07_obj_rule);
+				
+			}
+			if (!newsearchflag.equals("2")) {
+				if (t07_obj_rule == null) {
+					t07_obj_rule = new T07_OBJ_RULE();
+				}
+					t07_obj_ruleList = t07_obj_ruleDAO
+							.getT07_OBJ_RULECheck(sqlMap, t07_obj_rule,
+									this.getStartRec(intPage), this
+											.getIntPageSize());
+					int totalRow = t07_obj_ruleDAO
+							.getT07_OBJ_RULECheckCount(sqlMap,
+									t07_obj_rule);
+					String url = request.getContextPath() + "/report"
+							+ actionMapping.getPath() + ".do";
+					pageInfo = this.getPageInfoStr(totalRow, intPage, url, "");
+				} else {
+					t07_obj_ruleList = t07_obj_ruleDAO.getT07_OBJ_RULECheck(
+							sqlMap, t07_obj_rule, this.getStartRec(intPage),
+							this.getIntPageSize());
+					int totalRow = t07_obj_ruleDAO.getT07_OBJ_RULECheckCount(
+							sqlMap, t07_obj_rule);
+					String url = request.getContextPath() + "/report"
+							+ actionMapping.getPath() + ".do";
+					pageInfo = this.getPageInfoStr(totalRow, intPage, url, "");
+				}
+		} catch (Exception e) {
+			e.printStackTrace();
+			errors.add(errors.GLOBAL_ERROR, new ActionError(
+					"error.pagertitle.default"));
+			saveErrors(request, errors);
+			return actionMapping.findForward("failure");
+		}
+
+		request.setAttribute("pageInfo", pageInfo);
+		request.setAttribute("t07_obj_ruleList", t07_obj_ruleList);
+		return actionMapping.findForward("success");
+	}
 
 	public ActionForward performGetT07_greyList(ActionMapping actionMapping,
 			ActionForm actionForm, HttpServletRequest request,
@@ -475,7 +613,46 @@ public class T07_OBJ_RULEAction extends BaseAction {
 
 		return actionMapping.findForward("success");
 	}
+    /**
+     * 联网核查详细页面
+     * */
+	public ActionForward performGetT07_OBJ_RULEDispCheck(
+			ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) {
+		ActionErrors errors = new ActionErrors();
+		String changeflag = StringUtils.nullObject2String(request
+				.getParameter("changeflag"));
+		// 管理页面
+		if ("1".equals(changeflag))
+			request.setAttribute("url", "t07_obj_rule_check.do?intPage="
+					+ request.getSession().getAttribute("intPage"));
+		T07_OBJ_RULEDAO t07_obj_ruleDAO = (T07_OBJ_RULEDAO) context
+				.getBean("t07_obj_ruleDAO");
+		T07_OBJ_RULE t07_obj_rule = new T07_OBJ_RULE();
+		try {
+			T07_OBJ_RULEActionForm form = (T07_OBJ_RULEActionForm) actionForm;
+			T07_OBJ_RULE t07_obj_rule1 = new T07_OBJ_RULE();
+			String id_no = form.getId_no();
+			t07_obj_rule1.setId_no(id_no);
+			t07_obj_rule = t07_obj_ruleDAO
+					.getT07_OBJ_RULEDispCheck(sqlMap, t07_obj_rule1);
+			// 获取机构
+//			LinkedHashMap organMap = cm.getMapFromCache("organ");
+//			t07_obj_rule.setBank_code2((String) organMap.get(t07_obj_rule
+//					.getOrgankey()));
 
+		} catch (Exception e) {
+			e.printStackTrace();
+			errors.add(errors.GLOBAL_ERROR, new ActionError(
+					"error.pagertitle.default"));
+			saveErrors(request, errors);
+			return actionMapping.findForward("failure");
+		}
+		
+		request.setAttribute("t07_obj_rule", t07_obj_rule);
+		//
+		return actionMapping.findForward("success");
+	}
 	/**
 	 * 详细信息 孙日朋 2009-6-26
 	 * 
@@ -536,6 +713,28 @@ public class T07_OBJ_RULEAction extends BaseAction {
 		
 		request.setAttribute("t07_obj_rule", t07_obj_rule);
 		//
+		return actionMapping.findForward("success");
+	}
+    /**
+     * 联网核查添加页面
+     * */
+	public ActionForward performAddT07_OBJ_RULECheck(ActionMapping actionMapping,
+			ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		ActionErrors errors = new ActionErrors();
+		T07_OBJ_RULEActionForm form = (T07_OBJ_RULEActionForm) actionForm;
+		// 客户类别
+		LinkedHashMap checkresultMap = cm.getMapFromCache("checkresults");		
+		request.setAttribute("checkresultMap", this.getOptionsListByMap(
+				checkresultMap, null, true));
+		// 免检测类型
+		LinkedHashMap checkmethodMap = cm.getMapFromCache("checkmethod");
+		request.setAttribute("checkmethodMap", this.getOptionsListByMap(
+				checkmethodMap, null, true));
+		// 是否启用
+		LinkedHashMap is_instMap = cm.getMapFromCache("is_inst");
+		request.setAttribute("is_instMap", this.getOptionsListByMap(is_instMap,
+				null, true));
 		return actionMapping.findForward("success");
 	}
 
@@ -606,6 +805,77 @@ public class T07_OBJ_RULEAction extends BaseAction {
 		request.setAttribute("isuseMap", this.getOptionsListByMap(isuseMap,
 				null, true));
 
+		return actionMapping.findForward("success");
+	}
+    /**
+     * 联网核查新建提交
+     * */
+	public ActionForward performAddT07_OBJ_RULEDoCheck(ActionMapping actionMapping,
+			ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		ActionErrors errors = new ActionErrors();
+		HttpSession session = request.getSession();
+		T07_OBJ_RULEDAO t07_obj_ruleDAO = (T07_OBJ_RULEDAO) context
+				.getBean("t07_obj_ruleDAO");
+		T07_OBJ_RULE t07_obj_rule = new T07_OBJ_RULE();
+		// 获取当前用户信息
+		AuthBean authBean = (AuthBean) session.getAttribute("authBean");
+		Authorization auth = authBean.getAuthToken();
+		String success = "";
+		try {
+			T07_OBJ_RULEActionForm form = (T07_OBJ_RULEActionForm) actionForm;
+			MyBeanUtils.copyBean2Bean(t07_obj_rule, form);
+			// 插入名单
+			t07_obj_rule.setIs_inst("1");
+			t07_obj_rule.setBank_name(form.getBank_name());
+			t07_obj_rule.setBank_code2(form.getBank_code2());
+			if(!"".equals(form.getCheckdate())){
+				String checkdate= form.getCheckdate();
+				checkdate=checkdate.substring(0, 4)+checkdate.substring(5, 7)+checkdate.substring(8, 10);
+				t07_obj_rule.setCheckdate(checkdate);
+			}
+			if(!"".equals(form.getChecktime())){
+			t07_obj_rule.setChecktime(form.getChecktime());
+			}
+			if(!"".equals(form.getName())){
+			t07_obj_rule.setName(form.getName());
+			}
+			t07_obj_rule.setId_no(form.getId_no());
+			t07_obj_rule.setResult(form.getResult());
+			if(!"".equals(form.getCounter_no())){
+			t07_obj_rule.setCounter_no(form.getCounter_no());
+			}
+			if(!"".equals(form.getOpe_line())){
+			t07_obj_rule.setOpe_line(form.getOpe_line());
+			}
+			t07_obj_rule.setCheckmode(form.getCheckmode());
+			if(!"".equals(form.getPurpose())){
+			t07_obj_rule.setPurpose(form.getPurpose());
+			}
+			if(!"".equals(form.getTb_id())){
+			t07_obj_rule.setTb_id(form.getTb_id());
+			}
+			sqlMap.endTransaction();
+			sqlMap.startTransaction();
+			int row = t07_obj_ruleDAO.insertT07_OBJ_RULECheck(sqlMap, t07_obj_rule);
+			if (row <= 0) {
+				throw new Exception("");
+			}
+			sqlMap.commitTransaction();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			errors.add(errors.GLOBAL_ERROR, new ActionError(
+					"error.pagertitle.default"));
+			saveErrors(request, errors);
+			return actionMapping.findForward("failure");
+
+		} finally {
+			try {
+				sqlMap.endTransaction();
+			} catch (Exception e) {
+			}
+		}
 		return actionMapping.findForward("success");
 	}
 
@@ -847,7 +1117,48 @@ public class T07_OBJ_RULEAction extends BaseAction {
 		request.setAttribute("t07_obj_rulename", t07_obj_rule.getParty_id());
 		return actionMapping.findForward("success");
 	}
-
+/**
+ * 联网核查修改
+ * */
+	public ActionForward performModifyT07_OBJ_RULECheck(ActionMapping actionMapping,
+			ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+		ActionErrors errors = new ActionErrors();
+		T07_OBJ_RULEDAO t07_obj_ruleDAO = (T07_OBJ_RULEDAO) context
+				.getBean("t07_obj_ruleDAO");
+		T07_OBJ_RULE t07_obj_rule = new T07_OBJ_RULE();
+		HttpSession session = request.getSession();
+		
+		try {
+			LinkedHashMap checkresultMap = cm.getMapFromCache("checkresults");
+			request.setAttribute("checkresultMap", this.getOptionsListByMap(
+					checkresultMap, null, true));
+			LinkedHashMap checkmethodMap = cm.getMapFromCache("checkmethod");
+			request.setAttribute("checkmethodMap", this.getOptionsListByMap(checkmethodMap,
+					null, true));
+			LinkedHashMap is_instMap = cm.getMapFromCache("is_inst");
+			request.setAttribute("is_instMap", this.getOptionsListByMap(is_instMap,
+					null, true));
+			T07_OBJ_RULEActionForm form = (T07_OBJ_RULEActionForm) actionForm;
+			String selectedPartyId = form.getSelectedPartyId()[0];
+			T07_OBJ_RULE t07_obj_rule_temp = new T07_OBJ_RULE();
+			t07_obj_rule_temp.setId_no(selectedPartyId);
+			t07_obj_rule = t07_obj_ruleDAO.getT07_OBJ_RULEDispCheck0(sqlMap,
+					t07_obj_rule_temp);
+			MyBeanUtils.copyBean2Bean(form, t07_obj_rule);
+//			form.setCheckmode(t07_obj_rule.getCheckmode());
+//			form.setResult(t07_obj_rule.getResult());
+			request.setAttribute("t07_obj_rule",t07_obj_rule);
+		} catch (Exception e) {
+			e.printStackTrace();
+			errors.add(errors.GLOBAL_ERROR, new ActionError(
+					"error.pagertitle.default"));
+			saveErrors(request, errors);
+			return actionMapping.findForward("failure");
+		}
+		request.setAttribute("t07_obj_rulename", t07_obj_rule.getId_no());
+		return actionMapping.findForward("success");
+	}
 	public ActionForward performModifyT07_grey(ActionMapping actionMapping,
 			ActionForm actionForm, HttpServletRequest request,
 			HttpServletResponse response) {
@@ -982,6 +1293,72 @@ public class T07_OBJ_RULEAction extends BaseAction {
 		}
 		return actionMapping.findForward(success);
 	}
+    /**
+     * 联网核查修改提交动作
+     * */
+	public ActionForward performModifyT07_OBJ_RULEDoCheck(
+			ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) {
+		ActionErrors errors = new ActionErrors();
+		HttpSession session = request.getSession();
+		T07_OBJ_RULEDAO t07_obj_ruleDAO = (T07_OBJ_RULEDAO) context
+				.getBean("t07_obj_ruleDAO");
+		T07_OBJ_RULE t07_obj_rule = new T07_OBJ_RULE();
+		AuthBean authBean = (AuthBean) session.getAttribute("authBean");
+		Authorization auth = authBean.getAuthToken();
+		String mdifyuser = auth.getT00_user().getUsername();
+		String success = "success";
+		
+		LinkedHashMap t87_sysparaMap = cm.getMapFromCache("t87_syspara");
+		
+		try {
+			T07_OBJ_RULEActionForm form = (T07_OBJ_RULEActionForm) actionForm;
+			MyBeanUtils.copyBean2Bean(t07_obj_rule, form);
+			if(!"".equals(form.getCheckdate())){
+				String checkdate= form.getCheckdate();
+				checkdate=checkdate.substring(0, 4)+checkdate.substring(5, 7)+checkdate.substring(8, 10);
+				t07_obj_rule.setCheckdate(checkdate);
+			}
+			if(!"".equals(form.getChecktime())){
+			t07_obj_rule.setChecktime(form.getChecktime());
+			}
+			if(!"".equals(form.getName())){
+			t07_obj_rule.setName(form.getName());
+			}
+			t07_obj_rule.setResult(form.getResult());
+			if(!"".equals(form.getCounter_no())){
+			t07_obj_rule.setCounter_no(form.getCounter_no());
+			}
+			if(!"".equals(form.getOpe_line())){
+			t07_obj_rule.setOpe_line(form.getOpe_line());
+			}
+			t07_obj_rule.setCheckmode(form.getCheckmode());
+			if(!"".equals(form.getPurpose())){
+			t07_obj_rule.setPurpose(form.getPurpose());
+			}
+			if(!"".equals(form.getTb_id())){
+			t07_obj_rule.setTb_id(form.getTb_id());
+			}		
+			sqlMap.endTransaction();
+			sqlMap.startTransaction();
+				t07_obj_ruleDAO.modifyT07_OBJ_RULECheck(sqlMap, t07_obj_rule);
+			sqlMap.commitTransaction();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			errors.add(errors.GLOBAL_ERROR, new ActionError(
+					"error.pagertitle.default"));
+			saveErrors(request, errors);
+			return actionMapping.findForward("failure");
+		}finally{
+			try{
+				sqlMap.endTransaction();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		return actionMapping.findForward(success);
+	}
 
 	public ActionForward performModifyT07_greyDo(ActionMapping actionMapping,
 			ActionForm actionForm, HttpServletRequest request,
@@ -1056,6 +1433,43 @@ public class T07_OBJ_RULEAction extends BaseAction {
 				String selectedPartyId = selectedPartyIds[i];
 				t07_obj_ruleDAO.deleteT07_OBJ_RULE(sqlMap, selectedPartyId);
 				t07_obj_ruleDAO.deleteT07_OBJ_RULES(sqlMap, selectedPartyId);
+			}
+			MyBeanUtils.copyBean2Bean(t07_obj_rule, form);
+			sqlMap.commitTransaction();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			errors.add(errors.GLOBAL_ERROR, new ActionError(
+					"error.pagertitle.default"));
+			saveErrors(request, errors);
+			return actionMapping.findForward("failure");
+		}finally{
+			try{
+				sqlMap.endTransaction();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		return actionMapping.findForward("success");
+	}
+    /**
+     * 联网核查删除动作
+     * */
+	public ActionForward performDeleteT07_OBJ_RULEDoCheck(
+			ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) {
+		ActionErrors errors = new ActionErrors();
+		T07_OBJ_RULEDAO t07_obj_ruleDAO = (T07_OBJ_RULEDAO) context
+				.getBean("t07_obj_ruleDAO");
+		T07_OBJ_RULE t07_obj_rule = new T07_OBJ_RULE();
+		try {
+			T07_OBJ_RULEActionForm form = (T07_OBJ_RULEActionForm) actionForm;
+			String[] selectedPartyIds = form.getSelectedPartyId();
+			sqlMap.endTransaction();
+			sqlMap.startTransaction();
+			for (int i = 0; i < selectedPartyIds.length; i++) {
+				String selectedPartyId = selectedPartyIds[i];
+				t07_obj_ruleDAO.deleteT07_OBJ_RULECheck(sqlMap, selectedPartyId);
 			}
 			MyBeanUtils.copyBean2Bean(t07_obj_rule, form);
 			sqlMap.commitTransaction();
