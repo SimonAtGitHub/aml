@@ -125,14 +125,6 @@ function dosubmit(theUrl){
 				<bean:write name="t07_obj_rule" property="purpose" />
 			</td>
 			<td height="22" align="right" bgcolor="ECF3FF">
-			          提取编号:
-			</td>
-			<td bgcolor="F6F9FF">
-				<bean:write name="t07_obj_rule" property="tb_id" />
-			</td>
-		</tr>
-		<tr>
-			<td height="22" align="right" bgcolor="ECF3FF">
 				是否系统补录：
 			</td>
 			<td colspan="4" bgcolor="F6F9FF">

@@ -72,7 +72,7 @@
 		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
 		resultClass="com.ist.aml.report.dto.T07_OBJ_RULE">
 		select
-		bank_name,bank_code2,checkdate,name,id_no,result,is_inst from T3R_LWHC_LOG
+		bank_name,bank_code2,checkdate,name,id_no,result,is_inst from T47_LWHC_LOG
 		where 1=1
 		<dynamic>
 			<isNotEmpty prepend="and" property="bank_code2">
@@ -128,7 +128,7 @@
    <statement id="getT07_OBJ_RULECheckCount"
 		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
 		resultClass="int">
-		select count(*) from T3R_LWHC_LOG where 1>0
+		select count(*) from T47_LWHC_LOG where 1>0
 		<dynamic>
 			<isNotEmpty prepend="and" property="bank_code2">
 				bank_code2 = #bank_code2#
@@ -232,12 +232,12 @@
 	<statement id="insertT07_OBJ_RULECheck" parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
 	resultClass="int">
 	insert into
-	T3R_LWHC_LOG(bank_name,bank_code2,checkdate,checktime,name,
-	id_no,result,counter_no,ope_line,checkmode,purpose,tb_id,is_inst )
+	T47_LWHC_LOG(bank_name,bank_code2,checkdate,checktime,name,
+	id_no,result,counter_no,ope_line,checkmode,purpose,is_inst )
 	values(
 	#bank_name#,#bank_code2#,#checkdate#,#checktime#,#name#,#id_no#,
 	#result#,#counter_no#,
-	#ope_line#,#checkmode#,#purpose#,#tb_id#,#is_inst#)
+	#ope_line#,#checkmode#,#purpose#,#is_inst#)
 	</statement>
 	<statement id="insertT07_grey"
 		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
@@ -287,9 +287,9 @@
 	<statement id="modifyT07_OBJ_RULECheck"
 		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
 		resultClass="int">
-		update T3R_LWHC_LOG set
+		update T47_LWHC_LOG set
 		checkdate=#checkdate#,checktime=#checktime#,name=#name#,
-		result=#result#,counter_no=#counter_no#,ope_line=#ope_line#,checkmode=#checkmode#,purpose=#purpose#,tb_id=#tb_id# where
+		result=#result#,counter_no=#counter_no#,ope_line=#ope_line#,checkmode=#checkmode#,purpose=#purpose# where
 		id_no=#id_no#
 	</statement>
 	<statement id="modifyT07_OBJ_RULE_ischeck"
@@ -340,7 +340,7 @@
 	</statement>
     <statement id="deleteT07_OBJ_RULECheck" parameterClass="java.lang.String"
 		resultClass="int">
-		delete from T3R_LWHC_LOG where id_no=#id_no#
+		delete from T47_LWHC_LOG where id_no=#id_no#
 	</statement>
 	<statement id="deleteT07_OBJ_RULES"
 		parameterClass="java.lang.String" resultClass="int">
@@ -362,7 +362,7 @@
 		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
 		resultClass="com.ist.aml.report.dto.T07_OBJ_RULE">
 		select
-		bank_name,bank_code2,checkdate,name,id_no,result,is_inst,checktime,counter_no,ope_line,checkmode,purpose,tb_id from T3R_LWHC_LOG
+		bank_name,bank_code2,checkdate,name,id_no,result,is_inst,checktime,counter_no,ope_line,checkmode,purpose from T47_LWHC_LOG
 		where id_no= #id_no#
 		<isNotEmpty prepend="and" property="bank_name">
 			BANK_NAME = #bank_name#
@@ -372,7 +372,7 @@
 		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
 		resultClass="com.ist.aml.report.dto.T07_OBJ_RULE">
 		select
-		bank_name,bank_code2,checkdate,name,id_no,result,is_inst,checktime,counter_no,ope_line,checkmode,purpose,tb_id from T3R_LWHC_LOG
+		bank_name,bank_code2,checkdate,name,id_no,result,is_inst,checktime,counter_no,ope_line,checkmode,purpose from T47_LWHC_LOG
 		where id_no= #id_no#
 		<isNotEmpty prepend="and" property="bank_name">
 			BANK_NAME = #bank_name#

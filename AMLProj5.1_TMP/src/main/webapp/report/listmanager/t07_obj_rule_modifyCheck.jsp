@@ -231,19 +231,6 @@ function  _Disp(){
 											size="20"/>
 									</div>
 								</TD>
-								<TD height="22" bgcolor="ECF3FF">
-									<div align="right">
-										<font color="#FF0000">*</font>提取编号：
-									</div>
-								</TD>
-								<TD bgcolor="F6F9FF">
-									<div align="left">
-										<html:text property="tb_id" styleClass="text_white"
-											size="20"/>
-									</div>
-								</TD>
-							</TR>
-							<TR align="center">
 								<td height="22" align="right" bgcolor="ECF3FF">
 									<div align="right">
 										<font color="#FF0000">*</font>摘要：
@@ -253,8 +240,7 @@ function  _Disp(){
 									<html:textarea cols="29" rows="3" property="purpose"></html:textarea>
 									<br>
 								</td>
-								
-							</tr>
+							</TR>
 							<tr>	
 								<td colspan="4" align="center">
 									<input type="button" class="in_button1" value="提 交"

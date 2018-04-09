@@ -272,18 +272,6 @@ function  _Disp(){
 									<br>
 								</td>
 							</TR>
-							<TR align="center">			
-								<TD height="22" bgcolor="ECF3FF">
-									<div align="right">
-										提取编号：
-									</div>
-								</TD>
-								<TD bgcolor="F6F9FF">
-									<div align="left">
-										<html:text property="tb_id" require="false" datatype="limit_max" max="256" msg="不能超过256个字符"/>
-									</div>
-								</TD>
-							</tr>
 							<tr>
 								
 								<td colspan="4" align="center">
