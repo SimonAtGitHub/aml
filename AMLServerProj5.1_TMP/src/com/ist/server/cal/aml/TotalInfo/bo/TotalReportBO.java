@@ -288,7 +288,7 @@ public class TotalReportBO {
 	   			"CARD_NO,ORGANKEY,CREATE_DT,PARTY_STATUS_CD,AML1_TYPE_CD,CHECK_STATUS) " +
 	   	   		" select PARTY_ID,HOST_CUST_ID,PARTY_CLASS_CD,PARTY_CHN_NAME,CARD_TYPE," +
 	   			"CARD_NO,ORGANKEY,create_dt,PARTY_STATUS_CD,AML1_TYPE_CD,'0'"
-	   			+"  from t47_party where LY!='1' AND CREATE_DT="+func.vch2dt(statisticdate, "yyyy-mm-dd");
+	   			+"  from t47_party where (LY!='1' or LY is null) AND CREATE_DT="+func.vch2dt(statisticdate, "yyyy-mm-dd");
 	      	  int count = SQLExecute.exeSql(conn, sql); 
 	      	insert_T10_T10_CHECKPARTY_RELT1(conn, statisticdate);
 	      	  return count;
