@@ -67,41 +67,41 @@ public class T07_INREP_BH_sum_rep extends BaseDTO {
 		org_ids = orgIds;
 	}                                             
 /** 对公客户人工预警外币交易金额 */
-private Integer amt_fc_man_c = new Integer(0);
+private Long amt_fc_man_c = new Long(0);
 /** 对私客户系统预警本币交易笔数 */
-private Integer trans_dc_sys_i = new Integer(0);
+private Long trans_dc_sys_i = new Long(0);
 /** 对私客户系统预警本币交易金额 */
-private Integer amt_dc_sys_i = new Integer(0);
+private Long amt_dc_sys_i = new Long(0);
 /** 对公客户人工预警外币交易笔数 */
-private Integer trans_fc_man_c = new Integer(0);
+private Long trans_fc_man_c = new Long(0);
 /** 对私客户人工预警外币交易笔数 */
-private Integer trans_fc_man_i = new Integer(0);
+private Long trans_fc_man_i = new Long(0);
 /** 对公客户系统预警外币交易笔数 */
-private Integer trans_fc_sys_c = new Integer(0);
+private Long trans_fc_sys_c = new Long(0);
 /** 对公客户系统预警本币交易金额 */
-private Integer amt_dc_sys_c = new Integer(0);
+private Long amt_dc_sys_c = new Long(0);
 /** 对公客户系统预警本币交易笔数 */
-private Integer trans_dc_sys_c = new Integer(0);
+private Long trans_dc_sys_c = new Long(0);
 /** 报送日期 */
 private Date report_dt = new Date();
 /** 对公客户人工预警本币交易笔数 */
-private Integer trans_dc_man_c = new Integer(0);
+private Long trans_dc_man_c = new Long(0);
 /** 对公客户人工预警本币交易金额 */
-private Integer amt_dc_man_c = new Integer(0);
+private Long amt_dc_man_c = new Long(0);
 /** 对私客户人工预警本币交易笔数 */
-private Integer trans_dc_man_i = new Integer(0);
+private Long trans_dc_man_i = new Long(0);
 /** 对私客户人工预警本币交易金额 */
-private Integer amt_dc_man_i = new Integer(0);
+private Long amt_dc_man_i = new Long(0);
 /** 机构号 */
 private String organkey = "";
 /** 对私客户系统预警外币交易金额 */
-private Integer amt_fc_sys_i = new Integer(0);
+private Long amt_fc_sys_i = new Long(0);
 /** 对私客户人工预警外币交易金额 */
-private Integer amt_fc_man_i = new Integer(0);
+private Long amt_fc_man_i = new Long(0);
 /** 对私客户系统预警外币交易笔数 */
-private Integer trans_fc_sys_i = new Integer(0);
+private Long trans_fc_sys_i = new Long(0);
 /** 对公客户系统预警外币交易金额 */
-private Integer amt_fc_sys_c = new Integer(0);
+private Long amt_fc_sys_c = new Long(0);
 //=======================================================
 /** 报送日期 */
 private String report_dt_disp = "";
@@ -111,59 +111,59 @@ private String report_dt_disp = "";
      */                   
     public T07_INREP_BH_sum_rep() {    
     }                     
-public void setAmt_fc_man_c(Integer iamt_fc_man_c){
+public void setAmt_fc_man_c(Long iamt_fc_man_c){
 this.amt_fc_man_c = iamt_fc_man_c;
 }
-public Integer getAmt_fc_man_c(){
+public Long getAmt_fc_man_c(){
 return this.amt_fc_man_c;
 }
 
-public void setTrans_dc_sys_i(Integer itrans_dc_sys_i){
+public void setTrans_dc_sys_i(Long itrans_dc_sys_i){
 this.trans_dc_sys_i = itrans_dc_sys_i;
 }
-public Integer getTrans_dc_sys_i(){
+public Long getTrans_dc_sys_i(){
 return this.trans_dc_sys_i;
 }
 
-public void setAmt_dc_sys_i(Integer iamt_dc_sys_i){
+public void setAmt_dc_sys_i(Long iamt_dc_sys_i){
 this.amt_dc_sys_i = iamt_dc_sys_i;
 }
-public Integer getAmt_dc_sys_i(){
+public Long getAmt_dc_sys_i(){
 return this.amt_dc_sys_i;
 }
 
-public void setTrans_fc_man_c(Integer itrans_fc_man_c){
+public void setTrans_fc_man_c(Long itrans_fc_man_c){
 this.trans_fc_man_c = itrans_fc_man_c;
 }
-public Integer getTrans_fc_man_c(){
+public Long getTrans_fc_man_c(){
 return this.trans_fc_man_c;
 }
 
-public void setTrans_fc_man_i(Integer itrans_fc_man_i){
+public void setTrans_fc_man_i(Long itrans_fc_man_i){
 this.trans_fc_man_i = itrans_fc_man_i;
 }
-public Integer getTrans_fc_man_i(){
+public Long getTrans_fc_man_i(){
 return this.trans_fc_man_i;
 }
 
-public void setTrans_fc_sys_c(Integer itrans_fc_sys_c){
+public void setTrans_fc_sys_c(Long itrans_fc_sys_c){
 this.trans_fc_sys_c = itrans_fc_sys_c;
 }
-public Integer getTrans_fc_sys_c(){
+public Long getTrans_fc_sys_c(){
 return this.trans_fc_sys_c;
 }
 
-public void setAmt_dc_sys_c(Integer iamt_dc_sys_c){
+public void setAmt_dc_sys_c(Long iamt_dc_sys_c){
 this.amt_dc_sys_c = iamt_dc_sys_c;
 }
-public Integer getAmt_dc_sys_c(){
+public Long getAmt_dc_sys_c(){
 return this.amt_dc_sys_c;
 }
 
-public void setTrans_dc_sys_c(Integer itrans_dc_sys_c){
+public void setTrans_dc_sys_c(Long itrans_dc_sys_c){
 this.trans_dc_sys_c = itrans_dc_sys_c;
 }
-public Integer getTrans_dc_sys_c(){
+public Long getTrans_dc_sys_c(){
 return this.trans_dc_sys_c;
 }
 
@@ -174,31 +174,31 @@ public Date getReport_dt(){
 return this.report_dt;
 }
 
-public void setTrans_dc_man_c(Integer itrans_dc_man_c){
+public void setTrans_dc_man_c(Long itrans_dc_man_c){
 this.trans_dc_man_c = itrans_dc_man_c;
 }
-public Integer getTrans_dc_man_c(){
+public Long getTrans_dc_man_c(){
 return this.trans_dc_man_c;
 }
 
-public void setAmt_dc_man_c(Integer iamt_dc_man_c){
+public void setAmt_dc_man_c(Long iamt_dc_man_c){
 this.amt_dc_man_c = iamt_dc_man_c;
 }
-public Integer getAmt_dc_man_c(){
+public Long getAmt_dc_man_c(){
 return this.amt_dc_man_c;
 }
 
-public void setTrans_dc_man_i(Integer itrans_dc_man_i){
+public void setTrans_dc_man_i(Long itrans_dc_man_i){
 this.trans_dc_man_i = itrans_dc_man_i;
 }
-public Integer getTrans_dc_man_i(){
+public Long getTrans_dc_man_i(){
 return this.trans_dc_man_i;
 }
 
-public void setAmt_dc_man_i(Integer iamt_dc_man_i){
+public void setAmt_dc_man_i(Long iamt_dc_man_i){
 this.amt_dc_man_i = iamt_dc_man_i;
 }
-public Integer getAmt_dc_man_i(){
+public Long getAmt_dc_man_i(){
 return this.amt_dc_man_i;
 }
 
@@ -209,31 +209,31 @@ public String getOrgankey(){
 return this.organkey;
 }
 
-public void setAmt_fc_sys_i(Integer iamt_fc_sys_i){
+public void setAmt_fc_sys_i(Long iamt_fc_sys_i){
 this.amt_fc_sys_i = iamt_fc_sys_i;
 }
-public Integer getAmt_fc_sys_i(){
+public Long getAmt_fc_sys_i(){
 return this.amt_fc_sys_i;
 }
 
-public void setAmt_fc_man_i(Integer iamt_fc_man_i){
+public void setAmt_fc_man_i(Long iamt_fc_man_i){
 this.amt_fc_man_i = iamt_fc_man_i;
 }
-public Integer getAmt_fc_man_i(){
+public Long getAmt_fc_man_i(){
 return this.amt_fc_man_i;
 }
 
-public void setTrans_fc_sys_i(Integer itrans_fc_sys_i){
+public void setTrans_fc_sys_i(Long itrans_fc_sys_i){
 this.trans_fc_sys_i = itrans_fc_sys_i;
 }
-public Integer getTrans_fc_sys_i(){
+public Long getTrans_fc_sys_i(){
 return this.trans_fc_sys_i;
 }
 
-public void setAmt_fc_sys_c(Integer iamt_fc_sys_c){
+public void setAmt_fc_sys_c(Long iamt_fc_sys_c){
 this.amt_fc_sys_c = iamt_fc_sys_c;
 }
-public Integer getAmt_fc_sys_c(){
+public Long getAmt_fc_sys_c(){
 return this.amt_fc_sys_c;
 }
 
