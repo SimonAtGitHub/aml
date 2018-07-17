@@ -99,6 +99,22 @@ function checkForm(theUrl) {
 		errorMsg = "请选择国籍";
 		gEBI("country_cd").focus();
 	}
+	//add by zyd 2018/6/6  
+	var addr1_dom=gEBI("addr1");
+	var cell_no_dom=gEBI("cell_no");
+	if(addr1_dom!=null&&cell_no_dom!=null){
+	var addr1=gEBI("addr1").value.replace(/\s+/g,"");
+	var cell_no=gEBI("cell_no").value.replace(/\s+/g,"");
+	if(addr1==null||addr1==""){
+		errorMsg = "住所地或经常居住地为必填项";
+		gEBI("addr1").focus();
+	}
+	if(cell_no==null||cell_no==""){
+		errorMsg = "联系方式为必填项";
+		gEBI("cell_no").focus();
+	}
+	}
+	//end 
 	if(gEBI("party_class_cd").value == "C"){
 		if(gEBI("organkey").value==null || gEBI("organkey").value==""){
 			errorMsg = "机构号不能为空";
@@ -219,7 +235,7 @@ function checkForm(theUrl) {
 		gEBI("valid_dt_disp").focus();
 	}
 	if(checkRadio(document.forms[0].check_result)<0){
-		errorMsg+="请选择关注程度";
+		errorMsg="请选择关注程度";
     }
 	if(gEBI("addwmenu_flag").value=="1"){
 		if(gEBI("w_rule_type").value==""){
@@ -353,15 +369,6 @@ function validateCheckBox(err){
 						</td>
 					</tr>
 					<tr>
-						<td>性別：</td>
-						<td>
-							<html:select name="clientInfo" property="gender" styleId="gender">
-								<html:options collection="genderMap" property="label" labelProperty="value" />
-							</html:select>
-							<br/>
-						</td>
-					</tr>
-					<tr>
 					  <td>证件号码： </td>
 					  <td><html:text name="clientInfo" property="card_no" styleId="card_no"/>
 						<font color="#FF0000">*</font></td>
@@ -373,9 +380,9 @@ function validateCheckBox(err){
 					</tr>
 					<tr>
 					  <td>住所地或经常居住地：</td>
-					  <td><html:text name="clientInfo" property="addr1" size="40"/></td>
+					  <td><html:text name="clientInfo" property="addr1" size="40" styleId="addr1"/><font color="#FF0000">*</font></td>
 					  <td>联系电话：</td>
-					  <td><html:text name="clientInfo" property="cell_no" /></td>
+					  <td><html:text name="clientInfo" property="cell_no" styleId="cell_no"/><font color="#FF0000">*</font></td>
 					</tr>
 					<tr>
 						<td>职业：</td>
@@ -463,23 +470,6 @@ function validateCheckBox(err){
 						 	<html:text name="clientInfo" property="card_no" styleId="card_no"/>
 							<font color="#FF0000">*</font>
 						</td>
-						<td>证件到期日： </td>
-						<td>
-							<html:text name="clientInfo" property="licence_end_dt_disp" styleId="licence_end_dt_disp" onclick="calendar.show(this);" readonly="true" style="background:url(../../images/blue/icon_r.gif) no-repeat right 50%" />
-							<font color="red">*</font>
-						</td>
-					</tr>
-					<tr>
-						<td>国税登记证号： </td>
-						<td>
-						 	<html:text name="clientInfo" property="nation_affair_no" styleId="nation_affair_no"/>
-						</td>
-						<td>地税登记证号： </td>
-						<td>
-						 	<html:text name="clientInfo" property="local_affair_no" styleId="local_affair_no"/>
-						</td>
-					</tr>
-					<tr>
 						<td>对公客户行业：</td>
 						<td>
 							<html:select name="clientInfo" property="industry">
@@ -506,10 +496,6 @@ function validateCheckBox(err){
 					<tr>
 					  <td>法定代表人姓名：</td>
 					  <td><html:text name="clientInfo" property="legal_obj" styleId="legal_obj"/><font color="red">*</font></td>
-					  <td>客戶地址：</td>
-				      <td>
-						<html:text name="clientInfo" property="addr1" />
-					  </td>
 					</tr>
 					<tr>
 					  <td>法定代表人身份证件类型：</td>
@@ -528,11 +514,11 @@ function validateCheckBox(err){
 						<td><html:text name="clientInfo" property="legal_card_no_end_dt_disp" styleId="legal_card_no_end_dt_disp" onclick="calendar.show(this);" readonly="true" style="background:url(../../images/blue/icon_r.gif) no-repeat right 50%"/><font color="red">*</font></td>
 					</tr>
 					<tr>
-					  <td>控股股东或实际控制人：</td>
+					  <td>实际控股股东：</td>
 					  <td><html:text name="clientInfo" property="stock_holder" styleId="stock_holder"/><font color="red">*</font></td>
 					</tr>
 					<tr>
-						<td>控股股东或实际控制人身份证件种类：</td>
+						<td>实际控股人身份证件种类：</td>
 					  <td colspan=3>
 					  	<html:select name="clientInfo" property="stock_holder_card_type" styleId="stock_holder_card_type" >
 								<html:options collection="bitpMap" property="label" labelProperty="value" />
@@ -540,9 +526,9 @@ function validateCheckBox(err){
 					  </td>
 					</tr>
 					<tr>
-						<td>控股股东或实际控制人身份证件号码：</td>
+						<td>实际控股人身份证件号码：</td>
 						<td><html:text name="clientInfo" property="stock_holder_card_no" styleId="stock_holder_card_no"/><font color="red">*</font></td>
-						<td>控股股东或实际控制人证件到期日</td>
+						<td>实际控股人证件到期日</td>
 						<td><html:text name="clientInfo" property="stock_holder_card_no_end_dt_disp" styleId="stock_holder_card_no_end_dt_disp" onclick="calendar.show(this);" readonly="true" style="background:url(../../images/blue/icon_r.gif) no-repeat right 50%"/><font color="red">*</font></td>
 					</tr>
 	                  <tr>
