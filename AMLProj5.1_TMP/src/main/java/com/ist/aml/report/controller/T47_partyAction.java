@@ -82,6 +82,12 @@ public class T47_partyAction extends BaseAction {
 			myforward = performGetT47_party_list(mapping, form, request,
 					response);
 		}
+		 //by zyd 2018/6/14 增加获取客户信息补录日志的方法
+		else if("getT47_partyLogForBuLu".equalsIgnoreCase(myaction)){
+			myforward = performGetT47_partyLogForBuLu(mapping, form, request,
+						response);
+			}
+		 //end
 		return myforward;
 
 	}
@@ -416,6 +422,12 @@ public class T47_partyAction extends BaseAction {
 			}
 			ObjectCompare.ObjCompare(t47_party_uc, source, "#");
 			t47_party_uc.setParty_id(source.getParty_id());
+			//by zyd 2018/6/11修改上次修改日期和时间
+			HttpSession session=request.getSession();
+			AuthBean authBean = (AuthBean) session.getAttribute("authBean");
+			Authorization auth = authBean.getAuthToken();
+			t47_party_uc.setLast_upd_user(auth.getT00_user().getUsername());
+			//end 
 			//20091211，修改客户表同时修改验证状态标志
 			t47_partyDAO.saveModifyT47_partyUc(sqlMap, t47_party_uc);
 		
@@ -825,4 +837,33 @@ public class T47_partyAction extends BaseAction {
 
 		return mapping.findForward("success");
 	}
+	//add by zyd 2018/6/14获取客户信息补录日志
+	public ActionForward performGetT47_partyLogForBuLu(ActionMapping mapping,
+			ActionForm actionForm, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ActionErrors errors = new ActionErrors();
+		HttpSession session = request.getSession();
+		T47_partyDAO t47_partyDAO =(T47_partyDAO)context.getBean("t47_partyDAO");
+		ArrayList<T47_party> t47_partyLogList=null;
+		String newsearchflag = StringUtils.nullObject2String(request.getParameter("newsearchflag"));
+		String party_id=StringUtils.nullObject2String(request.getParameter("party_id"));
+		try{
+		if("1".equals(newsearchflag)){
+			T47_party t47_party=new T47_party();
+			t47_party.setParty_id(party_id);
+			t47_partyLogList=t47_partyDAO.getT47_partyLogListForBuLu(sqlMap,t47_party);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error("异常",e);
+			return mapping.findForward("failure");
+		}
+		request.setAttribute("party_id", party_id);
+		request.setAttribute("t47_partyLogList",t47_partyLogList);
+		request.setAttribute("newsearch",newsearchflag);
+		return mapping.findForward("success");
+		}
+	//end
+	
 }

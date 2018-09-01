@@ -168,6 +168,20 @@ public class T47_partyDAO extends BaseDAO {
 		int row = 0;
 		row = (int) sqlMap.update("saveModifyT47_partyUc_20091211",
 				t47_party_uc);
+		//by zyd  更新t47_party表的上次更新日期和上次修改人
+		try{
+			LinkedHashMap flagOfPartyLogMap = cm.getMapFromCache("t87_syspara");
+			String flagOfPartyLog=(String)flagOfPartyLogMap.get("flagOfPartyLog");
+			if("1".equals(flagOfPartyLog)){
+			t47_party_uc.setLast_upd_dt_disp(DateUtils.dateToString(new java.util.Date()));
+			t47_party_uc.setLast_upd_dt(DateUtils.stringToDate(t47_party_uc.getLast_upd_dt_disp()));
+				sqlMap.update("insertT47_partyForLastDt",t47_party_uc);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.debug(e);
+		}
+		//end by zyd 
 		return row;
 	}
 
@@ -704,4 +718,11 @@ public class T47_partyDAO extends BaseDAO {
 		}
 		return t47_partyList;
 	}
+	//by zyd 获取客户补录信息
+	public ArrayList<T47_party> getT47_partyLogListForBuLu(SqlMapClient sqlMap, T47_party t47_party) throws SQLException {
+		ArrayList<T47_party> t47_partyLogList=null;
+		t47_partyLogList=(ArrayList<T47_party>)sqlMap.queryForList("selectT47_partyForLastDt",t47_party);
+		return t47_partyLogList;
+	}
+	//end 
 }
