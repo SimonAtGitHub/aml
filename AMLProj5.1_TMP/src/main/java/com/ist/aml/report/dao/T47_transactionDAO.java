@@ -2464,5 +2464,11 @@ public class T47_transactionDAO extends BaseDAO {
 		int i = sqlMap.update("insertT47_trans_recordLog", t47_trans_recordLog);
 		return i;
 	}
-
+//by zyd 获取交易补录日志 2018-6-17 begin
+	public ArrayList<T47_trans_recordLog> getTransactionLogList(SqlMapClient sqlMap,T47_transaction t47_transaction) throws SQLException{
+		ArrayList<T47_trans_recordLog> t47_transactionLogList=null;
+		t47_transactionLogList=(ArrayList<T47_trans_recordLog>)sqlMap.queryForList("getTransactionLogList_BuLu",t47_transaction);
+		return t47_transactionLogList;
+	}
+//end zyd
 }

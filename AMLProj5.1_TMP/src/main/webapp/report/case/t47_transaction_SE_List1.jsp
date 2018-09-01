@@ -7,6 +7,7 @@
 <head>
  
 <meta content="MSHTML 6.00.2600.0" name=GENERATOR />
+<script type="text/javascript" src="../../js/ymPrompt.js"></script>
 <script src="../../js/title.js"></script>
 <script language="JavaScript" src="../../js/basefunc.js"></script>
 <script language="JavaScript" src="../../js/uc.js"></script>
@@ -366,6 +367,11 @@ function openFullWin(url) {
 			<th>交易代码</th>
 			<th>借/贷</th>
 			<th>现转标记</th>
+			<%boolean timeFlagForBuLu=(Boolean)request.getAttribute("timeFlagForBuLu") ;
+			if(timeFlagForBuLu){
+			%>
+			<th>补录日志</th>
+			<%} %>
 		</tr>
 		<logic:present name="t47_transactionList" scope="request">
 			<logic:iterate id="transaction" indexId="i"
@@ -388,6 +394,17 @@ function openFullWin(url) {
 					<td><bean:write name="transaction" property="cb_tx_cd" /></td>
 					<td><bean:write name="transaction" property="debit_credit_disp" /></td>
 					<td><bean:write name="transaction" property="cash_trans_flag_disp" /></td>
+			    <% if(timeFlagForBuLu){
+			      %>
+			      <td>
+		          <a href='javascript:' onclick="ymPrompt.win({message:'<%=request.getContextPath()%>/report/case/getT47_transLogForBuLu.do?transactionkey=<bean:write
+						name="transaction" property="transactionkey" />',width:500,height:300,title:'交易补录日志',handler:handler,iframe:true,fixPosition:true,dragOut:false});return false;">
+						查看</a>
+						<%-- 
+						<a href='javascript:' onclick='window.open("<%=request.getContextPath()%>/report/case/t47_transaction_se_modify1.do?transactionkey=<bean:write
+						name="transaction" property="transactionkey" />","补录记录","scrollbars=yes,toolbar=no,status=yes,resizable=yes,MenuBar=no,location=no,top=0,left=0,width=300,height=200")'><bean:write name="transaction" property="transactionkey" /></a>--%>
+						</td>
+			    <%} %>
 				</tr>
 			</logic:iterate>
 		</logic:present>
