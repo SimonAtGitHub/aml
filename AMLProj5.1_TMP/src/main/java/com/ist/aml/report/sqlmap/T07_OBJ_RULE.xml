@@ -367,6 +367,7 @@
 		<isNotEmpty prepend="and" property="bank_name">
 			BANK_NAME = #bank_name#
 		</isNotEmpty>
+		order by checkdate,checktime desc
 	</statement>
 	<statement id="getT07_OBJ_RULEDispCheck0"
 		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"

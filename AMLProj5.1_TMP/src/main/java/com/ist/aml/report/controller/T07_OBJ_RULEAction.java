@@ -628,7 +628,8 @@ public class T07_OBJ_RULEAction extends BaseAction {
 					+ request.getSession().getAttribute("intPage"));
 		T07_OBJ_RULEDAO t07_obj_ruleDAO = (T07_OBJ_RULEDAO) context
 				.getBean("t07_obj_ruleDAO");
-		T07_OBJ_RULE t07_obj_rule = new T07_OBJ_RULE();
+		//by  zyd 修复内江联网核查一对多
+		ArrayList<T07_OBJ_RULE> t07_obj_rule = new ArrayList<T07_OBJ_RULE>();
 		try {
 			T07_OBJ_RULEActionForm form = (T07_OBJ_RULEActionForm) actionForm;
 			T07_OBJ_RULE t07_obj_rule1 = new T07_OBJ_RULE();
@@ -649,8 +650,8 @@ public class T07_OBJ_RULEAction extends BaseAction {
 			return actionMapping.findForward("failure");
 		}
 		
-		request.setAttribute("t07_obj_rule", t07_obj_rule);
-		//
+		request.setAttribute("t07_obj_rule_list", t07_obj_rule);
+		
 		return actionMapping.findForward("success");
 	}
 	/**
@@ -840,7 +841,8 @@ public class T07_OBJ_RULEAction extends BaseAction {
 			if(!"".equals(form.getName())){
 			t07_obj_rule.setName(form.getName());
 			}
-			t07_obj_rule.setId_no(form.getId_no());
+			//zyd  2018-0810内江联网核查去空格
+			t07_obj_rule.setId_no(form.getId_no().trim());
 			t07_obj_rule.setResult(form.getResult());
 			if(!"".equals(form.getCounter_no())){
 			t07_obj_rule.setCounter_no(form.getCounter_no());

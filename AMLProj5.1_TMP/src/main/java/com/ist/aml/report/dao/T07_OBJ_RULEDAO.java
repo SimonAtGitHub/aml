@@ -300,35 +300,44 @@ public class T07_OBJ_RULEDAO extends BaseDAO {
     /**
      * 联网核查明细
      * */
-	public T07_OBJ_RULE getT07_OBJ_RULEDispCheck(SqlMapClient sqlMap, T07_OBJ_RULE t07_OBJ_RULE)
-			throws SQLException {
-		T07_OBJ_RULE t07_obj_rule = (T07_OBJ_RULE) sqlMap.queryForObject(
-				"getT07_OBJ_RULEDispCheck", t07_OBJ_RULE);
-		LinkedHashMap checkresultMap = cm.getMapFromCache("checkresults");
-		LinkedHashMap checkmethodMap = cm.getMapFromCache("checkmethod");
-		LinkedHashMap is_instMap = cm.getMapFromCache("is_inst");
-		if (t07_obj_rule.getResult()!= null && !"".equals(t07_obj_rule.getResult())) {
-			t07_obj_rule.setResult((String) checkresultMap.get(t07_obj_rule
-					.getResult()));
-		}
-		if(t07_obj_rule.getCheckdate()!=null){
-			String checkdate = t07_obj_rule.getCheckdate();
-			checkdate = checkdate.substring(0,4)+ "-" + checkdate.substring(4,6) + "-" + checkdate.substring(6,8);
-			t07_obj_rule.setCheckdate(checkdate);
-		}
-		if (t07_obj_rule.getCheckmode()!= null && !"".equals(t07_obj_rule.getCheckmode())) {
-			t07_obj_rule.setCheckmode((String) checkmethodMap.get(t07_obj_rule
-					.getCheckmode()));
-		}
-		if (t07_obj_rule.getIs_inst()!= null && !"".equals(t07_obj_rule.getIs_inst())) {
-			t07_obj_rule.setIs_inst((String) is_instMap.get(t07_obj_rule
-					.getIs_inst()));
-		}
-		if (t07_obj_rule == null) {
-			t07_obj_rule = new T07_OBJ_RULE();
-		}
-		return t07_obj_rule;
-	}
+	public ArrayList<T07_OBJ_RULE> getT07_OBJ_RULEDispCheck(SqlMapClient sqlMap, T07_OBJ_RULE t07_OBJ_RULE)
+	throws SQLException {
+ArrayList<T07_OBJ_RULE> arrT07_OBJ_RULE=null;
+ArrayList<T07_OBJ_RULE> arrT07_OBJ_RULE_REETURN=new ArrayList<T07_OBJ_RULE>() ;
+ arrT07_OBJ_RULE = (ArrayList<T07_OBJ_RULE>) sqlMap.queryForList(
+		"getT07_OBJ_RULEDispCheck", t07_OBJ_RULE);
+LinkedHashMap checkresultMap = cm.getMapFromCache("checkresults");
+LinkedHashMap checkmethodMap = cm.getMapFromCache("checkmethod");
+LinkedHashMap is_instMap = cm.getMapFromCache("is_inst");
+if(arrT07_OBJ_RULE!=null&&arrT07_OBJ_RULE.size()>0){
+for(int i=0;i<arrT07_OBJ_RULE.size();i++){
+		T07_OBJ_RULE t07_obj_rule=arrT07_OBJ_RULE.get(i);
+if (t07_obj_rule.getResult()!= null && !"".equals(t07_obj_rule.getResult())) {
+	t07_obj_rule.setResult((String) checkresultMap.get(t07_obj_rule
+			.getResult()));
+}
+if(t07_obj_rule.getCheckdate()!=null){
+	String checkdate = t07_obj_rule.getCheckdate();
+	checkdate = checkdate.substring(0,4)+ "-" + checkdate.substring(4,6) + "-" + checkdate.substring(6,8);
+	t07_obj_rule.setCheckdate(checkdate);
+}
+if (t07_obj_rule.getCheckmode()!= null && !"".equals(t07_obj_rule.getCheckmode())) {
+	t07_obj_rule.setCheckmode((String) checkmethodMap.get(t07_obj_rule
+			.getCheckmode()));
+}
+if (t07_obj_rule.getIs_inst()!= null && !"".equals(t07_obj_rule.getIs_inst())) {
+	t07_obj_rule.setIs_inst((String) is_instMap.get(t07_obj_rule
+			.getIs_inst()));
+}
+if (t07_obj_rule == null) {
+	t07_obj_rule = new T07_OBJ_RULE();
+}
+arrT07_OBJ_RULE_REETURN.add(t07_obj_rule);
+}  //end for
+}//end if
+arrT07_OBJ_RULE=null;
+return arrT07_OBJ_RULE_REETURN;
+}
 	/**
 	 * 联网核查修改明细
 	 * */

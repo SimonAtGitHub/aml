@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@page  import="java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<HEAD>
@@ -40,7 +41,11 @@ function dosubmit(theUrl){
 				</tr>
 			</table>
 			<html:errors />
-			<div class="cond_c2">
+		<%ArrayList<com.ist.aml.report.dto.T07_OBJ_RULE> t07_obj_rule_list=(ArrayList<com.ist.aml.report.dto.T07_OBJ_RULE>)request.getAttribute("t07_obj_rule_list");
+		if(t07_obj_rule_list!=null&&t07_obj_rule_list.size()>0){
+		 %>
+		 <logic:iterate id="t07_obj_rule" name="t07_obj_rule_list" type="com.ist.aml.report.dto.T07_OBJ_RULE">
+			<div class="cond_c2" style='margin-bottom:15px;'>
 	  <table border="0" cellpadding="0" cellspacing="0">
 		<tr>
 			<td height="22" align="right" bgcolor="ECF3FF">
@@ -133,6 +138,8 @@ function dosubmit(theUrl){
 		</tr>
 		</TABLE>
 		</div>
+		</logic:iterate>
+		<%} %>
 		</div>
 		</html:form>
 		
