@@ -178,6 +178,12 @@ function checkForm(theUrl) {
 			errorMsg = "实际控股人证件到期日不能为空";
 			gEBI("stock_holder_card_no_end_dt_disp").focus();
 		}
+			//add by zyd 2018-08-07 新乡营业执照
+	if(gEBI("licence_end_dtdisp").value==null || gEBI("licence_end_dtdisp").value==""){
+		errorMsg = "营业执照到期日不能为空";
+		gEBI("licence_end_dtdisp").focus();
+	}
+	//end 
 	}else{
 		if(gEBI("card_type").value==null || gEBI("card_type").value==""){
 			errorMsg = "请选择证件类型";
@@ -523,6 +529,14 @@ function validateCheckBox(err){
 						<html:text name="clientInfo" property="org_credit_vt_disp" onclick="calendar.show(this);" readonly="true" style="background:url(../../images/blue/icon_r.gif) no-repeat right 50%"/>
 						</td>
 	                  </tr>
+	                  <!-- add by zyd 新乡增加营业执照到期日  -->
+	                     <tr>
+	                  	<td>营业执照到期日：</td>
+						<td>
+						<html:text name="clientInfo" property="licence_end_dtdisp" styleId="licence_end_dtdisp" onclick="calendar.show(this);" readonly="true" style="background:url(../../images/blue/icon_r.gif) no-repeat right 50%"/><font color="red">*</font>
+						</td>					
+	                  </tr>
+	                  <!-- end -->
 				</table>
 			</div>
 		</logic:equal>

@@ -455,7 +455,9 @@ rt
 <tr>
 	<td class=xl40>机构信用代码有效期：</td>
 	<td class=xl41><bean:write name="clientInfo" property="org_credit_vt_disp" /></td>
-	<td class=xl40 colspan=4></td>
+	<td class=xl40>营业执照到期日：</td>
+	<td class=xl41><bean:write name="clientInfo" property="licence_end_dtdisp" /></td>
+	<td class=xl40 colspan=2></td>
 </tr>
 </logic:equal>
 <%

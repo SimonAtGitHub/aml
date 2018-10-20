@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"> 
+ 
+<sqlMap namespace="T10_newClientCheck">
+	<!-- added by shanbh for new client check start -->
+		<!-- for check state start -->
+			<statement id="getCheckStateList" parameterClass="java.lang.String" resultClass="com.ist.aml.cust_identify.dto.T10_newClientCheck">
+				SELECT UPCODE,ELEMENTID,ELEMENTNAME
+				FROM T10_SURVEYDEPLOY ORDER BY UPCODE,ELEMENTID
+			</statement>
+			<statement id="insertT10_SURVEYPARTY_TEXT"
+				parameterClass="com.ist.aml.cust_identify.dto.T10_newClientCheck" resultClass="int">
+				INSERT INTO T10_SURVEYPARTY_TEXT
+				(PARTY_ID,CHECK_NO,UPCODE,ELEMENTID,ELEMENTNAME,ISTRUE,CONTEXT,CHECKUSER,CHECKDATE)
+				VALUES
+				(#party_id#,#check_no#,#upcode#,#elementid#,#elementname#,#istrue#,#context#,#checkuser#,#checkdate#)
+			</statement>
+			<statement id="insertT10_SURVEYPARTY_TEXT_UH"
+				parameterClass="java.lang.String" resultClass="int">
+				INSERT INTO T10_SURVEYPARTY_TEXT_UH
+				(PARTY_ID,CHECK_NO,UPCODE,ELEMENTID,ELEMENTNAME,ISTRUE,CONTEXT,CHECKUSER,CHECKDATE)
+				SELECT PARTY_ID,CHECK_NO,UPCODE,ELEMENTID,ELEMENTNAME,ISTRUE,CONTEXT,CHECKUSER,CHECKDATE FROM T10_SURVEYPARTY_TEXT WHERE PARTY_ID=#value#
+			</statement>
+			
+			<statement id="getT10_newClientCheck_checkStateCount"
+				parameterClass="java.lang.String" resultClass="int">
+				select count(*) from T10_SURVEYPARTY_TEXT where party_id=#value#
+			</statement>
+			
+			<statement id="getT10_newClientCheck_checkState_singleList"
+				parameterClass="java.lang.String" resultClass="com.ist.aml.cust_identify.dto.T10_newClientCheck">
+				select PARTY_ID,CHECK_NO,UPCODE,ELEMENTID,ELEMENTNAME,ISTRUE,CONTEXT,CHECKUSER,CHECKDATE
+				from T10_SURVEYPARTY_TEXT where party_id=#value#
+			</statement>
+			
+			<statement id="deleteT10_newClientCheck_checkState_single"
+				parameterClass="java.lang.String" resultClass="int">
+				delete from T10_SURVEYPARTY_TEXT where party_id=#value#
+			</statement>
+		<!-- for check state end -->
+		
+		<!-- for checked stare start -->
+			<statement id="getCheckedStateList" parameterClass="com.ist.aml.cust_identify.dto.T10_newClientCheck" resultClass="com.ist.aml.cust_identify.dto.T10_newClientCheck">
+				SELECT A.UPCODE,A.ELEMENTID,A.ELEMENTNAME,B.PARTY_ID,B.CHECK_NO,B.ISTRUE,B.CONTEXT,B.CHECKUSER,B.CHECKDATE FROM
+				T10_SURVEYDEPLOY A LEFT JOIN 
+				<isEqual property="table_name" compareValue="0">
+					T10_SURVEYPARTY_TEXT B ON A.ELEMENTID = B.ELEMENTID AND B.PARTY_ID=#party_id# ORDER BY A.UPCODE,A.ELEMENTID
+				</isEqual>
+				<isEqual property="table_name" compareValue="1">
+					T10_SURVEYPARTY_TEXT_UH B ON A.ELEMENTID = B.ELEMENTID AND B.CHECK_NO=#check_no# ORDER BY A.UPCODE,A.ELEMENTID
+				</isEqual>
+			</statement>
+		<!-- for checked stare end -->
+		
+		<!-- for client info start -->
+			<statement id="getT47_i_newClientDisp"
+				parameterClass="java.lang.String" resultClass="com.ist.aml.cust_identify.dto.T10_newClientCheck">
+				SELECT 
+					A.PARTY_ID,A.PARTY_CLASS_CD,A.ORGANKEY,A.PARTY_CHN_NAME,A.PARTY_ENG_NAME,A.COUNTRY_CD,A.CARD_TYPE,A.CARD_NO,B.CARD_END_DT,A.ADDR1,A.CELL_NO,
+					A.AML1_TYPE_CD,B.OCCUPATION,B.DUTY,B.COMPANY,B.INDUSTRY,B.INDIV_INCOME,B.INCOME_ECNO,B.INCOME_SOURCE,B.CREATE_PURPOSE 
+				FROM T47_PARTY A,T47_INDIVIDUAL B 
+				WHERE A.PARTY_ID = B.PARTY_ID AND A.PARTY_ID = #value#
+			</statement>
+			<statement id="getT47_c_newClientDisp"
+				parameterClass="java.lang.String" resultClass="com.ist.aml.cust_identify.dto.T10_newClientCheck">
+				SELECT 
+					A.PARTY_ID,A.PARTY_CLASS_CD,A.ORGANKEY,A.PARTY_CHN_NAME,A.COUNTRY_CD,A.CARD_TYPE AS CARD_TYPE_C,A.CARD_NO,B.INDUSTRYKEY AS INDUSTRY,A.AML2_TYPE_CD,B.MAIN_MANAGE_SCOPE,A.AML1_TYPE_CD,
+					B.MAIN_MANAGE_BUSINESS,B.ENROL_FUND_CURRENCY_CD,B.ENROL_FUND_AMT,B.LEGAL_OBJ,B.LEGAL_CARD_TYPE,B.LEGAL_CARD_NO,B.LEGAL_CARD_NO_END_DT,
+					B.STOCK_HOLDER,B.STOCK_HOLDER_CARD_TYPE,B.STOCK_HOLDER_CARD_NO,B.STOCK_HOLDER_CARD_NO_END_DT,B.ORG_CREDIT_NO,B.ORG_CREDIT_VT,
+					<!-- 2018-08-08 新乡营业执照zyd -->B.LICENCE_END_DT
+				FROM T47_PARTY A,T47_CORPORATION B
+				WHERE A.PARTY_ID = B.PARTY_ID AND A.PARTY_ID = #value#
+			</statement>
+			<statement id="modifyClientInfo_C_t47_PARTY"
+				parameterClass="com.ist.aml.cust_identify.dto.T10_newClientCheck" resultClass="int">
+				UPDATE T47_PARTY SET ORGANKEY=#organkey#,PARTY_CHN_NAME=#party_chn_name#,COUNTRY_CD=#country_cd#,CARD_TYPE=#card_type_c#,CARD_NO=#card_no#
+				WHERE PARTY_ID=#party_id#
+			</statement>
+			<statement id="modifyClientInfo_C_t47_CORPORATION"
+				parameterClass="com.ist.aml.cust_identify.dto.T10_newClientCheck" resultClass="int">
+				UPDATE T47_CORPORATION SET LEGAL_OBJ=#legal_obj#,LEGAL_CARD_TYPE=#legal_card_type#,LEGAL_CARD_NO=#legal_card_no#,LEGAL_CARD_NO_END_DT=#legal_card_no_end_dt#,
+				STOCK_HOLDER=#stock_holder#,STOCK_HOLDER_CARD_TYPE=#stock_holder_card_type#,STOCK_HOLDER_CARD_NO=#stock_holder_card_no#,STOCK_HOLDER_CARD_NO_END_DT=#stock_holder_card_no_end_dt#,
+				ORGAN_CODE=#organkey#,INDUSTRYKEY=#industry#,MAIN_MANAGE_SCOPE=#main_manage_scope#,MAIN_MANAGE_BUSINESS=#main_manage_business#,
+				ENROL_FUND_CURRENCY_CD=#enrol_fund_currency_cd#,ENROL_FUND_AMT=#enrol_fund_amt#,ORG_CREDIT_NO=#org_credit_no#,ORG_CREDIT_VT=#org_credit_vt#
+				<!-- zyd 新乡营业执照 -->,LICENCE_END_DT=#licence_end_dt#
+				WHERE PARTY_ID=#party_id#
+			</statement>
+			<statement id="modifyClientInfo_I_t47_PARTY"
+				parameterClass="com.ist.aml.cust_identify.dto.T10_newClientCheck" resultClass="int">
+				UPDATE T47_PARTY SET 
+				PARTY_CHN_NAME=#party_chn_name#,PARTY_ENG_NAME=#party_eng_name#,COUNTRY_CD=#country_cd#,CARD_TYPE=#card_type#,CARD_NO=#card_no#,
+				ADDR1=#addr1#,CELL_NO=#cell_no#
+				WHERE PARTY_ID=#party_id#
+			</statement>
+			<statement id="modifyClientInfo_I_t47_INDIVIDUAL"
+				parameterClass="com.ist.aml.cust_identify.dto.T10_newClientCheck" resultClass="int">
+				UPDATE T47_INDIVIDUAL SET 
+				CARD_END_DT=#card_end_dt#,OCCUPATION=#occupation#,DUTY=#duty#,COMPANY=#company#,INDUSTRY=#industry#,INDIV_INCOME=#indiv_income#,INCOME_ECNO=#income_ecno#,
+				INCOME_SOURCE=#income_source#,CREATE_PURPOSE=#create_purpose#
+				WHERE PARTY_ID=#party_id#
+			</statement>
+		<!-- for client info end -->
+		
+		<!-- for check result start -->
+			<statement id="insertT10_CHECKPARTY_RELT" parameterClass="com.ist.aml.cust_identify.dto.T10_newClientCheck"
+				resultClass="int">
+				INSERT INTO T10_CHECKPARTY_RELT
+				(CHECK_NO,CHECK_TYPE,PARTY_ID,PARTY_CLASS_CD,CHECKER_ORG,ORGANKEY,CHECK_DT, VALID_DT, ADDWMENU_FLAG, ADDBMENU_FLAG, CHECK_EXPLAIN, CHECKER, CHECK_RESULT, CHECK_REASON,PARTY_CHN_NAME,CARD_TYPE,CARD_NO,AML1_TYPE_CD)
+				VALUES
+				(#check_no#,#check_type#,#party_id#,#party_class_cd#,#check_org#,#organkey#,#check_dt#,#valid_dt#,#addwmenu_flag#,#addbmenu_flag#,#check_explain#,#checker#,#check_result#,#check_reason#,#party_chn_name#,#card_type#,#card_no#,#aml1_type_cd#)
+			</statement>
+			<statement id="modifyStatusT10_CHECKPARTY_NEW" parameterClass="java.lang.String" resultClass="int">
+				UPDATE T10_CHECKPARTY_NEW SET CHECK_STATUS=1 WHERE PARTY_ID = #value#
+			</statement>
+			<statement id="modifyStatusT10_CHECKPARTY_RE" parameterClass="java.lang.String" resultClass="int">
+				UPDATE T10_CHECKPARTY_RE SET CHECK_STATUS=1 WHERE PARTY_ID = #value#
+			</statement>
+			<statement id="insertT10_CHECKPARTY_UH"
+				parameterClass="com.ist.aml.cust_identify.dto.T10_newClientCheck" resultClass="int">
+				INSERT INTO T10_CHECKPARTY_UH
+				(PARTY_ID,CHECK_NO,PARTY_CLASS_CD,PARTY_CHN_NAME,CARD_TYPE,CARD_NO,ORGANKEY,CHECK_DT,VALID_DT,CHECK_RESULT,CHECKER,CHECK_TYPE)
+				VALUES 
+				(#party_id#,#check_no#,#party_class_cd#,#party_chn_name#,#card_type#,#card_no#,#organkey#,#check_dt#,#valid_dt#,#check_result#,#checker#,#check_type#)
+			</statement>
+			<statement id="insertT10_CHECKPARTY_NEW"
+				parameterClass="com.ist.aml.cust_identify.dto.T10_checkparty" resultClass="int">
+				INSERT INTO T10_CHECKPARTY_NEW
+				(PARTY_ID,HOST_CUST_ID,PARTY_CLASS_CD,PARTY_CHN_NAME,CARD_TYPE,CARD_NO,ORGANKEY,CREATE_DT,PARTY_STATUS_CD,AML1_TYPE_CD,CHECK_STATUS
+				VALUES 
+				(#party_id#,#host_cust_id#,#party_class_cd#,#party_chn_name#,#card_type#,#card_no#,#organkey#,#create_dt#,#party_status_cd#,#aml1_type_cd#,#check_status#)
+			</statement>
+			
+			<statement id="isExistT10_CHECKPARTY_RELT" parameterClass="java.lang.String" resultClass="int">
+				SELECT COUNT(*) FROM T10_CHECKPARTY_RELT WHERE PARTY_ID=#value#
+			</statement>
+			<statement id="isExistT10_CHECKPARTY_NEW" parameterClass="java.lang.String" resultClass="int">
+				SELECT COUNT(*) FROM T10_CHECKPARTY_NEW WHERE PARTY_ID=#value#
+			</statement>
+			<statement id="isExistT10_CHECKPARTY_RE" parameterClass="java.lang.String" resultClass="int">
+				SELECT COUNT(*) FROM T10_CHECKPARTY_RE WHERE PARTY_ID=#value#
+			</statement>
+			<statement id="insertT10_CHECKPARTY_RELT_UH" parameterClass="java.lang.String"
+				resultClass="int">
+				INSERT INTO T10_CHECKPARTY_RELT_UH
+				(CHECK_NO,CHECK_TYPE,PARTY_ID,PARTY_CLASS_CD,CHECKER_ORG,CHECK_DT,VALID_DT,ADDWMENU_FLAG,ADDBMENU_FLAG,CHECK_EXPLAIN,CHECKER,CHECK_RESULT,CHECK_REASON,PARTY_CHN_NAME,CARD_TYPE,CARD_NO)
+				SELECT CHECK_NO,CHECK_TYPE,PARTY_ID,PARTY_CLASS_CD,CHECKER_ORG,CHECK_DT,VALID_DT,ADDWMENU_FLAG,ADDBMENU_FLAG,CHECK_EXPLAIN,CHECKER,CHECK_RESULT,CHECK_REASON,PARTY_CHN_NAME,CARD_TYPE,CARD_NO
+				FROM T10_CHECKPARTY_RELT WHERE PARTY_ID=#value#
+			</statement>
+			<statement id="deleteT10_CHECKPARTY_RELT" parameterClass="java.lang.String" resultClass="int">
+				DELETE FROM T10_CHECKPARTY_RELT WHERE PARTY_ID=#value#
+			</statement>
+			<statement id="getT10_CHECKPARTY_RELT" parameterClass="com.ist.aml.cust_identify.dto.T10_newClientCheck" resultClass="com.ist.aml.cust_identify.dto.T10_newClientCheck">
+				SELECT A.PARTY_ID,A.CHECK_NO,A.CHECK_EXPLAIN,A.CHECKER,A.CHECK_DT,A.VALID_DT,A.CHECK_RESULT FROM 
+				<isEqual property="table_name" compareValue="0">
+					T10_CHECKPARTY_RELT A WHERE A.PARTY_ID=#party_id#
+				</isEqual>
+				<isEqual property="table_name" compareValue="1">
+					T10_CHECKPARTY_RELT_UH A WHERE A.CHECK_NO=#check_no#
+				</isEqual>
+			</statement>
+			<statement id="getCheck_reason" parameterClass="java.lang.String" resultClass="java.lang.String">
+				SELECT CHECK_REASON FROM T10_CHECKPARTY_RE WHERE PARTY_ID = #value# AND CHECK_STATUS = '0'
+			</statement>
+		<!-- for check result end -->
+		
+		<!-- for black/white list start -->
+			<statement id="getWhiteCount" parameterClass="java.lang.String" resultClass="int">
+				SELECT COUNT(*) FROM T07_WHITELIST_INFO WHERE PARTY_ID=#value#
+			</statement>
+			<statement id="getBlackCount" parameterClass="java.lang.String" resultClass="int">
+				SELECT COUNT(*) FROM T07_BLACKLIST WHERE PARTY_ID=#value#
+			</statement>
+			<statement id="getT07_WHITELIST_INFO_single" parameterClass="java.lang.String" resultClass="com.ist.aml.cust_identify.dto.T10_newClientCheck">
+				SELECT PARTY_ID,REASON_CREATE,RULE_TYPE
+				FROM T07_WHITELIST_INFO WHERE PARTY_ID=#value#
+			</statement>
+			<statement id="getT07_BLACKLIST_single" parameterClass="java.lang.String" resultClass="com.ist.aml.cust_identify.dto.T10_newClientCheck">
+				SELECT PARTY_ID,REASON_CREATE AS B_REASON_CREATE,LIST_TYPE
+				FROM T07_BLACKLIST WHERE PARTY_ID=#value#
+			</statement>
+		<!-- for black/white list end -->
+	<!-- added by shanbh for new client check end -->
+</sqlMap>

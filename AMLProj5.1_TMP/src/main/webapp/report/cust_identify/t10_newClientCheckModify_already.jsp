@@ -231,6 +231,15 @@ function showOrNot(obj,id){
 						<bean:write name="clientInfo" property="org_credit_vt_disp"  />
 						</td>
 	                  </tr>
+	                  <!-- by zyd 2018-08-07 新乡增加营业执照到期日 -->
+	                    <tr>
+	                  	<td>营业执照到期日：</td>
+						<td><bean:write name="clientInfo" property="licence_end_dtdisp" /></td>
+						<td></td>
+						<td>
+						</td>
+	                  </tr>
+	                  <!-- end -->
 				</table>
 			</div>
 		</logic:equal>
