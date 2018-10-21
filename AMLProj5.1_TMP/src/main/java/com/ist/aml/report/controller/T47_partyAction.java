@@ -1,5 +1,14 @@
 package com.ist.aml.report.controller;
 
+import java.io.File;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,6 +28,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.apache.struts.upload.FormFile;
 
 import com.ist.aml.report.dao.T47_partyDAO;
 import com.ist.aml.report.dto.T47_party;
@@ -28,6 +38,8 @@ import com.ist.common.Authorization;
 import com.ist.common.MyBeanUtils;
 import com.ist.common.ObjectCompare;
 import com.ist.common.PageUtils;
+
+import com.ist.common.T47Flog;
 import com.ist.common.base.BaseAction;
 import com.ist.platform.dto.T00_organ;
 import com.ist.util.Constans;
@@ -88,6 +100,15 @@ public class T47_partyAction extends BaseAction {
 						response);
 			}
 		 //end
+		else if("finance_query".equalsIgnoreCase(myaction)){
+			myforward = performFinance_query(mapping, form, request,
+					response);
+		}
+		 //金融查询文件下载
+		else if("finance_query_download".equalsIgnoreCase(myaction)){
+			myforward = performFinance_query_download(mapping, form, request,
+					response);
+		}
 		return myforward;
 
 	}
@@ -865,5 +886,114 @@ public class T47_partyAction extends BaseAction {
 		return mapping.findForward("success");
 		}
 	//end
+	
+	//金融查询
+	private ActionForward performFinance_query(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ActionErrors errors = new ActionErrors();
+		HttpSession session = request.getSession();
+		ArrayList t47FlogList;
+		String pageInfo = "";	
+		T47_partyDAO t47_partyDAO = (T47_partyDAO)context.getBean("t47_partyDAO");
+		T47Flog t47flog = new T47Flog();			
+		try {
+			Finance_query_form forms = (Finance_query_form) form;	
+			String newsearchflag = StringUtils.nullObject2String(request
+					.getParameter("newsearchflag"));
+		
+			int intPage = PageUtils.intPage(request, newsearchflag);;
+
+			// 从右侧菜单进入
+			if ("0".equals(newsearchflag)) {
+				return mapping.findForward("success");
+				// 新的查询
+			} else if ("1".equals(newsearchflag)) {
+				MyBeanUtils.copyBean2Bean(t47flog, forms);							
+				t47flog.setIntPage("0");			
+				session.setAttribute("t47flogCon", t47flog);
+				// 翻页
+			} else {
+				t47flog = (T47Flog) session
+						.getAttribute("t47flogCon");
+			   if(t47flog!=null){
+				   MyBeanUtils.copyBean2Bean(form,t47flog);  
+			   }
+				session.setAttribute("t47flogCon", t47flog);
+			}
+			// 执行查询动作
+			int totalRow;		
+			t47FlogList = t47_partyDAO.getT47FinLog(sqlMap,
+					t47flog, this.getStartRec(intPage), this
+								.getIntPageSize());
+				totalRow = t47_partyDAO.getTotalT47FinLog(sqlMap,
+						t47flog);				
+			String url = request.getContextPath() + "/report"
+					+ mapping.getPath() + ".do";
+			pageInfo = this.getPageInfoStr(totalRow, intPage, url, "");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("异常",e);
+			errors.add(errors.GLOBAL_ERROR, new ActionError(
+					"error.pagertitle.default"));
+			saveErrors(request, errors);
+			return mapping.findForward("failure");
+		}
+
+		request.setAttribute("pageInfo", pageInfo);
+		request.setAttribute("t47FlogList", t47FlogList);
+		return mapping.findForward("success");
+	
+	}
+	/**
+	 * 文件下载
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 */
+	private ActionForward performFinance_query_download(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		try{
+		Finance_query_form actionForm = (Finance_query_form) form;
+		LinkedHashMap finMap = cm.getMapFromCache("t87_syspara");
+		//设置响应类型
+		response.setContentType("multipart/form-data");
+		String flag=request.getParameter("flag");
+		String mipath=(String)finMap.get("MIPATH");
+		String mwpath=(String)finMap.get("MWPATH");
+		String filename;
+		String filepath;
+		if("1".equals(flag)){
+			filename=actionForm.getMwFileName();
+			filepath=mwpath;
+		}else {
+			filename=actionForm.getMiFileName();
+			filepath=mipath;
+		}
+	    InputStream in = new FileInputStream(filepath+filename);
+	 //   name = URLEncoder.encode(name, "UTF-8");
+	    //设置文件头
+	    response.setHeader("Content-Disposition", "attachment;filename="+filename);   
+	    response.setContentLength(in.available());
+	    OutputStream out = response.getOutputStream();
+	    byte[] b = new byte[1024*1024];
+	    int len = 0;
+	    while((len = in.read(b))!=-1){
+	      out.write(b, 0, len);
+	    }
+	    out.flush();
+	    out.close();
+	    in.close();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	//end 金融查询
 	
 }

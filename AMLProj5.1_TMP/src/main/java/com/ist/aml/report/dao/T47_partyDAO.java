@@ -24,6 +24,7 @@ package com.ist.aml.report.dao;
  * @version 1.0
  */
 
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,8 +36,10 @@ import org.springframework.context.ApplicationContext;
 import com.ibatis.sqlmap.client.SqlMapClient;
 
 import com.ist.aml.information.dto.T47_Opp_info;
+import com.ist.aml.information.dto.T47_kggd;
 import com.ist.aml.report.dto.T47_party;
 import com.ist.common.LogUtils;
+import com.ist.common.T47Flog;
 import com.ist.common.base.BaseDAO;
 import com.ist.common.db.results.DefaultDbQuery;
 import com.ist.common.db.results.I_DatabaseQuery;
@@ -168,7 +171,7 @@ public class T47_partyDAO extends BaseDAO {
 		int row = 0;
 		row = (int) sqlMap.update("saveModifyT47_partyUc_20091211",
 				t47_party_uc);
-		//by zyd  更新t47_party表的上次更新日期和上次修改人
+		//by zyd  更新T47_PARTY_UC_BULU表的上次更新日期和上次修改人
 		try{
 			LinkedHashMap flagOfPartyLogMap = cm.getMapFromCache("t87_syspara");
 			String flagOfPartyLog=(String)flagOfPartyLogMap.get("flagOfPartyLog");
@@ -725,4 +728,14 @@ public class T47_partyDAO extends BaseDAO {
 		return t47_partyLogList;
 	}
 	//end 
+	//金融查询  by zyd  2018-09-07
+	public ArrayList<T47Flog> getT47FinLog(SqlMapClient sqlMap, T47Flog t47log,int iStartRec, int iPageSize)throws SQLException {
+		ArrayList<T47Flog> od=(ArrayList<T47Flog>) sqlMap.queryForList("getT47FinLog", t47log, iStartRec,iPageSize);
+		return od;
+	}
+	public int getTotalT47FinLog(SqlMapClient sqlMap, T47Flog t47log)throws SQLException {
+		Integer gh=(Integer) sqlMap.queryForObject("getTotalT47FinLog", t47log);
+		return gh;
+	}
+	//end 金融查询
 }

@@ -172,14 +172,6 @@
 	WHERE PARTY_ID=#party_id#
 	</statement>
 	<!-- by zyd 修改T47_PARTY_UC_BULU的上次修改时间和上次更新人 -->
-	<statement id="updateT47_partyForLastDt"
-		parameterClass="com.ist.aml.report.dto.T47_party" resultClass="int">
-		UPDATE T47_PARTY_UC_BULU SET LAST_UPD_DT=#last_upd_dt#,LAST_UPD_USER=#last_upd_user# where party_id=#party_id#                          
-	</statement>
-	<statement id="checkT47_partyForLastDt"
-		parameterClass="com.ist.aml.report.dto.T47_party" resultClass="int">
-		select count(*) from  T47_PARTY_UC_BULU  where party_id=#party_id#                          
-	</statement>
 	<statement id="insertT47_partyForLastDt"
 		parameterClass="com.ist.aml.report.dto.T47_party"
 		resultClass="int">
@@ -583,7 +575,6 @@
 		#party_id#,#host_cust_id#,#party_class_cd#,#aml1_type_cd#,#aml2_type_cd#,#party_chn_name#,#party_eng_name#,#card_type#,#card_no#,#birth_dt#,#country_residence#,#country_cd#,#addr1#,#addr2#,#tel_no#,#cell_no#,#net_address#,#email_addr#,#create_dt:DATE#,#last_upd_dt#,#last_upd_user#
 		)
 	</statement>
-	<!-- 信息维护1 -->
 	<statement id="getCorporationDisp" parameterClass="java.lang.String"
 		resultClass="com.ist.aml.report.dto.T47_party">
 		SELECT
@@ -591,7 +582,6 @@
 		FROM T47_PARTY A , T47_CORPORATION B WHERE A.PARTY_ID=#value#
 		AND B.PARTY_ID=A.PARTY_ID
 	</statement>
-	<!-- 客户信息维护2 -->
 	<statement id="getCorporationDisp1"
 		parameterClass="java.lang.String"
 		resultClass="com.ist.aml.report.dto.T47_party">
@@ -757,5 +747,41 @@
 			</isNotNull>
 		</dynamic>
 	</statement>
-	
+	<!-- 金融查询 20180907 by zyd-->
+	<statement id="getT47FinLog" parameterClass="com.ist.common.T47Flog" resultClass="com.ist.common.T47Flog">
+		select 	 xqFileName,mwFileName,mingwStatus,
+         miFileName,miStatus,errmsg,verification_DT,
+         verification_BATCH,verification_SEQ from T47_FINLOG
+		where 1=1 
+		<isNotEmpty prepend="AND" property="begindat">
+				verification_DT>=#begindat#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="enddat">	
+				<![CDATA[verification_DT<=#enddat#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="verification_BATCH">
+				verification_BATCH= #verification_BATCH#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="verification_SEQ">
+				verification_SEQ= #verification_SEQ#
+			</isNotEmpty>
+	</statement>
+		<!-- 金融查询20180907 zyd -->
+	<statement id="getTotalT47FinLog" parameterClass="com.ist.common.T47Flog" resultClass="int">
+		select 	count(*) from T47_FINLOG
+		where 1=1 
+			<isNotEmpty prepend="AND" property="begindat">
+				verification_DT>=#begindat#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="enddat">
+				<![CDATA[verification_DT<=#enddat#]]>
+			</isNotEmpty>  
+			<isNotEmpty prepend="AND" property="verification_BATCH">
+				verification_BATCH= #verification_BATCH#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="verification_SEQ">
+				verification_SEQ= #verification_SEQ#
+			</isNotEmpty>
+	</statement>
+	<!-- end 金融查询 -->
 </sqlMap>
