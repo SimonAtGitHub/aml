@@ -366,6 +366,15 @@ function initDate(){
 				<th>
 					行内员工
 				</th>
+				<th>
+				交易代码
+				</th>
+				<th>
+				  补录日期
+				</th>
+				<th>
+				补录柜员
+				</th>
 			</tr>
 			<logic:present name="t47_transactionList">
 				<logic:iterate id="search" name="t47_transactionList"
@@ -424,6 +433,17 @@ function initDate(){
 						<td>
 							<bean:write name="search" property="is_staff" scope="page" />
 						</td>
+						<!-- add zyd 2018-08-28 -->
+					    <td>
+							<bean:write name="search" property="jydm" scope="page" />
+						</td>
+						<td>
+							<bean:write name="search" property="blString" scope="page" />
+						</td>
+						<td>
+							<bean:write name="search" property="buparty" scope="page" />
+						</td>
+						<!-- end -->
 					</tr>
 				</logic:iterate>
 			</logic:present>

@@ -21,6 +21,39 @@ public class T47_transaction_ms extends T47_transaction{
 	private Date app_dt;
 	private String app_dt_disp;
 	//add 2009.12.15  行内员工号
+	//add 2018-08-28 by zyd
+	private String blString;
+	private Date blDate;
+	private String buparty;
+	private String jydm;
+	public String getBlString() {
+		return blString;
+	}
+	public void setBlString(String blString) {
+		this.blString = blString;
+	}
+	public Date getBlDate() {
+		return blDate;
+	}
+	public void setBlDate(Date blDate) {
+		this.blDate = blDate;
+	}
+	public String getBuparty() {
+		return buparty;
+	}
+	public void setBuparty(String buparty) {
+		this.buparty = buparty;
+	}
+	public String getJydm() {
+		return jydm;
+	}
+	public void setJydm(String jydm) {
+		this.jydm = jydm;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	//end
 	private String staffkey;
 	private String alertkey;
 	private Date case_date=new Date();

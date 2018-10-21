@@ -229,6 +229,9 @@ rt
   <td class=xl25 width=100 style='width:75pt'>是否跨境交易</td>
   <td class=xl25 width=108 style='width:81pt'>对方账户类型</td>
   <td class=xl26 width=100 style='width:75pt'>现/转标志</td>
+    <td class=xl26 width=100 style='width:75pt'>交易代码</td>
+      <td class=xl26 width=100 style='width:75pt'>补录日期</td>
+        <td class=xl26 width=100 style='width:75pt'>补录柜员</td>
   <td class=xl24>　</td>
  </tr>
  
@@ -253,6 +256,9 @@ rt
   <td class=xl25 width=100 style='width:75pt'><bean:write name="trans" property="overarea_ind" ignore="true"/></td>
   <td class=xl25 width=108 style='width:81pt'><bean:write name="trans" property="opp_acct_type_cd" ignore="true"/></td>
   <td class=xl26 width=100 style='width:75pt'><bean:write name="trans" property="cash_trans_flag" ignore="true"/></td>
+    <td class=xl26 width=100 style='width:75pt'><bean:write name="trans" property="jydm" ignore="true"/></td>
+      <td class=xl26 width=100 style='width:75pt'><bean:write name="trans" property="blString" ignore="true"/></td>
+        <td class=xl26 width=100 style='width:75pt'><bean:write name="trans" property="buparty" ignore="true"/></td>
   <td class=xl24>　</td>
  </tr>
  </logic:iterate>
