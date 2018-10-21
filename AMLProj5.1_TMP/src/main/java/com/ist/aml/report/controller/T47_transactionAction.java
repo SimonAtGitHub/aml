@@ -195,6 +195,12 @@ public class T47_transactionAction extends BaseAction {
 			myforward = performModifyT47_transaction_newDo(mapping, form,
 					request, response);
 		}
+		//by zyd 获取补录日志 20198/6/17
+		else if ("getT47_transLogForBuLu".equalsIgnoreCase(myaction)) {
+			myforward = performgetT47_transLogForBuLu(mapping, form,
+					request, response);
+		}
+		//end
 		return myforward;
 		
 	}
@@ -2953,6 +2959,19 @@ String cash_trans_flag_str=cm.getMapFromCacheToStr("goflag", "cash_trans_flag_di
 						.getAttribute("t47_transactionSearchObjb");
 				MyBeanUtils.copyBean2Bean(form, t47_transaction);
 			}
+			//by zyd 2018/6/16
+			boolean timeFlagForBuLu=false;
+			if(t47_transaction!=null){  //设置前台验证状态
+			if(newsearchflag.equals("1")){
+			}else{
+				form.setValidate_ind(t47_transaction.getValidate_ind());
+			}
+			}
+			if("1".equals(form.getValidate_ind())){
+				timeFlagForBuLu=true;
+			}
+			request.setAttribute("timeFlagForBuLu", timeFlagForBuLu);
+			//end 
 			//验证状态
 			String status_str=cm.getMapFromCacheToStr("status1", "validate_ind", form.getValidate_ind(),"", false); 
 			request.setAttribute("status_str", status_str);
@@ -4889,5 +4908,25 @@ String cash_trans_flag_str=cm.getMapFromCacheToStr("goflag", "cash_trans_flag_di
 		if(str==null)str="";
 		return str;
 	}
-	
+	//by zyd 2018-06-17 增加交易补录日志控制器
+	public ActionForward performgetT47_transLogForBuLu(
+			ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) {
+		ArrayList<T47_trans_recordLog> t47_transactionLogList=null;
+		try{
+			T47_transactionDAO t47_transactionDAO = (T47_transactionDAO)context.getBean("t47_transactionDAO");
+			String transactionkey=request.getParameter("transactionkey");
+			T47_transaction t47_transaction=new T47_transaction();
+			t47_transaction.setTransactionkey(transactionkey);
+			t47_transactionLogList=t47_transactionDAO.getTransactionLogList(sqlMap,t47_transaction);
+			t47_transaction=null;
+		}catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e);
+			return actionMapping.findForward("failure");
+		}
+		request.setAttribute("t47_transactionLogList", t47_transactionLogList);
+		return actionMapping.findForward("success");
+	}
+	//end zyd
 }

@@ -143,6 +143,8 @@ while(path.indexOf("\\")!=-1){
 		<th>机构级别</th>
 		<th>行政区划代码</th>
 		<th>支付系统行号</th>
+		<th>金融机构代码</th>
+		<th>是否跨境</th>
 		<th>联系人</th>
 		<th>联系电话</th>
 	  </tr>
@@ -167,6 +169,9 @@ pageContext.setAttribute("map", map, PageContext.PAGE_SCOPE);
       </td>
       <td><bean:write name="organ" property="org_area"/></td>
             <td><bean:write name="organ" property="unionorgkey"/></td>
+            <td><bean:write name="organ" property="organcode"/></td>
+      <td><bean:write name="organ" property="overarea_ind_disp"/></td>
+            
       <td><bean:write name="organ" property="linkman"/></td>
       <td><bean:write name="organ" property="telephone"/></td>
     </tr>

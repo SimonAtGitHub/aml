@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 基础管理平台模块配置 -->
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+  <data-sources />
+  <form-beans>
+	<!-- add by ljd satrt 2018-1-16 -->
+	<form-bean name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyActionForm" />
+	<!-- add by ljd end 2018-1-16 -->
+	<form-bean name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkActionForm" />
+  </form-beans>
+  <global-exceptions />
+  <global-forwards />
+  <action-mappings>
+		<!-- add by ljd satrt 2018-1-16 -->
+		<action path="/pbc/getT1q_pbc_applyList" parameter="getT1q_pbc_applyList"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/pbc/t1q_pbc_applyList.jsp" />
+		</action>
+		
+		<action path="/pbc/t1q_apply_result_file" parameter="getT1q_pbc_apply_result_file"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/pbc/t1q_apply_result_fileInfo.jsp" />
+		</action>
+			
+			<action path="/pbc/getT1q_pbc_apply_task_logList" parameter="getT1q_pbc_apply_task_logList"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+				<forward name="success" path="/pbc/t1q_pbc_apply_logList.jsp" />
+			</action>
+			
+			<action path="/pbc/performGetT1q_pbc_file_info" parameter="performGetT1q_pbc_file_info"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+				<forward name="success" path="/pbc/t1q_pbc_apply_task_logList.jsp" />
+			</action>
+			
+			<action path="/pbc/t1q_apply_result_taskCheck" parameter="getT1q_apply_result_taskCheck"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+				<forward name="success" path="/pbc/t1q_pbc_apply_task_logList.jsp" />
+			</action>
+			
+			<action path="/pbc/getT1q_pbc_apply_definedList" parameter="getT1q_pbc_apply_definedList"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+				<forward name="success" path="/pbc/t1q_pbc_apply_defineList.jsp" />
+			</action>
+			
+			<action path="/pbc/getT1q_apply_define_columns" parameter="getT1q_apply_define_columns"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+				<forward name="success" path="/pbc/t1q_pbc_define_columnsList.jsp" />
+			</action>
+			
+			<action path="/pbc/getT1q_pbc_approveList" parameter="getT1q_pbc_approveList"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+				<forward name="success" path="/pbc/t1q_pbc_approveList.jsp" />
+			</action>
+			
+			<action path="/pbc/getT1q_pbc_approvePass" parameter="getT1q_pbc_approvePass"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+				<forward name="success" path="/pbc/getT1q_pbc_approveList.do" />
+			</action>
+			
+			<action path="/pbc/getT1q_pbc_approveReturn" parameter="getT1q_pbc_approveReturn"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+				<forward name="success" path="/pbc/t1q_pbc_approveReturn_Reison.jsp" />
+			</action>
+			
+			
+			
+			
+			<action path="/pbc/getT1q_pbc_application" parameter="getT1q_pbc_application_list"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+				<forward name="success" path="/pbc/t1q_pbc_applicationList.jsp" />
+			</action>
+			
+			<action path="/pbc/getT1q_pbc_app_add" parameter="getT1q_pbc_app_addList"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+				<forward name="success" path="/pbc/t1q_pbc_appAdd.jsp" />
+			</action>
+			
+			<action path="/pbc/getT1q_pbc_app_add_other" parameter="getT1q_pbc_app_add_other"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+				<forward name="success" path="/pbc/t1q_pbc_appAdd_other.jsp" />
+			</action>
+			
+			
+			<action path="/pbc/getT1q_pbc_app_delete" parameter="getT1q_pbc_app_delete"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+				<forward name="success" path="/pbc/getT1q_pbc_application.do" />
+			</action>
+			
+			
+			<action path="/pbc/getT1q_pbc_app_submit" parameter="getT1q_pbc_app_submit"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+				<forward name="success" path="/pbc/getT1q_pbc_application.do" />
+				<forward name="failure" path="/pbc/getT1q_pbc_application.do" />
+			</action>
+		<action path="/pbc/t1q_apply_field_definition" parameter="t1q_apply_field_definition"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/pbc/t1q_apply_field_definition.jsp" />
+		</action>
+		<action path="/pbc/tb_apply_field_delete" parameter="tb_apply_field_delete"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/pbc/t1q_apply_field_definition.do" />
+		</action>	
+			
+		<action path="/pbc/getT1q_pbc_app_add_save" parameter="getT1q_pbc_app_add_save"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/pbc/getT1q_pbc_app_modify.do" />
+			<forward name="failure" path="/pbc/getT1q_pbc_app_add_other.do" />
+		</action>
+		
+		
+		<action path="/pbc/getT1q_pbc_app_modify" parameter="getT1q_pbc_app_modify"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/pbc/t1q_pbc_appModify.jsp" />
+		</action>
+		<action path="/pbc/getT1q_pbc_app_modify_do" parameter="getT1q_pbc_app_modify_do"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/pbc/getT1q_pbc_app_modify.do" />
+			<forward name="failure" path="/pbc/getT1q_pbc_app_modify.do" />
+		</action>
+		
+		<action path="/pbc/t1q_pbc_table_lock" parameter="getT1q_pbc_table_lock"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/pbc/getT1q_pbc_app_add_other.do" />
+		</action>
+		<action path="/pbc/t1q_pbc_apply_conf_save" parameter="getT1q_pbc_apply_conf_save"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/pbc/getT1q_pbc_app_add_other.do" redirect="true"  />
+		</action>
+		
+		
+		<!-- 审批退回保存 -->
+		<action path="/pbc/getT1q_pbc_approveReturn_save" parameter="getT1q_pbc_approveReturn_do"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+		</action>
+		<action path="/pbc/getT1q_pbc_app_modfiy" parameter="getT1q_pbc_app_modfiy"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/pbc/getT1q_pbc_approveList.do" />
+		</action>
+		<!-- 审核 -->
+			<action path="/pbc/getT1q_pbc_auditList" parameter="getT1q_pbc_auditList"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/pbc/t1q_pbc_auditList.jsp" />
+		</action>
+		<action path="/pbc/getT1q_pbc_auditPass" parameter="getT1q_pbc_auditPass"
+		name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/pbc/getT1q_pbc_auditList.do" />
+			<forward name="failure" path="/pbc/getT1q_pbc_auditList.do" />
+		</action>
+		<action path="/pbc/getT1q_pbc_produce" parameter="getT1q_pbc_produce"
+		name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/pbc/getT1q_pbc_auditPass.do" />
+		</action>
+		
+		<action path="/pbc/getT1q_pbc_approveSave" parameter="getT1q_pbc_approveSave"
+		name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/pbc/getT1q_pbc_approveList.do" />
+			<forward name="failure" path="/pbc/getT1q_pbc_approveList.do" />
+		</action>
+		
+		<action path="/pbc/getT1q_pbc_approveIsFile" parameter="getT1q_pbc_approveIsFile"
+		name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/pbc/getT1q_pbc_applyList.do" />
+			<forward name="failure" path="/pbc/getT1q_pbc_applyList.do" />
+		</action>
+		
+		<action path="/pbc/t1q_apply_result_file_zip" parameter="getT1q_apply_result_file_zip"
+		name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/pbc/t1q_pbc_app_result_fileInfo_zip.jsp" />
+		</action>
+		<action path="/pbc/getT1q_pbc_auditReturn" parameter="getT1q_pbc_auditReturn"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+				<forward name="success" path="/pbc/t1q_pbc_auditReturn.jsp" />
+			</action>
+		<action path="/pbc/getT1q_pbc_auditReturn_do" parameter="getT1q_pbc_auditReturn_do"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+		</action>
+		
+		<!-- 退回查看getT1q_pbc_applyCheck -->
+		
+		<action path="/pbc/getT1q_pbc_applyCheck" parameter="getT1q_pbc_applyCheck"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/pbc/t1q_pbc_applyCheck.jsp" />
+		</action>
+		
+		<!-- 字段修改 -->
+			<action path="/pbc/t1q_apply_field_definition_modify" parameter="getT1q_apply_field_definition_modify"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/pbc/t1q_apply_field_definition_modify.jsp"  />
+		</action>
+		
+		
+		
+		
+		<action path="/pbc/getT1q_pbc_apply_modify" parameter="getT1q_pbc_apply_modify"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/pbc/t1q_pbc_apply_modify.jsp" />
+		</action>
+		
+			<action path="/pbc/getT1q_pbc_app_add_other_modify" parameter="getT1q_pbc_app_add_other_modify"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+				<forward name="success" path="/pbc/t1q_pbc_appAdd_other_modify.jsp" />
+			</action>
+		<!--字段修改 保存 -->
+		<action path="/pbc/t1q_pbc_apply_conf_modify_save" parameter="getT1q_pbc_apply_conf_modify_save"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+				<forward name="success" path="/pbc/getT1q_pbc_apply_modify.do" />
+				<forward name="failure" path="/pbc/getT1q_pbc_apply_modify.do" />
+			</action>
+		<action path="/pbc/t1q_pbc_table_lock_modify" parameter="getT1q_pbc_table_lock_modify"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+				<forward name="success" path="/pbc/getT1q_pbc_app_add_other_modify.do" />
+				<forward name="failure" path="/pbc/getT1q_pbc_app_add_other_modify.do" />
+			</action>
+		
+		<action path="/pbc/getT1q_pbc_apply_modify_put" parameter="getT1q_pbc_apply_modify_put"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+				<forward name="success" path="/pbc/getT1q_pbc_apply_modify.do" />
+				<forward name="failure" path="/pbc/getT1q_pbc_apply_modify.do" />
+				
+			</action>
+		<!--下载 -->
+		<action path="/pbc/getT1q_pbc_approve_download" parameter="getT1q_pbc_approve_download"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+			<forward name="failure" path="/pbc/getT1q_pbc_applyList.do" />
+		</action>
+		<!-- 错误日志 -->
+		<action path="/pbc/t1q_errorlog_list" parameter="getT1q_errorlog_list"
+			name="t1q_pbc_applyActionForm" type="com.ist.bmp.pbc.controller.T1q_pbc_applyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/pbc/t1q_errorlog_list.jsp" />
+		</action>
+		
+		<!-- add by ljd end 2018-1-16  -->
+		
+	<action path="/check/t3r_checkList" parameter="getT3r_checkList" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_check_list.jsp"/> 
+        <forward name="failure" path="/check/t3r_check_list.jsp"/> 
+    </action>
+    <action path="/check/t3r_checkDisp" parameter="getT3r_checkDisp" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_check_disp.jsp"/> 
+        <forward name="failure" path="/check/t3r_check_disp.jsp"/> 
+    </action>
+    <action path="/check/t3r_check_add" parameter="addT3r_check" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_check_add.jsp"/> 
+        <forward name="failure" path="/check/t3r_checkList.do"/> 
+    </action>
+    <action path="/check/t3r_check_add_do" parameter="addT3r_checkDo" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_checkList.do"/> 
+        <forward name="failure" path="/check/t3r_check_add.do"/> 
+    </action>
+     <action path="/check/t3r_check_modify" parameter="modifyT3r_check" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_check_modify.jsp"/> 
+        <forward name="failure" path="/check/t3r_checkList.do"/> 
+    </action>
+    <action path="/check/t3r_check_modify_do" parameter="modifyT3r_checkDo" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_checkList.do"/> 
+        <forward name="failure" path="/check/t3r_check_modify.do"/> 
+    </action>
+     <action path="/check/t3r_check_modify_status" parameter="modifyT3r_checkStatus" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_checkList.do"/> 
+        <forward name="failure" path="/check/t3r_checkList.do"/> 
+    </action>
+    <action path="/check/t3r_check_delete_do" parameter="deleteT3r_check" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_checkList.do" redirect="true"/> 
+        <forward name="failure" path="/check/t3r_checkList.do"/> 
+    </action>	
+    
+    
+    
+    
+    <action path="/check/t3r_chk_logList" parameter="getT3r_chk_logList" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_chk_log_list.jsp"/> 
+        <forward name="failure" path="/check/t3r_chk_log_list.jsp"/> 
+    </action>
+    <action path="/check/t3r_chk_logDisp" parameter="getT3r_chk_logDisp" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_chk_log_disp.jsp"/> 
+        <forward name="failure" path="/check/t3r_chk_log_disp.jsp"/> 
+    </action>
+    <action path="/check/t3r_chk_log_add" parameter="addT3r_chk_log" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_chk_log_add.jsp"/> 
+        <forward name="failure" path="/check/t3r_chk_logList.do"/> 
+    </action>
+    <action path="/check/t3r_chk_log_add_do" parameter="addT3r_chk_logDo" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_chk_logList.do"/> 
+        <forward name="failure" path="/check/t3r_chk_log_add.do"/> 
+    </action>
+     <action path="/check/t3r_chk_log_modify" parameter="modifyT3r_chk_log" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_chk_log_modify.jsp"/> 
+        <forward name="failure" path="/check/t3r_chk_logList.do"/> 
+    </action>
+    <action path="/check/t3r_chk_log_modify_do" parameter="modifyT3r_chk_logDo" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_chk_logList.do"/> 
+        <forward name="failure" path="/check/t3r_chk_log_modify.do"/> 
+    </action>
+    <action path="/check/t3r_chk_log_delete_do" parameter="deleteT3r_chk_log" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_chk_logList.do" redirect="true"/> 
+        <forward name="failure" path="/check/t3r_chk_logList.do"/> 
+    </action>	
+    
+    
+    
+    
+     <action path="/check/t3r_chk_qstList" parameter="getT3r_chk_qstList" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_chk_qst_list.jsp"/> 
+        <forward name="failure" path="/check/t3r_chk_qst_list.jsp"/> 
+    </action>
+    <action path="/check/t3r_chk_qstDisp" parameter="getT3r_chk_qstDisp" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_chk_qst_disp.jsp"/> 
+        <forward name="failure" path="/check/t3r_chk_qst_disp.jsp"/> 
+    </action>
+    <action path="/check/t3r_chk_qst_add" parameter="addT3r_chk_qst" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_chk_qst_add.jsp"/> 
+        <forward name="failure" path="/check/t3r_chk_qstList.do"/> 
+    </action>
+    <action path="/check/t3r_chk_qst_add_do" parameter="addT3r_chk_qstDo" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_chk_qstList.do"/> 
+        <forward name="failure" path="/check/t3r_chk_qst_add.do"/> 
+    </action>
+     <action path="/check/t3r_chk_qst_modify" parameter="modifyT3r_chk_qst" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_chk_qst_modify.jsp"/> 
+        <forward name="failure" path="/check/t3r_chk_qstList.do"/> 
+    </action>
+    <action path="/check/t3r_chk_qst_modify_do" parameter="modifyT3r_chk_qstDo" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_chk_qstList.do"/> 
+        <forward name="failure" path="/check/t3r_chk_qst_modify.do"/> 
+    </action>
+    <action path="/check/t3r_chk_qst_delete_do" parameter="deleteT3r_chk_qst" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_chk_qstList.do" redirect="true"/> 
+        <forward name="failure" path="/check/t3r_chk_qstList.do"/> 
+    </action>	
+    
+    
+      <action path="/check/t3r_chk_qstAllList" parameter="getT3r_chk_qstAllList" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_chk_qst_alllist.jsp"/> 
+        <forward name="failure" path="/check/t3r_chk_qst_alllist.jsp"/> 
+    </action>
+     <action path="/check/t3r_chk_qst_mod" parameter="updateT3r_chk_qst" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_chk_qst_mod.jsp"/> 
+        <forward name="failure" path="/check/t3r_chk_qstAllList.do"/> 
+    </action>
+    <action path="/check/t3r_chk_qst_mod_do" parameter="updateT3r_chk_qstDo" name="t3r_checkActionForm" type="com.ist.bmp.pbc.controller.T3r_checkAction" validate="false" scope="request"> 
+	    <forward name="success" path="/check/t3r_chk_qstAllList.do"/> 
+        <forward name="failure" path="/check/t3r_chk_qst_mod.do"/> 
+    </action>
+  </action-mappings>
+  <message-resources parameter="ApplicationResources_zh_CN" />
+</struts-config>

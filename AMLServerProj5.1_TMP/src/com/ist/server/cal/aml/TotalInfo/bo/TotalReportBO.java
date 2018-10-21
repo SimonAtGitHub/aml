@@ -788,6 +788,45 @@ public class TotalReportBO {
 	     }
 	     	  return count;
 	  	}
-     	   
-       
+	     //by zyd 2018-08-07  客户重新识别剔除销户
+	     //如果剔除销户有异常代码继续执行
+     	public void deleteT10_CHECKPARTY_RE_XH(Connection conn,String statisticdate){
+     	try{
+     	logger.debug("执行客户重新识别表去除销户客户...");
+     	/*	初始设计为仅删除当天重新识别的客户
+     	String deletexh="DELETE FROM T10_CHECKPARTY_RE_BK WHERE CREATE_DT="+func.vch2dt(statisticdate, "yyyy-mm-dd");
+     	int countTep =SQLExecute.exeSql(conn, deletexh);
+     	logger.debug("删除备份表"+countTep+"行");
+     	String sqlxh="insert into T10_CHECKPARTY_RE_BK(PARTY_ID, RECHECK_TYPE, HOST_CUST_ID, PARTY_CLASS_CD, PARTY_CHN_NAME,"+
+     	" CARD_TYPE, CARD_NO, ORGANKEY, PARTY_STATUS_CD, AML1_TYPE_CD, CREATE_DT, CHECK_STATUS, CHECK_REASON)  "+
+     	"SELECT PARTY_ID, RECHECK_TYPE, HOST_CUST_ID, PARTY_CLASS_CD, PARTY_CHN_NAME,"+
+     	" CARD_TYPE, CARD_NO, ORGANKEY, PARTY_STATUS_CD, AML1_TYPE_CD, CREATE_DT, CHECK_STATUS, CHECK_REASON FROM T10_CHECKPARTY_RE WHERE" +
+     	" PARTY_ID IN (SELECT PARTY_ID FROM V47_PARTY_XH) AND CREATE_DT="+func.vch2dt(statisticdate, "yyyy-mm-dd");
+     	*/
+     	String sqlxh="insert into T10_CHECKPARTY_RE_BK(PARTY_ID, RECHECK_TYPE, HOST_CUST_ID, PARTY_CLASS_CD, PARTY_CHN_NAME,"+
+     	" CARD_TYPE, CARD_NO, ORGANKEY, PARTY_STATUS_CD, AML1_TYPE_CD, CREATE_DT, CHECK_STATUS, CHECK_REASON)  "+
+     	"SELECT PARTY_ID, RECHECK_TYPE, HOST_CUST_ID, PARTY_CLASS_CD, PARTY_CHN_NAME,"+
+     	" CARD_TYPE, CARD_NO, ORGANKEY, PARTY_STATUS_CD, AML1_TYPE_CD, CREATE_DT, CHECK_STATUS, CHECK_REASON FROM T10_CHECKPARTY_RE WHERE" +
+     	" PARTY_ID IN (SELECT PARTY_ID FROM V47_PARTY_XH) ";
+     	int countTep2=SQLExecute.exeSql(conn, sqlxh);
+     	logger.debug("插入备份表"+countTep2+"行");
+      /* 初始设计为仅删除当天重新识别的客户
+        String sqldelxh="DELETE FROM T10_CHECKPARTY_RE WHERE  " +
+     	"PARTY_ID IN (SELECT PARTY_ID FROM V47_PARTY_XH) AND CREATE_DT="+func.vch2dt(statisticdate, "yyyy-mm-dd"); 
+     */
+     	String sqldelxh="DELETE FROM T10_CHECKPARTY_RE WHERE  " +
+     	"PARTY_ID IN (SELECT PARTY_ID FROM V47_PARTY_XH)  ";
+       	int countTep3=SQLExecute.exeSql(conn, sqldelxh);
+       	logger.debug("删除客户重新识别表"+countTep3+"行");
+       	logger.debug("执行客户重新识别表去除销户客户成功");
+     	}catch(Exception e){
+     		logger.debug("剔除销户异常,代码继续执行");
+     		logger.error(e.getMessage());
+     	}
+     	
+     	}
+      //end zyd
+       public static void main(String[] args){
+    	   
+       }
 }

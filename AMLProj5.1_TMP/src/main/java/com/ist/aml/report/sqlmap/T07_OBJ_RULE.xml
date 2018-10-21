@@ -68,6 +68,30 @@
 			</isNotEmpty>
 		</dynamic>
 	</statement>
+	<statement id="getT07_OBJ_RULECheck"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="com.ist.aml.report.dto.T07_OBJ_RULE">
+		select
+		bank_name,bank_code2,checkdate,name,id_no,result,is_inst from T47_LWHC_LOG
+		where 1=1
+		<dynamic>
+			<isNotEmpty prepend="and" property="bank_code2">
+				bank_code2 = #bank_code2#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="name">
+				name LIKE '%'||#name#||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="id_no">
+				id_no = #id_no#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="checkdate">
+				<![CDATA[to_date(checkdate,'yyyy-mm-dd') >= to_date(#checkdate#,'yyyy-mm-dd')]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="checkdate1">
+				<![CDATA[to_date(checkdate,'yyyy-mm-dd') <= to_date(#checkdate1#,'yyyy-mm-dd')]]>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
 	<statement id="getT07_greyList"
 		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
 		resultClass="com.ist.aml.report.dto.T07_OBJ_RULE">
@@ -98,11 +122,31 @@
 			</isNotEmpty>
 			<isNotEmpty prepend="AND" property="create1_dt">
 				<![CDATA[create_dt <= #create1_dt#]]>
-			</isNotEmpty>
-		
+			</isNotEmpty>	
 		</dynamic>
 	</statement>
-
+   <statement id="getT07_OBJ_RULECheckCount"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="int">
+		select count(*) from T47_LWHC_LOG where 1>0
+		<dynamic>
+			<isNotEmpty prepend="and" property="bank_code2">
+				bank_code2 = #bank_code2#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="id_no">
+				id_no = #id_no#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="name">
+				name LIKE '%'||#name#||'%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="checkdate">
+				<![CDATA[checkdate >= #checkdate#]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="checkdate1">
+				<![CDATA[checkdate <= #checkdate1#]]>
+			</isNotEmpty>
+		</dynamic>
+	</statement>
 	<statement id="getT07_OBJ_RULEListCount"
 		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
 		resultClass="int">
@@ -179,11 +223,21 @@
 	resultClass="int">
 	insert into
 	T07_WHITELIST_INFO(party_id,obj_name,organkey,isuse,party_class_cd,
-	reason_create,reason_cancel,rule_type,create_user,create_dt,modify_user,modify_dt,ischeck )
+	reason_create,reason_cancel,rule_type,create_user,create_dt,modify_user,modify_dt)
 	values(
 	#party_id#,#obj_name#,#organkey#,#isuse#,#party_class_cd#,#reason_create#,
 	#reason_cancel#,#rule_type#,
-	#create_user#,#create_dt#,#modify_user#,#modify_dt#,#ischeck# )
+	#create_user#,#create_dt#,#modify_user#,#modify_dt#,#ischeck#)
+	</statement>
+	<statement id="insertT07_OBJ_RULECheck" parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+	resultClass="int">
+	insert into
+	T47_LWHC_LOG(bank_name,bank_code2,checkdate,checktime,name,
+	id_no,result,counter_no,ope_line,checkmode,purpose,is_inst )
+	values(
+	#bank_name#,#bank_code2#,#checkdate#,#checktime#,#name#,#id_no#,
+	#result#,#counter_no#,
+	#ope_line#,#checkmode#,#purpose#,#is_inst#)
 	</statement>
 	<statement id="insertT07_grey"
 		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
@@ -230,7 +284,14 @@
 		modify_user=#modify_user#,modify_dt=#modify_dt#,ischeck=#ischeck# where
 		party_id=#party_id#
 	</statement>
-	
+	<statement id="modifyT07_OBJ_RULECheck"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="int">
+		update T47_LWHC_LOG set
+		checkdate=#checkdate#,checktime=#checktime#,name=#name#,
+		result=#result#,counter_no=#counter_no#,ope_line=#ope_line#,checkmode=#checkmode#,purpose=#purpose# where
+		id_no=#id_no#
+	</statement>
 	<statement id="modifyT07_OBJ_RULE_ischeck"
 		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
 		resultClass="int">
@@ -277,7 +338,10 @@
 		resultClass="int">
 		delete from T07_WHITELIST_INFO where party_id=#value#
 	</statement>
-
+    <statement id="deleteT07_OBJ_RULECheck" parameterClass="java.lang.String"
+		resultClass="int">
+		delete from T47_LWHC_LOG where id_no=#id_no#
+	</statement>
 	<statement id="deleteT07_OBJ_RULES"
 		parameterClass="java.lang.String" resultClass="int">
 		delete from T07_OBJ_RULE where TL_OBJECTID=#value#
@@ -294,7 +358,26 @@
 			OBJ_NAME = #obj_name#
 		</isNotEmpty>
 	</statement>
-	
+	<statement id="getT07_OBJ_RULEDispCheck"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="com.ist.aml.report.dto.T07_OBJ_RULE">
+		select
+		bank_name,bank_code2,checkdate,name,id_no,result,is_inst,checktime,counter_no,ope_line,checkmode,purpose from T47_LWHC_LOG
+		where id_no= #id_no#
+		<isNotEmpty prepend="and" property="bank_name">
+			BANK_NAME = #bank_name#
+		</isNotEmpty>
+	</statement>
+	<statement id="getT07_OBJ_RULEDispCheck0"
+		parameterClass="com.ist.aml.report.dto.T07_OBJ_RULE"
+		resultClass="com.ist.aml.report.dto.T07_OBJ_RULE">
+		select
+		bank_name,bank_code2,checkdate,name,id_no,result,is_inst,checktime,counter_no,ope_line,checkmode,purpose from T47_LWHC_LOG
+		where id_no= #id_no#
+		<isNotEmpty prepend="and" property="bank_name">
+			BANK_NAME = #bank_name#
+		</isNotEmpty>
+	</statement>
 	<statement id="getT07_OBJ_RULE_blackDisp"
 		parameterClass="java.lang.String"
 		resultClass="com.ist.aml.report.dto.T07_OBJ_RULE">

@@ -36,6 +36,7 @@
 			/WEB-INF/spring/applicationContext-cms.xml
 			/WEB-INF/spring/applicationContext-lucene.xml
 			/WEB-INF/spring/applicationContext-cmp.xml
+			/WEB-INF/spring/applicationContext-datacheck.xml
 	
 		</param-value>
 	</context-param>
@@ -75,6 +76,8 @@
 			<param-name>authTextStorepath</param-name>
 			<param-value>D:/aml/download/</param-value>
 		</init-param>
+		
+		
 	</filter>
 	<filter-mapping>
 		<filter-name>SetCharacterEncoding</filter-name>
@@ -207,6 +210,12 @@
 			<param-name>config/risk_rate</param-name>
 			<param-value>/WEB-INF/struts/struts-risk_rate.xml</param-value>
 		</init-param>
+		
+		<init-param>
+			<param-name>config/datacheck</param-name>
+			<param-value>/WEB-INF/struts/struts-datacheck.xml</param-value>
+		</init-param>
+		
 		<init-param>
 			<param-name>debug</param-name>
 			<param-value>3</param-value>

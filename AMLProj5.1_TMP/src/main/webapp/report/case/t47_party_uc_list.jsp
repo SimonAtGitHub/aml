@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
 <link id="skincss" href="../../css/aml_<%=session.getAttribute("style") %>.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../js/ymPrompt.js"></script>
 <script type="text/javascript" src="../../js/jquery.js"></script>
 <script type="text/javascript" src="../../js/aml.js"></script>
 <!--[if lte IE 6]>
@@ -60,7 +61,9 @@ function _Commit(){
 			  <span>客户信息补录</span>
 		
 			  <span class="buttons">
-			  <a href="#" id="hdd_display" class="bt_hidden"></a>
+			  <a href="#" id="hdd_display" class="bt_hidden"></a>&nbsp;
+			  <a href='javascript:' onclick="ymPrompt.win({message:'<%=request.getContextPath()%>/information/client/getT47_partyLogForBuLu.do'
+			  ,width:450,height:300,title:'客户补录日志',handler:handler,iframe:true,fixPosition:true,dragOut:false});return false;"><img src="../../images/blue/b_add2.png" />补录日志</a>
 			  </span>
 			</div>
 			

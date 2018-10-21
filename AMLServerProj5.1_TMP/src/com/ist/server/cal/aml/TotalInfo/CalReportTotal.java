@@ -83,6 +83,9 @@ public class CalReportTotal extends BaseCalTask {
 			count=reportBo.insert_T10_CHECKPARTY_RE1(conn, statisticdate); //黑名单客户
 			count=reportBo.insert_T10_CHECKPARTY_RE2(conn, statisticdate);//对私证件到期客户
 			count=reportBo.insert_T10_CHECKPARTY_RE3(conn, statisticdate);//对公证件到期客户
+			//by zyd 2018-08-27 去除 客户重新识别表中的销户客户
+			   reportBo.deleteT10_CHECKPARTY_RE_XH(conn,statisticdate);
+		    //end
 		//	count=reportBo.insert_T10_CHECKPARTY_RE4(conn, statisticdate);//高风险以上客户
 		//	count=reportBo.insert_T10_CHECKPARTY_RE5(conn, statisticdate);//可疑上报客户
 			

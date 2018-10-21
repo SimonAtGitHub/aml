@@ -3202,4 +3202,9 @@ SETTLE_TYPE_CD=#settle_type_cd#,USE_DES=#use_des#,OPP_SYS_ID=#opp_sys_id#,OPP_AR
 		 values(#transactionkey#,#tx_no#,#tx_dt:DATE#,#acct_num#,#party_id#,#oper_des#,#oper_obj_type#,#create_dt#,#create_usr#)
 	</statement>
 	
+	<statement id="getTransactionLogList_BuLu" parameterClass="com.ist.aml.report.dto.T47_transaction" 
+	 resultClass="com.ist.aml.report.dto.T47_trans_recordLog">
+	 select T.tx_no,T.tx_dt,T.party_id,T.create_dt,T.create_usr from T47_TRANS_RECORDLOG T where T.transactionkey=#transactionkey# order by create_dt
+	 </statement>
+
 </sqlMap>

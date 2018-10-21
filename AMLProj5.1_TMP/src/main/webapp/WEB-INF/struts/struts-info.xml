@@ -383,7 +383,13 @@
 			<forward name="failure"
 				path="/client/t07_modify_partyorgan_list.do" />
 		</action>
-		
+		 	<!-- by zyd 增加获取客户补录日志的方法 2018/6/17 -->
+	<action path="/client/getT47_partyLogForBuLu" parameter="getT47_partyLogForBuLu"
+			name="t47_partyActionForm" type="com.ist.aml.report.controller.T47_partyAction"
+			validate="false" scope="request">
+			<forward name="success" path="/client/t47_partyLog_List_BuLu.jsp" />
+		</action>
+ <!-- end  -->
 	</action-mappings>
 	<message-resources parameter="ApplicationResources_zh_CN" />
 

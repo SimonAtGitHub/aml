@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 基础管理平台模块配置 -->
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	
+     <!-- add ljd start 2018-01-16 300号文 -->
+     <bean id="t1q_pbc_applyDao" parent="baseDAO" class="com.ist.bmp.pbc.dao.T1q_pbc_applyDao" ></bean> 
+     <!-- add ljd end 2018-01-16 300号文 -->
+     
+     <bean id="t3r_checkDAO" parent="baseDAO" class="com.ist.bmp.pbc.dao.T3r_checkDAO" ></bean> 
+     
+</beans>

@@ -6,7 +6,7 @@
 
 <c:if test="${isClosed == 'y'}">
     <script language="JavaScript">
-		window.opener.addAttach_n('<c:out value="${dispAttachPath}" />','<c:out value="${editAttachPath}" />','<c:out value="${attachkey}" />','<c:out value="${fname}" />','<c:out value="${fileSize}" />','<c:out value="${creator}" />','<c:out value="${attachtype}"/>');
+		window.opener.addAttach_ch('<c:out value="${dispAttachPath}" />','<c:out value="${editAttachPath}" />','<c:out value="${attachkey}" />','<c:out value="${fname}" />','<c:out value="${fileSize}" />','<c:out value="${creator}" />','<c:out value="${attachtype}"/>');
 		<c:if test="${t01_attachmentActionForm.isBack == 1}">
 			window.opener.setSelectOption('picName','<c:out value="${picUrl}" />','<c:out value="${fname}" />');
 		</c:if>
