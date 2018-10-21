@@ -98,7 +98,8 @@ function _isDateSpaceComplete(_Date1, _Date2) {
         else if(type=='del'){
             errMsg = CheckBoxMustChecked(document.forms[0]);
             var len=document.forms[0].selectedPartyId.length;
-            if(len >= 1)
+            var errMsgTemp=errMsg;
+          /*  if(len >= 1)
             {
             	for(var i=0;i<len;i++){
             	var obj = document.forms[0].selectedPartyId[i];
@@ -124,7 +125,42 @@ function _isDateSpaceComplete(_Date1, _Date2) {
                 if(confirm('你真的要删除选择的名单吗？')){
                     isSub = true;
                 }
+            }*/
+            //add by zyd 2018-08-24   强制删除   
+             if(len >= 1)
+            {
+            	for(var i=0;i<len;i++){
+            	var obj = document.forms[0].selectedPartyId[i];
+            	if(obj.checked){
+            		if(document.getElementById("check_"+obj.value).value !='2' ){
+            			errMsgTemp+="您选择的客户"+ obj.value + "已处于非待审核状态，确定进行删除吗?";
+            			break;
+            			}
+            		}
+            	}
+ 
             }
+            else
+            {
+            	var obj = document.forms[0].selectedPartyId;
+            	if(document.getElementById("check_"+obj.value).value !='2' )
+            	{
+            		errMsgTemp+="您选择的客户" + obj.value + "已处于非待审核状态，确定进行删除吗?";
+            	}
+            }
+            
+              if(errMsg==''){
+               if(errMsgTemp!=''){
+                if(confirm(errMsgTemp)){
+                    isSub = true;
+                }
+               }else{
+                if(confirm('你真的要删除选择的名单吗？')){
+                    isSub = true;
+                }
+                }
+            }
+            //end 
         }
         else if(type=='search' || type=='add'){
             isSub = true;
