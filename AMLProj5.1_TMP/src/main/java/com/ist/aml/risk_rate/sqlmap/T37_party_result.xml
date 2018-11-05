@@ -484,13 +484,20 @@
 		resultClass="com.ist.aml.risk_rate.dto.T37_level_audit">
 		SELECT
 		A.PARTY_ID,A.AUDIT_NO,A.LAST_UPD_DT,A.LAST_UPD_USER,A.LEVEL_BEFORE_ADJUST,A.LEVEL_AFTER_ADJUST, A.RES_POST_ID,
-		A.ADJUST_REASON,A.POST_ID FROM $table_name$ A WHERE
+		A.ADJUST_REASON,A.POST_ID,B.STAFCODE FROM $table_name$ A,t00_user B WHERE A.LAST_UPD_USER=B.USERNAME AND
 		A.RSLTKEY=#resulekey# 
 		<isNotEmpty prepend="AND" property="organkey">
 			A.ORGANKEY=#organkey#
 		 </isNotEmpty>
 		 order by A.AUDIT_NO desc
   </statement>
+    <statement id="getT37_level_auditList_not"
+       parameterClass="com.ist.aml.risk_rate.dto.T37_party_result"
+	   resultClass="com.ist.aml.risk_rate.dto.T37_party_result">
+	   SELECT 
+		PARTY_ID,LEVELKEY,AUDIT_USER,AUDIT_DT,CHECK_USER,CHECK_DT,RCHECK_USER,RCHECK_DT,MODIFY_CD FROM T37_PARTY_RESULT_CURR WHERE
+		PARTY_ID=#party_id#
+    </statement>
   <statement id="getT37_level_auditList1"
        parameterClass="com.ist.aml.risk_rate.dto.T37_party_result"
 	   resultClass="com.ist.aml.risk_rate.dto.T37_level_audit">

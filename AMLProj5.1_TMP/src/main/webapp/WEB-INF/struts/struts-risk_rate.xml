@@ -276,6 +276,12 @@
 			scope="request">
 			<forward name="success" path="/result/t37_level_auditList_export.jsp" />
 		</action>
+		<action path="/result/getT37_level_auditList_not"
+			parameter="getT37_level_auditList_not" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/getT37_level_auditList_not.jsp" />
+		</action>
 		<action path="/result/getT37_helpcheckList"
 			parameter="getT37_helpcheckList" name="t37_help_checkActionForm"
 			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"

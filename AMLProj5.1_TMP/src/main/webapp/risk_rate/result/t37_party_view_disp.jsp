@@ -44,11 +44,12 @@ function dosubmit(theUrl){
 			   <a href="<%=request.getContextPath() %>/risk_rate/result/t37_party_result_uhlist.do?party_id=<%=party_id %>&organkey=<bean:write name="t37_party_resultActionForm" property="organkey"/>&newsearchflag=1" target="iframe_cus_child" ><img src="../../images/<%=session.getAttribute("style") %>/b_result.png" />历史评级信息</a>
 		       <a href="<%=request.getContextPath() %>/report/cust_identify/t10_party_risklist.do?newsearchflag=1&party_id=<%=party_id %>&party_class_cd=<bean:write name="t37_party_resultActionForm" property="party_class_cd" />" target="iframe_cus_child" ><img src="../../images/<%=session.getAttribute("style") %>/b_risktranc.png" />风险事件</a>
 			   <a href="<%=request.getContextPath() %>/report/cust_identify/t10_checkparty_result_viewlist.do?newsearchflag=1&party_id=<%=party_id %>&party_class_cd=<bean:write name="t37_party_resultActionForm" property="party_class_cd" />" target="iframe_cus_child" ><img src="../../images/<%=session.getAttribute("style") %>/b_tradline.png" />调查结论</a>
-			   <a href="<%=request.getContextPath() %>/report/attention/t07_attention_lib_list.do?newsearchflag=1&atten_post=P5&party_id=<%=party_id %>&is_his=all" target="iframe_cus_child"><img src="../../images/<%=session.getAttribute("style") %>/b_analysis.png" />关注信息</a>  
-		 </span>
+			   <a href="<%=request.getContextPath() %>/report/attention/t07_attention_lib_list.do?newsearchflag=1&atten_post=P5&party_id=<%=party_id %>&is_his=all" target="iframe_cus_child"><img src="../../images/<%=session.getAttribute("style") %>/b_analysis.png" />关注信息</a>&nbsp;
+			   <a href="<%=request.getContextPath() %>/risk_rate/result/getT37_level_auditList_not.do?newsearchflag=1&party_id=<%=party_id %>" <img src="../../images/<%=session.getAttribute("style") %>/b_risktranc.png" /> <font color='red'>人工未调整记录</font></a>
+		 </span>           
 		<% String backurl=(String)request.getAttribute("backurl");
 		     if(backurl!=null && !backurl.equals("")){
-		 %>
+		 %>  
 		 <span style='background:none;float:right;'>
 		    <a href="#" onclick="dosubmit('<%=(String)request.getAttribute("backurl")%>')" >
 		        	<img src="../../images/<%=session.getAttribute("style") %>/b_back.png" />返 回</a>&nbsp;
