@@ -153,7 +153,12 @@ public class T37_party_resultAction extends BaseAction
     else if ("changeLevelByLastscore".equalsIgnoreCase(myaction)) {
       myforward = performChangeLevelByLastscore(mapping, form, request, response);
     }
-
+	//by zyd 20181031 雅安批量上报
+	else if ("t37_flow_batchTwo_oper".equalsIgnoreCase(myaction)) {
+		myforward = performT37_flow_batchTwo_opere(mapping, form, request,
+				response);
+	}
+   //end zyd
     return myforward;
   }
 
@@ -758,7 +763,7 @@ public class T37_party_resultAction extends BaseAction
       MyBeanUtils.copyBean2Bean(t37_party_result, form);
       if (t37_party_result.getTemptype().equals("1")) {
         forward = "main";
-       } if (t37_party_result.getTemptype().equals("2")) {
+        } if (t37_party_result.getTemptype().equals("2")) {
         t37_party_result = t37_party_resultDAO.getT37_party_resultDisp(this.sqlMap, t37_party_result);
         t37_party_result.setLevel_before_adjust(StringUtils.null2String(t37_party_result.getEmendationlevel()));
 
@@ -2560,4 +2565,105 @@ public class T37_party_resultAction extends BaseAction
     }
     return 0.0D;
   }
+  
+//by  zyd 20181031 雅安批量上报
+  // UPDATE   T37_PARTY_RESULT T SET T.STATUS_CD='2',T.CURR_POST='P2002', audit_user =,audit_dt = ? 
+	public ActionForward performT37_flow_batchTwo_opere(
+			ActionMapping actionMapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) {
+		/* ActionMessages errors = new ActionMessages();
+		HttpSession session = request.getSession();
+		AuthBean authBean = (AuthBean) session.getAttribute("authBean");
+		Authorization auth = authBean.getAuthToken();
+		String user=auth.getT00_user().getUsername();
+		List t37_party_resultList = null;
+		T37_party_resultDAO t37_party_resultDAO = (T37_party_resultDAO) context
+				.getBean("t37_party_result_rateDAO");		
+		try {
+			T37_party_resultActionForm form = (T37_party_resultActionForm) actionForm;
+			T37_party_result t37_party_result =(T37_party_result)session.getAttribute("t37_party_result_rateSearchObj");
+			LinkedHashMap node_postMap = cm.getMapFromCache("t31_node_postid"); // 岗位信息
+			String node_id = (String)node_postMap.get(t37_party_result.getPost_id());
+			t37_party_result.setNode_id(node_id);
+			t37_party_resultList = t37_party_resultDAO
+			     .getT37_party_resultList(sqlMap, t37_party_result);
+		 if(t37_party_resultList!=null && t37_party_resultList.size()>0){
+			 String[] tep=new String[t37_party_resultList.size()];
+			 for(int i=0;i<t37_party_resultList.size();i++){	
+				 T37_party_result result =(T37_party_result) t37_party_resultList.get(i);
+						String party_id = result.getParty_id();
+                      String resulekey = result.getResulekey() ;
+                      String organkey=result.getOrgankey();
+						String flow_id=result.getFlow_id();
+						String hcheck_status=result.getHcheck_status();
+						String higherlevel=result.getHigherlevel();
+                      String resulekeys=result.getResulekey()+","+flow_id+","+higherlevel+","+organkey;
+                     tep[i]=resulekeys;
+			 }   //end for
+			if(tep.length>900){     //拆分数组  一次处理900条
+				String[] pattep=new String[900];
+				int total=tep.length;
+				int block=1;
+				if(total%900==0)
+					block=total/900;
+				else
+					block=total/900+1;	
+				int teplength=900;
+			    for(int s=0; s<block;s++){	
+			    if (s==block-1){
+			      teplength=total-(s*900);
+			      pattep=new String[teplength];
+			    }
+			    System.arraycopy(tep, s*900, pattep,0, teplength);
+				form.setRkeys(pattep);  //生成rkeys 
+				performAddT37_operDo(actionMapping,form,request,response);	//调用批量程序
+				}
+			}else
+			{
+				form.setRkeys(tep);  //生成rkeys 
+				performAddT37_operDo(actionMapping,form,request,response);	//调用批量程序
+			}
+		 } else{                                                   // 如果没有上报对象   直接返回成功
+			logger.debug(user+"批量操作0条!");
+			   return actionMapping.findForward("success");    
+		   }
+		}catch(Exception e){
+			e.printStackTrace();
+			errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
+					"error.common", e.getMessage()));
+			saveMessages(request, errors);
+			return actionMapping.findForward("failure");
+		}
+	  logger.debug(user+"批量操作"+t37_party_resultList.size()+"条!");
+    return actionMapping.findForward("success");
+	}
+	//end zyd*/
+		ActionMessages errors = new ActionMessages();
+		HttpSession session = request.getSession();
+		AuthBean authBean = (AuthBean) session.getAttribute("authBean");
+		Authorization auth = authBean.getAuthToken();
+		String user=auth.getT00_user().getUsername();
+		List t37_party_resultList = null;
+		T37_party_resultDAO t37_party_resultDAO = (T37_party_resultDAO) context
+				.getBean("t37_party_result_rateDAO");			
+		try {
+			T37_party_resultActionForm form = (T37_party_resultActionForm) actionForm;
+			T37_party_result t37_party_result =(T37_party_result)session.getAttribute("t37_party_result_rateSearchObj");
+			t37_party_result.setAudit_user(user);
+			t37_party_result.setAudit_dt(DateUtils.getCurrDateTime());
+			int count=0;
+			String post_id=form.getPost_id();
+			if(post_id!=null&&post_id.equals("P2001")){
+               count=this.sqlMap.update("updateT37_party_result_batch",t37_party_result);
+			}
+          logger.debug(user+"批量操作"+count+"条!");
+		}catch(Exception e){
+			e.printStackTrace();
+			errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
+					"error.common", e.getMessage()));
+			saveMessages(request, errors);
+			return actionMapping.findForward("failure");
+		}	  
+    return actionMapping.findForward("success");
+	}
 }

@@ -934,5 +934,67 @@
         </isNotEmpty>
 		order by treelaye desc
   </statement>
+  
+  <!-- by zyd20181101  雅安批量上报 -->
+  <statement id="updateT37_party_result_batch" parameterClass="com.ist.aml.risk_rate.dto.T37_party_result" resultClass="int"> 
+  update  T37_party_result R set R.status_cd='2' ,R.curr_post='P2002' ,R.audit_user =#audit_user# ,audit_dt = #audit_dt# 
+		<dynamic prepend="WHERE">
+		<isNotEmpty prepend="AND" property="organStr">
+			R.ORGANKEY IN ($organStr$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="status_cd">
+			R.status_cd=#status_cd#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="post_id">
+			R.CURR_POST =#post_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="tempcategory_c">
+			R.TEMPCATEGORY IN ($tempcategory_c$)
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="tempcategory_s">
+			R.TEMPCATEGORY =#tempcategory_s#
+		</isNotEmpty>
+	    <isNotEmpty prepend="AND" property="statistic_dt">
+			<![CDATA[STATISTIC_DT >= #statistic_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="statistic_dt_end">
+			<![CDATA[STATISTIC_DT <= #statistic_dt_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="modifydate">
+			<![CDATA[MODIFYDATE >= #modifydate#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="modifydate_end">
+			<![CDATA[MODIFYDATE <= #modifydate_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt">
+			<![CDATA[CREATE_DT >= #create_dt#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="create_dt_end">
+			<![CDATA[CREATE_DT <= #create_dt_end#]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="party_id">
+			R.PARTY_ID =#party_id#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="organkey">
+			R.ORGANKEY = #organkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="fristappralevel">
+			R.FRISTAPPRALEVEL = #fristappralevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="emendationlevel">
+			R.emendationlevel=#emendationlevel#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="lastlevelkey">
+			R.lastlevelkey=#lastlevelkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="levelkey">
+			R.LEVELKEY = #levelkey#
+		</isNotEmpty>
+		<isNotEmpty prepend="AND" property="hcheck_status">
+			R.HCHECK_STATUS = #hcheck_status#
+		</isNotEmpty>
+		</dynamic>
+  </statement> 
+  <!-- end zyd 20181101 -->
 </sqlMap> 
-
+ 

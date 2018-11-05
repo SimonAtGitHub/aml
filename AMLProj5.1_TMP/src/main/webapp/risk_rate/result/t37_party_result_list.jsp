@@ -37,6 +37,11 @@ function selectAllCheckBox(objElement,currentForm){
 	}
 }	
 function opersubmit(theUrl){
+var tmpUrl=theUrl.substring(0,22);
+var constr="确认您的操作吗!";
+  if('t37_flow_batchTwo_oper'==tmpUrl){
+     constr="确认进行批量操作吗!";
+  }else{
 	var errMsg = "";
 	var form=document.forms[0];
 		errMsg = CheckBoxMustChecked(form);
@@ -71,9 +76,9 @@ function opersubmit(theUrl){
         } 
         
     }
-	 
+	 }
 		
-    if(confirm("确认您的操作吗!")){
+    if(confirm(constr)){
         document.forms[0].action=theUrl;
         document.forms[0].submit();
     }

@@ -462,6 +462,15 @@
 			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
 			scope="request">
 		</action>
+				<!-- by zyd 20181031雅安中心初评岗批量上报 -->
+				<action path="/result/t37_flow_batchTwo_oper"
+			parameter="t37_flow_batchTwo_oper" name="t37_party_resultActionForm"
+			type="com.ist.aml.risk_rate.controller.T37_party_resultAction" validate="false"
+			scope="request">
+			<forward name="success" path="/result/t37_party_result_list.do" />
+			<forward name="failure" path="/result/t37_party_result_list.do" />
+		</action>
+		<!-- end 20181031-->
 	</action-mappings>
 	<message-resources parameter="ApplicationResources_zh_CN" />
 
